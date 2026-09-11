@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vehicle Inventory · Chicago Motor Cars — AAN (Gen 5)</title>
+<link rel="stylesheet" href="all-vehicles-gen5.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></symbol>
+  <symbol id="i-cam" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+  <symbol id="i-cam-off" viewBox="0 0 24 24"><path d="M2 2l20 20M7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h13M9.5 4h5L17 7h3a2 2 0 0 1 2 2v7.5"/><path d="M14.1 15.1a3 3 0 0 1-4.2-4.2"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-tag-off" viewBox="0 0 24 24"><path d="M2 2l20 20M12.5 3H2v10.5l8.6 8.6a2 2 0 0 0 2.8 0l3.4-3.4M17.5 13.6l3.1-3.1a2 2 0 0 0 0-2.8L15 2h-1"/></symbol>
+  <symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/></symbol>
+  <symbol id="i-rss" viewBox="0 0 24 24"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
+  <symbol id="i-cols" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20h16M7 16v-5M12 16V6M17 16v-8"/></symbol>
+  <symbol id="i-table" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 10v10"/></symbol>
+  <symbol id="i-cards" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></symbol>
+  <symbol id="i-dn" viewBox="0 0 24 24"><path d="M12 5v14m6-6-6 6-6-6"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8"/></symbol>
+  <symbol id="i-drag" viewBox="0 0 24 24"><circle cx="9" cy="6" r="1.2"/><circle cx="15" cy="6" r="1.2"/><circle cx="9" cy="12" r="1.2"/><circle cx="15" cy="12" r="1.2"/><circle cx="9" cy="18" r="1.2"/><circle cx="15" cy="18" r="1.2"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8M5 10v10h5v-6h4v6h5V10"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M3 14l2-5.5A2 2 0 0 1 6.9 7h10.2a2 2 0 0 1 1.9 1.5L21 14M3 14v4h2m16-4v4h-2M3 14h18M7 18a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm10 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></symbol>
+  <symbol id="i-leads" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4.5-6.2"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
+  <symbol id="i-mega" viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h2l6 4V6L6 10H4a1 1 0 0 0-1 1zM16 9a4 4 0 0 1 0 6M19 7a7 7 0 0 1 0 10"/></symbol>
+  <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0 5 5L21 9.5l-2.5-2.5-2 2-1.5-1.5 2-2L14.5 3zM14 10 4.5 19.5a1.4 1.4 0 0 0 2 2L16 12"/></symbol>
+  <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></symbol>
+</svg>
+
+<div class="app">
+  <!-- ═══ PLATFORM RAIL ═══ -->
+  <aside class="rail" aria-label="Platform">
+    <a class="rail__logo" href="#" title="All Auto Network">AAN</a>
+    <nav class="rail__nav" aria-label="Sections">
+      <div class="rail__it"><a class="rail__b" href="#" title="Dashboard"><svg class="i"><use href="#i-home"/></svg></a><div class="fly"><div class="fly__t">Dashboard</div><a class="fly__l" href="#">Dealer home</a></div></div>
+      <div class="rail__it rail__it--on"><button class="rail__b" title="Inventory Management"><svg class="i"><use href="#i-car"/></svg></button>
+        <div class="fly"><div class="fly__t">Inventory Management</div><a class="fly__l fly__l--on" href="#">Inventory Manager</a><a class="fly__l" href="#">Lead Manager</a><a class="fly__l" href="#">Auto Locator</a><div class="fly__sep"></div><a class="fly__l" href="#">Inventory Aging Report</a><a class="fly__l" href="#">Sold Inventory Report</a></div></div>
+      <div class="rail__it"><button class="rail__b" title="Leads"><svg class="i"><use href="#i-leads"/></svg></button><div class="fly"><div class="fly__t">Leads</div><a class="fly__l" href="#">Lead Manager</a><a class="fly__l" href="#">Customers</a></div></div>
+      <div class="rail__it"><button class="rail__b" title="Site Management"><svg class="i"><use href="#i-globe"/></svg></button><div class="fly"><div class="fly__t">Site Management</div><a class="fly__l" href="#">Site Content Manager</a></div></div>
+      <div class="rail__it"><button class="rail__b" title="Marketing Applications"><svg class="i"><use href="#i-mega"/></svg></button><div class="fly"><div class="fly__t">Marketing Applications</div><a class="fly__l" href="#">Newsletter Tools</a></div></div>
+      <div class="rail__it"><button class="rail__b" title="Dealer Tools"><svg class="i"><use href="#i-wrench"/></svg></button><div class="fly"><div class="fly__t">Dealer Tools</div><a class="fly__l" href="#">View Site Statistics <svg class="i i-sm"><use href="#i-ext"/></svg></a></div></div>
+      <div class="rail__it"><button class="rail__b" title="Support"><svg class="i"><use href="#i-buoy"/></svg></button><div class="fly"><div class="fly__t">Support</div><a class="fly__l" href="#">View tickets</a><a class="fly__l" href="#">Create ticket</a></div></div>
+    </nav>
+    <div class="rail__sp"></div>
+    <div class="rail__it"><button class="rail__b" title="Notifications"><svg class="i"><use href="#i-bell"/></svg><span class="rail__dot"></span></button></div>
+    <div class="rail__it"><button class="rail__av" title="Parin · Chicago Motor Cars">P</button><div class="fly" style="top:auto;bottom:0"><div class="fly__t">Parin</div><a class="fly__l" href="#">Chicago Motor Cars · #277</a><div class="fly__sep"></div><a class="fly__l" href="#">Light / Dark</a><a class="fly__l" href="#">Logout</a></div></div>
+  </aside>
+
+  <!-- ═══ WORKSPACE ═══ -->
+  <main class="ws">
+    <div class="ws__in">
+      <div class="ctx">
+        <div class="crumbs"><a href="#">Inventory Management</a><span class="sep">›</span><span>Inventory Manager</span></div>
+        <div class="ctx__sp"></div>
+        <span class="live">Updated 5 min ago</span>
+        <button class="dealer" type="button"><span class="dealer__mk">CM</span>Chicago Motor Cars <span style="color:var(--ink-4)">· #277 · 6 rooftops</span><svg class="i"><use href="#i-chev"/></svg></button>
+        <label class="gsearch"><svg class="i i-sm"><use href="#i-search"/></svg><input type="search" placeholder="Search anywhere" aria-label="Search anywhere"><kbd>⌘K</kbd></label>
+      </div>
+
+      <div class="title">
+        <div>
+          <h1 class="title__h">Vehicle Inventory</h1>
+          <p class="title__s">Available inventory across <b>6 rooftops</b> · <span id="scope-sub">359 available</span></p>
+        </div>
+        <div class="title__acts">
+          <button class="btn btn--quiet" type="button" title="Edit price / status / flags across the listing"><svg class="i"><use href="#i-grid"/></svg> Inline edit</button>
+          <button class="btn btn--quiet" type="button"><svg class="i"><use href="#i-file"/></svg> Carfax reports</button>
+          <button class="btn btn--secondary" type="button" title="Download this scope as CSV"><svg class="i"><use href="#i-down"/></svg> Export</button>
+          <button class="btn btn--primary" type="button"><svg class="i"><use href="#i-plus"/></svg> Add vehicle</button>
+        </div>
+      </div>
+
+      <!-- ═══ INTELLIGENCE BENTO ═══ -->
+      <section class="bento" aria-label="Inventory intelligence">
+        <div class="mod mod--focal">
+          <div class="mod__h"><span class="caps">Lot</span><span class="sub">Chicago Motor Cars · 6 rooftops</span></div>
+          <div class="hero"><div class="hero__n num" id="scope-n">359</div><div class="hero__l"><b id="scope-l">Available</b>of 13,587 on file</div></div>
+          <div class="lanes" role="tablist" aria-label="Status scope">
+            <button class="lane lane--on" data-lane="Available">Available <b>359</b></button>
+            <button class="lane" data-lane="Sold">Sold <b>13,212</b></button>
+            <button class="lane lane--zero" data-lane="Pending">Pending <b>0</b></button>
+            <button class="lane" data-lane="Staging">Staging <b>16</b></button>
+            <button class="lane" data-lane="All">All <b>13,587</b></button>
+          </div>
+          <div class="kv">
+            <div><div class="v num" title="$66,311,600">$66.3M</div><div class="l">asking value</div></div>
+            <div><div class="v num" title="$293,414">$293K</div><div class="l">average price</div></div>
+            <div><div class="v num">146</div><div class="l">over $100k</div></div>
+          </div>
+        </div>
+
+        <div class="mod">
+          <div class="mod__h"><span class="caps">Age mix</span><span class="sub">days in stock</span></div>
+          <div class="mix__bar" aria-hidden="true">
+            <button class="mix__seg" style="--seg:var(--age-fresh);width:20.3%" data-age="fresh" title="73 · ≤ 30 days"></button>
+            <button class="mix__seg" style="--seg:var(--age-mid);width:32%" data-age="mid" title="115 · 31–90 days"></button>
+            <button class="mix__seg" style="--seg:var(--age-late);width:36.5%" data-age="late" title="131 · 91–365 days"></button>
+            <button class="mix__seg" style="--seg:var(--age-stale);width:11.2%" data-age="stale" title="40 · over 1 year"></button>
+          </div>
+          <button class="ml" style="--seg:var(--age-fresh)" data-age="fresh"><i></i><b>73</b><span>New ≤ 30 days</span><em>20%</em></button>
+          <button class="ml" style="--seg:var(--age-mid)" data-age="mid"><i></i><b>115</b><span>31–90 days</span><em>32%</em></button>
+          <button class="ml" style="--seg:var(--age-late)" data-age="late"><i></i><b>131</b><span>91–365 days</span><em>36%</em></button>
+          <button class="ml" style="--seg:var(--age-stale)" data-age="stale"><i></i><b>40</b><span>Over 1 year</span><em>11%</em></button>
+        </div>
+
+        <div class="mod mod--attn">
+          <div class="mod__h"><span class="caps">Needs attention</span><span class="sub">of 359 available</span><button class="linkbtn" type="button" data-act="insights">Insights <svg class="i"><use href="#i-chev"/></svg></button></div>
+          <div class="attn">
+            <button class="ar" data-attn="no_price"><span class="ar__n">133</span><span class="ar__b"><span class="ar__l">No price</span><span class="ar__m"><i style="--w:37%"></i></span></span><span class="ar__p">37%</span></button>
+            <button class="ar" data-attn="no_photos"><span class="ar__n">95</span><span class="ar__b"><span class="ar__l">No photos</span><span class="ar__m"><i style="--w:26%"></i></span></span><span class="ar__p">26%</span></button>
+            <button class="ar ar--danger" data-attn="feed_excluded"><span class="ar__n">67</span><span class="ar__b"><span class="ar__l">Feed excluded</span><span class="ar__m"><i style="--w:19%"></i></span></span><span class="ar__p">19%</span></button>
+            <button class="ar ar--slate" data-attn="hidden"><span class="ar__n">61</span><span class="ar__b"><span class="ar__l">Hidden on site</span><span class="ar__m"><i style="--w:17%"></i></span></span><span class="ar__p">17%</span></button>
+            <button class="ar ar--danger" data-attn="aging365"><span class="ar__n">40</span><span class="ar__b"><span class="ar__l">Aging &gt; 1 yr</span><span class="ar__m"><i style="--w:11%"></i></span></span><span class="ar__p">11%</span></button>
+            <button class="ar ar--violet" data-attn="sale_pending"><span class="ar__n">49</span><span class="ar__b"><span class="ar__l">Sale pending</span><span class="ar__m"><i style="--w:14%"></i></span></span><span class="ar__p">14%</span></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ COMMAND BAR ═══ -->
+      <div class="cmd">
+        <label class="search"><svg class="i"><use href="#i-search"/></svg><input type="search" id="q" placeholder="Find a vehicle — stock #, VIN, year, make, model, color…" autocomplete="off" aria-label="Find a vehicle"><kbd class="kbd">/</kbd></label>
+        <div class="facet"><button class="facet__b" data-pop="p-make" aria-expanded="false"><span class="facet__k">Make</span><span class="facet__v" id="make-v">Any</span><svg class="i"><use href="#i-chev"/></svg></button>
+          <div class="pop" id="p-make"><div class="pop__search"><input class="fld" type="search" placeholder="Search 54 makes…" data-filter="make-list"></div><div class="pop__list" id="make-list"></div><div class="pop__foot"><button class="btn btn--quiet btn--xs" type="button" data-act="clear-makes">Clear</button><span>counts = Available scope</span></div></div></div>
+        <div class="facet"><button class="facet__b" data-pop="p-model" aria-expanded="false"><span class="facet__k">Model</span><span class="facet__v">Any</span><svg class="i"><use href="#i-chev"/></svg></button><div class="pop" id="p-model"><div class="pop__empty">Pick a make first — models scope to it.</div></div></div>
+        <div class="facet"><button class="facet__b" data-pop="p-year" aria-expanded="false"><span class="facet__k">Year</span><span class="facet__v">Any</span><svg class="i"><use href="#i-chev"/></svg></button>
+          <div class="pop" id="p-year"><div class="pop__body"><div class="pop__row"><select class="sel sel--sm" id="y1" aria-label="From"><option value="">From</option></select><span>–</span><select class="sel sel--sm" id="y2" aria-label="To"><option value="">To</option></select></div><div class="pop__quick"><button class="btn btn--secondary btn--xs">2020s</button><button class="btn btn--secondary btn--xs">2010s</button><button class="btn btn--secondary btn--xs">2000s</button><button class="btn btn--secondary btn--xs">Pre-2000</button></div></div></div></div>
+        <div class="facet"><button class="facet__b" data-pop="p-price" aria-expanded="false"><span class="facet__k">Price</span><span class="facet__v">Any</span><svg class="i"><use href="#i-chev"/></svg></button>
+          <div class="pop" id="p-price"><div class="pop__body"><div class="pop__row"><input class="fld fld--sm" type="search" inputmode="numeric" placeholder="$ min"><span>–</span><input class="fld fld--sm" type="search" inputmode="numeric" placeholder="$ max"></div><div class="pop__quick"><button class="btn btn--secondary btn--xs">&lt; $25k</button><button class="btn btn--secondary btn--xs">$25–100k</button><button class="btn btn--secondary btn--xs">$100k+</button><button class="btn btn--secondary btn--xs">No price</button></div></div></div></div>
+        <div class="facet"><button class="facet__b" type="button" data-act="filters" aria-expanded="false"><svg class="i"><use href="#i-sliders"/></svg><span class="facet__v">Filters</span><span class="facet__cnt" id="more-cnt" hidden>0</span></button></div>
+      </div>
+
+      <div class="chips" id="chips" hidden></div>
+
+      <!-- ═══ INVENTORY FIELD ═══ -->
+      <section class="field" aria-label="Vehicles">
+        <div class="field__bar" id="listbar">
+          <nav class="tabs" role="tablist" aria-label="Status scope">
+            <button class="tab tab--on" data-lane="Available">Available <b>359</b></button>
+            <button class="tab" data-lane="Sold">Sold <b>13,212</b></button>
+            <button class="tab tab--zero" data-lane="Pending">Pending <b>0</b></button>
+            <button class="tab" data-lane="Staging">Staging <b>16</b></button>
+            <button class="tab" data-lane="All">All <b>13,587</b></button>
+          </nav>
+          <div class="field__sp"></div>
+          <div class="meta">Showing <b>&nbsp;<span id="shown">1–22</span>&nbsp;</b> of <b>&nbsp;359</b></div>
+          <div class="field__ctl">
+            <div class="seg" role="group" aria-label="View"><button class="seg__b seg__b--on" data-view="table"><svg class="i"><use href="#i-table"/></svg>Table</button><button class="seg__b" data-view="gallery"><svg class="i"><use href="#i-cards"/></svg>Gallery</button><button class="seg__b" data-view="photos"><svg class="i"><use href="#i-image"/></svg>Photos</button></div>
+            <div class="facet--bar"><button class="ctlb" data-pop="p-sort" aria-expanded="false">Sort <b id="sort-v">Stock ↑</b><svg class="i"><use href="#i-chev"/></svg></button>
+              <div class="pop pop--right mn" id="p-sort"><div class="caps mn__lab">Sort by</div>
+                <button class="mn__it mn__it--on" data-sort="stock"><svg class="i"><use href="#i-check"/></svg>Stock</button><button class="mn__it" data-sort="year"><svg class="i"><use href="#i-check"/></svg>Year</button><button class="mn__it" data-sort="make"><svg class="i"><use href="#i-check"/></svg>Make</button><button class="mn__it" data-sort="model"><svg class="i"><use href="#i-check"/></svg>Model</button><button class="mn__it" data-sort="trim"><svg class="i"><use href="#i-check"/></svg>Trim</button><button class="mn__it" data-sort="ext"><svg class="i"><use href="#i-check"/></svg>Ext. color</button><button class="mn__it" data-sort="price"><svg class="i"><use href="#i-check"/></svg>Price</button><button class="mn__it" data-sort="status"><svg class="i"><use href="#i-check"/></svg>Status</button><button class="mn__it" data-sort="days"><svg class="i"><use href="#i-check"/></svg>Age</button><button class="mn__it" data-sort="issues"><svg class="i"><use href="#i-check"/></svg>Attention (most first)</button>
+                <div class="mn__sep"></div><button class="mn__it" data-dir="asc"><svg class="i"><use href="#i-up"/></svg>Ascending</button><button class="mn__it" data-dir="desc"><svg class="i"><use href="#i-dn"/></svg>Descending</button></div></div>
+            <div class="facet--bar"><button class="ctlb ctlb--icon" data-pop="p-cols" title="Columns"><svg class="i"><use href="#i-cols"/></svg></button>
+              <div class="pop pop--right" id="p-cols" style="min-width:300px"><div class="pop__list" id="cols-list"></div><div class="pop__foot"><select class="sel sel--sm" style="width:100%"><option value="">Add column…</option><option>VIN</option><option>Type</option><option>Certified</option><option>Transmission</option><option>Discount Price</option><option>Interior Color</option><option>Body</option><option>Mileage</option><option>Engine</option><option>Location</option><option>Specials</option><option>MPG city</option><option>MPG hwy</option><option>Car Fax</option><option>Lease Price</option><option>Lease Term</option><option>When Added</option><option>When Modified</option><option># Photos</option><option>Video</option><option>Invoice Price</option><option>Pending sale name</option></select></div></div></div>
+          </div>
+        </div>
+
+        <div class="bulk" id="bulk" hidden>
+          <span><b id="bulk-n">0</b> selected</span><span class="bulk__sp"></span>
+          <button class="btn btn--sm" type="button"><svg class="i"><use href="#i-grid"/></svg> Inline edit</button>
+          <button class="btn btn--sm" type="button"><svg class="i"><use href="#i-eye"/></svg> Show / hide on site</button>
+          <button class="btn btn--sm" type="button"><svg class="i"><use href="#i-rss"/></svg> Feed on / off</button>
+          <button class="btn btn--sm" type="button"><svg class="i"><use href="#i-print"/></svg> Print stickers</button>
+          <button class="btn btn--sm" type="button"><svg class="i"><use href="#i-down"/></svg> Export</button>
+          <button class="btn btn--sm btn--dq" type="button" data-act="bulk-delete"><svg class="i"><use href="#i-trash"/></svg> Delete…</button>
+          <button class="btn btn--sm btn--icon" type="button" data-act="clear-sel" aria-label="Clear selection"><svg class="i"><use href="#i-x"/></svg></button>
+        </div>
+
+        <div class="tbl"><table><colgroup id="cg"></colgroup><thead><tr id="thr"></tr></thead><tbody id="tb"></tbody></table></div>
+
+        <div class="field__foot">
+          <div class="meta">Showing <b>&nbsp;<span id="shown2">1–22</span>&nbsp;</b> of <b>&nbsp;359</b></div>
+          <span class="field__sp"></span>
+          <nav class="pager" aria-label="Pagination"><button class="pager__b" disabled><svg class="i"><use href="#i-left"/></svg></button><button class="pager__b pager__b--cur">1</button><button class="pager__b">2</button><button class="pager__b">3</button><button class="pager__b">4</button><button class="pager__b"><svg class="i"><use href="#i-right"/></svg></button></nav>
+          <label class="per">Rows <select class="sel" aria-label="Rows per page"><option>50</option><option selected>100</option><option>250</option><option>500</option><option>1000</option></select></label>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- ═══ CONTEXTUAL LAYERS ═══ -->
+<div class="scrim" id="scrim" data-act="close-panels"></div>
+
+<aside class="panel" id="panel-filters" aria-label="Filters" aria-hidden="true">
+  <div class="panel__h"><div class="panel__t">Filters</div><span class="caps">secondary</span><button class="ract" type="button" data-act="close-panels" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="panel__b">
+    <div class="grp"><span class="caps">Identity</span>
+      <label class="f"><span>Type</span><select class="sel"><option>Any</option><option>New</option><option>Used</option></select></label>
+      <label class="f"><span>Stock #</span><input class="fld" type="search" placeholder="Exact stock number"></label>
+      <label class="f"><span>VIN</span><input class="fld" type="search" placeholder="Full or partial VIN"></label>
+    </div>
+    <div class="grp"><span class="caps">Where</span>
+      <label class="f"><span>Location</span><select class="sel"><option>All rooftops</option><option>Boats</option><option>Chicago Motor Cars</option><option>Chicago Motor Cars - KC</option><option>Chicago Motor Cars - Naperville</option><option>Chicago Motor Cars - SC</option><option>CMS Diesel</option></select></label>
+      <div class="pop__row"><label class="f" style="flex:1"><span>Exterior color</span><input class="fld" type="search" placeholder="e.g. Rosso"></label><label class="f" style="flex:1"><span>Interior color</span><input class="fld" type="search" placeholder="e.g. Tan"></label></div>
+    </div>
+    <div class="grp"><span class="caps">Merchandising</span>
+      <label class="f"><span>Display on site</span><select class="sel"><option>All</option><option>Hidden</option><option>Display Vehicle In Inventory</option></select></label>
+      <label class="f"><span>Outbound feed</span><select class="sel"><option>Any</option><option>Excluded (nofeedout)</option><option>Feeding</option></select></label>
+      <label class="f"><span>Pending sale</span><select class="sel"><option>All</option><option>Pending sales only</option></select></label>
+    </div>
+    <div class="grp"><span class="caps">Audit</span>
+      <label class="f"><span>Missing items</span><select class="sel"><option value="">— any —</option><optgroup label="Photos"><option>Images</option><option>1 image or less</option></optgroup><optgroup label="Identity"><option>VIN Decoding</option><option>Stock Number</option><option>Make</option><option>Model</option><option>Trim</option><option>Year</option><option>VIN Number</option><option>Vehicle Type</option></optgroup><optgroup label="Specs"><option>Body</option><option>Transmission</option><option>Mileage</option><option>Exterior Color</option><option>Interior Color</option><option>Fuel</option><option>Location</option></optgroup><optgroup label="Pricing"><option>Price</option><option>Discounted Price</option><option>Invoice Price</option><option>Lease Price</option><option>Lease Term</option></optgroup><optgroup label="Copy"><option>Intro Description</option><option>Caption</option><option>Main Description</option><option>Bulleted Text</option><option>Description 2</option><option>Buyers Guide Text</option></optgroup></select></label>
+      <div class="f"><span>Custom field</span><div class="pop__row"><select class="sel"><option value="">—</option><option>cfx_date</option><option>trucks_and_equipment</option><option>ove_feed_data</option><option>no_carfax</option><option>pending_sale_name</option><option>truck_trailer</option><option>images_timestamp</option><option>no_vin</option><option>carfax_timestamp</option></select><input class="fld" type="search" placeholder="value…"></div></div>
+    </div>
+  </div>
+  <div class="panel__f"><button class="btn btn--quiet btn--sm" type="button">Reset</button><button class="btn btn--primary" type="button" data-act="close-panels">Apply filters</button></div>
+</aside>
+
+<aside class="panel" id="panel-insp" aria-label="Vehicle" aria-hidden="true">
+  <div class="panel__h"><div class="panel__t">Vehicle</div><span class="caps" id="insp-stock"></span><button class="ract" type="button" data-act="close-panels" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="panel__b" id="insp-body"></div>
+</aside>
+
+<div class="pop mn" id="rowmenu">
+  <button class="mn__it" data-row="inspect"><svg class="i"><use href="#i-eye"/></svg>Quick view</button>
+  <button class="mn__it" data-row="edit"><svg class="i"><use href="#i-edit"/></svg>Edit vehicle</button>
+  <button class="mn__it" data-row="photos"><svg class="i"><use href="#i-cam"/></svg>Photos</button>
+  <button class="mn__it" data-row="sticker"><svg class="i"><use href="#i-print"/></svg>Window sticker</button>
+  <button class="mn__it" data-row="carfax"><svg class="i"><use href="#i-file"/></svg>Carfax report</button>
+  <div class="mn__sep"></div>
+  <button class="mn__it mn__it--danger" data-row="delete"><svg class="i"><use href="#i-trash"/></svg>Delete vehicle…</button>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <div class="modal__bd" data-act="close"></div>
+  <div class="modal__p" tabindex="-1">
+    <div class="modal__t">Delete vehicle?</div>
+    <div class="modal__b">This permanently deletes <b id="modal-name">this vehicle</b> from the dealer's inventory. Hard delete — there is no undo.</div>
+    <div class="modal__f"><button class="btn btn--secondary" type="button" data-act="close">Cancel</button><button class="btn btn--danger" type="button" data-act="close"><svg class="i"><use href="#i-trash"/></svg> Delete</button></div>
+  </div>
+</div>
+
+<script src="all-vehicles-gen5.data.js"></script>
+<script src="all-vehicles-gen5.js"></script>
+</body>
+</html>

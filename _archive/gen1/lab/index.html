@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AAN Design Lab — Original vs Redesign</title>
+<style>
+  /* The lab shell is deliberately neutral: no brand, no colour, nothing
+     that competes with the two pages under review. */
+  :root { --bg: #d9dbe0; --bar: #f4f5f7; --ink: #1b1d22; --ink-2: #5d6370; --line: #c6c9d0; --acc: #1b1d22; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { font: 13px/1.4 system-ui, "Segoe UI", sans-serif; color: var(--ink); background: var(--bg); display: flex; flex-direction: column; overflow: hidden; }
+
+  .bar { display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 12px; background: var(--bar); border-bottom: 1px solid var(--line); flex: 0 0 auto; }
+  .bar__title { font-weight: 600; margin-right: 6px; white-space: nowrap; }
+  .bar__title small { font-weight: 400; color: var(--ink-2); }
+  .bar__spacer { flex: 1; }
+  .grp { display: inline-flex; border: 1px solid var(--line); border-radius: 5px; overflow: hidden; background: #fff; }
+  .grp button { font: inherit; border: 0; background: transparent; padding: 0 10px; height: 28px; cursor: pointer; color: var(--ink-2); border-right: 1px solid var(--line); }
+  .grp button:last-child { border-right: 0; }
+  .grp button:hover { color: var(--ink); background: #f0f1f3; }
+  .grp button.on { background: var(--acc); color: #fff; }
+  .lbl { color: var(--ink-2); white-space: nowrap; }
+  select, .btn { font: inherit; height: 28px; border: 1px solid var(--line); border-radius: 5px; background: #fff; color: var(--ink); padding: 0 8px; cursor: pointer; }
+  .btn:hover { background: #f0f1f3; }
+  .kbd { font: 11px ui-monospace, monospace; border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; color: var(--ink-2); background: #fff; }
+
+  .stage { flex: 1; min-height: 0; position: relative; overflow: auto; padding: 14px; }
+  .stage--fit { overflow: hidden; padding: 0; }
+  .panes { display: flex; gap: 14px; height: 100%; min-height: 0; align-items: stretch; }
+  .pane { position: relative; flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .pane[hidden] { display: none; }
+  .pane__head { display: flex; align-items: center; gap: 8px; height: 26px; padding: 0 10px; font-size: 12px; color: var(--ink-2); background: var(--bar); border-bottom: 1px solid var(--line); flex: 0 0 auto; }
+  .pane__head b { color: var(--ink); font-weight: 600; }
+  .pane__head a { color: var(--ink-2); margin-left: auto; text-decoration: none; }
+  .pane__head a:hover { color: var(--ink); }
+  .pane__body { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+  .pane__body iframe { border: 0; background: #fff; display: block; transform-origin: 0 0; }
+  .pane__body { background: #cfd2d8; }
+
+  /* Swipe */
+  .swipe { position: absolute; inset: 0; }
+  .swipe .layer { position: absolute; inset: 0; overflow: hidden; }
+  .swipe .layer--top { clip-path: inset(0 50% 0 0); }
+  .swipe__handle { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: var(--acc); cursor: col-resize; z-index: 5; }
+  .swipe__handle::after { content: "⇔"; position: absolute; top: 60px; left: 50%; transform: translate(-50%, -50%); width: 30px; height: 30px; border-radius: 50%; background: var(--acc); color: #fff; display: grid; place-items: center; font-size: 14px; }
+  .swipe__tag { position: absolute; top: 8px; padding: 2px 8px; border-radius: 4px; background: rgba(27,29,34,.78); color: #fff; font-size: 11px; z-index: 4; pointer-events: none; }
+  .swipe__tag--l { left: 8px; } .swipe__tag--r { right: 8px; }
+
+  .hint { color: var(--ink-2); font-size: 12px; white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <span class="bar__title">AAN Design Lab <small>· Dealer UI · All Vehicles</small></span>
+
+  <span class="grp" id="mode">
+    <button data-mode="original">Original</button>
+    <button data-mode="redesign">Redesign</button>
+    <button data-mode="side" class="on">Side-by-side</button>
+    <button data-mode="swipe">Swipe</button>
+  </span>
+
+  <span class="lbl">Viewport</span>
+  <select id="vw" title="Virtual viewport width for both frames">
+    <option value="1280">1280</option>
+    <option value="1440" selected>1440</option>
+    <option value="1600">1600</option>
+    <option value="1920">1920</option>
+    <option value="fit">Fit pane (no scaling)</option>
+  </select>
+
+  <span class="lbl">Theme</span>
+  <span class="grp" id="theme">
+    <button data-theme="light" class="on">Light</button>
+    <button data-theme="dark">Dark</button>
+  </span>
+
+  <span class="lbl">Original state</span>
+  <select id="orig-src" title="Which captured state of the original to show">
+    <option value="d03-inventory-1.html" selected>Table · Available (359)</option>
+    <option value="d03-inventory-2.html">Gallery · Ferrari+Lamborghini · no photos</option>
+    <option value="d03-inventory-3.html">Photos preset · Sold lane</option>
+    <option value="d04-inventory-states-1.html">Insights drawer open</option>
+    <option value="d04-inventory-states-2.html">Columns picker open</option>
+    <option value="d04-inventory-states-3.html">Near-empty lot (19 cars)</option>
+  </select>
+
+  <span class="bar__spacer"></span>
+  <span class="hint">Both frames share one scroll · <span class="kbd">R</span> refresh · <span class="kbd">1</span>–<span class="kbd">4</span> modes</span>
+  <button class="btn" id="refresh" title="Reload both frames (R)">↻ Refresh</button>
+</div>
+
+<div class="stage" id="stage">
+  <div class="panes" id="panes">
+    <section class="pane" id="pane-orig">
+      <div class="pane__head"><b>Original</b> <span id="orig-cap">aan-design-export-2026-09-09 · d03-inventory-1</span> <a id="open-orig" href="#" target="_blank">open ↗</a></div>
+      <div class="pane__body"><iframe id="f-orig" title="Original" scrolling="no"></iframe></div>
+    </section>
+    <section class="pane" id="pane-new">
+      <div class="pane__head"><b>Redesign</b> AAN_RESELLER_REDESIGN_FINALE · pages/dealer/all-vehicles <a id="open-new" href="#" target="_blank">open ↗</a></div>
+      <div class="pane__body"><iframe id="f-new" title="Redesign" scrolling="no"></iframe></div>
+    </section>
+    <section class="pane" id="pane-swipe" hidden>
+      <div class="pane__head"><b>Swipe</b> drag the divider — left: original, right: redesign</div>
+      <div class="pane__body">
+        <div class="swipe" id="swipe">
+          <div class="layer layer--bottom"><iframe id="f-swipe-new" title="Redesign" scrolling="no"></iframe></div>
+          <div class="layer layer--top" id="swipe-top"><iframe id="f-swipe-orig" title="Original" scrolling="no"></iframe></div>
+          <div class="swipe__handle" id="swipe-handle"></div>
+          <span class="swipe__tag swipe__tag--l">Original</span>
+          <span class="swipe__tag swipe__tag--r">Redesign</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+(function () {
+  var ORIG_BASE = '../../aan-design-export-2026-09-09/pages/';
+  var NEW_SRC = '../pages/dealer/all-vehicles.html';
+  var DOC_H = 6200; // both pages are rendered at full document height inside one scrolling stage, so one wheel scrolls both
+
+  var $ = function (s) { return document.querySelector(s); };
+  var frames = { orig: $('#f-orig'), fnew: $('#f-new'), sorig: $('#f-swipe-orig'), snew: $('#f-swipe-new') };
+  var state = { mode: 'side', vw: 1440, theme: 'light', orig: 'd03-inventory-1.html' };
+  try { state.theme = localStorage.getItem('aan-theme') === 'dark' ? 'dark' : 'light'; } catch (e) {}
+
+  function bust(u) { return u + (u.indexOf('?') < 0 ? '?' : '&') + 'lab=' + Date.now(); }
+  function srcs() {
+    var o = bust(ORIG_BASE + state.orig), n = bust(NEW_SRC);
+    frames.orig.src = o; frames.fnew.src = n; frames.sorig.src = o; frames.snew.src = n;
+    $('#open-orig').href = ORIG_BASE + state.orig; $('#open-new').href = NEW_SRC;
+    $('#orig-cap').textContent = 'aan-design-export-2026-09-09 · ' + state.orig.replace('.html', '');
+  }
+
+  function layout() {
+    var side = state.mode === 'side', swipe = state.mode === 'swipe';
+    $('#pane-orig').hidden = !(side || state.mode === 'original');
+    $('#pane-new').hidden = !(side || state.mode === 'redesign');
+    $('#pane-swipe').hidden = !swipe;
+    document.querySelectorAll('#mode button').forEach(function (b) { b.classList.toggle('on', b.dataset.mode === state.mode); });
+    requestAnimationFrame(fit);
+  }
+
+  // Identical framing: every frame renders at the same virtual width and is
+  // scaled to fit its pane; heights are the full document so the stage scrolls both.
+  function fit() {
+    var fitMode = state.vw === 'fit';
+    document.querySelectorAll('.pane:not([hidden]) .pane__body').forEach(function (body) {
+      var w = body.clientWidth;
+      body.querySelectorAll('iframe').forEach(function (f) {
+        if (fitMode) { f.style.width = w + 'px'; f.style.height = DOC_H + 'px'; f.style.transform = 'none'; }
+        else { var s = Math.min(1, w / state.vw); var off = Math.max(0, Math.round((w - state.vw * s) / 2)); f.style.width = state.vw + 'px'; f.style.height = Math.round(DOC_H / s) + 'px'; f.style.transform = 'translateX(' + off + 'px) scale(' + s + ')'; }
+      });
+      var scale = fitMode ? 1 : Math.min(1, w / state.vw);
+      body.style.height = Math.round(DOC_H * (fitMode ? 1 : 1)) + 'px';
+      body.style.height = 'auto';
+      body.style.minHeight = Math.round(DOC_H * scale) + 'px';
+      body.style.overflow = 'hidden';
+    });
+    // Swipe layers need the pane height too
+    var sw = $('#swipe'); if (sw) { var b = $('#pane-swipe .pane__body'); sw.style.height = b.style.minHeight; }
+  }
+
+  function setTheme(t) {
+    state.theme = t;
+    try { localStorage.setItem('aan-theme', t); } catch (e) {}
+    document.querySelectorAll('#theme button').forEach(function (b) { b.classList.toggle('on', b.dataset.theme === t); });
+    // The redesign listens for a message; the original reads localStorage on load, so reload it.
+    [frames.fnew, frames.snew].forEach(function (f) { try { f.contentWindow.postMessage({ type: 'aan:theme', theme: t }, '*'); } catch (e) {} });
+    frames.orig.src = bust(ORIG_BASE + state.orig); frames.sorig.src = frames.orig.src;
+  }
+
+  $('#mode').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; state.mode = b.dataset.mode; layout(); });
+  $('#theme').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; setTheme(b.dataset.theme); });
+  $('#vw').addEventListener('change', function () { state.vw = this.value === 'fit' ? 'fit' : +this.value; fit(); });
+  $('#orig-src').addEventListener('change', function () { state.orig = this.value; srcs(); });
+  $('#refresh').addEventListener('click', srcs);
+  window.addEventListener('resize', fit);
+  document.addEventListener('keydown', function (e) {
+    if (/input|select|textarea/i.test(document.activeElement.tagName)) return;
+    if (e.key === 'r' || e.key === 'R') srcs();
+    var m = { '1': 'original', '2': 'redesign', '3': 'side', '4': 'swipe' }[e.key];
+    if (m) { state.mode = m; layout(); }
+  });
+
+  // Swipe divider
+  (function () {
+    var sw = $('#swipe'), top = $('#swipe-top'), h = $('#swipe-handle'), drag = false;
+    function setX(clientX) {
+      var r = sw.getBoundingClientRect(); var p = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+      top.style.clipPath = 'inset(0 ' + ((1 - p) * 100) + '% 0 0)'; h.style.left = (p * 100) + '%';
+    }
+    h.addEventListener('pointerdown', function (e) { drag = true; h.setPointerCapture(e.pointerId); });
+    h.addEventListener('pointermove', function (e) { if (drag) setX(e.clientX); });
+    h.addEventListener('pointerup', function () { drag = false; });
+    sw.addEventListener('click', function (e) { if (e.target === h) return; if (e.target.closest('.swipe__handle')) return; });
+  })();
+
+  document.querySelectorAll('#theme button').forEach(function (b) { b.classList.toggle('on', b.dataset.theme === state.theme); });
+  srcs(); layout();
+})();
+</script>
+</body>
+</html>

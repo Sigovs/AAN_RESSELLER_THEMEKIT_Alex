@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inventory — All Vehicles · AAN redesign</title>
+<script>
+  // Pre-paint theme stamp — same key as the live app.
+  try { var t = localStorage.getItem('aan-theme'); if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
+<link rel="stylesheet" href="../../ds/tokens.css">
+<link rel="stylesheet" href="../../ds/base.css">
+<link rel="stylesheet" href="../../ds/components.css">
+<link rel="stylesheet" href="all-vehicles.css">
+</head>
+<body>
+
+<!-- ─── Icon set: one stroke family, sized optically ─────────────── -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-chevron-up" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></symbol>
+  <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-grid-edit" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+  <symbol id="i-camera-off" viewBox="0 0 24 24"><path d="M2 2l20 20M7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h13M9.5 4h5L17 7h3a2 2 0 0 1 2 2v7.5"/><path d="M14.1 15.1a3 3 0 0 1-4.2-4.2"/></symbol>
+  <symbol id="i-printer" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22"/></symbol>
+  <symbol id="i-tag-off" viewBox="0 0 24 24"><path d="M2 2l20 20M12.5 3H2v10.5l8.6 8.6a2 2 0 0 0 2.8 0l3.4-3.4M17.5 13.6l3.1-3.1a2 2 0 0 0 0-2.8L15 2h-1"/><path d="M7 7h.01"/></symbol>
+  <symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
+  <symbol id="i-columns" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20h16M7 16v-5M12 16V6M17 16v-8"/></symbol>
+  <symbol id="i-table" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 10v10"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></symbol>
+  <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M12 5v14m6-6-6 6-6-6"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></symbol>
+  <symbol id="i-drag" viewBox="0 0 24 24"><circle cx="9" cy="6" r="1.2"/><circle cx="15" cy="6" r="1.2"/><circle cx="9" cy="12" r="1.2"/><circle cx="15" cy="12" r="1.2"/><circle cx="9" cy="18" r="1.2"/><circle cx="15" cy="18" r="1.2"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36M21 3v6h-6"/></symbol>
+  <symbol id="i-sticker" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></symbol>
+</svg>
+
+<!-- ─── Chrome: one graphite band. Brand · product nav · context · account ─── -->
+<header class="topbar">
+  <a class="brand" href="#" title="All Auto Network">
+    <span class="brand__mark">AAN</span>
+    <span class="brand__name">All Auto Network</span>
+    <span class="brand__env">Backend</span>
+  </a>
+
+  <nav class="nav" aria-label="System menu">
+    <div class="nav__group">
+      <button class="nav__trigger" aria-haspopup="true">Site Management <svg class="i"><use href="#i-chevron-down"/></svg></button>
+      <div class="nav__menu"><a class="nav__link" href="#">Site Content Manager</a></div>
+    </div>
+    <div class="nav__group nav__group--on">
+      <button class="nav__trigger" aria-haspopup="true">Inventory Management <svg class="i"><use href="#i-chevron-down"/></svg></button>
+      <div class="nav__menu">
+        <a class="nav__link nav__link--on" href="#" aria-current="page">Inventory Manager</a>
+        <a class="nav__link" href="#">Lead Manager</a>
+        <a class="nav__link" href="#">Auto Locator</a>
+        <a class="nav__link" href="#">Inventory Aging Report</a>
+        <a class="nav__link" href="#">Sold Inventory Report</a>
+      </div>
+    </div>
+    <div class="nav__group">
+      <button class="nav__trigger" aria-haspopup="true">Dealer Tools <svg class="i"><use href="#i-chevron-down"/></svg></button>
+      <div class="nav__menu"><a class="nav__link" href="#">View Site Statistics <svg class="i i-sm"><use href="#i-external"/></svg></a></div>
+    </div>
+    <div class="nav__group">
+      <button class="nav__trigger" aria-haspopup="true">Support <svg class="i"><use href="#i-chevron-down"/></svg></button>
+      <div class="nav__menu"><a class="nav__link" href="#">View tickets</a><a class="nav__link" href="#">Create ticket</a></div>
+    </div>
+    <div class="nav__group">
+      <button class="nav__trigger" aria-haspopup="true">Marketing Applications <svg class="i"><use href="#i-chevron-down"/></svg></button>
+      <div class="nav__menu"><a class="nav__link" href="#">Newsletter Tools</a></div>
+    </div>
+  </nav>
+
+  <div class="topbar__spacer"></div>
+
+  <div class="ctx">
+    <a class="ctx__link" href="#">Home</a>
+    <a class="ctx__link" href="#">Support</a>
+  </div>
+
+  <button class="theme-toggle" type="button" data-action="theme" aria-label="Toggle dark theme" title="Light / Dark">
+    <svg class="i i--moon"><use href="#i-moon"/></svg>
+    <svg class="i i--sun"><use href="#i-sun"/></svg>
+  </button>
+
+  <button class="account" type="button" aria-haspopup="true" title="Account">
+    <span class="account__avatar">P</span>
+    <span class="account__text">
+      <span class="account__name">Parin</span>
+      <span class="account__sub">Chicago Motor Cars</span>
+    </span>
+    <svg class="i i-sm"><use href="#i-chevron-down"/></svg>
+  </button>
+</header>
+
+<main class="page">
+
+  <!-- ─── Page head ───────────────────────────────────────────── -->
+  <header class="page-head">
+    <div>
+      <div class="page-head__eyebrow">Chicago Motor Cars · dealer #277</div>
+      <h1 class="page-head__title">Inventory</h1>
+    </div>
+    <div class="page-head__actions">
+      <button class="btn btn--quiet" type="button" title="Edit price / status / flags across the listing (update-listing grid)"><svg class="i"><use href="#i-grid-edit"/></svg> Inline edit</button>
+      <a class="btn btn--quiet" href="#" title="Carfax reports"><svg class="i"><use href="#i-file"/></svg> Carfax reports</a>
+      <a class="btn btn--secondary" href="#" title="Download the current scope as CSV"><svg class="i"><use href="#i-download"/></svg> Export CSV</a>
+      <a class="btn btn--primary" href="#"><svg class="i"><use href="#i-plus"/></svg> Add vehicle</a>
+    </div>
+  </header>
+
+  <!-- ─── Lane bar: status scope (mutually exclusive) + how to look at it ─── -->
+  <div class="lanebar">
+    <nav class="tabs" role="tablist" aria-label="Status scope" id="lanes">
+      <button class="tab" role="tab" data-lane="all">All <span class="tab__count">13,587</span></button>
+      <button class="tab tab--on" role="tab" aria-selected="true" data-lane="available">Available <span class="tab__count">359</span></button>
+      <button class="tab" role="tab" data-lane="sold">Sold <span class="tab__count">13,212</span></button>
+      <button class="tab tab--zero" role="tab" data-lane="pending">Pending <span class="tab__count">0</span></button>
+      <button class="tab" role="tab" data-lane="staging">Staging <span class="tab__count">16</span></button>
+    </nav>
+    <div class="lanebar__right">
+      <button class="btn btn--quiet btn--sm" type="button" data-toggle="insights" aria-expanded="false" title="Lot analytics — makes, decades, aging, price mix">
+        <svg class="i"><use href="#i-chart"/></svg> Insights <svg class="i btn__caret"><use href="#i-chevron-down"/></svg>
+      </button>
+      <div class="seg" role="group" aria-label="Layout">
+        <button class="seg__btn seg__btn--on" data-view="table" title="Standard table"><svg class="i"><use href="#i-table"/></svg> Table</button>
+        <button class="seg__btn" data-view="gallery" title="Photo cards"><svg class="i"><use href="#i-grid"/></svg> Gallery</button>
+        <button class="seg__btn" data-view="photos" title="Photos preset — photo status columns"><svg class="i"><use href="#i-image"/></svg> Photos</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Pulse: lot health, every item is a toggle filter ─────── -->
+  <div class="pulse pulse--row" role="group" aria-label="Lot health">
+    <button class="pulse__item pulse__item--ok" data-health="fresh30" aria-pressed="false" title="Added in the last 30 days"><span class="pulse__dot"></span><span class="pulse__v">73</span><span class="pulse__l">New ≤ 30d</span></button>
+    <button class="pulse__item pulse__item--danger" data-health="aging365" aria-pressed="false" title="In stock more than a year"><span class="pulse__dot"></span><span class="pulse__v">40</span><span class="pulse__l">Aging &gt; 1 yr</span></button>
+    <button class="pulse__item pulse__item--warn" data-health="no_photos" aria-pressed="false" title="No photos uploaded"><span class="pulse__dot"></span><span class="pulse__v">95</span><span class="pulse__l">No photos</span></button>
+    <button class="pulse__item pulse__item--warn" data-health="no_price" aria-pressed="false" title="No price set"><span class="pulse__dot"></span><span class="pulse__v">133</span><span class="pulse__l">No price</span></button>
+    <button class="pulse__item pulse__item--slate" data-health="hidden" aria-pressed="false" title="Do Not Display on site"><span class="pulse__dot"></span><span class="pulse__v">61</span><span class="pulse__l">Hidden on site</span></button>
+    <button class="pulse__item pulse__item--danger" data-health="feed_excluded" aria-pressed="false" title="Excluded from outbound feeds (nofeedout)"><span class="pulse__dot"></span><span class="pulse__v">67</span><span class="pulse__l">Feed excluded</span></button>
+    <button class="pulse__item pulse__item--violet" data-health="sale_pending" aria-pressed="false" title="Sale pending"><span class="pulse__dot"></span><span class="pulse__v">49</span><span class="pulse__l">Sale pending</span></button>
+    <div class="pulse__stat" title="Sum of asking prices in this status scope"><strong>$66,311,600</strong> asking <span class="pulse__stat-sep">·</span> avg $293,414</div>
+  </div>
+
+  <!-- ─── Insights (collapsed by default) ─────────────────────── -->
+  <section class="insights" id="insights" hidden>
+    <div class="insights__head"><strong>359 units</strong> $66,311,600 asking · avg $293,414 <span class="insights__hint">every bar filters the list · scope: Available</span></div>
+    <div class="insights__grid">
+      <div>
+        <div class="insight__title">Top makes</div>
+        <div class="bars">
+          <button class="bar"><span class="bar__label">Porsche</span><span class="bar__track"><span class="bar__fill" style="width:100%"></span></span><span class="bar__v">54</span></button>
+          <button class="bar"><span class="bar__label">Ford</span><span class="bar__track"><span class="bar__fill" style="width:87%"></span></span><span class="bar__v">47</span></button>
+          <button class="bar"><span class="bar__label">Ferrari</span><span class="bar__track"><span class="bar__fill" style="width:78%"></span></span><span class="bar__v">42</span></button>
+          <button class="bar"><span class="bar__label">Lamborghini</span><span class="bar__track"><span class="bar__fill" style="width:50%"></span></span><span class="bar__v">27</span></button>
+          <button class="bar"><span class="bar__label">McLaren</span><span class="bar__track"><span class="bar__fill" style="width:37%"></span></span><span class="bar__v">20</span></button>
+          <button class="bar"><span class="bar__label">Mercedes-Benz</span><span class="bar__track"><span class="bar__fill" style="width:37%"></span></span><span class="bar__v">20</span></button>
+          <button class="bar"><span class="bar__label">Chevrolet</span><span class="bar__track"><span class="bar__fill" style="width:30%"></span></span><span class="bar__v">16</span></button>
+          <button class="bar"><span class="bar__label">Dodge</span><span class="bar__track"><span class="bar__fill" style="width:22%"></span></span><span class="bar__v">12</span></button>
+          <button class="bar"><span class="bar__label">Land Rover</span><span class="bar__track"><span class="bar__fill" style="width:22%"></span></span><span class="bar__v">12</span></button>
+          <button class="bar"><span class="bar__label">Audi</span><span class="bar__track"><span class="bar__fill" style="width:20%"></span></span><span class="bar__v">11</span></button>
+        </div>
+      </div>
+      <div>
+        <div class="insight__title">By decade</div>
+        <div class="cols">
+          <button class="col" title="1950s"><span class="col__fill" style="height:3%"></span><span class="col__l">50s</span></button>
+          <button class="col" title="1960s"><span class="col__fill" style="height:6%"></span><span class="col__l">60s</span></button>
+          <button class="col" title="1970s"><span class="col__fill" style="height:5%"></span><span class="col__l">70s</span></button>
+          <button class="col" title="1980s"><span class="col__fill" style="height:5%"></span><span class="col__l">80s</span></button>
+          <button class="col" title="1990s"><span class="col__fill" style="height:16%"></span><span class="col__l">90s</span></button>
+          <button class="col" title="2000s"><span class="col__fill" style="height:18%"></span><span class="col__l">00s</span></button>
+          <button class="col" title="2010s"><span class="col__fill" style="height:60%"></span><span class="col__l">10s</span></button>
+          <button class="col" title="2020s"><span class="col__fill" style="height:100%"></span><span class="col__l">20s</span></button>
+        </div>
+      </div>
+      <div>
+        <div class="insight__title">Lot aging</div>
+        <div class="bars">
+          <button class="bar bar--ok"><span class="bar__label">≤ 30 days</span><span class="bar__track"><span class="bar__fill" style="width:56%"></span></span><span class="bar__v">73</span></button>
+          <button class="bar bar--slate"><span class="bar__label">31–90 days</span><span class="bar__track"><span class="bar__fill" style="width:88%"></span></span><span class="bar__v">115</span></button>
+          <button class="bar bar--warn"><span class="bar__label">91–365 days</span><span class="bar__track"><span class="bar__fill" style="width:100%"></span></span><span class="bar__v">131</span></button>
+          <button class="bar bar--danger"><span class="bar__label">over 1 year</span><span class="bar__track"><span class="bar__fill" style="width:31%"></span></span><span class="bar__v">40</span></button>
+        </div>
+      </div>
+      <div>
+        <div class="insight__title">Price mix</div>
+        <div class="bars">
+          <button class="bar bar--warn"><span class="bar__label">no price</span><span class="bar__track"><span class="bar__fill" style="width:91%"></span></span><span class="bar__v">133</span></button>
+          <button class="bar"><span class="bar__label">&lt; $10k</span><span class="bar__track"><span class="bar__fill" style="width:3%"></span></span><span class="bar__v">4</span></button>
+          <button class="bar"><span class="bar__label">$10–25k</span><span class="bar__track"><span class="bar__fill" style="width:5%"></span></span><span class="bar__v">8</span></button>
+          <button class="bar"><span class="bar__label">$25–50k</span><span class="bar__track"><span class="bar__fill" style="width:16%"></span></span><span class="bar__v">24</span></button>
+          <button class="bar"><span class="bar__label">$50–100k</span><span class="bar__track"><span class="bar__fill" style="width:30%"></span></span><span class="bar__v">44</span></button>
+          <button class="bar"><span class="bar__label">$100k+</span><span class="bar__track"><span class="bar__fill" style="width:100%"></span></span><span class="bar__v">146</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Find row: one line of facets. Everything else is behind "More". ─── -->
+  <div class="findrow">
+    <label class="search findrow__search">
+      <svg class="i"><use href="#i-search"/></svg>
+      <input class="search__input" type="search" id="omni" placeholder="Find a vehicle — stock #, VIN, year, make, model, color…" autocomplete="off" aria-label="Find a vehicle">
+      <kbd class="kbd" title="Press / to search">/</kbd>
+    </label>
+
+    <div class="pop-host">
+      <button class="facet" data-pop="pop-make" aria-haspopup="true" aria-expanded="false"><span class="facet__label">Make</span><span class="facet__value" data-facet-value="make">Any</span><svg class="i"><use href="#i-chevron-down"/></svg></button>
+      <div class="pop" id="pop-make" role="dialog" aria-label="Filter by make">
+        <div class="pop__search"><label class="search"><svg class="i"><use href="#i-search"/></svg><input class="search__input" type="search" placeholder="Search 54 makes…" data-pop-filter="make-list"></label></div>
+        <div class="pop__list" id="make-list"></div>
+        <div class="pop__foot"><button class="btn btn--quiet btn--xs" type="button" data-action="clear-makes">Clear</button><span>counts = Available scope</span></div>
+      </div>
+    </div>
+
+    <div class="pop-host">
+      <button class="facet" data-pop="pop-model" aria-haspopup="true" aria-expanded="false"><span class="facet__label">Model</span><span class="facet__value">Any</span><svg class="i"><use href="#i-chevron-down"/></svg></button>
+      <div class="pop" id="pop-model" role="dialog" aria-label="Filter by model"><div class="pop__empty">Pick a make first — models scope to it.</div></div>
+    </div>
+
+    <div class="pop-host">
+      <button class="facet" data-pop="pop-year" aria-haspopup="true" aria-expanded="false"><span class="facet__label">Year</span><span class="facet__value">Any</span><svg class="i"><use href="#i-chevron-down"/></svg></button>
+      <div class="pop" id="pop-year" role="dialog" aria-label="Filter by year">
+        <div class="pop__body">
+          <div class="pop__row">
+            <select class="select select--sm" aria-label="Year from" id="yr-from"><option value="">From</option></select>
+            <span class="pop__sep">–</span>
+            <select class="select select--sm" aria-label="Year to" id="yr-to"><option value="">To</option></select>
+          </div>
+          <div class="pop__quick">
+            <button class="btn btn--xs btn--secondary" type="button">2020s</button>
+            <button class="btn btn--xs btn--secondary" type="button">2010s</button>
+            <button class="btn btn--xs btn--secondary" type="button">2000s</button>
+            <button class="btn btn--xs btn--secondary" type="button">Pre-2000</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pop-host">
+      <button class="facet" data-pop="pop-price" aria-haspopup="true" aria-expanded="false"><span class="facet__label">Price</span><span class="facet__value">Any</span><svg class="i"><use href="#i-chevron-down"/></svg></button>
+      <div class="pop" id="pop-price" role="dialog" aria-label="Filter by price">
+        <div class="pop__body">
+          <div class="pop__row">
+            <input class="input input--sm" type="search" inputmode="numeric" placeholder="$ min" aria-label="Price min">
+            <span class="pop__sep">–</span>
+            <input class="input input--sm" type="search" inputmode="numeric" placeholder="$ max" aria-label="Price max">
+          </div>
+          <div class="pop__quick">
+            <button class="btn btn--xs btn--secondary" type="button">&lt; $25k</button>
+            <button class="btn btn--xs btn--secondary" type="button">$25–100k</button>
+            <button class="btn btn--xs btn--secondary" type="button">$100k+</button>
+            <button class="btn btn--xs btn--secondary" type="button">No price</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pop-host">
+      <button class="facet" data-pop="pop-more" aria-haspopup="true" aria-expanded="false"><svg class="i"><use href="#i-sliders"/></svg><span class="facet__value">More filters</span><span class="facet__count" data-more-count hidden>0</span><svg class="i"><use href="#i-chevron-down"/></svg></button>
+      <div class="pop pop--panel pop--right" id="pop-more" role="dialog" aria-label="More filters">
+        <div class="pop__grid">
+          <div class="pop__group">
+            <div class="pop__group-title">Identity</div>
+            <label class="field"><span class="field__label">Type</span><select class="select"><option>Any</option><option>New</option><option>Used</option></select></label>
+            <label class="field"><span class="field__label">Stock #</span><input class="input" type="search" placeholder="Exact stock number"></label>
+            <label class="field"><span class="field__label">VIN</span><input class="input" type="search" placeholder="Full or partial VIN"></label>
+            <label class="field"><span class="field__label">Location</span><select class="select"><option>All rooftops</option><option>Boats</option><option>Chicago Motor Cars</option><option>Chicago Motor Cars - KC</option><option>Chicago Motor Cars - Naperville</option><option>Chicago Motor Cars - SC</option><option>CMS Diesel</option></select></label>
+          </div>
+          <div class="pop__group">
+            <div class="pop__group-title">Merchandising</div>
+            <label class="field"><span class="field__label">Display on site</span><select class="select"><option>All</option><option>Hidden</option><option>Display Vehicle In Inventory</option></select></label>
+            <label class="field"><span class="field__label">Outbound feed</span><select class="select"><option>Any</option><option>Excluded (nofeedout)</option><option>Feeding</option></select></label>
+            <label class="field"><span class="field__label">Pending sale</span><select class="select"><option>All</option><option>Pending sales only</option></select></label>
+            <label class="field"><span class="field__label">Missing items</span>
+              <select class="select">
+                <option value="">— any —</option>
+                <optgroup label="Photos"><option>Images</option><option>1 image or less</option></optgroup>
+                <optgroup label="Identity"><option>VIN Decoding</option><option>Stock Number</option><option>Make</option><option>Model</option><option>Trim</option><option>Year</option><option>VIN Number</option><option>Vehicle Type</option></optgroup>
+                <optgroup label="Specs"><option>Body</option><option>Transmission</option><option>Mileage</option><option>Exterior Color</option><option>Interior Color</option><option>Fuel</option><option>Location</option></optgroup>
+                <optgroup label="Pricing"><option>Price</option><option>Discounted Price</option><option>Invoice Price</option><option>Lease Price</option><option>Lease Term</option></optgroup>
+                <optgroup label="Copy"><option>Intro Description</option><option>Caption</option><option>Main Description</option><option>Bulleted Text</option><option>Description 2</option><option>Buyers Guide Text</option></optgroup>
+              </select>
+            </label>
+          </div>
+          <div class="pop__group">
+            <div class="pop__group-title">Attributes</div>
+            <label class="field"><span class="field__label">Exterior color</span><input class="input" type="search" placeholder="e.g. Rosso"></label>
+            <label class="field"><span class="field__label">Interior color</span><input class="input" type="search" placeholder="e.g. Tan"></label>
+            <div class="field"><span class="field__label">Custom field</span>
+              <div class="pop__row">
+                <select class="select"><option value="">—</option><option>cfx_date</option><option>trucks_and_equipment</option><option>ove_feed_data</option><option>no_carfax</option><option>pending_sale_name</option><option>truck_trailer</option><option>truck_trailer_caregory</option><option>images_timestamp</option><option>no_vin</option><option>carfax_timestamp</option></select>
+                <input class="input" type="search" placeholder="value…">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pop__foot"><button class="btn btn--quiet btn--xs" type="button">Reset all</button><button class="btn btn--primary btn--sm" type="button" data-action="close-pops">Apply</button></div>
+      </div>
+    </div>
+
+    <div class="findrow__spacer"></div>
+
+    <div class="pop-host">
+      <button class="facet" data-pop="pop-sort" aria-haspopup="true" aria-expanded="false"><span class="facet__label">Sort</span><span class="facet__value" id="sort-label">Stock ↑</span><svg class="i"><use href="#i-chevron-down"/></svg></button>
+      <div class="pop pop--right menu" id="pop-sort" role="menu" aria-label="Sort by">
+        <div class="menu__label">Sort by</div>
+        <button class="menu__item menu__item--on" data-sort="stock"><svg class="i"><use href="#i-check"/></svg>Stock</button>
+        <button class="menu__item" data-sort="year"><svg class="i"><use href="#i-check"/></svg>Year</button>
+        <button class="menu__item" data-sort="make"><svg class="i"><use href="#i-check"/></svg>Make</button>
+        <button class="menu__item" data-sort="model"><svg class="i"><use href="#i-check"/></svg>Model</button>
+        <button class="menu__item" data-sort="trim"><svg class="i"><use href="#i-check"/></svg>Trim</button>
+        <button class="menu__item" data-sort="ext"><svg class="i"><use href="#i-check"/></svg>Ext. color</button>
+        <button class="menu__item" data-sort="price"><svg class="i"><use href="#i-check"/></svg>Price</button>
+        <button class="menu__item" data-sort="status"><svg class="i"><use href="#i-check"/></svg>Status</button>
+        <button class="menu__item" data-sort="days"><svg class="i"><use href="#i-check"/></svg>Age</button>
+        <div class="menu__sep"></div>
+        <button class="menu__item" data-sort-dir="asc"><svg class="i"><use href="#i-arrow-up"/></svg>Ascending</button>
+        <button class="menu__item" data-sort-dir="desc"><svg class="i"><use href="#i-arrow-down"/></svg>Descending</button>
+      </div>
+    </div>
+
+    <div class="pop-host">
+      <button class="btn btn--secondary btn--icon" data-pop="pop-cols" aria-haspopup="true" aria-expanded="false" title="Columns"><svg class="i"><use href="#i-columns"/></svg></button>
+      <div class="pop pop--right" id="pop-cols" role="dialog" aria-label="Columns" style="min-width:300px">
+        <div class="pop__head">Columns <button class="btn btn--quiet btn--xs" type="button">Reset to default</button></div>
+        <div class="pop__list" id="cols-list"></div>
+        <div class="pop__foot">
+          <select class="select select--sm" aria-label="Add column" style="width:100%">
+            <option value="">Add column…</option>
+            <option>VIN</option><option>Type</option><option>Certified</option><option>Transmission</option><option>Discount Price</option><option>Interior Color</option><option>Body</option><option>Mileage</option><option>Engine</option><option>Location</option><option>Specials</option><option>MPG city</option><option>MPG hwy</option><option>Car Fax</option><option>Lease Price</option><option>Lease Term</option><option>When Added</option><option>When Modified</option><option># Photos</option><option>Video</option><option>Invoice Price</option><option>Sale Pending</option><option>Do Not Display on Site</option><option>Outgoing Feed Status</option><option>Pending sale name</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Active filters (only rendered when something is on) ─── -->
+  <div class="chips chips--row" id="chips" hidden></div>
+
+  <!-- ─── Table toolbar ────────────────────────────────────────── -->
+  <div class="toolbar toolbar--top">
+    <div class="toolbar__info">Showing <strong>1–100</strong> of <strong id="total-count">359</strong></div>
+    <div class="toolbar__spacer"></div>
+    <nav class="pager" aria-label="Pagination">
+      <button class="pager__btn" disabled aria-label="Previous page"><svg class="i"><use href="#i-chevron-left"/></svg></button>
+      <button class="pager__btn pager__btn--cur" aria-current="page">1</button>
+      <button class="pager__btn">2</button>
+      <button class="pager__btn">3</button>
+      <button class="pager__btn">4</button>
+      <button class="pager__btn" aria-label="Next page"><svg class="i"><use href="#i-chevron-right"/></svg></button>
+    </nav>
+    <label class="toolbar__per">Rows <select class="select select--sm" aria-label="Rows per page"><option>50</option><option selected>100</option><option>250</option><option>500</option><option>1000</option></select></label>
+  </div>
+
+  <!-- ─── The list ────────────────────────────────────────────── -->
+  <div class="dt" id="table-view">
+    <div class="dt__scroll">
+      <table>
+        <colgroup id="colgroup"></colgroup>
+        <thead><tr id="thead-row"></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="cards" id="gallery-view" hidden></div>
+
+  <div class="toolbar toolbar--bottom">
+    <div class="toolbar__info">Showing <strong>1–100</strong> of <strong>359</strong></div>
+    <div class="toolbar__spacer"></div>
+    <nav class="pager" aria-label="Pagination">
+      <button class="pager__btn" disabled aria-label="Previous page"><svg class="i"><use href="#i-chevron-left"/></svg></button>
+      <button class="pager__btn pager__btn--cur" aria-current="page">1</button>
+      <button class="pager__btn">2</button>
+      <button class="pager__btn">3</button>
+      <button class="pager__btn">4</button>
+      <button class="pager__btn" aria-label="Next page"><svg class="i"><use href="#i-chevron-right"/></svg></button>
+    </nav>
+    <label class="toolbar__per">Rows <select class="select select--sm" aria-label="Rows per page"><option>50</option><option selected>100</option><option>250</option><option>500</option><option>1000</option></select></label>
+  </div>
+
+</main>
+
+<!-- ─── Row kebab menu (positioned by JS) ─────────────────────── -->
+<div class="pop menu" id="row-menu" role="menu" style="position:fixed">
+  <button class="menu__item" data-row-action="edit"><svg class="i"><use href="#i-edit"/></svg>Edit vehicle</button>
+  <button class="menu__item" data-row-action="photos"><svg class="i"><use href="#i-camera"/></svg>Photos</button>
+  <button class="menu__item" data-row-action="sticker"><svg class="i"><use href="#i-printer"/></svg>Window sticker</button>
+  <button class="menu__item" data-row-action="carfax"><svg class="i"><use href="#i-file"/></svg>Carfax report</button>
+  <div class="menu__sep"></div>
+  <button class="menu__item menu__item--danger" data-row-action="delete"><svg class="i"><use href="#i-trash"/></svg>Delete vehicle…</button>
+</div>
+
+<!-- ─── Delete confirm ────────────────────────────────────────── -->
+<div class="modal" id="modal-delete" role="dialog" aria-modal="true" aria-labelledby="modal-delete-title">
+  <div class="modal__backdrop" data-action="close-modal"></div>
+  <div class="modal__panel" tabindex="-1">
+    <div class="modal__head"><h2 class="modal__title" id="modal-delete-title">Delete vehicle?</h2><button class="ract" type="button" data-action="close-modal" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+    <div class="modal__body">This permanently deletes <strong id="modal-delete-name">this vehicle</strong> from the dealer's inventory. This is a hard delete — there is no undo.</div>
+    <div class="modal__foot"><button class="btn btn--secondary" type="button" data-action="close-modal">Cancel</button><button class="btn btn--danger" type="button" data-action="close-modal"><svg class="i"><use href="#i-trash"/></svg> Delete</button></div>
+  </div>
+</div>
+
+<script src="all-vehicles.data.js"></script>
+<script src="all-vehicles.js"></script>
+</body>
+</html>

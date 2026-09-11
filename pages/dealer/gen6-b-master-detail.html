@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Gen 6 · B — Master / Detail Operations</title>
+<style>
+@font-face { font-family: "Archivo"; font-weight: 100 900; font-stretch: 62% 125%; src: url("../../ds/fonts/archivo-latin-var.woff2") format("woff2"); }
+@font-face { font-family: "Plex Mono"; font-weight: 400; src: url("../../ds/fonts/plex-mono-400.woff2") format("woff2"); }
+@font-face { font-family: "Plex Mono"; font-weight: 600; src: url("../../ds/fonts/plex-mono-600.woff2") format("woff2"); }
+:root{--font:"Archivo",system-ui,sans-serif;--mono:"Plex Mono",monospace;--ground:#e9ebef;--sheet:#fff;--sheet2:#f5f6f8;--wash:#eef0f4;--ink:#0f1522;--ink2:#3f4756;--ink3:#6b7383;--ink4:#9ba3b2;--line:#e2e5eb;--line2:#eceef2;--brand:#1d5bd6;--brandsoft:#e8effd;--amber:#b96700;--amberfill:#f0a22e;--ambersoft:#fff3df;--amberline:#f1d19a;--red:#cf3a2e;--redsoft:#fce9e6;--redline:#f2bcb5;--slate:#66707f;--slatesoft:#eceef2;--violet:#6b4fd8;--violetsoft:#eeeafc;--violetline:#d3c8f5;--green:#2fb46f;--ok:#178a52}
+*{box-sizing:border-box}body{margin:0;background:var(--ground);color:var(--ink);font:13px/1.4 var(--font);font-feature-settings:"tnum" 1;-webkit-font-smoothing:antialiased;width:1440px;height:900px;overflow:hidden;position:relative}
+.i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;display:block;flex:0 0 auto}
+.caps{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
+.mono{font-family:var(--mono)}
+
+/* PLATFORM — a thin bar; the workspace is split, not stacked */
+.bar{position:absolute;left:0;right:0;top:0;height:48px;display:flex;align-items:center;gap:14px;padding:0 20px;background:var(--sheet);border-bottom:1px solid var(--line)}
+.logo{width:30px;height:30px;border-radius:8px;background:var(--brand);color:#fff;font-weight:700;font-size:11px;display:grid;place-items:center}
+.nav{display:flex;gap:2px}.nav span{padding:6px 10px;border-radius:7px;color:var(--ink3);font-weight:500}.nav span.on{color:var(--ink);background:var(--wash)}
+.bar .sp{flex:1}
+.dealer{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 10px 0 6px;border-radius:8px;background:var(--wash);color:var(--ink2)}
+.dealer i{width:18px;height:18px;border-radius:5px;background:var(--ink);color:#fff;font-style:normal;font-size:9px;font-weight:700;display:grid;place-items:center}
+.k{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 10px 0 12px;border-radius:8px;background:var(--wash);color:var(--ink4);width:220px}.k kbd{margin-left:auto;font:11px var(--mono);color:var(--ink4)}
+.av{width:28px;height:28px;border-radius:8px;background:var(--wash);border:1px solid var(--line);display:grid;place-items:center;font-weight:600;font-size:11px}
+
+/* LOT RIBBON — intelligence as a single dense strip, every figure is a filter */
+.ribbon{position:absolute;left:20px;right:20px;top:60px;height:44px;display:flex;align-items:center;gap:6px;padding:0 6px;border-radius:12px;background:var(--sheet);box-shadow:0 1px 2px rgba(15,21,34,.05),0 0 0 1px rgba(15,21,34,.04)}
+.rb{display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 10px;border-radius:8px;color:var(--ink2);white-space:nowrap}
+.rb b{font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em}.rb.on{background:var(--ink);color:#fff}.rb.on b{color:#fff}
+.rb i{width:7px;height:7px;border-radius:50%;background:var(--dot,#c9cfd8)}
+.rb.a b{color:var(--amber)}.rb.r b{color:var(--red)}.rb.s b{color:var(--slate)}.rb.v b{color:var(--violet)}
+.rb.a.on{background:var(--ambersoft);color:var(--amber);box-shadow:inset 0 0 0 1px var(--amberline)}.rb.a.on b{color:var(--amber)}
+.ribbon .div{width:1px;height:22px;background:var(--line);margin:0 6px}
+.ribbon .sp{flex:1}
+.ribbon .agebar{display:flex;gap:2px;width:120px;height:8px;border-radius:3px;overflow:hidden}.ribbon .agebar i{height:100%}
+
+/* MASTER — dense browser */
+.master{position:absolute;left:20px;top:118px;width:806px;bottom:16px;display:flex;flex-direction:column;background:var(--sheet);border-radius:14px;box-shadow:0 1px 2px rgba(15,21,34,.05),0 0 0 1px rgba(15,21,34,.04);overflow:hidden}
+.cmd{display:flex;align-items:center;gap:8px;padding:10px 10px 8px}
+.search{flex:1;display:flex;align-items:center;gap:8px;height:34px;padding:0 12px;border-radius:9px;background:var(--wash);color:var(--ink4)}.search kbd{margin-left:auto;font:11px var(--mono);color:var(--ink4)}
+.f{display:inline-flex;align-items:center;gap:5px;height:34px;padding:0 10px;border-radius:9px;border:1px solid var(--line);color:var(--ink2);white-space:nowrap}.f b{color:var(--ink);font-weight:600}
+.f.ic{width:34px;padding:0;justify-content:center;color:var(--ink3)}
+.mh{display:flex;align-items:center;gap:10px;padding:0 14px 8px;color:var(--ink3);font-size:12px}.mh b{color:var(--ink);font-weight:600}.mh .sp{flex:1}
+.tabs{display:flex;gap:2px}.tabs span{padding:4px 8px;border-radius:6px;font-weight:500;color:var(--ink3)}.tabs span.on{background:var(--wash);color:var(--ink)}
+.rows{flex:1;overflow:hidden;border-top:1px solid var(--line2)}
+.row{display:grid;grid-template-columns:22px 56px 1fr 96px 64px 176px;align-items:center;gap:12px;height:54px;padding:0 12px 0 14px;border-bottom:1px solid var(--line2)}
+.row:hover{background:var(--sheet2)}
+.row.cur{background:var(--brandsoft);box-shadow:inset 3px 0 0 var(--brand)}
+.ck{width:15px;height:15px;border:1px solid #c9cfd8;border-radius:4px;background:#fff}.ck.on{background:var(--brand);border-color:var(--brand)}
+.th{width:56px;height:36px;border-radius:6px;object-fit:cover;background:var(--wash);box-shadow:inset 0 0 0 1px rgba(15,21,34,.07)}.th.none{display:grid;place-items:center;border:1px dashed #cfd5de;background:var(--sheet2)}
+.id{min-width:0;line-height:1.2}.id .n{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.id .n em{font-style:normal;font-weight:400;color:var(--ink3);margin-right:5px}
+.id .m{display:flex;gap:8px;align-items:center;margin-top:3px;font-size:11.5px;color:var(--ink4);white-space:nowrap;overflow:hidden}.tag{padding:1px 6px;border-radius:4px;background:var(--wash);color:var(--ink2);font:600 11.5px var(--mono)}
+.price{text-align:right;font-size:14px;font-weight:600}.price em{font-style:normal;color:var(--ink4);font-weight:400}.price.none{color:var(--ink4);font-weight:400}
+.age{text-align:right;font-weight:500;color:var(--ink2)}.age.stale{color:var(--red);font-weight:600}.age.fresh{color:var(--ok)}
+.x{display:flex;gap:3px;justify-content:flex-end}
+.xt{display:inline-flex;align-items:center;height:18px;padding:0 5px;border-radius:4px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;color:var(--amber);background:var(--ambersoft);box-shadow:inset 0 0 0 1px var(--amberline)}
+.xt.red{color:var(--red);background:var(--redsoft);box-shadow:inset 0 0 0 1px var(--redline)}.xt.slate{color:var(--slate);background:var(--slatesoft);box-shadow:inset 0 0 0 1px #cfd5de}.xt.violet{color:var(--violet);background:var(--violetsoft);box-shadow:inset 0 0 0 1px var(--violetline)}.xt.more{color:var(--ink2);background:var(--wash);box-shadow:inset 0 0 0 1px var(--line);letter-spacing:0}
+.x .none{color:var(--ink4)}
+.mf{display:flex;align-items:center;gap:10px;padding:8px 14px;border-top:1px solid var(--line2);color:var(--ink3);font-size:12px}.mf .sp{flex:1}.pg span{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:6px;padding:0 6px;margin-left:2px}.pg span.on{background:var(--ink);color:#fff}
+
+/* DETAIL — persistent inspector; the object commands the region (5.4) */
+.detail{position:absolute;left:846px;right:20px;top:118px;bottom:16px;display:flex;flex-direction:column;background:var(--sheet);border-radius:16px;box-shadow:0 10px 30px rgba(15,21,34,.10),0 1px 2px rgba(15,21,34,.06);overflow:hidden}
+.hero{position:relative;height:300px;background:#0f1522}
+.hero img{width:100%;height:100%;object-fit:cover;opacity:.96}
+.hero .ov{position:absolute;left:0;right:0;bottom:0;padding:18px 22px 16px;background:linear-gradient(to top,rgba(9,13,22,.86),rgba(9,13,22,0));color:#fff}
+.hero .ov .n{font-size:24px;font-weight:600;letter-spacing:-.015em;line-height:1.1}.hero .ov .n em{font-style:normal;font-weight:400;color:#aab4c8;margin-right:6px}
+.hero .ov .m{display:flex;gap:10px;align-items:center;margin-top:8px;font-size:12px;color:#aab4c8}.hero .ov .m .tag{background:rgba(255,255,255,.14);color:#fff}
+.hero .nav2{position:absolute;top:14px;right:14px;display:flex;gap:6px}.hero .nav2 span{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,.14);color:#fff;display:grid;place-items:center;backdrop-filter:blur(4px)}
+.hero::before{content:"";position:absolute;left:0;right:0;top:0;height:70px;background:linear-gradient(to bottom,rgba(9,13,22,.55),rgba(9,13,22,0));z-index:1}.hero .nav2,.hero .cnt{z-index:2}
+.hero .cnt{position:absolute;top:16px;left:18px;color:#fff;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#aab4c8;font-weight:600}
+.body{flex:1;padding:16px 22px 18px;overflow:hidden;display:flex;flex-direction:column;gap:14px}
+.kv{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:12px}
+.kv div .v{font-size:22px;font-weight:600;letter-spacing:-.015em;line-height:1}.kv div .l{font-size:11px;color:var(--ink4);margin-top:5px}
+.kv .none .v{color:var(--amber);font-size:16px}
+.health{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;padding:12px 14px;border-radius:12px;background:var(--wash)}
+.hl{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink2)}.hl i{width:16px;height:16px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-style:normal;font-weight:700}
+.hl.ok i{background:#dff4e8;color:var(--ok)}.hl.bad i{background:var(--ambersoft);color:var(--amber);box-shadow:inset 0 0 0 1px var(--amberline)}.hl.bad{color:var(--ink);font-weight:500}.hl.red i{background:var(--redsoft);color:var(--red)}
+.sec .caps{display:block;margin-bottom:6px}
+.spec{display:grid;grid-template-columns:1fr 1fr;gap:3px 18px;font-size:12.5px}.spec div{display:flex;justify-content:space-between;gap:10px;padding:4px 0;border-bottom:1px solid var(--line2)}.spec span:first-child{color:var(--ink4)}.spec span:last-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:34px;padding:0 12px;border-radius:9px;font-weight:600;font-size:13px;border:1px solid var(--line);background:var(--sheet)}
+.btn.p{background:var(--brand);color:#fff;border-color:transparent;grid-column:1/-1}.btn.d{color:var(--red)}
+.pill{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:6px;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="logo">AAN</div>
+  <div class="nav"><span>Dashboard</span><span class="on">Inventory</span><span>Leads</span><span>Site</span><span>Marketing</span><span>Dealer tools</span><span>Support</span></div>
+  <span class="sp"></span>
+  <span class="dealer"><i>CM</i>Chicago Motor Cars · 6 rooftops</span>
+  <span class="k">Search anywhere<kbd>⌘K</kbd></span>
+  <span class="av">P</span>
+</div>
+
+<div class="ribbon">
+  <span class="rb on"><b>359</b> available</span><span class="rb"><b>13,212</b> sold</span><span class="rb"><b>16</b> staging</span><span class="rb" style="color:var(--ink4)"><b style="color:var(--ink4)">0</b> pending</span>
+  <span class="div"></span>
+  <span class="rb"><b>$66.3M</b> asking</span><span class="rb"><b>$293K</b> avg</span>
+  <span class="div"></span>
+  <span class="rb a"><b>133</b> no price</span><span class="rb a on"><b>95</b> no photos</span><span class="rb r"><b>67</b> feed off</span><span class="rb s"><b>61</b> hidden</span><span class="rb r"><b>40</b> aging</span><span class="rb v"><b>49</b> pending</span>
+  <span class="sp"></span>
+  <span class="rb" style="gap:10px;color:var(--ink3)"><span class="agebar"><i style="width:20%;background:var(--green)"></i><i style="width:32%;background:#b3bac6"></i><i style="width:37%;background:var(--amberfill)"></i><i style="width:11%;background:#e35548"></i></span>age mix</span>
+</div>
+
+<section class="master">
+  <div class="cmd">
+    <div class="search">Find a vehicle — stock, VIN, make, model, colour…<kbd>/</kbd></div>
+    <span class="f">Make <b>Any</b></span><span class="f">Model <b>Any</b></span><span class="f">Year <b>Any</b></span><span class="f">Price <b>Any</b></span><span class="f ic">⚙</span>
+  </div>
+  <div class="mh"><span class="tabs"><span class="on">Available 359</span><span>Sold</span><span>Staging</span><span>All</span></span><span class="sp"></span><span>Filtered by <b>No photos</b> · 95</span><span>·</span><span>Sort <b>Age ↓</b></span><span>·</span><span><b>+</b> Add vehicle</span></div>
+  <div class="rows" id="rows"></div>
+  <div class="mf"><span>1–12 of 95</span><span class="sp"></span><span class="pg"><span>‹</span><span class="on">1</span><span>2</span><span>3</span><span>›</span></span></div>
+</section>
+
+<aside class="detail" id="detail"></aside>
+
+<script src="gen6-demo.js"></script>
+<script>
+var V=G6.slice(0,12), CUR=1;
+document.getElementById("rows").innerHTML=V.map(function(v,i){
+  var b=G6.band(v.d), tags=v.f.slice(0,v.f.length>2?1:2), rest=v.f.length-tags.length;
+  return '<div class="row'+(i===CUR?' cur':'')+'"><span class="ck"></span>'+(v.t?'<img class="th" src="img/'+v.t+'">':'<span class="th none"></span>')+
+  '<div class="id"><div class="n"><em>'+v.y+'</em>'+v.mk+' '+v.md+'</div><div class="m"><span class="tag">'+v.s+'</span><span>'+v.c+'</span></div></div>'+
+  (v.p?'<div class="price"><em>$</em>'+v.p.toLocaleString()+'</div>':'<div class="price none">—</div>')+
+  '<div class="age '+b+'">'+G6.lab(v.d)+'</div>'+
+  '<div class="x">'+(tags.length?tags.map(function(t){return '<span class="xt '+(G6.tone[t]||'')+'">'+t+'</span>'}).join('')+(rest>0?'<span class="xt more">+'+rest+'</span>':''):'<span class="none">—</span>')+'</div></div>';
+}).join('');
+var v=V[CUR], has=function(t){return v.f.indexOf(t)>=0};
+document.getElementById("detail").innerHTML=
+ '<div class="hero">'+(v.t?'<img src="img/'+v.t+'">':'')+'<span class="cnt">2 of 95 · No photos</span><div class="nav2"><span>‹</span><span>›</span></div><div class="ov"><div class="n"><em>'+v.y+'</em>'+v.mk+' '+v.md+'</div><div class="m"><span class="tag">'+v.s+'</span><span class="mono">VIN '+G6.vin(v.s)+'</span><span>· Available · Chicago Motor Cars</span></div></div></div>'+
+ '<div class="body">'+
+  '<div class="kv"><div class="none"><div class="v">No asking price</div><div class="l">price</div></div><div><div class="v" style="color:var(--red)">'+G6.lab(v.d)+'</div><div class="l">'+v.d.toLocaleString()+' days in stock</div></div><div><div class="v">1</div><div class="l">photo on file</div></div></div>'+
+  '<div class="sec"><span class="caps">Merchandising health</span><div class="health">'+
+   '<div class="hl bad"><i>!</i>No asking price</div><div class="hl ok"><i>✓</i>Description present</div>'+
+   '<div class="hl bad"><i>!</i>1 photo · needs 8+</div><div class="hl ok"><i>✓</i>VIN decoded</div>'+
+   '<div class="hl red"><i>✕</i>Excluded from feeds</div><div class="hl ok"><i>✓</i>Window sticker ready</div>'+
+   '<div class="hl bad"><i>!</i>Hidden on site</div><div class="hl"><i style="background:var(--violetsoft);color:var(--violet)">◔</i>Sale pending</div>'+
+  '</div></div>'+
+  '<div class="sec"><span class="caps">Specification</span><div class="spec"><div><span>Trim</span><span>'+v.tr+'</span></div><div><span>Exterior</span><span>'+v.c+'</span></div><div><span>Type</span><span>Used</span></div><div><span>Location</span><span>Chicago Motor Cars</span></div><div><span>Added</span><span>Nov 2022</span></div><div><span>Modified</span><span>3 days ago</span></div></div></div>'+
+  '<div class="acts"><span class="btn p">Edit vehicle</span><span class="btn">Set price</span><span class="btn">Upload photos</span><span class="btn">Window sticker</span><span class="btn">Carfax</span><span class="btn">Feed on</span><span class="btn d">Delete…</span></div>'+
+ '</div>';
+</script>
+</body>
+</html>

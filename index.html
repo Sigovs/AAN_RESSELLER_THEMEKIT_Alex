@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AAN Reseller — All Vehicles redesign · versions</title>
+<style>
+  :root{--bg:#eef0f4;--sheet:#fff;--ink:#0f1522;--ink2:#3f4756;--ink3:#6b7383;--ink4:#9ba3b2;--line:#e1e4ea;--brand:#1d5bd6;--amber:#b96700;--ambersoft:#fff3df;--ok:#178a52;--oksoft:#e2f5ea;--red:#cf3a2e;--redsoft:#fce9e6}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 system-ui,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1360px;margin:0 auto;padding:36px 28px 64px}
+  header{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:28px;flex-wrap:wrap}
+  h1{margin:0;font-size:26px;letter-spacing:-.02em}
+  h1 small{display:block;font-size:14px;font-weight:400;color:var(--ink3);margin-top:4px}
+  .meta{color:var(--ink3);font-size:13px}
+  .meta b{color:var(--ink)}
+  h2{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);margin:34px 0 12px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  .grid--wide{grid-template-columns:repeat(auto-fill,minmax(420px,1fr))}
+  .card{background:var(--sheet);border-radius:14px;box-shadow:0 1px 2px rgba(15,21,34,.05),0 0 0 1px rgba(15,21,34,.05);overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .15s ease,transform .15s ease}
+  .card:hover{box-shadow:0 10px 26px rgba(15,21,34,.12),0 0 0 1px rgba(15,21,34,.06);transform:translateY(-1px)}
+  .card--lead{grid-column:1/-1;display:grid;grid-template-columns:1.3fr 1fr}
+  .card--lead .shot{aspect-ratio:auto;height:100%;min-height:380px;border-bottom:0;border-right:1px solid var(--line)}
+  .card--lead .body{padding:20px 22px}
+  .card--lead .shots3{padding:6px 0 4px}
+  .shot{display:block;aspect-ratio:16/10;width:100%;object-fit:cover;object-position:top;background:#dfe3ea;border-bottom:1px solid var(--line)}
+  .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .tag{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;width:max-content}
+  .tag--cur{background:var(--oksoft);color:var(--ok)}
+  .tag--ref{background:#e8effd;color:var(--brand)}
+  .tag--rej{background:var(--redsoft);color:var(--red)}
+  .tag--exp{background:var(--ambersoft);color:var(--amber)}
+  .t{font-size:16px;font-weight:600;letter-spacing:-.01em}
+  .d{color:var(--ink2);font-size:13px;margin:0}
+  .links{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
+  .links a{display:inline-flex;align-items:center;height:30px;padding:0 11px;border-radius:8px;background:var(--brand);color:#fff;text-decoration:none;font-weight:600;font-size:13px}
+  .links a.s{background:#eef1f5;color:var(--ink)}
+  .links a:hover{filter:brightness(.95)}
+  .note{margin-top:28px;padding:14px 16px;border-radius:12px;background:var(--sheet);border:1px solid var(--line);color:var(--ink3);font-size:13px}
+  .note b{color:var(--ink)}
+  .shots3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:0 16px 14px}
+  .shots3 img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top;border-radius:8px;border:1px solid var(--line);background:#dfe3ea}
+  .shots3 span{display:block;font-size:11px;color:var(--ink4);margin-top:4px;text-align:center}
+  .k{font:12px ui-monospace,monospace;color:var(--ink4)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>AAN Reseller — All Vehicles redesign<small>Dealer UI · Chicago Motor Cars #277 · every generation, live and static, 1440 light</small></h1>
+    <div class="meta">Functional source: AAN backend export 2026-09-09 · Demo data, local assets, no network · <b>Gen 7</b> is the proposed direction</div>
+  </header>
+
+  <h2>Proposed direction</h2>
+  <div class="grid">
+    <div class="card card--lead">
+      <img class="shot" src="previews/gen7.jpg" alt="Gen 7">
+      <div class="body">
+        <span class="tag tag--cur">Gen 7 · final direction</span>
+        <div class="t">Workspace: Rail · Lot column · Field · adaptive Dock</div>
+        <p class="d">No analytics band. Intelligence lives in a persistent Lot column (one focal object + ranked attention queue, every figure a filter). Command and inventory share one sheet. Selecting a vehicle lifts the row and docks a contextual inspector; the Lot column collapses to a gauge strip so the field keeps its width. Filters open in the same dock.</p>
+        <div class="shots3">
+          <div><img src="previews/gen7-inspector.jpg" alt=""><span>vehicle inspector docked</span></div>
+          <div><img src="previews/gen7-filters.jpg" alt=""><span>secondary filters in the dock</span></div>
+          <div><img src="previews/gen7.jpg" alt=""><span>default workspace</span></div>
+        </div>
+        <div class="links"><a href="pages/dealer/all-vehicles-gen7.html">Open Gen 7 live →</a><a class="s" href="reference/redesign-gen7-1440-light.png">1440 screenshot</a><a class="s" href="reference/redesign-gen7-1440-inspector.png">inspector</a><a class="s" href="reference/redesign-gen7-1440-filters.png">filters</a></div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Source of truth</h2>
+  <div class="grid">
+    <div class="card">
+      <img class="shot" src="previews/original.jpg" alt="Original AAN">
+      <div class="body"><span class="tag tag--ref">Original AAN</span><div class="t">Current Inventory Manager (live rebuild)</div><p class="d">Static 1440 capture of the real page, Available lane, 359 vehicles. Functional specification for every redesign.</p><div class="links"><a href="reference/original.html">Open capture →</a></div></div>
+    </div>
+  </div>
+
+  <h2>Earlier generations — evidence, kept exactly as reviewed</h2>
+  <div class="grid">
+    <div class="card">
+      <img class="shot" src="previews/gen1.jpg" alt="Gen 1">
+      <div class="body"><span class="tag tag--rej">Gen 1 · rejected</span><div class="t">Compressed reskin</div><p class="d">Consolidated the old page but demoted inventory intelligence to a strip. Rejected for product hierarchy. Archived with its DS v0.1 and compare lab.</p><div class="links"><a href="_archive/gen1/pages/dealer/all-vehicles.html">Open live →</a><a class="s" href="_archive/gen1/lab/shots/all-vehicles-redesign-light.png">screenshot</a></div></div>
+    </div>
+    <div class="card">
+      <img class="shot" src="previews/gen2.jpg" alt="Gen 2">
+      <div class="body"><span class="tag tag--exp">Gen 2 · Command Center</span><div class="t">Dark instrument cluster over a paper work surface</div><p class="d">Three visible jobs (understand / find / act), attention matrix, bulk bar. Zoning worked; the dark slab and matrix were superseded.</p><div class="links"><a href="pages/dealer/all-vehicles.html">Open live →</a><a class="s" href="reference/redesign-gen2-1440-light.png">screenshot</a></div></div>
+    </div>
+    <div class="card">
+      <img class="shot" src="previews/gen3.jpg" alt="Gen 3">
+      <div class="body"><span class="tag tag--exp">Gen 3 · Ref2 / 2027</span><div class="t">Light workspace, one intelligence band, integrated find strip</div><p class="d">Commercial-product polish on the ref2 hierarchy; attention as a five-slot strip. Judged still too close to upgraded admin.</p><div class="links"><a href="pages/dealer/all-vehicles-gen3.html">Open live →</a><a class="s" href="reference/redesign-gen3-1440-light.png">screenshot</a></div></div>
+    </div>
+    <div class="card">
+      <img class="shot" src="previews/gen4.jpg" alt="Gen 4">
+      <div class="body"><span class="tag tag--exp">Gen 4 · Object rows / zoned surfaces</span><div class="t">Vehicle-as-object rows, semantic exception tags</div><p class="d">Introduced the row anatomy and NO PRICE / NO PHOTOS / FEED OFF tags that carried forward, plus a tinted intelligence zone.</p><div class="links"><a href="pages/dealer/all-vehicles-gen4.html">Open live →</a><a class="s" href="reference/redesign-gen4-1440-light.png">screenshot</a></div></div>
+    </div>
+    <div class="card">
+      <img class="shot" src="previews/gen5.jpg" alt="Gen 5">
+      <div class="body"><span class="tag tag--exp">Gen 5 · Spatial workspace</span><div class="t">Rail, bento intelligence, floating command bar, inspector drawer</div><p class="d">First rail-based workspace and the first contextual vehicle inspector — the inspector idea was approved and carried into Gen 7.</p><div class="links"><a href="pages/dealer/all-vehicles-gen5.html">Open live →</a><a class="s" href="reference/redesign-gen5-1440-light.png">screenshot</a></div></div>
+    </div>
+  </div>
+
+  <h2>Gen 6 — structural breakout (three concepts, rejected as exercises)</h2>
+  <div class="grid">
+    <div class="card"><img class="shot" src="previews/gen6a.jpg" alt="Gen 6 A"><div class="body"><span class="tag tag--rej">Gen 6 · A</span><div class="t">Inventory Canvas</div><p class="d">Intelligence objects beside the work; selected vehicle lifts out of the list in place.</p><div class="links"><a href="pages/dealer/gen6-a-inventory-canvas.html">Open →</a></div></div></div>
+    <div class="card"><img class="shot" src="previews/gen6b.jpg" alt="Gen 6 B"><div class="body"><span class="tag tag--rej">Gen 6 · B</span><div class="t">Master / Detail Operations</div><p class="d">Dense browser left, persistent vehicle inspector right, intelligence as a filter ribbon.</p><div class="links"><a href="pages/dealer/gen6-b-master-detail.html">Open →</a></div></div></div>
+    <div class="card"><img class="shot" src="previews/gen6c.jpg" alt="Gen 6 C"><div class="body"><span class="tag tag--rej">Gen 6 · C</span><div class="t">Command / Exception Workspace</div><p class="d">Operational lenses as navigation; the list is a queue shaped by the active lens.</p><div class="links"><a href="pages/dealer/gen6-c-command-workspace.html">Open →</a><a class="s" href="pages/dealer/gen6-review.html">review page</a></div></div></div>
+  </div>
+
+  <div class="note"><b>Notes.</b> All pages are static prototypes with 16–22 demo vehicles; buttons, filters and menus demonstrate states, not a backend. The Gen 1 compare lab needs the AAN export folder beside the project and does not work online. Third-party visual references (5.1–5.5, ref2) are research material and are not published. <span class="k">Fonts: Archivo (OFL) · IBM Plex Mono</span></div>
+</div>
+</body>
+</html>

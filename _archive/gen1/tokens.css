@@ -1,0 +1,234 @@
+/*
+ * AAN Design System v0.1 — tokens
+ * ------------------------------------------------------------------
+ * Grown from the Dealer UI / All Vehicles redesign. Everything here
+ * exists because that page needed it. Light theme on :root, dark
+ * theme as a full re-solve under [data-theme="dark"] (same key the
+ * live app uses: localStorage "aan-theme").
+ *
+ * Rulings carried over from the current app (owner rulings, not taste):
+ *   - 14 px readability floor for anything a person reads to decide.
+ *   - Horizontal cell padding stays tight; spend breathing room on Y.
+ */
+
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url("fonts/archivo-latin-var.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url("fonts/archivo-latin-ext-var.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Archivo";
+  font-style: italic;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url("fonts/archivo-latin-italic-var.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/plex-mono-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Plex Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("fonts/plex-mono-600.woff2") format("woff2");
+}
+
+:root {
+  /* ── Type ─────────────────────────────────────────────────────── */
+  --font-ui: "Archivo", "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "Plex Mono", "IBM Plex Mono", "Cascadia Mono", ui-monospace, monospace;
+
+  --text-xs: 13px;   /* incidental chrome only: kbd hints, pager glyphs   */
+  --text-sm: 14px;   /* the floor: table data, labels, tags, flags        */
+  --text-md: 15px;   /* body, controls                                    */
+  --text-lg: 17px;   /* section titles, pulse numbers                     */
+  --text-xl: 24px;   /* page title                                        */
+  --text-2xl: 28px;  /* display numbers                                   */
+
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.5;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --stretch-ui: 100%;
+  --stretch-data: 96%;   /* table cells: Archivo's width axis buys density without dropping below 14 px */
+  --stretch-label: 100%;
+
+  --tracking-caps: 0.06em;
+
+  /* ── Space (4 px grid) ────────────────────────────────────────── */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+
+  --gutter: 24px;       /* page side gutter */
+
+  /* ── Density ──────────────────────────────────────────────────── */
+  --row-h: 52px;        /* two-line vehicle cell */
+  --row-h-dense: 40px;  /* single-line rows (photos preset, reports) */
+  --cell-px: 10px;      /* DO NOT RAISE — every px comes out of content width */
+  --cell-py: 6px;
+  --ctl-h: 36px;        /* buttons, inputs, facets */
+  --ctl-h-sm: 30px;
+  --ctl-h-xs: 26px;
+  --thumb-w: 64px;
+  --thumb-h: 42px;
+
+  /* ── Shape ────────────────────────────────────────────────────── */
+  --r-xs: 2px;
+  --r-sm: 4px;
+  --r-md: 6px;
+  --r-lg: 10px;
+  --r-pill: 999px;
+  --bw: 1px;
+
+  /* ── Elevation ────────────────────────────────────────────────── */
+  --shadow-1: 0 1px 2px rgba(16, 20, 28, 0.06);
+  --shadow-2: 0 4px 14px rgba(16, 20, 28, 0.12), 0 1px 3px rgba(16, 20, 28, 0.08);
+  --shadow-3: 0 16px 40px rgba(16, 20, 28, 0.22), 0 2px 6px rgba(16, 20, 28, 0.10);
+
+  /* ── Motion ───────────────────────────────────────────────────── */
+  --dur-1: 90ms;
+  --dur-2: 160ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ── Layout ───────────────────────────────────────────────────── */
+  --topbar-h: 52px;
+  --page-max: 1600px;
+
+  /* ══ LIGHT ═══════════════════════════════════════════════════════ */
+  color-scheme: light;
+
+  /* Chrome: the graphite band that carries brand + navigation. Fixed
+     dark in both themes on purpose — it is the one authored surface. */
+  --chrome-bg: #15181d;
+  --chrome-bg-2: #1e2229;
+  --chrome-ink: #f2f4f7;
+  --chrome-ink-2: #aab2bd;
+  --chrome-ink-3: #6f7987;
+  --chrome-line: #2a2f38;
+  --chrome-accent: #6f9df5;
+
+  /* Surfaces (0 = page, up = closer) */
+  --surface-0: #eff1f4;
+  --surface-1: #ffffff;
+  --surface-2: #f6f7f9;
+  --surface-3: #eceef2;
+  --surface-inset: #f3f5f7;
+  --backdrop: rgba(21, 24, 29, 0.48);
+
+  /* Ink */
+  --ink-1: #15181d;
+  --ink-2: #454c57;
+  --ink-3: #6b7380;
+  --ink-4: #9aa2ad;
+  --ink-inverse: #ffffff;
+
+  /* Lines */
+  --line-1: #d9dde3;
+  --line-2: #e7eaee;
+  --line-strong: #b9c0c9;
+
+  /* Brand */
+  --brand: #1552c9;
+  --brand-hover: #1147ae;
+  --brand-active: #0e3c94;
+  --brand-soft: #e6eefc;
+  --brand-soft-2: #cfdefa;
+  --brand-ink: #0f3a8f;
+  --brand-on: #ffffff;
+
+  /* Status roles — the only colour on the workspace */
+  --ok: #1b7f4c;        --ok-soft: #e1f3e8;      --ok-soft-2: #bfe5cf;
+  --warn: #b25d05;      --warn-soft: #fdf0dc;    --warn-soft-2: #f8dcb0;
+  --danger: #c2392b;    --danger-soft: #fbe6e3;  --danger-soft-2: #f5c6c0;
+  --slate: #5a6675;     --slate-soft: #e8ebef;   --slate-soft-2: #d3d9e0;
+  --violet: #6a41c8;    --violet-soft: #eee8fb;  --violet-soft-2: #dccff5;
+  --info: var(--brand); --info-soft: var(--brand-soft);
+
+  --focus: 0 0 0 2px var(--surface-1), 0 0 0 4px var(--brand);
+  --focus-chrome: 0 0 0 2px var(--chrome-bg), 0 0 0 4px var(--chrome-accent);
+
+  /* Age bands (data → colour). Mid band is deliberately neutral so
+     colour marks only the two exceptions: fresh and stale. */
+  --age-fresh: var(--ok);
+  --age-mid: var(--ink-3);
+  --age-late: var(--ink-2);
+  --age-stale: var(--danger);
+}
+
+/* ══ DARK — re-solved, not inverted ═══════════════════════════════ */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --chrome-bg: #0c0e11;
+  --chrome-bg-2: #14171c;
+  --chrome-ink: #f2f4f7;
+  --chrome-ink-2: #a6aeb9;
+  --chrome-ink-3: #6a7380;
+  --chrome-line: #22262e;
+  --chrome-accent: #7aa6f7;
+
+  --surface-0: #101216;
+  --surface-1: #171a1f;
+  --surface-2: #1c2026;
+  --surface-3: #23282f;
+  --surface-inset: #1a1e24;
+  --backdrop: rgba(0, 0, 0, 0.6);
+
+  --ink-1: #eceff3;
+  --ink-2: #b4bcc7;
+  --ink-3: #8891a0;
+  --ink-4: #5c6673;
+  --ink-inverse: #15181d;
+
+  --line-1: #2a3039;
+  --line-2: #21262d;
+  --line-strong: #3a424d;
+
+  --brand: #5d8ff0;
+  --brand-hover: #79a3f5;
+  --brand-active: #4a7be0;
+  --brand-soft: rgba(93, 143, 240, 0.16);
+  --brand-soft-2: rgba(93, 143, 240, 0.30);
+  --brand-ink: #a9c4f8;
+  --brand-on: #0b1630;
+
+  --ok: #49c982;        --ok-soft: rgba(73, 201, 130, 0.14);    --ok-soft-2: rgba(73, 201, 130, 0.30);
+  --warn: #f0a63a;      --warn-soft: rgba(240, 166, 58, 0.14);  --warn-soft-2: rgba(240, 166, 58, 0.30);
+  --danger: #f2685c;    --danger-soft: rgba(242, 104, 92, 0.14); --danger-soft-2: rgba(242, 104, 92, 0.30);
+  --slate: #9aa5b4;     --slate-soft: rgba(154, 165, 180, 0.14); --slate-soft-2: rgba(154, 165, 180, 0.28);
+  --violet: #ab90f4;    --violet-soft: rgba(171, 144, 244, 0.16); --violet-soft-2: rgba(171, 144, 244, 0.32);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 4px 14px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-3: 0 16px 40px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.4);
+}

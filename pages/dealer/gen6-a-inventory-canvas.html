@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Gen 6 · A — Inventory Canvas</title>
+<style>
+@font-face { font-family: "Archivo"; font-weight: 100 900; font-stretch: 62% 125%; src: url("../../ds/fonts/archivo-latin-var.woff2") format("woff2"); }
+@font-face { font-family: "Plex Mono"; font-weight: 400; src: url("../../ds/fonts/plex-mono-400.woff2") format("woff2"); }
+@font-face { font-family: "Plex Mono"; font-weight: 600; src: url("../../ds/fonts/plex-mono-600.woff2") format("woff2"); }
+:root{--font:"Archivo",system-ui,sans-serif;--mono:"Plex Mono",monospace;--ground:#eceef2;--sheet:#fff;--sheet2:#f5f6f8;--wash:#eef0f4;--ink:#0f1522;--ink2:#3f4756;--ink3:#6b7383;--ink4:#9ba3b2;--line:#e2e5eb;--line2:#eceef2;--brand:#1d5bd6;--brandsoft:#e8effd;--focal:#111827;--amber:#b96700;--amberfill:#f0a22e;--ambersoft:#fff3df;--amberline:#f1d19a;--red:#cf3a2e;--redsoft:#fce9e6;--redline:#f2bcb5;--slate:#66707f;--slatesoft:#eceef2;--violet:#6b4fd8;--violetsoft:#eeeafc;--violetline:#d3c8f5;--green:#2fb46f;--ok:#178a52}
+*{box-sizing:border-box}body{margin:0;background:var(--ground);color:var(--ink);font:14px/1.4 var(--font);font-feature-settings:"tnum" 1;-webkit-font-smoothing:antialiased;width:1440px;height:900px;overflow:hidden;position:relative}
+.i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;display:block;flex:0 0 auto}
+.caps{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
+.mono{font-family:var(--mono)}
+
+/* RAIL — compact, contextual (5.2) */
+.rail{position:absolute;left:0;top:0;bottom:0;width:56px;background:var(--sheet);border-right:1px solid var(--line);display:flex;flex-direction:column;align-items:center;padding:12px 0}
+.rail .logo{width:32px;height:32px;border-radius:9px;background:var(--brand);color:#fff;font-weight:700;font-size:11px;display:grid;place-items:center;margin-bottom:16px}
+.rail .b{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:var(--ink3);margin:2px 0}
+.rail .b.on{background:var(--ink);color:#fff}
+.rail .sp{flex:1}
+.rail .av{width:30px;height:30px;border-radius:9px;background:var(--wash);border:1px solid var(--line);display:grid;place-items:center;font-size:11px;font-weight:600;color:var(--ink2)}
+
+/* CANVAS — the inventory is the dominant region; intelligence objects sit beside the work */
+.canvas{position:absolute;left:56px;top:0;right:0;bottom:0;padding:18px 24px 0 24px}
+.top{display:flex;align-items:center;gap:12px;height:36px;margin-bottom:14px}
+.crumb{color:var(--ink3);font-size:13px}.crumb b{color:var(--ink);font-weight:600;font-size:15px}
+.dealer{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 10px 0 6px;border-radius:8px;background:var(--sheet);border:1px solid var(--line);font-size:13px;color:var(--ink2)}
+.dealer i{width:18px;height:18px;border-radius:5px;background:var(--ink);color:#fff;font-style:normal;font-size:9px;font-weight:700;display:grid;place-items:center}
+.top .sp{flex:1}
+.k{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 10px 0 12px;border-radius:9px;background:var(--sheet);border:1px solid var(--line);color:var(--ink4);font-size:13px;width:230px}
+.k kbd{margin-left:auto;font:11px var(--mono);border:1px solid var(--line);border-radius:4px;padding:1px 5px;background:var(--sheet2);color:var(--ink4)}
+.btn{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 13px;border-radius:9px;font-weight:600;font-size:13px;border:1px solid transparent}
+.btn.p{background:var(--brand);color:#fff}.btn.s{background:var(--sheet);border-color:var(--line);color:var(--ink)}.btn.q{color:var(--ink2)}
+
+.grid{display:grid;grid-template-columns:1fr 336px;gap:20px;height:calc(100% - 68px)}
+
+/* WORK — command strip is local to the list, not a page band */
+.work{min-width:0;display:flex;flex-direction:column}
+.cmd{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.search{flex:0 0 440px;display:flex;align-items:center;gap:10px;height:40px;padding:0 14px;border-radius:11px;background:var(--sheet);border:1px solid var(--line);color:var(--ink4);font-size:14px;box-shadow:0 1px 2px rgba(15,21,34,.05)}
+.search kbd{margin-left:auto;font:11px var(--mono);border:1px solid var(--line);border-radius:4px;padding:1px 5px;background:var(--sheet2)}
+.f{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border-radius:11px;background:var(--sheet);border:1px solid var(--line);font-size:13px;color:var(--ink2)}
+.f b{color:var(--ink);font-weight:600}.f .i{width:13px;height:13px;color:var(--ink4)}
+.f.on{border-color:var(--brand);color:var(--brand)}.f.on b{color:var(--brand)}
+.cmd .sp{flex:1}
+.chips{display:flex;align-items:center;gap:6px;margin:0 0 10px 2px;font-size:13px;color:var(--ink3)}
+.chip{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 8px;border-radius:7px;background:var(--ambersoft);color:var(--amber);border:1px solid var(--amberline);font-weight:600;font-size:12px}
+.listhead{display:flex;align-items:center;gap:12px;padding:0 6px 8px;font-size:13px;color:var(--ink3)}
+.listhead b{color:var(--ink);font-weight:600}
+.listhead .sp{flex:1}
+.seg{display:inline-flex;padding:2px;background:var(--wash);border-radius:8px;gap:2px}
+.seg span{padding:4px 9px;border-radius:6px;font-size:12px;font-weight:500;color:var(--ink2)}.seg span.on{background:var(--sheet);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.1)}
+
+/* STRIPS — composed inventory objects, no column headers */
+.sheet{background:var(--sheet);border-radius:14px;box-shadow:0 1px 2px rgba(15,21,34,.05),0 0 0 1px rgba(15,21,34,.04);flex:1;min-height:0}
+.sheet .strip:first-child{border-radius:14px 14px 0 0}
+.strip{display:grid;grid-template-columns:26px 88px 1fr 110px 84px 232px 30px;align-items:center;gap:14px;height:70px;padding:0 14px 0 14px;border-bottom:1px solid var(--line2)}
+.strip:hover{background:var(--sheet2)}
+.strip.sel{background:var(--brandsoft);box-shadow:inset 3px 0 0 var(--brand)}
+.ck{width:16px;height:16px;border:1px solid #c9cfd8;border-radius:5px;background:#fff}.ck.on{background:var(--brand);border-color:var(--brand)}
+.th{width:88px;height:56px;border-radius:9px;object-fit:cover;background:var(--wash);box-shadow:inset 0 0 0 1px rgba(15,21,34,.07)}
+.th.none{display:grid;place-items:center;border:1px dashed #cfd5de;color:var(--ink4);font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:var(--sheet2)}
+.id{min-width:0;line-height:1.25}
+.id .n{font-size:16px;font-weight:600;letter-spacing:-.008em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.id .n em{font-style:normal;font-weight:400;color:var(--ink3);margin-right:6px}
+.id .m{display:flex;align-items:center;gap:10px;margin-top:5px;font-size:12px;color:var(--ink4);white-space:nowrap;overflow:hidden}.id .m .vin{flex:0 0 auto}.id .m .sp3{min-width:0;flex:1 1 auto;margin-top:0}
+.id .sp3{display:flex;align-items:center;gap:6px;margin-top:3px;font-size:12px;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tag{display:inline-flex;align-items:center;height:20px;padding:0 7px;border-radius:5px;background:var(--wash);color:var(--ink2);font:600 12px var(--mono)}
+.id .m .vin{font-family:var(--mono)}
+.spec{font-size:13px;color:var(--ink2);line-height:1.3;min-width:0}.spec div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.spec .c{color:var(--ink3);display:flex;align-items:center;gap:6px}.sw{width:10px;height:10px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15);display:inline-block}
+.price{text-align:right;font-size:16px;font-weight:600;letter-spacing:-.005em}.price em{font-style:normal;color:var(--ink4);font-weight:400}.price.none{color:var(--ink4);font-weight:400;font-size:14px}
+.age{display:flex;align-items:center;justify-content:flex-end;gap:8px;font-weight:500;color:var(--ink2)}.age i{width:34px;height:4px;border-radius:2px;background:var(--line2);position:relative;overflow:hidden}.age i::after{content:"";position:absolute;left:0;top:0;bottom:0;width:var(--w);background:var(--b);border-radius:2px}
+.age.fresh{color:var(--ok)}.age.stale{color:var(--red);font-weight:600}
+.x{display:flex;gap:4px;flex-wrap:nowrap}
+.xt{display:inline-flex;align-items:center;height:21px;padding:0 7px;border-radius:5px;font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;color:var(--amber);background:var(--ambersoft);box-shadow:inset 0 0 0 1px var(--amberline)}
+.xt.red{color:var(--red);background:var(--redsoft);box-shadow:inset 0 0 0 1px var(--redline)}.xt.slate{color:var(--slate);background:var(--slatesoft);box-shadow:inset 0 0 0 1px #cfd5de}.xt.violet{color:var(--violet);background:var(--violetsoft);box-shadow:inset 0 0 0 1px var(--violetline)}.xt.more{color:var(--ink2);background:var(--wash);box-shadow:inset 0 0 0 1px var(--line);letter-spacing:0}
+.x .none{color:var(--ink4);font-size:13px}
+.more{color:var(--ink4);display:grid;place-items:center;width:30px;height:30px;border-radius:8px}
+
+/* SELECTION TRAY — contextual, appears near the work (not a page band) */
+.tray{position:absolute;left:calc(56px + 24px + 160px);bottom:22px;width:640px;height:52px;border-radius:14px;background:var(--focal);color:#fff;display:flex;align-items:center;gap:6px;padding:0 8px 0 16px;box-shadow:0 18px 44px rgba(15,21,34,.28);font-size:13px}
+.tray b{font-weight:600;margin-right:6px}.tray .t{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 11px;border-radius:8px;color:#fff;font-weight:600}.tray .t.d{color:#ffb8ad}.tray .sp{flex:1}.tray .x2{width:32px;height:32px;display:grid;place-items:center;border-radius:8px;color:#aab4c8}
+
+/* INTELLIGENCE OBJECTS — unequal scale (5.3), beside the work */
+.objs{display:flex;flex-direction:column;gap:14px}
+.obj{background:var(--sheet);border-radius:16px;padding:16px 18px;box-shadow:0 1px 2px rgba(15,21,34,.05),0 0 0 1px rgba(15,21,34,.04)}
+.obj.focal{background:var(--focal);color:#f3f5f9;box-shadow:0 10px 28px rgba(15,21,34,.18)}
+.obj .h{display:flex;align-items:center;gap:8px;margin-bottom:12px}.obj .h .caps{flex:1}.obj.focal .caps{color:#8b96ab}.obj .h .s{font-size:11px;color:var(--ink4)}.obj.focal .h .s{color:#6c7890}
+.hero{display:flex;align-items:flex-end;gap:14px}.hero .n{font-size:46px;font-weight:600;font-stretch:88%;letter-spacing:-.02em;line-height:.9}.hero .l{font-size:13px;color:#aab4c8;padding-bottom:4px;line-height:1.3}.hero .l b{display:block;color:#fff;font-size:15px}
+.lanes{display:flex;flex-wrap:wrap;gap:4px;margin-top:12px}.lane{height:24px;padding:0 8px;border-radius:6px;font-size:12px;color:#aab4c8;display:inline-flex;align-items:center;gap:5px}.lane b{color:#fff;font-weight:600}.lane.on{background:#fff;color:var(--focal)}.lane.on b{color:var(--focal)}
+.kv{display:flex;gap:18px;margin-top:12px;padding-top:12px;border-top:1px solid #2a3654}.kv .v{font-size:20px;font-weight:600;font-stretch:90%;letter-spacing:-.01em}.kv .l{font-size:11px;color:#6c7890;margin-top:3px}
+.ar{display:grid;grid-template-columns:40px 1fr 34px;align-items:center;gap:8px;height:34px;padding:0 6px;border-radius:8px}.ar .n{font-size:20px;font-weight:600;font-stretch:90%;color:var(--amber)}.ar.red .n{color:var(--red)}.ar.slate .n{color:var(--slate)}.ar.violet .n{color:var(--violet)}.ar .l{font-size:13px;font-weight:500;line-height:1.1;margin-bottom:4px}.ar .m{display:block;height:3px;border-radius:2px;background:var(--wash);overflow:hidden}.ar .m i{display:block;height:100%;width:var(--w);background:var(--amberfill)}.ar.red .m i{background:#e35548}.ar.slate .m i{background:#8b95a5}.ar.violet .m i{background:#8f78ea}.ar .p{font-size:11px;color:var(--ink4);text-align:right}
+.ar.on{background:var(--ambersoft);box-shadow:inset 0 0 0 1px var(--amberline)}
+.mix{display:flex;gap:2px;height:10px;border-radius:3px;overflow:hidden;margin-bottom:10px}.mix i{display:block;height:100%}
+.ml{display:grid;grid-template-columns:8px 30px 1fr auto;gap:8px;align-items:center;height:22px;font-size:12px;color:var(--ink2)}.ml i{width:8px;height:8px;border-radius:2px}.ml b{color:var(--ink)}.ml em{font-style:normal;color:var(--ink4)}
+
+/* Gen6-A planes: focal (dominant, dark) · inset (inside focal) · flat (on the ground) · lifted (selected object) · temporary (tray) */
+.objs{gap:18px}
+.obj.focal{padding-bottom:14px}
+.inset{margin:14px -18px -14px;padding:12px 18px 14px;background:#0b1120;border-radius:0 0 16px 16px;border-top:1px solid #2a3654}
+.inset .caps{color:#8b96ab}.inset .s{color:#6c7890}
+.mlrow{display:flex;justify-content:space-between;font-size:11px;color:#aab4c8}.mlrow i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:5px;vertical-align:0}
+.flat{padding:0 6px}.flat .h{margin-bottom:8px;padding:0 6px;display:flex;align-items:center}.flat .h .caps{flex:1}.flat .h .s{font-size:11px;color:var(--ink4)}
+.flat .ar:hover{background:#fff}
+.flat .ar.on{background:#fff;box-shadow:0 1px 2px rgba(15,21,34,.06),0 0 0 1px var(--amberline)}
+.lift{position:relative;margin:6px -10px;padding:16px 18px;background:#fff;border-radius:14px;box-shadow:0 14px 36px rgba(15,21,34,.16),0 2px 6px rgba(15,21,34,.06);display:grid;grid-template-columns:220px 1fr 200px;gap:20px;align-items:start;z-index:2}
+.lift .im{width:220px;height:140px;border-radius:10px;object-fit:cover;box-shadow:inset 0 0 0 1px rgba(15,21,34,.08)}
+.lift .n{font-size:20px;font-weight:600;letter-spacing:-.015em}.lift .n em{font-style:normal;font-weight:400;color:var(--ink3);margin-right:6px}
+.lift .m{display:flex;gap:8px;align-items:center;margin:6px 0 12px;font-size:12px;color:var(--ink4)}
+.lift .kv3{display:flex;gap:22px}.lift .kv3 .v{font-size:18px;font-weight:600;letter-spacing:-.01em}.lift .kv3 .l{font-size:11px;color:var(--ink4);margin-top:2px}
+.lift .spec2{margin-top:12px;font-size:13px;color:var(--ink2);display:grid;grid-template-columns:1fr 1fr;gap:4px 18px}.lift .spec2 span{color:var(--ink4);margin-right:6px}
+.lift .acts{display:flex;flex-direction:column;gap:6px}.lift .acts .btn{height:32px;justify-content:flex-start}
+.lift .close{position:absolute;top:10px;right:12px;color:var(--ink4)}
+</style>
+</head>
+<body>
+
+<aside class="rail">
+  <div class="logo">AAN</div>
+  <div class="b"><svg class="i" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg></div>
+  <div class="b on"><svg class="i" viewBox="0 0 24 24"><path d="M3 14l2-5.5A2 2 0 0 1 6.9 7h10.2a2 2 0 0 1 1.9 1.5L21 14M3 14v4h2m16-4v4h-2M3 14h18M7 18a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm10 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg></div>
+  <div class="b"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4.5-6.2"/></svg></div>
+  <div class="b"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
+  <div class="b"><svg class="i" viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h2l6 4V6L6 10H4a1 1 0 0 0-1 1zM16 9a4 4 0 0 1 0 6"/></svg></div>
+  <div class="b"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"/></svg></div>
+  <div class="sp"></div>
+  <div class="b"><svg class="i" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
+  <div class="av">P</div>
+</aside>
+
+<div class="canvas">
+  <div class="top">
+    <div class="crumb"><b>Inventory</b> &nbsp;·&nbsp; Inventory Manager</div>
+    <span class="dealer"><i>CM</i>Chicago Motor Cars · 6 rooftops</span>
+    <span class="sp"></span>
+    <span class="k"><svg class="i" style="width:14px;height:14px" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>Search anywhere<kbd>⌘K</kbd></span>
+    <button class="btn q">Inline edit</button><button class="btn s">Export</button><button class="btn p">+ Add vehicle</button>
+  </div>
+
+  <div class="grid">
+    <section class="work">
+      <div class="cmd">
+        <div class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>Find a vehicle — stock, VIN, make, model, colour…<kbd>/</kbd></div>
+        <span class="f">Make <b>Any</b><svg class="i" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span>
+        <span class="f">Model <b>Any</b><svg class="i" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span>
+        <span class="f">Year <b>Any</b><svg class="i" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span>
+        <span class="f">Price <b>Any</b><svg class="i" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span>
+        <span class="f on"><svg class="i" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg><b>Filters</b> 1</span>
+      </div>
+      <div class="chips">Showing <b style="color:var(--ink)">&nbsp;95&nbsp;</b> of 359 available &nbsp;·&nbsp; <span class="chip">No photos ✕</span><span style="margin-left:4px">Clear</span></div>
+      <div class="listhead"><span>Sorted by <b>Age ↓</b></span><span class="sp"></span><span>Rows <b>50</b></span><span class="seg"><span class="on">Strips</span><span>Gallery</span><span>Photos</span></span></div>
+      <div class="sheet" id="list"></div>
+    </section>
+
+    <aside class="objs">
+      <div class="obj focal">
+        <div class="h"><span class="caps">Lot</span><span class="s">updated 5 min ago</span></div>
+        <div class="hero"><div class="n">359</div><div class="l"><b>Available</b>of 13,587 on file</div></div>
+        <div class="lanes"><span class="lane on">Available <b>359</b></span><span class="lane">Sold <b>13,212</b></span><span class="lane">Staging <b>16</b></span><span class="lane">Pending <b>0</b></span><span class="lane">All <b>13,587</b></span></div>
+        <div class="kv"><div><div class="v">$66.3M</div><div class="l">asking value</div></div><div><div class="v">$293K</div><div class="l">average</div></div><div><div class="v">146</div><div class="l">over $100k</div></div></div>
+        <div class="inset">
+          <div class="h" style="margin-bottom:8px"><span class="caps">Age mix</span><span class="s">days in stock</span></div>
+          <div class="mix"><i style="width:20%;background:var(--green)"></i><i style="width:32%;background:#5b6577"></i><i style="width:37%;background:var(--amberfill)"></i><i style="width:11%;background:#e35548"></i></div>
+          <div class="mlrow"><span><i style="background:var(--green)"></i>73 ≤30d</span><span><i style="background:#5b6577"></i>115 31–90</span><span><i style="background:var(--amberfill)"></i>131 91–365</span><span><i style="background:#e35548"></i>40 &gt;1y</span></div>
+        </div>
+      </div>
+      <div class="flat">
+        <div class="h"><span class="caps">Needs attention</span><span class="s">click = filter</span></div>
+        <div class="ar"><span class="n">133</span><span><span class="l">No price</span><span class="m"><i style="--w:37%"></i></span></span><span class="p">37%</span></div>
+        <div class="ar on"><span class="n">95</span><span><span class="l">No photos</span><span class="m"><i style="--w:26%"></i></span></span><span class="p">26%</span></div>
+        <div class="ar red"><span class="n">67</span><span><span class="l">Feed excluded</span><span class="m"><i style="--w:19%"></i></span></span><span class="p">19%</span></div>
+        <div class="ar slate"><span class="n">61</span><span><span class="l">Hidden on site</span><span class="m"><i style="--w:17%"></i></span></span><span class="p">17%</span></div>
+        <div class="ar red"><span class="n">40</span><span><span class="l">Aging &gt; 1 yr</span><span class="m"><i style="--w:11%"></i></span></span><span class="p">11%</span></div>
+        <div class="ar violet"><span class="n">49</span><span><span class="l">Sale pending</span><span class="m"><i style="--w:14%"></i></span></span><span class="p">14%</span></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div class="tray"><b>2 selected</b><span class="t">Inline edit</span><span class="t">Show / hide</span><span class="t">Feed on / off</span><span class="t">Stickers</span><span class="t">Export</span><span class="t d">Delete…</span><span class="sp"></span><span class="x2">✕</span></div>
+
+<script src="gen6-demo.js"></script>
+<script>
+var V=G6.slice(0,10);
+document.getElementById("list").innerHTML=V.map(function(v,i){
+  var b=G6.band(v.d), tags=v.f.slice(0,3), rest=v.f.length-tags.length, sel=(i===1||i===3);
+  if(i===5){ return '<div class="lift"><img class="im" src="img/'+v.t+'"><div><div class="n"><em>'+v.y+'</em>'+v.mk+' '+v.md+'</div><div class="m"><span class="tag">'+v.s+'</span><span class="mono">VIN '+G6.vin(v.s)+'</span><span>· Available</span></div>'+
+    '<div class="kv3"><div><div class="v">$'+v.p.toLocaleString()+'</div><div class="l">asking price</div></div><div><div class="v" style="color:var(--red)">'+G6.lab(v.d)+'</div><div class="l">'+v.d.toLocaleString()+' days in stock</div></div><div><div class="v">18</div><div class="l">photos</div></div></div>'+
+    '<div class="spec2"><div><span>Trim</span>'+v.tr+'</div><div><span>Exterior</span>'+v.c+'</div><div><span>Location</span>Chicago Motor Cars</div><div><span>Feed</span>Feeding · shown on site</div></div></div>'+
+    '<div class="acts"><span class="btn p">Edit vehicle</span><span class="btn s">Photos</span><span class="btn s">Window sticker</span><span class="btn s">Carfax</span><span class="btn q" style="color:var(--red)">Delete…</span></div><span class="close">✕</span></div>'; }
+  return '<div class="strip'+(sel?' sel':'')+'"><span class="ck'+(sel?' on':'')+'"></span>'+
+    (v.t?'<img class="th" src="img/'+v.t+'">':'<span class="th none">No photo</span>')+
+    '<div class="id"><div class="n"><em>'+v.y+'</em>'+v.mk+' '+v.md+'</div><div class="m"><span class="tag">'+v.s+'</span><span class="vin">VIN '+G6.vin(v.s)+'</span><span class="sp3"><span class="sw" style="background:'+v.hx+'"></span>'+v.c+' · '+v.tr+'</span></div></div>'+
+    (v.p?'<div class="price"><em>$</em>'+v.p.toLocaleString()+'</div>':'<div class="price none">—</div>')+
+    '<div class="age '+b+'"><i style="--w:'+Math.min(100,Math.round(v.d/730*100))+'%;--b:'+G6.col[b]+'"></i>'+G6.lab(v.d)+'</div>'+
+    '<div class="x">'+(tags.length?tags.map(function(t){return '<span class="xt '+(G6.tone[t]||'')+'">'+t+'</span>'}).join('')+(rest>0?'<span class="xt more">+'+rest+'</span>':''):'<span class="none">—</span>')+'</div>'+
+    '<span class="more">···</span></div>';
+}).join('');
+</script>
+</body>
+</html>

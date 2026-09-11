@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Gen 6 · C — Command / Exception Workspace</title>
+<style>
+@font-face { font-family: "Archivo"; font-weight: 100 900; font-stretch: 62% 125%; src: url("../../ds/fonts/archivo-latin-var.woff2") format("woff2"); }
+@font-face { font-family: "Plex Mono"; font-weight: 400; src: url("../../ds/fonts/plex-mono-400.woff2") format("woff2"); }
+@font-face { font-family: "Plex Mono"; font-weight: 600; src: url("../../ds/fonts/plex-mono-600.woff2") format("woff2"); }
+:root{--font:"Archivo",system-ui,sans-serif;--mono:"Plex Mono",monospace;--ground:#eef0f3;--sheet:#fff;--sheet2:#f5f6f8;--wash:#eef0f4;--ink:#0f1522;--ink2:#3f4756;--ink3:#6b7383;--ink4:#9ba3b2;--line:#e2e5eb;--line2:#eceef2;--brand:#1d5bd6;--brandsoft:#e8effd;--amber:#b96700;--amberfill:#f0a22e;--ambersoft:#fff3df;--amberline:#f1d19a;--red:#cf3a2e;--redsoft:#fce9e6;--redline:#f2bcb5;--slate:#66707f;--slatesoft:#eceef2;--violet:#6b4fd8;--violetsoft:#eeeafc;--violetline:#d3c8f5;--green:#2fb46f;--ok:#178a52}
+*{box-sizing:border-box}body{margin:0;background:var(--ground);color:var(--ink);font:13px/1.4 var(--font);font-feature-settings:"tnum" 1;-webkit-font-smoothing:antialiased;width:1440px;height:900px;overflow:hidden;position:relative;display:grid;grid-template-columns:272px 1fr}
+.caps{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
+.mono{font-family:var(--mono)}
+
+/* LENSES — navigation and analytics are one system */
+.lenses{background:var(--sheet);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:16px 12px 14px}
+.brand{display:flex;align-items:center;gap:10px;padding:0 6px 16px}.brand i{width:30px;height:30px;border-radius:8px;background:var(--brand);color:#fff;font-style:normal;font-weight:700;font-size:11px;display:grid;place-items:center}.brand b{font-size:14px}.brand small{display:block;color:var(--ink4);font-size:11px}
+.dealer{display:flex;align-items:center;gap:8px;height:34px;padding:0 10px;border-radius:9px;background:var(--wash);color:var(--ink2);margin-bottom:16px;font-size:12.5px}.dealer i{width:18px;height:18px;border-radius:5px;background:var(--ink);color:#fff;font-style:normal;font-size:9px;font-weight:700;display:grid;place-items:center}
+.sec{margin-bottom:14px}.sec .caps{display:block;padding:0 8px 6px}
+.lens{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px;padding:7px 10px;border-radius:9px;color:var(--ink2);font-weight:500;position:relative}
+.lens b{font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.lens .m{grid-column:1/-1;height:3px;border-radius:2px;background:var(--wash);overflow:hidden;margin-top:4px}.lens .m i{display:block;height:100%;width:var(--w);background:var(--t,var(--amberfill))}
+.lens.on{background:var(--ink);color:#fff}.lens.on b{color:#fff}.lens.on .m{background:#2a3244}
+.lens.a b{color:var(--amber)}.lens.r b{color:var(--red)}.lens.s b{color:var(--slate)}.lens.v b{color:var(--violet)}.lens.on.a b{color:#ffcf7a}
+.lens.big{padding:10px}.lens.big b{font-size:18px}
+.lens.dim{color:var(--ink4)}.lens.dim b{color:var(--ink4)}
+.value{margin-top:auto;padding:12px 10px 0;border-top:1px solid var(--line2)}
+.value .row{display:flex;justify-content:space-between;padding:4px 0;font-size:12.5px;color:var(--ink3)}.value .row b{color:var(--ink);font-weight:600}
+.value .agebar{display:flex;gap:2px;height:8px;border-radius:3px;overflow:hidden;margin:8px 0 6px}.value .agebar i{height:100%}
+.value .lg{display:flex;justify-content:space-between;font-size:11px;color:var(--ink4)}
+
+/* WORK — the queue */
+.work{padding:16px 24px 16px 24px;display:flex;flex-direction:column;min-width:0}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.k{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 12px;border-radius:9px;background:var(--sheet);border:1px solid var(--line);color:var(--ink4);flex:1;max-width:520px}.k kbd{margin-left:auto;font:11px var(--mono);color:var(--ink4)}
+.top .sp{flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 13px;border-radius:9px;font-weight:600;border:1px solid var(--line);background:var(--sheet)}.btn.p{background:var(--brand);color:#fff;border-color:transparent}.btn.q{border-color:transparent;background:transparent;color:var(--ink2)}
+.av{width:30px;height:30px;border-radius:9px;background:var(--sheet);border:1px solid var(--line);display:grid;place-items:center;font-weight:600;font-size:11px}
+
+/* queue head — the lens becomes the page */
+.qh{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:end;margin-bottom:14px}
+.qh .t{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.qh h1{margin:0;font-size:30px;font-weight:600;letter-spacing:-.022em;line-height:1.05}.qh h1 b{font-weight:600;color:var(--amber)}
+.qh p{margin:8px 0 0;color:var(--ink3);font-size:14px;max-width:560px}
+.qh .prog{background:var(--sheet);border-radius:12px;padding:12px 14px;box-shadow:0 1px 2px rgba(15,21,34,.05),0 0 0 1px rgba(15,21,34,.04)}
+.qh .prog .r{display:flex;justify-content:space-between;font-size:12px;color:var(--ink3);margin-bottom:6px}.qh .prog .r b{color:var(--ink)}
+.qh .prog .bar{height:8px;border-radius:4px;background:var(--wash);overflow:hidden}.qh .prog .bar i{display:block;height:100%;width:63%;background:var(--ink)}
+.qh .prog .f{display:flex;gap:14px;margin-top:8px;font-size:12px;color:var(--ink3)}.qh .prog .f b{color:var(--ink)}
+
+/* queue controls */
+.qc{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.search{display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;border-radius:10px;background:var(--sheet);border:1px solid var(--line);color:var(--ink4);width:380px}
+.f{display:inline-flex;align-items:center;gap:5px;height:36px;padding:0 10px;border-radius:10px;background:var(--sheet);border:1px solid var(--line);color:var(--ink2);white-space:nowrap}.f b{color:var(--ink);font-weight:600}
+.qc .sp{flex:1}
+.qc .bulk{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 4px 0 12px;border-radius:10px;background:var(--ink);color:#fff;font-weight:600}.qc .bulk span{padding:6px 9px;border-radius:7px;font-weight:600;color:#fff}.qc .bulk .n{font-weight:400;color:#aab4c8;margin-right:2px}
+
+/* queue list — each row is a work item with the lens-specific action inline */
+.list{background:var(--sheet);border-radius:14px;box-shadow:0 1px 2px rgba(15,21,34,.05),0 0 0 1px rgba(15,21,34,.04);flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column}
+.lh{display:grid;grid-template-columns:24px 64px 1fr 120px 170px 204px 70px;gap:12px;padding:8px 14px;border-bottom:1px solid var(--line);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4)}
+.lh .r{text-align:right}
+.it{display:grid;grid-template-columns:24px 64px 1fr 120px 170px 204px 70px;gap:12px;align-items:center;height:60px;padding:0 14px;border-bottom:1px solid var(--line2)}
+.it:hover{background:var(--sheet2)}
+.ck{width:15px;height:15px;border:1px solid #c9cfd8;border-radius:4px;background:#fff}.ck.on{background:var(--brand);border-color:var(--brand)}
+.th{width:64px;height:40px;border-radius:7px;object-fit:cover;background:var(--wash);box-shadow:inset 0 0 0 1px rgba(15,21,34,.07)}.th.none{display:grid;place-items:center;border:1px dashed #cfd5de;background:var(--sheet2);color:var(--ink4);font-size:9px;letter-spacing:.06em;text-transform:uppercase}
+.id{min-width:0;line-height:1.2}.id .n{font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.id .n em{font-style:normal;font-weight:400;color:var(--ink3);margin-right:5px}
+.id .m{display:flex;gap:8px;align-items:center;margin-top:4px;font-size:11.5px;color:var(--ink4);white-space:nowrap;overflow:hidden}.tag{padding:1px 6px;border-radius:4px;background:var(--wash);color:var(--ink2);font:600 11.5px var(--mono)}
+.age{text-align:right;font-weight:500;color:var(--ink2)}.age.stale{color:var(--red);font-weight:600}.age.fresh{color:var(--ok)}.age small{display:block;font-weight:400;color:var(--ink4);font-size:11px}
+.also{display:flex;gap:3px}
+.xt{display:inline-flex;align-items:center;height:18px;padding:0 5px;border-radius:4px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;color:var(--amber);background:var(--ambersoft);box-shadow:inset 0 0 0 1px var(--amberline)}
+.xt.red{color:var(--red);background:var(--redsoft);box-shadow:inset 0 0 0 1px var(--redline)}.xt.slate{color:var(--slate);background:var(--slatesoft);box-shadow:inset 0 0 0 1px #cfd5de}.xt.violet{color:var(--violet);background:var(--violetsoft);box-shadow:inset 0 0 0 1px var(--violetline)}
+.also .none{color:var(--ink4)}
+/* the lens action: set price inline */
+.act{display:flex;align-items:center;gap:6px}
+.inp{display:flex;align-items:center;height:34px;width:150px;padding:0 10px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink4);font-variant-numeric:tabular-nums}.inp b{color:var(--ink3);font-weight:400;margin-right:4px}
+.inp.done{border-color:#bfe5cf;background:#f1faf5;color:var(--ok);font-weight:600}
+.go{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;background:var(--brand);color:#fff;font-weight:700}
+.more{color:var(--ink4);text-align:right}
+.lf{display:flex;align-items:center;gap:10px;padding:8px 14px;color:var(--ink3);font-size:12px;border-top:1px solid var(--line2)}.lf .sp{flex:1}
+</style>
+</head>
+<body>
+
+<aside class="lenses">
+  <div class="brand"><i>AAN</i><div><b>Inventory</b><small>All Auto Network</small></div></div>
+  <div class="dealer"><i>CM</i>Chicago Motor Cars · 6 rooftops</div>
+  <div class="sec"><span class="caps">Lot</span>
+    <div class="lens big"><span>All available</span><b>359</b></div>
+    <div class="lens dim"><span>Sold</span><b>13,212</b></div>
+    <div class="lens dim"><span>Staging</span><b>16</b></div>
+  </div>
+  <div class="sec"><span class="caps">Queues</span>
+    <div class="lens"><span>Needs attention</span><b>187</b><span class="m"><i style="--w:52%;--t:#e35548"></i></span></div>
+    <div class="lens on a"><span>No price</span><b>133</b><span class="m"><i style="--w:37%"></i></span></div>
+    <div class="lens a"><span>No photos</span><b>95</b><span class="m"><i style="--w:26%"></i></span></div>
+    <div class="lens r"><span>Feed issues</span><b>67</b><span class="m"><i style="--w:19%;--t:#e35548"></i></span></div>
+    <div class="lens s"><span>Hidden on site</span><b>61</b><span class="m"><i style="--w:17%;--t:#8b95a5"></i></span></div>
+    <div class="lens r"><span>Aging &gt; 1 year</span><b>40</b><span class="m"><i style="--w:11%;--t:#e35548"></i></span></div>
+    <div class="lens v"><span>Sale pending</span><b>49</b><span class="m"><i style="--w:14%;--t:#8f78ea"></i></span></div>
+    <div class="lens"><span>New ≤ 30 days</span><b>73</b><span class="m"><i style="--w:20%;--t:#2fb46f"></i></span></div>
+  </div>
+  <div class="value">
+    <div class="row"><span>Asking value</span><b>$66.3M</b></div>
+    <div class="row"><span>Average</span><b>$293K</b></div>
+    <div class="agebar"><i style="width:20%;background:var(--green)"></i><i style="width:32%;background:#b3bac6"></i><i style="width:37%;background:var(--amberfill)"></i><i style="width:11%;background:#e35548"></i></div>
+    <div class="lg"><span>73 ≤30d</span><span>115</span><span>131</span><span>40 &gt;1y</span></div>
+  </div>
+</aside>
+
+<main class="work">
+  <div class="top"><span class="k">Search anywhere — stock, VIN, vehicle, customer…<kbd>⌘K</kbd></span><span class="sp"></span><span class="btn q">Reports</span><span class="btn">Export</span><span class="btn p">+ Add vehicle</span><span class="av">P</span></div>
+
+  <div class="qh">
+    <div>
+      <div class="t">Queue · Merchandising</div>
+      <h1><b>133</b> vehicles without an asking price</h1>
+      <p>37% of the available lot is unpriced and cannot be advertised. Set a price inline or open the vehicle — priced units leave this queue automatically.</p>
+    </div>
+    <div class="prog">
+      <div class="r"><span>Resolved this week</span><b>21 of 154</b></div>
+      <div class="bar"><i></i></div>
+      <div class="f"><span><b>$48.2M</b> unpriced est.</span><span><b>29</b> also missing photos</span><span><b>18</b> feed off</span></div>
+    </div>
+  </div>
+
+  <div class="qc">
+    <span class="search">Find in this queue…</span>
+    <span class="f">Make <b>Any</b></span><span class="f">Year <b>Any</b></span><span class="f">Sort <b>Oldest first</b></span>
+    <span class="sp"></span>
+    <span class="bulk"><span class="n">3 selected</span><span>Set price…</span><span>Export</span><span>Hide</span><span>✕</span></span>
+  </div>
+
+  <div class="list">
+    <div class="lh"><span></span><span></span><span>Vehicle</span><span class="r">Age in stock</span><span>Also</span><span>Asking price</span><span></span></div>
+    <div id="items"></div>
+    <div class="lf"><span>1–8 of 133 in this queue</span><span class="sp"></span><span>‹ &nbsp;1&nbsp; 2 &nbsp;3 … 14 &nbsp;›</span></div>
+  </div>
+</main>
+
+<script src="gen6-demo.js"></script>
+<script>
+var V=G6.filter(function(v){return v.p===null}).sort(function(a,b){return b.d-a.d}).slice(0,10);
+document.getElementById("items").innerHTML=V.map(function(v,i){
+  var b=G6.band(v.d), alsoAll=v.f.filter(function(t){return t!=="No price"}), also=alsoAll.slice(0,2), rest=alsoAll.length-also.length, sel=i<3;
+  var done=i===2;
+  return '<div class="it"><span class="ck'+(sel?' on':'')+'"></span>'+(v.t?'<img class="th" src="img/'+v.t+'">':'<span class="th none">No photo</span>')+
+   '<div class="id"><div class="n"><em>'+v.y+'</em>'+v.mk+' '+v.md+'</div><div class="m"><span class="tag">'+v.s+'</span><span>'+v.c+' · '+v.tr+'</span></div></div>'+
+   '<div class="age '+b+'">'+G6.lab(v.d)+'<small>'+v.d.toLocaleString()+' days</small></div>'+
+   '<div class="also">'+(also.length?also.map(function(t){return '<span class="xt '+(G6.tone[t]||'')+'">'+t+'</span>'}).join('')+(rest>0?'<span class="xt" style="color:var(--ink2);background:var(--wash);box-shadow:inset 0 0 0 1px var(--line);letter-spacing:0">+'+rest+'</span>':''):'<span class="none">—</span>')+'</div>'+
+   (done?'<div class="act"><span class="inp done">$ 34,900 · saved</span></div>':(v.p?'<div class="act"><span class="inp"><b>$</b>'+v.p.toLocaleString()+'</span></div>':'<div class="act"><span class="inp"><b>$</b>Set price</span><span class="go">→</span></div>'))+
+   '<div class="more">Open ›</div></div>';
+}).join('');
+</script>
+</body>
+</html>

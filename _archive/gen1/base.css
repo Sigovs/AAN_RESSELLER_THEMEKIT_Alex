@@ -1,0 +1,73 @@
+/*
+ * AAN DS v0.1 — base
+ * Reset, document defaults, typography roles, surfaces, focus.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { height: 100%; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--surface-0);
+  color: var(--ink-1);
+  font-family: var(--font-ui);
+  font-size: var(--text-md);
+  font-stretch: var(--stretch-ui);
+  line-height: var(--leading-normal);
+  font-feature-settings: "tnum" 1, "cv11" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, p { margin: 0; }
+a { color: var(--brand); text-decoration: none; }
+a:hover { color: var(--brand-hover); }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+input, select, textarea { font: inherit; color: inherit; }
+img { display: block; max-width: 100%; }
+svg { display: block; }
+table { border-collapse: collapse; border-spacing: 0; }
+kbd { font-family: var(--font-mono); }
+
+:focus { outline: none; }
+:focus-visible { box-shadow: var(--focus); border-radius: var(--r-sm); }
+
+::selection { background: var(--brand-soft-2); }
+
+/* ── Type roles ──────────────────────────────────────────────────── */
+.t-title   { font-size: var(--text-xl); font-weight: var(--weight-semibold); line-height: var(--leading-tight); letter-spacing: -0.01em; }
+.t-section { font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-tight); }
+.t-body    { font-size: var(--text-md); }
+.t-data    { font-size: var(--text-sm); font-stretch: var(--stretch-data); }
+.t-label   { font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--ink-2); }
+.t-caps    { font-size: var(--text-sm); font-weight: var(--weight-semibold); letter-spacing: var(--tracking-caps); text-transform: uppercase; color: var(--ink-3); }
+.t-muted   { color: var(--ink-3); }
+.t-quiet   { color: var(--ink-2); }
+.t-mono    { font-family: var(--font-mono); font-size: var(--text-sm); letter-spacing: 0; }
+.t-num     { font-variant-numeric: tabular-nums; }
+.t-strong  { font-weight: var(--weight-semibold); color: var(--ink-1); }
+
+/* ── Surfaces ────────────────────────────────────────────────────── */
+.surface   { background: var(--surface-1); border: var(--bw) solid var(--line-1); border-radius: var(--r-md); }
+.surface-2 { background: var(--surface-2); }
+.hairline-b { border-bottom: var(--bw) solid var(--line-2); }
+.hairline-t { border-top: var(--bw) solid var(--line-2); }
+
+/* ── Utilities ───────────────────────────────────────────────────── */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.row  { display: flex; align-items: center; }
+.grow { flex: 1 1 auto; min-width: 0; }
+[hidden] { display: none !important; }
+
+/* Icon glyphs: one set, stroke-matched, sized optically */
+.i { width: 16px; height: 16px; flex: 0 0 auto; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.i-sm { width: 14px; height: 14px; }
+.i-lg { width: 18px; height: 18px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}

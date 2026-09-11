@@ -1,0 +1,88 @@
+/*
+ * All Vehicles — page-specific composition.
+ * Everything reusable lives in ds/components.css; this file only
+ * arranges the blocks and sets the column plan.
+ */
+
+/* Lane bar: tabs left, "how am I looking at this" right, one hairline */
+.lanebar {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: var(--sp-4);
+  border-bottom: 1px solid var(--line-1);
+  margin-bottom: var(--sp-3);
+}
+.lanebar .tabs { margin-left: -12px; }
+.lanebar__right { display: flex; align-items: center; gap: var(--sp-2); padding-bottom: 6px; }
+
+/* Pulse row */
+.pulse--row { margin: 0 -10px var(--sp-3); gap: 8px; }
+.pulse__stat-sep { color: var(--ink-4); }
+
+/* Insights */
+.insights { margin-bottom: var(--sp-3); }
+.insights__hint { margin-left: auto; color: var(--ink-4); }
+
+/* Find row */
+.findrow { display: flex; align-items: center; gap: var(--sp-2); margin-bottom: var(--sp-2); }
+.findrow__search { flex: 0 1 420px; min-width: 260px; }
+.findrow__spacer { flex: 1; }
+.pop__quick { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+
+/* Chips */
+.chips--row { margin: 2px 0 var(--sp-3); }
+
+/* Toolbars */
+.toolbar--top { margin-bottom: var(--sp-2); }
+.toolbar--bottom { margin-top: var(--sp-2); }
+
+/* Column plan (default table) — widths sum to a 1392 px content width
+   at 1440; the Vehicle column absorbs the remainder. */
+.dt col.c-thumb   { width: 84px; }
+.dt col.c-stock   { width: 126px; }
+.dt col.c-vehicle { width: auto; }
+.dt col.c-ext     { width: 170px; }
+.dt col.c-price   { width: 128px; }
+.dt col.c-status  { width: 118px; }
+.dt col.c-health  { width: 158px; }
+.dt col.c-age     { width: 84px; }
+.dt col.c-actions { width: 138px; }
+
+/* Photos preset — single-line dense rows, large thumb */
+.dt--photos td { height: 64px; }
+.dt col.c-vin    { width: 150px; }
+.dt col.c-type   { width: 70px; }
+.dt col.c-year   { width: 64px; }
+.dt col.c-make   { width: 120px; }
+.dt col.c-model  { width: 140px; }
+.dt col.c-trim   { width: 150px; }
+.dt col.c-photo  { width: 104px; }
+.dt col.c-days   { width: 76px; }
+.dt--photos col.c-ext { width: 140px; }
+.dt--photos col.c-status { width: 108px; }
+.dt--photos col.c-actions { width: 128px; }
+.dt--photos .dt__thumb { width: 84px; height: 52px; }
+
+/* Row lock indicator (being edited by someone) */
+.dt__lock { display: inline-flex; align-items: center; gap: 5px; color: var(--brand); font-size: var(--text-sm); }
+
+/* Responsive: nav collapses under the brand, find row wraps */
+@media (max-width: 1320px) {
+  .brand__name { display: none; }
+  .nav__trigger { padding: 0 8px; }
+  .findrow { flex-wrap: wrap; }
+  .findrow__search { flex-basis: 100%; }
+  .findrow__spacer { display: none; }
+  .pulse--row { flex-wrap: wrap; row-gap: 6px; }
+  .pulse__stat { width: 100%; margin-left: 0; }
+  .dt col.c-ext { width: 130px; }
+  .dt col.c-health { width: 140px; }
+}
+@media (max-width: 900px) {
+  .topbar { flex-wrap: wrap; height: auto; padding-bottom: 6px; }
+  .nav { order: 10; flex-basis: 100%; overflow-x: auto; }
+  .page-head { flex-direction: column; align-items: flex-start; }
+  .lanebar { flex-direction: column; align-items: stretch; }
+  .lanebar .tabs { overflow-x: auto; }
+  .pop--panel { min-width: 0; width: calc(100vw - 48px); }
+  .pop__grid { grid-template-columns: 1fr; }
+  .pop__group { border-right: 0; border-bottom: 1px solid var(--line-2); }
+}
