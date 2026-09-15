@@ -7,3 +7,8 @@ reference/5.5.png
 reference/ref2.png
 .DS_Store
 Thumbs.db
+
+# third-party visual references and generated concept frames — research only, never published
+reference/gen9-input/
+reference/gen9-target/
+reference/gen9-concepts/
