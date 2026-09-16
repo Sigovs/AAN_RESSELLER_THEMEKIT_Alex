@@ -207,10 +207,11 @@
 
   function vehicleSheet(v) {
     var has = function (t) { return v.f.indexOf(t) >= 0; };
-    var acts = '<div class="veh__acts"><button class="btn btn--primary" type="button">' + ic('i-edit') + ' Edit vehicle</button>' +
-      '<button class="btn btn--sheet" type="button">' + ic('i-cam') + ' Photos</button><button class="btn btn--sheet" type="button">' + ic('i-print') + ' Window sticker</button>' +
-      '<button class="btn btn--sheet" type="button">' + ic('i-file') + ' Carfax</button><button class="btn btn--sheet" type="button">' + ic('i-rss') + (has('Feed off') ? ' Include in feeds' : ' Exclude from feeds') + '</button>' +
-      '<button class="btn btn--sheet" type="button">' + ic('i-eye') + (has('Hidden') ? ' Show on site' : ' Hide on site') + '</button><button class="btn btn--sheet btn--del" type="button">' + ic('i-trash') + ' Delete…</button></div>';
+    var ab = function (cls, icon, label) { return '<button class="btn ' + cls + '" type="button">' + ic(icon) + '<span>' + label + '</span></button>'; };
+    var acts = '<div class="veh__acts">' + ab('btn--primary', 'i-edit', 'Edit vehicle') +
+      ab('btn--sheet', 'i-cam', 'Photos') + ab('btn--sheet', 'i-print', 'Window sticker') +
+      ab('btn--sheet', 'i-file', 'Carfax') + ab('btn--sheet', 'i-rss', has('Feed off') ? 'Include in feeds' : 'Exclude feeds') +
+      ab('btn--sheet', 'i-eye', has('Hidden') ? 'Show on site' : 'Hide on site') + ab('btn--sheet btn--del', 'i-trash', 'Delete…') + '</div>';
     var p = vehicleBody(v);
     return '<div class="exp__l">' + p.img + p.kv + acts + '</div>' +
       '<div class="exp__r"><div class="exp__top"><div><h3 class="veh__n"><em>' + v.y + '</em>' + esc(v.mk) + ' ' + esc(v.md) + '</h3>' + p.meta + p.tags + '</div><button class="exp__x" type="button" data-act="close-veh" aria-label="Close vehicle">' + ic('i-x') + '</button></div><div class="exp__accs">' + p.accs + '</div></div>';
@@ -282,7 +283,7 @@
     return '<div class="vf"><button class="btn btn--primary btn--lg" type="button">' + ic('i-edit') + ' Edit vehicle</button>' +
       '<button class="btn btn--sheet btn--lg" type="button">' + ic('i-cam') + ' Photos</button><button class="btn btn--sheet btn--lg" type="button">' + ic('i-print') + ' Sticker</button>' +
       '<div class="facet"><button class="btn btn--sheet btn--lg btn--icon" type="button" data-pop="p-vmore" aria-label="More actions">' + ic('i-more') + '</button>' +
-      '<div class="pop pop--up pop--right mn" id="p-vmore"><button class="mn__it" type="button">' + ic('i-file') + 'Carfax report</button><button class="mn__it" type="button">' + ic('i-rss') + (has('Feed off') ? 'Include in feeds' : 'Exclude from feeds') + '</button><button class="mn__it" type="button">' + ic('i-eye') + (has('Hidden') ? 'Show on site' : 'Hide on site') + '</button><div class="mn__sep"></div><button class="mn__it mn__it--danger" type="button">' + ic('i-trash') + 'Delete vehicle…</button></div></div></div>';
+      '<div class="pop pop--up pop--right mn" id="p-vmore"><button class="mn__it" type="button">' + ic('i-file') + 'Carfax report</button><button class="mn__it" type="button">' + ic('i-rss') + (has('Feed off') ? 'Include in feeds' : 'Exclude feeds') + '</button><button class="mn__it" type="button">' + ic('i-eye') + (has('Hidden') ? 'Show on site' : 'Hide on site') + '</button><div class="mn__sep"></div><button class="mn__it mn__it--danger" type="button">' + ic('i-trash') + 'Delete vehicle…</button></div></div></div>';
   }
 
   function fv(g, key, label, count, max, extra, cls) {

@@ -885,3 +885,14 @@ body { overflow: auto; }
 .ar__n { font-weight: 700; } .ar__l { font-weight: 600; } .ar__m { background: var(--line-3); }
 .attn__g { gap: 6px 8px; }
 [data-theme="dark"] .value, [data-theme="dark"] .attn { box-shadow: 0 10px 26px -10px rgba(0,0,0,.6), 0 0 0 1px var(--line-3); background: linear-gradient(180deg, var(--sheet) 0, var(--sheet) 70%, var(--wash) 100%); }
+
+/* ── open sheet, left column: everything under the photo is locked to the photo's edges (300px), nothing can push past ── */
+.exp__l { width: 300px; min-width: 0; max-width: 100%; overflow: hidden; }
+.exp .veh__img { width: 100%; }
+.exp .veh__kv { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr) minmax(0, .8fr); gap: 8px; box-sizing: border-box; width: 100%; }
+.exp .veh__kv > div { min-width: 0; }
+.exp .veh__kv .v, .exp .veh__kv .l { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.exp .veh__acts { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); width: 100%; }
+.exp .veh__acts .btn { min-width: 0; width: 100%; padding: 0 10px; font-size: 13px; overflow: hidden; }
+.exp .veh__acts .btn > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.exp .veh__acts .btn .i { flex: none; }
