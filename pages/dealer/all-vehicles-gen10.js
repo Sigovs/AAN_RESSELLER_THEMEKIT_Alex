@@ -85,14 +85,13 @@
 
   /* ── rows ─────────────────────────────────────────────────────────── */
   function tag(t) { return '<span class="tag' + (TONE[t] ? ' tag--' + TONE[t] : '') + '">' + esc(t) + '</span>'; }
-  /* price cell — one primary figure, then the qualifiers that matter:
-       asking price · MSRP with the saving · lease per month · 'Call for price' · price that IS the MSRP · no price */
+  /* price cell — only the export's own price fields:
+       Price, then Discount Price and Lease Price · Lease Term as the qualifiers under it */
   function priceCell(v) {
-    if (v.pm === 'call') return '<div class="price price--call"><span class="price__mode">Call for price</span></div>';
     if (v.p == null) return '<div class="price price--none" aria-label="No price">—</div>';
-    var h = '<div class="price' + (v.pm === 'msrp' ? ' price--msrp' : '') + '"><div class="price__v"><em>$</em>' + nf(v.p) + (v.pm === 'msrp' ? '<i class="price__tag" title="Client entered the MSRP as the price">MSRP</i>' : '') + '</div>';
-    if (v.msrp && v.msrp > v.p) h += '<div class="price__sub price__sub--msrp" title="MSRP ' + fmt(v.msrp) + ' · you save ' + fmt(v.msrp - v.p) + '"><s>' + fmt(v.msrp) + '</s><b>−' + kfmt(v.msrp - v.p) + '</b></div>';
-    if (v.lease) h += '<div class="price__sub price__sub--lease" title="Lease from ' + fmt(v.lease) + ' per month"><span>' + fmt(v.lease) + '<em>/mo</em></span><i>lease</i></div>';
+    var h = '<div class="price"><div class="price__v"><em>$</em>' + nf(v.p) + '</div>';
+    if (v.disc && v.disc < v.p) h += '<div class="price__sub price__sub--disc" title="Discount Price ' + fmt(v.disc) + ' · ' + fmt(v.p - v.disc) + ' off Price"><s>' + fmt(v.p) + '</s><b>' + fmt(v.disc) + '</b></div>';
+    if (v.lease) h += '<div class="price__sub price__sub--lease" title="Lease Price ' + fmt(v.lease) + ' per month' + (v.lt ? ' · Lease Term ' + v.lt + ' months' : '') + '"><span>' + fmt(v.lease) + '<em>/mo</em></span><i>lease' + (v.lt ? ' ' + v.lt : '') + '</i></div>';
     return h + '</div>';
   }
   function kfmt(n) { if (n < 1000) return '$' + nf(n); var k = (n / 1000).toFixed(1); return '$' + k.replace(/\.0$/, '') + 'K'; }
@@ -241,7 +240,7 @@
   function vehicleBody(v) {
     var b = band(v.d), has = function (t) { return v.f.indexOf(t) >= 0; }, m = market(v);
     var H = [
-      has('No price') ? ['bad', 'i-alert', 'No asking price'] : v.pm === 'call' ? ['ok', 'i-check', 'Call for price'] : ['ok', 'i-check', 'Priced'],
+      has('No price') ? ['bad', 'i-alert', 'No asking price'] : ['ok', 'i-check', 'Priced'],
       has('No photos') ? ['bad', 'i-alert', 'No photos'] : ['ok', 'i-check', nf(v.ph || 0) + ' photos'],
       has('Feed off') ? ['red', 'i-x', 'Excluded from feeds'] : ['ok', 'i-check', 'Feeding to partners'],
       has('Hidden') ? ['bad', 'i-alert', 'Hidden on site'] : ['ok', 'i-check', 'Shown on site'],
@@ -290,8 +289,8 @@
       img: '<div class="veh__img">' + (v.t ? '<img alt="' + esc(v.y + ' ' + v.mk + ' ' + v.md) + '" src="img/' + esc(v.t) + '"><span class="cnt">' + ic('i-cam') + nf(v.ph || 0) + ' photos</span>' : '<div class="none">' + ic('i-cam-off') + 'No photos uploaded<button class="btn btn--sm" type="button">' + ic('i-plus') + ' Upload photos</button></div>') + '</div>',
       meta: '<div class="veh__m"><span class="idtag">' + esc(v.s) + '</span><span class="mono">VIN ' + esc(v.vin) + '</span><span class="veh__st">Available</span>' + (v.lock ? '<span class="lock" title="Being edited by another user">' + ic('i-lock') + '</span>' : '') + '</div>',
       tags: (v.f.length ? '<div class="veh__tags">' + v.f.map(tag).join('') + '</div>' : ''),
-      kv: '<div class="veh__kv"><div><div class="v' + (v.p == null && v.pm !== 'call' ? ' warn' : '') + '">' + (v.pm === 'call' ? 'Call' : v.p == null ? 'No price' : fmt(v.p)) + '</div><div class="l">' + (v.pm === 'call' ? 'call for price' : v.pm === 'msrp' ? 'MSRP as price' : 'asking price') + '</div></div><div><div class="v" style="color:' + (b === 'stale' ? 'var(--danger)' : b === 'fresh' ? 'var(--ok)' : 'var(--ink)') + '">' + lab(v.d) + '</div><div class="l">' + nf(v.d) + ' days</div></div><div><div class="v">' + (v.ph || 0) + '</div><div class="l">photos</div></div></div>',
-      pricing: (v.msrp || v.lease || v.pm) ? '<div class="veh__pr">' + (v.msrp ? '<div><span>MSRP</span><b>' + fmt(v.msrp) + '</b></div>' + (v.p != null && v.msrp > v.p ? '<div><span>Discount</span><b class="ok">−' + fmt(v.msrp - v.p) + ' · ' + Math.round((v.msrp - v.p) / v.msrp * 100) + '%</b></div>' : '') : '') + (v.lease ? '<div><span>Lease</span><b>' + fmt(v.lease) + '/mo</b></div>' : '') + (v.pm === 'call' ? '<div><span>Price mode</span><b>Call for price</b></div>' : v.pm === 'msrp' ? '<div><span>Price mode</span><b>MSRP shown as price</b></div>' : '') + '</div>' : '',
+      kv: '<div class="veh__kv"><div><div class="v' + (v.p == null ? ' warn' : '') + '">' + (v.p == null ? 'No price' : fmt(v.p)) + '</div><div class="l">price</div></div><div><div class="v" style="color:' + (b === 'stale' ? 'var(--danger)' : b === 'fresh' ? 'var(--ok)' : 'var(--ink)') + '">' + lab(v.d) + '</div><div class="l">' + nf(v.d) + ' days</div></div><div><div class="v">' + (v.ph || 0) + '</div><div class="l">photos</div></div></div>',
+      pricing: (v.disc || v.inv || v.lease) ? '<div class="veh__pr">' + (v.disc ? '<div><span>Discount Price</span><b class="ok">' + fmt(v.disc) + '</b></div>' : '') + (v.inv ? '<div><span>Invoice (Cost) Price</span><b>' + fmt(v.inv) + '</b></div>' : '') + (v.lease ? '<div><span>Lease Price</span><b>' + fmt(v.lease) + '/mo</b></div>' : '') + (v.lt ? '<div><span>Lease Term</span><b>' + v.lt + ' months</b></div>' : '') + '</div>' : '',
       accs: acc('health', 'Merchandising health', healthSum, '<div class="health">' + H.map(function (h) { return '<div class="hl hl--' + h[0] + '"><i>' + ic(h[1]) + '</i>' + esc(h[2]) + '</div>'; }).join('') + '</div>') +
         acc('market', 'Market &amp; pricing', mktSum, mktIn, ' <span class="demo">Demo</span>') +
         acc('comps', 'Recent comps', '5 of ' + m.n + ' listings', compsIn, ' <span class="demo">Demo</span>') +

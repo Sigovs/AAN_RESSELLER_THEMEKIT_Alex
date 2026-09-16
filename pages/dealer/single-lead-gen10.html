@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lead · Chicago Motor Cars — AAN (Gen 10)</title>
 <script>try { var t = localStorage.getItem('aan-theme'); if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="all-vehicles-gen10.css?v=202609161036">
-<link rel="stylesheet" href="single-lead-gen10.css?v=202609161036">
+<link rel="stylesheet" href="all-vehicles-gen10.css?v=202609162220">
+<link rel="stylesheet" href="single-lead-gen10.css?v=202609162220">
 </head>
 <body>
 
@@ -160,12 +160,12 @@
     </div>
 
     <div class="value">
-      <div class="value__h"><span class="caps">Workflow</span><a class="s" href="#" data-act="dock">edit in panel</a></div>
+      <div class="value__h"><span class="caps">Activity</span><span class="s">this lead</span></div>
       <div class="kv" id="wf-kv"></div>
     </div>
 
-    <section class="attn" aria-label="Timeline">
-      <div class="attn__h"><h2><span class="full">Timeline</span><span class="short">Timeline</span></h2><span class="s" id="tl-s">created · modified · last email</span></div>
+    <section class="attn" aria-label="Lead facts">
+      <div class="attn__h"><h2><span class="full">Lead facts</span><span class="short">Facts</span></h2><span class="s" id="tl-s">source · provider · trace</span></div>
       <div class="attn__g" id="tl-g"></div>
     </section>
   </section>
@@ -253,16 +253,15 @@
         <div class="workflow-flags"><label class="flag"><input type="checkbox" id="wf-internet"><span>Internet</span></label><label class="flag"><input type="checkbox" id="wf-imc"><span>Mgmt checkoff</span></label></div>
         <div class="form__f form__f--wf"><span class="form__note">Status · rep · follow-up · flags</span><button class="btn btn--primary" type="submit" data-act="wf-save">Save</button></div>
       </form>
-      <div class="facts"><div class="caps">Lead facts</div><dl id="facts"></dl></div>
       <div class="facts"><div class="caps">Marketing UTM trace</div><pre class="utm" id="utm">[]</pre></div>
       <div class="facts"><label class="flag"><input type="checkbox" id="nl"><span>Newsletter</span></label></div>
     </div>
-    <div class="dock__f"></div>
+    <div class="dock__f"><span class="form__note">Unsaved changes</span><button class="btn btn--quiet btn--sm" type="button" data-act="wf-discard">Discard</button><button class="btn btn--primary btn--sm" type="button" data-act="wf-save">Save</button></div>
   </aside>
 </div>
 
-<script src="all-vehicles-gen10.data.js?v=202609161036"></script>
-<script src="all-leads-gen10.data.js?v=202609161036"></script>
-<script src="single-lead-gen10.js?v=202609161036"></script>
+<script src="all-vehicles-gen10.data.js?v=202609162230"></script>
+<script src="all-leads-gen10.data.js?v=202609162230"></script>
+<script src="single-lead-gen10.js?v=202609162230"></script>
 </body>
 </html>
