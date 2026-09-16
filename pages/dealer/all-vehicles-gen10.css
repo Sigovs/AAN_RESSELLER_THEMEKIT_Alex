@@ -997,3 +997,25 @@ body { overflow: auto; }
 @keyframes meter-in { from { width: 0; } }
 .attn .ar:hover .ar__m i, .attn .ar:focus-visible .ar__m i { animation: meter-in .65s cubic-bezier(.2,.7,.2,1) both; }
 @media (prefers-reduced-motion: reduce) { .attn .ar:hover .ar__m i, .attn .ar:focus-visible .ar__m i { animation: none; } }
+
+/* ── price cell: asking price first; MSRP saving, lease and price mode as quiet qualifiers under it ── */
+.field { --cols: 26px 92px 104px 46px 104px minmax(100px, 1fr) 84px 92px 118px 80px 218px 76px 108px; }
+.price { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; line-height: 1.1; }
+.price__v { display: inline-flex; align-items: baseline; gap: 5px; }
+.price__tag { font-style: normal; font: 700 9.5px/1 var(--font); letter-spacing: .08em; padding: 3px 4px; border-radius: 4px; color: var(--ink-3); background: var(--wash); box-shadow: inset 0 0 0 1px var(--line); }
+.price__sub { display: inline-flex; align-items: baseline; gap: 5px; font-size: 11.5px; font-weight: 500; color: var(--ink-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.price__sub s { text-decoration: line-through; text-decoration-color: var(--ink-4); color: var(--ink-4); }
+.price__sub--msrp b { color: var(--ok); font-weight: 700; }
+.price__sub--lease em { font-style: normal; color: var(--ink-4); }
+.price__sub--lease i { font-style: normal; font-size: 9.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--brand); }
+.price--call .price__mode { font-size: 13px; font-weight: 600; color: var(--ink-2); padding: 3px 7px; border-radius: 6px; background: var(--wash); box-shadow: inset 0 0 0 1px var(--line); white-space: nowrap; }
+.row.open .price__sub, .row.open .price__sub s, .row.open .price__sub--lease em { color: rgba(255,255,255,.75); }
+.row.open .price__sub--msrp b { color: #b9f0d2; }
+.row.open .price__sub--lease i { color: #cfe0ff; }
+.row.open .price__tag, .row.open .price--call .price__mode { color: #fff; background: rgba(255,255,255,.16); box-shadow: none; }
+.app.dock-open .field .price__sub { display: none; }
+/* sheet: pricing lines under the stats */
+.veh__pr { display: grid; gap: 0; margin-top: 10px; padding: 4px 14px; border-radius: 12px; background: var(--well); }
+.veh__pr div { display: flex; justify-content: space-between; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line-2); font-size: 13px; }
+.veh__pr div:last-child { border-bottom: 0; }
+.veh__pr span { color: var(--ink-3); } .veh__pr b { font-weight: 600; font-variant-numeric: tabular-nums; } .veh__pr b.ok { color: var(--ok); }

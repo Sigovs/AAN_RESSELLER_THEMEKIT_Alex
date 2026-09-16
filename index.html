@@ -137,6 +137,42 @@
   .pr b { display: block; font-size: 15px; margin-bottom: 6px; }
   .pr span { font-size: 13px; color: var(--on-2); }
 
+  /* ── open questions ── */
+  .oq { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 28px; align-items: start; padding: 34px 36px; border-radius: 22px; background: rgba(255,255,255,.04); box-shadow: inset 0 0 0 1px var(--line-on); }
+  .oq + .oq { margin-top: 22px; }
+  .oq h3 { margin: 10px 0 6px; font-size: 26px; letter-spacing: -.025em; font-weight: 700; font-stretch: 92%; }
+  .oq .q { margin: 0 0 14px; font-size: 15px; color: var(--on-2); }
+  .oq .q b { color: var(--on); }
+  .oq h4 { margin: 18px 0 8px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--on-3); }
+  .oq ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+  .oq li { position: relative; padding-left: 18px; font-size: 14px; color: var(--on-2); }
+  .oq li::before { content: ""; position: absolute; left: 0; top: 9px; width: 7px; height: 7px; border-radius: 50%; background: var(--violet); box-shadow: 0 0 8px rgba(159,139,255,.8); }
+  .oq li b { color: var(--on); font-weight: 600; }
+  .oq .rule { display: grid; grid-template-columns: 150px 1fr; gap: 6px 14px; margin: 0; font-size: 14px; }
+  .oq .rule dt { color: var(--on-3); font-family: var(--mono); font-size: 12.5px; padding-top: 2px; }
+  .oq .rule dd { margin: 0; color: var(--on-2); }
+  .oq .rule dd b { color: var(--on); font-weight: 600; }
+  .oq .status { display: inline-flex; gap: 8px; align-items: center; margin-top: 16px; font-size: 13px; color: var(--on-3); }
+  /* price cell mock — the actual Gen 10 rendering, on paper */
+  .paper { background: var(--sheet); color: var(--ink); border-radius: 14px; padding: 6px 0; box-shadow: 0 30px 60px -30px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.08); overflow: hidden; }
+  .paper .hd { display: grid; grid-template-columns: 1fr 132px 96px; gap: 12px; padding: 8px 16px; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); border-bottom: 1px solid var(--line); }
+  .paper .r { display: grid; grid-template-columns: 1fr 132px 96px; gap: 12px; align-items: center; padding: 10px 16px; border-bottom: 1px solid var(--line); font-size: 14px; }
+  .paper .r:last-child { border-bottom: 0; }
+  .paper .r .n b { display: block; font-weight: 600; } .paper .r .n span { font-size: 12px; color: var(--ink-3); }
+  .paper .p { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .paper .p .v { font-size: 16px; font-weight: 600; letter-spacing: -.005em; } .paper .p .v em { font-style: normal; color: var(--ink-3); font-weight: 400; }
+  .paper .p .s { display: inline-flex; align-items: baseline; gap: 5px; font-size: 11.5px; font-weight: 500; color: var(--ink-3); white-space: nowrap; }
+  .paper .p .s s { color: var(--ink-4); text-decoration-color: var(--ink-4); } .paper .p .s b { color: #178a52; font-weight: 700; }
+  .paper .p .s i { font-style: normal; font-size: 9.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--brand); }
+  .paper .p .s em { font-style: normal; color: var(--ink-4); }
+  .paper .p .tag { font-style: normal; font-size: 9.5px; font-weight: 700; letter-spacing: .08em; padding: 3px 4px; border-radius: 4px; color: var(--ink-3); background: #edf0f4; box-shadow: inset 0 0 0 1px var(--line); margin-left: 5px; }
+  .paper .p .call { font-size: 13px; font-weight: 600; color: var(--ink-2); padding: 3px 7px; border-radius: 6px; background: #edf0f4; box-shadow: inset 0 0 0 1px var(--line); }
+  .paper .p .none { color: var(--ink-4); }
+  .paper .h { display: inline-flex; gap: 4px; justify-self: end; }
+  .paper .t { display: inline-flex; align-items: center; height: 20px; padding: 0 6px; border-radius: 5px; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #945000; background: #fff2dc; box-shadow: inset 0 0 0 1px #efcd93; }
+  .paper .ok { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: #178a52; }
+  @media (max-width: 980px) { .oq { grid-template-columns: 1fr; } .oq .rule { grid-template-columns: 1fr; } }
+
   footer { padding: 36px 0 60px; color: var(--on-3); font-size: 13px; border-top: 1px solid var(--line-on); }
   footer b { color: var(--on-2); }
 
@@ -159,6 +195,7 @@
     <a href="#candidates">Candidates</a>
     <a href="#compare">Compare</a>
     <a href="#journey">Journey</a>
+    <a href="#questions">Open questions</a>
     <a href="#principles">Principles</a>
     <a class="go" href="pages/dealer/all-vehicles-gen10.html">Open Gen 10 →</a>
   </nav>
@@ -206,6 +243,7 @@
         <li><b>Page scroll</b> — sticky band and column header, edge to edge</li>
         <li><b>Full row</b> — Stock · Year · Make · Model · Trim · Colour · Price · Status · Health · Age · Actions</li>
         <li><b>Attention as filters</b> — tap a queue item, the list narrows</li>
+        <li><b>Price modes</b> — MSRP saving, lease, call for price <a href="#questions" style="color:#8fb3ff">↓</a></li>
       </ul>
       <div class="cta">
         <a class="btn btn--p" href="pages/dealer/all-vehicles-gen10.html">Open live →</a>
@@ -321,6 +359,73 @@
     <div class="g">
       <img src="previews/gen10.jpg" alt="">
       <div class="b"><div class="n"><span class="badge badge--a">Candidate A</span><span class="k">Gen 10</span></div><h4>Bento Command</h4><p>Gen 8's language, recomposed: intelligence as a heavy-top bento, the list full width, the vehicle as an inline accordion sheet.</p><div class="l"><a class="p" href="pages/dealer/all-vehicles-gen10.html">Live</a><a href="reference/archive/redesign-gen10-1440-light.png">Still</a><a href="reference/archive/redesign-gen10-1440-vehicle.png">Vehicle</a><a href="reference/archive/redesign-gen10-1440-dark-filters.png">Dark</a></div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ── OPEN QUESTIONS ── -->
+<section id="questions"><div class="wrap">
+  <div class="sec-h"><span class="caps">Open questions</span><h2>Price — what a single field cannot say</h2><p>Two questions the current page leaves open, with a proposal and the rule set. Gen 10 already renders every case on demo cars.</p></div>
+
+  <div class="oq">
+    <div>
+      <span class="badge badge--muted">Question 1</span>
+      <h3>Lease price</h3>
+      <p class="q">Some dealers list a monthly lease next to the asking price; most don't, and a car can have either, both or neither. <b>Where does it live, and how do we show it without stretching every row for the few that have one?</b></p>
+      <h4>Proposal</h4>
+      <ul>
+        <li><b>Lease is a qualifier, not a second price.</b> The asking price stays the one figure in the Price column; the lease sits under it as a quiet 11.5px line — <b>$2,450/mo</b> with a small LEASE mark — only on cars that have one.</li>
+        <li><b>Rows keep one height.</b> The 74px row already has room for a primary figure plus up to two qualifier lines; nothing reflows when a lease appears.</li>
+        <li><b>The vehicle sheet spells it out.</b> Under the stats, a Pricing block lists MSRP, Discount and Lease as label / value rows — the place for the full numbers and, later, the term and down payment.</li>
+        <li><b>Filterable.</b> "Has lease price" becomes a facet in Merchandising, next to "Has photos", so a lease campaign can be worked as a list.</li>
+        <li><b>Feeds.</b> Lease goes out as its own field, never concatenated into the price string.</li>
+      </ul>
+      <h4>Rules</h4>
+      <dl class="rule">
+        <dt>lease = null</dt><dd>Nothing shown. No placeholder, no empty line.</dd>
+        <dt>lease &gt; 0, price set</dt><dd>Price first, <b>lease line under it</b>. Sort and price facets use the asking price only.</dd>
+        <dt>lease &gt; 0, no price</dt><dd>Price cell shows <b>—</b> and the lease line; Health still flags <b>NO PRICE</b>. A lease alone does not satisfy the price check.</dd>
+        <dt>Filters open</dt><dd>Qualifier lines hide (narrow list); the sheet still has them.</dd>
+      </dl>
+      <div class="status"><span class="badge badge--a">In Gen 10</span> Ferrari 812 GTS, Toyota Supra, Mercedes G550 — lease on demo data</div>
+    </div>
+    <div class="paper">
+      <div class="hd"><span>Vehicle</span><span style="text-align:right">Price</span><span style="text-align:right">Health</span></div>
+      <div class="r"><div class="n"><b>2023 Ferrari 812 GTS</b><span>lease only</span></div><div class="p"><span class="v"><em>$</em>1,099,500</span><span class="s"><span>$9,800<em>/mo</em></span><i>lease</i></span></div><div class="h"><span class="ok">✓ OK</span></div></div>
+      <div class="r"><div class="n"><b>2018 Mercedes-Benz G550</b><span>MSRP, discount and lease</span></div><div class="p"><span class="v"><em>$</em>199,500</span><span class="s"><s>$214,900</s><b>−$15.4K</b></span><span class="s"><span>$2,450<em>/mo</em></span><i>lease</i></span></div><div class="h"><span class="ok">✓ OK</span></div></div>
+      <div class="r"><div class="n"><b>2010 Terex PT100F</b><span>no price, no lease</span></div><div class="p"><span class="v none">—</span></div><div class="h"><span class="t">No price</span></div></div>
+    </div>
+  </div>
+
+  <div class="oq">
+    <div>
+      <span class="badge badge--muted">Question 2</span>
+      <h3>MSRP, "OFF", text in the price field</h3>
+      <p class="q">Clients type things into the price that are not an asking price: the MSRP itself, "$5,000 OFF", "Call", "Sale". Today it is one free field, so the list, the feeds and the filters cannot tell them apart. <b>How do we show what the client meant without changing what they typed?</b></p>
+      <h4>Proposal</h4>
+      <ul>
+        <li><b>One price, plus a price mode.</b> The field stays numeric; a small mode next to it says what the number is: <b>Asking</b> (default) · <b>MSRP</b> · <b>Call for price</b>. Anything a client types that is not a number is parsed into a mode on save — "MSRP" → MSRP, "Call" → Call for price — and the client sees the mode we picked.</li>
+        <li><b>MSRP is its own field.</b> When both MSRP and asking price exist, the row shows the asking price with the MSRP struck out and the saving in green: <b>$100,800 · <s>$118,500</s> −$17.7K</b>. "OFF" is never typed — it is computed.</li>
+        <li><b>MSRP-as-price is marked, not hidden.</b> If the client's number is the MSRP, the row shows it with a small <b>MSRP</b> tag, so nobody mistakes a sticker price for a deal price.</li>
+        <li><b>"Call for price" is a decision, not an error.</b> The cell shows a quiet <b>Call for price</b> pill; Health shows OK, not NO PRICE. Feeds send the call-for-price flag instead of a number.</li>
+        <li><b>The Health column stays honest.</b> NO PRICE means the client has not decided; Call for price means they have. Two different queues for the manager.</li>
+      </ul>
+      <h4>Rules</h4>
+      <dl class="rule">
+        <dt>mode = asking</dt><dd>Number as today. If MSRP is set and higher: struck MSRP + saving under it.</dd>
+        <dt>mode = msrp</dt><dd>Number with an <b>MSRP</b> tag. Sorting and ranges treat it as a price; feeds send it as MSRP.</dd>
+        <dt>mode = call</dt><dd><b>Call for price</b> pill, no number. Health OK. Excluded from price ranges; sorts after priced cars.</dd>
+        <dt>typed "5,000 OFF"</dt><dd>Stored as discount only if MSRP exists (price = MSRP − 5,000); otherwise rejected with a hint to set MSRP first.</dd>
+        <dt>typed text</dt><dd>Never shown raw in the list. Unrecognised text is kept in the record and surfaced in the sheet as "Price note".</dd>
+      </dl>
+      <div class="status"><span class="badge badge--a">In Gen 10</span> Kenworth W900L (MSRP + saving), Peterbilt 384 (MSRP as price), Dodge Viper (Call for price)</div>
+    </div>
+    <div class="paper">
+      <div class="hd"><span>Vehicle</span><span style="text-align:right">Price</span><span style="text-align:right">Health</span></div>
+      <div class="r"><div class="n"><b>2016 Kenworth W900L</b><span>asking price under MSRP</span></div><div class="p"><span class="v"><em>$</em>100,800</span><span class="s"><s>$118,500</s><b>−$17.7K</b></span></div><div class="h"><span class="ok">✓ OK</span></div></div>
+      <div class="r"><div class="n"><b>2010 Peterbilt 384</b><span>client typed the MSRP</span></div><div class="p"><span class="v"><em>$</em>42,800<span class="tag">MSRP</span></span></div><div class="h"><span class="ok">✓ OK</span></div></div>
+      <div class="r"><div class="n"><b>2014 Dodge SRT Viper</b><span>client typed "Call"</span></div><div class="p"><span class="call">Call for price</span></div><div class="h"><span class="ok">✓ OK</span></div></div>
+      <div class="r"><div class="n"><b>2005 Porsche Carrera GT</b><span>nothing entered</span></div><div class="p"><span class="v none">—</span></div><div class="h"><span class="t">No price</span></div></div>
     </div>
   </div>
 </div></section>

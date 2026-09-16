@@ -85,6 +85,17 @@
 
   /* ── rows ─────────────────────────────────────────────────────────── */
   function tag(t) { return '<span class="tag' + (TONE[t] ? ' tag--' + TONE[t] : '') + '">' + esc(t) + '</span>'; }
+  /* price cell — one primary figure, then the qualifiers that matter:
+       asking price · MSRP with the saving · lease per month · 'Call for price' · price that IS the MSRP · no price */
+  function priceCell(v) {
+    if (v.pm === 'call') return '<div class="price price--call"><span class="price__mode">Call for price</span></div>';
+    if (v.p == null) return '<div class="price price--none" aria-label="No price">—</div>';
+    var h = '<div class="price' + (v.pm === 'msrp' ? ' price--msrp' : '') + '"><div class="price__v"><em>$</em>' + nf(v.p) + (v.pm === 'msrp' ? '<i class="price__tag" title="Client entered the MSRP as the price">MSRP</i>' : '') + '</div>';
+    if (v.msrp && v.msrp > v.p) h += '<div class="price__sub price__sub--msrp" title="MSRP ' + fmt(v.msrp) + ' · you save ' + fmt(v.msrp - v.p) + '"><s>' + fmt(v.msrp) + '</s><b>−' + kfmt(v.msrp - v.p) + '</b></div>';
+    if (v.lease) h += '<div class="price__sub price__sub--lease" title="Lease from ' + fmt(v.lease) + ' per month"><span>' + fmt(v.lease) + '<em>/mo</em></span><i>lease</i></div>';
+    return h + '</div>';
+  }
+  function kfmt(n) { if (n < 1000) return '$' + nf(n); var k = (n / 1000).toFixed(1); return '$' + k.replace(/\.0$/, '') + 'K'; }
   function row(v) {
     var b = band(v.d), max = S.dock === 'filters' ? 1 : 2, tags = v.f.slice(0, max), rest = v.f.length - tags.length;
     var name = v.y + ' ' + v.mk + ' ' + v.md;
@@ -97,7 +108,7 @@
       '<div class="md" title="' + esc(v.md) + '">' + esc(v.md) + '</div>' +
       '<div class="trim" title="' + esc(v.tr) + '">' + (v.tr ? esc(v.tr) : '<i>—</i>') + '</div>' +
       '<div class="ext" title="' + esc(v.c) + '"><span class="sw" style="--c:' + v.hx + '"></span><span>' + esc(v.c) + '</span></div>' +
-      (v.p != null ? '<div class="price"><em>$</em>' + nf(v.p) + '</div>' : '<div class="price price--none" aria-label="No price">—</div>') +
+      priceCell(v) +
       '<div class="st"><span class="stat stat--' + (S.lane === 'Sold' ? 'sold' : S.lane === 'Staging' ? 'staging' : 'ok') + '">' + (S.lane === 'All' ? 'Available' : esc(S.lane)) + '</span></div>' +
       '<div class="tags">' + (v.f.length ? tags.map(tag).join('') + (rest > 0 ? '<span class="tag tag--more" title="' + esc(v.f.slice(tags.length).join(' · ')) + '">+' + rest + '</span>' : '') : '<span class="okmark" title="No attention flags">' + ic('i-check') + 'OK</span>') + '</div>' +
       '<div class="age age--' + b + '" title="' + nf(v.d) + ' days in stock"><i style="--w:' + Math.min(100, Math.round(v.d / 730 * 100)) + '%;--b:' + COL[b] + '"></i>' + lab(v.d) + '</div>' +
@@ -223,14 +234,14 @@
       ab('btn--sheet', 'i-file', 'Carfax') + ab('btn--sheet', 'i-rss', has('Feed off') ? 'Include in feeds' : 'Exclude feeds') +
       ab('btn--sheet', 'i-eye', has('Hidden') ? 'Show on site' : 'Hide on site') + ab('btn--sheet btn--del', 'i-trash', 'Delete…') + '</div>';
     var p = vehicleBody(v);
-    return '<div class="exp__l">' + p.img + p.kv + acts + '</div>' +
+    return '<div class="exp__l">' + p.img + p.kv + (p.pricing || '') + acts + '</div>' +
       '<div class="exp__r"><div class="exp__top"><div><h3 class="veh__n"><em>' + v.y + '</em>' + esc(v.mk) + ' ' + esc(v.md) + '</h3>' + p.meta + p.tags + '</div><button class="exp__x" type="button" data-act="close-veh" aria-label="Close vehicle">' + ic('i-x') + '</button></div><div class="exp__accs">' + p.accs + '</div></div>';
   }
 
   function vehicleBody(v) {
     var b = band(v.d), has = function (t) { return v.f.indexOf(t) >= 0; }, m = market(v);
     var H = [
-      has('No price') ? ['bad', 'i-alert', 'No asking price'] : ['ok', 'i-check', 'Priced'],
+      has('No price') ? ['bad', 'i-alert', 'No asking price'] : v.pm === 'call' ? ['ok', 'i-check', 'Call for price'] : ['ok', 'i-check', 'Priced'],
       has('No photos') ? ['bad', 'i-alert', 'No photos'] : ['ok', 'i-check', nf(v.ph || 0) + ' photos'],
       has('Feed off') ? ['red', 'i-x', 'Excluded from feeds'] : ['ok', 'i-check', 'Feeding to partners'],
       has('Hidden') ? ['bad', 'i-alert', 'Hidden on site'] : ['ok', 'i-check', 'Shown on site'],
@@ -279,7 +290,8 @@
       img: '<div class="veh__img">' + (v.t ? '<img alt="' + esc(v.y + ' ' + v.mk + ' ' + v.md) + '" src="img/' + esc(v.t) + '"><span class="cnt">' + ic('i-cam') + nf(v.ph || 0) + ' photos</span>' : '<div class="none">' + ic('i-cam-off') + 'No photos uploaded<button class="btn btn--sm" type="button">' + ic('i-plus') + ' Upload photos</button></div>') + '</div>',
       meta: '<div class="veh__m"><span class="idtag">' + esc(v.s) + '</span><span class="mono">VIN ' + esc(v.vin) + '</span><span class="veh__st">Available</span>' + (v.lock ? '<span class="lock" title="Being edited by another user">' + ic('i-lock') + '</span>' : '') + '</div>',
       tags: (v.f.length ? '<div class="veh__tags">' + v.f.map(tag).join('') + '</div>' : ''),
-      kv: '<div class="veh__kv"><div><div class="v' + (v.p == null ? ' warn' : '') + '">' + (v.p == null ? 'No price' : fmt(v.p)) + '</div><div class="l">asking price</div></div><div><div class="v" style="color:' + (b === 'stale' ? 'var(--danger)' : b === 'fresh' ? 'var(--ok)' : 'var(--ink)') + '">' + lab(v.d) + '</div><div class="l">' + nf(v.d) + ' days</div></div><div><div class="v">' + (v.ph || 0) + '</div><div class="l">photos</div></div></div>',
+      kv: '<div class="veh__kv"><div><div class="v' + (v.p == null && v.pm !== 'call' ? ' warn' : '') + '">' + (v.pm === 'call' ? 'Call' : v.p == null ? 'No price' : fmt(v.p)) + '</div><div class="l">' + (v.pm === 'call' ? 'call for price' : v.pm === 'msrp' ? 'MSRP as price' : 'asking price') + '</div></div><div><div class="v" style="color:' + (b === 'stale' ? 'var(--danger)' : b === 'fresh' ? 'var(--ok)' : 'var(--ink)') + '">' + lab(v.d) + '</div><div class="l">' + nf(v.d) + ' days</div></div><div><div class="v">' + (v.ph || 0) + '</div><div class="l">photos</div></div></div>',
+      pricing: (v.msrp || v.lease || v.pm) ? '<div class="veh__pr">' + (v.msrp ? '<div><span>MSRP</span><b>' + fmt(v.msrp) + '</b></div>' + (v.p != null && v.msrp > v.p ? '<div><span>Discount</span><b class="ok">−' + fmt(v.msrp - v.p) + ' · ' + Math.round((v.msrp - v.p) / v.msrp * 100) + '%</b></div>' : '') : '') + (v.lease ? '<div><span>Lease</span><b>' + fmt(v.lease) + '/mo</b></div>' : '') + (v.pm === 'call' ? '<div><span>Price mode</span><b>Call for price</b></div>' : v.pm === 'msrp' ? '<div><span>Price mode</span><b>MSRP shown as price</b></div>' : '') + '</div>' : '',
       accs: acc('health', 'Merchandising health', healthSum, '<div class="health">' + H.map(function (h) { return '<div class="hl hl--' + h[0] + '"><i>' + ic(h[1]) + '</i>' + esc(h[2]) + '</div>'; }).join('') + '</div>') +
         acc('market', 'Market &amp; pricing', mktSum, mktIn, ' <span class="demo">Demo</span>') +
         acc('comps', 'Recent comps', '5 of ' + m.n + ' listings', compsIn, ' <span class="demo">Demo</span>') +
