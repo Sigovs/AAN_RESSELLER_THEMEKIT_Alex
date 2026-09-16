@@ -417,7 +417,11 @@
   (function () {
     var cmd = $('.cmd'); if (!cmd) return;
     var stuck = null;
-    function onScroll() { var s = window.scrollY > 0 && cmd.getBoundingClientRect().top <= 56.5; if (s !== stuck) { stuck = s; cmd.classList.toggle('cmd--stuck', s); } }
+    var hd = $('.hd'), hdStuck = null;
+    function onScroll() {
+      var s = window.scrollY > 0 && cmd.getBoundingClientRect().top <= 56.5; if (s !== stuck) { stuck = s; cmd.classList.toggle('cmd--stuck', s); }
+      if (hd) { var h = window.scrollY > 0 && hd.getBoundingClientRect().top <= 114.5; if (h !== hdStuck) { hdStuck = h; hd.classList.toggle('hd--stuck', h); } }
+    }
     window.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', onScroll); onScroll();
   })();
 

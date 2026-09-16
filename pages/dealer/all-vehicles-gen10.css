@@ -845,3 +845,31 @@ body { overflow: auto; }
 .qf .facet__cnt { min-width: 18px; height: 18px; font-size: 11px; }
 .sub__shown { flex: none; margin-left: 10px; font-size: 13px; color: var(--ink-3); white-space: nowrap; }
 .app.dock-open .qf .c-sec { display: none; }
+.foot { padding: 0 16px; }
+.sub { padding: 6px 16px; }
+
+/* ── selected row: flat grey tab — square corners, no shadow; it simply becomes the top of the sheet ── */
+.row.open, .row.open:hover { border-radius: 0; box-shadow: none; }
+.exp__in { box-shadow: inset 0 0 0 1px #6A7285; border-radius: 0 0 14px 14px; }
+[data-theme="dark"] .exp__in { box-shadow: inset 0 0 0 1px #4f576a; }
+.row.open::before { display: none; }
+.exp__in::before { display: none; }
+
+/* ── stacking order while scrolling: band over everything, then the scope line (its popups), then the sticky
+      column header, then the open row — so nothing slides over the grey band or the header ── */
+.cmd { z-index: 6; }
+.sub { z-index: 5; }
+.hd { z-index: 4; }
+.row.open { z-index: 3; }
+
+/* ── column header: casts a shadow only once it is stuck under the band ── */
+.hd { transition: box-shadow var(--dur) var(--ease); }
+.hd--stuck { box-shadow: 0 8px 16px -8px rgba(14,20,33,.22), 0 1px 0 var(--line-2); }
+[data-theme="dark"] .hd--stuck { box-shadow: 0 8px 16px -8px rgba(0,0,0,.6), 0 1px 0 var(--line-2); }
+
+/* ── stuck column header also runs edge to edge (background + shadow only; the columns stay on the row grid) ── */
+.hd { isolation: isolate; }
+.hd--stuck { box-shadow: none; }
+.hd--stuck::before { content: ""; position: absolute; top: 0; bottom: -1px; left: calc(var(--gap) * -1); right: calc(var(--gap) * -1); z-index: -1; background: var(--sheet); border-bottom: 1px solid var(--line-2); box-shadow: 0 8px 16px -8px rgba(14,20,33,.22); }
+[data-theme="dark"] .hd--stuck::before { box-shadow: 0 8px 16px -8px rgba(0,0,0,.6); }
+.app.dock-open .hd--stuck::before { right: 0; }
