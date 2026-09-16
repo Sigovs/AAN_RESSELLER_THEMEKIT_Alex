@@ -992,3 +992,8 @@ body { overflow: auto; }
 [data-theme="dark"] .row:hover .tags { background: rgba(255,255,255,.06); }
 .hd > span:nth-child(11) { margin: -4px -6px; }
 .field { --cols: 26px 92px 104px 46px 104px minmax(100px, 1fr) 96px 92px 88px 86px 218px 76px 108px; }
+
+/* ── on hover the glowing meter drives in from zero ── */
+@keyframes meter-in { from { width: 0; } }
+.attn .ar:hover .ar__m i, .attn .ar:focus-visible .ar__m i { animation: meter-in .65s cubic-bezier(.2,.7,.2,1) both; }
+@media (prefers-reduced-motion: reduce) { .attn .ar:hover .ar__m i, .attn .ar:focus-visible .ar__m i { animation: none; } }
