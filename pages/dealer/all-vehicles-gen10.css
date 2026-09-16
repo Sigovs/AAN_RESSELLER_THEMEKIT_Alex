@@ -804,3 +804,25 @@ body { overflow: auto; }
 .field { --cols: 26px 92px 104px 46px 104px minmax(100px, 1fr) 96px 92px 90px 88px 204px 76px 108px; }
 .tags { min-width: 0; overflow: hidden; }
 .field { --cols: 26px 92px 104px 46px 104px minmax(100px, 1fr) 96px 92px 88px 86px 210px 76px 108px; }
+
+/* ── stuck state: the band goes edge to edge and fully grey, no white shoulders ── */
+.cmd { transition: margin var(--dur) var(--ease), border-radius var(--dur) var(--ease); }
+.cmd--stuck { margin-left: calc(var(--gap) * -1); margin-right: calc(var(--gap) * -1); border-radius: 0; padding-left: 32px; padding-right: 32px; }
+.cmd--stuck::after { border-color: #6A7285; border-radius: 0; }
+
+.hd > span { white-space: nowrap; overflow: hidden; }
+.cmd--stuck { margin-right: calc(var(--gap) * -2); }   /* the empty dock track adds one more gap on the right */
+.app.dock-open .cmd--stuck { margin-right: 0; }
+
+/* ── one vertical rhythm: search box, scope line, checkbox column, sheet image and header cells all start at the same x ── */
+.cmd--stuck { padding-left: 32px; padding-right: 48px; }
+.app.dock-open .cmd--stuck { padding-right: 16px; }
+.scope { padding-left: 16px; padding-right: 16px; }
+.exp__in { padding-left: 16px; padding-right: 16px; }
+.exp__in::before { left: 0; }
+
+/* ── the empty dock track no longer keeps a phantom 16px gap: field, bento and page head share one right edge ── */
+.app { column-gap: 0; }
+.app.dock-open { column-gap: var(--gap); }
+.cmd--stuck { margin-right: calc(var(--gap) * -1); padding-right: 32px; }
+.app.dock-open .cmd--stuck { margin-right: 0; padding-right: 16px; }

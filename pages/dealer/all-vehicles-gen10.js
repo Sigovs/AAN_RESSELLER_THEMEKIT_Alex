@@ -412,5 +412,13 @@
     else if ('filters' in P) showFilters();
     else render();
   })();
+  /* command band: inset while the sheet top is visible, edge-to-edge grey once it sticks under the platform bar */
+  (function () {
+    var cmd = $('.cmd'); if (!cmd) return;
+    var stuck = null;
+    function onScroll() { var s = window.scrollY > 0 && cmd.getBoundingClientRect().top <= 56.5; if (s !== stuck) { stuck = s; cmd.classList.toggle('cmd--stuck', s); } }
+    window.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', onScroll); onScroll();
+  })();
+
   window.G8demo = { showVehicle: showVehicle, closeVehicle: closeVehicle, showFilters: showFilters, closeDock: closeDock, S: S, V: V };
 })();
