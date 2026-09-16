@@ -106,6 +106,20 @@
   .shots img { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: top; }
   .shots span { display: block; font-size: 11px; color: var(--on-3); padding: 5px 8px; background: rgba(255,255,255,.04); }
 
+  /* ── the Gen 10 family: pages built on the same system, side by side ── */
+  .fam { grid-column: 1 / -1; margin-top: 8px; padding-top: 26px; border-top: 1px solid var(--line-on); }
+  .fam__h { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+  .fam__h b { font-size: 15px; } .fam__h span { font-size: 13px; color: var(--on-3); }
+  .fam__g { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .pg { display: grid; grid-template-columns: 132px 1fr; gap: 14px; align-items: start; padding: 12px; border-radius: 14px; background: rgba(255,255,255,.04); box-shadow: inset 0 0 0 1px var(--line-on); text-decoration: none; color: inherit; transition: transform .15s ease, box-shadow .15s ease; }
+  .pg:hover { transform: translateY(-2px); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18), 0 20px 40px -20px rgba(0,0,0,.7); }
+  .pg img { width: 132px; aspect-ratio: 16/10; object-fit: cover; object-position: top; border-radius: 8px; background: #1a2334; }
+  .pg b { display: block; font-size: 15px; letter-spacing: -.01em; }
+  .pg small { display: block; font-size: 12px; color: var(--on-3); margin: 2px 0 6px; }
+  .pg p { margin: 0; font-size: 12.5px; color: var(--on-2); }
+  .pg .k { display: block; margin-top: 8px; }
+  .pg--new b::after { content: "new"; margin-left: 8px; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8fe6ba; vertical-align: middle; }
+
   /* ── compare ── */
   .cmp { width: 100%; border-collapse: collapse; border-radius: 16px; overflow: hidden; box-shadow: inset 0 0 0 1px var(--line-on); background: rgba(255,255,255,.03); }
   .cmp th, .cmp td { padding: 14px 18px; text-align: left; vertical-align: top; font-size: 14px; border-bottom: 1px solid var(--line-on); }
@@ -176,7 +190,7 @@
   /* ── robot avatar in the corner ── */
   .robo { position: fixed; right: 18px; bottom: 14px; z-index: 30; width: 168px; height: 168px; display: grid; place-items: center; filter: drop-shadow(0 18px 24px rgba(0,0,0,.55)); will-change: transform; transform: translate3d(0, 40px, 0) scale(.8); opacity: 0; transition: opacity .6s ease; }
   .robo--ready { opacity: 1; }
-  .beam { position: absolute; left: 50%; top: 22%; width: 26px; height: 26px; margin-left: -13px; border-radius: 50%; pointer-events: none; opacity: 0; background: radial-gradient(circle, rgba(200,232,255,1) 0, rgba(77,160,255,.85) 30%, rgba(77,134,255,0) 70%); filter: blur(2px); transform: scale(.4); transition: opacity .25s ease, transform .35s cubic-bezier(.2,.7,.2,1); }
+  .beam { position: absolute; left: 50%; top: 22%; width: 26px; height: 26px; margin-left: -13px; border-radius: 50%; pointer-events: none; opacity: 0; background: radial-gradient(circle, rgba(255,246,200,1) 0, rgba(255,204,64,.9) 30%, rgba(255,190,40,0) 70%); filter: blur(2px); transform: scale(.4); transition: opacity .25s ease, transform .35s cubic-bezier(.2,.7,.2,1); }
   .robo--lit .beam { opacity: 1; transform: scale(2.2); animation: beam-pulse 1.4s ease-in-out infinite; }
   @keyframes beam-pulse { 0%, 100% { transform: scale(2.0); } 50% { transform: scale(2.6); } }
   .robo model-viewer { width: 100%; height: 100%; background: transparent; --poster-color: transparent; cursor: grab; }
@@ -238,6 +252,7 @@
     <div class="facts">
       <div><b>10</b><span>generations</span></div>
       <div><b>2</b><span>candidates</span></div>
+      <div><b>2</b><span>pages on Gen 10</span></div>
       <div><b>1440</b><span>light &amp; dark, live</span></div>
       <div><b>359</b><span>vehicles, demo data</span></div>
     </div>
@@ -288,6 +303,14 @@
       <img class="s3" src="reference/archive/redesign-gen10-1440-scrolled.png" alt="">
       <img class="s2" src="reference/archive/redesign-gen10-1440-vehicle.png" alt="">
       <img class="s1" src="reference/archive/redesign-gen10-1440-light.png" alt="Gen 10">
+    </div>
+    <div class="fam">
+      <div class="fam__h"><b>The Gen 10 family</b><span>every page on the same system — top bar · bento on top · search-first band · full rows · detail opens inline</span></div>
+      <div class="fam__g">
+        <a class="pg" href="pages/dealer/all-vehicles-gen10.html"><img src="previews/gen10.jpg" alt=""><span><b>All Vehicles</b><small>Dealer · Inventory Manager</small><p>Lot · Value · Attention on top; the vehicle unfolds under its row with price modes, health, market and history.</p><span class="k">pages/dealer/all-vehicles-gen10</span></span></a>
+        <a class="pg pg--new" href="pages/reports/leads-report-gen10.html"><img src="previews/leads10-light.jpg" alt=""><span><b>Leads Report</b><small>AAN staff · Network reports · 74 dealers</small><p>Fleet leads by year and month, Quality, a Needs-attention queue (stale, duplicates, quiet, zero-rate); each dealer opens inline with its months, sources and latest leads.</p><span class="k">pages/reports/leads-report-gen10</span></span></a>
+        <div class="pg" style="opacity:.55"><img src="previews/original.jpg" alt="" style="filter:grayscale(1)"><span><b>Next</b><small>Lead Desk · Vehicle editor · Dealer home</small><p>Same skeleton, same parts. Each one is a data file and a column map away.</p></span></div>
+      </div>
     </div>
   </div>
 
@@ -386,7 +409,7 @@
     </div>
     <div class="g">
       <img src="previews/gen10.jpg" alt="">
-      <div class="b"><div class="n"><span class="badge badge--a">Candidate A</span><span class="k">Gen 10</span></div><h4>Bento Command</h4><p>Gen 8's language, recomposed: intelligence as a heavy-top bento, the list full width, the vehicle as an inline accordion sheet.</p><div class="l"><a class="p" href="pages/dealer/all-vehicles-gen10.html">Live</a><a href="reference/archive/redesign-gen10-1440-light.png">Still</a><a href="reference/archive/redesign-gen10-1440-vehicle.png">Vehicle</a><a href="reference/archive/redesign-gen10-1440-dark-filters.png">Dark</a></div></div>
+      <div class="b"><div class="n"><span class="badge badge--a">Candidate A</span><span class="k">Gen 10</span></div><h4>Bento Command</h4><p>Gen 8's language, recomposed: intelligence as a heavy-top bento, the list full width, the vehicle as an inline accordion sheet. Now a system: the Leads Report is built on it.</p><div class="l"><a class="p" href="pages/dealer/all-vehicles-gen10.html">All Vehicles</a><a class="p" href="pages/reports/leads-report-gen10.html">Leads Report</a><a href="reference/archive/redesign-gen10-1440-light.png">Still</a><a href="reference/archive/redesign-gen10-1440-vehicle.png">Vehicle</a><a href="reference/archive/redesign-gen10-1440-dark-filters.png">Dark</a></div></div>
     </div>
   </div>
 </div></section>
@@ -533,7 +556,7 @@
   });
   function light(on) {
     robo.classList.toggle('robo--lit', on);
-    try { if (led) led.setEmissiveFactor(on ? [1, 1, 1] : [0.06, 0.16, 0.32]); } catch (e) {}
+    try { if (led) led.setEmissiveFactor(on ? [1, 0.82, 0.25] : [0.06, 0.16, 0.32]); } catch (e) {}
   }
 
   /* ── motion: home is the corner; he drifts a little after the cursor, and flies over to a button you hover ── */
@@ -550,7 +573,7 @@
       target.x = gx - cx; target.y = gy - cy; ts = 1.06;
       spin = false; tyaw = Math.max(-45, Math.min(45, ((r.left + r.width / 2) - gx) / 5));
     } else {
-      target.x = (mouse.x - cx) / innerWidth * 56; target.y = (mouse.y - cy) / innerHeight * 30; ts = 1;   // a gentle lean toward the cursor
+      target.x = (mouse.x - cx) / innerWidth * 22; target.y = (mouse.y - cy) / innerHeight * 12; ts = 1;   // a gentle lean toward the cursor
       spin = !robo.matches(':hover');
     }
   }
@@ -570,18 +593,11 @@
 
   /* buttons and links: he flies over, nods, and the light in his head comes on */
   var HOT = 'a.btn, .btn, .bar nav a, .links a, .shots a, .g .l a, .cta a';
-  document.addEventListener('mouseover', function (e) {
-    var el = e.target.closest && e.target.closest(HOT); if (!el || robo.contains(el)) return;
-    if (near !== el) { near = el; aim(); light(true); play('Nod'); }
-  });
-  document.addEventListener('mouseout', function (e) {
-    if (!near) return; var to = e.relatedTarget; if (to && to.closest && to.closest(HOT) === near) return;
-    near = null; light(false); aim();
-  });
+  /* (flying to buttons is off — he floats in his corner and only leans a little toward the cursor) */
 
   /* the robot himself: a wave and a line */
-  robo.addEventListener('mouseenter', function () { spin = false; tyaw = 0; show(); play('Wave'); });
-  robo.addEventListener('mouseleave', function () { if (!near) spin = true; });
+  robo.addEventListener('mouseenter', function () { spin = false; tyaw = 0; light(true); show(); play('Wave'); });
+  robo.addEventListener('mouseleave', function () { spin = true; light(false); });
   robo.addEventListener('click', function () { show(); play('Wave'); });
   setTimeout(function tick() { if (!robo.matches(':hover') && !near) show(); setTimeout(tick, 18000 + Math.random() * 14000); }, 8000);
 })();
