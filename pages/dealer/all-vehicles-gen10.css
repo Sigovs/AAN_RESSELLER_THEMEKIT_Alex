@@ -873,3 +873,15 @@ body { overflow: auto; }
 .hd--stuck::before { content: ""; position: absolute; top: 0; bottom: -1px; left: calc(var(--gap) * -1); right: calc(var(--gap) * -1); z-index: -1; background: var(--sheet); border-bottom: 1px solid var(--line-2); box-shadow: 0 8px 16px -8px rgba(14,20,33,.22); }
 [data-theme="dark"] .hd--stuck::before { box-shadow: 0 8px 16px -8px rgba(0,0,0,.6); }
 .app.dock-open .hd--stuck::before { right: 0; }
+
+/* ── Value and Needs-attention carry more weight: defined edge, lifted shadow, firmer type ── */
+.value, .attn { box-shadow: 0 1px 0 rgba(14,20,33,.04), 0 8px 22px -10px rgba(14,20,33,.22), 0 0 0 1px var(--line-3); background: linear-gradient(180deg, var(--sheet) 0, var(--sheet) 70%, var(--well) 100%); }
+.value__h .caps, .attn__h h2 { font-size: 16px; font-weight: 700; letter-spacing: -.01em; text-transform: none; color: var(--ink); }
+.value__h .s, .attn__h .s { font-size: 13px; }
+.value .kv .v { font-size: 24px; font-weight: 700; }
+.value .kv > div { border-bottom-color: var(--line); }
+.ar { background: var(--well); border-color: var(--line-2); }
+.ar:hover { background: var(--wash); border-color: var(--line-3); }
+.ar__n { font-weight: 700; } .ar__l { font-weight: 600; } .ar__m { background: var(--line-3); }
+.attn__g { gap: 6px 8px; }
+[data-theme="dark"] .value, [data-theme="dark"] .attn { box-shadow: 0 10px 26px -10px rgba(0,0,0,.6), 0 0 0 1px var(--line-3); background: linear-gradient(180deg, var(--sheet) 0, var(--sheet) 70%, var(--wash) 100%); }
