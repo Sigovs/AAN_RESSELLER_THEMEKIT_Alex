@@ -174,7 +174,7 @@
   @media (max-width: 980px) { .oq { grid-template-columns: 1fr; } .oq .rule { grid-template-columns: 1fr; } }
 
   /* ── robot avatar in the corner ── */
-  .robo { position: fixed; right: 18px; bottom: 14px; z-index: 30; width: 140px; height: 140px; display: grid; place-items: center; text-decoration: none; filter: drop-shadow(0 18px 24px rgba(0,0,0,.55)); transition: transform .35s cubic-bezier(.2,.7,.2,1); animation: robo-in .9s cubic-bezier(.2,.7,.2,1) both, robo-float 5s ease-in-out 1s infinite; }
+  .robo { position: fixed; right: 18px; bottom: 14px; z-index: 30; width: 168px; height: 168px; display: grid; place-items: center; text-decoration: none; filter: drop-shadow(0 18px 24px rgba(0,0,0,.55)); transition: transform .35s cubic-bezier(.2,.7,.2,1); animation: robo-in .9s cubic-bezier(.2,.7,.2,1) both, robo-float 5s ease-in-out 1s infinite; }
   .robo model-viewer { width: 100%; height: 100%; background: transparent; --poster-color: transparent; cursor: grab; }
   .robo model-viewer:active { cursor: grabbing; }
   .robo::before { content: ""; position: absolute; inset: 12% 8% -6% 8%; border-radius: 50%; background: radial-gradient(50% 50% at 50% 60%, rgba(77,134,255,.45), rgba(77,134,255,0) 70%); filter: blur(8px); z-index: -1; transition: opacity .3s ease; }
@@ -459,6 +459,6 @@
 </div></footer>
 
 <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
-<div class="robo" title="Drag to spin"><span class="say">Ten generations. Two candidates. Pick one.</span><model-viewer src="previews/robo.glb" poster="previews/robo.png" alt="Robot" auto-rotate auto-rotate-delay="0" rotation-per-second="18deg" camera-controls disable-zoom disable-pan interaction-prompt="none" shadow-intensity="0" exposure="1.1" camera-orbit="-30deg 76deg auto" field-of-view="24deg" loading="eager"></model-viewer></div>
+<div class="robo" title="Drag to spin"><span class="say">Ten generations. Two candidates. Pick one.</span><model-viewer src="previews/robo.glb" poster="previews/robo.png" alt="Robot" auto-rotate auto-rotate-delay="0" rotation-per-second="14deg" camera-controls disable-zoom disable-pan interaction-prompt="none" environment-image="neutral" exposure="1.15" shadow-intensity="0" tone-mapping="aces" camera-orbit="-25deg 78deg auto" field-of-view="22deg" loading="eager"></model-viewer></div>
 </body>
 </html>
