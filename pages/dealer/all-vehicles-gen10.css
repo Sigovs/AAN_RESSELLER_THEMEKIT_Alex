@@ -628,3 +628,87 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
 .app.dock-open .bento .ar { grid-template-columns: 50px minmax(0, 1fr) 38px; gap: 8px; height: 44px; padding: 0 10px; }
 .app.dock-open .bento .ar__n { font-size: 26px; }
 .app.dock-open .bento .ar__l { font-size: 14px; margin: 0 0 6px; color: var(--ink); }
+
+/* ── full row anatomy: every element of the original row, on every car ── */
+:root { --row: 64px; }
+.field { --cols: 26px 84px minmax(0, 1fr) 150px 140px 100px 96px 92px 190px 132px; }
+.app.dock-open .field { --cols: 24px 64px minmax(0, 1fr) 0px 0px 96px 92px 84px 150px 132px; }
+.app.dock-open .field .trim, .app.dock-open .field .ext, .app.dock-open .field .c-trim, .app.dock-open .field .c-ext { display: none; }
+.app.dock-open .field .hd, .app.dock-open .field .row { gap: 10px; }
+.hd .r:last-child { justify-self: end; }
+.stock { font: 600 13px/1 var(--mono); color: var(--brand-ink); padding: 3px 6px; border-radius: 5px; background: var(--brand-soft); white-space: nowrap; }
+.stock:hover { text-decoration: underline; }
+.id__m { gap: 8px; }
+.trim { min-width: 0; font-size: 14px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.trim i { font-style: normal; color: var(--ink-4); }
+.ext { display: flex; align-items: center; gap: 7px; min-width: 0; font-size: 14px; color: var(--ink-2); }
+.ext span:last-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.st { min-width: 0; }
+.stat { display: inline-flex; align-items: center; height: 24px; padding: 0 9px; border-radius: 7px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.stat--ok { color: var(--ok); background: var(--ok-soft); box-shadow: inset 0 0 0 1px var(--ok-line); }
+.stat--sold { color: var(--danger); background: var(--danger-soft); box-shadow: inset 0 0 0 1px var(--danger-line); }
+.stat--staging { color: var(--slate); background: var(--slate-soft); box-shadow: inset 0 0 0 1px var(--line-3); }
+.okmark { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 600; color: var(--ok); opacity: .85; }
+.okmark .i { width: 14px; height: 14px; stroke-width: 2.2; }
+/* actions: always present, quiet until hovered */
+.acts { position: static; transform: none; display: inline-flex; justify-self: end; gap: 0; padding: 0; background: transparent; box-shadow: none; }
+.row:hover .acts, .row:focus-within .acts { display: inline-flex; }
+.acts button { width: 30px; height: 30px; color: var(--ink-3); }
+.acts button:hover { background: var(--wash); color: var(--ink); }
+.acts button.del:hover { background: var(--danger-soft); color: var(--danger); }
+.row:hover .acts button { color: var(--ink-2); }
+
+/* ── page scroll: the list grows down the page; nothing is trapped in one screen ── */
+html, body { height: auto; }
+body { overflow: auto; }
+.app { height: auto; min-height: 100vh; grid-template-rows: var(--top) var(--headh) auto auto; }
+.top { position: sticky; top: 0; }
+.field { min-height: 0; overflow: visible; }
+.rows { flex: none; overflow: visible; }
+.hd { top: var(--top); }
+.tray { position: fixed; bottom: 20px; }
+.dock { position: sticky; top: calc(var(--top) + 12px); align-self: start; max-height: calc(100vh - var(--top) - 28px); }
+.rows::-webkit-scrollbar { display: none; }
+
+/* ── the open car pops: tinted lifted header row + the sheet, one raised object ── */
+.row.open { background: var(--brand-soft); box-shadow: var(--el-3); border-radius: 14px 14px 0 0; margin: 10px 6px 0; padding: 0 12px; height: calc(var(--row) + 6px); }
+.row.open::before { width: 4px; top: 0; bottom: 0; border-radius: 4px 0 0 0; }
+.row.open .id__n { color: var(--brand-ink); }
+.row.open .stock { background: var(--sheet); }
+.exp__in { box-shadow: var(--el-3); border-radius: 0 0 14px 14px; }
+.exp__in::before { width: 4px; bottom: 0; border-radius: 0 0 0 4px; }
+.row.open + .exp { margin-bottom: 14px; }
+
+/* ── columns as in the original: Stock · Year · Make · Model · Trim · Ext colour · Price · Status · Health · Age · Actions ── */
+.field { --cols: 26px 60px 112px 50px 112px minmax(120px, 1fr) 120px 110px 92px 90px 164px 84px 112px; }
+.app.dock-open .field { --cols: 24px 56px 108px 48px 104px minmax(100px, 1fr) 0px 0px 90px 88px 140px 80px 112px; }
+.hd, .row { gap: 8px; padding: 0 16px; }
+.hd { height: 36px; }
+.th { width: 60px; height: 40px; }
+.app.dock-open .th { width: 56px; height: 38px; }
+.stk { min-width: 0; line-height: 1.2; }
+.stk__l { display: flex; align-items: center; gap: 5px; }
+.stk__vin { display: block; margin-top: 4px; font: 12px var(--mono); color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.yr { font-size: 14px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.mk, .md { min-width: 0; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mk { font-weight: 600; color: var(--ink); }
+.md { font-weight: 500; color: var(--ink); }
+.tags { flex-wrap: nowrap; }
+.age i { width: 26px; }
+.row.open .mk, .row.open .md { color: var(--brand-ink); }
+.field { --cols: 26px 60px 108px 50px 108px minmax(120px, 1fr) 104px 100px 92px 90px 204px 84px 108px; }
+.app.dock-open .field { --cols: 24px 56px 104px 48px 100px minmax(100px, 1fr) 0px 0px 88px 86px 168px 80px 108px; }
+.acts button { width: 27px; }
+
+/* ── the drop-down details are a distinct, tinted plane: obviously expandable ── */
+.exp .exp__accs { margin-top: 14px; padding: 6px 8px; border-top: 0; border-radius: 12px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line); }
+.exp .exp__accs::before { content: "More details · tap a section to expand"; display: block; padding: 6px 10px 4px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.exp .exp__accs .acc { border-top: 0; margin: 2px 0; border-radius: 9px; }
+.exp .exp__accs .acc__h { min-height: 44px; padding: 0 10px; border-radius: 9px; transition: background var(--dur) var(--ease); }
+.exp .exp__accs .acc__h:hover { background: var(--sheet); }
+.exp .exp__accs .acc__h > .i { width: 24px; height: 24px; padding: 5px; border-radius: 50%; background: var(--sheet); color: var(--ink-2); box-shadow: inset 0 0 0 1px var(--line); }
+.exp .exp__accs .acc--open > h3 > .acc__h { background: var(--sheet); border-radius: 9px 9px 0 0; box-shadow: inset 0 0 0 1px var(--line); }
+.exp .exp__accs .acc--open > h3 > .acc__h > .i { background: var(--brand-btn); color: #fff; box-shadow: none; }
+.exp .exp__accs .acc--open > .acc__p > div > .acc__in { background: var(--sheet); border-radius: 0 0 9px 9px; padding: 12px 12px 16px; box-shadow: inset 0 0 0 1px var(--line); }
+.exp .exp__accs .acc__t { font-size: 14px; }
+[data-theme="dark"] .exp .exp__accs { background: var(--wash); }

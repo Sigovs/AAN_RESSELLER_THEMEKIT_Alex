@@ -86,17 +86,22 @@
   /* ── rows ─────────────────────────────────────────────────────────── */
   function tag(t) { return '<span class="tag' + (TONE[t] ? ' tag--' + TONE[t] : '') + '">' + esc(t) + '</span>'; }
   function row(v) {
-    var b = band(v.d), max = S.dock === 'filters' ? 1 : (v.f.length > 3 ? 2 : 3), tags = v.f.slice(0, max), rest = v.f.length - tags.length;
+    var b = band(v.d), max = S.dock === 'filters' ? 1 : 2, tags = v.f.slice(0, max), rest = v.f.length - tags.length;
     var name = v.y + ' ' + v.mk + ' ' + v.md;
     return '<div class="row' + (S.sel[v.id] ? ' sel' : '') + (S.cur === v.id ? ' open' : '') + '" data-id="' + v.id + '" tabindex="0" aria-label="' + esc(name) + '">' +
       '<input class="ck" type="checkbox" data-sel="' + v.id + '"' + (S.sel[v.id] ? ' checked' : '') + ' aria-label="Select ' + esc(name) + '">' +
       (v.t ? '<img class="th" alt="" src="img/' + esc(v.t) + '">' : '<span class="th th--none" title="No photos uploaded">' + ic('i-cam-off') + '</span>') +
-      '<div class="id"><span class="id__n" title="' + esc(name) + '"><em>' + v.y + '</em>' + esc(v.mk) + ' ' + esc(v.md) + '</span><span class="id__m"><span class="idtag">' + esc(v.s) + '</span>' + (v.lock ? '<span class="lock" title="Being edited by another user">' + ic('i-lock') + '</span>' : '') + '<span class="id__vin">' + esc(v.vin) + '</span></span></div>' +
-      '<div class="spec"><span class="spec__t" title="' + esc(v.tr) + '">' + (v.tr ? esc(v.tr) : '<i>No trim recorded</i>') + '</span><span class="spec__c"><span class="sw" style="--c:' + v.hx + '"></span>' + esc(v.c) + '</span></div>' +
+      '<div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop title="Open in the vehicle editor">' + esc(v.s) + '</a>' + (v.lock ? '<span class="lock" title="Being edited by another user">' + ic('i-lock') + '</span>' : '') + '</span><span class="stk__vin" title="VIN ' + esc(v.vin) + '">' + esc(v.vin) + '</span></div>' +
+      '<div class="yr">' + v.y + '</div>' +
+      '<div class="mk" title="' + esc(v.mk) + '">' + esc(v.mk) + '</div>' +
+      '<div class="md" title="' + esc(v.md) + '">' + esc(v.md) + '</div>' +
+      '<div class="trim" title="' + esc(v.tr) + '">' + (v.tr ? esc(v.tr) : '<i>—</i>') + '</div>' +
+      '<div class="ext" title="' + esc(v.c) + '"><span class="sw" style="--c:' + v.hx + '"></span><span>' + esc(v.c) + '</span></div>' +
       (v.p != null ? '<div class="price"><em>$</em>' + nf(v.p) + '</div>' : '<div class="price price--none" aria-label="No price">—</div>') +
+      '<div class="st"><span class="stat stat--' + (S.lane === 'Sold' ? 'sold' : S.lane === 'Staging' ? 'staging' : 'ok') + '">' + (S.lane === 'All' ? 'Available' : esc(S.lane)) + '</span></div>' +
+      '<div class="tags">' + (v.f.length ? tags.map(tag).join('') + (rest > 0 ? '<span class="tag tag--more" title="' + esc(v.f.slice(tags.length).join(' · ')) + '">+' + rest + '</span>' : '') : '<span class="okmark" title="No attention flags">' + ic('i-check') + 'OK</span>') + '</div>' +
       '<div class="age age--' + b + '" title="' + nf(v.d) + ' days in stock"><i style="--w:' + Math.min(100, Math.round(v.d / 730 * 100)) + '%;--b:' + COL[b] + '"></i>' + lab(v.d) + '</div>' +
-      '<div class="tags">' + tags.map(tag).join('') + (rest > 0 ? '<span class="tag tag--more" title="' + esc(v.f.slice(tags.length).join(' · ')) + '">+' + rest + '</span>' : '') + '</div>' +
-      '<span class="acts"><button type="button" aria-label="Edit vehicle" data-stop>' + ic('i-edit') + '</button><button type="button" aria-label="Photos" data-stop>' + ic('i-cam') + '</button><button type="button" aria-label="Window sticker" data-stop>' + ic('i-print') + '</button><button type="button" aria-label="More" data-stop>' + ic('i-more') + '</button></span>' +
+      '<span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop>' + ic('i-edit') + '</button><button type="button" title="Photos" aria-label="Photos" data-stop>' + ic('i-cam') + '</button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop>' + ic('i-print') + '</button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop>' + ic('i-trash') + '</button></span>' +
       '</div>';
   }
 
@@ -190,7 +195,7 @@
     if (S.cur === id) { closeVehicle(); return; }
     var ex = $('#exp');
     S.cur = id; S.expNow = false;
-    var go = function () { render(); var r = $('.row[data-id="' + id + '"]'); if (r) r.scrollIntoView({ block: 'nearest' }); };
+    var go = function () { render(); var r = $('.row[data-id="' + id + '"]'); if (r) { var y = r.getBoundingClientRect().top + window.scrollY - 56 - 36 - 10; window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' }); } };
     if (ex) { ex.classList.remove('exp--open'); setTimeout(go, 200); } else go();
   }
   function closeVehicle() {
