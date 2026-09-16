@@ -896,3 +896,32 @@ body { overflow: auto; }
 .exp .veh__acts .btn { min-width: 0; width: 100%; padding: 0 10px; font-size: 13px; overflow: hidden; }
 .exp .veh__acts .btn > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .exp .veh__acts .btn .i { flex: none; }
+
+/* ── three dark boxes on top, one material as the Lot: same navy, each lit from a different edge ──
+      Lot: blue, top-left (existing) · Value: cool blue, bottom-right · Attention: warm amber, top-right */
+.value, .attn { background: var(--focal); color: var(--focal-ink); box-shadow: var(--el-2); position: relative; overflow: hidden; }
+.value { background-image: radial-gradient(90% 80% at 104% 112%, rgba(31,95,224,.50) 0, rgba(31,95,224,.16) 40%, rgba(31,95,224,0) 70%), radial-gradient(50% 40% at -10% -10%, rgba(31,95,224,.14) 0, rgba(31,95,224,0) 60%); }
+.attn  { background-image: radial-gradient(70% 90% at 100% -20%, rgba(242,161,43,.34) 0, rgba(242,161,43,.10) 40%, rgba(242,161,43,0) 68%), radial-gradient(60% 60% at -8% 110%, rgba(31,95,224,.22) 0, rgba(31,95,224,0) 60%); }
+[data-theme="dark"] .value, [data-theme="dark"] .attn { box-shadow: var(--el-2); }
+
+/* Value on dark */
+.value__h .caps, .value__h .s { color: var(--focal-ink-3); }
+.value__h .caps { color: var(--focal-ink); }
+.value .kv > div { border-bottom-color: var(--focal-line); }
+.value .kv .v { color: var(--focal-ink); }
+.value .kv .l { color: var(--focal-ink-3); }
+
+/* Attention on dark: bright tones, translucent rows */
+.attn { --signal: #f3b155; --signal-soft: rgba(242,161,43,.16); --signal-line: rgba(242,161,43,.45);
+        --danger: #ff8c7f; --danger-soft: rgba(232,96,79,.16); --danger-line: rgba(232,96,79,.48);
+        --slate: #b4bdcb; --slate-soft: rgba(139,149,165,.16); --line-3: rgba(139,149,165,.45);
+        --violet: #c3b6ff; --violet-soft: rgba(150,129,240,.18); --violet-line: rgba(150,129,240,.5); }
+.attn__h h2 { color: var(--focal-ink); }
+.attn__h .s { color: var(--focal-ink-3); }
+.attn .ar { background: rgba(255,255,255,.055); border-color: rgba(255,255,255,.07); }
+.attn .ar:hover { background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.14); }
+.attn .ar--on, .attn .ar--on:hover { background: var(--tone-soft, var(--signal-soft)); border-color: var(--tone-line, var(--signal-line)); }
+.attn .ar__l { color: var(--focal-ink); }
+.attn .ar__p { color: var(--focal-ink-3); }
+.attn .ar__m { background: rgba(255,255,255,.14); }
+.attn .ar:focus-visible { outline: 2px solid var(--focal-on); outline-offset: 1px; }
