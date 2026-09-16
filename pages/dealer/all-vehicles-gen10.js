@@ -107,7 +107,7 @@
 
   function render() {
     var L = list(), F = filtered();
-    $('#tb').innerHTML = L.length ? L.map(function (v) { return row(v) + (S.cur === v.id ? '<div class="exp" id="exp"><div><div class="exp__in">' + vehicleSheet(v) + '</div></div></div>' : ''); }).join('') : '<div class="empty">No vehicles match these filters.<button type="button" data-act="clear-all">Clear all</button></div>';
+    $('#tb').innerHTML = L.length ? L.map(function (v) { return row(v) + (S.cur === v.id ? '<div class="exp" id="exp"><div><div class="exp__in">' + vehicleSheet(v) + '</div></div></div>' : ''); }).join('') + (S.cur ? '<div class="exp-space" id="exp-space"></div>' : '') : '<div class="empty">No vehicles match these filters.<button type="button" data-act="clear-all">Clear all</button></div>';
     $('.field').classList.toggle('has-open', !!S.cur);
     var ex = $('#exp'); if (ex) { if (S.expNow) ex.classList.add('exp--open'); else requestAnimationFrame(function () { requestAnimationFrame(function () { ex.classList.add('exp--open'); }); }); S.expNow = true; }
     $('#shown').textContent = (L.length ? '1–' + L.length : '0') + ' of ' + (F ? L.length : 359);
@@ -196,7 +196,7 @@
     if (S.cur === id) { closeVehicle(); return; }
     var ex = $('#exp');
     S.cur = id; S.expNow = false;
-    var go = function () { render(); var r = $('.row[data-id="' + id + '"]'); if (r) { var y = r.getBoundingClientRect().top + window.scrollY - 56 - 36 - 10; window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' }); } };
+    var go = function () { render(); var r = $('.row[data-id="' + id + '"]'); if (r) { var y = Math.max(0, r.getBoundingClientRect().top + window.scrollY - 56 - 58 - 36 - 10); var sp = $('#exp-space'); if (sp) { var need = y - (document.documentElement.scrollHeight - window.innerHeight); sp.style.height = need > 0 ? Math.ceil(need) + 'px' : '0px'; } window.scrollTo({ top: y, behavior: 'smooth' }); } };
     if (ex) { ex.classList.remove('exp--open'); setTimeout(go, 200); } else go();
   }
   function closeVehicle() {
@@ -209,7 +209,7 @@
     var acts = '<div class="veh__acts"><button class="btn btn--primary" type="button">' + ic('i-edit') + ' Edit vehicle</button>' +
       '<button class="btn btn--sheet" type="button">' + ic('i-cam') + ' Photos</button><button class="btn btn--sheet" type="button">' + ic('i-print') + ' Window sticker</button>' +
       '<button class="btn btn--sheet" type="button">' + ic('i-file') + ' Carfax</button><button class="btn btn--sheet" type="button">' + ic('i-rss') + (has('Feed off') ? ' Include in feeds' : ' Exclude from feeds') + '</button>' +
-      '<button class="btn btn--sheet" type="button">' + ic('i-eye') + (has('Hidden') ? ' Show on site' : ' Hide on site') + '</button><button class="btn btn--quiet" type="button" style="color:var(--danger)">' + ic('i-trash') + ' Delete…</button></div>';
+      '<button class="btn btn--sheet" type="button">' + ic('i-eye') + (has('Hidden') ? ' Show on site' : ' Hide on site') + '</button><button class="btn btn--sheet btn--del" type="button">' + ic('i-trash') + ' Delete…</button></div>';
     var p = vehicleBody(v);
     return '<div class="exp__l">' + p.img + p.kv + acts + '</div>' +
       '<div class="exp__r"><div class="exp__top"><div><h3 class="veh__n"><em>' + v.y + '</em>' + esc(v.mk) + ' ' + esc(v.md) + '</h3>' + p.meta + p.tags + '</div><button class="exp__x" type="button" data-act="close-veh" aria-label="Close vehicle">' + ic('i-x') + '</button></div><div class="exp__accs">' + p.accs + '</div></div>';

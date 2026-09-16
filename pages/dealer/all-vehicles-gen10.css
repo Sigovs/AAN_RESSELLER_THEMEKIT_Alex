@@ -749,3 +749,58 @@ body { overflow: auto; }
 .exp__in { box-shadow: var(--el-3), 0 0 0 1px #6A7285; }
 .exp__in::before { background: #6A7285; }
 [data-theme="dark"] .row.open, [data-theme="dark"] .row.open:hover { background: #4f576a; }
+
+/* ── larger thumbnails ─────────────────────────────────────────── */
+:root { --row: 74px; --cmdh: 58px; }
+.field { --cols: 26px 92px 108px 50px 108px minmax(110px, 1fr) 104px 100px 92px 90px 204px 84px 108px; }
+.app.dock-open .field { --cols: 24px 80px 104px 48px 100px minmax(90px, 1fr) 0px 0px 88px 86px 168px 80px 108px; }
+.th { width: 92px; height: 60px; border-radius: 7px; }
+.app.dock-open .th { width: 80px; height: 52px; }
+.th--none .i { width: 20px; height: 20px; }
+
+/* ── command band sticks under the platform bar; the column header stacks under it ── */
+.cmd { position: sticky; top: var(--top); z-index: 4; isolation: isolate; }
+.cmd::after { content: ""; position: absolute; inset: -10px -10px 0; z-index: -1; box-sizing: border-box; border: 10px solid var(--sheet); border-bottom: 0; border-radius: 23px 23px 0 0; pointer-events: none; }
+.hd { top: calc(var(--top) + var(--cmdh)); z-index: 3; }
+
+/* ── selected row + sheet: one aligned block, columns flush with the list ── */
+.row.open, .row.open:hover { margin: 10px 0 0; padding: 0 16px; height: var(--row); border-radius: 14px 14px 0 0; }
+.app.dock-open .field .row.open { padding: 0 16px; }
+.exp { margin: 0; }
+.exp__in { box-shadow: var(--el-3), inset 0 0 0 1px #6A7285; border-radius: 0 0 14px 14px; }
+.exp__in::before { left: 1px; }
+.row.open + .exp { margin-bottom: 14px; }
+.exp-space { display: block; height: 0; }
+.exp .veh__acts .btn--del { color: var(--danger); }
+.exp .veh__acts .btn--del:hover { background: var(--danger-soft); }
+[data-theme="dark"] .exp__in { box-shadow: var(--el-3), inset 0 0 0 1px #4f576a; }
+[data-theme="dark"] .exp__in::before { background: #4f576a; }
+
+/* ── Columns: a labelled control next to the view switch, not a lone icon ── */
+.cmd .c-cols .facet__b { gap: 6px; }
+.mn--cols { min-width: 232px; columns: 2; column-gap: 6px; }
+.mn--cols .mn__lab, .mn--cols .mn__sep, .mn--cols .mn__it:last-child { column-span: all; }
+.mn--cols .mn__it { break-inside: avoid; }
+#p-cols .mn__it:not(.mn__it--on) .i { visibility: visible; color: var(--ink-4); }
+#p-cols .mn__it:not(.mn__it--on):hover .i { color: var(--brand); }
+
+/* ── Filters open: the list narrows, so Trim · Ext colour · Status step out; the rest tightens ── */
+.app.dock-open .field { --cols: 24px 68px 90px 40px 92px minmax(80px, 1fr) 0px 0px 80px 0px 120px 72px 104px; }
+.app.dock-open .field .hd, .app.dock-open .field .row { gap: 6px; }
+/* hidden columns stay in the grid (0px tracks) so every cell keeps its track */
+.app.dock-open .field .trim, .app.dock-open .field .ext, .app.dock-open .field .st, .app.dock-open .field .c-trim, .app.dock-open .field .c-ext, .app.dock-open .field .hd > span:nth-child(10) { display: block; width: 0; min-width: 0; padding: 0; overflow: hidden; visibility: hidden; }
+.app.dock-open .th { width: 68px; height: 46px; }
+.app.dock-open .field .stk__vin { font-size: 11px; }
+.app.dock-open .field .acts button { width: 26px; height: 26px; }
+
+/* ── columns must sum to the row width: the Actions cell was overhanging the sheet by ~27px ── */
+.field { --cols: 26px 92px 104px 46px 104px minmax(100px, 1fr) 100px 96px 90px 88px 196px 80px 108px; }
+.app.dock-open .field { --cols: 24px 68px 100px 40px 86px minmax(80px, 1fr) 0px 0px 80px 0px 120px 72px 104px; }
+.stk__l { min-width: 0; } .stock { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+
+/* ── the open sheet breathes: even air above the image and below the actions ── */
+.exp__in { padding: 22px 20px 26px; }
+.exp .exp__top { padding-top: 0; }
+.field { --cols: 26px 92px 104px 46px 104px minmax(100px, 1fr) 96px 92px 90px 88px 204px 76px 108px; }
+.tags { min-width: 0; overflow: hidden; }
+.field { --cols: 26px 92px 104px 46px 104px minmax(100px, 1fr) 96px 92px 88px 86px 210px 76px 108px; }
