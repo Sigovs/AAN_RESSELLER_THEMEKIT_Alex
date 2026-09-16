@@ -130,3 +130,5 @@
 @media (max-width: 1280px) { .field { --cols: 26px minmax(140px, 1.1fr) minmax(150px, 1.2fr) minmax(130px, 1.1fr) 96px 104px 116px 116px 86px 90px 130px; } }
 .field { --cols: 26px minmax(136px, 1.1fr) minmax(156px, 1.2fr) minmax(136px, 1.1fr) 96px 108px 118px 118px 84px 88px 130px; }
 .hd, .row { gap: 10px; }
+.row.open .ld__id .nm { color: #1f5fe0; box-shadow: none; }
+.pg button.on { background: #1f5fe0; color: #fff; }
