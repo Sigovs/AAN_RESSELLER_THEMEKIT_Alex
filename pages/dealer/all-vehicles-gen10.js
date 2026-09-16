@@ -120,7 +120,8 @@
     });
     $('#scope').innerHTML = '<span class="scope__n">' + (S.lane === 'All' ? 'All vehicles' : esc(S.lane)) + '</span><span>·</span><span><b>' + nf(F ? L.length : 359) + '</b> vehicles</span>' +
       (chips.length ? chips.map(function (c, i) { return '<span class="chip ' + c.cls + '">' + esc(c.v) + '<button class="chip__x" type="button" data-chip="' + i + '" aria-label="Remove ' + esc(c.v) + '">' + ic('i-x') + '</button></span>'; }).join('') + '<button class="scope__clear" type="button" data-act="clear-all">Clear all</button>' : '') +
-      '<span class="scope__sp"></span><span>' + (L.length ? '1–' + L.length : '0') + ' shown</span>';
+      '';
+    $('#sub-shown').textContent = (L.length ? '1–' + L.length : '0') + ' shown';
     $('#scope')._chips = chips;
 
     var mk = sel('make'), yb = sel('year'), pb = sel('price');

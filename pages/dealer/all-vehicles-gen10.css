@@ -826,3 +826,22 @@ body { overflow: auto; }
 .app.dock-open { column-gap: var(--gap); }
 .cmd--stuck { margin-right: calc(var(--gap) * -1); padding-right: 32px; }
 .app.dock-open .cmd--stuck { margin-right: 0; padding-right: 16px; }
+
+/* ── command band = search first: one wide white field, then Sort · view · Columns.
+      The Make/Model/Year/Price/Filters facets move to the scope line under it ── */
+.cmd { gap: 6px; }
+.cmd .search { flex: 1 1 auto; height: 44px; padding: 0 12px 0 14px; border-radius: 11px; }
+.cmd .search input { font-size: 15px; }
+.cmd > .facet, .cmd > .seg { flex: none; }
+.sub { position: relative; z-index: 5; display: flex; align-items: center; gap: 4px; min-height: 48px; padding: 8px 16px 4px; }
+.sub .scope { flex: 0 1 auto; min-height: 0; padding: 0; margin-right: 8px; }
+.sub .scope .scope__sp { display: none; }
+.qf { display: flex; align-items: center; gap: 4px; margin-left: auto; flex-wrap: wrap; }
+.qf .facet__b { height: 34px; padding: 0 10px; border-radius: 9px; font-size: 13px; background: var(--wash); box-shadow: inset 0 0 0 1px var(--line-2); }
+.qf .facet__b:hover { background: var(--well); }
+.qf .facet__b--on { background: var(--brand-soft); box-shadow: inset 0 0 0 1px var(--brand-soft-2); }
+.qf .facet__b--on .facet__k { color: var(--brand); } .qf .facet__b--on .facet__v { color: var(--brand-ink); }
+.qf .facet__b .i { width: 15px; height: 15px; }
+.qf .facet__cnt { min-width: 18px; height: 18px; font-size: 11px; }
+.sub__shown { flex: none; margin-left: 10px; font-size: 13px; color: var(--ink-3); white-space: nowrap; }
+.app.dock-open .qf .c-sec { display: none; }
