@@ -54,7 +54,6 @@
 .secnav__b:hover { background: rgba(255,255,255,.18); }
 .secnav__b--on { background: var(--sheet); color: var(--brand-ink); font-weight: 600; }
 .secnav__b--on b { background: var(--brand-soft); color: var(--brand-ink); }
-.cmd--stuck { padding-left: 32px; }
 
 /* ── sections ── */
 .secs { padding: 8px 16px 24px; display: grid; gap: 14px; }
@@ -125,3 +124,8 @@
 /* the dock is the workflow rail: keep the bento intact when it is open (Gen 10 already does), the field narrower */
 .app.dock-open .secs { padding-right: 16px; }
 @media (max-width: 1280px) { .app.dock-open .bento { grid-template-columns: 1fr 1fr; } .app.dock-open .bento .focal { grid-column: 1 / -1; } }
+
+/* ── the section band sticks exactly like the list pages' band (shared rules); sections scroll under it ── */
+.secnav__b { height: 46px; }
+.secs { padding-top: 12px; }
+.sec { scroll-margin-top: calc(56px + 58px + 12px); }

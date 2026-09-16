@@ -123,7 +123,7 @@
 .pg { display: inline-flex; align-items: center; gap: 2px; }
 .pg button { min-width: 30px; height: 30px; padding: 0 8px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .pg button:hover { background: var(--wash); color: var(--ink); }
-.pg button.on { background: var(--brand-ink); color: #fff; }
+.pg button.on { background: var(--brand); color: #fff; }
 .pg button:disabled { color: var(--ink-4); }
 .pg span { padding: 0 4px; color: var(--ink-4); }
 

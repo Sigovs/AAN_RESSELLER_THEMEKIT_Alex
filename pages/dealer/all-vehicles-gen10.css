@@ -624,10 +624,10 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
 .app.dock-open .bento .hero__l { padding-bottom: 3px; } .app.dock-open .bento .hero__l b { font-size: 17px; }
 .app.dock-open .bento .attn { padding: 14px 12px 10px; }
 .app.dock-open .bento .attn__h { padding: 0 8px 8px; }
-.app.dock-open .bento .attn__h h2 { font-size: 15px; font-weight: 600; letter-spacing: -.005em; text-transform: none; color: var(--ink); }
+.app.dock-open .bento .attn__h h2 { font-size: 15px; font-weight: 600; letter-spacing: -.005em; text-transform: none; color: var(--focal-ink); }
 .app.dock-open .bento .ar { grid-template-columns: 50px minmax(0, 1fr) 38px; gap: 8px; height: 44px; padding: 0 10px; }
 .app.dock-open .bento .ar__n { font-size: 26px; }
-.app.dock-open .bento .ar__l { font-size: 14px; margin: 0 0 6px; color: var(--ink); }
+.app.dock-open .bento .ar__l { font-size: 14px; margin: 0 0 6px; color: var(--focal-ink); }
 
 /* ── full row anatomy: every element of the original row, on every car ── */
 :root { --row: 64px; }
@@ -1023,3 +1023,10 @@ body { overflow: auto; }
 /* ── short pages: the bento keeps its content height; the field takes whatever is left (auto/auto used to split the spare space) ── */
 .app { grid-template-rows: var(--top) var(--headh) max-content 1fr; }
 .field { align-self: stretch; }
+
+/* ── one shell for every Gen 10 page ──
+      the dock's header sits level with the stuck band (both start at the top bar's bottom edge);
+      the scrollbar gutter is always reserved so the top bar and the grid never shift sideways when a list gets short */
+html { scrollbar-gutter: stable; }
+.dock { top: var(--top); max-height: calc(100vh - var(--top) - 16px); }
+.dock__h, .dock__f { flex: none; }   /* the dock header and footer never shrink when the body is tall */
