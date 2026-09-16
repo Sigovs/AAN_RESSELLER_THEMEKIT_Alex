@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lead · Chicago Motor Cars — AAN (Gen 10)</title>
 <script>try { var t = localStorage.getItem('aan-theme'); if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="all-vehicles-gen10.css?v=202609160941">
-<link rel="stylesheet" href="single-lead-gen10.css?v=202609160941">
+<link rel="stylesheet" href="all-vehicles-gen10.css?v=202609161021">
+<link rel="stylesheet" href="single-lead-gen10.css?v=202609161021">
 </head>
 <body>
 
@@ -153,13 +153,14 @@
       <div class="focal__main">
         <div class="focal__h"><span class="caps">The buyer's message</span><span class="s" id="f-via">via All Auto Network</span></div>
         <blockquote class="quote" id="quote"></blockquote>
+        <button class="quote__more" type="button" data-act="quote-more" hidden>Show full message</button>
         <div class="ident" id="ident"></div>
       </div>
       <div class="agemix vcar" id="vcar"></div>
     </div>
 
     <div class="value">
-      <div class="value__h"><span class="caps">Workflow</span><a class="s" href="#" data-act="dock">edit</a></div>
+      <div class="value__h"><span class="caps">Workflow</span><a class="s" href="#" data-act="dock">edit in panel</a></div>
       <div class="kv" id="wf-kv"></div>
     </div>
 
@@ -189,9 +190,11 @@
         <div class="sec__b">
           <div class="vcard vcard--big" id="vcard"></div>
           <form class="form" id="f-vehicle" onsubmit="return false">
-            <div class="form__h"><span class="caps">Vehicle of Interest / Purchased</span><label class="search search--sm"><svg class="i"><use href="#i-search"/></svg><input type="search" placeholder="Keyword (stock / vin / make / model)" aria-label="Search Inventory"><button class="btn btn--sheet btn--sm" type="button">Search Inventory</button></label></div>
-            <div class="grid4"><label class="f"><span>Stock #</span><input class="fld" type="text" name="stock"></label><label class="f"><span>Type</span><input class="fld" type="text" name="type"></label><label class="f"><span>Year</span><input class="fld" type="text" name="year"></label><label class="f"><span>Make</span><input class="fld" type="text" name="make"></label><label class="f"><span>Model</span><input class="fld" type="text" name="model"></label><label class="f"><span>VIN</span><input class="fld" type="text" name="vin"></label><label class="f"><span>Mileage</span><input class="fld" type="text" name="mileage"></label><label class="f"><span>Price</span><input class="fld" type="text" name="price"></label><label class="f"><span>Int Color</span><input class="fld" type="text" name="int"></label><label class="f"><span>Ext Color</span><input class="fld" type="text" name="ext"></label></div>
-            <div class="form__f"><button class="btn btn--primary" type="submit">Save</button></div>
+            <div class="grp">
+              <div class="grp__h"><span class="grp__t">Vehicle of Interest / Purchased</span><span class="grp__s">the record behind the card above — edit here if the feed got it wrong</span><label class="search search--sm"><svg class="i"><use href="#i-search"/></svg><input type="search" placeholder="Keyword (stock / vin / make / model)" aria-label="Search Inventory"><button class="btn btn--sheet btn--sm" type="button">Search Inventory</button></label></div>
+              <div class="grid4"><label class="f"><span>Stock #</span><input class="fld" type="text" name="stock"></label><label class="f"><span>Type</span><input class="fld" type="text" name="type"></label><label class="f"><span>Year</span><input class="fld" type="text" name="year"></label><label class="f"><span>Make</span><input class="fld" type="text" name="make"></label><label class="f"><span>Model</span><input class="fld" type="text" name="model"></label><label class="f"><span>VIN</span><input class="fld" type="text" name="vin"></label><label class="f"><span>Mileage</span><input class="fld" type="text" name="mileage"></label><label class="f"><span>Price</span><input class="fld" type="text" name="price"></label><label class="f"><span>Int Color</span><input class="fld" type="text" name="int"></label><label class="f"><span>Ext Color</span><input class="fld" type="text" name="ext"></label></div>
+            </div>
+            <div class="form__f"><span class="form__note">Saves the vehicle record on this lead</span><button class="btn btn--primary" type="submit">Save</button></div>
           </form>
         </div>
       </section>
@@ -200,10 +203,20 @@
         <div class="sec__h"><h2>Contact &amp; address</h2><span class="s">same fields, same save</span></div>
         <div class="sec__b">
           <form class="form" id="f-contact" onsubmit="return false">
-            <div class="grid4"><label class="f"><span>First Name</span><input class="fld" type="text" name="first"></label><label class="f"><span>Middle Name</span><input class="fld" type="text" name="middle"></label><label class="f"><span>Last Name</span><input class="fld" type="text" name="last"></label><label class="f"><span>Email Address <b>*</b></span><input class="fld" type="email" name="email"></label><label class="f"><span>Day Phone <b>*</b></span><input class="fld" type="tel" name="day"></label><label class="f"><span>Evening Phone</span><input class="fld" type="tel" name="eve"></label><label class="f"><span>Best Time To Call</span><input class="fld" type="text" name="best"></label><label class="f"><span>Street Address</span><input class="fld" type="text" name="street"></label><label class="f"><span>City</span><input class="fld" type="text" name="city"></label><label class="f"><span>State</span><input class="fld" type="text" name="state"></label><label class="f"><span>Zip</span><input class="fld" type="text" name="zip"></label><label class="f"><span>Country</span><input class="fld" type="text" name="country"></label></div>
-            <div class="hint">Email OR Day Phone is required.</div>
-            <div class="grid2"><label class="f f--wide"><span>Message</span><textarea class="fld" rows="3" name="message"></textarea></label><label class="f f--wide"><span>Comments</span><textarea class="fld" rows="3" name="comments"></textarea></label></div>
-            <div class="form__f"><button class="btn btn--primary" type="submit">Save</button></div>
+            <div class="grp grp--primary">
+              <div class="grp__h"><span class="grp__t">Who</span><span class="grp__s">Email OR Day Phone is required.</span></div>
+              <div class="grid3"><label class="f f--big"><span>First Name</span><input class="fld" type="text" name="first"></label><label class="f"><span>Middle Name</span><input class="fld" type="text" name="middle"></label><label class="f f--big"><span>Last Name</span><input class="fld" type="text" name="last"></label></div>
+              <div class="grid3"><label class="f f--big"><span>Email Address <b>*</b></span><input class="fld" type="email" name="email"></label><label class="f f--big"><span>Day Phone <b>*</b></span><input class="fld" type="tel" name="day"></label><label class="f"><span>Evening Phone</span><input class="fld" type="tel" name="eve"></label></div>
+            </div>
+            <div class="grp">
+              <div class="grp__h"><span class="grp__t">Reach &amp; address</span></div>
+              <div class="grid4"><label class="f"><span>Best Time To Call</span><input class="fld" type="text" name="best"></label><label class="f f--wide"><span>Street Address</span><input class="fld" type="text" name="street"></label><label class="f"><span>City</span><input class="fld" type="text" name="city"></label><label class="f"><span>State</span><input class="fld" type="text" name="state"></label><label class="f"><span>Zip</span><input class="fld" type="text" name="zip"></label><label class="f"><span>Country</span><input class="fld" type="text" name="country"></label></div>
+            </div>
+            <div class="grp grp--msg">
+              <div class="grp__h"><span class="grp__t">Message &amp; comments</span><span class="grp__s">the buyer's words, then yours</span></div>
+              <div class="grid2"><label class="f f--wide"><span>Message</span><textarea class="fld" rows="4" name="message"></textarea></label><label class="f f--wide"><span>Comments</span><textarea class="fld" rows="4" name="comments"></textarea></label></div>
+            </div>
+            <div class="form__f"><span class="form__note">Saves contact, address, message and comments</span><button class="btn btn--primary" type="submit">Save</button></div>
           </form>
         </div>
       </section>
@@ -216,15 +229,15 @@
       <section class="sec" id="s-activity">
         <div class="sec__h"><h2>Activity</h2><span class="s" id="act-s">0 entries</span></div>
         <div class="sec__b">
-          <form class="note" onsubmit="return false"><span class="caps">Add a note</span><textarea class="fld" id="note-in" rows="2" placeholder="Add a note…"></textarea><div class="form__f"><button class="btn btn--primary" type="submit" data-act="add-note">Add Note</button></div></form>
-          <div class="tbl" id="act-tbl"></div>
+          <form class="composer" onsubmit="return false"><span class="composer__who" id="composer-who">P</span><div class="composer__b"><textarea class="fld" id="note-in" rows="2" placeholder="Add a note — what happened, what's next…"></textarea><div class="composer__f"><span class="hint">Logged as <b id="composer-name">Parin</b> · shows in Activity for everyone on this lead</span><button class="btn btn--primary" type="submit" data-act="add-note">Add Note</button></div></div></form>
+          <div class="feed" id="act-tbl"></div>
           <details class="raw"><summary><span class="caps">Raw message (ADF)</span><span class="s">expand</span></summary><pre id="raw"></pre></details>
         </div>
       </section>
 
       <section class="sec" id="s-emails">
         <div class="sec__h"><h2>Emails</h2><span class="s" id="em-s">0 emails</span><button class="btn btn--sheet btn--sm" type="button" data-act="email"><svg class="i"><use href="#i-rss"/></svg> Write email</button></div>
-        <div class="sec__b"><div class="tbl" id="em-tbl"></div></div>
+        <div class="sec__b"><div class="mail" id="em-tbl"></div></div>
       </section>
     </div>
   </section>
@@ -237,8 +250,8 @@
         <label class="f"><span>Status</span><select class="sel" id="wf-status"><option>Unassigned</option><option>New Lead</option><option>Active Prospect</option><option>Long Term Lead</option><option>Pending</option><option>Hot</option><option>Trade Appraisal</option><option>Just Looking</option><option>Sale Pending</option><option>Bought Here</option><option>Service</option><option>Storage</option><option>Galleria</option><option>Looking For</option><option>Bought Elsewhere</option><option>Purchased Car</option><option>No Longer in Market</option><option>Spam</option><option>No Response</option><option>Credit Approved</option><option>Credit Declined</option><option>Duplicate Lead</option><option>Car is Sold</option><option>Car Unavailable</option><option>Unrealistic / Lowball Offer</option><option>Archived Phone Lead</option><option>Lease Ended</option><option>Wrong Number</option></select></label>
         <label class="f"><span>Assigned to</span><select class="sel" id="wf-rep"><option>Select Rep</option></select></label>
         <label class="f"><span>Follow-up date</span><input class="fld" type="datetime-local" id="wf-follow"></label>
-        <label class="sw"><input type="checkbox" id="wf-imc"><span>Internet mgmt checkoff</span></label>
-        <div class="form__f"><button class="btn btn--primary" type="submit" data-act="wf-save">Save</button></div>
+        <div class="flags"><label class="sw"><input type="checkbox" id="wf-internet"><span>Internet</span></label><label class="sw"><input type="checkbox" id="wf-imc"><span>Mgmt checkoff</span></label></div>
+        <div class="form__f form__f--wf"><span class="form__note">Status · rep · follow-up · flags</span><button class="btn btn--primary" type="submit" data-act="wf-save">Save</button></div>
       </form>
       <div class="facts"><div class="caps">Lead facts</div><dl id="facts"></dl></div>
       <div class="facts"><div class="caps">Marketing UTM trace</div><pre class="utm" id="utm">[]</pre></div>
@@ -248,8 +261,8 @@
   </aside>
 </div>
 
-<script src="all-vehicles-gen10.data.js?v=202609160941"></script>
-<script src="all-leads-gen10.data.js?v=202609160941"></script>
-<script src="single-lead-gen10.js?v=202609160941"></script>
+<script src="all-vehicles-gen10.data.js?v=202609161021"></script>
+<script src="all-leads-gen10.data.js?v=202609161021"></script>
+<script src="single-lead-gen10.js?v=202609161021"></script>
 </body>
 </html>

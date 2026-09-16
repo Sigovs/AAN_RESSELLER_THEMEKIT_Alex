@@ -238,7 +238,7 @@
     var cmd = $('.cmd'), hd = $('.hd'), stuck = null, hdStuck = null;
     function onScroll() {
       var s = window.scrollY > 0 && cmd.getBoundingClientRect().top <= 56.5; if (s !== stuck) { stuck = s; cmd.classList.toggle('cmd--stuck', s); }
-      var h = window.scrollY > 0 && hd.getBoundingClientRect().top <= 114.5; if (h !== hdStuck) { hdStuck = h; hd.classList.toggle('hd--stuck', h); }
+      var h = window.scrollY > 0 && hd.getBoundingClientRect().top <= 114.5; if (h !== hdStuck) { hdStuck = h; hd.classList.toggle('hd--stuck', h); } var ex = document.getElementById('exp'); var veil = false; if (h && ex) { var er = ex.getBoundingClientRect(), hb = 114 + 48; veil = er.top < hb && er.bottom > 114; } hd.classList.toggle('hd--veil', veil);
     }
     window.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', onScroll); onScroll();
   })();

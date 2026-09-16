@@ -132,3 +132,18 @@
 .hd, .row { gap: 10px; }
 .row.open .ld__id .nm { color: #1f5fe0; box-shadow: none; }
 .pg button.on { background: #1f5fe0; color: #fff; }
+
+/* ══ consolidated fix pass ══ */
+/* 4) By status: a deliberate analytics inset, not a squeezed sidebar */
+.focal { grid-template-columns: minmax(0, 1fr) 272px; }
+.agemix { padding: 18px 22px 18px 22px; }
+.agerows { gap: 6px; }
+.agerow { grid-template-columns: 112px minmax(0, 1fr) 40px 40px; gap: 10px; height: 30px; padding: 0 8px; }
+.agerow__l { font-size: 13.5px; }
+.agerow b { text-align: right; min-width: 0; }
+.agerow em { text-align: right; }
+.bento { grid-template-columns: minmax(600px, 1.55fr) 232px minmax(0, 1.25fr); }
+@media (max-width: 1320px) {
+  .field { --cols: 26px minmax(120px, 1.1fr) minmax(140px, 1.2fr) minmax(120px, 1.1fr) 84px 96px 108px 104px 80px 84px 112px; }
+  .hd, .row { gap: 8px; }
+}

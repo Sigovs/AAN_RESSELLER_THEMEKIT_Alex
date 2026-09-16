@@ -1027,8 +1027,34 @@ body { overflow: auto; }
 /* ── one shell for every Gen 10 page ──
       the dock's header sits level with the stuck band (both start at the top bar's bottom edge);
       the scrollbar gutter is always reserved so the top bar and the grid never shift sideways when a list gets short */
-html { scrollbar-gutter: stable; }
+body { overflow-y: scroll; }   /* the scrollbar track is always there: nothing drifts when a list gets short, and the top bar reaches the edge */
 .dock { top: var(--top); max-height: calc(100vh - var(--top) - 16px); }
 .dock__h, .dock__f { flex: none; }   /* the dock header and footer never shrink when the body is tall */
 .cmd .facet__b--on .i, .cmd .facet__b--on > .i:first-child { color: var(--brand); }   /* an active band button is white: its icon turns brand, not white */
 .row.open .stock { color: #1f5fe0; }   /* white pill on the grey tab: fixed blue ink in both themes */
+
+/* ══ consolidated fix pass ══ */
+
+/* 13) an open row's sheet is part of the list, not a floating card: flat bottom, one divider into the next row */
+.exp__in { border-radius: 0; box-shadow: inset 0 0 0 1px #6A7285; }
+.exp__in { box-shadow: inset 1px 0 0 #6A7285, inset -1px 0 0 #6A7285, inset 0 -1px 0 #6A7285; }
+.row.open + .exp { margin-bottom: 0; }
+.row.open + .exp + .row { border-top: 0; }
+[data-theme="dark"] .exp__in { box-shadow: inset 1px 0 0 #4f576a, inset -1px 0 0 #4f576a, inset 0 -1px 0 #4f576a; }
+
+/* 3) the sticky header stack never cuts through an open sheet: while the sheet passes under the column header,
+      the header steps aside (the band stays); it returns when the next rows arrive */
+.hd { transition: opacity var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
+.hd--veil { opacity: 0; pointer-events: none; }
+.hd--veil::before { box-shadow: none; }
+
+/* 1) the workspace ends on purpose: the sheet closes with the footer, a full-width rule above it */
+.foot { border-top: 1px solid var(--line-2); }
+
+/* 1280: the same eleven columns, tighter — nothing clips, no horizontal scroll */
+@media (max-width: 1320px) {
+  .field { --cols: 26px 72px 96px 46px 96px minmax(90px, 1fr) 80px 80px 100px 80px 170px 70px 104px; }
+  .hd, .row { gap: 6px; }
+  .th { width: 72px; height: 48px; }
+  .app.dock-open .field { --cols: 24px 60px 90px 40px 84px minmax(80px, 1fr) 0px 0px 76px 0px 108px 66px 84px; }
+}

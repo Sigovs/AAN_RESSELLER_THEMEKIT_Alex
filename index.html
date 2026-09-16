@@ -68,6 +68,16 @@
   .stage--r .s3 { left: auto; right: 0; transform: rotateY(12deg) rotateX(10deg) translateZ(-220px); }
   .stage--r:hover .s1 { transform: rotateY(10deg) rotateX(3deg) rotateZ(0deg) translateZ(20px); }
   .stage--r:hover .s2 { transform: rotateY(12deg) rotateX(5deg) translateZ(-100px); }
+  /* hero stage: the three screens slide in one after another on load, then settle into the perspective stack */
+  .hero .stage .s3 { animation: stage-in-l .9s cubic-bezier(.2,.7,.2,1) .15s both; }
+  .hero .stage .s2 { animation: stage-in-r .9s cubic-bezier(.2,.7,.2,1) .45s both; }
+  .hero .stage .s1 { animation: stage-in-l .9s cubic-bezier(.2,.7,.2,1) .75s both; }
+  .hero .stage .glow { animation: glow-in 1.2s ease .9s both; }
+  @keyframes stage-in-l { from { opacity: 0; transform: translateX(-60px) rotateY(-16deg) rotateX(6deg); } to { opacity: 1; } }
+  @keyframes stage-in-r { from { opacity: 0; transform: translateX(80px) rotateY(-18deg) rotateX(8deg) translateZ(-120px); } to { opacity: .96; } }
+  @keyframes glow-in { from { opacity: 0; } to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .hero .stage img, .hero .stage .glow { animation: none; } }
+
   .glow { position: absolute; inset: auto 10% -10% 10%; height: 40%; background: radial-gradient(50% 60% at 50% 100%, rgba(31,95,224,.35), rgba(31,95,224,0) 70%); filter: blur(10px); pointer-events: none; }
 
   /* ── sections ── */
