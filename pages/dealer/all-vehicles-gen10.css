@@ -925,3 +925,37 @@ body { overflow: auto; }
 .attn .ar__p { color: var(--focal-ink-3); }
 .attn .ar__m { background: rgba(255,255,255,.14); }
 .attn .ar:focus-visible { outline: 2px solid var(--focal-on); outline-offset: 1px; }
+
+/* ── column header: taller, with inner air ── */
+:root { --hdh: 48px; }
+.hd { height: var(--hdh); padding-top: 4px; padding-bottom: 4px; }
+
+/* ── the three boxes get more air at the bottom ── */
+:root { --bento-h: 220px; }
+.focal__main { padding-bottom: 24px; }
+.agemix { padding-bottom: 20px; }
+.value { padding-bottom: 22px; }
+.attn { padding-bottom: 18px; }
+
+.hero__n { font-variant-numeric: tabular-nums; }
+/* ── and more air left/right ── */
+.focal__main { padding-left: 26px; padding-right: 26px; }
+.agemix { padding-left: 24px; padding-right: 24px; }
+.value { padding-left: 26px; padding-right: 26px; }
+.attn { padding-left: 18px; padding-right: 18px; }
+/* ── Lot a touch narrower; Attention takes the room ── */
+.bento { grid-template-columns: minmax(540px, 1.3fr) 240px minmax(0, 1.55fr); }
+.focal { grid-template-columns: minmax(0, 1fr) 236px; }
+.focal { grid-template-columns: minmax(0, 1fr) 222px; }
+.agemix { padding-left: 20px; padding-right: 20px; }
+.lane { padding: 0 9px; font-size: 13px; height: 34px; gap: 6px; }
+.lane b { font-size: 13px; }
+.lane { padding: 0 7px; }
+.lanes { gap: 4px 3px; }
+.focal { grid-template-columns: minmax(0, 1fr) 216px; }
+
+/* ── Attention rows: the meter gets a small neon glow on hover, in its own tone ── */
+.attn .ar__m { overflow: visible; }
+.attn .ar__m i { transition: box-shadow var(--dur2) var(--ease), filter var(--dur2) var(--ease); }
+.attn .ar:hover .ar__m i, .attn .ar:focus-visible .ar__m i { box-shadow: 0 0 6px 1px var(--tone-fill, var(--signal-fill)), 0 0 14px 2px color-mix(in srgb, var(--tone-fill, var(--signal-fill)) 45%, transparent); filter: brightness(1.15); }
+.attn .ar--on .ar__m i { box-shadow: 0 0 5px 0 color-mix(in srgb, var(--tone-fill, var(--signal-fill)) 70%, transparent); }

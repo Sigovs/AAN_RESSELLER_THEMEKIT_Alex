@@ -146,10 +146,20 @@
   }
   function setAttn(a, on) { S.attn[a] = on; $$('.ar[data-attn="' + a + '"]').forEach(function (b) { b.classList.toggle('ar--on', on); b.setAttribute('aria-pressed', on); }); render(); }
   function setAge(b) { S.age = b; $$('[data-age]').forEach(function (el) { el.classList.toggle('on', el.dataset.age === b); }); render(); }
+  /* hero number as a counter: rolls from the current value to the new one (~700ms, eased); instant when reduced motion is on */
+  function countTo(el, text) {
+    var to = parseInt(String(text).replace(/[^0-9]/g, ''), 10); if (isNaN(to)) { el.textContent = text; return; }
+    var from = parseInt(String(el.textContent).replace(/[^0-9]/g, ''), 10) || 0;
+    if (from === to || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) { el.textContent = nf(to); return; }
+    if (el._raf) cancelAnimationFrame(el._raf);
+    var t0 = performance.now(), dur = 700;
+    var step = function (t) { var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3); el.textContent = nf(Math.round(from + (to - from) * e)); if (p < 1) el._raf = requestAnimationFrame(step); else el._raf = null; };
+    el._raf = requestAnimationFrame(step);
+  }
   function setLane(l) {
     S.lane = l;
     $$('[data-lane]').forEach(function (b) { var on = b.dataset.lane === l; b.classList.toggle('lane--on', on); b.setAttribute('aria-pressed', on); });
-    $('#scope-n').textContent = $('[data-lane="' + l + '"] b').textContent; $('#scope-l').textContent = l === 'All' ? 'All on file' : l;
+    countTo($('#scope-n'), $('[data-lane="' + l + '"] b').textContent); $('#scope-l').textContent = l === 'All' ? 'All on file' : l;
     render();
   }
   function tog(g, key, on) {
@@ -197,7 +207,7 @@
     if (S.cur === id) { closeVehicle(); return; }
     var ex = $('#exp');
     S.cur = id; S.expNow = false;
-    var go = function () { render(); var r = $('.row[data-id="' + id + '"]'); if (r) { var y = Math.max(0, r.getBoundingClientRect().top + window.scrollY - 56 - 58 - 36 - 10); var sp = $('#exp-space'); if (sp) { var need = y - (document.documentElement.scrollHeight - window.innerHeight); sp.style.height = need > 0 ? Math.ceil(need) + 'px' : '0px'; } window.scrollTo({ top: y, behavior: 'smooth' }); } };
+    var go = function () { render(); var r = $('.row[data-id="' + id + '"]'); if (r) { var y = Math.max(0, r.getBoundingClientRect().top + window.scrollY - 56 - 58 - 48 - 10); var sp = $('#exp-space'); if (sp) { var need = y - (document.documentElement.scrollHeight - window.innerHeight); sp.style.height = need > 0 ? Math.ceil(need) + 'px' : '0px'; } window.scrollTo({ top: y, behavior: 'smooth' }); } };
     if (ex) { ex.classList.remove('exp--open'); setTimeout(go, 200); } else go();
   }
   function closeVehicle() {
@@ -425,6 +435,8 @@
     }
     window.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', onScroll); onScroll();
   })();
+
+  (function () { var n = $('#scope-n'); if (n) { var v = n.textContent; n.textContent = '0'; requestAnimationFrame(function () { countTo(n, v); }); } })();
 
   window.G8demo = { showVehicle: showVehicle, closeVehicle: closeVehicle, showFilters: showFilters, closeDock: closeDock, S: S, V: V };
 })();
