@@ -91,7 +91,7 @@
 
   /* section nav follows the scroll */
   function syncNav() {
-    var y = window.scrollY + 56 + 58 + 40, cur = 's-overview';
+    var y = window.scrollY + 56 + 48 + 40, cur = 's-overview';
     $$('.sec').forEach(function (s) { if (s.offsetTop <= y) cur = s.id; });
     $$('.secnav__b').forEach(function (b) { b.classList.toggle('secnav__b--on', b.dataset.sec === cur); });
   }
@@ -113,10 +113,10 @@
     if ((el = t.closest('[data-act="dock"]'))) { e.preventDefault(); toggleDock(); return; }
     if ((el = t.closest('[data-act="close"]'))) { toggleDock(false); return; }
     if ((el = t.closest('[data-copy]'))) { try { navigator.clipboard.writeText(el.dataset.copy); } catch (x) {} return; }
-    if ((el = t.closest('[data-sec]'))) { e.preventDefault(); var s = $('#' + el.dataset.sec); if (s) window.scrollTo({ top: s.offsetTop - 56 - 58 - 12, behavior: 'smooth' }); return; }
+    if ((el = t.closest('[data-sec]'))) { e.preventDefault(); var s = $('#' + el.dataset.sec); if (s) window.scrollTo({ top: s.offsetTop - 56 - 48 - 20, behavior: 'smooth' }); return; }
     if ((el = t.closest('[data-act="add-note"]'))) { var v = $('#note-in').value.trim(); if (!v) return; acts.unshift({ d: fdt(new Date().toISOString()), a: 'Comments Added', n: v, r: L.rep === 'Unassigned' ? window.LD.totals.dealer : L.rep }); L.notes++; $('#note-in').value = ''; render(); return; }
-    if ((el = t.closest('[data-act="note"]'))) { $('#note-in').focus(); window.scrollTo({ top: $('#s-activity').offsetTop - 56 - 58 - 12, behavior: 'smooth' }); return; }
-    if ((el = t.closest('[data-act="email"]'))) { window.scrollTo({ top: $('#s-emails').offsetTop - 56 - 58 - 12, behavior: 'smooth' }); return; }
+    if ((el = t.closest('[data-act="note"]'))) { $('#note-in').focus(); window.scrollTo({ top: $('#s-activity').offsetTop - 56 - 48 - 20, behavior: 'smooth' }); return; }
+    if ((el = t.closest('[data-act="email"]'))) { window.scrollTo({ top: $('#s-emails').offsetTop - 56 - 48 - 20, behavior: 'smooth' }); return; }
     if ((el = t.closest('[data-act="wf-save"]'))) { L.status = $('#wf-status').value; var rv = $('#wf-rep').value; L.rep = rv === 'Select Rep' ? 'Unassigned' : rv; var fv = $('#wf-follow').value; L.follow = fv ? fv.slice(0, 10) : null; L.pastDue = !!L.follow && L.follow < '2026-09-10'; acts.unshift({ d: fdt(new Date().toISOString()), a: 'Status Changed', n: L.status + (L.rep !== 'Unassigned' ? ' · assigned to ' + L.rep : ''), r: L.rep === 'Unassigned' ? window.LD.totals.dealer : L.rep }); render(); return; }
     if ((el = t.closest('[data-act="remove-veh"]'))) { L.car = null; L.stock = null; render(); return; }
     if ((el = t.closest('[data-act="add-trade"]'))) { L.type = 'tradein'; render(); return; }
