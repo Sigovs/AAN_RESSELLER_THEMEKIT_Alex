@@ -959,3 +959,21 @@ body { overflow: auto; }
 .attn .ar__m i { transition: box-shadow var(--dur2) var(--ease), filter var(--dur2) var(--ease); }
 .attn .ar:hover .ar__m i, .attn .ar:focus-visible .ar__m i { box-shadow: 0 0 6px 1px var(--tone-fill, var(--signal-fill)), 0 0 14px 2px color-mix(in srgb, var(--tone-fill, var(--signal-fill)) 45%, transparent); filter: brightness(1.15); }
 .attn .ar--on .ar__m i { box-shadow: 0 0 5px 0 color-mix(in srgb, var(--tone-fill, var(--signal-fill)) 70%, transparent); }
+
+/* ── lanes read as subtle button tags: translucent fill + hairline, lift on hover, solid white when active ── */
+.lane { background: rgba(255,255,255,.06); box-shadow: inset 0 0 0 1px rgba(255,255,255,.10); border-radius: 9px; padding: 0 9px; transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease), transform var(--dur) var(--ease); }
+.lane:hover { background: rgba(255,255,255,.12); box-shadow: inset 0 0 0 1px rgba(255,255,255,.22); transform: translateY(-1px); }
+.lane:active { transform: translateY(0); }
+.lane b { padding: 1px 6px; border-radius: 6px; background: rgba(255,255,255,.10); font-size: 12px; }
+.lane--on, .lane--on:hover { background: var(--focal-on); box-shadow: 0 2px 8px rgba(0,0,0,.25); transform: none; }
+.lane--on b { background: rgba(15,22,38,.08); }
+.lane--zero { opacity: .7; }
+.lane--zero b { background: transparent; box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
+.lane:focus-visible { outline: 2px solid var(--focal-on); outline-offset: 1px; }
+/* lanes as an orderly 2-column grid of tags; 'All on file' spans the row */
+.lanes { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 12px; }
+.lane { height: 30px; flex: none; width: auto; }
+.lane--all { grid-column: 1 / -1; margin-left: 0; }
+.focal__main { padding-bottom: 20px; }
+.lanes { gap: 8px 10px; margin-top: 14px; }
+.lane { padding: 0 10px; }
