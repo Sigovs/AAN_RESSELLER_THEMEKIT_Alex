@@ -731,3 +731,21 @@ body { overflow: auto; }
 .field.has-open .row:not(.open) { opacity: .55; transition: opacity var(--dur2) var(--ease); }
 .field.has-open .row:not(.open):hover { opacity: 1; }
 .exp__in { box-shadow: var(--el-3), 0 0 0 1px var(--focal-line); }
+
+/* ── selected row: the command-bar grey instead of navy, white text on it ── */
+.row.open, .row.open:hover { background: #6A7285; background-image: none; color: #fff; }
+.row.open::before { background: #fff; }
+.row.open .yr, .row.open .trim, .row.open .ext, .row.open .stk__vin, .row.open .age { color: rgba(255,255,255,.88); }
+.row.open .mk, .row.open .md, .row.open .price { color: #fff; }
+.row.open .price em, .row.open .trim i { color: rgba(255,255,255,.7); }
+.row.open .stock { background: #fff; color: var(--brand-ink); }
+.row.open .lock { background: rgba(255,255,255,.2); color: #fff; }
+.row.open .age--stale { color: #ffc7bf; } .row.open .age--fresh { color: #b9f0d2; }
+.row.open .age i { background: rgba(255,255,255,.28); }
+.row.open .okmark { color: #b9f0d2; }
+.row.open .th { box-shadow: 0 0 0 2px rgba(255,255,255,.35); }
+.row.open .acts button { color: rgba(255,255,255,.9); } .row.open .acts button:hover { background: rgba(255,255,255,.18); color: #fff; }
+.row.open .ck { border-color: rgba(255,255,255,.6); }
+.exp__in { box-shadow: var(--el-3), 0 0 0 1px #6A7285; }
+.exp__in::before { background: #6A7285; }
+[data-theme="dark"] .row.open, [data-theme="dark"] .row.open:hover { background: #4f576a; }
