@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vehicle Inventory · Chicago Motor Cars — AAN (Gen 10)</title>
+<title>Vehicle Inventory · Chicago Motor Cars — AAN (Gen 10 · bento + inline vehicle)</title>
 <script>try { var t = localStorage.getItem('aan-theme'); if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
 <link rel="stylesheet" href="all-vehicles-gen10.css">
 </head>
@@ -143,35 +143,43 @@
     <button class="btn btn--primary" type="button"><svg class="i"><use href="#i-plus"/></svg> Add vehicle</button>
   </div>
 
-  <!-- LOT column — understand -->
-  <aside class="lot" aria-label="Lot intelligence">
-    <section class="focal">
-      <div class="focal__h"><span class="caps">Lot</span><span class="s">6 rooftops</span></div>
-      <div class="hero"><div class="hero__n" id="scope-n">359</div><div class="hero__l"><b id="scope-l">Available</b><span class="hero__of">of 13,587 on file</span></div></div>
-      <div class="lanes" role="group" aria-label="Lane">
-        <button class="lane lane--on" type="button" data-lane="Available" aria-pressed="true"><span>Available</span><b>359</b></button>
-        <button class="lane" type="button" data-lane="Sold" aria-pressed="false"><span>Sold</span><b>13,212</b></button>
-        <button class="lane" type="button" data-lane="Staging" aria-pressed="false"><span>Staging</span><b>16</b></button>
-        <button class="lane lane--zero" type="button" data-lane="Pending" aria-pressed="false"><span>Pending</span><b>0</b></button>
-        <button class="lane lane--all" type="button" data-lane="All" aria-pressed="false"><span>All on file</span><b>13,587</b></button>
+  <!-- BENTO — understand, on top: one dominant object, one compact value module, one working queue -->
+  <section class="bento" aria-label="Lot intelligence">
+    <div class="focal">
+      <div class="focal__main">
+        <div class="focal__h"><span class="caps">Lot</span><span class="s">6 rooftops · updated 5 min ago</span></div>
+        <div class="hero"><div class="hero__n" id="scope-n">359</div><div class="hero__l"><b id="scope-l">Available</b><span class="hero__of">of 13,587 on file</span></div></div>
+        <div class="lanes" role="group" aria-label="Lane">
+          <button class="lane lane--on" type="button" data-lane="Available" aria-pressed="true"><span>Available</span><b>359</b></button>
+          <button class="lane" type="button" data-lane="Sold" aria-pressed="false"><span>Sold</span><b>13,212</b></button>
+          <button class="lane" type="button" data-lane="Staging" aria-pressed="false"><span>Staging</span><b>16</b></button>
+          <button class="lane lane--zero" type="button" data-lane="Pending" aria-pressed="false"><span>Pending</span><b>0</b></button>
+          <button class="lane lane--all" type="button" data-lane="All" aria-pressed="false"><span>All on file</span><b>13,587</b></button>
+        </div>
       </div>
-      <div class="kv"><div><div class="v" title="$66,311,600">$66.3M</div><div class="l">asking value</div></div><div><div class="v" title="$293,414">$293K</div><div class="l">average</div></div><div><div class="v">146</div><div class="l">over $100K</div></div></div>
       <div class="agemix">
         <div class="agemix__h"><span class="caps">Age mix</span><a class="s" href="#">Aging report</a></div>
         <div class="agerows"><button type="button" class="agerow" data-age="fresh" aria-pressed="false"><span class="agerow__l">≤ 30 days</span><span class="agerow__m"><i style="--seg:var(--age-fresh);width:56%"></i></span><b>73</b><em>20%</em></button><button type="button" class="agerow" data-age="mid" aria-pressed="false"><span class="agerow__l">31–90 days</span><span class="agerow__m"><i style="--seg:var(--age-mid-focal);width:88%"></i></span><b>115</b><em>32%</em></button><button type="button" class="agerow" data-age="late" aria-pressed="false"><span class="agerow__l">91–365 days</span><span class="agerow__m"><i style="--seg:var(--age-late);width:100%"></i></span><b>131</b><em>36%</em></button><button type="button" class="agerow" data-age="stale" aria-pressed="false"><span class="agerow__l">over 1 year</span><span class="agerow__m"><i style="--seg:var(--age-stale);width:31%"></i></span><b>40</b><em>11%</em></button></div>
       </div>
-    </section>
+    </div>
+
+    <div class="value">
+      <div class="value__h"><span class="caps">Value</span><span class="s">asking, available</span></div>
+      <div class="kv"><div><div class="v" title="$66,311,600">$66.3M</div><div class="l">asking value</div></div><div><div class="v" title="$293,414">$293K</div><div class="l">average price</div></div><div><div class="v">146</div><div class="l">over $100K</div></div></div>
+    </div>
 
     <section class="attn" aria-label="Needs attention">
-      <div class="attn__h"><h2><span class="full">Needs attention</span><span class="short">Attention</span></h2><span class="s">tap to filter</span></div>
+      <div class="attn__h"><h2><span class="full">Needs attention</span><span class="short">Attention</span></h2><span class="s">tap to filter the list</span></div>
+      <div class="attn__g">
       <button class="ar" type="button" data-attn="no_price"><span class="ar__n">133</span><span class="ar__b"><span class="ar__l"><span class="full">No price</span><span class="short">No price</span></span><span class="ar__m"><i style="--w:37%"></i></span></span><span class="ar__p">37%</span></button>
       <button class="ar" type="button" data-attn="no_photos"><span class="ar__n">95</span><span class="ar__b"><span class="ar__l"><span class="full">No photos</span><span class="short">No photos</span></span><span class="ar__m"><i style="--w:26%"></i></span></span><span class="ar__p">26%</span></button>
       <button class="ar ar--danger" type="button" data-attn="feed_off"><span class="ar__n">67</span><span class="ar__b"><span class="ar__l"><span class="full">Feed excluded</span><span class="short">Feed off</span></span><span class="ar__m"><i style="--w:19%"></i></span></span><span class="ar__p">19%</span></button>
       <button class="ar ar--slate" type="button" data-attn="hidden"><span class="ar__n">61</span><span class="ar__b"><span class="ar__l"><span class="full">Hidden on site</span><span class="short">Hidden</span></span><span class="ar__m"><i style="--w:17%"></i></span></span><span class="ar__p">17%</span></button>
       <button class="ar ar--danger" type="button" data-attn="aging"><span class="ar__n">40</span><span class="ar__b"><span class="ar__l"><span class="full">Aging over 1 year</span><span class="short">Aging</span></span><span class="ar__m"><i style="--w:11%"></i></span></span><span class="ar__p">11%</span></button>
       <button class="ar ar--violet" type="button" data-attn="pending"><span class="ar__n">49</span><span class="ar__b"><span class="ar__l"><span class="full">Sale pending</span><span class="short">Pending</span></span><span class="ar__m"><i style="--w:14%"></i></span></span><span class="ar__p">14%</span></button>
+      </div>
     </section>
-  </aside>
+  </section>
 
   <!-- FIELD — command + inventory -->
   <section class="field" aria-label="Inventory">
@@ -208,7 +216,7 @@
 
   <!-- DOCK — contextual plane: vehicle or filters -->
   <aside class="dock" id="dock" aria-label="Context">
-    <div class="dock__h"><h2 class="dock__t" id="dock-t">Vehicle</h2><span class="dock__c" id="dock-c"></span><div class="dock__nav" id="dock-nav"><button type="button" data-act="prev" aria-label="Previous vehicle"><svg class="i"><use href="#i-left"/></svg></button><button type="button" data-act="next" aria-label="Next vehicle"><svg class="i"><use href="#i-right"/></svg></button></div><button class="dock__x" type="button" data-act="close" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+    <div class="dock__h"><h2 class="dock__t" id="dock-t">Filters</h2><span class="dock__c" id="dock-c"></span><div class="dock__nav" id="dock-nav"><button type="button" data-act="prev" aria-label="Previous vehicle"><svg class="i"><use href="#i-left"/></svg></button><button type="button" data-act="next" aria-label="Next vehicle"><svg class="i"><use href="#i-right"/></svg></button></div><button class="dock__x" type="button" data-act="close" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
     <div class="dock__b" id="dock-b"></div>
     <div class="dock__f" id="dock-f"></div>
   </aside>

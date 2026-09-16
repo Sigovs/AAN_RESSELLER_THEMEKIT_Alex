@@ -1,4 +1,5 @@
-/* Gen 10 — Gen 7 workspace behaviour, plus: platform menus, Light/Dark, and the Dock as accordions
+/* Gen 10 — bento intelligence on top, vehicle opens INLINE under its row (accordion sheet), Dock = Filters only.
+   Platform menus, Light/Dark, facet counts
    (Filters with facet counts; vehicle inspector with Market & pricing, Recent comps, History).
    Prototype JS. Every facet count, market figure, comparable listing and history entry is DEMO data. */
 (function () {
@@ -37,7 +38,7 @@
   var S = {
     sort: 'days', dir: 'desc', attn: {}, age: null, sel: {}, lane: 'Available', dock: null, cur: null, fq: '', allMakes: false,
     f: { make: {}, model: {}, year: {}, price: {}, mile: {}, loc: {}, type: {}, merch: {}, color: {}, opt: {} },
-    acc: { health: false, market: true, comps: false, spec: false, hist: false, 'f-make': true, 'f-price': true, 'f-year': false, 'f-model': false, 'f-mile': false, 'f-loc': false, 'f-type': false, 'f-merch': false, 'f-color': false, 'f-opt': false, 'f-audit': false }
+    acc: { health: true, market: false, comps: false, spec: false, hist: false, 'f-make': true, 'f-price': true, 'f-year': false, 'f-model': false, 'f-mile': false, 'f-loc': false, 'f-type': false, 'f-merch': false, 'f-color': false, 'f-opt': false, 'f-audit': false }
   };
 
   function band(d) { return d <= 30 ? 'fresh' : d <= 90 ? 'mid' : d <= 365 ? 'late' : 'stale'; }
@@ -85,7 +86,7 @@
   /* ── rows ─────────────────────────────────────────────────────────── */
   function tag(t) { return '<span class="tag' + (TONE[t] ? ' tag--' + TONE[t] : '') + '">' + esc(t) + '</span>'; }
   function row(v) {
-    var b = band(v.d), max = S.dock ? 1 : (v.f.length > 3 ? 2 : 3), tags = v.f.slice(0, max), rest = v.f.length - tags.length;
+    var b = band(v.d), max = S.dock === 'filters' ? 1 : (v.f.length > 3 ? 2 : 3), tags = v.f.slice(0, max), rest = v.f.length - tags.length;
     var name = v.y + ' ' + v.mk + ' ' + v.md;
     return '<div class="row' + (S.sel[v.id] ? ' sel' : '') + (S.cur === v.id ? ' open' : '') + '" data-id="' + v.id + '" tabindex="0" aria-label="' + esc(name) + '">' +
       '<input class="ck" type="checkbox" data-sel="' + v.id + '"' + (S.sel[v.id] ? ' checked' : '') + ' aria-label="Select ' + esc(name) + '">' +
@@ -101,7 +102,8 @@
 
   function render() {
     var L = list(), F = filtered();
-    $('#tb').innerHTML = L.length ? L.map(row).join('') : '<div class="empty">No vehicles match these filters.<button type="button" data-act="clear-all">Clear all</button></div>';
+    $('#tb').innerHTML = L.length ? L.map(function (v) { return row(v) + (S.cur === v.id ? '<div class="exp" id="exp"><div><div class="exp__in">' + vehicleSheet(v) + '</div></div></div>' : ''); }).join('') : '<div class="empty">No vehicles match these filters.<button type="button" data-act="clear-all">Clear all</button></div>';
+    var ex = $('#exp'); if (ex) { if (S.expNow) ex.classList.add('exp--open'); else requestAnimationFrame(function () { requestAnimationFrame(function () { ex.classList.add('exp--open'); }); }); S.expNow = true; }
     $('#shown').textContent = (L.length ? '1–' + L.length : '0') + ' of ' + (F ? L.length : 359);
 
     var chips = [];
@@ -131,7 +133,6 @@
     var n = Object.keys(S.sel).filter(function (x) { return S.sel[x]; }).length;
     $('#tray').classList.toggle('tray--on', n > 0); $('#tray-n').textContent = n;
     if (S.dock === 'filters') renderFilters();
-    if (S.dock === 'vehicle') { var v = byId(S.cur), i = L.indexOf(v); $('#dock-c').textContent = i >= 0 ? (i + 1) + ' of ' + L.length : 'not in current filter'; }
   }
   function renderMakes() {
     $('#make-list').innerHTML = MAKES.map(function (m) { return '<label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="' + esc(m[0]) + '"' + (S.f.make[m[0]] ? ' checked' : '') + '><span>' + esc(m[0]) + '</span><span class="c">' + m[1] + '</span></label>'; }).join('');
@@ -182,16 +183,30 @@
     if (p) { if (open) p.removeAttribute('inert'); else p.setAttribute('inert', ''); }
   }
   function openDock() { $('#app').classList.add('dock-open'); $('[data-act="filters"]').classList.toggle('facet__b--on', S.dock === 'filters'); }
-  function closeDock() { S.dock = null; S.cur = null; $('#app').classList.remove('dock-open'); $('[data-act="filters"]').classList.remove('facet__b--on'); $('#dock-f').className = 'dock__f'; render(); }
+  function closeDock() { S.dock = null; $('#app').classList.remove('dock-open'); $('[data-act="filters"]').classList.remove('facet__b--on'); $('#dock-f').className = 'dock__f'; render(); }
 
   function showVehicle(id) {
     var v = byId(id); if (!v) return;
-    S.cur = id; S.dock = 'vehicle';
-    $('#dock-t').textContent = 'Vehicle'; $('#dock-nav').hidden = false;
-    $('#dock-b').innerHTML = vehicleBody(v); $('#dock-b').scrollTop = 0;
-    $('#dock-f').className = 'dock__f'; $('#dock-f').innerHTML = vehicleFoot(v);
-    openDock(); render();
-    var r = $('.row[data-id="' + id + '"]'); if (r) r.scrollIntoView({ block: 'nearest' });
+    if (S.cur === id) { closeVehicle(); return; }
+    var ex = $('#exp');
+    S.cur = id; S.expNow = false;
+    var go = function () { render(); var r = $('.row[data-id="' + id + '"]'); if (r) r.scrollIntoView({ block: 'nearest' }); };
+    if (ex) { ex.classList.remove('exp--open'); setTimeout(go, 200); } else go();
+  }
+  function closeVehicle() {
+    var ex = $('#exp'); S.cur = null;
+    if (ex) { ex.classList.remove('exp--open'); setTimeout(render, 200); } else render();
+  }
+
+  function vehicleSheet(v) {
+    var has = function (t) { return v.f.indexOf(t) >= 0; };
+    var acts = '<div class="veh__acts"><button class="btn btn--primary" type="button">' + ic('i-edit') + ' Edit vehicle</button>' +
+      '<button class="btn btn--sheet" type="button">' + ic('i-cam') + ' Photos</button><button class="btn btn--sheet" type="button">' + ic('i-print') + ' Window sticker</button>' +
+      '<button class="btn btn--sheet" type="button">' + ic('i-file') + ' Carfax</button><button class="btn btn--sheet" type="button">' + ic('i-rss') + (has('Feed off') ? ' Include in feeds' : ' Exclude from feeds') + '</button>' +
+      '<button class="btn btn--sheet" type="button">' + ic('i-eye') + (has('Hidden') ? ' Show on site' : ' Hide on site') + '</button><button class="btn btn--quiet" type="button" style="color:var(--danger)">' + ic('i-trash') + ' Delete…</button></div>';
+    var p = vehicleBody(v);
+    return '<div class="exp__l">' + p.img + p.kv + acts + '</div>' +
+      '<div class="exp__r"><div class="exp__top"><div><h3 class="veh__n"><em>' + v.y + '</em>' + esc(v.mk) + ' ' + esc(v.md) + '</h3>' + p.meta + p.tags + '</div><button class="exp__x" type="button" data-act="close-veh" aria-label="Close vehicle">' + ic('i-x') + '</button></div><div class="exp__accs">' + p.accs + '</div></div>';
   }
 
   function vehicleBody(v) {
@@ -242,16 +257,17 @@
 
     var specIn = '<div class="spec2"><div><span>Trim</span><span title="' + esc(v.tr) + '">' + (esc(v.tr) || '—') + '</span></div><div><span>Exterior</span><span>' + esc(v.c) + '</span></div><div><span>Type</span><span>Used</span></div><div><span>Mileage</span><span>Not recorded</span></div><div><span>Location</span><span>Chicago Motor Cars</span></div><div><span>Stock #</span><span class="mono">' + esc(v.s) + '</span></div></div>';
 
-    return '<div class="veh__img">' + (v.t ? '<img alt="' + esc(v.y + ' ' + v.mk + ' ' + v.md) + '" src="img/' + esc(v.t) + '"><span class="cnt">' + ic('i-cam') + nf(v.ph || 0) + ' photos</span>' : '<div class="none">' + ic('i-cam-off') + 'No photos uploaded<button class="btn btn--sm" type="button">' + ic('i-plus') + ' Upload photos</button></div>') + '</div>' +
-      '<h3 class="veh__n"><em>' + v.y + '</em>' + esc(v.mk) + ' ' + esc(v.md) + '</h3>' +
-      '<div class="veh__m"><span class="idtag">' + esc(v.s) + '</span><span class="mono">VIN ' + esc(v.vin) + '</span><span class="veh__st">Available</span>' + (v.lock ? '<span class="lock" title="Being edited by another user">' + ic('i-lock') + '</span>' : '') + '</div>' +
-      (v.f.length ? '<div class="veh__tags">' + v.f.map(tag).join('') + '</div>' : '') +
-      '<div class="veh__kv"><div><div class="v' + (v.p == null ? ' warn' : '') + '">' + (v.p == null ? 'No price' : fmt(v.p)) + '</div><div class="l">asking price</div></div><div><div class="v" style="color:' + (b === 'stale' ? 'var(--danger)' : b === 'fresh' ? 'var(--ok)' : 'var(--ink)') + '">' + lab(v.d) + '</div><div class="l">' + nf(v.d) + ' days</div></div><div><div class="v">' + (v.ph || 0) + '</div><div class="l">photos</div></div></div>' +
-      acc('health', 'Merchandising health', healthSum, '<div class="health">' + H.map(function (h) { return '<div class="hl hl--' + h[0] + '"><i>' + ic(h[1]) + '</i>' + esc(h[2]) + '</div>'; }).join('') + '</div>') +
-      acc('market', 'Market &amp; pricing', mktSum, mktIn, ' <span class="demo">Demo</span>') +
-      acc('comps', 'Recent comps', '5 of ' + m.n + ' listings', compsIn, ' <span class="demo">Demo</span>') +
-      acc('spec', 'Specification', esc(v.tr || 'No trim recorded'), specIn) +
-      acc('hist', 'History', 'Edited 3 days ago', histIn, ' <span class="demo">Demo</span>');
+    return {
+      img: '<div class="veh__img">' + (v.t ? '<img alt="' + esc(v.y + ' ' + v.mk + ' ' + v.md) + '" src="img/' + esc(v.t) + '"><span class="cnt">' + ic('i-cam') + nf(v.ph || 0) + ' photos</span>' : '<div class="none">' + ic('i-cam-off') + 'No photos uploaded<button class="btn btn--sm" type="button">' + ic('i-plus') + ' Upload photos</button></div>') + '</div>',
+      meta: '<div class="veh__m"><span class="idtag">' + esc(v.s) + '</span><span class="mono">VIN ' + esc(v.vin) + '</span><span class="veh__st">Available</span>' + (v.lock ? '<span class="lock" title="Being edited by another user">' + ic('i-lock') + '</span>' : '') + '</div>',
+      tags: (v.f.length ? '<div class="veh__tags">' + v.f.map(tag).join('') + '</div>' : ''),
+      kv: '<div class="veh__kv"><div><div class="v' + (v.p == null ? ' warn' : '') + '">' + (v.p == null ? 'No price' : fmt(v.p)) + '</div><div class="l">asking price</div></div><div><div class="v" style="color:' + (b === 'stale' ? 'var(--danger)' : b === 'fresh' ? 'var(--ok)' : 'var(--ink)') + '">' + lab(v.d) + '</div><div class="l">' + nf(v.d) + ' days</div></div><div><div class="v">' + (v.ph || 0) + '</div><div class="l">photos</div></div></div>',
+      accs: acc('health', 'Merchandising health', healthSum, '<div class="health">' + H.map(function (h) { return '<div class="hl hl--' + h[0] + '"><i>' + ic(h[1]) + '</i>' + esc(h[2]) + '</div>'; }).join('') + '</div>') +
+        acc('market', 'Market &amp; pricing', mktSum, mktIn, ' <span class="demo">Demo</span>') +
+        acc('comps', 'Recent comps', '5 of ' + m.n + ' listings', compsIn, ' <span class="demo">Demo</span>') +
+        acc('spec', 'Specification', esc(v.tr || 'No trim recorded'), specIn) +
+        acc('hist', 'History', 'Edited 3 days ago', histIn, ' <span class="demo">Demo</span>')
+    };
   }
 
   function vehicleFoot(v) {
@@ -316,7 +332,7 @@
       setAccOpen(sec, q ? !sec.hidden : !!S.acc[sec.dataset.acc]);
     });
   }
-  function showFilters() { S.cur = null; S.dock = 'filters'; $('#dock-b').scrollTop = 0; openDock(); render(); }
+  function showFilters() { S.dock = 'filters'; $('#dock-b').scrollTop = 0; openDock(); render(); }
 
   /* ── platform menus, theme ────────────────────────────────────────── */
   function closeMenus(except) { $$('.nav__it--open').forEach(function (it) { if (it !== except) { it.classList.remove('nav__it--open'); var b = $('[data-menu]', it); if (b) b.setAttribute('aria-expanded', 'false'); } }); }
@@ -338,10 +354,10 @@
     if ((el = t.closest('[data-act="theme"]'))) { setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true); return; }
     if ((el = t.closest('[data-act="filters"]'))) { if (S.dock === 'filters') closeDock(); else showFilters(); return; }
     if ((el = t.closest('[data-act="close"]'))) { closeDock(); return; }
+    if ((el = t.closest('[data-act="close-veh"]'))) { closeVehicle(); return; }
     if ((el = t.closest('[data-act="all-makes"]'))) { S.allMakes = !S.allMakes; render(); return; }
     if ((el = t.closest('[data-act="reset-f"]'))) { Object.keys(S.f).forEach(function (g) { S.f[g] = {}; }); renderMakes(); render(); return; }
-    if ((el = t.closest('[data-act="prev"], [data-act="next"]'))) { var L = list(), i = L.findIndex(function (x) { return x.id === S.cur; }); var nx = L[(i + (el.dataset.act === 'next' ? 1 : -1) + L.length) % L.length]; if (nx) showVehicle(nx.id); return; }
-    if ((el = t.closest('[data-fk]'))) { var fk = el.dataset.fk.split(':'); tog(fk[0], fk[1]); return; }
+        if ((el = t.closest('[data-fk]'))) { var fk = el.dataset.fk.split(':'); tog(fk[0], fk[1]); return; }
     if ((el = t.closest('[data-lane]'))) { setLane(el.dataset.lane); return; }
     if ((el = t.closest('.ar[data-attn]'))) { setAttn(el.dataset.attn, !S.attn[el.dataset.attn]); return; }
     if ((el = t.closest('[data-age]'))) { setAge(S.age === el.dataset.age ? null : el.dataset.age); return; }
@@ -367,7 +383,7 @@
   });
   document.addEventListener('keydown', function (e) {
     var a = document.activeElement;
-    if (e.key === 'Escape') { if ($('.nav__it--open') || $('.pop--open')) { closeMenus(); closePops(); } else if (S.dock) closeDock(); return; }
+    if (e.key === 'Escape') { if ($('.nav__it--open') || $('.pop--open')) { closeMenus(); closePops(); } else if (S.cur) closeVehicle(); else if (S.dock) closeDock(); return; }
     if (e.key === 'Enter' && a && a.matches && a.matches('.row[data-id]')) { showVehicle(a.dataset.id); return; }
     if (e.key === '/' && !/input|select|textarea/i.test(a.tagName)) { e.preventDefault(); $('#q').focus(); }
   });
@@ -390,5 +406,5 @@
     else if ('filters' in P) showFilters();
     else render();
   })();
-  window.G8demo = { showVehicle: showVehicle, showFilters: showFilters, closeDock: closeDock, S: S, V: V };
+  window.G8demo = { showVehicle: showVehicle, closeVehicle: closeVehicle, showFilters: showFilters, closeDock: closeDock, S: S, V: V };
 })();
