@@ -174,11 +174,14 @@
   @media (max-width: 980px) { .oq { grid-template-columns: 1fr; } .oq .rule { grid-template-columns: 1fr; } }
 
   /* ── robot avatar in the corner ── */
-  .robo { position: fixed; right: 18px; bottom: 14px; z-index: 30; width: 168px; height: 168px; display: grid; place-items: center; text-decoration: none; filter: drop-shadow(0 18px 24px rgba(0,0,0,.55)); transition: transform .35s cubic-bezier(.2,.7,.2,1); animation: robo-in .9s cubic-bezier(.2,.7,.2,1) both, robo-float 5s ease-in-out 1s infinite; }
+  .robo { position: fixed; right: 18px; bottom: 14px; z-index: 30; width: 168px; height: 168px; display: grid; place-items: center; filter: drop-shadow(0 18px 24px rgba(0,0,0,.55)); will-change: transform; transform: translate3d(0, 40px, 0) scale(.8); opacity: 0; transition: opacity .6s ease; }
+  .robo--ready { opacity: 1; }
+  .beam { position: absolute; left: 50%; top: 22%; width: 26px; height: 26px; margin-left: -13px; border-radius: 50%; pointer-events: none; opacity: 0; background: radial-gradient(circle, rgba(200,232,255,1) 0, rgba(77,160,255,.85) 30%, rgba(77,134,255,0) 70%); filter: blur(2px); transform: scale(.4); transition: opacity .25s ease, transform .35s cubic-bezier(.2,.7,.2,1); }
+  .robo--lit .beam { opacity: 1; transform: scale(2.2); animation: beam-pulse 1.4s ease-in-out infinite; }
+  @keyframes beam-pulse { 0%, 100% { transform: scale(2.0); } 50% { transform: scale(2.6); } }
   .robo model-viewer { width: 100%; height: 100%; background: transparent; --poster-color: transparent; cursor: grab; }
   .robo model-viewer:active { cursor: grabbing; }
   .robo::before { content: ""; position: absolute; inset: 12% 8% -6% 8%; border-radius: 50%; background: radial-gradient(50% 50% at 50% 60%, rgba(77,134,255,.45), rgba(77,134,255,0) 70%); filter: blur(8px); z-index: -1; transition: opacity .3s ease; }
-  .robo:hover { transform: translateY(-4px); animation-play-state: paused, paused; }
   /* comic speech bubble: thick ink outline, tail of two bubbles, bounces in, poofs out */
   .robo .say { position: absolute; right: 92%; bottom: 62%; width: max-content; max-width: 280px; padding: 12px 16px; border-radius: 22px; background: #fff; color: #10151f; border: 3px solid #10151f; font-size: 14px; font-weight: 700; line-height: 1.25; letter-spacing: -.01em; opacity: 0; transform: scale(.5); transform-origin: 100% 100%; pointer-events: none; box-shadow: 4px 6px 0 #10151f, 0 18px 30px rgba(0,0,0,.35); white-space: normal; }
   .robo .say::before, .robo .say::after { content: ""; position: absolute; background: #fff; border: 3px solid #10151f; border-radius: 50%; box-shadow: 3px 3px 0 #10151f; }
@@ -195,10 +198,8 @@
   .robo .puff i:nth-child(1) { --dx: -46px; --dy: -34px; } .robo .puff i:nth-child(2) { --dx: -70px; --dy: 0px; animation-delay: .03s; } .robo .puff i:nth-child(3) { --dx: -40px; --dy: 30px; animation-delay: .06s; } .robo .puff i:nth-child(4) { --dx: -12px; --dy: -50px; animation-delay: .04s; } .robo .puff i:nth-child(5) { --dx: -90px; --dy: -22px; animation-delay: .08s; width: 10px; height: 10px; } .robo .puff i:nth-child(6) { --dx: -20px; --dy: 40px; animation-delay: .05s; width: 10px; height: 10px; }
   @keyframes puff { 0% { opacity: 0; transform: translate(0, 0) scale(.3); } 25% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1.3); } }
 
-  @keyframes robo-in { from { opacity: 0; transform: translateY(24px) scale(.8); } to { opacity: 1; transform: none; } }
-  @keyframes robo-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
   @media (max-width: 980px) { .robo { width: 90px; height: 90px; right: 10px; bottom: 10px; } .robo .say, .robo .puff { display: none; } }
-  @media (prefers-reduced-motion: reduce) { .robo { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .robo { transition: none; } }
 
   footer { padding: 36px 0 60px; color: var(--on-3); font-size: 13px; border-top: 1px solid var(--line-on); }
   footer b { color: var(--on-2); }
@@ -473,7 +474,7 @@
 </div></footer>
 
 <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
-<div class="robo" id="robo" title="Drag to spin · click to talk"><span class="say" id="say">Ten generations. Two candidates. Pick one.</span><span class="puff" id="puff" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span><model-viewer src="previews/robo.glb" poster="previews/robo.png" alt="Robot" autoplay animation-name="Idle" auto-rotate auto-rotate-delay="0" rotation-per-second="14deg" camera-controls disable-zoom disable-pan interaction-prompt="none" environment-image="neutral" exposure="1.15" shadow-intensity="0" tone-mapping="aces" camera-orbit="-25deg 78deg auto" field-of-view="22deg" loading="eager"></model-viewer></div>
+<div class="robo" id="robo" title="Drag to spin · click to talk"><span class="say" id="say">Ten generations. Two candidates. Pick one.</span><span class="puff" id="puff" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span><model-viewer id="mv" src="previews/robo.glb" poster="previews/robo.png" alt="Robot" autoplay animation-name="Wait" interaction-prompt="none" environment-image="neutral" exposure="1.15" shadow-intensity="0" tone-mapping="aces" camera-orbit="0deg 80deg auto" min-camera-orbit="-Infinity 80deg auto" max-camera-orbit="Infinity 80deg auto" field-of-view="22deg" loading="eager" interpolation-decay="120"></model-viewer><span class="beam" id="beam" aria-hidden="true"></span></div>
 <script>
 (function () {
   var lines = [
@@ -495,11 +496,14 @@
     "Ten generations. Two candidates. Pick one.",
     "More input! Ten generations was not enough."
   ];
-  var robo = document.getElementById('robo'), say = document.getElementById('say'), puff = document.getElementById('puff');
-  var i = Math.floor(Math.random() * lines.length), hideT, poofT, shown = false;
+  var robo = document.getElementById('robo'), say = document.getElementById('say'), puff = document.getElementById('puff'), mv = document.getElementById('mv');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── speech bubble: bounces in, poofs out ── */
+  var li = Math.floor(Math.random() * lines.length), hideT, poofT, shown = false;
   function show() {
     clearTimeout(hideT); clearTimeout(poofT);
-    say.textContent = lines[i]; i = (i + 1) % lines.length;
+    say.textContent = lines[li]; li = (li + 1) % lines.length;
     say.classList.remove('say--poof'); void say.offsetWidth; say.classList.add('say--on'); shown = true;
     hideT = setTimeout(poof, 3800);
   }
@@ -509,9 +513,77 @@
     puff.classList.remove('puff--go'); void puff.offsetWidth; puff.classList.add('puff--go');
     poofT = setTimeout(function () { say.classList.remove('say--poof'); puff.classList.remove('puff--go'); }, 700);
   }
-  robo.addEventListener('mouseenter', show);
-  robo.addEventListener('click', show);
-  setTimeout(function tick() { if (!robo.matches(':hover')) show(); setTimeout(tick, 16000 + Math.random() * 12000); }, 7000);
+
+  /* ── clips: Wait loops; Wave / Nod play once, then back to Wait ── */
+  var busy = false;
+  function play(name) {
+    if (!mv.loaded || busy || reduce) return; busy = true;
+    mv.animationName = name; mv.currentTime = 0; try { mv.play({ repetitions: 1 }); } catch (e) { mv.play(); }
+    var fired = false, done = function () { if (fired) return; fired = true; mv.removeEventListener('finished', done); mv.animationName = 'Wait'; mv.currentTime = 0; mv.play(); busy = false; };
+    mv.addEventListener('finished', done);
+    setTimeout(function () { setTimeout(done, Math.max(200, (mv.duration || 1) * 1000 - 40)); }, 60);   // duration is known once the clip is active
+  }
+
+  /* ── head light: the Led material glows, plus a soft beam ── */
+  var led = null;
+  mv.addEventListener('load', function () {
+    robo.classList.add('robo--ready');
+    try { led = mv.model.getMaterialByName('Led'); if (led) led.setEmissiveFactor([0.06, 0.16, 0.32]); } catch (e) {}
+    mv.animationName = 'Wait'; mv.play();
+  });
+  function light(on) {
+    robo.classList.toggle('robo--lit', on);
+    try { if (led) led.setEmissiveFactor(on ? [1, 1, 1] : [0.06, 0.16, 0.32]); } catch (e) {}
+  }
+
+  /* ── motion: home is the corner; he drifts a little after the cursor, and flies over to a button you hover ── */
+  var target = { x: 0, y: 0 }, pos = { x: 0, y: 40 }, vel = { x: 0, y: 0 }, s = 0.8, ts = 1, yaw = 0, tyaw = 0, spin = true, lean = 0, mouse = { x: innerWidth / 2, y: innerHeight / 2 }, near = null;
+  function roboBox() { return robo.getBoundingClientRect(); }
+  function aim() {
+    var b = roboBox(), cx = b.left + b.width / 2 - pos.x, cy = b.top + b.height / 2 - pos.y;   // where the robot sits at home
+    if (near) {
+      var r = near.getBoundingClientRect();
+      var gx = r.right + 24 + b.width / 2, gy = r.top + r.height / 2;            // beside the button, to its right
+      if (gx + b.width / 2 > innerWidth - 8) gx = r.left - 24 - b.width / 2;      // or to its left if there is no room
+      gx = Math.max(b.width / 2 + 8, Math.min(innerWidth - b.width / 2 - 8, gx));
+      gy = Math.max(b.height / 2 + 8, Math.min(innerHeight - b.height / 2 - 8, gy));
+      target.x = gx - cx; target.y = gy - cy; ts = 1.06;
+      spin = false; tyaw = Math.max(-45, Math.min(45, ((r.left + r.width / 2) - gx) / 5));
+    } else {
+      target.x = (mouse.x - cx) / innerWidth * 56; target.y = (mouse.y - cy) / innerHeight * 30; ts = 1;   // a gentle lean toward the cursor
+      spin = !robo.matches(':hover');
+    }
+  }
+  function frame() {
+    var k = near ? 0.075 : 0.06;
+    var nx = pos.x + (target.x - pos.x) * k, ny = pos.y + (target.y - pos.y) * k; vel.x = nx - pos.x; vel.y = ny - pos.y; pos.x = nx; pos.y = ny; s += (ts - s) * 0.08;
+    if (spin) { yaw = (yaw + 0.12) % 360; } else { var d = ((tyaw - yaw + 540) % 360) - 180; yaw += d * 0.08; }   // 360° around the vertical axis only
+    lean += ((reduce ? 0 : Math.max(-12, Math.min(12, -vel.x * 0.9 + vel.y * 0.25))) - lean) * 0.15;   // leans into the move, like a drone
+    var bob = reduce ? 0 : Math.sin(performance.now() / 900) * 3;
+    robo.style.transform = 'translate3d(' + pos.x.toFixed(1) + 'px,' + (pos.y + bob).toFixed(1) + 'px,0) rotate(' + lean.toFixed(2) + 'deg) scale(' + s.toFixed(3) + ')';
+    if (mv.loaded) mv.cameraOrbit = yaw.toFixed(1) + 'deg 80deg auto';
+    requestAnimationFrame(frame);
+  }
+  if (!reduce) { addEventListener('mousemove', function (e) { mouse.x = e.clientX; mouse.y = e.clientY; if (!near) aim(); }, { passive: true }); }
+  addEventListener('resize', aim); addEventListener('scroll', function () { if (near) aim(); }, { passive: true });
+  requestAnimationFrame(frame); aim();
+
+  /* buttons and links: he flies over, nods, and the light in his head comes on */
+  var HOT = 'a.btn, .btn, .bar nav a, .links a, .shots a, .g .l a, .cta a';
+  document.addEventListener('mouseover', function (e) {
+    var el = e.target.closest && e.target.closest(HOT); if (!el || robo.contains(el)) return;
+    if (near !== el) { near = el; aim(); light(true); play('Nod'); }
+  });
+  document.addEventListener('mouseout', function (e) {
+    if (!near) return; var to = e.relatedTarget; if (to && to.closest && to.closest(HOT) === near) return;
+    near = null; light(false); aim();
+  });
+
+  /* the robot himself: a wave and a line */
+  robo.addEventListener('mouseenter', function () { spin = false; tyaw = 0; show(); play('Wave'); });
+  robo.addEventListener('mouseleave', function () { if (!near) spin = true; });
+  robo.addEventListener('click', function () { show(); play('Wave'); });
+  setTimeout(function tick() { if (!robo.matches(':hover') && !near) show(); setTimeout(tick, 18000 + Math.random() * 14000); }, 8000);
 })();
 </script>
 </body>
