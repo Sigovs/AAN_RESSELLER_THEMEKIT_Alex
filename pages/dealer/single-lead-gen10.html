@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lead · Chicago Motor Cars — AAN (Gen 10)</title>
+<script>try { var t = localStorage.getItem('aan-theme'); if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
+<link rel="stylesheet" href="all-vehicles-gen10.css">
+<link rel="stylesheet" href="single-lead-gen10.css">
+</head>
+<body>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></symbol>
+  <symbol id="i-cam" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+  <symbol id="i-cam-off" viewBox="0 0 24 24"><path d="M2 2l20 20M7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h13M9.5 4h5L17 7h3a2 2 0 0 1 2 2v7.5"/><path d="M14.1 15.1a3 3 0 0 1-4.2-4.2"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
+  <symbol id="i-cols" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16"/></symbol>
+  <symbol id="i-table" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 10v10"/></symbol>
+  <symbol id="i-cards" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 7v6M12 17h.01"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.2"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></symbol>
+  <symbol id="i-dn" viewBox="0 0 24 24"><path d="M12 5v14m6-6-6 6-6-6"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8"/></symbol>
+  <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></symbol>
+  <symbol id="i-rss" viewBox="0 0 24 24"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></symbol>
+</svg>
+
+
+  <!-- PLATFORM — the permanent navigation, as in AAN (header nav is the keeper; the side rail was a build artefact) -->
+
+<div class="app dock-open" id="app">
+  <header class="top">
+    <a class="brand" href="#" title="All Auto Network · Backend"><span class="brand__mk">AAN</span><span class="brand__t">All Auto Network</span></a>
+    <nav class="nav" aria-label="Platform">
+      <div class="nav__it"><a class="nav__b" href="#">Home</a></div>
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Inventory<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu">
+          <div class="menu__col"><div class="caps menu__t">Inventory</div>
+            <a class="menu__l" href="all-vehicles-gen10.html"><b>Inventory Manager</b><span>Every vehicle, by lane</span></a>
+            <a class="menu__l" href="#"><b>Auto Locator</b><span>Find a vehicle for a buyer</span></a>
+            <a class="menu__l" href="#"><b>Sort order</b><span>How vehicles list on your site</span></a>
+            <a class="menu__l" href="#"><b>New submissions</b><span>Vehicles waiting for review</span></a>
+          </div>
+          <div class="menu__col"><div class="caps menu__t">Reports</div>
+            <a class="menu__l" href="#"><b>Inventory aging</b><span>Days in stock, per vehicle</span></a>
+            <a class="menu__l" href="#"><b>Sold inventory</b><span>What sold, and when</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="nav__it nav__it--on">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Leads<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Leads</div>
+          <a class="menu__l menu__l--on" href="all-leads-gen10.html" aria-current="page"><b>Lead Manager</b><span>Every enquiry, by stage</span></a>
+          <a class="menu__l" href="#"><b>Customers</b><span>People who enquired or bought</span></a>
+          <a class="menu__l" href="#"><b>Referrals</b><span>Where leads came from</span></a>
+        </div></div>
+      </div>
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Site<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Site management</div>
+          <a class="menu__l" href="#"><b>Site Content Manager</b><span>Pages, banners and copy</span></a>
+        </div></div>
+      </div>
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Marketing<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Marketing applications</div>
+          <a class="menu__l" href="#"><b>Newsletter tools</b><span>Compose and send</span></a>
+          <a class="menu__l" href="#"><b>Craigslist posting</b><span>Post vehicles to Craigslist</span></a>
+          <a class="menu__l" href="#"><b>Posting tools &amp; eBay</b><span>Other marketplaces</span></a>
+        </div></div>
+      </div>
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Dealer tools<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Dealer tools</div>
+          <a class="menu__l" href="#"><b>View site statistics <svg class="i"><use href="#i-ext"/></svg></b><span>Opens in a new tab</span></a>
+          <a class="menu__l" href="#"><b>Billing info</b><span>Invoices and balance</span></a>
+        </div></div>
+      </div>
+    </nav>
+    <span class="top__sp"></span>
+    <label class="gsearch"><svg class="i"><use href="#i-search"/></svg><input type="search" placeholder="Search anywhere" aria-label="Search anywhere"><kbd>⌘K</kbd></label>
+    <button class="tbtn" type="button" data-act="theme" aria-label="Switch to dark theme"><svg class="i t-moon"><use href="#i-moon"/></svg><svg class="i t-sun"><use href="#i-sun"/></svg></button>
+    <div class="nav__it nav__it--r">
+      <button class="tbtn" type="button" data-menu aria-haspopup="true" aria-expanded="false" aria-label="Support"><svg class="i"><use href="#i-buoy"/></svg></button>
+      <div class="menu menu--r"><div class="menu__col"><div class="caps menu__t">Support</div>
+        <a class="menu__l" href="#"><b>View tickets</b><span>Your requests to AAN</span></a>
+        <a class="menu__l" href="#"><b>Create ticket</b><span>Ask AAN for help</span></a>
+      </div></div>
+    </div>
+    <button class="tbtn" type="button" aria-label="Notifications"><svg class="i"><use href="#i-bell"/></svg><span class="tbtn__dot"></span></button>
+    <span class="top__div"></span>
+    <div class="nav__it nav__it--r">
+      <button class="dealer" type="button" data-menu aria-haspopup="true" aria-expanded="false"><span class="dealer__mk">CM</span><span class="dealer__n">Chicago Motor Cars</span><span class="dealer__id">#277</span><svg class="i"><use href="#i-chev"/></svg></button>
+      <div class="menu menu--r"><div class="menu__col"><div class="caps menu__t">Rooftops · 6</div>
+        <a class="menu__l menu__l--on" href="#"><b>All rooftops</b><span>Chicago Motor Cars group</span></a>
+        <a class="menu__l" href="#"><b>Chicago Motor Cars</b></a>
+        <a class="menu__l" href="#"><b>CMC · Naperville</b></a>
+        <a class="menu__l" href="#"><b>CMC · KC</b></a>
+        <a class="menu__l" href="#"><b>CMC · SC</b></a>
+        <a class="menu__l" href="#"><b>CMS Diesel</b></a>
+      </div></div>
+    </div>
+    <div class="nav__it nav__it--r">
+      <button class="av" type="button" data-menu aria-haspopup="true" aria-expanded="false" aria-label="Account · Parin">P</button>
+      <div class="menu menu--r"><div class="menu__col">
+        <div class="menu__who"><b>Parin</b><span>Chicago Motor Cars · #277</span></div>
+        <a class="menu__l" href="#"><b>Account</b></a>
+        <a class="menu__l" href="#"><b>Log out</b></a>
+      </div></div>
+    </div>
+  </header>
+
+  <!-- PAGE — the dossier's own parts: back, prev/next, name · status · #id, Email, Note; identity line; section nav; sections; workflow rail -->
+  <div class="head">
+    <a class="btn btn--quiet" href="all-leads-gen10.html"><svg class="i"><use href="#i-left"/></svg> Back to board</a>
+    <span class="head__div"></span>
+    <h1 id="h-name">Lead</h1>
+    <span class="stat stat--new" id="h-status">New Lead</span>
+    <span class="head__ctx" id="h-id">#16994</span>
+    <span class="head__sp"></span>
+    <span class="walk"><button class="btn btn--quiet" type="button" data-act="prev"><svg class="i"><use href="#i-left"/></svg> Prev</button><button class="btn btn--quiet" type="button" data-act="next">Next <svg class="i"><use href="#i-right"/></svg></button></span>
+    <button class="btn btn--sheet" type="button" data-act="note"><svg class="i"><use href="#i-plus"/></svg> Note</button>
+    <button class="btn btn--primary" type="button" data-act="email"><svg class="i"><use href="#i-rss"/></svg> Email</button>
+  </div>
+
+  <!-- BENTO — the buyer's message is the object; the vehicle of interest beside it; workflow and the counts as modules -->
+  <section class="bento" aria-label="Lead overview">
+    <div class="focal">
+      <div class="focal__main">
+        <div class="focal__h"><span class="caps">The buyer's message</span><span class="s" id="f-via">via All Auto Network</span></div>
+        <blockquote class="quote" id="quote"></blockquote>
+        <div class="ident" id="ident"></div>
+      </div>
+      <div class="agemix vcar" id="vcar"></div>
+    </div>
+
+    <div class="value">
+      <div class="value__h"><span class="caps">Workflow</span><a class="s" href="#" data-act="dock">edit</a></div>
+      <div class="kv" id="wf-kv"></div>
+    </div>
+
+    <section class="attn" aria-label="Timeline">
+      <div class="attn__h"><h2><span class="full">Timeline</span><span class="short">Timeline</span></h2><span class="s" id="tl-s">created · modified · last email</span></div>
+      <div class="attn__g" id="tl-g"></div>
+    </section>
+  </section>
+
+  <!-- FIELD — section nav band + the sections -->
+  <section class="field" aria-label="Lead">
+    <div class="cmd cmd--nav">
+      <nav class="secnav" id="secnav" aria-label="Sections">
+        <a class="secnav__b secnav__b--on" href="#s-overview" data-sec="s-overview">Overview</a>
+        <a class="secnav__b" href="#s-contact" data-sec="s-contact">Contact</a>
+        <a class="secnav__b" href="#s-trade" data-sec="s-trade">Trade-in</a>
+        <a class="secnav__b" href="#s-activity" data-sec="s-activity">Activity <b id="n-act">0</b></a>
+        <a class="secnav__b" href="#s-emails" data-sec="s-emails">Emails <b id="n-em">0</b></a>
+      </nav>
+      <span class="cmd__sp"></span>
+      <button class="facet__b" type="button" data-act="print"><svg class="i"><use href="#i-print"/></svg><span class="facet__v">Print</span></button>
+      <button class="facet__b facet__b--on" type="button" data-act="dock"><svg class="i"><use href="#i-sliders"/></svg><span class="facet__v">Workflow</span></button>
+    </div>
+
+    <div class="secs">
+      <section class="sec" id="s-overview">
+        <div class="sec__h"><h2>Overview</h2><span class="s">vehicle of interest / purchased</span></div>
+        <div class="sec__b">
+          <div class="vcard vcard--big" id="vcard"></div>
+          <form class="form" id="f-vehicle" onsubmit="return false">
+            <div class="form__h"><span class="caps">Vehicle of Interest / Purchased</span><label class="search search--sm"><svg class="i"><use href="#i-search"/></svg><input type="search" placeholder="Keyword (stock / vin / make / model)" aria-label="Search Inventory"><button class="btn btn--sheet btn--sm" type="button">Search Inventory</button></label></div>
+            <div class="grid4"><label class="f"><span>Stock #</span><input class="fld" type="text" name="stock"></label><label class="f"><span>Type</span><input class="fld" type="text" name="type"></label><label class="f"><span>Year</span><input class="fld" type="text" name="year"></label><label class="f"><span>Make</span><input class="fld" type="text" name="make"></label><label class="f"><span>Model</span><input class="fld" type="text" name="model"></label><label class="f"><span>VIN</span><input class="fld" type="text" name="vin"></label><label class="f"><span>Mileage</span><input class="fld" type="text" name="mileage"></label><label class="f"><span>Price</span><input class="fld" type="text" name="price"></label><label class="f"><span>Int Color</span><input class="fld" type="text" name="int"></label><label class="f"><span>Ext Color</span><input class="fld" type="text" name="ext"></label></div>
+            <div class="form__f"><button class="btn btn--primary" type="submit">Save</button></div>
+          </form>
+        </div>
+      </section>
+
+      <section class="sec" id="s-contact">
+        <div class="sec__h"><h2>Contact &amp; address</h2><span class="s">same fields, same save</span></div>
+        <div class="sec__b">
+          <form class="form" id="f-contact" onsubmit="return false">
+            <div class="grid4"><label class="f"><span>First Name</span><input class="fld" type="text" name="first"></label><label class="f"><span>Middle Name</span><input class="fld" type="text" name="middle"></label><label class="f"><span>Last Name</span><input class="fld" type="text" name="last"></label><label class="f"><span>Email Address <b>*</b></span><input class="fld" type="email" name="email"></label><label class="f"><span>Day Phone <b>*</b></span><input class="fld" type="tel" name="day"></label><label class="f"><span>Evening Phone</span><input class="fld" type="tel" name="eve"></label><label class="f"><span>Best Time To Call</span><input class="fld" type="text" name="best"></label><label class="f"><span>Street Address</span><input class="fld" type="text" name="street"></label><label class="f"><span>City</span><input class="fld" type="text" name="city"></label><label class="f"><span>State</span><input class="fld" type="text" name="state"></label><label class="f"><span>Zip</span><input class="fld" type="text" name="zip"></label><label class="f"><span>Country</span><input class="fld" type="text" name="country"></label></div>
+            <div class="hint">Email OR Day Phone is required.</div>
+            <div class="grid2"><label class="f f--wide"><span>Message</span><textarea class="fld" rows="3" name="message"></textarea></label><label class="f f--wide"><span>Comments</span><textarea class="fld" rows="3" name="comments"></textarea></label></div>
+            <div class="form__f"><button class="btn btn--primary" type="submit">Save</button></div>
+          </form>
+        </div>
+      </section>
+
+      <section class="sec" id="s-trade">
+        <div class="sec__h"><h2>Trade-in / Consignment</h2><span class="s" id="trade-s">no trade-in on this lead</span><button class="btn btn--sheet btn--sm" type="button" data-act="add-trade"><svg class="i"><use href="#i-plus"/></svg> Add trade-in</button></div>
+        <div class="sec__b" id="trade-b"></div>
+      </section>
+
+      <section class="sec" id="s-activity">
+        <div class="sec__h"><h2>Activity</h2><span class="s" id="act-s">0 entries</span></div>
+        <div class="sec__b">
+          <form class="note" onsubmit="return false"><span class="caps">Add a note</span><textarea class="fld" id="note-in" rows="2" placeholder="Add a note…"></textarea><div class="form__f"><button class="btn btn--primary" type="submit" data-act="add-note">Add Note</button></div></form>
+          <div class="tbl" id="act-tbl"></div>
+          <details class="raw"><summary><span class="caps">Raw message (ADF)</span><span class="s">expand</span></summary><pre id="raw"></pre></details>
+        </div>
+      </section>
+
+      <section class="sec" id="s-emails">
+        <div class="sec__h"><h2>Emails</h2><span class="s" id="em-s">0 emails</span><button class="btn btn--sheet btn--sm" type="button" data-act="email"><svg class="i"><use href="#i-rss"/></svg> Write email</button></div>
+        <div class="sec__b"><div class="tbl" id="em-tbl"></div></div>
+      </section>
+    </div>
+  </section>
+
+  <!-- DOCK — the dossier's right rail: Workflow · Lead facts · Marketing UTM trace · Newsletter -->
+  <aside class="dock" id="dock" aria-label="Workflow">
+    <div class="dock__h"><h2 class="dock__t">Workflow</h2><span class="dock__c" id="dock-c"></span><button class="dock__x" type="button" data-act="close" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+    <div class="dock__b">
+      <form class="wf" onsubmit="return false">
+        <label class="f"><span>Status</span><select class="sel" id="wf-status"><option>Unassigned</option><option>New Lead</option><option>Active Prospect</option><option>Long Term Lead</option><option>Pending</option><option>Hot</option><option>Trade Appraisal</option><option>Just Looking</option><option>Sale Pending</option><option>Bought Here</option><option>Service</option><option>Storage</option><option>Galleria</option><option>Looking For</option><option>Bought Elsewhere</option><option>Purchased Car</option><option>No Longer in Market</option><option>Spam</option><option>No Response</option><option>Credit Approved</option><option>Credit Declined</option><option>Duplicate Lead</option><option>Car is Sold</option><option>Car Unavailable</option><option>Unrealistic / Lowball Offer</option><option>Archived Phone Lead</option><option>Lease Ended</option><option>Wrong Number</option></select></label>
+        <label class="f"><span>Assigned to</span><select class="sel" id="wf-rep"><option>Select Rep</option></select></label>
+        <label class="f"><span>Follow-up date</span><input class="fld" type="datetime-local" id="wf-follow"></label>
+        <label class="sw"><input type="checkbox" id="wf-imc"><span>Internet mgmt checkoff</span></label>
+        <div class="form__f"><button class="btn btn--primary" type="submit" data-act="wf-save">Save</button></div>
+      </form>
+      <div class="facts"><div class="caps">Lead facts</div><dl id="facts"></dl></div>
+      <div class="facts"><div class="caps">Marketing UTM trace</div><pre class="utm" id="utm">[]</pre></div>
+      <div class="facts"><label class="sw"><input type="checkbox" id="nl"><span>Newsletter</span></label></div>
+    </div>
+    <div class="dock__f"></div>
+  </aside>
+</div>
+
+<script src="all-vehicles-gen10.data.js"></script>
+<script src="all-leads-gen10.data.js"></script>
+<script src="single-lead-gen10.js"></script>
+</body>
+</html>

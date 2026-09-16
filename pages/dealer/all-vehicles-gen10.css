@@ -1019,3 +1019,7 @@ body { overflow: auto; }
 .veh__pr div { display: flex; justify-content: space-between; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line-2); font-size: 13px; }
 .veh__pr div:last-child { border-bottom: 0; }
 .veh__pr span { color: var(--ink-3); } .veh__pr b { font-weight: 600; font-variant-numeric: tabular-nums; } .veh__pr b.ok { color: var(--ok); }
+
+/* ── short pages: the bento keeps its content height; the field takes whatever is left (auto/auto used to split the spare space) ── */
+.app { grid-template-rows: var(--top) var(--headh) max-content 1fr; }
+.field { align-self: stretch; }

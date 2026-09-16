@@ -1,0 +1,127 @@
+/* Single Lead — Gen 10. Sits on all-vehicles-gen10.css. The dossier's own parts (d15/d16) in the Gen 10 composition:
+   page head with back / prev-next / Email / Note; bento = the buyer's message + vehicle of interest + workflow + timeline;
+   a sticky section band; the sections as sheets; the dossier's right rail lives in the Dock (open by default). */
+
+/* ── head ── */
+.head .btn--quiet { padding: 0 10px; }
+.head__div { width: 1px; height: 24px; background: var(--line-2); margin: 0 4px; }
+.head h1 { margin: 0; }
+.head .stat { height: 26px; padding: 0 10px; font-size: 13px; margin-left: 6px; }
+.walk { display: inline-flex; gap: 2px; margin-right: 6px; }
+
+/* ── bento ── */
+.bento { grid-template-columns: minmax(560px, 1.5fr) 232px minmax(0, 1.2fr); }
+.app.dock-open .bento { grid-template-columns: minmax(520px, 1.5fr) 220px minmax(0, 1.1fr); }
+.focal { grid-template-columns: minmax(0, 1fr) 300px; }
+.quote { margin: 12px 0 0; font-size: 17px; line-height: 1.45; font-weight: 500; color: var(--focal-ink); letter-spacing: -.005em; max-height: 118px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; }
+.quote::before { content: "“"; color: rgba(255,255,255,.35); margin-right: 2px; }
+.ident { display: flex; flex-wrap: wrap; gap: 6px 8px; margin-top: 14px; }
+.ident > * { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 9px; border-radius: 8px; background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,.10); font-size: 13px; color: var(--focal-ink-2); white-space: nowrap; }
+.ident b { color: var(--focal-ink); font-weight: 600; }
+.ident button { color: var(--focal-ink-3); cursor: pointer; }
+.ident button:hover { color: #fff; }
+.ident .i { width: 13px; height: 13px; }
+.ident .mono { font-family: var(--mono); }
+.ident .ok { color: #b9f0d2; }
+/* vehicle of interest inset */
+.vcar { display: flex; flex-direction: column; gap: 10px; padding: 16px 18px; }
+.vcar__img { position: relative; height: 118px; border-radius: 12px; overflow: hidden; background: rgba(255,255,255,.06); display: grid; place-items: center; color: var(--focal-ink-3); }
+.vcar__img img { width: 100%; height: 100%; object-fit: cover; }
+.vcar__img .st { position: absolute; left: 10px; top: 10px; height: 22px; padding: 0 8px; border-radius: 6px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: rgba(10,16,28,.72); color: #fff; display: inline-flex; align-items: center; gap: 5px; }
+.vcar__img .st::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--ok-fill); }
+.vcar__img .st--sold::before { background: var(--danger-fill); }
+.vcar__t { font-size: 15px; font-weight: 600; color: var(--focal-ink); letter-spacing: -.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vcar__m { font: 12px var(--mono); color: var(--focal-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vcar__acts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+.vcar__acts a, .vcar__acts button { height: 28px; padding: 0 9px; border-radius: 8px; font-size: 12.5px; font-weight: 600; background: rgba(255,255,255,.10); color: var(--focal-ink); text-decoration: none; display: inline-flex; align-items: center; }
+.vcar__acts a:hover, .vcar__acts button:hover { background: rgba(255,255,255,.18); }
+.vcar__acts .p { background: var(--focal-on); color: var(--focal-on-ink); }
+.vcar--none .vcar__img { border: 1px dashed rgba(255,255,255,.2); }
+/* workflow module */
+.value .kv > div { padding: 8px 0; }
+.value .kv .v { font-size: 16px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
+.value .kv .v.warn { color: #ffd9a3; }
+.value .kv .v.due { color: #ffc7bf; }
+/* timeline as the attention grid */
+.attn .ar { cursor: default; }
+.attn .ar__n { font-size: 22px; }
+
+/* ── section band ── */
+.cmd--nav { gap: 4px; }
+.secnav { display: inline-flex; gap: 2px; }
+.secnav__b { display: inline-flex; align-items: center; gap: 7px; height: 46px; padding: 0 13px; border-radius: var(--r-m); color: #fff; font-size: 14px; font-weight: 500; text-decoration: none; transition: background var(--dur) var(--ease); }
+.secnav__b b { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; background: rgba(255,255,255,.16); font-size: 12px; font-weight: 700; }
+.secnav__b:hover { background: rgba(255,255,255,.18); }
+.secnav__b--on { background: var(--sheet); color: var(--brand-ink); font-weight: 600; }
+.secnav__b--on b { background: var(--brand-soft); color: var(--brand-ink); }
+.cmd--stuck { padding-left: 32px; }
+
+/* ── sections ── */
+.secs { padding: 8px 16px 24px; display: grid; gap: 14px; }
+.sec { scroll-margin-top: calc(56px + 58px + 14px); border-radius: 14px; background: var(--sheet); box-shadow: inset 0 0 0 1px var(--line-2); }
+.sec__h { display: flex; align-items: center; gap: 10px; padding: 14px 18px 0; }
+.sec__h h2 { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -.01em; }
+.sec__h .s { flex: 1; font-size: 13px; color: var(--ink-3); }
+.sec__b { padding: 12px 18px 18px; }
+.form__h { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+.form__h .caps { flex: 1; }
+.search--sm { height: 36px; flex: 0 1 460px; padding-right: 4px; box-shadow: inset 0 0 0 1px var(--line-3); }
+.search--sm .btn { height: 28px; }
+.grid4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px 14px; }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 14px; margin-top: 10px; }
+.app.dock-open .grid4 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.f { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.f > span { font-size: 12.5px; font-weight: 600; color: var(--ink-3); }
+.f > span b { color: var(--danger); }
+.f .fld, .f .sel { width: 100%; }
+.f textarea.fld { height: auto; padding: 8px 10px; resize: vertical; font: inherit; }
+.form__f { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+.hint { font-size: 12.5px; color: var(--ink-3); margin-top: 8px; }
+.kind { display: flex; gap: 14px; margin-bottom: 10px; font-size: 14px; }
+.kind label { display: inline-flex; align-items: center; gap: 6px; }
+
+/* vehicle card in Overview (the dossier's card, with its four actions) */
+.vcard { display: grid; grid-template-columns: 168px 1fr; gap: 16px; align-items: start; padding: 12px; border-radius: 12px; background: var(--well); margin-bottom: 14px; }
+.vcard img, .vcard .none { width: 168px; height: 108px; object-fit: cover; border-radius: 10px; background: var(--wash); display: grid; place-items: center; color: var(--ink-4); }
+.vcard b { display: block; font-size: 16px; letter-spacing: -.01em; }
+.vcard .m { display: block; margin-top: 3px; font: 12.5px var(--mono); color: var(--ink-3); }
+.vcard .acts2 { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.vcard .st { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ok); margin-left: 8px; }
+.vcard .st--sold { color: var(--danger); }
+
+/* note + tables */
+.note { display: grid; gap: 6px; margin-bottom: 14px; }
+.note .form__f { margin-top: 4px; }
+.tbl { border-radius: 10px; box-shadow: inset 0 0 0 1px var(--line-2); overflow: hidden; }
+.tbl table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.tbl th { text-align: left; padding: 9px 12px; font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); background: var(--wash); border-bottom: 1px solid var(--line-2); }
+.tbl td { padding: 9px 12px; border-bottom: 1px solid var(--line-2); vertical-align: top; }
+.tbl tr:last-child td { border-bottom: 0; }
+.tbl td.d { white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.tbl td.a b { font-weight: 600; }
+.tbl td.n { color: var(--ink-2); max-width: 520px; }
+.tbl td.r { color: var(--ink-3); white-space: nowrap; }
+.tbl .dir { display: inline-grid; place-items: center; min-width: 34px; height: 20px; padding: 0 6px; border-radius: 5px; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; }
+.tbl .dir--in { background: var(--ok-soft); color: var(--ok); } .tbl .dir--out { background: var(--brand-soft); color: var(--brand-ink); }
+.tbl .empty { padding: 22px; }
+.raw { margin-top: 12px; }
+.raw summary { display: flex; align-items: center; gap: 10px; cursor: pointer; list-style: none; }
+.raw summary .s { font-size: 12.5px; color: var(--brand); font-weight: 600; }
+.raw pre { margin: 8px 0 0; padding: 12px; border-radius: 10px; background: var(--well); font: 12px/1.5 var(--mono); color: var(--ink-2); overflow: auto; max-height: 260px; }
+
+/* ── dock: the right rail ── */
+.wf { display: grid; gap: 10px; padding-bottom: 14px; border-bottom: 1px solid var(--line-2); }
+.sw { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.sw input { width: 18px; height: 18px; }
+.facts { padding: 14px 0; border-bottom: 1px solid var(--line-2); }
+.facts:last-child { border-bottom: 0; }
+.facts dl { margin: 8px 0 0; display: grid; gap: 0; }
+.facts dl div { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--line-2); font-size: 13px; }
+.facts dl div:last-child { border-bottom: 0; }
+.facts dt { color: var(--ink-3); } .facts dd { margin: 0; font-weight: 500; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 60%; }
+.facts dd.mono { font-family: var(--mono); font-size: 12.5px; }
+.utm { margin: 8px 0 0; padding: 10px; border-radius: 8px; background: var(--well); font: 12px var(--mono); color: var(--ink-3); }
+
+/* the dock is the workflow rail: keep the bento intact when it is open (Gen 10 already does), the field narrower */
+.app.dock-open .secs { padding-right: 16px; }
+@media (max-width: 1280px) { .app.dock-open .bento { grid-template-columns: 1fr 1fr; } .app.dock-open .bento .focal { grid-column: 1 / -1; } }

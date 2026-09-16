@@ -120,6 +120,19 @@
   .pg .k { display: block; margin-top: 8px; }
   .pg--new b::after { content: "new"; margin-left: 8px; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8fe6ba; vertical-align: middle; }
 
+  /* ── preview pattern ── */
+  .pv { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 32px; align-items: center; padding: 36px 40px; border-radius: 24px; background: linear-gradient(135deg, rgba(47,191,122,.10), rgba(31,95,224,.10)); box-shadow: inset 0 0 0 1px rgba(47,191,122,.25); }
+  .pv h3 { margin: 12px 0 8px; font-size: 32px; letter-spacing: -.03em; font-weight: 700; font-stretch: 92%; }
+  .pv p { margin: 0 0 14px; font-size: 15px; color: var(--on-2); max-width: 52ch; }
+  .pv ol { margin: 0; padding: 0 0 0 20px; color: var(--on-2); font-size: 14px; display: grid; gap: 6px; }
+  .pv ol b { color: var(--on); }
+  .pv__shots { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .pv__shots a { display: block; border-radius: 12px; overflow: hidden; box-shadow: 0 30px 60px -30px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.1); transition: transform .2s ease; }
+  .pv__shots a:hover { transform: translateY(-3px); }
+  .pv__shots img { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: top; }
+  .pv__shots span { display: block; padding: 8px 10px; font-size: 12px; color: var(--on-3); background: rgba(255,255,255,.05); }
+  @media (max-width: 980px) { .pv { grid-template-columns: 1fr; } }
+
   /* ── compare ── */
   .cmp { width: 100%; border-collapse: collapse; border-radius: 16px; overflow: hidden; box-shadow: inset 0 0 0 1px var(--line-on); background: rgba(255,255,255,.03); }
   .cmp th, .cmp td { padding: 14px 18px; text-align: left; vertical-align: top; font-size: 14px; border-bottom: 1px solid var(--line-on); }
@@ -235,6 +248,7 @@
   <span class="logo"><i>AAN</i> All Vehicles · redesign</span>
   <nav>
     <a href="#candidates">Candidates</a>
+    <a href="#preview">Preview</a>
     <a href="#compare">Compare</a>
     <a href="#journey">Journey</a>
     <a href="#questions">Open questions</a>
@@ -252,7 +266,7 @@
     <div class="facts">
       <div><b>10</b><span>generations</span></div>
       <div><b>2</b><span>candidates</span></div>
-      <div><b>2</b><span>pages on Gen 10</span></div>
+      <div><b>3</b><span>pages on Gen 10</span></div>
       <div><b>1440</b><span>light &amp; dark, live</span></div>
       <div><b>359</b><span>vehicles, demo data</span></div>
     </div>
@@ -309,7 +323,8 @@
       <div class="fam__g">
         <a class="pg" href="pages/dealer/all-vehicles-gen10.html"><img src="previews/gen10.jpg" alt=""><span><b>All Vehicles</b><small>Dealer · Inventory Manager</small><p>Lot · Value · Attention on top; the vehicle unfolds under its row with price modes, health, market and history.</p><span class="k">pages/dealer/all-vehicles-gen10</span></span></a>
         <a class="pg pg--new" href="pages/dealer/all-leads-gen10.html"><img src="previews/leads-desk10-light.jpg" alt=""><span><b>All leads</b><small>Dealer · Lead Desk · 16,574 leads · 70 per page</small><p>The Lead Desk's own parts — New Mail / Uncategorized / Today / Past Due lanes, Rep · Status · Source · Provider · Type · Created · More, the eleven columns, Assign-to bar, pagination — in the Gen 10 composition; a lead opens inline with the buyer's message, vehicle, contact, activity and emails.</p><span class="k">pages/dealer/all-leads-gen10</span></span></a>
-        <div class="pg" style="opacity:.55"><img src="previews/original.jpg" alt="" style="filter:grayscale(1)"><span><b>Next</b><small>Single Lead · Single Vehicle · Dealer login welcome · then the employee UI</small><p>Same skeleton, same parts. Each one is a data file and a column map away.</p></span></div>
+        <a class="pg pg--new" href="pages/dealer/single-lead-gen10.html?id=16992"><img src="previews/single-lead10-light.jpg" alt=""><span><b>Single Lead</b><small>Dealer · lead dossier</small><p>The dossier's own parts: back / prev · next, name · status · #id, Email, Note; the buyer's message as the object, the vehicle of interest beside it, Workflow and Timeline; Overview · Contact · Trade-in · Activity · Emails; the right rail (Workflow, Lead facts, UTM, Newsletter) in the Dock.</p><span class="k">pages/dealer/single-lead-gen10</span></span></a>
+        <div class="pg" style="opacity:.55"><img src="previews/original.jpg" alt="" style="filter:grayscale(1)"><span><b>Next</b><small>Single Vehicle · Dealer login welcome · then the employee UI</small><p>Same skeleton, same parts. Each one is a data file and a column map away.</p></span></div>
       </div>
     </div>
   </div>
@@ -343,6 +358,27 @@
         <a href="reference/archive/redesign-gen9-1440-filters.png"><img src="previews/gen9-filters.jpg" alt=""><span>Filters · facet counts</span></a>
         <a href="reference/archive/redesign-gen9-1440-dark.png"><img src="previews/gen9-dark.jpg" alt=""><span>Dark theme</span></a>
       </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ── PREVIEW BEFORE DETAIL ── -->
+<section id="preview"><div class="wrap">
+  <div class="sec-h"><span class="caps">The pattern</span><h2>Preview before detail</h2><p>One idea that runs through every Gen 10 list. Worth a sentence to the boss.</p></div>
+  <div class="pv">
+    <div>
+      <span class="badge badge--ok">In every list</span>
+      <h3>Open it here, before you go there.</h3>
+      <p>Click a row and it turns into a tab with a preview sheet under it — the photo, the numbers, the message, the flags, the first actions — without leaving the list. You only go to the full page when you actually need to work the record.</p>
+      <ol>
+        <li><b>All Vehicles</b> → vehicle preview: photo, price modes, health, market, comps, history.</li>
+        <li><b>All leads</b> → lead preview: the buyer's message, vehicle of interest, contact, activity, emails, trade-in.</li>
+        <li><b>Open lead / Edit vehicle</b> takes you to the Single page with the same parts, in full.</li>
+      </ol>
+    </div>
+    <div class="pv__shots">
+      <a href="reference/archive/redesign-gen10-1440-vehicle.png"><img src="previews/gen10-vehicle.jpg" alt=""><span>All Vehicles · vehicle preview under its row</span></a>
+      <a href="reference/archive/all-leads-gen10-1440-lead.png"><img src="previews/leads-desk10-lead.jpg" alt=""><span>All leads · lead preview under its row</span></a>
     </div>
   </div>
 </div></section>
@@ -409,7 +445,7 @@
     </div>
     <div class="g">
       <img src="previews/gen10.jpg" alt="">
-      <div class="b"><div class="n"><span class="badge badge--a">Candidate A</span><span class="k">Gen 10</span></div><h4>Bento Command</h4><p>Gen 8's language, recomposed: intelligence as a heavy-top bento, the list full width, the vehicle as an inline accordion sheet. Now a system: All leads is built on it.</p><div class="l"><a class="p" href="pages/dealer/all-vehicles-gen10.html">All Vehicles</a><a class="p" href="pages/dealer/all-leads-gen10.html">All leads</a><a href="reference/archive/redesign-gen10-1440-light.png">Still</a><a href="reference/archive/redesign-gen10-1440-vehicle.png">Vehicle</a><a href="reference/archive/redesign-gen10-1440-dark-filters.png">Dark</a></div></div>
+      <div class="b"><div class="n"><span class="badge badge--a">Candidate A</span><span class="k">Gen 10</span></div><h4>Bento Command</h4><p>Gen 8's language, recomposed: intelligence as a heavy-top bento, the list full width, the vehicle as an inline accordion sheet. Now a system: All leads and Single Lead are built on it.</p><div class="l"><a class="p" href="pages/dealer/all-vehicles-gen10.html">All Vehicles</a><a class="p" href="pages/dealer/all-leads-gen10.html">All leads</a><a class="p" href="pages/dealer/single-lead-gen10.html?id=16992">Single Lead</a><a href="reference/archive/redesign-gen10-1440-light.png">Still</a><a href="reference/archive/redesign-gen10-1440-vehicle.png">Vehicle</a><a href="reference/archive/redesign-gen10-1440-dark-filters.png">Dark</a></div></div>
     </div>
   </div>
 </div></section>

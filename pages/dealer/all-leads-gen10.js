@@ -88,7 +88,7 @@
     var open = S.cur === l.id;
     return '<div class="row' + (S.sel[l.id] ? ' sel' : '') + (open ? ' open' : '') + '" data-id="' + l.id + '" tabindex="0" aria-label="' + esc(l.name) + ' #' + l.id + '">' +
       '<input class="ck" type="checkbox" data-sel="' + l.id + '"' + (S.sel[l.id] ? ' checked' : '') + ' aria-label="Select row ' + l.id + '">' +
-      '<div class="ld"><span class="ld__n"><a href="#" data-stop title="Open lead #' + l.id + '">' + esc(l.name) + '</a></span><span class="ld__id">#' + l.id + (l.newMail ? '<span class="nm">' + ic('i-bell') + 'new mail</span>' : '') + '</span></div>' +
+      '<div class="ld"><span class="ld__n"><a href="single-lead-gen10.html?id=' + l.id + '" data-stop title="Open lead #' + l.id + '">' + esc(l.name) + '</a></span><span class="ld__id">#' + l.id + (l.newMail ? '<span class="nm">' + ic('i-bell') + 'new mail</span>' : '') + '</span></div>' +
       '<div class="ct" title="' + esc(l.email + (l.phone ? ' ' + l.phone : '')) + '"><span class="ct__e">' + esc(l.email) + '</span><span class="ct__p' + (l.phone ? '' : ' none') + '">' + (l.phone ? esc(l.phone) : 'no phone') + '</span></div>' +
       (l.car ? '<div class="vh" title="' + esc(l.car) + '"><span class="vh__n">' + esc(l.car) + '</span>' + (l.stock ? '<span class="vh__s">' + esc(l.stock) + '</span>' : '') + '</div>' : '<div class="vh vh--none"><span class="vh__n">—</span></div>') +
       '<div class="ty" title="' + esc(l.type) + '">' + esc(l.type) + '</div>' +
@@ -111,7 +111,7 @@
   function sheet(l) {
     var msg = '<div class="lsheet__msg"><span class="caps">The buyer\'s message</span><p>' + esc(l.msg) + '</p><span class="via">via ' + esc(l.src) + ' · ' + esc(l.type) + ' · created ' + fd(l.d) + '</span></div>';
     var kv = '<div class="veh__kv"><div><div class="v' + (l.pastDue ? ' warn' : '') + '">' + (l.follow ? fd(l.follow).slice(0, 5) : '—') + '</div><div class="l">follow-up</div></div><div><div class="v">' + l.emails + '</div><div class="l">emails</div></div><div><div class="v">' + l.notes + '</div><div class="l">notes</div></div></div>';
-    var acts = '<div class="veh__acts"><button class="btn btn--primary" type="button">' + ic('i-ext') + '<span>Open lead</span></button>' +
+    var acts = '<div class="veh__acts"><a class="btn btn--primary" href="single-lead-gen10.html?id=' + l.id + '">' + ic('i-ext') + '<span>Open lead</span></a>' +
       '<button class="btn btn--sheet" type="button">' + ic('i-rss') + '<span>Email</span></button><button class="btn btn--sheet" type="button">' + ic('i-edit') + '<span>Note</span></button>' +
       '<button class="btn btn--sheet" type="button">' + ic('i-file') + '<span>Assign…</span></button><button class="btn btn--sheet" type="button">' + ic('i-tag') + '<span>Status…</span></button></div>';
     var vcard = l.car ? '<div class="vcard"><div class="none">' + ic('i-cam') + '</div><div><b>' + esc(l.car) + '</b><span class="m">' + (l.stock ? 'Stock ' + esc(l.stock) : 'no stock number') + '</span><div class="acts2"><button class="btn btn--sheet btn--sm" type="button">Open in Inventory →</button><button class="btn btn--quiet btn--sm" type="button">Change vehicle…</button><button class="btn btn--quiet btn--sm" type="button">Remove vehicle</button></div></div></div>' : '<div class="hint">No vehicle of interest. <button class="btn btn--sheet btn--sm" type="button">Search Inventory</button></div>';
@@ -222,7 +222,6 @@
     if ((el = t.closest('[data-act="clear-sel"]'))) { S.sel = {}; render(); return; }
     if ((el = t.closest('[data-chip]'))) { $('#scope')._chips[+el.dataset.chip].off(); render(); return; }
     if ((el = t.closest('.acc__h'))) { var sec = el.closest('.acc'); S.acc[sec.dataset.acc] = !S.acc[sec.dataset.acc]; setAccOpen(sec, S.acc[sec.dataset.acc]); return; }
-    if ((el = t.closest('.ld__n a'))) { e.preventDefault(); showLead(+el.closest('.row').dataset.id); return; }
     if (t.closest('[data-stop]') || t.closest('.exp') || t.closest('a')) return;
     if ((el = t.closest('.row'))) { if (t.classList.contains('ck')) return; showLead(+el.dataset.id); return; }
   });
