@@ -108,6 +108,7 @@
   function render() {
     var L = list(), F = filtered();
     $('#tb').innerHTML = L.length ? L.map(function (v) { return row(v) + (S.cur === v.id ? '<div class="exp" id="exp"><div><div class="exp__in">' + vehicleSheet(v) + '</div></div></div>' : ''); }).join('') : '<div class="empty">No vehicles match these filters.<button type="button" data-act="clear-all">Clear all</button></div>';
+    $('.field').classList.toggle('has-open', !!S.cur);
     var ex = $('#exp'); if (ex) { if (S.expNow) ex.classList.add('exp--open'); else requestAnimationFrame(function () { requestAnimationFrame(function () { ex.classList.add('exp--open'); }); }); S.expNow = true; }
     $('#shown').textContent = (L.length ? '1–' + L.length : '0') + ' of ' + (F ? L.length : 359);
 

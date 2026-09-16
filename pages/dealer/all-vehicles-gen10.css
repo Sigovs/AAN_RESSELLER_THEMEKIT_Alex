@@ -712,3 +712,22 @@ body { overflow: auto; }
 .exp .exp__accs .acc--open > .acc__p > div > .acc__in { background: var(--sheet); border-radius: 0 0 9px 9px; padding: 12px 12px 16px; box-shadow: inset 0 0 0 1px var(--line); }
 .exp .exp__accs .acc__t { font-size: 14px; }
 [data-theme="dark"] .exp .exp__accs { background: var(--wash); }
+
+/* ── the selected car cannot blend in: its row goes focal-dark, the rest of the list steps back ── */
+.row.open, .row.open:hover { background: var(--focal); background-image: radial-gradient(120% 140% at 0% 0%, rgba(31,95,224,.42) 0, rgba(31,95,224,0) 60%); color: var(--focal-ink); box-shadow: var(--el-3); }
+.row.open::before { background: var(--brand); }
+.row.open .yr, .row.open .trim, .row.open .ext, .row.open .stk__vin, .row.open .age { color: var(--focal-ink-2); }
+.row.open .mk, .row.open .md, .row.open .price { color: var(--focal-ink); }
+.row.open .price em { color: var(--focal-ink-3); }
+.row.open .trim i { color: var(--focal-ink-3); }
+.row.open .stock { background: var(--focal-on); color: var(--focal-on-ink); }
+.row.open .lock { background: rgba(255,255,255,.14); color: #fff; }
+.row.open .age--stale { color: #ff9a8f; } .row.open .age--fresh { color: #7fe0ad; }
+.row.open .age i { background: rgba(255,255,255,.14); }
+.row.open .okmark { color: #7fe0ad; }
+.row.open .th { box-shadow: 0 0 0 2px rgba(255,255,255,.18); }
+.row.open .acts button { color: var(--focal-ink-2); } .row.open .acts button:hover { background: var(--focal-2); color: #fff; }
+.row.open .ck { border-color: rgba(255,255,255,.4); background: transparent; }
+.field.has-open .row:not(.open) { opacity: .55; transition: opacity var(--dur2) var(--ease); }
+.field.has-open .row:not(.open):hover { opacity: 1; }
+.exp__in { box-shadow: var(--el-3), 0 0 0 1px var(--focal-line); }
