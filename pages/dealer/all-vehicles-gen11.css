@@ -1263,3 +1263,85 @@ a { color: var(--brand-ink); }
 .exp__in::before { display: none; }
 .exp-space { display: none; }
 @media (prefers-reduced-motion: reduce) { .exp { transition: none; transform: none; } }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   GEN 11 · the preview popover, recomposed.
+   Diagnosis it fixes: no dominant (the photo sat at 300×188 inside a 1377 block,
+   C1/C13), mass proportion unresolved — a 1013px column holding five collapsed
+   strips (C8), the space at the bottom left over rather than active (C4), seven
+   equal-weight buttons claiming equal rank (U1), and an instruction line standing
+   in for composition.
+   Plan: object (photo + price) dominates, identity subordinates, the evidence
+   sections support as a two-column card field, actions resolve as one grid.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* the instruction was doing a composition's job */
+.exp .exp__accs::before { content: none; }
+
+.exp .exp__in { grid-template-columns: 420px minmax(0, 1fr); gap: 28px; padding: 22px 24px 24px; align-items: start; }
+.exp .exp__l, .exp .exp__r { align-self: start; }
+
+/* dominant: the vehicle as an object, with the price attached to it */
+.exp .veh__img { height: 264px; border-radius: 16px; }
+.exp .veh__kv { margin: 16px 0 0; padding: 16px 18px; border-radius: 16px; }
+.exp .veh__kv .v { font-size: 26px; }
+.exp .veh__pr { margin-top: 12px; padding: 14px 18px; border-radius: 16px; background: var(--well); }
+
+/* actions resolve as a grid: the primary spans, the rest pair off */
+.exp .veh__acts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+.exp .veh__acts > :first-child { grid-column: 1 / -1; }
+.exp .veh__acts .btn { width: 100%; }
+
+/* subordinate: identity reads before the evidence */
+.exp .veh__n { margin-top: 0; font-size: 28px; }
+
+/* support: evidence as a card field, the open section taking the full width */
+.exp .exp__accs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-content: start; margin-top: 18px; }
+.exp .acc { border-top: 0; border-radius: 14px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line-2); }
+.exp .acc__h { min-height: 48px; padding: 0 14px; }
+.exp .acc__t { font-size: 14px; }
+.exp .acc--open { grid-column: 1 / -1; background: var(--sheet); box-shadow: var(--sh-pill); }
+.exp .acc__in { padding: 0 14px 14px; }
+
+/* ══ sticky zone: the two bars the list travels under must stay readable ══
+   Both were already sticky; the failure was that they were transparent — the
+   command band at .72 alpha and the column header pure white with no edge — so
+   rows scrolled straight through them. Density, an edge and a shadow make the
+   layer real, and the header now sits directly under the band. */
+.cmd { top: 88px; background: rgba(255,255,255,.93);
+  box-shadow: 0 0 0 1px rgba(34,58,118,.09), 0 14px 26px -20px rgba(34,58,118,.55), inset 0 1px 0 rgba(255,255,255,.95); }
+@supports (backdrop-filter: blur(12px)) {
+  .cmd { background: rgba(255,255,255,.88); -webkit-backdrop-filter: saturate(1.35) blur(12px); backdrop-filter: saturate(1.35) blur(12px); }
+}
+.hd { position: sticky; top: 168px; z-index: 5; background: var(--sheet);
+  box-shadow: 0 1px 0 var(--line-3), 0 12px 22px -20px rgba(34,58,118,.5); }
+[data-theme="dark"] .cmd { background: rgba(16,22,34,.90); box-shadow: 0 0 0 1px rgba(255,255,255,.07), 0 14px 26px -20px rgba(0,0,0,.7); }
+[data-theme="dark"] .hd { box-shadow: 0 1px 0 rgba(255,255,255,.10), 0 12px 22px -20px rgba(0,0,0,.65); }
+
+/* ══ the sticky zone is one stack, not three floating strips ══
+   Judgment call: the lane track does NOT stick — pinning it too would put ~270px
+   of chrome above a 900px viewport. What sticks instead is the thin scope line,
+   which already carries the active lane and the count, so the state stays visible
+   for 22px instead of 50. The three layers butt together: the 8px gaps let rows
+   show through and read as a clipped row under glass. */
+.cmd { top: 88px; margin-bottom: 0; border-radius: 24px 24px 0 0; }
+.scope { position: sticky; top: 160px; z-index: 5; margin: 0; padding: 8px 18px;
+  background: rgba(255,255,255,.93); box-shadow: 0 0 0 1px rgba(34,58,118,.09); }
+@supports (backdrop-filter: blur(12px)) {
+  .scope { background: rgba(255,255,255,.88); -webkit-backdrop-filter: saturate(1.35) blur(12px); backdrop-filter: saturate(1.35) blur(12px); }
+}
+.hd { top: 198px; }
+[data-theme="dark"] .scope { background: rgba(16,22,34,.90); box-shadow: 0 0 0 1px rgba(255,255,255,.07); }
+
+/* The scope line would not stick (it left the stack at -346 while the bars held),
+   and the gap it was meant to fill let rows show between the band and the header.
+   Simpler and verifiable: the band and the column header butt together, so the
+   sticky zone is two solid layers and nothing travels between them. */
+.scope { position: static; background: none; box-shadow: none; padding: 8px 18px 6px; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.hd { top: 160px; }
+
+/* last gap: 20px of daylight between the floating bar and the band let a row edge
+   flicker through. The band now meets the bar, and the header meets the band —
+   one uninterrupted sticky stack, 192px total. */
+.cmd { top: 68px; }
+.hd { top: 140px; }
