@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manage Dealers — AAN (Gen 11)</title>
+<meta name="description" content="AAN staff dealer roster — Gen 11 build of the production Manage Dealers list.">
+<script>document.documentElement.classList.remove('no-js');
+/* Dark is gated off across Gen 11 while the palette is re-solved, so a stored
+   `dark` — the key is shared with the other Gen pages — cannot land this page
+   in a half-dark state at load. */
+try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
+<link rel="stylesheet" href="manage-dealers-gen11.css?v=202609282140">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></symbol>
+  <symbol id="i-dn" viewBox="0 0 24 24"><path d="M12 5v14m6-6-6 6-6-6"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-cog" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-2.89 1.2V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 7.96 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 3 15.04H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 8.96a1.7 1.7 0 0 0-.34-1.87l-.06-.06A2 2 0 1 1 7.03 4.2l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 2.89 1.2l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1Z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36M21 4v5h-5"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+  <symbol id="i-pkg" viewBox="0 0 24 24"><path d="M21 8v8l-9 5-9-5V8l9-5 9 5Z"/><path d="m3 8 9 5 9-5M12 13v8"/></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8"/></symbol>
+  <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></symbol>
+</svg>
+
+<div class="app" id="app">
+
+  <!-- ══ PLATFORM BAR ══════════════════════════════════════════════════════
+       The employee shell as the export ships it: AAN · Backend, the eight
+       staff nav groups, the account. The collapsed side rail is not rebuilt —
+       Gen 11 keeps the header nav and drops the rail. -->
+  <header class="top">
+    <a class="brand" href="#" title="All Auto Network · Backend">
+      <span class="brand__mk">AAN</span>
+      <span class="brand__t">All Auto Network</span>
+      <span class="brand__env">Backend</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="System menu"></nav>
+    <span class="top__sp"></span>
+    <label class="gsearch">
+      <svg class="i"><use href="#i-search"/></svg>
+      <input type="search" name="global-search" placeholder="Search anywhere" aria-label="Search anywhere">
+      <kbd>/</kbd>
+    </label>
+    <a class="atlas" href="#" title="The Atlas — system architecture wiki"><span aria-hidden="true">▣</span><span class="atlas__t">Atlas</span></a>
+    <button class="tbtn" type="button" hidden title="Dark theme is being re-solved" aria-label="Switch to dark theme"><svg class="i"><use href="#i-moon"/></svg></button>
+    <div class="nav__it">
+      <button class="tbtn" type="button" data-pop="p-help" aria-haspopup="true" aria-expanded="false" aria-label="Support"><svg class="i"><use href="#i-buoy"/></svg></button>
+      <div class="pop pop--r" id="p-help">
+        <div class="caps pop__lab">Support</div>
+        <a class="mn__it" href="#">Create A Ticket</a>
+        <a class="mn__it" href="#">Activity Report</a>
+      </div>
+    </div>
+    <span class="top__div"></span>
+    <div class="nav__it">
+      <button class="me" type="button" data-pop="p-me" aria-haspopup="true" aria-expanded="false">
+        <span class="me__mk">IG</span><span class="me__n">Ivaylo Guenkov</span>
+        <svg class="i"><use href="#i-chev"/></svg>
+      </button>
+      <div class="pop pop--r" id="p-me">
+        <div class="mn__who"><b>Ivaylo Guenkov</b>AAN · Backend</div>
+        <a class="mn__it" href="#">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ PAGE HEAD ════════════════════════════════════════════════════════ -->
+  <div class="head">
+    <div class="head__id">
+      <h1>Manage Dealers</h1>
+      <div class="head__meta" id="page-meta"></div>
+    </div>
+    <span class="head__ctx">Dealer Management</span>
+    <span class="head__sp"></span>
+    <div class="head__actions">
+      <button class="btn btn--quiet" type="button" data-act="print"><svg class="i"><use href="#i-print"/></svg> Print</button>
+      <button class="btn btn--sheet" type="button" data-act="csv"><svg class="i"><use href="#i-down"/></svg> Dealers CSV</button>
+      <button class="btn btn--sheet" type="button" data-act="pkg-new"><svg class="i"><use href="#i-pkg"/></svg> Create Package</button>
+      <a class="btn btn--primary" href="dealer-edit-gen11.html?dealer=new"><svg class="i"><use href="#i-plus"/></svg> Add New Dealer</a>
+    </div>
+  </div>
+
+  <!-- ══ ROSTER COUNTS ════════════════════════════════════════════════════
+       The export's stat strip. Six read-only counts, not six filters: in
+       production they are plain spans, so nothing here is clickable and
+       nothing pretends to be. On the page ground, one caps label, no card. -->
+  <div class="tally" id="tally" aria-label="Roster counts"></div>
+
+  <!-- ══ FIELD ════════════════════════════════════════════════════════════ -->
+  <section class="field" id="field" aria-label="Dealer roster">
+
+    <!-- saved filters — one exclusive control, one sunken track -->
+    <div class="cmdtop">
+      <div class="lanes" id="modes" role="group" aria-label="Saved filters"></div>
+    </div>
+
+    <!-- command band · sticky 2 of 3 -->
+    <div class="cmd" id="cmd">
+      <label class="search">
+        <svg class="i"><use href="#i-search"/></svg>
+        <span class="vh">Company name</span>
+        <input type="search" id="q" placeholder="Company name…" autocomplete="off">
+        <span id="q-chips"></span>
+      </label>
+
+      <label class="search search--phone">
+        <svg class="i"><use href="#i-pin"/></svg>
+        <span class="vh">Find by phone</span>
+        <input type="search" id="phone" placeholder="Find by phone — digits…" inputmode="numeric" autocomplete="off"
+               title="Contact phone digit search — searches ALL dealers incl. disabled (legacy parity)">
+      </label>
+
+      <span class="cmd__div"></span>
+
+      <div class="facet">
+        <button class="facet__b" type="button" data-pop="p-rid" aria-haspopup="true" aria-expanded="false">
+          <span class="facet__k">Reseller</span>
+          <span class="facet__v" id="rid-v">Show all</span>
+          <svg class="i"><use href="#i-chev"/></svg>
+        </button>
+        <div class="pop pop--wide" id="p-rid">
+          <div class="pop__find"><input class="fld" type="search" id="rid-f" placeholder="Search 71 resellers…" aria-label="Search resellers"></div>
+          <div id="rid-list"></div>
+        </div>
+      </div>
+
+      <div class="facet">
+        <button class="facet__b" type="button" data-pop="p-rgid" aria-haspopup="true" aria-expanded="false">
+          <span class="facet__k">Reseller Group</span>
+          <span class="facet__v" id="rgid-v">Any</span>
+          <svg class="i"><use href="#i-chev"/></svg>
+        </button>
+        <div class="pop pop--r" id="p-rgid"><div id="rgid-list"></div></div>
+      </div>
+    </div>
+
+    <!-- scope line: what is shown, what is filtering it, and the A–Z jump -->
+    <div class="sub">
+      <span class="scope" id="scope"></span>
+      <span class="sub__sp"></span>
+      <nav class="az" id="az" aria-label="Jump to letter"></nav>
+    </div>
+
+    <div class="rows" id="rows">
+      <!-- column header · sticky 3 of 3. Sort is on the six columns the
+           export makes sortable; the other seven are labels. -->
+      <div class="hd" id="hd" role="row">
+        <span class="c-mark" title="Account status">
+          <span class="vh">Account status</span>
+        </span>
+        <span class="c-name"><button class="s" type="button" data-sort="name">Company Name<svg class="i"><use href="#i-dn"/></svg></button></span>
+        <span class="c-state"><button class="s" type="button" data-sort="state">State<svg class="i"><use href="#i-dn"/></svg></button></span>
+        <span class="c-res"><button class="s" type="button" data-sort="reseller">Reseller<svg class="i"><use href="#i-dn"/></svg></button></span>
+        <span class="c-st"><button class="s" type="button" data-sort="status">Status<svg class="i"><use href="#i-dn"/></svg></button></span>
+        <span class="c-cre"><button class="s" type="button" data-sort="created">Date Created<svg class="i"><use href="#i-dn"/></svg></button></span>
+        <span class="c-mod"><button class="s" type="button" data-sort="modified">Last Modified<svg class="i"><use href="#i-dn"/></svg></button></span>
+        <span class="c-pkg">Packages</span>
+        <span class="c-feat">Features</span>
+        <span class="c-sup">Support</span>
+        <span class="c-note">Notes</span>
+        <!-- production ships this header cell empty; the label is for screen readers -->
+        <span class="c-act r"><span class="vh">Actions</span></span>
+        <span class="c-ver">Version</span>
+      </div>
+      <div id="tb"></div>
+      <div class="empty" id="empty" hidden></div>
+    </div>
+
+    <div class="foot">
+      <span id="foot-n"></span>
+      <span class="foot__sp"></span>
+      <span class="foot__prov" id="foot-prov"></span>
+    </div>
+  </section>
+
+  <p class="nojs">This roster is rendered by script. Enable JavaScript to see the 365 dealers.</p>
+</div>
+
+<!-- ══ DEALER PACKAGE — FLOATING dialog, the export's own four fields ═════ -->
+<dialog class="modal" id="pkg" aria-labelledby="pkg-t">
+  <form method="dialog" class="modal__in">
+    <div class="modal__hd">
+      <h2 class="modal__t" id="pkg-t">Dealer Package</h2>
+      <button class="modal__x" type="submit" value="close" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="modal__bd">
+      <div class="fg">
+        <div class="fld-w fld-w--full">
+          <label class="fld-l fld-l--req" for="pkg-d">Dealer</label>
+          <select class="fld" id="pkg-d"></select>
+          <p class="fld-h">Active + Pending dealers only (legacy dropdown predicate). Selecting a dealer loads its existing note.</p>
+        </div>
+        <div class="fld-w fld-w--full">
+          <span class="fld-l">Marketing Package</span>
+          <label class="opt"><input type="checkbox" class="ck" id="pkg-m"> Has marketing package</label>
+          <p class="fld-h">Same flag as Edit Dealer (dealers.marketing_package); saved only when changed.</p>
+        </div>
+        <div class="fld-w fld-w--full">
+          <label class="fld-l fld-l--req" for="pkg-ti">Package Title</label>
+          <input class="fld" id="pkg-ti" autocomplete="off">
+        </div>
+        <div class="fld-w fld-w--full">
+          <label class="fld-l" for="pkg-de">Package Details</label>
+          <textarea class="fld fld--area" id="pkg-de" rows="8"></textarea>
+          <p class="fld-h">HTML (the legacy FCKeditor blob).</p>
+        </div>
+      </div>
+    </div>
+    <div class="modal__ft">
+      <button class="btn btn--quiet" type="submit" value="close">Close</button>
+      <button class="btn btn--danger" type="button" data-act="pkg-del">Delete Package</button>
+      <button class="btn btn--primary" type="submit" value="save">Update Package</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="manage-dealers-gen11.data.js?v=202609282140"></script>
+<script src="manage-dealers-gen11.js?v=202609282140"></script>
+</body>
+</html>

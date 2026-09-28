@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accounting · Billing — Dealers — AAN (Gen 11)</title>
+<meta name="description" content="AAN staff accounting — Gen 11 build of the production Billing — Dealers view-all surface.">
+<script>document.documentElement.classList.remove('no-js');
+/* Dark is gated off across Gen 11 while the palette is re-solved (DESIGN.md §5), and the
+   `aan-theme` key is shared with the Gen 10 pages, so a stored `dark` must not land this
+   page in a half-dark state at load. Temporary; the dark-theme stage removes it. */
+try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
+<link rel="stylesheet" href="accounting-view-all-gen11.css?v=202609282140">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></symbol>
+  <symbol id="i-dn" viewBox="0 0 24 24"><path d="M12 5v14m6-6-6 6-6-6"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></symbol>
+  <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></symbol>
+  <symbol id="i-cash" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 12h.01M18 12h.01"/></symbol>
+  <symbol id="i-dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-half" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/><path d="M12 6a6 6 0 0 1 0 12Z" fill="currentColor" stroke="none"/></symbol>
+</svg>
+
+<div class="app" id="app">
+
+  <!-- ══ PLATFORM BAR ══════════════════════════════════════════════════════
+       The same employee shell as `my-work-queue-gen11.html` and
+       `single-ticket-gen11.html`: one boundary for the staff family. -->
+  <header class="top">
+    <a class="brand" href="#" title="All Auto Network · Backend">
+      <span class="brand__mk">AAN</span>
+      <span class="brand__t">All Auto Network</span>
+      <span class="brand__env">Backend</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="System menu"></nav>
+    <span class="top__sp"></span>
+    <label class="gsearch">
+      <svg class="i"><use href="#i-search"/></svg>
+      <input type="search" placeholder="Search anywhere" aria-label="Search anywhere">
+      <kbd>/</kbd>
+    </label>
+    <a class="atlas" href="#" title="The Atlas — system architecture wiki"><span aria-hidden="true">▣</span>Atlas</a>
+    <button class="tbtn" type="button" hidden title="Dark theme is being re-solved" aria-label="Switch to dark theme"><svg class="i"><use href="#i-moon"/></svg></button>
+    <div class="nav__it">
+      <button class="tbtn" type="button" data-pop="p-help" aria-haspopup="true" aria-expanded="false" aria-label="Support"><svg class="i"><use href="#i-buoy"/></svg></button>
+      <div class="pop pop--r" id="p-help">
+        <div class="caps pop__lab">Support</div>
+        <a class="mn__it" href="#">Create A Ticket</a>
+        <a class="mn__it" href="#">Activity Report</a>
+      </div>
+    </div>
+    <span class="top__div"></span>
+    <div class="nav__it">
+      <button class="me" type="button" data-pop="p-me" aria-haspopup="true" aria-expanded="false">
+        <span class="me__mk">IG</span><span class="me__n">Ivaylo Guenkov</span>
+        <svg class="i"><use href="#i-chev"/></svg>
+      </button>
+      <div class="pop pop--r" id="p-me">
+        <div class="mn__who"><b>Ivaylo Guenkov</b>AAN · Backend</div>
+        <a class="mn__it" href="#">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ PAGE HEAD ════════════════════════════════════════════════════════ -->
+  <div class="head">
+    <div class="head__id">
+      <h1>Billing — Dealers</h1>
+      <div class="head__meta" id="head-meta"></div>
+    </div>
+    <span class="head__ctx">Accounting</span>
+    <span class="head__sp"></span>
+    <nav class="utils" id="utils" aria-label="Accounting tools"></nav>
+    <button class="btn btn--sheet btn--sm" type="button" data-act="print"><svg class="i"><use href="#i-print"/></svg> Print</button>
+  </div>
+
+  <!-- ══ DECK — the totals ════════════════════════════════════════════════
+       This is where the money is stated, so it is the loudest thing on the page
+       and nothing else competes with it. Two of the four are filters and say so;
+       two are figures and say so. -->
+  <section class="deck" id="deck" aria-label="Billing totals"></section>
+
+  <!-- ══ FIELD ════════════════════════════════════════════════════════════ -->
+  <section class="field" id="field" aria-label="Dealer billing">
+
+    <!-- which population — one exclusive control on one sunken track -->
+    <div class="cmdtop">
+      <div class="lanes" id="lanes" role="group" aria-label="Which dealers"></div>
+      <span class="cmdtop__sp"></span>
+      <div class="statuses" id="statuses" role="group" aria-label="Dealer status"></div>
+    </div>
+
+    <!-- command band · sticky #2 of 3 -->
+    <div class="cmd" id="cmd">
+      <label class="search">
+        <svg class="i"><use href="#i-search"/></svg>
+        <input type="search" id="q" placeholder="Search name, billing email, or #invoice…" autocomplete="off"
+               title="Text matches company name or billing email; 4 or more digits also match a dealer number or an invoice number"
+               aria-label="Search dealers">
+        <span class="fchips" id="fchips"></span>
+        <kbd>/</kbd>
+      </label>
+      <span class="cmd__div"></span>
+      <label class="facet facet--sel"><span class="facet__k">Reseller</span><select class="sel" id="f-reseller" aria-label="Reseller"></select></label>
+      <label class="facet facet--sel"><span class="facet__k">Group</span><select class="sel" id="f-group" aria-label="Reseller group"></select></label>
+    </div>
+
+    <!-- scope line + the A–Z index -->
+    <div class="sub">
+      <span class="scope" id="scope"></span>
+      <span class="sub__sp"></span>
+      <nav class="az" id="az" aria-label="Jump to initial"></nav>
+    </div>
+
+    <div class="rows" id="rows">
+      <div class="hd" id="hd">
+        <span class="c-stat" title="Dealer status, and whether billing is active">Bill</span>
+        <span class="s c-name" data-sort="name">Company Name</span>
+        <span class="s c-to" data-sort="billTo" title="Whose account the invoice is raised against">Bill To</span>
+        <span class="s c-pay" data-sort="payWith">Pay With</span>
+        <span class="c-mail">Billing Email</span>
+        <span class="s c-lp" data-sort="lpDate">Latest Payment</span>
+        <span class="r s c-bal" data-sort="bal">Balance</span>
+        <span class="r s c-mo" data-sort="mo">Monthly</span>
+        <span class="r c-act">Actions</span>
+      </div>
+      <div id="tb"></div>
+      <p class="empty" id="empty" hidden><b>No dealer matches</b><span>Clear the search or the filters to bring the list back.</span></p>
+    </div>
+
+    <!-- ══ FOOTER — the shown set, and its two column sums ════════════════
+         The deck states the whole book. This states what is on screen right
+         now, because a filtered list whose total still reads as the book's is
+         the one way a money page can lie without a wrong number in it. -->
+    <div class="foot">
+      <span id="shown"></span>
+      <span class="foot__sp"></span>
+      <span class="tot" id="tot"></span>
+    </div>
+  </section>
+
+  <!-- Document extender (DESIGN.md §8). Zero height until an opened row needs to
+       be able to reach the anchor. Load-bearing even when it measures 0. -->
+  <div id="exp-space" aria-hidden="true"></div>
+
+  <p class="nojs">This page renders its dealer list with script. Enable JavaScript to read it.</p>
+</div>
+
+<script src="accounting-view-all-gen11.data.js?v=202609282140"></script>
+<script src="accounting-view-all-gen11.js?v=202609282140"></script>
+</body>
+</html>

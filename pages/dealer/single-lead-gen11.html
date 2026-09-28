@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lead · Chicago Motor Cars — AAN (Gen 11)</title>
+<script>/* Dark is gated off for Gen 11 (DESIGN.md §5) — a stored `dark` from another Gen page
+   cannot land this one in a half-dark state. Only an explicit `light` is honoured. */
+try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
+<link rel="stylesheet" href="all-vehicles-gen11.css?v=202609282140">
+<link rel="stylesheet" href="single-lead-gen11.css?v=202609282140">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></symbol>
+  <symbol id="i-cam" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+  <symbol id="i-cam-off" viewBox="0 0 24 24"><path d="M2 2l20 20M7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h13M9.5 4h5L17 7h3a2 2 0 0 1 2 2v7.5"/><path d="M14.1 15.1a3 3 0 0 1-4.2-4.2"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
+  <symbol id="i-cols" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16"/></symbol>
+  <symbol id="i-table" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 10v10"/></symbol>
+  <symbol id="i-cards" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 7v6M12 17h.01"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.2"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></symbol>
+  <symbol id="i-dn" viewBox="0 0 24 24"><path d="M12 5v14m6-6-6 6-6-6"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></symbol>
+  <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></symbol>
+  <symbol id="i-rss" viewBox="0 0 24 24"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></symbol>
+</svg>
+
+<!-- ============================================================================
+     SINGLE LEAD — GENERATION 11
+
+     Five continuous sections in one scroll: Overview / Contact / Trade-in /
+     Activity / Emails. The band above them is a SECTION NAVIGATOR, not a tab
+     strip: every section is in the document at all times and the navigator only
+     moves the scroll position to one of them.
+
+     Surfaces (DESIGN.md section 2): the platform bar and the section band are
+     the sticky stack — ATTACHED, square where they touch, one hairline each,
+     one shadow at the stack bottom edge. The field and the dock are FLOATING.
+     The five sections are ATTACHED to one another inside the field: no radius
+     between them, one hairline, no shadow, one shared inset. Nothing here is
+     wrapped in a card for the sake of having a card.
+     ========================================================================= -->
+
+<div class="app dock-open" id="app">
+  <header class="top">
+    <a class="brand" href="#" title="All Auto Network · Backend"><span class="brand__mk">AAN</span><span class="brand__t">All Auto Network</span></a>
+    <nav class="nav" aria-label="Platform">
+      <div class="nav__it"><a class="nav__b" href="#">Home</a></div>
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Inventory<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu">
+          <div class="menu__col"><div class="caps menu__t">Inventory</div>
+            <a class="menu__l" href="all-vehicles-gen11.html"><b>Inventory Manager</b><span>Every vehicle, by lane</span></a>
+            <a class="menu__l" href="#"><b>Auto Locator</b><span>Find a vehicle for a buyer</span></a>
+            <a class="menu__l" href="#"><b>Sort order</b><span>How vehicles list on your site</span></a>
+            <a class="menu__l" href="#"><b>New submissions</b><span>Vehicles waiting for review</span></a>
+          </div>
+          <div class="menu__col"><div class="caps menu__t">Reports</div>
+            <a class="menu__l" href="#"><b>Inventory aging</b><span>Days in stock, per vehicle</span></a>
+            <a class="menu__l" href="#"><b>Sold inventory</b><span>What sold, and when</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="nav__it nav__it--on">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Leads<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Leads</div>
+          <a class="menu__l menu__l--on" href="all-leads-gen10.html" aria-current="page"><b>Lead Manager</b><span>Every enquiry, by stage</span></a>
+          <a class="menu__l" href="#"><b>Customers</b><span>People who enquired or bought</span></a>
+          <a class="menu__l" href="#"><b>Referrals</b><span>Where leads came from</span></a>
+        </div></div>
+      </div>
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Site<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Site management</div>
+          <a class="menu__l" href="#"><b>Site Content Manager</b><span>Pages, banners and copy</span></a>
+        </div></div>
+      </div>
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Marketing<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Marketing applications</div>
+          <a class="menu__l" href="#"><b>Newsletter tools</b><span>Compose and send</span></a>
+          <a class="menu__l" href="#"><b>Craigslist posting</b><span>Post vehicles to Craigslist</span></a>
+          <a class="menu__l" href="#"><b>Posting tools &amp; eBay</b><span>Other marketplaces</span></a>
+        </div></div>
+      </div>
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Dealer tools<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Dealer tools</div>
+          <a class="menu__l" href="#"><b>View site statistics <svg class="i"><use href="#i-ext"/></svg></b><span>Opens in a new tab</span></a>
+          <a class="menu__l" href="#"><b>Billing info</b><span>Invoices and balance</span></a>
+        </div></div>
+      </div>
+    </nav>
+    <span class="top__sp"></span>
+    <label class="gsearch"><svg class="i"><use href="#i-search"/></svg><input type="search" id="q-global" name="q-global" autocomplete="off" placeholder="Search anywhere" aria-label="Search anywhere"></label>
+    <div class="nav__it nav__it--r">
+      <button class="tbtn" type="button" data-menu aria-haspopup="true" aria-expanded="false" aria-label="Support"><svg class="i"><use href="#i-buoy"/></svg></button>
+      <div class="menu menu--r"><div class="menu__col"><div class="caps menu__t">Support</div>
+        <a class="menu__l" href="#"><b>View tickets</b><span>Your requests to AAN</span></a>
+        <a class="menu__l" href="#"><b>Create ticket</b><span>Ask AAN for help</span></a>
+      </div></div>
+    </div>
+    <button class="tbtn" type="button" aria-label="Notifications"><svg class="i"><use href="#i-bell"/></svg><span class="tbtn__dot"></span></button>
+    <span class="top__div"></span>
+    <div class="nav__it nav__it--r">
+      <button class="dealer" type="button" data-menu aria-haspopup="true" aria-expanded="false"><span class="dealer__mk">CM</span><span class="dealer__n">Chicago Motor Cars</span><span class="dealer__id">#277</span><svg class="i"><use href="#i-chev"/></svg></button>
+      <div class="menu menu--r"><div class="menu__col"><div class="caps menu__t">Rooftops · 6</div>
+        <a class="menu__l menu__l--on" href="#"><b>All rooftops</b><span>Chicago Motor Cars group</span></a>
+        <a class="menu__l" href="#"><b>Chicago Motor Cars</b></a>
+        <a class="menu__l" href="#"><b>CMC · Naperville</b></a>
+        <a class="menu__l" href="#"><b>CMC · KC</b></a>
+        <a class="menu__l" href="#"><b>CMC · SC</b></a>
+        <a class="menu__l" href="#"><b>CMS Diesel</b></a>
+      </div></div>
+    </div>
+    <div class="nav__it nav__it--r">
+      <button class="av" type="button" data-menu aria-haspopup="true" aria-expanded="false" aria-label="Account · Parin">P</button>
+      <div class="menu menu--r"><div class="menu__col">
+        <div class="menu__who"><b>Parin</b><span>Chicago Motor Cars · #277</span></div>
+        <a class="menu__l" href="#"><b>Account</b></a>
+        <a class="menu__l" href="#"><b>Log out</b></a>
+      </div></div>
+    </div>
+  </header>
+
+  <!-- HEAD — record identity and record navigation only. It owns no mutation:
+       the two quiet buttons are routes to the section that owns the action, so
+       no action ever appears twice as an owner. -->
+  <div class="head">
+    <a class="btn btn--quiet" href="all-leads-gen10.html"><svg class="i"><use href="#i-left"/></svg> Back to board</a>
+    <span class="head__div"></span>
+    <h1 id="h-name">Lead</h1>
+    <span class="stat" id="h-status">New Lead</span>
+    <span class="head__ctx" id="h-id">#16994</span>
+    <span class="head__sp"></span>
+    <span class="walk" role="group" aria-label="Record navigation"><button class="btn btn--quiet btn--sm" type="button" data-act="prev"><svg class="i"><use href="#i-left"/></svg> Prev</button><button class="btn btn--quiet btn--sm" type="button" data-act="next">Next <svg class="i"><use href="#i-right"/></svg></button></span>
+    <button class="btn btn--sheet btn--sm" type="button" data-act="goto-note"><svg class="i"><use href="#i-edit"/></svg> Note</button>
+    <button class="btn btn--sheet btn--sm" type="button" data-act="goto-email"><svg class="i"><use href="#i-rss"/></svg> Email</button>
+  </div>
+
+  <!-- BENTO — three slots named for their ROLE, not their grid position (audit
+       F7). Each slot is placed by `grid-area`, so no width can reassign one child
+       without the other two — which is how 1280 lost a whole track on Gen 10. -->
+  <section class="bento" aria-label="Lead summary">
+
+    <!-- The enquiry: what the buyer said, and the vehicle they said it about.
+         One object, two halves, 65 / 35 as a PROPORTION rather than a fixed lane,
+         so the ratio is a setting instead of a consequence of the viewport. -->
+    <div class="focal slot--enquiry">
+      <div class="focal__main">
+        <div class="focal__h"><span class="caps">The buyer's message</span></div>
+        <blockquote class="quote" id="quote"></blockquote>
+        <button class="quote__more" type="button" data-act="quote-more" hidden>Show full message</button>
+        <div class="ident" id="ident"></div>
+      </div>
+      <div class="vcar" id="vcar"></div>
+    </div>
+
+    <!-- What has happened on this lead, as three counts. -->
+    <div class="value slot--counts">
+      <div class="value__h"><span class="caps">Activity</span><span class="s">this lead</span></div>
+      <div class="kv" id="wf-kv"></div>
+    </div>
+
+    <!-- The record's own identifiers. The Demo chip and the source line come
+         BEFORE the tiles (DESIGN.md section 13): the reader is told what this is
+         before being asked to read it. -->
+    <section class="attn slot--facts" aria-label="Lead facts">
+      <div class="attn__h"><h2><span class="full">Lead facts</span><span class="short">Facts</span></h2><span class="demo">Demo</span><span class="s" id="tl-s">source · provider · trace</span></div>
+      <div class="attn__g" id="tl-g"></div>
+    </section>
+  </section>
+
+  <!-- FIELD — the one floating surface. Inside it: the sticky section navigator,
+       then the five sections attached to one another. -->
+  <section class="field" aria-label="Lead">
+
+    <!-- SECTION NAVIGATOR. Not tabs. A segmented track (DESIGN.md section 6:
+         current view = white thumb on a sunken track, never a blue fill) whose
+         pills move the scroll to a section that is already in the document. -->
+    <div class="cmd cmd--sec">
+      <nav class="secnav" id="secnav" aria-label="Sections on this page">
+        <a class="secnav__b secnav__b--on" href="#s-overview" data-sec="s-overview">Overview</a>
+        <a class="secnav__b" href="#s-contact" data-sec="s-contact">Contact</a>
+        <a class="secnav__b" href="#s-trade" data-sec="s-trade">Trade-in</a>
+        <a class="secnav__b" href="#s-activity" data-sec="s-activity">Activity <b id="n-act">0</b></a>
+        <a class="secnav__b" href="#s-emails" data-sec="s-emails">Emails <b id="n-em">0</b></a>
+      </nav>
+      <span class="cmd__sp"></span>
+      <span class="secnav__note">one page · five sections</span>
+      <button class="facet__b facet__b--on" type="button" data-act="dock" aria-expanded="true" aria-controls="dock"><svg class="i"><use href="#i-sliders"/></svg><span class="facet__v">Workflow</span></button>
+    </div>
+
+    <div class="secs">
+
+      <!-- ── OVERVIEW ───────────────────────────────────────────────────────
+           Two kinds of field, made two visibly different things: the inventory
+           record above (read here — text, not boxes) and the editable copy of
+           it below, which is what Save writes. -->
+      <section class="sec" id="s-overview" aria-labelledby="t-overview">
+        <div class="sec__h"><h2 id="t-overview">Overview</h2><span class="s">the vehicle this enquiry is about</span></div>
+        <div class="sec__b">
+
+          <div class="rec" id="vrec"></div>
+
+          <form class="form" id="f-vehicle" autocomplete="off" novalidate>
+            <div class="grp">
+              <div class="grp__h">
+                <span class="grp__t">Vehicle of Interest / Purchased</span>
+                <span class="grp__ed"><svg class="i"><use href="#i-edit"/></svg> editable</span>
+                <span class="grp__s">the record behind the strip above — edit here if the feed got it wrong</span>
+              </div>
+              <label class="search search--sm"><svg class="i"><use href="#i-search"/></svg><input type="search" id="q-inventory" name="q-inventory" autocomplete="off" placeholder="Keyword (stock / vin / make / model)" aria-label="Search Inventory"><button class="btn btn--sheet btn--sm" type="button">Search Inventory</button></label>
+              <div class="grid grid--5">
+                <label class="f"><span>Stock #</span><input class="fld" type="text" name="stock" autocomplete="off"></label>
+                <label class="f"><span>Type</span><input class="fld" type="text" name="type" autocomplete="off"></label>
+                <label class="f"><span>Year</span><input class="fld" type="text" name="year" inputmode="numeric" autocomplete="off"></label>
+                <label class="f"><span>Make</span><input class="fld" type="text" name="make" autocomplete="off"></label>
+                <label class="f"><span>Model</span><input class="fld" type="text" name="model" autocomplete="off"></label>
+                <label class="f f--wide"><span>VIN</span><input class="fld mono" type="text" name="vin" autocomplete="off"></label>
+                <label class="f"><span>Mileage</span><input class="fld" type="text" name="mileage" inputmode="numeric" autocomplete="off"></label>
+                <label class="f"><span>Price</span><input class="fld" type="text" name="price" inputmode="numeric" autocomplete="off"></label>
+                <label class="f"><span>Int Color</span><input class="fld" type="text" name="int" autocomplete="off"></label>
+                <label class="f"><span>Ext Color</span><input class="fld" type="text" name="ext" autocomplete="off"></label>
+              </div>
+            </div>
+            <div class="form__f"><span class="form__note">Saves the vehicle record on this lead</span><span class="form__msg" role="status" aria-live="polite"></span><button class="btn btn--primary" type="submit">Save vehicle</button></div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ── CONTACT ──────────────────────────────────────────────────────── -->
+      <section class="sec" id="s-contact" aria-labelledby="t-contact">
+        <div class="sec__h"><h2 id="t-contact">Contact &amp; address</h2><span class="s">who to reach, and how</span></div>
+        <div class="sec__b">
+          <form class="form" id="f-contact" autocomplete="off" novalidate>
+            <div class="grp grp--req">
+              <div class="grp__h">
+                <span class="grp__t">Who</span>
+                <span class="grp__ed"><svg class="i"><use href="#i-edit"/></svg> editable</span>
+                <span class="grp__s" id="req-note">Email <b>or</b> Day Phone is required.</span>
+              </div>
+              <div class="grid grid--3">
+                <label class="f f--big"><span>First Name</span><input class="fld" type="text" name="first" autocomplete="off"></label>
+                <label class="f"><span>Middle Name</span><input class="fld" type="text" name="middle" autocomplete="off"></label>
+                <label class="f f--big"><span>Last Name</span><input class="fld" type="text" name="last" autocomplete="off"></label>
+              </div>
+              <div class="grid grid--3">
+                <label class="f f--big"><span>Email Address <b aria-hidden="true">*</b></span><input class="fld" type="email" name="email" autocomplete="off" aria-describedby="req-note"></label>
+                <label class="f f--big"><span>Day Phone <b aria-hidden="true">*</b></span><input class="fld" type="tel" name="day" autocomplete="off" aria-describedby="req-note"></label>
+                <label class="f"><span>Evening Phone</span><input class="fld" type="tel" name="eve" autocomplete="off"></label>
+              </div>
+            </div>
+            <div class="grp">
+              <div class="grp__h"><span class="grp__t">Reach &amp; address</span><span class="grp__ed"><svg class="i"><use href="#i-edit"/></svg> editable</span></div>
+              <div class="grid grid--4">
+                <label class="f"><span>Best Time To Call</span><input class="fld" type="text" name="best" autocomplete="off"></label>
+                <label class="f f--wide"><span>Street Address</span><input class="fld" type="text" name="street" autocomplete="off"></label>
+                <label class="f"><span>City</span><input class="fld" type="text" name="city" autocomplete="off"></label>
+                <label class="f"><span>State</span><input class="fld" type="text" name="state" autocomplete="off"></label>
+                <label class="f"><span>Zip</span><input class="fld" type="text" name="zip" inputmode="numeric" autocomplete="off"></label>
+                <label class="f"><span>Country</span><input class="fld" type="text" name="country" autocomplete="off"></label>
+              </div>
+            </div>
+            <div class="grp">
+              <div class="grp__h"><span class="grp__t">Message &amp; comments</span><span class="grp__s">the buyer's words, then yours</span></div>
+              <div class="grid grid--2">
+                <label class="f f--wide"><span>Message <i>as received</i></span><textarea class="fld" rows="4" name="message" autocomplete="off"></textarea></label>
+                <label class="f f--wide"><span>Comments <i>internal</i></span><textarea class="fld" rows="4" name="comments" autocomplete="off"></textarea></label>
+              </div>
+            </div>
+            <div class="form__f"><span class="form__note">Saves contact, address, message and comments</span><span class="form__msg" role="status" aria-live="polite"></span><button class="btn btn--primary" type="submit">Save contact</button></div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ── TRADE-IN ─────────────────────────────────────────────────────── -->
+      <section class="sec" id="s-trade" aria-labelledby="t-trade">
+        <div class="sec__h"><h2 id="t-trade">Trade-in / Consignment</h2><span class="s" id="trade-s">no trade-in on this lead</span><button class="btn btn--sheet btn--sm" type="button" data-act="add-trade"><svg class="i"><use href="#i-plus"/></svg> Add trade-in</button></div>
+        <div class="sec__b" id="trade-b"></div>
+      </section>
+
+      <!-- ── ACTIVITY — a chronological timeline ───────────────────────────── -->
+      <section class="sec" id="s-activity" aria-labelledby="t-activity">
+        <div class="sec__h"><h2 id="t-activity">Activity</h2><span class="demo">Demo</span><span class="s" id="act-s">0 entries</span></div>
+        <div class="sec__b">
+          <form class="composer" id="f-note" autocomplete="off" novalidate>
+            <span class="composer__who" id="composer-who" aria-hidden="true">P</span>
+            <div class="composer__b">
+              <label class="composer__lab" for="note-in">Add a note</label>
+              <textarea class="fld" id="note-in" rows="2" placeholder="What happened, and what is next…" autocomplete="off"></textarea>
+              <div class="composer__f"><span class="hint">Logged as <b id="composer-name">Parin</b> · shows in Activity for everyone on this lead</span><button class="btn btn--primary btn--sm" type="submit" data-act="add-note">Add note</button></div>
+            </div>
+          </form>
+          <p class="src">Timeline reconstructed from this lead's own counts — demo data, no CRM event stream connected.</p>
+          <ol class="feed" id="act-tbl"></ol>
+          <details class="raw">
+            <summary><span class="caps">Raw message (ADF)</span><span class="s">expand</span></summary>
+            <p class="src">Rendered from the fields above — the original provider payload is not stored in this demo.</p>
+            <pre id="raw"></pre>
+          </details>
+        </div>
+      </section>
+
+      <!-- ── EMAILS — a compact communication history ──────────────────────── -->
+      <section class="sec" id="s-emails" aria-labelledby="t-emails">
+        <div class="sec__h"><h2 id="t-emails">Emails</h2><span class="demo">Demo</span><span class="s" id="em-s">0 emails</span><button class="btn btn--primary btn--sm" type="button" data-act="write-email"><svg class="i"><use href="#i-rss"/></svg> Write email</button></div>
+        <div class="sec__b">
+          <p class="src">Subjects and bodies are demo data generated from this lead's email count — no mailbox connected.</p>
+          <div class="mail" id="em-tbl"></div>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- DOCK — the workflow rail. The one place on the page where a decision is
+       recorded, so it is the one place with a resting / dirty state pair. -->
+  <aside class="dock" id="dock" aria-label="Workflow">
+    <div class="dock__h"><h2 class="dock__t">Workflow</h2><span class="dock__c" id="dock-c"></span><button class="dock__x" type="button" data-act="close" aria-label="Close workflow"><svg class="i"><use href="#i-x"/></svg></button></div>
+    <div class="dock__b">
+      <form class="wf" id="f-wf" autocomplete="off" novalidate>
+        <div class="wf__state"><span class="caps">Current state</span><span class="stat" id="wf-chip">New Lead</span></div>
+        <label class="f"><span>Status</span><select class="sel" id="wf-status"><option>Unassigned</option><option>New Lead</option><option>Active Prospect</option><option>Long Term Lead</option><option>Pending</option><option>Hot</option><option>Trade Appraisal</option><option>Just Looking</option><option>Sale Pending</option><option>Bought Here</option><option>Service</option><option>Storage</option><option>Galleria</option><option>Looking For</option><option>Bought Elsewhere</option><option>Purchased Car</option><option>No Longer in Market</option><option>Spam</option><option>No Response</option><option>Credit Approved</option><option>Credit Declined</option><option>Duplicate Lead</option><option>Car is Sold</option><option>Car Unavailable</option><option>Unrealistic / Lowball Offer</option><option>Archived Phone Lead</option><option>Lease Ended</option><option>Wrong Number</option></select></label>
+        <label class="f"><span>Assigned to</span><select class="sel" id="wf-rep"><option>Select Rep</option></select></label>
+        <label class="f"><span>Follow-up date</span><input class="fld" type="datetime-local" id="wf-follow" autocomplete="off"></label>
+        <fieldset class="wf__flags">
+          <legend class="caps">Flags</legend>
+          <div class="workflow-flags">
+            <label class="flag"><input class="ck" type="checkbox" id="wf-internet"><span>Internet</span></label>
+            <label class="flag"><input class="ck" type="checkbox" id="wf-imc"><span>Mgmt checkoff</span></label>
+          </div>
+        </fieldset>
+      </form>
+
+      <div class="facts">
+        <div class="facts__h"><span class="caps">Marketing UTM trace</span><span class="demo">Demo</span></div>
+        <p class="src">Not connected — no campaign parameters are captured for this lead.</p>
+        <pre class="utm" id="utm"></pre>
+      </div>
+
+      <div class="facts">
+        <div class="facts__h"><span class="caps">Newsletter</span></div>
+        <label class="flag"><input class="ck" type="checkbox" id="nl"><span>Subscribed to the dealer newsletter</span></label>
+      </div>
+    </div>
+    <div class="dock__f dock__f--row" id="wf-foot">
+      <span class="dock__note" id="wf-note">No unsaved changes</span>
+      <button class="btn btn--quiet btn--sm" type="button" data-act="wf-discard" disabled>Discard</button>
+      <button class="btn btn--sheet btn--sm" type="button" data-act="wf-save" disabled>Save workflow</button>
+    </div>
+  </aside>
+
+  <!-- Document extender (DESIGN.md section 8). Zero height until the JS needs the
+       last section to be able to reach the anchor. It is load-bearing even when
+       it measures 0 — do not delete it for measuring nothing. -->
+  <div id="sec-space" aria-hidden="true"></div>
+</div>
+
+<script src="all-vehicles-gen11.data.js?v=202609282140"></script>
+<script src="all-leads-gen10.data.js?v=202609282140"></script>
+<script src="single-lead-gen11.js?v=202609282140"></script>
+</body>
+</html>

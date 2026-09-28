@@ -116,6 +116,14 @@
   .shots img { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: top; }
   .shots span { display: block; font-size: 11px; color: var(--on-3); padding: 5px 8px; background: rgba(255,255,255,.04); }
 
+  /* ── Gen 11 · current ── */
+  #gen11 { border-top: 1px solid var(--line, #e6e9ef); }
+  .g11-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 14px 28px; }
+  .g11-list li { position: relative; padding: 14px 0 14px 26px; border-top: 1px solid rgba(18,23,20,.08); font-size: 14.5px; line-height: 1.6; }
+  .g11-list li::before { content: "✓"; position: absolute; left: 0; top: 14px; font-size: 13px; color: #12704a; font-weight: 700; }
+  .g11-list b { font-weight: 650; }
+  .g11-list code { font: 12.5px/1 ui-monospace, SFMono-Regular, Menlo, monospace; padding: 1px 5px; border-radius: 5px; background: rgba(18,23,20,.06); }
+
   /* ── the Gen 10 family: pages built on the same system, side by side ── */
   .fam { grid-column: 1 / -1; margin-top: 8px; padding-top: 26px; border-top: 1px solid var(--line-on); }
   .fam__h { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
@@ -257,13 +265,14 @@
 <div class="bar"><div class="wrap">
   <span class="logo"><i>AAN</i> All Vehicles · redesign</span>
   <nav>
+    <a href="#gen11">Gen 11 · current</a>
     <a href="#candidates">Candidates</a>
     <a href="#preview">Preview</a>
     <a href="#compare">Compare</a>
     <a href="#journey">Journey</a>
     <a href="#questions">Open questions</a>
     <a href="#principles">Principles</a>
-    <a class="go" href="pages/dealer/all-vehicles-gen10.html">Open Gen 10 →</a>
+    <a class="go" href="pages/dealer/all-vehicles-gen11.html">Open Gen 11 →</a>
   </nav>
 </div></div>
 
@@ -292,6 +301,56 @@
     <img class="s1" src="reference/archive/redesign-gen10-1440-light.png" alt="Gen 10 · Bento Command">
   </div>
 </div></div>
+
+
+<!-- ── GEN 11 · CURRENT ────────────────────────────────────────────────────
+     The current family. Kept at the top of the page on purpose: older
+     generations stay published below for comparison, but this is the one
+     being built on. Only pages that exist are linked. ── -->
+<section id="gen11"><div class="wrap">
+  <div class="sec-h">
+    <span class="caps">Gen 11 · current</span>
+    <h2>The current UX/UI upgrade</h2>
+    <p>One visual system across the family: a single 8pt spacing ladder, a sticky stack that behaves as one attached surface, contextual detail that opens inside the list at a named position, and an active-state hierarchy where only one state is a blue fill. The system is written down in <a href="DESIGN.md">DESIGN.md</a>, extracted from the running implementation rather than proposed in advance.</p>
+  </div>
+
+  <div class="fam" id="gen11-family">
+    <div class="fam__h"><b>The Gen 11 family</b><span>ten pages, dealer and employee, on one system — one gutter · attached sticky stack · in-flow contextual detail · 8pt spacing</span></div>
+    <div class="fam__g" id="gen11-pages">
+      <a class="pg pg--new" href="pages/dealer/all-vehicles-gen11.html"><img src="previews/gen11.jpg" alt=""><span><b>All Vehicles</b><small>Dealer · Inventory Manager · 359 available</small><p>The reference implementation of the system. The selected vehicle opens in the list at a named anchor 202px under the sticky stack, its workspace shares the row's edges exactly, and its detail is four stacked regions — Merchandising Health, Market Intelligence, Specification, History.</p><span class="k">pages/dealer/all-vehicles-gen11</span></span></a>
+      <a class="pg pg--new" href="pages/dealer/dealer-login-gen11.html"><span><b>Dealer Login</b><small>Front door · all dealers</small><p>The production front door on the Gen 11 system: the marketing panel and support block as one dark focal pane, the form as a floating sheet beside it. User Name, Password with its reveal toggle, and the password-reset link — nothing added.</p><span class="k">pages/dealer/dealer-login-gen11</span></span></a>
+      <a class="pg pg--new" href="pages/dealer/all-leads-gen11.html"><span><b>All Leads</b><small>Dealer · Lead Desk · 70 per page</small><p>The lead desk on the Gen 11 system. The header no longer veils itself when the list travels under it, the command band shares the page gutter, unrelated rows are not dimmed, and a lead opens in the list at the same 202px anchor as a vehicle.</p><span class="k">pages/dealer/all-leads-gen11</span></span></a>
+      <a class="pg pg--new" href="pages/dealer/single-lead-gen11.html"><span><b>Single Lead</b><small>Dealer · lead dossier</small><p>Five continuous sections — Overview, Contact, Trade-in, Activity, Emails — as real anchors on one page, never tabs. The buyer's message is one of four facts at the top instead of dominating them, and the section navigator lands each heading exactly under the sticky stack.</p><span class="k">pages/dealer/single-lead-gen11</span></span></a>
+      <a class="pg pg--new" href="pages/dealer/single-vehicle-gen11.html"><span><b>Single Vehicle</b><small>Dealer · vehicle editor · 12 zones</small><p>The production editor's own architecture — status, pricing, photos, specs, colours, description, features, feeds, custom — rebuilt on the Gen 11 surfaces. 456 fields, the warning state included.</p><span class="k">pages/dealer/single-vehicle-gen11</span></span></a>
+      <a class="pg pg--new" href="pages/staff/my-work-queue-gen11.html"><span><b>My Work Queue</b><small>AAN employee · 94 open · 16 columns</small><p>A dense operational lane kept dense. Zero mid-word breaks across 467 cells; the clean two-line wraps are left exactly as they were, because they are not the defect.</p><span class="k">pages/staff/my-work-queue-gen11</span></span></a>
+      <a class="pg pg--new" href="pages/staff/single-ticket-gen11.html"><span><b>Single Ticket</b><small>AAN employee · work object</small><p>A ticket as thread, crew, todos and changelog — the chronological parts reuse the Gen 11 timeline rather than inventing one. The empty-crew and closed states are real states from the source.</p><span class="k">pages/staff/single-ticket-gen11</span></span></a>
+      <a class="pg pg--new" href="pages/staff/manage-dealers-gen11.html"><span><b>Manage Dealers</b><small>AAN employee · 365-row roster</small><p>The roster at full density, thirteen columns on the Gen 11 table treatment. No column is sticky, so none pretends to be: the operational group is marked by one divider, not a grey slab.</p><span class="k">pages/staff/manage-dealers-gen11</span></span></a>
+      <a class="pg pg--new" href="pages/staff/dealer-edit-gen11.html"><span><b>Dealer Edit</b><small>AAN employee · dealer file</small><p>105 fields across seven real zones — identity, people, access, communications, integrations, web, email — separated by rhythm and hairlines instead of being wrapped in cards.</p><span class="k">pages/staff/dealer-edit-gen11</span></span></a>
+      <a class="pg pg--new" href="pages/staff/accounting-view-all-gen11.html"><span><b>Accounting — View All</b><small>AAN employee · billing · 205 billable</small><p>Money, so the numbers are tabular and the totals are unmistakable. Past Due carries its own honest note where the figure does not resolve to the rows in the snapshot.</p><span class="k">pages/staff/accounting-view-all-gen11</span></span></a>
+    </div>
+  </div>
+
+  <div class="sec-h" style="margin-top:44px">
+    <span class="caps">What changed</span>
+    <h2>Twelve things, in the order they were fixed</h2>
+    <p>Each was measured before and after in a real browser at 1280 / 1366 / 1440 / 1920. The numbers live in the stage reports at the repository root.</p>
+  </div>
+
+  <ul class="g11-list">
+    <li><b>Foundation cleaned.</b> 1&nbsp;021 CSS rules collapsed to 747; twelve competing <code>:root</code> blocks became one. Dead rules removed, component definitions consolidated, <code>nth-child</code> selectors replaced by semantic classes.</li>
+    <li><b>1366 overflow corrected.</b> Horizontal overflow is now 0 at every tested width, in the default, filters-open and vehicle-open states.</li>
+    <li><b>Sticky mechanics stabilised.</b> CSS publishes the stack geometry and JS reads it. The engaged state could previously never fire — the script carried thresholds from a layout two versions old.</li>
+    <li><b>Layer collisions corrected.</b> A named z-index ladder; content travels under chrome, so hiding the column header is no longer necessary.</li>
+    <li><b>Focus treatment corrected.</b> Focus owns <code>outline</code> alone. It used to ride on <code>box-shadow</code>, which every decorative shadow overwrote.</li>
+    <li><b>Dark mode safely gated.</b> Off behind one flag, its rules inert rather than half-applied.</li>
+    <li><b>Selected-row anchor.</b> Opening a vehicle brings its row to rest 202px under the sticky stack — measured deviation −0.67px to 0, in both travel directions, under reduced motion, and with the dock open. Near the end of the list the document extends so the last row can still reach it.</li>
+    <li><b>In-flow vehicle workspace.</b> The detail was an absolutely-positioned card that floated over as many as fourteen rows while the other fifteen were dimmed. It is now part of the list: 0 rows covered, 0 dimmed, 0 seam, edges identical to the row's.</li>
+    <li><b>Detail as a stacked accordion.</b> Four regions down one column at full width, each opening in place and pushing the ones below it. No 2×2 grid, no column teleporting, no tabs, no rail.</li>
+    <li><b>Market + Comps unified.</b> They were always reporting the same number of listings. One region now, with the <em>not connected</em> disclosure above the price distribution rather than buried under it.</li>
+    <li><b>Sticky visual system completed.</b> Platform bar, command band and column header are one attached surface: square touching corners, one inset, one hairline per boundary, one shadow at the bottom edge. The translucent holes at the seams are gone.</li>
+    <li><b>8pt spacing system.</b> One ladder — 4 / 8 / 12 / 16 / 24 / 32 / 40 / 48 / 64 — with named structural tokens. The same relationship always takes the same token.</li>
+  </ul>
+</div></section>
 
 <!-- ── CANDIDATES ── -->
 <section id="candidates"><div class="wrap">

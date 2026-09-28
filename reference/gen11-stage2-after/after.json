@@ -1,0 +1,53 @@
+{
+  "captured": "2026-09-27",
+  "cacheKey": "202609272130",
+  "widths": [1280, 1366, 1440, 1920],
+  "identicalAcrossAllFourWidths": true,
+  "anchor": {
+    "contract": "--stick-bar + --stick-cmd + --stick-hd + --anchor-gap = 68 + 72 + 52 + 10 = 202px",
+    "firstRow": 10, "midRow": 9, "lastRow": 9,
+    "upwardTravel": { "from": 1331, "to": 517, "delta": 10 },
+    "reducedMotion": { "settledWithinMs": 60, "delta": 10 },
+    "documentExtender": { "firesWhenPageTooShort": true, "measured": "69px at 1920x1042, last row, doc 2526 -> 2595, maxScroll == anchor target 1553" },
+    "survivesDockToggle": { "beforeOpen": 10, "withFiltersOpen": 10, "afterClose": 10 }
+  },
+  "inFlow": {
+    "position": "static", "edgeDeltaLeft": 0, "edgeDeltaRight": 0, "seamGap": 0,
+    "rowsCovered": 0, "rowsDimmed": 0, "footBelowWorkspace": true,
+    "docGrowth": { "collapsed": "716 for a 696px workspace", "withMarket": "644 for a 624px workspace", "tolerance": "+20px, the two --exp-detach margins" },
+    "shadow": "inset 0 0 0 1px var(--line) — a hairline, no elevation",
+    "expSpace": { "display": "block", "role": "live document extender" }
+  },
+  "detail": {
+    "regions": ["health (static, always open)", "market (Market intelligence: market + comps)", "spec", "hist"],
+    "container": "single column, hairline separators, no grid",
+    "openingMarket": { "health": 0, "market": 0, "spec": 765, "hist": 766, "meaning": "nothing above moves; below shifts by exactly the opened region's growth" },
+    "allSameLeft": true, "allSameWidth": true,
+    "titlesAlignedAtX": 490, "summariesAlignedAtX": 1841,
+    "provenanceBeforeVisualisation": true
+  },
+  "layers": {
+    "headerWinsOverWorkspace": true,
+    "hdOpacityAtScroll": { "600": 1, "900": 1, "1200": 1, "1500": 1 },
+    "hdVeilIntroduced": false,
+    "trayHitTestableWithVehicleOpen": true
+  },
+  "regression": {
+    "horizontalOverflow": { "1280": 0, "1366": 0, "1440": 0, "1920": 0 },
+    "rowsAtRest1366x768": { "before": 1, "after": 1 },
+    "bentoAt1280": { "cols": "540px 240px 423.733px", "misassigned": false },
+    "stage1Gains": {
+      "laneRailWithFiltersOpen": "flex",
+      "attentionPadding": "14px 18px 18px",
+      "stickyEngagedFires": "cmd--stuck + hd--stuck, hd bottom 192",
+      "focusVisibleOutline": "2px solid rgb(31,95,224), offset 2px"
+    },
+    "api": ["S", "V", "closeDock", "closeVehicle", "showFilters", "showVehicle"],
+    "expNowRemoved": true,
+    "hashStates": { "#vehicle=19495&open=market": "opens that vehicle at anchor 10 with the market region open" },
+    "console": "clean (no errors, no warnings)"
+  },
+  "knownCarriedForward": {
+    "sheetVoid": { "before": "~270px", "after": "329px when every region is collapsed", "cause": "the left column (photo + facts + 7 actions) is 650px; the collapsed region column is 321px", "closesWhen": "any region is open (market alone makes the right column ~1085px)" }
+  }
+}

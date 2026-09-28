@@ -1,0 +1,1071 @@
+/* ============================================================================
+   AAN · Staff UI · ACCOUNTING — VIEW ALL — GENERATION 11
+
+   The production surface this rebuilds, and which variant is authoritative:
+
+     s05-billing-dealers-1.html  ← THE VIEW-ALL. Unfiltered, all 363 dealer rows,
+        Company Name ascending, header "363 dealers · Billing Active Dealers: 205".
+        The Accounting entry in the staff top nav points at exactly this page.
+     s05-billing-dealers-2.html     the SAME surface with the "Open balance" tile
+        engaged — 136 rows, sorted Balance descending. A filter state, not a page.
+     s05-billing-dealers-3.html     the SAME surface again, "All" + "Pending" —
+        24 rows, from a later snapshot (1,109 listed / 209 billable).
+     s06-billing-ledger-1.html      one dealer's ledger, which is what a row
+        opens into: Invoice · Created · Sent · Total · Paid · Date Paid ·
+        Reference · Balance · Type.
+
+   So the page is variant 1, and variants 2 and 3 are two of its states. Every
+   figure on it comes out of variant 1's own snapshot, so the deck, the lanes,
+   the rows and the footer sums agree with each other.
+
+   This is money, so three things are non-negotiable and each has a rule below:
+     · every figure is tabular-aligned and right-aligned in its column
+     · the totals are the loudest objects on the page, and the footer says what
+       the FILTERED set sums to rather than repeating the book's total
+     · nothing decorative. No gradient, no tinted column, no zebra.
+
+   What is deliberately NOT here, and why:
+     · no frozen rail, no column background fill — DESIGN.md §10. Not one cell
+       is `position: sticky`, so nothing paints as if it were.
+     · no pagination. Production ships this list as one flow with a count in the
+       footer, and a money list that can be summed in one scroll should not be
+       cut into pages that each sum to something meaningless.
+     · no bulk action and no selection tray. The export has no bulk operation on
+       this page; the one checkbox per row is production's billing-active toggle,
+       which is a per-dealer setting, not a selection.
+     · no invented past-due flag. See the deck note in §5.
+
+   Index
+     1  TOKENS
+     2  BASE
+     3  PLATFORM BAR
+     4  HEAD + the utility nav
+     5  DECK — the totals
+     6  COMMAND — lanes, band, scope, A–Z
+     7  THE LIST — column model, header, row, cells
+     8  THE OPEN ROW — in-flow expansion and the ledger
+     9  FOOTER — the shown set and its sums
+    10  MENUS · FOCUS
+    11  RESPONSIVE
+    12  MOTION · PRINT · NO-SCRIPT
+   ========================================================================== */
+
+
+/* ============================================================================
+   1 · TOKENS — one authoritative layer. DESIGN.md's values, verbatim, except
+   the two marked LOCAL, each carrying the reason it differs.
+   ========================================================================== */
+:root {
+  color-scheme: light;
+
+  --font: "Archivo", "Segoe UI", system-ui, sans-serif;
+  --mono: "Plex Mono", ui-monospace, monospace;
+
+  /* ── 8pt ladder (DESIGN.md §1) ───────────────────────────────────────── */
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px; --s5: 24px;
+  --s6: 32px; --s7: 40px; --s8: 48px; --s9: 64px;
+
+  --gutter: var(--s4);
+  --sheet-inset: var(--s4);
+  --col-gap: var(--s2);
+  --anchor-gap: 10px;        /* off the scale on purpose — DESIGN.md §8 */
+  --exp-detach: var(--s2);
+
+  /* ── colour roles (DESIGN.md §5) ─────────────────────────────────────── */
+  --ground: #e5e9ef;
+  --sheet: #ffffff;
+  --well: #eef1f5;
+  --wash: #f3f5f8;
+  --ink: #0d1320;
+  --ink-2: #353e4e;
+  --ink-3: #576070;
+  --ink-4: #697181;
+  --line: #dfe3ea;
+  --line-2: #e9ecf1;
+  --line-3: #c5cbd5;
+  --brand: #1f5fe0;
+  --brand-hover: #1a50c4;
+  --brand-ink: #1747b3;
+  --brand-soft: #e9f0fe;
+  --brand-soft-2: #cddbfb;
+  --ok: #12704a;
+  --ok-fill: #2fb46f;
+  --ok-soft: #e0f4e8;
+  --ok-line: #b9e2c9;
+  --signal: #945000;
+  --signal-fill: #f2a12b;
+  --signal-soft: #fff2dc;
+  --signal-line: #efcd93;
+  --danger: #bd3328;
+  --danger-fill: #e35548;
+  --danger-soft: #fde8e5;
+  --danger-line: #f1bab3;
+  --slate: #586171;
+  --slate-soft: #eceef2;
+  --violet: #5c42c9;
+  --violet-soft: #eeeafc;
+  --violet-line: #d1c6f4;
+  --focal: #172234;
+  --focal-2: #223049;
+  --focal-line: #2b3850;
+  --focal-ink: #f3f6fb;
+  --focal-ink-2: #bdc6d5;
+  --focal-ink-3: #97a3b7;
+
+  /* ── radius (DESIGN.md §3) ───────────────────────────────────────────── */
+  --r-pill: 999px;
+  --r-card: 24px;
+  --r-panel: 18px;
+  --r-control: 14px;
+  --r-inner: 10px;
+  --r-micro: 5px;
+
+  /* ── elevation (DESIGN.md §4) — one shadow per floating object ───────── */
+  --el-1: 0 1px 2px rgba(16,24,40,.08), 0 0 0 1px rgba(16,24,40,.06);
+  --el-2: 0 12px 30px -14px rgba(16,24,40,.22), 0 0 0 1px rgba(16,24,40,.05);
+  --el-3: 0 30px 64px -18px rgba(16,24,40,.34), 0 0 0 1px rgba(16,24,40,.06);
+  --sh-soft: 0 28px 64px -34px rgba(34,58,118,.42), 0 2px 8px -3px rgba(34,58,118,.10), inset 0 1px 0 rgba(255,255,255,.95);
+  --sh-pill: 0 1px 2px rgba(34,58,118,.12), 0 6px 14px -8px rgba(34,58,118,.32), inset 0 1px 0 #fff;
+  --sh-card: 0 22px 44px -22px rgba(15,27,61,.55), inset 0 1px 0 rgba(255,255,255,.14);
+  --glass: rgba(255,255,255,.76);
+
+  /* ── sticky stack (DESIGN.md §7) — CSS publishes, JS reads ───────────────
+     68 + 72 + 52 = 192  →  the open-row anchor = 192 + 10 = 202.
+     --stick-cmd's 72 is 8 + 56 + 8: the band's vertical padding plus the control
+     height. Change the padding and the anchor changes. */
+  --bar-track: 88px;
+  --stick-bar: 68px;
+  --stick-cmd: 72px;
+  --stick-hd: 52px;
+  --stick-cmd-top: var(--stick-bar);
+  --stick-hd-top: calc(var(--stick-bar) + var(--stick-cmd));
+
+  /* ── layer ladder (DESIGN.md §7) — no component writes a raw z-index ─── */
+  --z-ground: 0;
+  --z-content: 1;
+  --z-raised: 3;
+  --z-sticky-hd: 10;
+  --z-sticky-cmd: 12;
+  --z-platform: 20;
+  --z-menu: 40;
+
+  /* ── LOCAL · row height ──────────────────────────────────────────────────
+     DESIGN.md §10 ships --row: 74px, which is All Vehicles' — a 46px thumbnail
+     and a three-line price cell. Every cell here is ONE line of 13px text; the
+     tallest is "Latest Payment", which is an amount and a date side by side.
+     52px = --s8 + --s1 is the same rhythm at one line, and it is what lets 363
+     rows of money be compared by scrolling rather than by paging. */
+  --row: 52px;
+
+  /* ── LOCAL · column-header type ──────────────────────────────────────────
+     The system's `.caps` label role is 12px / 700 / .09em. Two headers here are
+     two words that must not break ("Company Name", "Latest Payment", "Billing
+     Email"), and .09em on nine tracks costs more than it buys, so tracking
+     steps to .05em. Size is unchanged. */
+  --hd-size: 12px;
+  --hd-track: .05em;
+
+  /* ── motion (DESIGN.md §14) ──────────────────────────────────────────── */
+  --dur: 160ms;
+  --dur2: 240ms;
+  --ease: cubic-bezier(.2,0,0,1);
+
+  /* ── focus (DESIGN.md §12) — owns `outline`, and nothing else owns it ── */
+  --focus-w: 2px;
+  --focus-offset: 2px;
+  --focus-color: var(--brand);
+  --focus-color-on-dark: #ffd98a;
+}
+
+
+/* ============================================================================
+   2 · BASE
+   ========================================================================== */
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: local("Archivo"), local("Archivo Variable");
+}
+@font-face {
+  font-family: "Plex Mono";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: local("IBM Plex Mono"), local("Cascadia Mono"), local("Consolas");
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font: 400 14px/1.45 var(--font);
+  font-feature-settings: "cv11";
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -.01em; }
+p, ul, ol, table { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+button, input, select { font: inherit; color: inherit; }
+button { background: none; border: 0; padding: 0; cursor: pointer; }
+button:disabled { cursor: default; }
+
+:focus { outline: none; }
+:focus-visible {
+  outline: var(--focus-w) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--r-micro);
+}
+
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+.i {
+  width: 16px; height: 16px; flex: 0 0 auto;
+  fill: none; stroke: currentColor; stroke-width: 1.6;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+svg { display: block; }
+
+.caps { font-size: 12px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); }
+
+/* ── EVERY figure on this page is tabular ────────────────────────────────
+   One rule, declared once, applied by role rather than repeated per component.
+   A money column whose digits do not line up cannot be compared by eye, which
+   is the only thing this page is for. */
+.mono, .num, .tot b, .tile__v, .bch b, .lg .num, .lg__f b { font-variant-numeric: tabular-nums; }
+.mono { font-family: var(--mono); }
+
+/* ── the app grid ─────────────────────────────────────────────────────── */
+.app {
+  display: grid;
+  /* A grid's implicit column is `auto`, and a grid item's `min-width` is `auto`
+     too, so the widest row in a 9-column table sized the whole shell: the column
+     resolved to 1800px inside a 1427px viewport and the page scrolled sideways.
+     `minmax(0, 1fr)` is the guard — the column may not exceed its share. */
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: var(--bar-track) auto auto 1fr auto;
+  padding: 0 var(--gutter) var(--gutter);
+  min-height: 100vh;
+}
+
+
+/* ============================================================================
+   3 · PLATFORM BAR — FLOATING at rest, ATTACHED once engaged (DESIGN.md §2)
+   ========================================================================== */
+.top {
+  grid-row: 1;
+  position: sticky;
+  top: 0;
+  z-index: var(--z-platform);
+  align-self: center;
+  display: flex; align-items: center; gap: var(--s1);
+  height: var(--stick-bar);
+  margin: var(--s3) 0 0;
+  padding: 0 16px;
+  border-radius: var(--r-card);
+  background: var(--glass);
+  box-shadow: var(--sh-soft);
+}
+@supports (backdrop-filter: blur(14px)) {
+  .top { -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px); }
+}
+
+.brand { display: flex; align-items: center; gap: var(--s2); padding: 0 var(--s2) 0 var(--s1); }
+.brand:hover { text-decoration: none; }
+.brand__mk {
+  display: grid; place-items: center;
+  width: 38px; height: 30px;
+  border-radius: var(--r-micro);
+  background: var(--focal); color: #fff;
+  font-size: 12px; font-weight: 700; letter-spacing: .06em;
+}
+.brand__t { font-weight: 600; letter-spacing: -.01em; white-space: nowrap; }
+.brand__env {
+  padding: 1px 6px; border-radius: var(--r-micro);
+  background: var(--well); color: var(--ink-3);
+  font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+}
+
+.nav { display: flex; align-items: center; gap: 2px; min-width: 0; }
+.nav__it { position: relative; }
+.nav__b {
+  display: inline-flex; align-items: center; gap: var(--s1);
+  height: 36px; padding: 0 10px;
+  border-radius: var(--r-pill);
+  color: var(--ink-2); font-size: 14px; font-weight: 500; white-space: nowrap;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.nav__b:hover { background: rgba(255,255,255,.72); color: var(--ink); text-decoration: none; }
+.nav__b .i { width: 12px; height: 12px; opacity: .6; }
+/* current nav section: tinted, no fill (DESIGN.md §6) */
+.nav__it--on > .nav__b { color: var(--brand-ink); font-weight: 600; }
+
+.top__sp { flex: 1 1 auto; min-width: var(--s2); }
+.top__div { width: 1px; height: 26px; margin: 0 var(--s2); background: var(--line); }
+
+.gsearch {
+  display: flex; align-items: center; gap: var(--s2);
+  width: 208px; height: 38px; padding: 0 var(--s2) 0 10px;
+  border-radius: var(--r-inner);
+  background: var(--sheet);
+  box-shadow: var(--el-1);
+  color: var(--ink-3);
+}
+.gsearch input { flex: 1; min-width: 0; border: 0; background: none; font-size: 13px; }
+kbd {
+  padding: 1px 5px; border-radius: var(--r-micro);
+  background: var(--well); color: var(--ink-3);
+  font: 600 11px var(--mono);
+}
+
+.tbtn {
+  display: grid; place-items: center;
+  width: 36px; height: 36px;
+  border-radius: var(--r-pill);
+  color: var(--ink-2);
+  transition: background var(--dur) var(--ease);
+}
+.tbtn:hover { background: rgba(255,255,255,.72); color: var(--ink); }
+
+.atlas {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 30px; padding: 0 10px;
+  border-radius: var(--r-pill);
+  background: var(--well); color: var(--ink-2);
+  font-size: 12px; font-weight: 600;
+}
+.atlas:hover { color: var(--ink); text-decoration: none; }
+
+.me {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  height: 40px; padding: 0 var(--s2) 0 var(--s1);
+  border-radius: var(--r-pill);
+  transition: background var(--dur) var(--ease);
+}
+.me:hover { background: rgba(255,255,255,.72); }
+.me__mk {
+  display: grid; place-items: center;
+  width: 30px; height: 30px; border-radius: var(--r-pill);
+  background: var(--focal); color: #fff; font-size: 12px; font-weight: 700;
+}
+.me__n { font-size: 13px; font-weight: 600; white-space: nowrap; }
+.me .i { width: 12px; height: 12px; opacity: .6; }
+
+
+/* ============================================================================
+   4 · HEAD + the utility nav
+   Production ships five accounting utilities as a text rail in the page header:
+   Reports · A/Tracker Notes · Policy · Log · Inv PDFs ▾. They are routes out of
+   this page, so they stay quiet text with one menu, not five buttons competing
+   with the totals underneath them.
+   ========================================================================== */
+.head {
+  grid-row: 2;
+  display: flex; align-items: center; gap: var(--s3);
+  min-height: var(--stick-bar);
+  padding: var(--s2) 0;
+}
+.head__id { min-width: 0; }
+.head h1 { font-size: 22px; line-height: 1.2; }
+.head__meta { margin-top: 3px; color: var(--ink-3); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.head__meta b { color: var(--ink-2); font-weight: 600; }
+.head__ctx {
+  align-self: flex-start; margin-top: 3px;
+  padding: 2px 8px; border-radius: var(--r-micro);
+  background: var(--well); color: var(--ink-3);
+  font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+}
+.head__sp { flex: 1 1 auto; }
+
+.utils { display: flex; align-items: center; gap: var(--s1); font-size: 13px; }
+.utils a, .utils button {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 32px; padding: 0 var(--s2);
+  border-radius: var(--r-inner);
+  color: var(--ink-2); font-weight: 500; white-space: nowrap;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.utils a:hover, .utils button:hover { background: rgba(255,255,255,.72); color: var(--brand-ink); text-decoration: none; }
+.utils .i { width: 12px; height: 12px; color: var(--ink-4); }
+.utils__sep { color: var(--line-3); }
+.utils .nav__it { display: inline-flex; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
+  height: 40px; padding: 0 var(--s4);
+  border-radius: var(--r-pill);
+  font-size: 14px; font-weight: 600; white-space: nowrap;
+  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.btn--primary { background: var(--brand); color: #fff; box-shadow: 0 10px 22px -10px rgba(29,95,230,.7), inset 0 1px 0 rgba(255,255,255,.32); }
+.btn--primary:hover { background: var(--brand-hover); text-decoration: none; }
+.btn--sheet { background: var(--sheet); color: var(--ink); box-shadow: var(--sh-pill); }
+.btn--sheet:hover { background: var(--wash); text-decoration: none; }
+.btn--quiet { color: var(--ink-2); }
+.btn--quiet:hover { background: rgba(255,255,255,.72); color: var(--ink); text-decoration: none; }
+.btn--sm { height: 32px; padding: 0 var(--s3); font-size: 13px; }
+.btn--xs { height: 28px; padding: 0 10px; font-size: 12px; }
+.btn .i { width: 15px; height: 15px; }
+
+
+/* ============================================================================
+   5 · DECK — THE TOTALS
+   Four figures, one row, each one a FLOATING card with its own radius and one
+   shadow. This is the only place on the page where type goes above 22px,
+   because the book's four numbers are the first thing an accounting page has to
+   answer and everything below is the detail behind them.
+
+   Two of the four are filters, and they say so with the word "filter" — not
+   with a hover-only affordance. Two are figures and carry no filter word:
+
+     Monthly recurring — production ships it static (`ui-billtile--static`),
+       because it is the sum of the active recurring templates, which is not a
+       property any row carries.
+     Past due — production ships it as a filter, and THIS BUILD DOES NOT. No row
+       in the export carries a past-due marker and no export variant lists the
+       40-dealer subset, so a filter here could only be guessed at. The figure is
+       real and is shown; the tile states that it cannot be resolved to rows from
+       this snapshot. A filter that returned the wrong 40 dealers would be worse
+       than a figure that admits its limit (DESIGN.md §13).
+   ========================================================================== */
+.deck {
+  grid-row: 3;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gutter);
+  padding-bottom: var(--gutter);
+}
+.tile {
+  display: flex; flex-direction: column;
+  min-width: 0;
+  padding: var(--s4) var(--s4) var(--s3);
+  border-radius: var(--r-card);
+  background: var(--sheet);
+  box-shadow: var(--sh-soft);
+  text-align: left;
+  transition: box-shadow var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+button.tile:hover { background: var(--wash); }
+.tile__k { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); }
+.tile__v {
+  margin-top: 6px;
+  font-size: 28px; font-weight: 600; letter-spacing: -.025em; line-height: 1.05;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.tile__s { margin-top: auto; padding-top: var(--s3); font-size: 12px; color: var(--ink-3); }
+.tile__f {
+  display: inline-flex; align-items: center; gap: 5px;
+  margin-top: 6px;
+  font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--ink-4);
+}
+.tile__f .i { width: 11px; height: 11px; }
+button.tile:hover .tile__f { color: var(--brand-ink); }
+
+/* an engaged filter tile is the FOCAL surface, not a blue fill — "open for
+   inspection" in DESIGN.md §6's five-state ladder, the same means the selected
+   row uses, because it is the same question: which set am I reading */
+.tile--on {
+  background: var(--focal);
+  box-shadow: var(--sh-card);
+  color: var(--focal-ink);
+}
+.tile--on .tile__k, .tile--on .tile__s { color: var(--focal-ink-3); }
+.tile--on .tile__f { color: var(--focal-ink-2); }
+.tile--on:hover { background: var(--focal-2); }
+
+/* a figure in the red is a fact, so it keeps --danger for the value and does not
+   tint the whole card: a tinted card would read as a state of the card */
+.tile--danger .tile__v { color: var(--danger); }
+.tile--static .tile__note { margin-top: 6px; font-size: 12px; color: var(--signal); font-weight: 600; }
+.tile--static .tile__note::before {
+  content: ""; display: inline-block;
+  width: 6px; height: 6px; margin-right: 6px;
+  border-radius: 50%; background: var(--signal-fill);
+  vertical-align: 1px;
+}
+
+
+/* ============================================================================
+   6 · COMMAND — lanes, band, scope, A–Z
+   ========================================================================== */
+.field {
+  grid-row: 4;
+  align-self: start;
+  border-radius: var(--r-card);
+  background: rgba(255,255,255,.58);
+  box-shadow: var(--sh-soft);
+}
+
+/* the lane rail scrolls away, exactly as All Vehicles' .cmdtop does, so the
+   engaged stack stays at 192px */
+.cmdtop {
+  display: flex; align-items: center; gap: var(--s3); flex-wrap: wrap;
+  min-height: 50px;
+  padding: var(--s3) var(--gutter) var(--s2);
+}
+.cmdtop__sp { flex: 1 1 auto; }
+
+.lanes, .statuses {
+  display: inline-flex; flex-wrap: wrap; align-items: center; gap: 3px;
+  padding: 5px;
+  border-radius: var(--r-pill);
+  background: var(--well);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.lane {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 34px; padding: 0 12px;
+  border-radius: var(--r-pill);
+  color: var(--ink-2); font-size: 13px; font-weight: 500; white-space: nowrap;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.lane:hover { background: rgba(255,255,255,.62); color: var(--ink); }
+.lane b { color: var(--ink); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+/* current lane = white thumb on a sunken track (DESIGN.md §6) */
+.lane--on, .lane--on:hover { background: var(--sheet); color: var(--brand-ink); box-shadow: var(--sh-pill); }
+.lane--on b { color: var(--brand-ink); }
+
+/* ── command band · sticky #2 of 3 ─── 8 + 56 + 8 = --stick-cmd ─────────── */
+.cmd {
+  position: sticky;
+  top: var(--stick-cmd-top);
+  z-index: var(--z-sticky-cmd);
+  display: flex; align-items: center; gap: var(--s2);
+  height: var(--stick-cmd);
+  padding: var(--s2) var(--gutter);
+  border-radius: 0;
+  background: rgba(255,255,255,.88);
+  isolation: isolate;
+  transition: background var(--dur) var(--ease);
+}
+@supports (backdrop-filter: blur(12px)) {
+  .cmd { -webkit-backdrop-filter: saturate(1.35) blur(12px); backdrop-filter: saturate(1.35) blur(12px); }
+}
+
+.search {
+  flex: 1 1 auto; min-width: 240px;
+  display: flex; align-items: center; gap: 6px;
+  height: 56px; padding: 0 var(--s3) 0 14px;
+  border-radius: var(--r-control);
+  background: var(--sheet);
+  box-shadow: var(--sh-pill);
+  color: var(--ink-3);
+  overflow: hidden;
+}
+.search input { flex: 1 1 140px; min-width: 100px; border: 0; background: none; font-size: 14px; color: var(--ink); }
+.search input::placeholder { color: var(--ink-3); }
+.fchips { display: inline-flex; align-items: center; gap: var(--s1); }
+.fchip {
+  display: inline-flex; align-items: center; gap: var(--s1);
+  height: 26px; padding: 0 var(--s1) 0 var(--s2); flex: none;
+  border-radius: var(--r-pill);
+  background: var(--brand-soft); color: var(--brand-ink);
+  font-size: 12px; font-weight: 600; white-space: nowrap;
+}
+.fchip__k { opacity: .72; font-weight: 500; }
+.fchip__x { display: grid; place-items: center; width: 18px; height: 18px; border-radius: var(--r-pill); color: inherit; }
+.fchip__x:hover { background: var(--brand); color: #fff; }
+.fchip__x .i { width: 11px; height: 11px; }
+
+.cmd__div { width: 1px; height: 32px; flex: none; background: rgba(18,23,20,.14); }
+
+/* the two closed-list filters are labelled controls, not naked selects */
+.facet--sel {
+  display: inline-flex; flex-direction: column; justify-content: center; gap: 1px;
+  height: 56px; padding: 0 var(--s3); flex: none;
+  border-radius: var(--r-control);
+  background: var(--sheet);
+  box-shadow: var(--sh-pill);
+}
+.facet__k { font-size: 12px; font-weight: 500; color: var(--ink-3); }
+.facet--sel .sel {
+  height: 22px; max-width: 176px; padding: 0;
+  border: 0; background: none;
+  font-size: 14px; font-weight: 600; color: var(--ink);
+}
+.sel {
+  height: 32px; padding: 0 var(--s2);
+  border: 1px solid var(--line-3); border-radius: var(--r-inner);
+  background: var(--sheet); font-size: 13px; color: var(--ink);
+}
+
+/* ── scope line + the A–Z index ────────────────────────────────────────── */
+.sub {
+  display: flex; align-items: center; gap: var(--s3); flex-wrap: wrap;
+  min-height: var(--s8);
+  padding: 6px var(--gutter);
+  color: var(--ink-3); font-size: 13px;
+}
+.sub__sp { flex: 1 1 auto; }
+.scope b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.az { display: flex; flex-wrap: wrap; align-items: center; gap: 1px; }
+.az button {
+  display: inline-grid; place-items: center;
+  min-width: 22px; height: 24px; padding: 0 3px;
+  border-radius: var(--r-micro);
+  color: var(--ink-3); font-size: 12px; font-weight: 600;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.az button:hover:not([disabled]) { background: var(--sheet); color: var(--brand-ink); }
+.az button[disabled] { color: var(--line-3); cursor: default; }
+.az .on, .az .on:hover { background: var(--ink); color: var(--sheet); }
+
+
+/* ============================================================================
+   7 · THE LIST
+   Nine tracks. Six are fixed, three are flexible, and every fixed track is
+   sized by its worst case measured at the type it renders — 12px/700/.05em for
+   headers and 13px for cells:
+
+       track     px    binding worst case
+       bill      44    the status glyph + the billing-active checkbox
+       name    180+    the only large flexible track; free text, and the
+                       dealer's identity. "AutoMeister Gruppe (formerly ACSM)".
+       bill to   56    BILL TO on two lines; the value is one letter
+       pay with  72    "Undefined" at 13px = 66.2
+       email   160+    flexible; free text, and it truncates before the numbers
+       latest   132    "$1149.00 · Aug 5" in mono = 126.4
+       balance  108    BALANCE 66.4 · "$14,953.18" in mono = 92.6
+       monthly  100    MONTHLY 68.7 · "$6,431.00" in mono = 80.1
+       actions  128    Pay + History at --btn-xs = 122
+
+   Minimum budget: 44+180+56+72+160+132+108+100+128 = 980, plus 8 gaps of 8 =
+   1044. At 1366 the track budget is 1318 once the ≤1400 gutter step lands, so
+   the two flexible tracks share 274px of slack and nothing overflows.
+   ========================================================================== */
+.rows { background: var(--sheet); border-radius: 0; }
+.field {
+  --cols:
+    44px                   /* bill status + active toggle */
+    minmax(180px, 2.1fr)   /* Company Name               */
+    56px                   /* Bill To                    */
+    72px                   /* Pay With                   */
+    minmax(160px, 1.5fr)   /* Billing Email              */
+    132px                  /* Latest Payment             */
+    108px                  /* Balance                    */
+    100px                  /* Monthly                    */
+    128px;                 /* Actions                    */
+}
+
+/* ── column header · sticky #3 of 3. It owns the stack's bottom edge. ───── */
+.hd {
+  position: sticky;
+  top: var(--stick-hd-top);
+  z-index: var(--z-sticky-hd);
+  display: grid;
+  grid-template-columns: var(--cols);
+  gap: var(--col-gap);
+  align-items: end;
+  height: var(--stick-hd);
+  padding: var(--s2) var(--sheet-inset) 10px;
+  background: var(--sheet);
+  box-shadow: inset 0 -1px 0 var(--line-3);
+  color: var(--ink-3);
+  font-size: var(--hd-size); font-weight: 700;
+  letter-spacing: var(--hd-track); text-transform: uppercase;
+  isolation: isolate;
+  transition: box-shadow var(--dur) var(--ease);
+}
+.hd > * { min-width: 0; line-height: 1.25; }
+/* wrapping at a word boundary is correct; a break inside a word never is, so no
+   rule here asks for one */
+.hd span { overflow-wrap: normal; word-break: normal; hyphens: manual; }
+.hd .s { display: inline-flex; align-items: flex-end; gap: 3px; text-align: left; color: inherit; }
+.hd .s:hover { color: var(--ink); text-decoration: none; }
+.hd .s .i { width: 11px; height: 11px; margin-bottom: 2px; opacity: 0; }
+.hd .s--on { color: var(--ink); }
+.hd .s--on .i { opacity: 1; }
+/* a right-aligned header keeps a FULL-WIDTH box on purpose: the operational
+   group's divider is an inset shadow on the box's left edge, and shrinking the
+   box to its text would move that line off the track edge */
+.hd .r { text-align: right; }
+.hd .r .s { justify-content: flex-end; width: 100%; }
+
+/* ── the money group ────────────────────────────────────────────────────
+   Bill · Company · Bill To · Pay With · Billing Email · Latest Payment tell you
+   WHO and HOW. Balance · Monthly · Actions are the money and what you do about
+   it. One divider marks where that group begins and nothing else does — no
+   fill, no frozen rail, addressed by semantic class rather than nth-child
+   (DESIGN.md §10). */
+.hd > .c-bal,
+.row > .c-bal { box-shadow: inset 1px 0 0 var(--line-2); padding-left: var(--s3); }
+
+.hd--stuck { box-shadow: 0 1px 0 var(--line), 0 10px 20px -16px rgba(34,58,118,.45); }
+.app.is-stuck .top { border-bottom-left-radius: 0; border-bottom-right-radius: 0; box-shadow: inset 0 -1px 0 var(--line-2); background: rgba(255,255,255,.94); }
+.cmd--stuck { background: rgba(255,255,255,.94); box-shadow: inset 0 -1px 0 var(--line-2); }
+
+/* ── row ────────────────────────────────────────────────────────────────── */
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--cols);
+  gap: var(--col-gap);
+  align-items: center;
+  height: var(--row);
+  padding: 0 var(--sheet-inset);
+  box-shadow: inset 0 -1px 0 var(--line-2);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background var(--dur) var(--ease);
+}
+.row:hover { background: var(--wash); }
+.row:focus-visible { outline-offset: -2px; border-radius: 0; }
+
+/* "open for inspection" = the dark focal surface, on-dark ink. It is a different
+   question from any filter tint and must never look like one (DESIGN.md §6). */
+.row.open, .row.open:hover {
+  background: var(--focal);
+  color: var(--focal-ink);
+  box-shadow: none;
+  border-radius: var(--r-inner) var(--r-inner) 0 0;
+  margin-top: var(--exp-detach);
+}
+.row.open .muted, .row.open .c-mail, .row.open .paydate { color: var(--focal-ink-3); }
+.row.open .c-name a, .row.open b { color: var(--focal-ink); }
+.row.open .num { color: var(--focal-ink); }
+.row.open .due { color: #ffb9b0; }
+/* on the focal surface the page hairline disappears, so the open row draws the
+   money group's divider in its own ink */
+.row.open > .c-bal { box-shadow: inset 1px 0 0 rgba(255,255,255,.20); }
+
+.c { min-width: 0; display: flex; align-items: center; gap: 6px; }
+.c--1 { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.muted { color: var(--ink-3); }
+.num { text-align: right; justify-content: flex-end; font-family: var(--mono); font-size: 12.5px; white-space: nowrap; }
+
+/* ── the bill cell: a status glyph and the billing-active toggle ──────────
+   Two different facts in one 44px track, as production ships them. The glyph
+   carries the dealer's status and repeats it in `title` + `aria-label`, so the
+   meaning is never hue alone; the checkbox is the billing-active setting. */
+.c-stat { display: flex; align-items: center; gap: 5px; }
+.bstat { display: grid; place-items: center; width: 14px; height: 14px; flex: none; }
+.bstat .i { width: 13px; height: 13px; }
+.bstat--green { color: var(--ok-fill); }
+.bstat--blue { color: var(--brand); }
+.bstat--amber { color: var(--signal-fill); }
+.bck { width: 14px; height: 14px; margin: 0; flex: none; accent-color: var(--brand); cursor: pointer; }
+
+.c-name { min-width: 0; }
+.c-name a { font-weight: 600; color: var(--ink); }
+.c-name .did { flex: none; font-family: var(--mono); font-size: 11.5px; color: var(--ink-4); }
+.row.open .c-name .did { color: var(--focal-ink-3); }
+
+.c-to, .c-pay { color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.c-to .none, .c-pay .none { color: var(--ink-4); }
+.row.open .c-to, .row.open .c-pay { color: var(--focal-ink-2); }
+
+.c-mail { min-width: 0; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.c-mail .more {
+  flex: none; margin-left: 4px;
+  padding: 1px 5px; border-radius: var(--r-micro);
+  background: var(--well); color: var(--ink-3);
+  font-size: 11px; font-weight: 700;
+}
+.row.open .c-mail .more { background: rgba(255,255,255,.12); color: var(--focal-ink-2); }
+
+/* Latest payment: a freshness dot, the amount, the date. The dot's three tones
+   are production's own (ok / warn / none-found) and each one is also stated in
+   `title`, so the dot never carries the meaning by itself. */
+.c-lp { white-space: nowrap; overflow: hidden; }
+.pdot { width: 7px; height: 7px; flex: none; border-radius: 50%; background: var(--line-3); }
+.pdot--ok { background: var(--ok-fill); }
+.pdot--warn { background: var(--signal-fill); }
+.pdot--bad { background: var(--danger-fill); }
+.c-lp .amt { font-family: var(--mono); font-size: 12.5px; }
+.paydate { color: var(--ink-3); }
+.c-lp .none { color: var(--ink-4); font-style: normal; }
+
+/* a balance is money someone owes, so it is the one figure allowed to be red */
+.due { color: var(--danger); font-weight: 600; }
+.zero { color: var(--ink-4); }
+
+.c-act { display: flex; align-items: center; justify-content: flex-end; gap: var(--s1); }
+.row.open .c-act .btn--sheet { background: rgba(255,255,255,.14); color: var(--focal-ink); box-shadow: inset 0 0 0 1px rgba(255,255,255,.22); }
+.row.open .c-act .btn--sheet:hover { background: rgba(255,255,255,.24); }
+
+.empty {
+  display: flex; flex-direction: column; align-items: center; gap: var(--s2);
+  padding: var(--s9) var(--gutter);
+  color: var(--ink-3); text-align: center;
+}
+.empty b { color: var(--ink); font-size: 15px; font-weight: 600; }
+
+
+/* ============================================================================
+   8 · THE OPEN ROW — in-flow expansion (DESIGN.md §8)
+   `position: static`, in flow, reserving its own height. It shares the row's
+   left and right edges exactly, the seam to the row is 0, it covers no sibling
+   row and dims none. One hairline, no elevation, no radius at the seam.
+   Closing does nothing to the scroll position.
+   ========================================================================== */
+.exp {
+  position: static;
+  padding: var(--s4) var(--sheet-inset) var(--s4);
+  border-radius: 0 0 var(--r-inner) var(--r-inner);
+  background: var(--sheet);
+  box-shadow: inset 0 0 0 1px var(--line);
+  margin-bottom: var(--exp-detach);
+}
+#exp-space { grid-row: 5; height: 0; }
+
+.exp__h { display: flex; align-items: center; gap: var(--s3); flex-wrap: wrap; }
+.exp__t { font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+.exp__t .did { margin-left: 6px; font-family: var(--mono); font-size: 13px; font-weight: 400; color: var(--ink-3); }
+.exp__sp { flex: 1 1 auto; }
+
+/* the ident line: address, accountant, phone, billing email — the facts you
+   need in hand before you chase money, in one line of text, not in four boxes */
+.ident {
+  display: flex; align-items: center; flex-wrap: wrap; gap: var(--s1) var(--s2);
+  margin-top: var(--s2);
+  font-size: 13px; color: var(--ink-2);
+}
+.ident__sep { color: var(--line-3); }
+.ident b { font-weight: 600; }
+.ident .copy {
+  display: inline-grid; place-items: center;
+  width: 22px; height: 22px; border-radius: var(--r-micro);
+  color: var(--ink-4);
+}
+.ident .copy:hover { background: var(--well); color: var(--brand-ink); }
+.ident .copy .i { width: 13px; height: 13px; }
+
+/* the dealer's own five figures. A chip, because each is one label and one
+   number and there is nothing else in it to lay out. */
+.chips { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); margin-top: var(--s3); }
+.bch {
+  display: inline-flex; align-items: baseline; gap: 6px;
+  height: 30px; padding: 0 var(--s3);
+  border-radius: var(--r-pill);
+  background: var(--well);
+  font-size: 12px; font-weight: 600; color: var(--ink-3);
+}
+.bch b { font-size: 13px; font-weight: 700; color: var(--ink); font-family: var(--mono); }
+.bch--bad { background: var(--danger-soft); color: var(--danger); box-shadow: inset 0 0 0 1px var(--danger-line); }
+.bch--bad b { color: var(--danger); }
+.bch--ok { background: var(--ok-soft); color: var(--ok); box-shadow: inset 0 0 0 1px var(--ok-line); }
+.bch--ok b { color: var(--ok); }
+
+.exp__src { margin-top: var(--s3); font-size: 13px; color: var(--ink-3); }
+.exp__src::before {
+  content: ""; display: inline-block;
+  width: 6px; height: 6px; margin-right: var(--s2);
+  border-radius: 50%; background: var(--slate);
+  vertical-align: 1px;
+}
+
+/* ── the ledger ─────────────────────────────────────────────────────────
+   A real table, because it is rows of figures that must align down the column
+   and across the row, and a table is what aligns them. Sticky nothing.
+   `tfoot` carries the sums over the WHOLE ledger and says so, so a capped view
+   never implies its own subtotal is the dealer's balance. */
+.lgw { margin-top: var(--s4); }
+.lgh { display: flex; align-items: baseline; gap: var(--s2); margin-bottom: var(--s2); }
+.lgh .caps { color: var(--ink-3); }
+.lgh .s { font-size: 12.5px; color: var(--ink-3); margin-left: auto; }
+
+.lg { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.lg th, .lg td { padding: var(--s2) var(--s2); text-align: left; vertical-align: middle; }
+.lg th {
+  font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--ink-3); white-space: nowrap;
+  box-shadow: inset 0 -1px 0 var(--line-3);
+}
+.lg td { box-shadow: inset 0 -1px 0 var(--line-2); }
+.lg tbody tr:hover td { background: var(--wash); }
+.lg .num, .lg th.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
+.lg th.num { font-family: var(--font); }
+.lg .inv { font-family: var(--mono); font-weight: 600; }
+.lg .faint { color: var(--ink-3); }
+.lg .none { color: var(--ink-4); }
+.lg .paid { color: var(--ok); }
+.lg .owe { color: var(--danger); font-weight: 600; }
+.lg .type {
+  display: inline-flex; align-items: center;
+  height: 20px; padding: 0 7px;
+  border-radius: var(--r-micro);
+  background: var(--well); color: var(--ink-2);
+  font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+}
+.lg .type--auto { background: var(--brand-soft); color: var(--brand-ink); box-shadow: inset 0 0 0 1px var(--brand-soft-2); }
+
+/* the totals row: heavier, on its own ground, and unmistakably not a data row */
+.lg tfoot td {
+  padding-top: var(--s3);
+  background: var(--well);
+  box-shadow: inset 0 2px 0 var(--line-3);
+  font-weight: 700; color: var(--ink);
+}
+.lg tfoot .lab { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.lg tfoot .num { font-size: 13px; }
+.lg tfoot .owe { color: var(--danger); }
+
+.lg__f { display: flex; align-items: center; gap: var(--s3); flex-wrap: wrap; margin-top: var(--s3); font-size: 12.5px; color: var(--ink-3); }
+.lg__f .sp { flex: 1 1 auto; }
+.lgtabs { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s1); }
+.lgtabs a {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 28px; padding: 0 10px;
+  border-radius: var(--r-pill);
+  background: var(--well); color: var(--ink-2);
+  font-size: 12px; font-weight: 600; white-space: nowrap;
+}
+.lgtabs a:hover { background: var(--brand-soft); color: var(--brand-ink); text-decoration: none; }
+
+
+/* ============================================================================
+   9 · FOOTER — the shown set and its sums
+   ========================================================================== */
+.foot {
+  display: flex; align-items: center; gap: var(--s5); flex-wrap: wrap;
+  min-height: var(--s8);
+  padding: var(--s2) var(--sheet-inset);
+  border-radius: 0 0 var(--r-card) var(--r-card);
+  background: var(--sheet);
+  box-shadow: inset 0 1px 0 var(--line-2);
+  color: var(--ink-3); font-size: 13px;
+}
+.foot__sp { flex: 1 1 auto; }
+.tot { display: inline-flex; align-items: baseline; gap: var(--s5); white-space: nowrap; flex-wrap: wrap; }
+.tot span { display: inline-flex; align-items: baseline; gap: 6px; }
+.tot b { color: var(--ink); font-weight: 700; font-family: var(--mono); font-size: 13.5px; }
+.tot .due { color: var(--danger); }
+
+
+/* ============================================================================
+   10 · MENUS · FOCUS
+   ========================================================================== */
+.pop {
+  display: none;
+  position: absolute; top: calc(100% + var(--s2)); left: 0;
+  z-index: var(--z-menu);
+  min-width: 232px; max-height: min(460px, 70vh);
+  padding: 6px;
+  border-radius: var(--r-panel);
+  background: var(--sheet);
+  box-shadow: var(--el-3);
+  overflow: auto; overscroll-behavior: contain;
+}
+.pop--open { display: block; }
+.pop--r { left: auto; right: 0; }
+.pop__lab { padding: var(--s2) 10px 6px; }
+.mn__it {
+  display: flex; align-items: center; gap: var(--s2);
+  width: 100%; min-height: 34px; padding: 6px 10px;
+  border-radius: var(--r-inner);
+  color: var(--ink-2); font-size: 14px; text-align: left;
+}
+.mn__it:hover { background: var(--wash); color: var(--ink); text-decoration: none; }
+.mn__it--on { background: var(--brand-soft); color: var(--brand-ink); font-weight: 600; }
+.mn__it--sub { padding-left: var(--s5); color: var(--ink-3); font-size: 13px; }
+.mn__it .i { width: 12px; height: 12px; margin-left: auto; color: var(--ink-4); }
+.mn__who { padding: var(--s2) 10px; color: var(--ink-3); font-size: 12px; }
+.mn__who b { display: block; color: var(--ink); font-size: 14px; }
+.nav .pop { min-width: 252px; }
+
+.btn:focus-visible, .lane:focus-visible { border-radius: var(--r-pill); }
+.row.open :focus-visible, .tile--on :focus-visible { outline-color: var(--focus-color-on-dark); }
+.sel:focus-visible { border-radius: var(--r-inner); }
+
+
+/* ============================================================================
+   11 · RESPONSIVE — desktop only, one breakpoint. 1366 is the binding width and
+   zero horizontal overflow is a hard requirement in every state, including with
+   a row open. Column tracks are NOT compacted: the gutter steps down one rung
+   of the same ladder (16 → 8) on both layers that use it, which returns 32px to
+   the track budget, and the flexible tracks absorb the rest (DESIGN.md §15).
+   ========================================================================== */
+@media (max-width: 1400px) {
+  :root { --gutter: var(--s2); --sheet-inset: var(--s2); }
+
+  .brand__t { display: none; }
+  .gsearch { width: 44px; padding: 0; justify-content: center; }
+  .gsearch input, .gsearch kbd { display: none; }
+  .nav__b { padding: 0 var(--s2); font-size: 13px; }
+  .me__n { display: none; }
+  .head h1 { font-size: 20px; }
+  .tile__v { font-size: 25px; }
+  .facet--sel .sel { max-width: 140px; }
+}
+
+@media (max-width: 1180px) {
+  /* Below the supported range the list scrolls horizontally rather than lie
+     about fitting. The page itself still never scrolls. */
+  .rows { overflow-x: auto; }
+  .hd, .row { min-width: 1044px; }
+  .exp { min-width: 1044px; }
+  .deck { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+
+/* ============================================================================
+   12 · MOTION · PRINT · NO-SCRIPT
+   Transitions are for disclosure and state, not for arrival. Under reduced
+   motion the anchor lands in the same place instantly (DESIGN.md §14).
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Accounting is printed and reconciled on paper. Chrome is not. */
+@media print {
+  .top, .cmdtop, .cmd, .sub, .pop, .utils, .head .btn, .c-act, .bck { display: none !important; }
+  body { background: #fff; }
+  .app { display: block; padding: 0; }
+  .field { background: none; box-shadow: none; border-radius: 0; }
+  .deck { gap: 8px; }
+  .tile { box-shadow: inset 0 0 0 1px #bbb; border-radius: 0; }
+  .tile--on { background: none; color: #000; }
+  .tile--on .tile__k, .tile--on .tile__s { color: #555; }
+  .hd { position: static; box-shadow: inset 0 -1px 0 #999; }
+  .row { height: auto; min-height: 0; box-shadow: inset 0 -1px 0 #ddd; cursor: default; }
+  .row.open { background: none; color: #000; margin-top: 0; }
+  .exp { box-shadow: inset 0 0 0 1px #bbb; }
+  .foot { box-shadow: inset 0 1px 0 #999; }
+}
+
+.nojs { display: none; }
+html.no-js .nojs { display: block; padding: var(--s9) 0; color: var(--ink-3); }
+html.no-js .deck, html.no-js .field, html.no-js .utils { display: none; }
+
+/* ── [hidden] must actually hide ──────────────────────────────────────────
+   Component rules that set `display` beat the user-agent's
+   `[hidden] { display: none }`, because both are display declarations and the
+   author sheet wins. Two pages were painting a "Switch to dark theme" button
+   that markup had marked hidden — a control offering a mode Gen 11 does not
+   ship (DESIGN.md §5) — and hidden empty-state paragraphs alongside it.
+   One guard, applied family-wide so the semantic can be trusted. */
+[hidden] { display: none !important; }
+
+/* ── the staff nav rail needs its air back before 1400 ────────────────────
+   Eight top-level menus want 992px. Once the shell stopped expanding past the
+   viewport (the `.app` column guard above), the rail was squeezed to 600px and
+   its items ran straight under the search and the account chip. Only the two
+   things that cause the collision are compressed here — the wordmark, the
+   search field and the menu padding — leaving gutters, headings and the tables
+   to the existing 1400px breakpoint. */
+@media (max-width: 1560px) {
+  .brand__t { display: none; }
+  .gsearch { width: 44px; padding: 0; justify-content: center; }
+  .gsearch input, .gsearch kbd { display: none; }
+  .nav__b { padding: 0 var(--s2); font-size: 13px; }
+  /* the chevron is redundant once the label is the only thing that fits —
+     the menus still open on click */
+  .nav__b > .i { display: none; }
+  .nav { gap: 0; }
+}

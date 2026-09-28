@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Single Ticket · Work — AAN (Gen 11)</title>
+<meta name="description" content="AAN staff single ticket — Gen 11 build of the production ticket detail page.">
+<script>document.documentElement.classList.remove('no-js');
+/* Dark is gated off across Gen 11 while the palette is re-solved (DESIGN.md §5), and the
+   `aan-theme` key is shared with the Gen 10 pages, so a stored `dark` must not land this
+   page in a half-dark state at load. Temporary; the dark-theme stage removes it. */
+try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
+<link rel="stylesheet" href="single-ticket-gen11.css?v=202609282140">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m3 6 9 7 9-7"/></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-todo" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m8 12 3 3 5-6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-hist" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8m0-5v5h5"/><path d="M12 8v4l3 2"/></symbol>
+  <symbol id="i-clip" viewBox="0 0 24 24"><path d="M21.4 11.1 12.5 20a5 5 0 0 1-7-7l8.5-8.5a3.3 3.3 0 0 1 4.7 4.7l-8.5 8.5a1.7 1.7 0 0 1-2.4-2.4l7.8-7.8"/></symbol>
+  <symbol id="i-cash" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 12h.01M18 12h.01"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.4"/><path d="M2 20a7 7 0 0 1 14 0M17 5.3a3.4 3.4 0 0 1 0 6.6M18 20a6.6 6.6 0 0 0-2-4.7"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
+  <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6"/></symbol>
+  <symbol id="i-up2" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></symbol>
+</svg>
+
+<div class="app dock-open" id="app">
+
+  <!-- ══ PLATFORM BAR ══════════════════════════════════════════════════════
+       The employee shell as the export ships it: AAN · Backend, the eight staff
+       nav groups, Atlas, support, the account. The collapsed side rail is not
+       rebuilt — Gen 11 keeps the header nav and drops the rail. Same shell as
+       `my-work-queue-gen11.html`, so the staff family has one boundary. -->
+  <header class="top">
+    <a class="brand" href="#" title="All Auto Network · Backend">
+      <span class="brand__mk">AAN</span>
+      <span class="brand__t">All Auto Network</span>
+      <span class="brand__env">Backend</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="System menu"></nav>
+    <span class="top__sp"></span>
+    <label class="gsearch">
+      <svg class="i"><use href="#i-search"/></svg>
+      <input type="search" name="q-global" autocomplete="off" placeholder="Search anywhere" aria-label="Search anywhere">
+      <kbd>/</kbd>
+    </label>
+    <a class="atlas" href="#" title="The Atlas — system architecture wiki"><span aria-hidden="true">▣</span>Atlas</a>
+    <button class="tbtn" type="button" hidden title="Dark theme is being re-solved" aria-label="Switch to dark theme"><svg class="i"><use href="#i-moon"/></svg></button>
+    <div class="nav__it">
+      <button class="tbtn" type="button" data-pop="p-help" aria-haspopup="true" aria-expanded="false" aria-label="Support"><svg class="i"><use href="#i-buoy"/></svg></button>
+      <div class="pop pop--r" id="p-help">
+        <div class="caps pop__lab">Support</div>
+        <a class="mn__it" href="#">Create A Ticket</a>
+        <a class="mn__it" href="#">Activity Report</a>
+      </div>
+    </div>
+    <span class="top__div"></span>
+    <div class="nav__it">
+      <button class="me" type="button" data-pop="p-me" aria-haspopup="true" aria-expanded="false">
+        <span class="me__mk">IG</span><span class="me__n">Ivaylo Guenkov</span>
+        <svg class="i"><use href="#i-chev"/></svg>
+      </button>
+      <div class="pop pop--r" id="p-me">
+        <div class="mn__who"><b>Ivaylo Guenkov</b>AAN · Backend</div>
+        <a class="mn__it" href="#">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ HEAD — record identity and record navigation ══════════════════════
+       It owns no mutation except the one the record itself owns: Save Ticket is
+       the work order's primary action and it lives in both places the export
+       puts it (masthead and save bar), wired to the same handler. Everything
+       else here is a route. -->
+  <div class="head">
+    <a class="btn btn--quiet" href="my-work-queue-gen11.html"><svg class="i"><use href="#i-left"/></svg> Back to queue</a>
+    <span class="head__div"></span>
+    <div class="head__id">
+      <h1 id="h-title">Ticket</h1>
+      <div class="head__meta" id="h-meta"></div>
+    </div>
+    <div class="chips" id="h-chips"></div>
+    <span class="head__sp"></span>
+    <span class="walk" role="group" aria-label="Record navigation">
+      <button class="btn btn--quiet btn--sm" type="button" data-act="prev"><svg class="i"><use href="#i-left"/></svg> Prev</button>
+      <button class="btn btn--quiet btn--sm" type="button" data-act="next">Next <svg class="i"><use href="#i-right"/></svg></button>
+    </span>
+    <button class="btn btn--sheet btn--sm" type="button" data-act="print"><svg class="i"><use href="#i-print"/></svg> Print</button>
+    <button class="btn btn--primary btn--sm" type="button" data-act="save"><svg class="i"><use href="#i-check"/></svg> Save Ticket</button>
+  </div>
+
+  <!-- ══ BENTO — two slots, placed by NAMED AREA ═══════════════════════════
+       A reflow has to redefine `grid-template-areas`, which moves both children
+       or neither; reassigning one child is not expressible. `pulse` is the
+       ticket's five production figures on the focal surface; `dealer` is the
+       quick-link rail, which is the only object on the page that leaves it. -->
+  <section class="bento" aria-label="Ticket summary">
+    <div class="focal slot--pulse">
+      <div class="focal__h"><span class="caps">This ticket</span><span class="s" id="pulse-s"></span></div>
+      <div class="pulse" id="pulse"></div>
+    </div>
+    <nav class="rail slot--dealer" id="rail" aria-label="Dealer quick links"></nav>
+  </section>
+
+  <!-- ══ FIELD — the one floating surface ══════════════════════════════════ -->
+  <section class="field" aria-label="Ticket">
+
+    <!-- SECTION BAND · sticky #2 of 2. Not tabs — a segmented track whose pills
+         move the scroll to a section already in the document (DESIGN.md §6). -->
+    <div class="cmd cmd--sec" id="band">
+      <nav class="secnav" id="secnav" aria-label="Sections on this page"></nav>
+      <span class="cmd__sp"></span>
+      <span class="secnav__note">one page · five sections</span>
+      <button class="facet__b facet__b--on" type="button" data-act="dock" aria-expanded="true" aria-controls="dock">
+        <svg class="i"><use href="#i-users"/></svg><span class="facet__v">Crew</span><span class="facet__cnt" id="crew-cnt">0</span>
+      </button>
+    </div>
+
+    <div class="secs">
+
+      <!-- ── 1 · WORK ORDER ──────────────────────────────────────────────── -->
+      <section class="sec" id="s-work" aria-labelledby="t-work">
+        <div class="sec__h"><h2 id="t-work">Work Order</h2><span class="s">what this ticket is, who asked, and when it is due</span></div>
+        <div class="sec__b">
+          <form class="form" id="f-work" novalidate>
+            <div class="grp">
+              <div class="grp__h"><span class="grp__t">Classification</span><span class="grp__ed"><svg class="i"><use href="#i-note"/></svg> editable</span><span class="grp__s">what this ticket is</span></div>
+              <div class="grid grid--3">
+                <label class="f"><span>Dealership <b aria-hidden="true">*</b></span><select class="sel" id="w-dealer" name="dealer"></select></label>
+                <label class="f f--wide"><span>Subject <b aria-hidden="true">*</b></span><input class="fld" type="text" id="w-subject" name="subject"></label>
+                <label class="f"><span>Work Status</span><select class="sel" id="w-status" name="status"></select></label>
+                <label class="f"><span>Work Type</span><select class="sel" id="w-type" name="type"></select></label>
+                <label class="f"><span>Priority</span><select class="sel" id="w-priority" name="priority"></select></label>
+              </div>
+            </div>
+            <div class="grp">
+              <div class="grp__h"><span class="grp__t">Contact</span><span class="grp__ed"><svg class="i"><use href="#i-note"/></svg> editable</span><span class="grp__s" id="w-hint">who asked</span></div>
+              <div class="grid grid--3">
+                <label class="f"><span>Your Name</span><input class="fld" type="text" id="w-name" name="cname"></label>
+                <label class="f"><span>Phone</span><input class="fld" type="tel" id="w-phone" name="phone"></label>
+                <div class="f"><span>Emails</span><div class="emails" id="w-emails"></div></div>
+              </div>
+            </div>
+            <div class="grp">
+              <div class="grp__h"><span class="grp__t">Schedule &amp; Billing</span><span class="grp__ed"><svg class="i"><use href="#i-note"/></svg> editable</span><span class="grp__s">drives the queue and Go Live</span></div>
+              <div class="grid grid--4">
+                <label class="f"><span>Begin Date</span><input class="fld" type="date" id="w-begin" name="begin"></label>
+                <label class="f"><span>Completion Date</span><input class="fld" type="date" id="w-completion" name="completion"></label>
+                <div class="f"><span>Waiting on Client</span><label class="flag"><input class="ck" type="checkbox" id="w-wait" name="wait"><span>Waiting on Client or Third party</span></label></div>
+                <div class="f"><span>Billable</span><div class="money"><label class="flag"><input class="ck" type="checkbox" id="w-billable" name="billable"><span class="vh">Billable</span></label><input class="fld mono" type="text" id="w-amount" name="amount" inputmode="decimal" placeholder="0.00" aria-label="Billable amount"></div></div>
+              </div>
+            </div>
+            <div class="form__f">
+              <span class="form__note">Saves classification, contact, schedule and billing on this ticket</span>
+              <span class="form__msg" id="w-msg" role="status" aria-live="polite"></span>
+              <button class="btn btn--primary" type="submit" data-act="save">Save Ticket</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ── 2 · THREAD — one chronological timeline ──────────────────────
+           Production ships four separate streams (Messages, Internal Notes,
+           Waiting on Client, ToDos) each with its own composer and its own post
+           action. All four are kept — every action the export has, none it does
+           not — but the entries themselves are ONE chronological feed on the
+           Gen 11 timeline, with the lane rail choosing which kinds are in view
+           and which composer is offered. -->
+      <section class="sec" id="s-thread" aria-labelledby="t-thread">
+        <div class="sec__h"><h2 id="t-thread">Ticket History</h2><span class="s" id="thread-s"></span></div>
+        <div class="sec__b">
+          <div class="lanes" id="thread-lanes" role="group" aria-label="Which entries are in view"></div>
+
+          <div class="composers" id="composers">
+            <form class="composer" id="c-message" data-lane="message" novalidate>
+              <span class="composer__who" aria-hidden="true">IG</span>
+              <div class="composer__b">
+                <label class="composer__lab" for="in-message">Reply to the client</label>
+                <textarea class="fld" id="in-message" name="in-message" rows="2" placeholder="Reply to the client…"></textarea>
+                <div class="drop"><svg class="i"><use href="#i-clip"/></svg><b>Drop files here or click to browse</b><span>Up to 20 MB per file</span><input type="file" id="in-files" name="in-files" multiple aria-label="Attach files"></div>
+                <div class="composer__f"><span class="hint">Client-visible — this is emailed to the addresses on the ticket</span><button class="btn btn--primary btn--sm" type="submit">Post Message</button></div>
+              </div>
+            </form>
+
+            <form class="composer" id="c-note" data-lane="note" novalidate>
+              <span class="composer__who" aria-hidden="true">IG</span>
+              <div class="composer__b">
+                <label class="composer__lab" for="in-note">Internal note</label>
+                <textarea class="fld" id="in-note" name="in-note" rows="2" placeholder="Internal note (never visible to the dealer)…"></textarea>
+                <div class="composer__f">
+                  <label class="flag"><input class="ck" type="checkbox" id="in-flag" name="in-flag"><span>Flag Note for</span></label>
+                  <select class="sel sel--sm" id="in-flag-who" name="in-flag-who" aria-label="Flag note for"></select>
+                  <span class="composer__sp"></span>
+                  <button class="btn btn--quiet btn--sm" type="button" data-act="lane-woc">+ Waiting-on-client note</button>
+                  <button class="btn btn--primary btn--sm" type="submit">Post Note</button>
+                </div>
+              </div>
+            </form>
+
+            <form class="composer" id="c-woc" data-lane="woc" novalidate>
+              <span class="composer__who" aria-hidden="true">IG</span>
+              <div class="composer__b">
+                <label class="composer__lab" for="in-woc">Waiting on Client</label>
+                <textarea class="fld" id="in-woc" name="in-woc" rows="2" placeholder="Why is this ticket waiting on the client?"></textarea>
+                <div class="composer__f"><span class="hint">Records why the clock is not running on AAN</span><button class="btn btn--primary btn--sm" type="submit">Post WOC Note</button></div>
+              </div>
+            </form>
+
+            <form class="composer" id="c-todo" data-lane="todo" novalidate>
+              <span class="composer__who" aria-hidden="true">IG</span>
+              <div class="composer__b">
+                <label class="composer__lab" for="in-todo">New ToDo</label>
+                <textarea class="fld" id="in-todo" name="in-todo" rows="2" placeholder="New ToDo…"></textarea>
+                <div class="composer__f">
+                  <span class="hint">For</span>
+                  <select class="sel sel--sm" id="in-todo-who" name="in-todo-who" aria-label="ToDo assignee"></select>
+                  <span class="composer__sp"></span>
+                  <button class="btn btn--primary btn--sm" type="submit">Add ToDo</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <ol class="feed" id="thread"></ol>
+          <p class="empty" id="thread-empty" hidden><b>Nothing in this lane yet</b><span>The composer above is where the first entry goes.</span></p>
+        </div>
+      </section>
+
+      <!-- ── 3 · CHANGELOG — the same timeline, on field changes ──────────── -->
+      <section class="sec" id="s-clog" aria-labelledby="t-clog">
+        <div class="sec__h">
+          <h2 id="t-clog">Changelog</h2>
+          <span class="s" id="clog-s"></span>
+          <button class="btn btn--sheet btn--sm" type="button" data-act="clog" aria-expanded="false" aria-controls="clog"><svg class="i"><use href="#i-chev"/></svg> <span data-clog-label>Show</span></button>
+        </div>
+        <div class="sec__b">
+          <div class="disc" id="clog" hidden>
+            <ol class="feed feed--clog" id="clog-feed"></ol>
+            <p class="empty" id="clog-empty" hidden><b>No changelog entries</b><span>No field on this ticket has been changed yet.</span></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 4 · ATTACHMENTS ─────────────────────────────────────────────── -->
+      <section class="sec" id="s-atts" aria-labelledby="t-atts">
+        <div class="sec__h"><h2 id="t-atts">Attachments</h2><span class="s" id="atts-s"></span></div>
+        <div class="sec__b">
+          <p class="src" id="atts-src" hidden>Files posted on this ticket. The export carries the filenames but not the bytes, so every row here reports its file as missing rather than offering a download that cannot resolve.</p>
+          <div class="atts" id="atts"></div>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- ══ DOCK — the crew rail ══════════════════════════════════════════════
+       The one place on this page where an assignment is created, completed or
+       timed, so it is the one place with a resting / dirty state pair. -->
+  <aside class="dock" id="dock" aria-label="Crew">
+    <div class="dock__h">
+      <h2 class="dock__t">Crew</h2>
+      <span class="dock__c" id="dock-c"></span>
+      <button class="dock__x" type="button" data-act="close" aria-label="Close crew"><svg class="i"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="dock__b">
+      <div class="assign">
+        <select class="sel sel--sm" id="new-assignee" name="new-assignee" aria-label="Assign to"></select>
+        <button class="btn btn--sheet btn--sm" type="button" data-act="add-crew">Add</button>
+      </div>
+      <div class="crew" id="crew"></div>
+      <div class="crewfoot" id="crewfoot"></div>
+      <div class="follow">
+        <span class="caps">Following</span>
+        <span class="follow__v" id="follow"></span>
+        <div class="assign">
+          <select class="sel sel--sm" id="new-follower" name="new-follower" aria-label="Add follower"></select>
+          <button class="btn btn--sheet btn--sm" type="button" data-act="add-follower">Add</button>
+        </div>
+      </div>
+      <details class="legend">
+        <summary><span class="caps">Time entry help</span><span class="s">expand</span></summary>
+        <p id="legend-ex"></p>
+        <p>Accepted formats: <span class="mono">45m</span> · <span class="mono">1:20</span> · <span class="mono">1h 20m</span> · <span class="mono">2h</span> · decimal hours (<span class="mono">1.33</span>) — saved as decimal.</p>
+      </details>
+    </div>
+    <div class="dock__f" id="crew-foot">
+      <span class="dock__note" id="crew-note">No unsaved changes</span>
+      <button class="btn btn--quiet btn--sm" type="button" data-act="crew-discard" disabled>Discard</button>
+      <button class="btn btn--sheet btn--sm" type="button" data-act="crew-save" disabled>Save crew</button>
+    </div>
+  </aside>
+
+  <!-- Document extender (DESIGN.md §8). Zero height until the last section needs
+       to be able to reach the anchor. Load-bearing even when it measures 0. -->
+  <div id="sec-space" aria-hidden="true"></div>
+
+  <p class="nojs">This page renders its ticket with script. Enable JavaScript to read it.</p>
+</div>
+
+<script src="single-ticket-gen11.data.js?v=202609282140"></script>
+<script src="single-ticket-gen11.js?v=202609282140"></script>
+</body>
+</html>

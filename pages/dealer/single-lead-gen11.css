@@ -1,0 +1,995 @@
+/* ============================================================================
+   AAN · Dealer UI · SINGLE LEAD — GENERATION 11
+
+   Sits on `all-vehicles-gen11.css`, which owns the shell, the token layer, the
+   8pt ladder, the radius ladder, the z-index ladder and the sticky arithmetic.
+   Nothing in this file redefines a token that lives there; it adds the two this
+   page needs (the section band's height, and the dock's width for a detail page)
+   and then builds the page's own parts on top.
+
+   It fixes, in the order DESIGN.md states them:
+     §2  the section band is ATTACHED to the field it labels at every scroll
+         position — it never changes width or inset on engage (audit F25)
+     §4  the engaged stack casts ONE shadow, at the band's bottom edge, because
+         on this page the band is the bottom of the stack (there is no .hd)
+     §6  the section navigator is a white thumb on a sunken track, not a blue
+         fill — five states, five means
+     §7  the stack is published here (68 + 56 = 124) and read by the JS
+     §8  the section anchor is stack + 10px, with a document extender so the last
+         section can reach it
+     §12 focus owns `outline` and nothing else; the base's box-shadow ring and
+         the base's decorative focus glow on .fld are both retired here
+     §13 every generated region states so before its content, not after
+
+   Index
+     1  PAGE TOKENS
+     2  1366 — the binding width
+     3  HEAD
+     4  BENTO — three slots named for their role
+     5  SECTION BAND — the navigator and the sticky stack
+     6  SECTIONS — one attached stack, no cards
+     7  FIELDS — read-only record vs editable form
+     8  ACTIVITY — the timeline
+     9  EMAILS — the communication history
+    10  DOCK — workflow, with a resting and a dirty state
+    11  FOCUS
+    12  MOTION
+    13  RESPONSIVE
+   ========================================================================== */
+
+
+/* ══ 1 · PAGE TOKENS ══════════════════════════════════════════════════════
+   Two additions and one override, all of them load-bearing.
+
+   --stick-sec is this page's second sticky layer, the way --stick-cmd is All
+   Vehicles'. Its arithmetic is 4 + 48 + 4: the band's vertical padding plus the
+   pill height. Change either and --stick-sec changes, which changes the section
+   anchor. The JS never carries its own copy of this number — it reads it.
+
+   --dock is 400 rather than the base's 440. Measured (audit F29) the rail is
+   already 60–100px wider than the stated 300–340 target at 400; the 40px goes to
+   the form, which is the density-limited object on this page. */
+:root {
+  --stick-sec: 56px;
+  --sl-stick-total: calc(var(--stick-bar) + var(--stick-sec));
+  --dock: 400px;
+}
+
+/* the platform bar's own sticky height is the base's; restated as a comment
+   rather than a declaration so there is only one place it is set:
+   --stick-bar: 68px  →  stack = 68 + 56 = 124px  →  anchor = 134px */
+
+
+/* ══ 2 · 1366 — THE BINDING WIDTH ════════════════════════════════════════
+   The measured overflow on the Gen 10 page was +26px at 1366, caused by the
+   brand wordmark staying 157px wide because the hiding breakpoint is
+   `max-width: 1360px` and the viewport is 1366. One query, moved to 1400, with a
+   26px deficit against 113px of recovered width.
+
+   The lead number is content, not chrome, so it is put back at every width — the
+   base query hides `.head__ctx` below 1360 and this rule out-specifies it
+   (0,2,0 vs 0,1,0). */
+@media (max-width: 1400px) {
+  .brand__t { display: none; }
+  .gsearch { width: 168px; }
+}
+.head .head__ctx { display: inline; }
+
+
+/* ══ 3 · HEAD ═════════════════════════════════════════════════════════════
+   Identity and record navigation. It owns no mutation: Note and Email are routes
+   to the section that owns those actions, so they are sheet-weight, not primary.
+   One primary fill per object, and the objects are the sections and the dock. */
+.head { gap: var(--s2); }
+.head .btn--quiet { padding: 0 var(--s3); }
+.head__div { width: 1px; height: 24px; background: var(--line); margin: 0 var(--s1); flex: none; }
+.head h1 { font-size: 26px; }
+.head .stat { margin-left: var(--s2); height: 26px; }
+.walk { display: inline-flex; gap: var(--s1); margin-right: var(--s2); flex: none; }
+
+
+/* ══ 4 · BENTO — THREE SLOTS NAMED FOR THEIR ROLE ════════════════════════
+   Audit F7: `.focal` / `.value` / `.attn` are grid positions wearing component
+   names, and on Gen 10 at 1280 that let one media query move `.focal` to
+   `grid-column: 1 / -1` while the other two kept three tracks — measured as
+   `537.9px 232px 433.8px` with the third track EMPTY and Lead facts squeezed
+   into the 232px lane meant for the smallest module.
+
+   The fix is structural, not a width tweak: the three children are placed by
+   NAMED AREA. A reflow now has to redefine `grid-template-areas`, which moves
+   all three together or not at all. Reassigning one child is no longer possible
+   to express. */
+.bento {
+  grid-template-columns: minmax(0, 1.36fr) 232px minmax(0, 1.44fr);
+  grid-template-areas: "enquiry counts facts";
+  gap: var(--gutter);
+  align-items: stretch;
+}
+.slot--enquiry { grid-area: enquiry; }
+.slot--counts  { grid-area: counts; }
+.slot--facts   { grid-area: facts; }
+
+/* the dock does not re-proportion the bento: it spans the whole grid either way,
+   and the base's dock-open compaction rules for the All Vehicles bento are
+   answered here at matching specificity so this page keeps one composition */
+.app.dock-open .bento { grid-template-columns: minmax(0, 1.36fr) 232px minmax(0, 1.44fr); }
+
+/* ── the enquiry object: message | vehicle, 65 / 35 ──────────────────────
+   Audit P1-f measured the Gen 10 split as 80.6 / 19.4 at 1280, 61.7 / 38.3 at
+   1440 and 73.1 / 26.9 at 1920 — because the vehicle lane was a FIXED 240px, so
+   the ratio was a consequence of the viewport and hit the stated 65/35 target at
+   no width at all. Two flexible tracks make the ratio a setting. The 176px floor
+   is the vehicle card's own minimum: below it the VIN cannot be read. */
+.focal.slot--enquiry {
+  display: grid;
+  grid-template-columns: minmax(0, 65fr) minmax(176px, 35fr);
+  padding: 0;
+  overflow: hidden;
+}
+.focal__main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: var(--s4) var(--s5) var(--s4);
+}
+.focal__h { margin-bottom: var(--s2); }
+
+/* ── the message, de-escalated ───────────────────────────────────────────
+   The block was the widest object on the page, the darkest surface on the page
+   and the largest non-heading type on the page at once. It keeps the surface and
+   loses the other two: 15px / 450 / 1.5 reads as a quotation; 15.5px / 500 /
+   1.45 with negative tracking was reading as a headline. */
+.quote {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 450;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: var(--focal-ink);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.quote--full { display: block; -webkit-line-clamp: unset; }
+.quote::before { content: "\201C"; color: var(--focal-ink-3); margin-right: 2px; }
+.quote__more {
+  align-self: flex-start;
+  margin-top: var(--s2);
+  padding: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--focal-ink-2);
+}
+.quote__more:hover { color: var(--focal-ink); }
+
+/* who sent it, and when — two quiet rows on the object's own baseline */
+.ident {
+  display: grid;
+  gap: var(--s1);
+  margin-top: auto;
+  padding-top: var(--s3);
+  box-shadow: inset 0 1px 0 var(--focal-line);
+}
+/* the row wraps rather than truncating: at 1280 the enquiry column is 333px and
+   three ellipsised fragments ("Ad So…", "quick-q…", "created 09/09/20…") is not
+   a contact line, it is a puzzle. A second line costs 18px and loses nothing. */
+.ident__row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s3);
+  min-width: 0;
+  font-size: 13px;
+  color: var(--focal-ink-3);
+}
+.ident__row > span { min-width: 0; white-space: nowrap; }
+.ident__row b { color: var(--focal-ink); font-weight: 600; }
+.ident__row .mono { font-family: var(--mono); font-size: 12.5px; }
+.ident__row .sep { color: var(--focal-line); flex: none; }
+.ident__row button {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--r-micro);
+  color: var(--focal-ink-3);
+  flex: none;
+}
+.ident__row button:hover { background: var(--focal-2); color: var(--focal-ink); }
+.ident__row button .i { width: 13px; height: 13px; }
+
+/* ── the vehicle module: the message's counterweight, not a sliver ───────
+   It now has 35% of the object instead of 240 fixed pixels, so the photograph
+   can be full-width and the VIN fits on one line. It carries exactly ONE action
+   — a route into Inventory. Every mutation of the vehicle belongs to the record
+   strip in Overview, which is the object those actions act on. */
+.vcar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+  min-width: 0;
+  padding: var(--s4);
+  background: var(--focal-inset);
+  box-shadow: inset 1px 0 0 var(--focal-line);
+}
+.vcar__cap {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--focal-ink-3);
+  margin-bottom: var(--s1);
+}
+.vcar__img {
+  position: relative;
+  height: 88px;
+  border-radius: var(--r-inner);
+  overflow: hidden;
+  background: var(--focal-2);
+  display: grid;
+  place-items: center;
+  color: var(--focal-ink-3);
+  flex: none;
+}
+.vcar__img img { width: 100%; height: 100%; object-fit: cover; }
+.vcar__img .st {
+  position: absolute;
+  left: var(--s2);
+  bottom: var(--s2);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 20px;
+  padding: 0 7px;
+  border-radius: var(--r-micro);
+  background: rgba(10, 16, 28, .78);
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+.vcar__img .st::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--ok-fill); }
+.vcar__img .st--sold::before { background: var(--danger-fill); }
+.vcar__t {
+  margin-top: var(--s2);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--focal-ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.vcar__m {
+  font: 12px var(--mono);
+  color: var(--focal-ink-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.vcar__acts { margin-top: auto; padding-top: var(--s2); }
+.vcar__acts a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--focal-ink);
+}
+.vcar__acts a:hover { text-decoration: underline; }
+.vcar__acts .i { width: 13px; height: 13px; }
+.vcar--none .vcar__img { background: none; box-shadow: inset 0 0 0 1px var(--focal-line); }
+
+/* ── the counts module ──────────────────────────────────────────────────── */
+.value.slot--counts { padding: var(--s4) var(--s5); }
+.value .kv > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s3);
+  padding: var(--s2) 0;
+  box-shadow: inset 0 -1px 0 var(--focal-line);
+}
+.value .kv > div:last-child { box-shadow: none; }
+.value .kv .v { font-size: 22px; }
+.value .kv .l { margin: 0; text-align: right; }
+
+/* ── lead facts: the Demo chip and the source line sit in the header, BEFORE
+      the tiles (DESIGN.md §13). The lead set's own header records that the
+      people, messages and dates in it are synthetic; the IP is derived from the
+      record index. That assessment is what licenses the chip. ─────────────── */
+.attn.slot--facts { padding: var(--s4) var(--s4) var(--s4); }
+.attn__h { align-items: center; gap: var(--s2); padding: 0 0 var(--s3); }
+.attn__h h2 { font-size: 15px; font-weight: 600; letter-spacing: -.005em; color: var(--focal-ink); }
+.attn__h .s { margin-left: auto; text-align: right; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--focal-ink-3); }
+.attn .demo { flex: none; background: rgba(195, 182, 255, .16); color: #d3caff; box-shadow: inset 0 0 0 1px rgba(150, 129, 240, .5); }
+/* Eight facts as eight filled tiles made this the busiest object on the page and
+   pushed the whole bento row to 261px — which left the enquiry panel beside it
+   holding a two-line message in a 261px box, i.e. a hole. They are definition
+   rows now: label over value, one hairline, no fill. The slot loses ~60px, the
+   row gets shorter, and the hole closes without the message being enlarged
+   again. */
+.attn__g { grid-template-columns: 1fr 1fr; gap: 0 var(--s5); align-content: start; }
+.attn .fact {
+  display: grid;
+  align-content: center;
+  gap: 1px;
+  min-height: 42px;
+  padding: var(--s1) 0;
+  box-shadow: inset 0 -1px 0 var(--focal-line);
+  min-width: 0;
+}
+.attn .fact:nth-last-child(-n+2) { box-shadow: none; }
+.attn .fact__l { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--focal-ink-3); }
+.attn .fact__v { font-size: 13.5px; font-weight: 600; color: var(--focal-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.attn .fact__v.mono { font-family: var(--mono); font-size: 12.5px; font-weight: 400; }
+
+
+/* ══ 5 · SECTION BAND — THE NAVIGATOR AND THE STICKY STACK ═══════════════
+   Audit F25, measured on Gen 10: the band was 960px at left 26 at rest and
+   996px at left 0 engaged, inside a sheet at left 16 — it grew 36px, slid to the
+   viewport edge and overhung the form it labels on the left. Three left edges in
+   one stack.
+
+   Here the band is a child of the field with `margin: 0` and the page gutter as
+   its horizontal padding, so its box IS the field's box in both states and there
+   is nothing left to animate. What changes on engage is only what a surface
+   parking on it changes: its top corners square off, exactly as the platform
+   bar's bottom corners do. No transition on the radius — this is a discrete
+   state change, not an arrival.
+
+   Height arithmetic: 4 + 48 + 4 = 56 = --stick-sec. */
+.cmd.cmd--sec {
+  margin: 0;
+  padding: var(--s1) var(--gutter);
+  gap: var(--s2);
+  border-radius: var(--r-card) var(--r-card) 0 0;
+  background: rgba(255, 255, 255, .93);
+  box-shadow: none;
+  transition: background var(--dur) var(--ease);
+}
+/* ── the engaged stack is OPAQUE on this page ────────────────────────────
+   Measured: with the band at the base's `rgba(255,255,255,.93)` and the page
+   scrolled into Overview, `elementsFromPoint` across the band returns
+   `span.grp__s` and `div.grp__h` under it and the form's white search pill and
+   group caption ghost visibly through the band at 7% — a smudge behind the
+   section navigator.
+
+   On All Vehicles what travels under the stack is a table of tall, sparse rows
+   and the glass reads as material. On a lead dossier what travels under it is
+   continuous 13–14px form text, and the same 7% reads as a printing fault. The
+   page keeps the family's geometry, hairline and single shadow and drops only
+   the transparency; the bar above it matches, so the two surfaces are still one
+   material and there is no .93 / 1.0 band at the seam.
+   The bar is opaque at every scroll position, not only once `is-stuck` fires:
+   it pins at y=0 as soon as the page moves 12px, while `is-stuck` waits for the
+   band to arrive ~330px later, and the bento ghosted through the bar for the
+   whole of that travel. `#app.is-stuck .top` is (1,1,1) against the base's
+   (0,2,0) so the engaged rule wins by weight, not by file order. */
+.top,
+#app.is-stuck .top,
+.cmd.cmd--sec.cmd--stuck {
+  background: var(--sheet);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.cmd.cmd--sec.cmd--stuck {
+  border-radius: 0;
+  /* the band is the BOTTOM of this page's stack — there is no column header
+     below it — so it carries the stack's one shadow (DESIGN.md §4). The base
+     gives that shadow to `.hd--stuck` and explicitly clears it from
+     `.cmd--stuck`; this rule is (0,3,0) against the base's (0,1,0) and states
+     why rather than relying on file order. */
+  box-shadow: inset 0 -1px 0 var(--line), 0 10px 20px -16px rgba(34, 58, 118, .45);
+}
+.cmd__sp { flex: 1; min-width: 0; }
+
+/* ── the navigator: one segmented object ─────────────────────────────────
+   DESIGN.md §6/§11: current view is a white thumb on a sunken track. A sunken
+   rail, --r-pill, 5px padding, 2px internal gap, and the current section as a
+   white thumb with tinted ink. It is not a blue fill, because a blue fill on
+   this page means "this is the primary action". */
+.secnav {
+  display: inline-flex;
+  gap: 2px;
+  padding: 5px;
+  border-radius: var(--r-pill);
+  background: var(--well);
+  box-shadow: inset 0 0 0 1px var(--line);
+  min-width: 0;
+}
+.secnav__b {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  height: 38px;
+  padding: 0 var(--s4);
+  border-radius: var(--r-pill);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-2);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.secnav__b:hover { background: rgba(255, 255, 255, .62); color: var(--ink); }
+.secnav__b--on, .secnav__b--on:hover {
+  background: var(--sheet);
+  color: var(--brand-ink);
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(18, 23, 20, .16), 0 0 0 1px rgba(18, 23, 20, .06);
+}
+/* a count is a quantity, not a state: it is neutral in both positions */
+.secnav__b b {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--r-pill);
+  background: var(--line-2);
+  color: var(--ink-2);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.secnav__b--on b { background: var(--well); color: var(--ink); }
+
+/* it says what it is, so nobody reads five pills as five tabs */
+.secnav__note { font-size: 13px; color: var(--ink-3); white-space: nowrap; }
+
+/* the workflow toggle is a band control, not a card: 40px, quiet, and it tells
+   you the rail is open by being pressed — not by carrying a dot */
+.cmd.cmd--sec .facet__b {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--s2);
+  height: 40px;
+  padding: 0 var(--s4);
+  border-radius: var(--r-pill);
+  background: transparent;
+  box-shadow: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-2);
+}
+.cmd.cmd--sec .facet__b > .i { position: static; margin: 0; width: 16px; height: 16px; color: var(--ink-3); }
+.cmd.cmd--sec .facet__b .facet__v { font-size: 14px; font-weight: 500; color: inherit; }
+.cmd.cmd--sec .facet__b:hover { background: var(--well); color: var(--ink); box-shadow: none; }
+.cmd.cmd--sec .facet__b--on,
+.cmd.cmd--sec .facet__b--on:hover {
+  background: var(--sheet);
+  color: var(--brand-ink);
+  box-shadow: 0 1px 2px rgba(18, 23, 20, .16), 0 0 0 1px rgba(18, 23, 20, .06);
+}
+.cmd.cmd--sec .facet__b--on > .i, .cmd.cmd--sec .facet__b--on .facet__v { color: var(--brand-ink); }
+
+
+/* ══ 6 · SECTIONS — ONE ATTACHED STACK, NO CARDS ═════════════════════════
+   Five continuous sections in one scroll. The field is the floating surface;
+   what is inside it is attached, so the sections are separated by rhythm and one
+   hairline rather than by each being wrapped in a sheet of its own. Gen 10 gave
+   every section a 14px radius, its own ring and a 14px gap — five cards inside a
+   card, which is what "card soup" means here.
+
+   The anchor (DESIGN.md §8): stack + --anchor-gap = 68 + 56 + 10 = 134. The JS
+   reads the same three values; `scroll-margin-top` covers hash navigation and
+   the keyboard, which never go through the JS. */
+.field { align-self: start; }
+.secs { display: flex; flex-direction: column; }
+
+/* the document extender is placed explicitly rather than left to auto-placement:
+   it has to be the last row of the app grid and span it, or the height it adds
+   lands beside the dock instead of below the document */
+#sec-space { grid-row: 5; grid-column: 1 / -1; height: 0; }
+.sec {
+  padding: var(--s5) 0 var(--s6);
+  scroll-margin-top: calc(var(--stick-bar) + var(--stick-sec) + var(--anchor-gap));
+}
+.sec + .sec { box-shadow: inset 0 1px 0 var(--line-2); }
+
+/* section header: 52px, label left, one-line context right (DESIGN.md §9) */
+.sec__h {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  min-height: 52px;
+  padding: 0 var(--sheet-inset);
+}
+.sec__h h2 { font-size: 18px; font-weight: 600; letter-spacing: -.012em; }
+.sec__h .demo { flex: none; }
+.sec__h .s { flex: 1; min-width: 0; font-size: 13.5px; color: var(--ink-3); }
+.sec__h .btn { flex: none; }
+.sec__b { padding: var(--s2) var(--sheet-inset) 0; }
+
+/* a source line always precedes what it qualifies (DESIGN.md §13) */
+.src {
+  margin: 0 0 var(--s3);
+  font-size: 13px;
+  color: var(--ink-3);
+}
+.src::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: var(--s2); border-radius: 50%; background: var(--violet-fill); vertical-align: 1px; }
+
+
+/* ══ 7 · FIELDS — READ-ONLY RECORD vs EDITABLE FORM ══════════════════════
+   Audit F26, measured: read-only values and editable values were the same 36px
+   box with the same 9px radius and the same border, so "Stock # 21902" and
+   "Make: Aston" were indistinguishable as *kinds of thing*. Nothing said what
+   the feed asserts, what you may change, and what you must decide.
+
+   Three kinds, three means, and no new taxonomy invented — the page's own copy
+   already draws the line ("the record behind the strip above — edit here if the
+   feed got it wrong"):
+     record   → no box at all. Label over value, one hairline. It is text,
+                because it is text.
+     editable → a real input, white, hairline contour, validation states, and an
+                `editable` role label on the group that owns it.
+     decide   → the workflow rail only, where --signal marks the dirty state.
+   --signal appears in exactly one of the three, so it keeps one meaning. */
+
+/* ── the record strip ───────────────────────────────────────────────────── */
+.rec {
+  display: grid;
+  grid-template-columns: 208px minmax(0, 1fr);
+  gap: var(--s5);
+  align-items: start;
+  padding: var(--s2) 0 var(--s5);
+  box-shadow: inset 0 -1px 0 var(--line-2);
+}
+.rec__img,
+.rec__none {
+  width: 208px;
+  height: 130px;
+  border-radius: var(--r-panel);
+  overflow: hidden;
+  background: var(--well);
+  display: grid;
+  place-items: center;
+  color: var(--ink-4);
+}
+.rec__img img { width: 100%; height: 100%; object-fit: cover; }
+.rec__b { min-width: 0; }
+.rec__cap {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.rec__cap .i { width: 13px; height: 13px; }
+.rec__n {
+  margin-top: var(--s2);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -.015em;
+  line-height: 1.15;
+}
+.rec__n .st {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: var(--s3);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ok);
+  vertical-align: 3px;
+}
+.rec__n .st--sold { color: var(--danger); }
+.rec__g {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0 var(--s5);
+  margin-top: var(--s3);
+}
+.rec__g > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: var(--s2) 0;
+  box-shadow: inset 0 -1px 0 var(--line-2);
+}
+.rec__l { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); }
+.rec__v { font-size: 14px; font-weight: 500; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rec__v.mono { font-family: var(--mono); font-size: 13px; font-weight: 400; }
+.rec__v.none { color: var(--ink-4); font-weight: 400; }
+
+/* the vehicle's actions live on the vehicle, and nowhere else on the page.
+   Destructive keeps the far end so it cannot be hit on the way to something
+   else (DESIGN.md §11). */
+.rec__acts { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); margin-top: var(--s4); }
+.rec__acts .btn--del { margin-left: auto; color: var(--danger); }
+.rec__acts .btn--del:hover { background: var(--danger-soft); color: var(--danger); }
+
+/* ── the editable form ──────────────────────────────────────────────────
+   Density: one control height (40px), one label size (13px), and one gap
+   relationship on the 8pt ladder — 16px between fields in both axes, 24px
+   between groups. Gen 10 ran 10px / 14px gaps with 36px controls and 12.5px
+   labels, which is three near-misses of the scale in one form. */
+.grp { padding: var(--s5) 0 0; }
+.grp + .grp { margin-top: var(--s5); box-shadow: inset 0 1px 0 var(--line-2); }
+.grp__h { display: flex; align-items: center; gap: var(--s3); flex-wrap: wrap; margin-bottom: var(--s4); }
+.grp__t { font-size: 14px; font-weight: 700; letter-spacing: -.005em; color: var(--ink); }
+.grp__s { font-size: 13px; color: var(--ink-3); flex: 1; min-width: 0; }
+.grp__s b { font-weight: 700; color: var(--ink-2); }
+/* a role label, not a state colour: it says what this group is, in slate */
+.grp__ed {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 20px;
+  padding: 0 7px;
+  border-radius: var(--r-micro);
+  background: var(--slate-soft);
+  color: var(--slate);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  flex: none;
+}
+.grp__ed .i { width: 12px; height: 12px; }
+
+.grid { display: grid; gap: var(--s4); }
+.grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.grid--5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.grid + .grid { margin-top: var(--s4); }
+.grid .f--wide { grid-column: span 2; }
+
+.f { display: flex; flex-direction: column; gap: var(--s1); margin: 0; min-width: 0; }
+.f > span { font-size: 13px; font-weight: 600; color: var(--ink-3); }
+.f > span b { color: var(--danger); font-weight: 700; }
+.f > span i { font-style: normal; font-weight: 500; color: var(--ink-4); }
+.fld, .sel { height: 40px; border-radius: var(--r-inner); font-size: 14px; }
+.f .fld, .f .sel { width: 100%; }
+.f textarea.fld { height: auto; min-height: 92px; padding: var(--s2) var(--s3); resize: vertical; font: inherit; line-height: 1.45; }
+.f--big .fld { font-size: 15px; font-weight: 500; }
+.fld.mono { font-family: var(--mono); font-size: 13px; }
+
+/* validation: a real state, stated in colour AND in words.
+   Doubled class so it out-specifies `.fld:focus` (0,2,0) in section 11 — an
+   invalid field that is also the focused field must still read as invalid, and
+   the focused field is exactly the one the error sends you to. */
+.fld.fld--bad, .fld.fld--bad:focus { border-color: var(--danger); background: var(--danger-soft); }
+.form__msg { font-size: 13px; font-weight: 600; color: var(--ok); }
+.form__msg--bad { color: var(--danger); }
+
+/* the search inside a group is a control, and it is sized by its job */
+.search--sm {
+  height: 40px;
+  flex: 0 1 460px;
+  margin-bottom: var(--s4);
+  padding: 0 var(--s1) 0 var(--s3);
+  border-radius: var(--r-inner);
+  box-shadow: inset 0 0 0 1px var(--line-3);
+  background: var(--sheet);
+}
+.search--sm .btn { height: 32px; }
+
+/* the save bar names its own object — that IS the ownership statement */
+.form__f {
+  display: flex;
+  align-items: center;
+  gap: var(--s4);
+  margin-top: var(--s5);
+  padding: var(--s4) 0 0;
+  box-shadow: inset 0 1px 0 var(--line-2);
+}
+.form__note { font-size: 13px; color: var(--ink-3); margin-right: auto; }
+.form__f .form__msg { margin-right: var(--s2); }
+
+/* trade-in */
+.kind { display: flex; align-items: center; gap: var(--s5); margin-bottom: var(--s4); font-size: 14px; }
+.kind label { display: inline-flex; align-items: center; gap: var(--s2); }
+/* `.ck` is the base's checkbox: a 5px-radius square with a tick. A radio is a
+   different control and must not borrow a checkbox's glyph — round box, dot. */
+.ck[type="radio"] { border-radius: 50%; }
+.ck[type="radio"]:checked::after {
+  width: 6px;
+  height: 6px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  transform: none;
+}
+.hint { font-size: 13px; color: var(--ink-3); }
+.sec__b > .hint { padding-bottom: var(--s2); }
+
+
+/* ══ 8 · ACTIVITY — THE TIMELINE ═════════════════════════════════════════
+   A chronological feed: one connector, a per-kind chip, title, kind, body,
+   author, right-aligned date. Preserved from Gen 10, re-cut on the ladder. */
+.composer { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: var(--s3); margin: 0 0 var(--s5); }
+.composer__who {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--well);
+  color: var(--ink-2);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-weight: 700;
+  font-size: 13px;
+}
+.composer__b { display: grid; gap: var(--s2); min-width: 0; }
+.composer__lab { font-size: 13px; font-weight: 600; color: var(--ink-3); }
+.composer__b textarea.fld { height: auto; min-height: 64px; padding: var(--s2) var(--s3); resize: vertical; font: inherit; font-size: 14px; line-height: 1.45; }
+.composer__f { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); }
+.composer__f .hint b { font-weight: 600; color: var(--ink-2); }
+
+.feed { position: relative; margin: 0; padding: 0; list-style: none; }
+.feed::before { content: ""; position: absolute; left: 17px; top: 18px; bottom: 18px; width: 2px; background: var(--line-2); }
+.ev {
+  position: relative;
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  gap: var(--s3);
+  padding: var(--s3) 0;
+  align-items: start;
+}
+.ev + .ev { box-shadow: inset 0 1px 0 var(--line-2); }
+.ev__i {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--sheet);
+  box-shadow: inset 0 0 0 1px var(--line-3);
+  color: var(--ink-3);
+  position: relative;
+  z-index: var(--z-content);
+}
+.ev__i .i { width: 15px; height: 15px; }
+.ev--mail .ev__i { background: var(--brand-soft); color: var(--brand-ink); box-shadow: inset 0 0 0 1px var(--brand-soft-2); }
+.ev--note .ev__i { background: var(--signal-soft); color: var(--signal); box-shadow: inset 0 0 0 1px var(--signal-line); }
+.ev--status .ev__i { background: var(--violet-soft); color: var(--violet); box-shadow: inset 0 0 0 1px var(--violet-line); }
+.ev--created .ev__i { background: var(--ok-soft); color: var(--ok); box-shadow: inset 0 0 0 1px var(--ok-line); }
+.ev__b { min-width: 0; padding-top: var(--s1); }
+.ev__t { display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap; font-size: 14px; font-weight: 600; color: var(--ink); }
+.ev__t .kind { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.ev__n { display: block; margin-top: var(--s1); font-size: 13.5px; color: var(--ink-2); line-height: 1.45; overflow-wrap: anywhere; }
+.ev__n code { font: 12px var(--mono); color: var(--ink-3); }
+.ev__m { margin-top: var(--s1); font-size: 13px; color: var(--ink-3); }
+.ev__m b { font-weight: 600; color: var(--ink-2); }
+.ev__d { padding-top: 6px; font-size: 13px; color: var(--ink-3); white-space: nowrap; font-variant-numeric: tabular-nums; text-align: right; }
+.ev__d small { display: block; color: var(--ink-4); font-size: 12px; }
+
+.raw { margin-top: var(--s5); padding-top: var(--s4); box-shadow: inset 0 1px 0 var(--line-2); }
+.raw summary { display: flex; align-items: center; gap: var(--s3); cursor: pointer; list-style: none; }
+.raw summary::-webkit-details-marker { display: none; }
+.raw summary .s { font-size: 13px; color: var(--brand-ink); font-weight: 600; }
+.raw > .src { margin: var(--s3) 0 0; }
+.raw pre {
+  margin: var(--s2) 0 0;
+  padding: var(--s3);
+  border-radius: var(--r-inner);
+  background: var(--well);
+  font: 12px/1.55 var(--mono);
+  color: var(--ink-2);
+  overflow: auto;
+  max-height: 260px;
+}
+
+
+/* ══ 9 · EMAILS — THE COMMUNICATION HISTORY ══════════════════════════════
+   Preserved as a compact list: header row, IN/OUT chip, subject + inline
+   preview, correspondents, date, disclosure. The Gen 10 ring and 10px radius are
+   dropped — the list is the section's body, not a card inside it. The rows
+   already carried `role="button"`, `tabindex="0"` and `aria-expanded`; that
+   contract is kept. */
+.mail { border-radius: 0; box-shadow: none; overflow: visible; }
+.mail__h,
+.em {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 208px 124px 24px;
+  gap: var(--s3);
+  align-items: center;
+}
+.mail__h {
+  padding: var(--s2) 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  box-shadow: inset 0 -1px 0 var(--line);
+}
+.em {
+  padding: var(--s3) 0;
+  box-shadow: inset 0 -1px 0 var(--line-2);
+  cursor: pointer;
+  transition: background var(--dur) var(--ease);
+}
+.em:last-child { box-shadow: none; }
+.em:hover { background: var(--wash); }
+.em--unread .em__s { font-weight: 700; }
+.em--unread .em__s::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--brand); margin-right: var(--s2); vertical-align: 2px; }
+.em__dir {
+  display: inline-grid;
+  place-items: center;
+  height: 20px;
+  padding: 0 7px;
+  border-radius: var(--r-micro);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  justify-self: start;
+}
+.em__dir--in { background: var(--ok-soft); color: var(--ok); box-shadow: inset 0 0 0 1px var(--ok-line); }
+.em__dir--out { background: var(--brand-soft); color: var(--brand-ink); box-shadow: inset 0 0 0 1px var(--brand-soft-2); }
+.em__s { min-width: 0; font-size: 14px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.em__p { display: block; margin-top: 2px; font-size: 13px; font-weight: 400; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.em__w { min-width: 0; font-size: 13px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.em__w em { font-style: normal; color: var(--ink-4); }
+.em__d { font-size: 13px; color: var(--ink-3); white-space: nowrap; font-variant-numeric: tabular-nums; text-align: right; }
+.em__x { color: var(--ink-4); display: grid; place-items: center; transition: transform var(--dur2) var(--ease); }
+.em__x .i { width: 14px; height: 14px; }
+.em--open .em__x { transform: rotate(180deg); }
+.em__body {
+  grid-column: 1 / -1;
+  display: none;
+  margin: var(--s2) 0 var(--s1) 64px;
+  padding: var(--s3) var(--s4);
+  border-radius: var(--r-inner);
+  background: var(--well);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  white-space: pre-line;
+}
+.em--open .em__body { display: block; }
+.mail__f { display: flex; align-items: center; gap: var(--s3); padding: var(--s3) 0 0; font-size: 13px; color: var(--ink-3); }
+.mail .empty { padding: var(--s5) 0; text-align: left; }
+
+
+/* ══ 10 · DOCK — WORKFLOW, WITH A RESTING AND A DIRTY STATE ══════════════
+   Audit F30: a sticky panel is either content-sized or scrollable, never a fixed
+   height with `overflow: hidden`. The base already scrolls `.dock__b` under a
+   `max-height`, so the defect is answered by inheritance and re-verified.
+
+   The state hierarchy is the part Gen 10 got wrong: the footer read "Unsaved
+   changes" permanently, whether or not anything had been changed, so the one
+   signal that should mean "you owe this page a save" meant nothing. It is now a
+   pair — at rest the footer is quiet and both buttons are disabled; once a value
+   differs from the record it turns --signal and Save becomes the primary fill.
+   That is the only place --signal is used on this page. */
+.wf { display: grid; gap: var(--s4); padding-bottom: var(--s5); }
+.wf .f { margin: 0; }
+.wf__state {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  padding-bottom: var(--s4);
+  box-shadow: inset 0 -1px 0 var(--line-2);
+}
+.wf__state .caps { flex: 1; }
+.wf__flags { margin: 0; padding: 0; border: 0; }
+.wf__flags legend { padding: 0 0 var(--s2); }
+.workflow-flags { display: flex; align-items: center; gap: var(--s5); flex-wrap: nowrap; }
+.flag { display: inline-flex; align-items: center; gap: var(--s2); white-space: nowrap; font-size: 14px; color: var(--ink); cursor: pointer; }
+.flag input { margin: 0; flex: none; }
+
+.facts { padding: var(--s4) 0; box-shadow: inset 0 1px 0 var(--line-2); }
+.facts__h { display: flex; align-items: center; gap: var(--s2); margin-bottom: var(--s2); }
+.facts__h .caps { flex: 1; }
+.facts .src { margin-bottom: var(--s2); }
+.utm {
+  margin: 0;
+  padding: var(--s3);
+  border-radius: var(--r-inner);
+  background: var(--well);
+  font: 12px/1.5 var(--mono);
+  color: var(--ink-3);
+}
+
+.dock__f--row { gap: var(--s2); transition: background var(--dur) var(--ease); }
+.dock__note { font-size: 13px; }
+#app.wf-dirty .dock__f--row { background: var(--signal-soft); box-shadow: inset 0 1px 0 var(--signal-line); }
+#app.wf-dirty .dock__note { color: var(--signal); font-weight: 600; }
+#app.wf-dirty .dock__note::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--signal-fill); margin-right: var(--s2); }
+
+
+/* ══ 11 · FOCUS ══════════════════════════════════════════════════════════
+   DESIGN.md §12: focus owns `outline` and nothing else owns it. The base ring is
+   on `box-shadow` — a single-slot property that every decorative shadow in the
+   file overwrites — so it is retired here at matching specificity, and the
+   decorative focus glow on `.fld` goes with it. Never put focus back on
+   box-shadow; never clip it with overflow. */
+:focus-visible {
+  box-shadow: none;
+  outline: var(--focus-w) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--r-inner);
+}
+.fld:focus, .sel:focus { box-shadow: none; border-color: var(--brand); }
+
+/* placeholder ink: the base sets --ink-4 (#697181), which measures 4.30:1 on the
+   --well ground the global search sits on — under AA for text this size. --ink-3
+   is the next step up the same ramp and clears it. Measured, not assumed. */
+.gsearch input::placeholder,
+.fld::placeholder,
+.search input::placeholder { color: var(--ink-3); }
+.focal :focus-visible,
+.value :focus-visible,
+.attn :focus-visible { outline-color: var(--focus-color-on-dark); }
+.secnav__b:focus-visible { border-radius: var(--r-pill); }
+
+
+/* ══ 12 · MOTION ═════════════════════════════════════════════════════════
+   Disclosure and state only. No arrival choreography, no setTimeout sequencing.
+   Under reduced motion the anchor lands in the same place instantly — the JS
+   switches `behavior` to 'auto' rather than shortening a duration. */
+@media (prefers-reduced-motion: reduce) {
+  .em, .em__x, .cmd.cmd--sec, .secnav__b, .dock__f--row, .facet__b { transition: none; }
+  html { scroll-behavior: auto; }
+}
+
+
+/* ══ 13 · RESPONSIVE ═════════════════════════════════════════════════════
+   1366 is the binding width and zero horizontal overflow is a hard requirement
+   in every state, dock open and dock closed. One breakpoint. The bento keeps all
+   three named areas at every width — only the track sizes move, so the 1280
+   track-loss cannot recur — and the forms drop one column rather than compacting
+   their controls. */
+@media (max-width: 1400px) {
+  .bento,
+  .app.dock-open .bento { grid-template-columns: minmax(0, 1.42fr) 208px minmax(0, 1.34fr); }
+
+  .app.dock-open .grid--5 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .app.dock-open .grid--4 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .app.dock-open .grid--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .app.dock-open .rec { grid-template-columns: 176px minmax(0, 1fr); }
+  .app.dock-open .rec__img, .app.dock-open .rec__none { width: 176px; height: 110px; }
+  .app.dock-open .rec__g { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  .app.dock-open .mail__h,
+  .app.dock-open .em { grid-template-columns: 52px minmax(0, 1fr) 168px 116px 24px; }
+
+  .secnav__note { display: none; }
+  .secnav__b { padding: 0 var(--s3); }
+}
+
+@media (max-width: 1300px) {
+  .app.dock-open .grid--5 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .app.dock-open .mail__h,
+  .app.dock-open .em { grid-template-columns: 52px minmax(0, 1fr) 0px 112px 24px; }
+  .app.dock-open .em__w, .app.dock-open .mail__h > span:nth-child(3) { display: none; }
+}
+
+
+/* ══ LEAD STATUS TONES ═══════════════════════════════════════════════════
+   The seven classes Gen 10 already maps its statuses onto, given tones from the
+   base palette. Status is never carried by hue alone — the chip always shows the
+   status word. */
+.stat--new    { color: var(--brand-ink); background: var(--brand-soft); box-shadow: inset 0 0 0 1px var(--brand-soft-2); }
+.stat--active { color: var(--ok); background: var(--ok-soft); box-shadow: inset 0 0 0 1px var(--ok-line); }
+.stat--hot    { color: var(--signal); background: var(--signal-soft); box-shadow: inset 0 0 0 1px var(--signal-line); }
+.stat--pend   { color: var(--violet); background: var(--violet-soft); box-shadow: inset 0 0 0 1px var(--violet-line); }
+.stat--trade  { color: var(--violet); background: var(--violet-soft); box-shadow: inset 0 0 0 1px var(--violet-line); }
+.stat--quiet  { color: var(--slate); background: var(--slate-soft); box-shadow: inset 0 0 0 1px var(--line-3); }
+.stat--won    { color: var(--ok); background: var(--ok-soft); box-shadow: inset 0 0 0 1px var(--ok-line); }
+.stat--dead   { color: var(--danger); background: var(--danger-soft); box-shadow: inset 0 0 0 1px var(--danger-line); }
+
+/* ── [hidden] must actually hide ──────────────────────────────────────────
+   Component rules that set `display` beat the user-agent's
+   `[hidden] { display: none }`, because both are display declarations and the
+   author sheet wins. Two pages were painting a "Switch to dark theme" button
+   that markup had marked hidden — a control offering a mode Gen 11 does not
+   ship (DESIGN.md §5) — and hidden empty-state paragraphs alongside it.
+   One guard, applied family-wide so the semantic can be trusted. */
+[hidden] { display: none !important; }

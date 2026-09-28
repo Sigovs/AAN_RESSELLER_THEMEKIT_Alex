@@ -1,0 +1,89 @@
+{
+  "pass": "Stage 2 verification (read-only)",
+  "date": "2026-09-27",
+  "cacheKey": "202609272130",
+  "sourceModifiedThisPass": false,
+
+  "1_anchor": {
+    "stickyStackHeight": 192,
+    "stickyStackComposition": { "--stick-bar": 68, "--stick-cmd": 72, "--stick-hd": 52 },
+    "intentionalAnchorGap": 10,
+    "expectedSelectedRowTop": 202,
+    "clarificationOfThe9to10InStage2Report": "It was the intentional 10px gap, measured as rowTop minus stickyBottom (192). It was NOT a 9-10px error against the 202px target.",
+    "cases": [
+      { "case": "middle row, downward",  "viewport": "1440x900",  "expected": 202, "actual": 201.33, "deviation": -0.67, "scrollBefore": 0,    "scrollAfter": 1035, "expSpace": "0px" },
+      { "case": "middle row, upward",    "viewport": "1440x900",  "expected": 202, "actual": 201.60, "deviation": -0.40, "scrollBefore": 982,  "scrollAfter": 591,  "expSpace": "0px" },
+      { "case": "final row (no need)",   "viewport": "1440x900",  "expected": 202, "actual": 201.47, "deviation": -0.53, "scrollBefore": 0,    "scrollAfter": 1553, "expSpace": "0px" },
+      { "case": "final row (extender)",  "viewport": "1441x1042", "expected": 202, "actual": 202.00, "deviation": 0.00,  "scrollAfter": 1553, "expSpace": "69px", "docBefore": 1882, "docAfter": 2595, "atVeryEnd": true },
+      { "case": "reduced motion",        "viewport": "1441x900",  "expected": 202, "actual": 201.33, "deviation": -0.67, "settledWithinMs": 50 },
+      { "case": "Filters open",          "viewport": "1441x900",  "expected": 202, "actual": 201.33, "deviation": -0.67, "rowTopBeforeDockOpened": 201.33 },
+      { "case": "middle row",            "viewport": "1366x768",  "expected": 202, "actual": 201.33, "deviation": -0.67 }
+    ],
+    "maxAbsoluteDeviationPx": 0.67,
+    "verdict": "ACCEPTED — sub-pixel. The residual is Math.round in the scroll target plus device-pixel snapping at dpr 1.875."
+  },
+
+  "2_detailIA": {
+    "verdict": "MISMATCH",
+    "topLevelRegionCount": 4,
+    "independentlyCollapsibleCount": 3,
+    "regions": [
+      { "key": "health", "header": "H3.acc__hd (no control)", "collapsible": false, "defaultState": "open",      "classes": "acc acc--open acc--static" },
+      { "key": "market", "header": "BUTTON.acc__h",           "collapsible": true,  "defaultState": "collapsed", "ariaExpanded": "false", "ariaControls": "acc-market", "collapsedHeightPx": 53 },
+      { "key": "spec",   "header": "BUTTON.acc__h",           "collapsible": true,  "defaultState": "collapsed", "ariaExpanded": "false", "ariaControls": "acc-spec",   "collapsedHeightPx": 53 },
+      { "key": "hist",   "header": "BUTTON.acc__h",           "collapsible": true,  "defaultState": "collapsed", "ariaExpanded": "false", "ariaControls": "acc-hist",   "collapsedHeightPx": 53 }
+    ],
+    "mechanism": {
+      "container": ".exp__accs — DIV, display:block, no grid (the 2x2 grid was removed in Stage 2)",
+      "builderCollapsible": "all-vehicles-gen11.js:230 function acc(key,title,summary,inner,extra) -> <section class=acc data-acc=KEY><h3><button class=acc__h aria-expanded aria-controls>",
+      "builderStatic": "all-vehicles-gen11.js:238 function staticRegion(...) -> <section class='acc acc--open acc--static'><h3 class=acc__hd> (no button)",
+      "callSite": "all-vehicles-gen11.js:344-347",
+      "toggleHandler": "all-vehicles-gen11.js:441  t.closest('.acc__h') -> S.acc[key] = !sec.classList.contains('acc--open'); setAccOpen(sec, S.acc[key])",
+      "applyState": "all-vehicles-gen11.js:243 setAccOpen(sec, open) toggles .acc--open and aria-expanded",
+      "persistedState": "all-vehicles-gen11.js:41  S.acc = { health:true, market:false, comps:false, spec:false, hist:false, ... }",
+      "cssDisclosure": "all-vehicles-gen11.css:841 .acc__p { display:grid; grid-template-rows:0fr; transition } · :843 .acc--open > .acc__p { grid-template-rows:1fr } · :842 .acc__p > div { overflow:hidden }"
+    },
+    "whatStage2DidChange": "removed the 2-column grid and .acc--open{grid-column:1/-1}; merged comps into market; made health static; one ordered column with hairline separators",
+    "whatStage2DidNotChange": "market, spec and hist remain three independent top-level accordions, collapsed by default — so at rest the workspace reads as one open section plus three closed bars, not as a continuous workspace"
+  },
+
+  "3_specificationDemoBadge": {
+    "existedBeforeStage2": false,
+    "introducedByStage2": true,
+    "baselineCall": "reference/gen11-stage2-baseline/all-vehicles-gen11.js:302  acc('spec','Specification',esc(v.tr||'No trim recorded'),specIn)",
+    "currentCall":  "pages/dealer/all-vehicles-gen11.js:346  acc('spec','Specification',esc(v.tr||'No trim recorded'),specIn,' <span class=\"demo\">Demo</span>')",
+    "mechanism": "the 5th argument of acc() is injected verbatim into the header; the .demo class is pre-existing (used by market, comps, hist in the baseline)",
+    "demoOccurrencesInJs": { "baseline": 5, "now": 6 },
+    "cssAdded": "none — .demo already existed",
+    "verdict": "SCOPE DEVIATION — Specification provenance was deferred. Left in place as instructed."
+  },
+
+  "4_inFlow": {
+    "viewport": "1441x1042",
+    "envelopeLeftRightWidth": {
+      "selectedRow":   [16, 1412.8, 1396.8],
+      "workspace":     [16, 1412.8, 1396.8],
+      "unselectedRow": [16, 1412.8, 1396.8],
+      "tableBody_tb":  [16, 1412.8, 1396.8],
+      "rowsContainer": [16, 1412.8, 1396.8],
+      "exactMatch": true
+    },
+    "seamGapPx": 0,
+    "siblingOverlapCount": 0,
+    "dimmedRowCount": 0,
+    "documentGrowth": { "docBefore": 1882, "docAfter": 2526, "growth": 644, "workspaceHeight": 623.6, "rowMarginTop": 10, "workspaceMarginBottom": 10, "expected": 643.6, "residualPx": 0.4 },
+    "footerBelowWorkspace": true,
+    "expSpace": { "whenNotNeeded": "0px", "nearDocumentEnd": "69px", "afterClose": "node removed, document back to 1882" },
+    "switching": { "newWorkspacePresentSynchronously": true, "synchronousCostMs": 8.6, "old200msPathUsed": false }
+  },
+
+  "6_impeccable": {
+    "visibleToClaudeCode": true,
+    "evidence": "listed by the Skill tool as 'impeccable'; four impeccable-* subagents also registered",
+    "path": ".claude/skills/impeccable/",
+    "skillMdVersion": "4.4.0",
+    "userInvocable": true,
+    "nothingRun": true,
+    "settingsJsonModifiedThisPass": false
+  }
+}

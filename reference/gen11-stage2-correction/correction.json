@@ -1,0 +1,67 @@
+{
+  "pass": "Stage 2 micro correction",
+  "date": "2026-09-27",
+  "cacheKey": "202609272130 -> 202609272300",
+  "blockersFixed": 2,
+
+  "1_topLevelAccordionsRemoved": {
+    "before": { "topLevelRegions": 4, "independentlyCollapsible": 3, "defaultCollapsed": ["market", "spec", "hist"] },
+    "after":  { "topLevelRegions": 4, "independentlyCollapsible": 0, "defaultCollapsed": [] },
+    "sheetAccordionButtons": 0,
+    "change": "all four regions built with staticRegion(); acc() no longer called by the vehicle sheet",
+    "regionContentHeightsAt1440": { "health": 40, "market": 766, "spec": 92, "hist": 196 },
+    "workspaceHeight": { "before": 696, "after": 1445 },
+    "preservedBecauseStillUsed": {
+      "acc()": "11 Filters-dock facet groups (f-make ... f-audit)",
+      ".acc__h click handler": "dock only — verified toggle, aria-expanded and S.acc all still work",
+      ".acc--open": "dock",
+      "0fr -> 1fr CSS (.acc__p)": "dock — panel measured animating to 366px",
+      "setAccOpen()": "dock, and the dock search filter at js:413"
+    },
+    "removedAsTrulyDead": {
+      "S.acc sheet keys": "health/market/comps/spec/hist dropped from the defaults; fresh load now shows only the 11 f-* keys",
+      "CSS .acc--static > .acc__hd::after": "reserved a chevron slot; no chevron exists in the sheet any more"
+    },
+    "addedForCorrectness": {
+      ".exp .acc--static > .acc__p { display: block }": "a region that never opens has no use for the disclosure grid",
+      ".exp .acc--static > .acc__p > div { overflow: visible }": "removes the clipping that came with it; the dock keeps both"
+    }
+  },
+
+  "2_specificationDemoBadgeRemoved": {
+    "call": "acc('spec', ..., specIn, ' <span class=\"demo\">Demo</span>')  ->  staticRegion('spec', 'Specification', esc(v.tr || 'No trim recorded'), specIn)",
+    "specHasDemoBadge": false,
+    "marketKeepsDemo": true,
+    "historyKeepsDemo": true,
+    "marketNotConnectedDisclosureIntact": "visor.vin market data · not connected, still first line of the region",
+    "specificationDataUnchanged": true,
+    "provenanceRedesigned": false
+  },
+
+  "3_acceptedBehaviourPreserved": {
+    "1440":  { "rowTop": 201.33, "deviation": -0.67, "seam": 0, "edges": [0, 0], "overlap": 0, "dimmed": 0, "overflow": 0 },
+    "1366":  { "rowTop": 201.33, "deviation": -0.67, "seam": 0, "edges": [0, 0], "overlap": 0, "dimmed": 0, "overflow": 0, "workspaceH": 1445 },
+    "finalRow": { "rowTop": 201.47, "deviation": -0.53, "seam": 0, "overlap": 0, "doc": 3370, "scrollY": 1553 },
+    "filtersPlusVehicle": { "rowTop": 201.33, "deviation": -0.67, "seam": 0, "edges": [0, 0], "overlap": 0, "dimmed": 0, "overflow": 0, "dockAccordions": 11 },
+    "stickyStack": 192, "anchorGap": 10,
+    "console": "clean"
+  },
+
+  "4_expSpaceStatusChanged": {
+    "mechanismIntact": { "nodeExists": true, "display": "block", "participatesInFlow": true, "inlineHeightWrittenByJs": "0px" },
+    "arithmeticAt1440LastRow": { "anchorTargetScroll": 1553, "documentScrollableMax": 2470, "need": -917, "spacerCorrectlyZero": true },
+    "finding": "The continuous workspace is now ~1445-1468px tall, so it supplies far more run-out below the anchor than the old 696px sheet did. The spacer would only be needed at a viewport height above roughly 1672px, which this display cannot produce. It is now a safety net rather than an active path.",
+    "previouslyObserved": "69px at 1441x1042 with the pre-correction 624px workspace",
+    "verdict": "code path intact and correctly evaluating to zero; no longer reachable on this hardware"
+  },
+
+  "5_measurementArtefactInvestigated": {
+    "symptom": "one run showed the selected row drifting to 1793 then 1495 scrollY, ~45-240px past the anchor",
+    "investigation": "wrapped window.scrollTo and Element.scrollIntoView — exactly one programmatic scroll was recorded, anchorRow at t=8ms; no second call",
+    "cleanRunResult": "fresh load, single click, 16 samples over 4s: travel completes by ~1000ms and holds rowTop 201.5 for the following 3 seconds",
+    "conclusion": "test-harness interference (back-to-back __reset + clicks leaving a smooth scroll in flight), not a product defect"
+  },
+
+  "notModified": ["sticky geometry", "sticky visuals", "lane controls", "summary cards", "global controls", "Filters behaviour", "bulk selection", "other pages", ".claude/settings.json"],
+  "impeccableRun": false
+}

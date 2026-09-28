@@ -1,0 +1,1148 @@
+/* ============================================================================
+   AAN · Staff UI · My Work Queue — GENERATION 11
+
+   Built to DESIGN.md (the locked Gen 11 system) with the content and behaviour
+   of the production export:
+     s01-work-queue-1.html   My Work            94 rows · 16 columns
+     s01-work-queue-2.html   All Open filtered  23 rows · a different 16
+     s01-work-queue-3.html   Found By Keyword   50 rows · archived on
+
+   What is deliberately NOT here, and why:
+     · no frozen rail and no column background fill — DESIGN.md §10. Not one
+       cell in this table is `position: sticky`, so nothing paints as if it were.
+     · no row expansion, no anchor, no `#exp-space` — in production a row opens
+       the ticket page. There is nothing to disclose in flow, so the §8
+       machinery has no subject here and is not imported for decoration.
+     · no bulk-selection checkbox and no selection tray — the export has no
+       bulk action on this page. A checkbox would promise one.
+
+   Index
+     TOKENS
+     BASE
+     PLATFORM BAR   .top
+     PAGE HEAD      .head  .golive
+     FIELD          .field .cmdtop .cmd .sub .rows .hd .row .foot
+     CELLS          one rule per named column class
+     MENUS          .pop .mn
+     RESPONSIVE     one breakpoint, max-width 1400px
+   ========================================================================== */
+
+
+/* ============================================================================
+   TOKENS — one authoritative layer. Values are DESIGN.md's, verbatim, except
+   the four marked LOCAL, each of which carries the reason it differs.
+   ========================================================================== */
+:root {
+  color-scheme: light;
+
+  --font: "Archivo", "Segoe UI", system-ui, sans-serif;
+  --mono: "Plex Mono", ui-monospace, monospace;
+
+  /* ── 8pt ladder (DESIGN.md §1) ───────────────────────────────────────── */
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px; --s5: 24px;
+  --s6: 32px; --s7: 40px; --s8: 48px; --s9: 64px;
+
+  --gutter: var(--s4);        /* every layer's left and right edge */
+  --sheet-inset: var(--s4);   /* field gutter: header cells, rows, scope, foot */
+  --col-gap: var(--s2);       /* between row columns */
+
+  /* ── colour roles (DESIGN.md §5) ─────────────────────────────────────── */
+  --ground: #e5e9ef;
+  --sheet: #ffffff;
+  --well: #eef1f5;
+  --wash: #f3f5f8;
+  --ink: #0d1320;
+  --ink-2: #353e4e;
+  --ink-3: #576070;
+  --ink-4: #697181;
+  --line: #dfe3ea;
+  --line-2: #e9ecf1;
+  --line-3: #c5cbd5;
+  --brand: #1f5fe0;
+  --brand-hover: #1a50c4;
+  --brand-ink: #1747b3;
+  --brand-soft: #e9f0fe;
+  --ok: #12704a;
+  --ok-soft: #e0f4e8;
+  --ok-line: #b9e2c9;
+  --signal: #945000;
+  --signal-fill: #f2a12b;
+  --signal-soft: #fff2dc;
+  --signal-line: #efcd93;
+  --danger: #bd3328;
+  --danger-soft: #fde8e5;
+  --danger-line: #f1bab3;
+  --focal: #172234;
+  --focal-2: #223049;
+  --focal-ink: #f3f6fb;
+  --focal-ink-2: #bdc6d5;
+
+  /* ── LOCAL · the department tone family ──────────────────────────────────
+     This page is the one in the system where colour carries WHICH DEPARTMENT
+     owns a ticket, not what state it is in (AAN_CROSS_PAGE_VERIFICATION §15
+     Q2). DESIGN.md §5 names brand / ok / signal / danger / slate / violet and
+     no more, so the four hues this table needs beyond them — magenta, teal,
+     orange, cyan — are taken at the production values the export ships
+     (assets/theme.css `--status-*`, light theme) rather than invented. All ten
+     pairs are contrast-verified in the render, not on the token. */
+  --t-blue-bg: #dfeafa;     --t-blue-ink: #1a55a8;
+  --t-amber-bg: #faeecb;    --t-amber-ink: #8a5c00;
+  --t-green-bg: #d9f1e1;    --t-green-ink: #156b38;
+  --t-red-bg: #fadddd;      --t-red-ink: #a82424;
+  --t-violet-bg: #e9e2fa;   --t-violet-ink: #5b34b0;
+  --t-magenta-bg: #f9e0ef;  --t-magenta-ink: #a81866;
+  --t-teal-bg: #d5f0ef;     --t-teal-ink: #0f6b66;
+  --t-orange-bg: #fae5d2;   --t-orange-ink: #94500a;
+  --t-slate-bg: #e5eaf0;    --t-slate-ink: #48586c;
+  --t-cyan-bg: #d8edf7;     --t-cyan-ink: #0d617e;
+
+  /* ── radius (DESIGN.md §3) ───────────────────────────────────────────── */
+  --r-pill: 999px;
+  --r-card: 24px;
+  --r-panel: 18px;
+  --r-control: 14px;
+  --r-inner: 10px;
+  --r-micro: 5px;
+
+  /* ── elevation (DESIGN.md §4) — one shadow per floating object ───────── */
+  --el-1: 0 1px 2px rgba(16,24,40,.08), 0 0 0 1px rgba(16,24,40,.06);
+  --el-2: 0 12px 30px -14px rgba(16,24,40,.22), 0 0 0 1px rgba(16,24,40,.05);
+  --el-3: 0 30px 64px -18px rgba(16,24,40,.34), 0 0 0 1px rgba(16,24,40,.06);
+  --sh-soft: 0 28px 64px -34px rgba(34,58,118,.42), 0 2px 8px -3px rgba(34,58,118,.10), inset 0 1px 0 rgba(255,255,255,.95);
+  --sh-pill: 0 1px 2px rgba(34,58,118,.12), 0 6px 14px -8px rgba(34,58,118,.32), inset 0 1px 0 #fff;
+  --glass: rgba(255,255,255,.76);
+
+  /* ── sticky stack (DESIGN.md §7) — CSS publishes, JS reads ───────────── */
+  --bar-track: 88px;
+  --stick-bar: 68px;
+  --stick-cmd: 72px;   /* 8 + 56 + 8 — the vertical padding is load-bearing */
+  --stick-hd: 52px;
+  --stick-cmd-top: var(--stick-bar);
+  --stick-hd-top: calc(var(--stick-bar) + var(--stick-cmd));
+
+  /* ── layer ladder (DESIGN.md §7) — no component writes a raw z-index ─── */
+  --z-ground: 0;
+  --z-content: 1;
+  --z-raised: 3;
+  --z-sticky-hd: 10;
+  --z-sticky-cmd: 12;
+  --z-platform: 20;
+  --z-menu: 40;
+
+  /* ── LOCAL · row height ──────────────────────────────────────────────────
+     DESIGN.md §10 ships --row: 74px. That number is All Vehicles': its row
+     carries a 46px thumbnail and a three-line price cell. The tallest cell
+     here is two lines of 13px text, and this is a 94-row operational queue —
+     production runs it at 67.5–92.2px per row with the same 13px type. 64px is
+     the same rhythm one step down the ladder (= --s9): 2 × 18px line + 2 × 14px
+     padding. Density is the point of the page; it is not spread out to look
+     calmer. */
+  --row: 64px;
+
+  /* ── LOCAL · column-header type ──────────────────────────────────────────
+     All Vehicles' .hd is 13px caps / .06em across 13 tracks. This lane has 16,
+     three of whose labels are single words wider than any track it can afford
+     (COMPLETION 96.7px, DEALERSHIP 93.1px, REMAINING 84.0px at 13px). Dropping
+     to the system's own `.caps` size — 12px / 700, DESIGN.md §1's label role —
+     buys back 10% and is what makes every label fit its track WITHOUT a
+     mid-word break. Tracking is .05em rather than .09em for the same reason. */
+  --hd-size: 12px;
+  --hd-track: .05em;
+
+  /* ── motion (DESIGN.md §14) ──────────────────────────────────────────── */
+  --dur: 160ms;
+  --dur2: 240ms;
+  --ease: cubic-bezier(.2,0,0,1);
+
+  /* ── focus (DESIGN.md §12) — owns `outline`, and nothing else owns it ── */
+  --focus-w: 2px;
+  --focus-offset: 2px;
+  --focus-color: var(--brand);
+  --focus-color-on-dark: #ffd98a;
+}
+
+
+/* ============================================================================
+   BASE
+   ========================================================================== */
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: local("Archivo"), local("Archivo Variable");
+}
+@font-face {
+  font-family: "Plex Mono";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: local("IBM Plex Mono"), local("Cascadia Mono"), local("Consolas");
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* every component here sets its own `display`, which would otherwise beat the
+   UA's [hidden] rule and leave a "hidden" control on screen */
+[hidden] { display: none !important; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font: 400 14px/1.45 var(--font);
+  font-feature-settings: "cv11";
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2 { margin: 0; font-weight: 600; letter-spacing: -.01em; }
+
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+button, input, select { font: inherit; color: inherit; }
+button { background: none; border: 0; padding: 0; cursor: pointer; }
+
+/* focus is one layer and it is never drawn with box-shadow (DESIGN.md §12) */
+:focus { outline: none; }
+:focus-visible {
+  outline: var(--focus-w) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--r-micro);
+}
+
+.vh {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+.i {
+  width: 16px; height: 16px; flex: 0 0 auto;
+  fill: none; stroke: currentColor; stroke-width: 1.6;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+.caps {
+  font-size: 12px; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+
+.n { font-variant-numeric: tabular-nums; }
+
+.app {
+  display: grid;
+  /* minmax(0,1fr), not the implicit `auto`: an auto column is sized by its
+     items' MAX-content, and .hd's max-content is the sum of every track at its
+     growth limit. That column then refuses to shrink to the viewport and the
+     page scrolls sideways — measured at +30px before this line existed. */
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: var(--bar-track) auto auto 1fr;
+  padding: 0 var(--gutter) var(--gutter);
+  min-height: 100vh;
+}
+
+
+/* ============================================================================
+   PLATFORM BAR — FLOATING at rest, ATTACHED once engaged (DESIGN.md §2)
+   ========================================================================== */
+.top {
+  grid-row: 1;
+  position: sticky;
+  top: 0;
+  z-index: var(--z-platform);
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: var(--s1);
+  height: var(--stick-bar);
+  margin: var(--s3) 0 0;
+  padding: 0 16px;
+  border-radius: var(--r-card);
+  background: var(--glass);
+  box-shadow: var(--sh-soft);
+}
+@supports (backdrop-filter: blur(14px)) {
+  .top { -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px); }
+}
+
+.brand { display: flex; align-items: center; gap: var(--s2); padding: 0 var(--s2) 0 var(--s1); }
+.brand__mk {
+  display: grid; place-items: center;
+  width: 38px; height: 30px;
+  border-radius: var(--r-micro);
+  background: var(--focal); color: #fff;
+  font-size: 12px; font-weight: 700; letter-spacing: .06em;
+}
+.brand__t { font-weight: 600; letter-spacing: -.01em; white-space: nowrap; }
+.brand__env {
+  padding: 1px 6px; border-radius: var(--r-micro);
+  background: var(--well); color: var(--ink-3);
+  font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+}
+
+.nav { display: flex; align-items: center; gap: 2px; min-width: 0; }
+.nav__it { position: relative; }
+.nav__b {
+  display: inline-flex; align-items: center; gap: var(--s1);
+  height: 36px; padding: 0 10px;
+  border-radius: var(--r-pill);
+  color: var(--ink-2); font-size: 14px; font-weight: 500; white-space: nowrap;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.nav__b:hover { background: rgba(255,255,255,.72); color: var(--ink); text-decoration: none; }
+.nav__b .i { width: 12px; height: 12px; opacity: .6; }
+/* current nav section: tinted, no fill (DESIGN.md §6) */
+.nav__it--on > .nav__b { color: var(--brand-ink); font-weight: 600; }
+
+.top__sp { flex: 1 1 auto; min-width: var(--s2); }
+.top__div { width: 1px; height: 26px; margin: 0 var(--s2); background: var(--line); }
+
+.gsearch {
+  display: flex; align-items: center; gap: var(--s2);
+  width: 208px; height: 38px; padding: 0 var(--s2) 0 10px;
+  border-radius: var(--r-inner);
+  background: var(--sheet);
+  box-shadow: var(--el-1);
+  color: var(--ink-3);
+}
+.gsearch input { flex: 1; min-width: 0; border: 0; background: none; font-size: 13px; }
+.gsearch input::placeholder { color: var(--ink-4); }
+.gsearch kbd {
+  padding: 1px 5px; border-radius: var(--r-micro);
+  background: var(--well); color: var(--ink-3);
+  font: 600 11px var(--mono);
+}
+
+.tbtn {
+  position: relative;
+  display: grid; place-items: center;
+  width: 36px; height: 36px;
+  border-radius: var(--r-pill);
+  color: var(--ink-2);
+  transition: background var(--dur) var(--ease);
+}
+.tbtn:hover { background: rgba(255,255,255,.72); color: var(--ink); }
+
+.atlas {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 30px; padding: 0 10px;
+  border-radius: var(--r-pill);
+  background: var(--well); color: var(--ink-2);
+  font-size: 12px; font-weight: 600;
+}
+.atlas:hover { color: var(--ink); text-decoration: none; }
+
+.me {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  height: 40px; padding: 0 var(--s2) 0 var(--s1);
+  border-radius: var(--r-pill);
+  transition: background var(--dur) var(--ease);
+}
+.me:hover { background: rgba(255,255,255,.72); }
+.me__mk {
+  display: grid; place-items: center;
+  width: 30px; height: 30px; border-radius: var(--r-pill);
+  background: var(--focal); color: #fff; font-size: 12px; font-weight: 700;
+}
+.me__n { font-size: 13px; font-weight: 600; white-space: nowrap; }
+.me .i { width: 12px; height: 12px; opacity: .6; }
+
+
+/* ============================================================================
+   PAGE HEAD
+   ========================================================================== */
+.head {
+  grid-row: 2;
+  display: flex; align-items: center; gap: var(--s3);
+  min-height: var(--stick-bar);
+  padding: var(--s2) 0;
+}
+.head__id { min-width: 0; }
+.head h1 { font-size: 22px; line-height: 1.2; }
+.head__meta {
+  margin-top: 3px;
+  color: var(--ink-3); font-size: 13px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.head__ttl { display: flex; align-items: center; gap: var(--s2); }
+.head__ctx {
+  padding: 2px 8px; border-radius: var(--r-micro);
+  background: var(--well); color: var(--ink-3);
+  font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+}
+.head__sp { flex: 1 1 auto; }
+.head__actions { display: flex; align-items: center; gap: var(--s2); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
+  height: 40px; padding: 0 var(--s4);
+  border-radius: var(--r-pill);
+  font-size: 14px; font-weight: 600; white-space: nowrap;
+  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.btn--primary { background: var(--brand); color: #fff; box-shadow: 0 10px 22px -10px rgba(29,95,230,.7), inset 0 1px 0 rgba(255,255,255,.32); }
+.btn--primary:hover { background: var(--brand-hover); text-decoration: none; }
+.btn--sheet { background: var(--sheet); color: var(--ink); box-shadow: var(--sh-pill); }
+.btn--sheet:hover { background: var(--wash); text-decoration: none; }
+.btn--quiet { color: var(--ink-2); }
+.btn--quiet:hover { background: rgba(255,255,255,.72); color: var(--ink); text-decoration: none; }
+.btn--sm { height: 32px; padding: 0 var(--s3); font-size: 13px; }
+.btn .i { width: 16px; height: 16px; }
+
+/* ── Go Live List ────────────────────────────────────────────────────────
+   Production ships this as a wrapping strip of dated go-live tickets above the
+   queue. It sits on the page ground with one caps label — not in a card, and
+   not inside the field, because it is not part of the list's chrome. */
+.golive {
+  grid-row: 3;
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  gap: var(--s1) var(--s2);
+  padding: var(--s1) 0 var(--s3);
+}
+.golive__l { flex: 0 0 auto; padding-right: var(--s1); }
+.gl {
+  display: inline-flex; align-items: baseline; gap: 6px;
+  height: 26px; padding: 0 10px;
+  border-radius: var(--r-pill);
+  background: var(--sheet); box-shadow: var(--el-1);
+  font-size: 12px;
+  transition: box-shadow var(--dur) var(--ease);
+}
+.gl:hover { box-shadow: var(--sh-pill); text-decoration: none; }
+.gl b { font-weight: 600; color: var(--ink); }
+.gl i { font-style: normal; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.gl--all { background: none; box-shadow: inset 0 0 0 1px var(--line-3); color: var(--ink-2); font-weight: 600; }
+
+
+/* ============================================================================
+   FIELD — FLOATING: one radius, one shadow. Everything inside it is ATTACHED:
+   square touching corners, one hairline, no interior shadow. (DESIGN.md §2)
+   ========================================================================== */
+.field {
+  grid-row: 4;
+  align-self: start;
+  border-radius: var(--r-card);
+  background: rgba(255,255,255,.58);
+  box-shadow: var(--sh-soft);
+}
+
+/* ── the lane rail. Not sticky: it scrolls away, exactly as All Vehicles'
+      .cmdtop does, so the engaged stack stays at 192px. ─────────────────── */
+.cmdtop {
+  display: flex; align-items: center; gap: var(--s3);
+  min-height: 50px;
+  padding: var(--s3) var(--gutter) var(--s2);
+}
+
+/* One exclusive control, one sunken track: every button in it calls the same
+   setLane(). The internal hairline is production's own divider between "my"
+   lanes and the department lanes — it groups, it does not separate two
+   controls. Current lane = white thumb on the sunken track (DESIGN.md §6). */
+.lanes {
+  display: inline-flex; flex-wrap: wrap; align-items: center;
+  gap: 3px;
+  padding: 5px;
+  border-radius: var(--r-pill);
+  background: var(--well);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.lanes__div { width: 1px; align-self: stretch; margin: 2px var(--s1); background: var(--line-3); }
+.lane {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 34px; padding: 0 12px;
+  border-radius: var(--r-pill);
+  color: var(--ink-2); font-size: 13px; font-weight: 500; white-space: nowrap;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.lane:hover { background: rgba(255,255,255,.62); color: var(--ink); }
+.lane b { color: var(--ink); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.lane--on, .lane--on:hover { background: var(--sheet); color: var(--brand-ink); box-shadow: var(--sh-pill); }
+.lane--on b { color: var(--brand-ink); }
+/* a lane with no archive is genuinely unavailable, not merely quiet */
+.lane[disabled] { color: var(--ink-4); cursor: not-allowed; }
+/* Pending is a lane STATE, not the current lane — production draws it red on
+   light with a red edge, and it must stay legible beside the white thumb. */
+.lane--hot { background: var(--danger-soft); box-shadow: inset 0 0 0 1px var(--danger-line); color: var(--danger); font-weight: 600; }
+.lane--hot b { color: var(--danger); }
+.lane--hot:hover { background: #fbdcd8; color: var(--danger); }
+
+.cmdtop__sp { flex: 1 1 auto; }
+
+.sw {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  height: 34px; padding: 0 var(--s3) 0 var(--s2);
+  border-radius: var(--r-pill);
+  color: var(--ink-2); font-size: 13px; font-weight: 600; white-space: nowrap;
+}
+.sw:hover { background: rgba(255,255,255,.62); color: var(--ink); }
+.sw__t {
+  position: relative; width: 30px; height: 18px; flex: none;
+  border-radius: var(--r-pill);
+  background: var(--line-3);
+  transition: background var(--dur) var(--ease);
+}
+.sw__t::after {
+  content: ""; position: absolute; top: 3px; left: 3px;
+  width: 12px; height: 12px; border-radius: var(--r-pill);
+  background: var(--sheet); box-shadow: 0 1px 2px rgba(16,24,40,.28);
+  transition: left var(--dur) var(--ease);
+}
+.sw[aria-checked="true"] { color: var(--brand-ink); }
+.sw[aria-checked="true"] .sw__t { background: var(--brand); }
+.sw[aria-checked="true"] .sw__t::after { left: 15px; }
+
+/* ── command band · sticky #2 of 3 ──────────────────────────────────────── */
+.cmd {
+  position: sticky;
+  top: var(--stick-cmd-top);
+  z-index: var(--z-sticky-cmd);
+  display: flex; align-items: center; gap: var(--s2);
+  height: var(--stick-cmd);
+  padding: var(--s2) var(--gutter);   /* 8 + 56 + 8 = --stick-cmd */
+  border-radius: 0;
+  background: rgba(255,255,255,.88);
+  isolation: isolate;
+  transition: background var(--dur) var(--ease);
+}
+@supports (backdrop-filter: blur(12px)) {
+  .cmd { -webkit-backdrop-filter: saturate(1.35) blur(12px); backdrop-filter: saturate(1.35) blur(12px); }
+}
+
+.search {
+  flex: 1 1 auto; min-width: 220px;
+  display: flex; align-items: center; gap: 6px;
+  height: 56px; padding: 0 var(--s3) 0 14px;
+  border-radius: var(--r-control);
+  background: var(--sheet);
+  /* An input is a control on a surface, not a card floating above one. It used
+     to carry --sh-pill, a real drop shadow, which made it the only genuinely
+     raised thing inside the field card on the whole family. A 1px ring states
+     the same edge without the elevation. DESIGN.md §2, §4. */
+  box-shadow: inset 0 0 0 1px var(--line);
+  color: var(--ink-3);
+  overflow: hidden;
+}
+.search:focus-within { box-shadow: inset 0 0 0 1px var(--brand); }
+.search__chips { display: flex; align-items: center; gap: var(--s1); flex: none; }
+.search input {
+  flex: 1 1 140px; min-width: 100px;
+  border: 0; background: none; font-size: 14px; color: var(--ink);
+}
+.search input::placeholder { color: var(--ink-4); }
+
+/* an applied filter, removable, shown where it was typed */
+.fchip {
+  display: inline-flex; align-items: center; gap: var(--s1);
+  height: 26px; padding: 0 var(--s1) 0 var(--s2); flex: none;
+  border-radius: var(--r-pill);
+  background: var(--brand-soft); color: var(--brand-ink);
+  font-size: 12px; font-weight: 600; white-space: nowrap;
+}
+.fchip__k { opacity: .72; font-weight: 500; }
+.fchip__x { display: grid; place-items: center; width: 18px; height: 18px; border-radius: var(--r-pill); color: inherit; }
+.fchip__x:hover { background: var(--brand); color: #fff; }
+.fchip__x .i { width: 11px; height: 11px; }
+/* a keyword is not a field filter — it is the query itself, and production
+   marks it in the signal tone rather than the brand tone */
+.fchip--kw { background: var(--signal-soft); color: var(--signal); box-shadow: inset 0 0 0 1px var(--signal-line); }
+.fchip--kw .fchip__x:hover { background: var(--signal); color: var(--signal-soft); }
+
+.facet { position: relative; flex: none; }
+.facet__b {
+  position: relative;
+  display: inline-flex; flex-direction: column; justify-content: center;
+  gap: 1px;
+  height: 56px; padding: 0 30px 0 var(--s4);
+  border-radius: var(--r-control);
+  background: var(--sheet); box-shadow: var(--sh-pill);
+  text-align: left; white-space: nowrap;
+  transition: background var(--dur) var(--ease);
+}
+.facet__b:hover { background: var(--wash); }
+.facet__k { font-size: 12px; font-weight: 500; color: var(--ink-3); }
+.facet__v { font-size: 14px; font-weight: 600; color: var(--ink); }
+.facet__b > .i { position: absolute; right: 12px; top: 50%; margin-top: -6px; width: 12px; height: 12px; color: var(--ink-3); }
+.facet__b--icon { flex-direction: row; align-items: center; gap: var(--s2); padding: 0 var(--s4); }
+.facet__b--icon > .i { position: static; margin: 0; width: 16px; height: 16px; }
+.facet__cnt {
+  min-width: 20px; padding: 1px 6px; border-radius: var(--r-pill);
+  background: var(--brand); color: #fff; font-size: 12px; font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.cmd__div { width: 1px; height: 32px; flex: none; background: rgba(18,23,20,.14); }
+
+/* ── scope line ─────────────────────────────────────────────────────────── */
+.sub {
+  display: flex; align-items: center; gap: var(--s2);
+  min-height: var(--s8);
+  padding: 6px var(--gutter);
+  color: var(--ink-3); font-size: 13px;
+}
+.sub__sp { flex: 1 1 auto; }
+.scope b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.sub label { font-size: 12px; }
+
+.sel {
+  height: 30px; padding: 0 var(--s2);
+  border: 0; border-radius: var(--r-inner);
+  background: var(--sheet); box-shadow: var(--el-1);
+  font-size: 13px; color: var(--ink);
+}
+
+
+/* ============================================================================
+   THE LIST
+   ========================================================================== */
+.rows { background: var(--sheet); border-radius: 0; }
+
+/* ── column model ────────────────────────────────────────────────────────
+   Sixteen tracks. Fourteen are fixed, Dealership is clamped, and Subject is
+   the ONE flexible track that absorbs the difference at every width
+   (DESIGN.md §15, §16).
+
+   Every fixed track is sized by its WORST CASE, and the worst case that binds
+   is the widest unbreakable word in either the header or the cells — measured,
+   not guessed, at 12px/700/.05em caps for headers and 13px for cells. That is
+   the whole fix for the mid-word breaks the verification found: nothing here
+   relies on `overflow-wrap: break-word` or `hyphens: auto` to make a label fit.
+
+       track        px   binding worst case
+       grip         20   the handle
+       rank         72   PRIORITY 63.1
+       ticket       60   TICKET 48.3 · 1048663 in mono 54.6
+       dealership  88+   1fr   ─┐ the two free-text tracks. See the note below
+       subject     140+  1.6fr  ─┘ on why there are two and not one.
+       status      100   the badge, not the label: "Support Open" measures 93.2
+                         with its pill padding and was clipping at 92
+       work type    88   "Modification" 74.0 — the longest word, not the longest
+                         value: "DNS Records/Settings" breaks after the slash
+       ticket age   52   TICKET 48.3
+       dollar       68   $49,500.00 in mono
+       my est.      64   "EST. TIME" 64.2 on one line under MY. 48px forced a
+                         third line into a header box that holds two.
+       remaining    80   REMAINING 76.5
+       last mod.    92   9/8/26 17:28 in mono 86.4
+       assigned     80   ASSIGNED 69.1
+       begin        52   BEGIN 42.1
+       completion   92   COMPLETION 88.1
+       actions      36   the cog
+
+   TWO flexible tracks, not one. DESIGN.md §16 names Model as All Vehicles' only
+   1fr because that table has one free-text column. This one has two — Dealership
+   and Subject — and production sizes them 8% and 13%, a ratio of 1.625. The fr
+   factors below reproduce that ratio (1 : 1.6) rather than inventing a split.
+   A clamped track was tried first and rejected on measurement: grid maximises a
+   clamped track BEFORE it expands an fr one, so at 1440 Dealership took 155px
+   while Subject sat at its 140px floor and 55 of 94 subjects truncated. Subject
+   is the ticket's identity; it must lead.
+
+   Budget check, the number that decides whether it fits. At 1366 the field is
+   1338px wide once the ≤1400 gutter step lands; 15 gaps of 8 and 16px of row
+   inset leave 1202px of track. The minimums sum to 1168px (mine) and 1176px
+   (open), so both sets clear it with room and nothing overflows — verified at
+   0px, not assumed.
+   ========================================================================== */
+.field[data-cols="mine"] {
+  --cols:
+    20px                  /* reorder     */
+    72px                  /* priority    */
+    60px                  /* ticket      */
+    minmax(88px, 1fr)     /* dealership  */
+    minmax(140px, 1.6fr)  /* subject     */
+    100px                 /* status      */
+    88px                  /* work type   */
+    52px                  /* ticket age  */
+    68px                  /* dollar      */
+    64px                  /* my est.     */
+    80px                  /* remaining   */
+    92px                  /* last mod.   */
+    80px                  /* assigned    */
+    52px                  /* begin       */
+    92px                  /* completion  */
+    36px;                 /* actions     */
+}
+
+/* The All Open / archived lanes ship a DIFFERENT sixteen: no reorder handle and
+   no personal time columns, and Priority becomes a badge rather than a rank.
+   Two column sets, declared, rather than one set that half-fits both. */
+.field[data-cols="open"] {
+  --cols:
+    60px                  /* ticket              TICKET 48.3 · mono 54.6      */
+    minmax(88px, 1fr)     /* dealership          DEALERSHIP 84.8              */
+    minmax(132px, 1.6fr)  /* subject             132 rather than the 140 the
+                                                  other set uses: this set
+                                                  carries one more wide track
+                                                  and the 8px buys DAYS SINCE a
+                                                  single line                  */
+    104px                 /* status              the archived lane's labels run
+                                                  longer than My Work's:
+                                                  "Internal Closed" needs 103  */
+    68px                  /* priority (badge)    PRIORITY 63.1. Six of the
+                                                  seven production values fit;
+                                                  "As Scheduled" ellipsises and
+                                                  carries its full text as the
+                                                  element's title, the way this
+                                                  table already treats a VIN    */
+    64px                  /* date created        CREATED 62.4                 */
+    48px                  /* ticket age          TICKET 47.6                  */
+    76px                  /* work type           "Modification" 74.0          */
+    60px                  /* dollar              AMOUNT 57.3 (all N/A here)   */
+    44px                  /* est. time           TIME 31.9                    */
+    92px                  /* last modified       mono timestamp 86.4          */
+    88px                  /* days since modified "DAYS SINCE" 79.0 on one line,
+                                                  MODIFIED 65.4 on the next.
+                                                  Measured: 68px broke it into
+                                                  three lines, 80px still did.  */
+    72px                  /* assigned            ASSIGNED 68.2                */
+    52px                  /* begin               BEGIN 41.5                   */
+    92px                  /* completion          COMPLETION 86.9              */
+    36px;                 /* actions             the cog                      */
+}
+
+/* ── column header · sticky #3 of 3. It owns the stack's bottom edge. ───── */
+.hd {
+  position: sticky;
+  top: var(--stick-hd-top);
+  z-index: var(--z-sticky-hd);
+  display: grid;
+  grid-template-columns: var(--cols);
+  gap: var(--col-gap);
+  align-items: end;
+  height: var(--stick-hd);
+  padding: var(--s2) var(--sheet-inset) 10px;
+  background: var(--sheet);
+  box-shadow: inset 0 -1px 0 var(--line-3);
+  color: var(--ink-3);
+  font-size: var(--hd-size); font-weight: 700;
+  letter-spacing: var(--hd-track); text-transform: uppercase;
+  isolation: isolate;
+  transition: box-shadow var(--dur) var(--ease);
+}
+.hd > * { min-width: 0; line-height: 1.25; }
+/* wrapping onto two lines at a word boundary is correct at this density. What
+   is never allowed is a break inside a word, so no rule here asks for one. */
+.hd span, .hd .s {
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
+}
+.hd .s {
+  display: inline-flex; align-items: flex-end; gap: 3px;
+  text-align: left; color: inherit;
+  /* a button does not inherit these from .hd — without the two lines below,
+     every sortable label rendered Title Case beside caps ones that were not */
+  text-transform: inherit;
+  letter-spacing: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+}
+.hd .s:hover { color: var(--ink); text-decoration: none; }
+.hd .s .i { width: 11px; height: 11px; margin-bottom: 2px; opacity: 0; }
+.hd .s--on { color: var(--ink); }
+.hd .s--on .i { opacity: 1; }
+/* right-aligned header cells keep a FULL-WIDTH box on purpose: the operational
+   group's divider is an inset shadow on the box's left edge, and justify-self:
+   end would shrink that box to its text and move the line off the track edge. */
+.hd .r { text-align: right; }
+.hd .r .s { justify-content: flex-end; width: 100%; }
+
+/* ── the operational column group ────────────────────────────────────────
+   Dollar Amount · My Est. · Remaining · Last Modified · Assigned · Begin ·
+   Completion are what you act on; Ticket → Work Type is what you identify the
+   ticket by. One divider where the group begins and nothing else — no fill, no
+   frozen rail, addressed by semantic class rather than nth-child
+   (DESIGN.md §10). */
+.hd > .c-amt,
+.row > .c-amt {
+  box-shadow: inset 1px 0 0 var(--line-2);
+  padding-left: var(--s3);
+}
+
+/* ── row ────────────────────────────────────────────────────────────────── */
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--cols);
+  gap: var(--col-gap);
+  align-items: center;
+  height: var(--row);
+  padding: 0 var(--sheet-inset);
+  box-shadow: inset 0 -1px 0 var(--line-2);
+  font-size: 13px;
+  transition: background var(--dur) var(--ease);
+}
+.row:hover { background: var(--well); }
+.row:focus-visible { outline-offset: -2px; border-radius: 0; }
+.row.row--drag { opacity: .45; }
+.row.row--over { box-shadow: inset 0 -1px 0 var(--line-2), inset 0 2px 0 var(--brand); }
+
+.c {
+  min-width: 0;
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 1px;
+  line-height: 1.35;
+}
+.c.r, .row > .n { text-align: right; align-items: flex-end; }
+.c.ctr { text-align: center; align-items: center; }
+
+/* reorder handle */
+.grip {
+  display: grid; place-items: center;
+  width: 20px; height: 32px;
+  border-radius: var(--r-micro);
+  color: var(--ink-4);
+  cursor: grab;
+}
+.row:hover .grip { color: var(--ink-3); }
+.grip:active { cursor: grabbing; }
+.grip .i { width: 14px; height: 14px; }
+
+/* an inline-editable value: it looks like the value, and says so on hover */
+.ed {
+  display: inline-block; max-width: 100%;
+  padding: 2px 5px; margin: -2px -5px;
+  border-radius: var(--r-micro);
+  color: var(--brand-ink); font: inherit; font-variant-numeric: tabular-nums;
+  text-align: inherit;
+  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.ed:hover { background: var(--brand-soft); box-shadow: inset 0 0 0 1px var(--brand-soft); }
+.ed--num { font-weight: 600; }
+.edin {
+  width: 100%; min-width: 0;
+  height: 26px; padding: 0 5px;
+  border: 0; border-radius: var(--r-micro);
+  background: var(--sheet);
+  box-shadow: inset 0 0 0 2px var(--brand);
+  font-size: 13px; font-variant-numeric: tabular-nums;
+}
+
+.c-rank { align-items: center; }
+.c-rank .ed { min-width: 26px; text-align: center; font-weight: 600; }
+
+.tkt { font: 600 13px var(--mono); color: var(--brand-ink); letter-spacing: -.01em; }
+
+.dlr {
+  display: inline-flex; align-items: center; gap: 3px;
+  min-width: 0;
+  color: var(--ink);
+}
+.dlr span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dlr .i { width: 11px; height: 11px; flex: none; color: var(--ink-4); opacity: 0; }
+.row:hover .dlr .i { opacity: 1; }
+
+.c-sub a { font-weight: 600; color: var(--ink); }
+.c-sub { overflow: hidden; }
+.c-sub a {
+  display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* status / priority badge — the department tone family */
+.bdg {
+  display: inline-block; max-width: 100%;
+  padding: 2px 8px 3px;
+  border-radius: var(--r-pill);
+  background: var(--bdg-bg, var(--t-slate-bg));
+  color: var(--bdg-ink, var(--t-slate-ink));
+  font-size: 12px; font-weight: 600;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.bdg--open,              .bdg--priority_normal      { --bdg-bg: var(--t-blue-bg);    --bdg-ink: var(--t-blue-ink); }
+.bdg--project_open                                  { --bdg-bg: var(--t-violet-bg);  --bdg-ink: var(--t-violet-ink); }
+.bdg--project_ongoing                               { --bdg-bg: var(--t-magenta-bg); --bdg-ink: var(--t-magenta-ink); }
+.bdg--projdevopen                                   { --bdg-bg: var(--t-teal-bg);    --bdg-ink: var(--t-teal-ink); }
+.bdg--leadtracking_open                             { --bdg-bg: var(--t-green-bg);   --bdg-ink: var(--t-green-ink); }
+.bdg--billing_open                                  { --bdg-bg: var(--t-orange-bg);  --bdg-ink: var(--t-orange-ink); }
+.bdg--project_hold                                  { --bdg-bg: var(--t-amber-bg);   --bdg-ink: var(--t-amber-ink); }
+.bdg--priority_high                                 { --bdg-bg: var(--t-red-bg);     --bdg-ink: var(--t-red-ink); }
+.bdg--closed, .bdg--project_closed,
+.bdg--projongoclosed, .bdg--projdevclosed,
+.bdg--leadtracking_closed, .bdg--billing_closed,
+.bdg--priority_low                                  { --bdg-bg: var(--t-slate-bg);   --bdg-ink: var(--t-slate-ink); }
+
+/* work type — breaks at a space or a slash, never inside a word */
+.c-wt { overflow: hidden; }
+.c-wt span {
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: break-word;   /* break opportunities only: space, hyphen, slash */
+  word-break: normal;
+  hyphens: manual;
+}
+
+/* Last Modified — who, then when. The flag is production's "Flagged by X".
+   It reads as an edge marker plus an icon, never as a slab of colour poured
+   across the cell: the same amber fill was doing two jobs in the export and
+   made a routine column the loudest thing in the row. */
+.c-mod b { display: flex; align-items: center; min-width: 0; font-weight: 600; }
+.c-mod b > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.c-mod i { font-style: normal; color: var(--ink-3); font: 500 12px var(--mono); }
+.c-mod--flag {
+  box-shadow: inset 2px 0 0 var(--signal-fill);
+  padding-left: 7px;
+  margin-left: -7px;
+}
+.c-mod__f { display: inline-flex; align-items: center; color: var(--signal); }
+.c-mod__f .i { width: 12px; height: 12px; margin-right: 3px; }
+
+/* Assigned — two names, then a count that carries the rest in its title.
+   The parenthesised name is production's own marker and keeps its --ok ink. */
+.c-who { overflow: hidden; }
+.c-who__l { display: flex; align-items: baseline; gap: var(--s1); min-width: 0; }
+.c-who__l > span, .c-who__l > i { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.c-who .own { color: var(--ok); font-style: normal; font-weight: 600; }
+.c-who .more {
+  flex: none;
+  padding: 0 5px; border-radius: var(--r-micro);
+  background: var(--wash); color: var(--ink-3);
+  font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+
+/* Completion — an optional state above the date. "Waiting" is production's own
+   phrase abbreviated the way production abbreviates elsewhere ("Misc.",
+   "System Enhance"); the full string is on the element. */
+/* A filled amber block here would be the HEALTH-column mistake again: the
+   loudest thing in the row would be a routine state on one in five tickets.
+   A dot and a word in the signal ink says the same thing and stays in rank. */
+.tag {
+  align-self: flex-start;
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 700; letter-spacing: .04em;
+  white-space: nowrap;
+  color: var(--signal);
+}
+.tag::before {
+  content: ""; width: 6px; height: 6px; flex: none;
+  border-radius: var(--r-pill); background: var(--signal-fill);
+}
+.c-beg .ed, .c-done .ed { font: 500 12px var(--mono); color: var(--brand-ink); }
+.c-beg .d, .c-done .d { font: 500 12px var(--mono); color: var(--ink-2); }
+
+/* numeric tracks — tabular, right-aligned, and quiet when the value is absent.
+   No age banding: production defines no day thresholds for a ticket, and
+   inventing four would be inventing a workflow. */
+.c-age, .c-amt, .c-est, .c-left, .c-since {
+  font-variant-numeric: tabular-nums;
+  align-items: flex-end; text-align: right;
+}
+.c-amt { font: 500 12px var(--mono); color: var(--ink-2); }
+.c-amt .na, .c-est .na, .c-left .na { color: var(--ink-4); font-family: var(--font); font-size: 12px; }
+.c-age, .c-since { font-weight: 600; color: var(--ink-2); }
+.c-left .v--neg { color: var(--danger); font-weight: 600; }
+.c-cre { font: 500 12px var(--mono); color: var(--ink-2); }
+.c-grip { align-items: center; }
+.c-pri, .c-st { overflow: hidden; }
+.c-act { align-items: flex-end; }
+
+.gear {
+  display: grid; place-items: center;
+  width: 32px; height: 32px;
+  border-radius: var(--r-inner);
+  color: var(--ink-3);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.gear:hover { background: var(--wash); color: var(--brand-ink); text-decoration: none; }
+.gear .i { width: 17px; height: 17px; }
+
+/* a keyword hit, marked on the text that matched and nowhere else */
+mark {
+  padding: 0 1px; border-radius: 2px;
+  background: var(--signal-soft);
+  box-shadow: inset 0 -2px 0 var(--signal-fill);
+  color: inherit;
+}
+
+/* archived rows are quieter, but they are still live links: the ink stays above
+   AA and nothing is dimmed with opacity. */
+.rows[data-archived] .row .tkt,
+.rows[data-archived] .row .c-sub a { color: var(--ink-2); }
+
+.empty {
+  display: flex; flex-direction: column; align-items: center; gap: var(--s3);
+  padding: var(--s9) var(--gutter);
+  color: var(--ink-3); text-align: center;
+}
+.empty b { display: block; color: var(--ink); font-size: 15px; font-weight: 600; }
+
+/* ── footer ─────────────────────────────────────────────────────────────── */
+.foot {
+  display: flex; align-items: center; gap: var(--s5);
+  min-height: var(--s8);
+  padding: var(--s2) var(--sheet-inset);
+  border-radius: 0 0 var(--r-card) var(--r-card);
+  background: var(--sheet);
+  box-shadow: inset 0 1px 0 var(--line-2);
+  color: var(--ink-3); font-size: 13px;
+}
+.foot__sp { flex: 1 1 auto; }
+.tot { display: inline-flex; gap: var(--s5); white-space: nowrap; }
+.tot b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.tot .v--ok { color: var(--ok); }
+
+.pg { display: inline-flex; align-items: center; gap: 2px; }
+.pg button {
+  display: inline-grid; place-items: center;
+  min-width: 30px; height: 30px; padding: 0 6px;
+  border-radius: var(--s2);
+  color: var(--ink-2); font-weight: 500; font-variant-numeric: tabular-nums;
+}
+.pg button:hover:not([disabled]) { background: var(--wash); color: var(--ink); }
+.pg button[disabled] { color: var(--ink-4); cursor: default; }
+.pg .on, .pg .on:hover { background: var(--ink); color: var(--sheet); }
+.pg .i { width: 14px; height: 14px; }
+
+
+/* ============================================================================
+   THE ENGAGED STACK — platform bar + command band + column header are ONE
+   attached surface: one glass value, one hairline per boundary, no interior
+   shadow, and exactly one shadow at the bottom edge. (DESIGN.md §2, §4)
+   ========================================================================== */
+.app.is-stuck .top,
+.cmd--stuck {
+  background: rgba(255,255,255,.94);
+  -webkit-backdrop-filter: saturate(1.35) blur(14px);
+  backdrop-filter: saturate(1.35) blur(14px);
+}
+.app.is-stuck .top { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+/* drawn as an inset shadow, not a border: a border would add a pixel to a layer
+   whose height --stick-cmd / --stick-bar is arithmetic for (DESIGN.md §2) */
+.app.is-stuck .top { box-shadow: inset 0 -1px 0 var(--line-2); }
+.cmd--stuck { box-shadow: inset 0 -1px 0 var(--line-2); }
+.hd--stuck { box-shadow: 0 1px 0 var(--line), 0 10px 20px -16px rgba(34,58,118,.45); }
+
+
+/* ============================================================================
+   MENUS — FLOATING, above content, one shadow
+   ========================================================================== */
+.pop {
+  display: none;
+  position: absolute; top: calc(100% + var(--s2)); left: 0;
+  z-index: var(--z-menu);
+  min-width: 232px; max-height: min(460px, 70vh);
+  padding: 6px;
+  border-radius: var(--r-panel);
+  background: var(--sheet);
+  box-shadow: var(--el-3);
+  overflow: auto; overscroll-behavior: contain;
+}
+.pop--open { display: block; }
+.pop--r { left: auto; right: 0; }
+.pop--wide { min-width: 268px; }
+.pop__lab { padding: var(--s2) 10px 6px; }
+.pop__sep { height: 1px; margin: 5px 6px; background: var(--line-2); }
+.mn__it {
+  display: flex; align-items: center; gap: var(--s2);
+  width: 100%; min-height: 34px; padding: 6px 10px;
+  border-radius: var(--r-inner);
+  color: var(--ink-2); font-size: 14px; text-align: left;
+}
+.mn__it:hover { background: var(--wash); color: var(--ink); text-decoration: none; }
+.mn__it > .i { width: 14px; height: 14px; opacity: 0; color: var(--brand); }
+.mn__it--on { color: var(--ink); font-weight: 600; }
+.mn__it--on > .i { opacity: 1; }
+.mn__it .sp { flex: 1; }
+.mn__it .hint { color: var(--ink-4); font-size: 12px; }
+.mn__row { display: flex; align-items: center; gap: var(--s2); padding: 6px 10px 10px; }
+.mn__row .sel { flex: 1; min-width: 0; }
+.mn__who { padding: var(--s2) 10px; color: var(--ink-3); font-size: 12px; }
+.mn__who b { display: block; color: var(--ink); font-size: 14px; }
+
+.nav .pop { min-width: 244px; }
+
+
+/* ============================================================================
+   RESPONSIVE — desktop only, one breakpoint. 1366 is the binding width and
+   zero horizontal overflow is a hard requirement in every state.
+   ========================================================================== */
+@media (max-width: 1400px) {
+  /* Column tracks are NOT compacted. What steps down is the gutter — one
+     value, still on the ladder (16 → 8), applied to both layers that use it.
+     That returns 32px to the track budget at 1366: 16px of page padding and
+     16px of row inset. It is the §15 instruction taken literally — use the
+     8 / 16 / 24 / 32 relationships and let the flexible column absorb the
+     difference — rather than shaving pixels off thirteen fixed tracks. */
+  :root { --gutter: var(--s2); --sheet-inset: var(--s2); }
+
+  .brand__t { display: none; }
+  .gsearch { width: 44px; padding: 0; justify-content: center; }
+  .gsearch input, .gsearch kbd { display: none; }
+  .nav__b { padding: 0 var(--s2); font-size: 13px; }
+  .me__n { display: none; }
+  .head h1 { font-size: 20px; }
+}
+
+@media (max-width: 1180px) {
+  /* Below the supported range the list is allowed to scroll horizontally
+     rather than lie about fitting. The page itself still never scrolls. */
+  .rows { overflow-x: auto; }
+  .hd, .row { min-width: 1168px; }
+}
+
+
+/* ============================================================================
+   MOTION — transitions are for disclosure and state, not for arrival.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* ============================================================================
+   PRINT — the queue is printed. Chrome is not.
+   ========================================================================== */
+@media print {
+  .top, .golive, .cmdtop, .cmd, .pop, .grip, .gear, .head__actions { display: none !important; }
+  body { background: #fff; }
+  .app { padding: 0; display: block; }
+  .field { background: none; box-shadow: none; border-radius: 0; }
+  .hd { position: static; box-shadow: inset 0 -1px 0 #999; }
+  .row { box-shadow: inset 0 -1px 0 #ddd; height: auto; min-height: 0; }
+}
+
+
+/* ============================================================================
+   NO-SCRIPT — the list is rendered by script, so say so rather than showing an
+   empty sheet with a header over it.
+   ========================================================================== */
+.nojs { display: none; }
+html.no-js .nojs { display: flex; }
+html.no-js .cmdtop, html.no-js .cmd, html.no-js .sub, html.no-js .hd, html.no-js .foot { display: none; }
+
+/* ── [hidden] must actually hide ──────────────────────────────────────────
+   Component rules that set `display` beat the user-agent's
+   `[hidden] { display: none }`, because both are display declarations and the
+   author sheet wins. Two pages were painting a "Switch to dark theme" button
+   that markup had marked hidden — a control offering a mode Gen 11 does not
+   ship (DESIGN.md §5) — and hidden empty-state paragraphs alongside it.
+   One guard, applied family-wide so the semantic can be trusted. */
+[hidden] { display: none !important; }
+
+/* Pagination is one set, and it is the same set on every page that has it.
+   All Vehicles moved it to --s1 during the Phase 1 button pass; 2px left these
+   pills visually merged. One value across the family. */
+.pg { gap: var(--s1); }
+
+/* ── the staff nav rail needs its air back before 1400 ────────────────────
+   Eight top-level menus want 992px. Once the shell stopped expanding past the
+   viewport (the `.app` column guard above), the rail was squeezed to 600px and
+   its items ran straight under the search and the account chip. Only the two
+   things that cause the collision are compressed here — the wordmark, the
+   search field and the menu padding — leaving gutters, headings and the tables
+   to the existing 1400px breakpoint. */
+@media (max-width: 1560px) {
+  .brand__t { display: none; }
+  .gsearch { width: 44px; padding: 0; justify-content: center; }
+  .gsearch input, .gsearch kbd { display: none; }
+  .nav__b { padding: 0 var(--s2); font-size: 13px; }
+  /* the chevron is redundant once the label is the only thing that fits —
+     the menus still open on click */
+  .nav__b > .i { display: none; }
+  .nav { gap: 0; }
+}

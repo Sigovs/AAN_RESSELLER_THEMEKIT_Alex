@@ -1,0 +1,872 @@
+/* ============================================================================
+   AAN · Staff UI · Dealer Edit (Dealer File) — GENERATION 11
+
+   Built to DESIGN.md (the locked Gen 11 system) with the content and behaviour
+   of the production export:
+     s12-dealer-file-1.html   fully-populated active dealer — Miller Motorcars
+     s12-dealer-file-2.html   sparse trial dealer — Beat The Trade (Client Intake)
+     s12-dealer-file-3.html   the blank new-dealer form
+
+   THE ONE DECISION THIS PAGE IS ABOUT
+   A 78-field form becomes card soup the moment each zone is given a surface of
+   its own. So the eight zones are NOT cards. The zone column is a single
+   FLOATING sheet (one radius, one shadow) and the zones are ATTACHED inside it:
+   square corners, one hairline between them, no interior shadow, and 40px of
+   air above each heading doing the separating that a card would otherwise do
+   (DESIGN.md §2, §9).
+
+   What IS a card, and why: the three side panels. Notes, Options and Danger &
+   Locks are not part of the record — they are three different objects that
+   surround it, each with its own lifetime and its own action. They float, they
+   are separated by a real gap, and they sit in their own column.
+
+   EDITABLE vs READ-ONLY, the second decision
+     editable      a control on --sheet with one hairline ring and a focus ring
+     sealed        no control at all until you ask for one: a lock, dots, and
+                   the three buttons production gives a secret
+     read-only     no box, no ring, no hover — the record head, the audit line,
+                   the note history. If it cannot be typed into, it does not
+                   wear the shape of something that can be.
+
+   What is deliberately NOT here, and why:
+     · no tabs. Production ships one scrolling form with a jump rail; tabs would
+       hide the six zones you are not looking at and break Ctrl+S over the lot.
+     · no autosave, no validation summary, no "completeness score" — the export
+       has none of the three, and each would be an invented workflow.
+     · the seal's Reveal and Copy are present but disabled: production fetches
+       the stored secret from the server, and this build has no server. The
+       control says so rather than showing a fabricated password.
+
+   Index
+     TOKENS · BASE · PLATFORM BAR · RECORD HEAD · RAIL · ZONES · FIELDS
+     SEAL · ROUTING TABLE · SIDE PANELS · SAVE BAR · RESPONSIVE · PRINT
+   ========================================================================== */
+
+
+/* ============================================================================
+   TOKENS — one authoritative layer. Values are DESIGN.md's, verbatim, except
+   the one marked LOCAL.
+   ========================================================================== */
+:root {
+  color-scheme: light;
+
+  --font: "Archivo", "Segoe UI", system-ui, sans-serif;
+  --mono: "Plex Mono", ui-monospace, monospace;
+
+  /* ── 8pt ladder (DESIGN.md §1) ───────────────────────────────────────── */
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px; --s5: 24px;
+  --s6: 32px; --s7: 40px; --s8: 48px; --s9: 64px;
+
+  --gutter: var(--s4);
+  --sheet-inset: var(--s4);
+
+  /* ── colour roles (DESIGN.md §5) ─────────────────────────────────────── */
+  --ground: #e5e9ef;
+  --sheet: #ffffff;
+  --well: #eef1f5;
+  --wash: #f3f5f8;
+  --ink: #0d1320;
+  --ink-2: #353e4e;
+  --ink-3: #576070;
+  --ink-4: #697181;
+  --line: #dfe3ea;
+  --line-2: #e9ecf1;
+  --line-3: #c5cbd5;
+  --brand: #1f5fe0;
+  --brand-hover: #1a50c4;
+  --brand-ink: #1747b3;
+  --brand-soft: #e9f0fe;
+  --ok: #12704a;
+  --ok-fill: #2fb46f;
+  --ok-soft: #e0f4e8;
+  --ok-line: #b9e2c9;
+  --signal: #945000;
+  --signal-fill: #f2a12b;
+  --signal-soft: #fff2dc;
+  --signal-line: #efcd93;
+  --danger: #bd3328;
+  --danger-soft: #fde8e5;
+  --danger-line: #f1bab3;
+  --slate: #586171;
+  --focal: #172234;
+  --focal-ink: #f3f6fb;
+
+  /* the head's status chips, at the three tones the export assigns them */
+  --b-ok-bg: #d9f1e1;      --b-ok-ink: #156b38;
+  --b-high-bg: #faeecb;    --b-high-ink: #8a5c00;
+  --b-info-bg: #dfeafa;    --b-info-ink: #1a55a8;
+  --b-quiet-bg: #e5eaf0;   --b-quiet-ink: #48586c;
+
+  /* ── radius (DESIGN.md §3) ───────────────────────────────────────────── */
+  --r-pill: 999px;
+  --r-card: 24px;
+  --r-panel: 18px;
+  --r-control: 14px;
+  --r-inner: 10px;
+  --r-micro: 5px;
+
+  /* ── elevation (DESIGN.md §4) — one shadow per floating object ───────── */
+  --el-1: 0 1px 2px rgba(16,24,40,.08), 0 0 0 1px rgba(16,24,40,.06);
+  --el-2: 0 12px 30px -14px rgba(16,24,40,.22), 0 0 0 1px rgba(16,24,40,.05);
+  --el-3: 0 30px 64px -18px rgba(16,24,40,.34), 0 0 0 1px rgba(16,24,40,.06);
+  --sh-soft: 0 28px 64px -34px rgba(34,58,118,.42), 0 2px 8px -3px rgba(34,58,118,.10), inset 0 1px 0 rgba(255,255,255,.95);
+  --sh-pill: 0 1px 2px rgba(34,58,118,.12), 0 6px 14px -8px rgba(34,58,118,.32), inset 0 1px 0 #fff;
+  --glass: rgba(255,255,255,.76);
+
+  /* ── sticky stack (DESIGN.md §7) — CSS publishes, JS reads ───────────────
+     This page's stack is two layers, not three: the platform bar and the record
+     head. There is no command band and no column header, so --stick-cmd and
+     --stick-hd do not exist here rather than being declared and left unused. */
+  --bar-track: 88px;
+  --stick-bar: 68px;
+  --stick-head: 96px;              /* the record head once engaged */
+  --stick-rail-top: calc(var(--stick-bar) + var(--stick-head) + var(--s4));
+
+  /* ── layer ladder (DESIGN.md §7) — no component writes a raw z-index ─── */
+  --z-ground: 0;
+  --z-content: 1;
+  --z-raised: 3;
+  --z-sticky-head: 10;
+  --z-platform: 20;
+  --z-savebar: 30;
+  --z-menu: 40;
+
+  /* ── LOCAL · the form's own measures ─────────────────────────────────────
+     --field-h 40px is DESIGN.md §11's "one height per class of control — 40px
+     for sheet actions", applied to inputs so a control and the button beside it
+     are the same object height. --zone-air is the 40px that separates two
+     attached zones: §1's --s7, chosen because it is the step at which a heading
+     reads as starting a new region without a card drawn round it. */
+  --field-h: 40px;
+  --zone-air: var(--s7);
+
+  /* ── motion (DESIGN.md §14) ──────────────────────────────────────────── */
+  --dur: 160ms;
+  --dur2: 240ms;
+  --ease: cubic-bezier(.2,0,0,1);
+
+  /* ── focus (DESIGN.md §12) — owns `outline`, and nothing else owns it ── */
+  --focus-w: 2px;
+  --focus-offset: 2px;
+  --focus-color: var(--brand);
+  --focus-color-on-dark: #ffd98a;
+}
+
+
+/* ============================================================================
+   BASE
+   ========================================================================== */
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: local("Archivo"), local("Archivo Variable");
+}
+@font-face {
+  font-family: "Plex Mono";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: local("IBM Plex Mono"), local("Cascadia Mono"), local("Consolas");
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font: 400 14px/1.45 var(--font);
+  font-feature-settings: "cv11";
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -.01em; }
+p { margin: 0; }
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { background: none; border: 0; padding: 0; cursor: pointer; }
+/* every component below sets its own `display`, so `hidden` needs the weight */
+[hidden] { display: none !important; }
+
+:focus { outline: none; }
+:focus-visible {
+  outline: var(--focus-w) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--r-micro);
+}
+
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.i { width: 16px; height: 16px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.caps { font-size: 12px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); }
+.mono { font-family: var(--mono); }
+
+.app {
+  display: grid;
+  grid-template-rows: var(--bar-track) auto 1fr;
+  padding: 0 var(--gutter) calc(var(--s9) + var(--s5));  /* room under the save bar */
+  min-height: 100vh;
+}
+
+
+/* ============================================================================
+   PLATFORM BAR — FLOATING at rest, ATTACHED once engaged (DESIGN.md §2).
+   Identical to the roster's: the two pages are one application.
+   ========================================================================== */
+.top {
+  grid-row: 1;
+  position: sticky; top: 0; z-index: var(--z-platform);
+  align-self: center;
+  display: flex; align-items: center; gap: 2px;
+  height: var(--stick-bar);
+  margin: var(--s3) 0 0;
+  padding: 0 var(--s2);
+  border-radius: var(--r-card);
+  background: var(--glass);
+  box-shadow: var(--sh-soft);
+}
+@supports (backdrop-filter: blur(14px)) {
+  .top { -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px); }
+}
+
+.brand { display: flex; align-items: center; gap: 6px; padding: 0 var(--s1); }
+.brand:hover { text-decoration: none; }
+.brand__mk {
+  display: grid; place-items: center;
+  width: 38px; height: 30px; border-radius: var(--r-micro);
+  background: var(--focal); color: #fff;
+  font-size: 12px; font-weight: 700; letter-spacing: .06em;
+}
+.brand__t { display: none; font-weight: 600; letter-spacing: -.01em; white-space: nowrap; }
+.brand__env {
+  padding: 1px 6px; border-radius: var(--r-micro);
+  background: var(--well); color: var(--ink-3);
+  font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+}
+
+.nav { display: flex; align-items: center; gap: 2px; min-width: 0; }
+.nav__it { position: relative; }
+.nav__b {
+  display: inline-flex; align-items: center; gap: var(--s1);
+  height: 36px; padding: 0 6px;
+  border-radius: var(--r-pill);
+  color: var(--ink-2); font-size: 13px; font-weight: 500; white-space: nowrap;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.nav__b:hover { background: rgba(255,255,255,.72); color: var(--ink); text-decoration: none; }
+.nav__b .i { width: 12px; height: 12px; opacity: .6; }
+.nav__it--on > .nav__b { color: var(--brand-ink); font-weight: 600; }
+
+.top__sp { flex: 1 1 auto; min-width: var(--s2); }
+.top__div { width: 1px; height: 26px; margin: 0 var(--s2); background: var(--line); }
+
+.gsearch {
+  display: flex; align-items: center; justify-content: center; gap: var(--s2);
+  width: 44px; height: 38px; padding: 0;
+  border-radius: var(--r-inner);
+  background: var(--sheet); box-shadow: var(--el-1);
+  color: var(--ink-3);
+}
+.gsearch input { display: none; flex: 1; min-width: 0; border: 0; background: none; font-size: 13px; }
+.gsearch input::placeholder { color: var(--ink-4); }
+.gsearch kbd { display: none; padding: 1px 5px; border-radius: var(--r-micro); background: var(--well); color: var(--ink-3); font: 600 11px var(--mono); }
+
+.tbtn {
+  display: grid; place-items: center;
+  width: 36px; height: 36px; border-radius: var(--r-pill);
+  color: var(--ink-2);
+  transition: background var(--dur) var(--ease);
+}
+.tbtn:hover { background: rgba(255,255,255,.72); color: var(--ink); }
+
+.atlas {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 30px; padding: 0 10px; border-radius: var(--r-pill);
+  background: var(--well); color: var(--ink-2);
+  font-size: 12px; font-weight: 600;
+}
+.atlas:hover { color: var(--ink); text-decoration: none; }
+
+.me {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  height: 40px; padding: 0 var(--s2) 0 var(--s1); border-radius: var(--r-pill);
+  transition: background var(--dur) var(--ease);
+}
+.me:hover { background: rgba(255,255,255,.72); }
+.me__mk { display: grid; place-items: center; width: 30px; height: 30px; border-radius: var(--r-pill); background: var(--focal); color: #fff; font-size: 12px; font-weight: 700; }
+.me__n { display: none; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.me .i { width: 12px; height: 12px; opacity: .6; }
+
+
+/* ============================================================================
+   RECORD HEAD — read-only, and shaped so that it cannot be mistaken for the
+   form. It sticks under the platform bar so that WHICH dealer you are editing
+   never leaves the screen across a 5,000px form. ATTACHED to the bar once
+   engaged: square top corners, one hairline, no shadow between the two.
+   ========================================================================== */
+.head {
+  grid-row: 2;
+  position: sticky; top: var(--stick-bar); z-index: var(--z-sticky-head);
+  display: flex; align-items: flex-start; gap: var(--s4);
+  min-height: var(--stick-head);
+  padding: var(--s3) var(--s5) var(--s3);
+  border-radius: 0 0 var(--r-card) var(--r-card);
+  background: rgba(255,255,255,.90);
+  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+@supports (backdrop-filter: blur(12px)) {
+  .head { -webkit-backdrop-filter: saturate(1.35) blur(12px); backdrop-filter: saturate(1.35) blur(12px); }
+}
+.head--stuck { box-shadow: 0 1px 0 var(--line), 0 10px 20px -16px rgba(34,58,118,.45); }
+.app.is-stuck .top { border-bottom-left-radius: 0; border-bottom-right-radius: 0; box-shadow: inset 0 -1px 0 var(--line-2); background: rgba(255,255,255,.94); }
+
+.head__back {
+  display: inline-grid; place-items: center;
+  width: 34px; height: 34px; flex: none;
+  margin-top: 2px;
+  border-radius: var(--r-inner);
+  background: var(--sheet); box-shadow: var(--el-1);
+  color: var(--ink-2);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.head__back:hover { background: var(--wash); color: var(--brand-ink); text-decoration: none; }
+
+.head__id { min-width: 0; flex: 1 1 auto; }
+.head__row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); min-width: 0; }
+.head h1 { font-size: 21px; line-height: 1.2; }
+.head__n { font: 500 13px var(--mono); color: var(--ink-3); }
+
+/* the record's own state, read-only: a chip, never a control */
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 22px; padding: 0 8px;
+  border-radius: var(--r-pill);
+  background: var(--bdg-bg, var(--b-quiet-bg));
+  color: var(--bdg-ink, var(--b-quiet-ink));
+  font-size: 12px; font-weight: 600; white-space: nowrap;
+}
+.chip--green { --bdg-bg: var(--b-ok-bg);   --bdg-ink: var(--b-ok-ink); }
+.chip--amber { --bdg-bg: var(--b-high-bg); --bdg-ink: var(--b-high-ink); }
+.chip--blue  { --bdg-bg: var(--b-info-bg); --bdg-ink: var(--b-info-ink); }
+
+.dbchip {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 22px; padding: 0 8px;
+  border-radius: var(--r-pill);
+  background: var(--wash); color: var(--ink-2);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font: 500 12px var(--mono); white-space: nowrap;
+}
+.dbchip:hover { background: var(--well); color: var(--ink); text-decoration: none; }
+.dbchip .i { width: 12px; height: 12px; color: var(--ink-3); }
+
+.head__audit { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s4); margin-top: 5px; color: var(--ink-3); font-size: 12px; }
+.head__audit b { font-weight: 600; color: var(--ink-3); }
+.head__audit span { font-variant-numeric: tabular-nums; }
+.head__audit i { font-style: normal; color: var(--ink-2); font-family: var(--mono); }
+.head__meta { margin-top: 5px; color: var(--ink-3); font-size: 13px; }
+
+.head__quick { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s1) var(--s2); flex: 0 1 auto; justify-content: flex-end; padding-top: 3px; }
+.head__quick a { display: inline-flex; align-items: center; gap: 4px; color: var(--brand-ink); font-size: 13px; font-weight: 600; white-space: nowrap; }
+.head__quick .i { width: 12px; height: 12px; }
+.head__quick .sep { color: var(--line-3); }
+
+
+/* ============================================================================
+   BODY — rail · zones · side
+   ========================================================================== */
+.body {
+  grid-row: 3;
+  display: grid;
+  grid-template-columns: 208px minmax(0, 1fr) 288px;
+  gap: var(--s5);
+  align-items: start;
+  padding-top: var(--s4);
+}
+
+
+/* ── RAIL — where am I in 78 fields. It is navigation, not a form control, so
+      it has no surface of its own: labels on the page ground, and the current
+      zone marked the way DESIGN.md §6 marks a current section — tinted, no
+      fill, with one edge marker. ───────────────────────────────────────── */
+.rail {
+  position: sticky; top: var(--stick-rail-top);
+  display: flex; flex-direction: column; gap: 1px;
+  padding: var(--s2) 0;
+}
+.rail__b {
+  display: flex; align-items: center; gap: var(--s2);
+  min-height: 34px; padding: 6px var(--s3) 6px 10px;
+  border-radius: var(--r-inner);
+  color: var(--ink-2); font-size: 13px; text-align: left;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.rail__b:hover { background: rgba(255,255,255,.66); color: var(--ink); }
+.rail__b--on, .rail__b--on:hover {
+  background: var(--brand-soft); color: var(--brand-ink); font-weight: 600;
+  box-shadow: inset 2px 0 0 var(--brand);
+}
+/* The dot is production's own per-zone marker. The export ships no legend for
+   it, so the words below are this build's reading of green / amber / grey and
+   they travel in the accessible name rather than being asserted on screen. */
+.dot { width: 7px; height: 7px; flex: none; border-radius: 50%; }
+.dot--green { background: var(--ok-fill); }
+.dot--amber { background: var(--signal-fill); }
+.dot--grey  { background: var(--line-3); }
+.rail__sep { height: 1px; margin: var(--s2) 10px; background: var(--line); }
+.rail__hint { padding: 0 10px; color: var(--ink-4); font-size: 12px; }
+.rail__hint kbd { padding: 1px 5px; border-radius: var(--r-micro); background: var(--sheet); box-shadow: inset 0 0 0 1px var(--line); font: 600 11px var(--mono); }
+
+
+/* ── ZONES — ONE floating sheet, eight attached regions inside it ────────
+      The zone column is the FLOATING surface: --r-card, one shadow, nothing
+      else. Inside it every zone is ATTACHED — square corners, one hairline at
+      the boundary, no shadow, the same horizontal inset. What separates two
+      zones is rhythm: --zone-air above each heading, which is four times the
+      gap inside a field group, so the eye reads a new region without a box
+      being drawn round it. (DESIGN.md §2, §9) */
+.zones {
+  min-width: 0;
+  border-radius: var(--r-card);
+  background: var(--sheet);
+  box-shadow: var(--sh-soft);
+  overflow: hidden;   /* the sheet's own corners clip the first and last zone */
+}
+.zone { padding: 0 var(--s6) var(--s7); }
+.zone + .zone { box-shadow: inset 0 1px 0 var(--line-2); }
+
+/* the heading, its summary, and the air that does a card's job */
+.zone__hd {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s2) var(--s3);
+  padding: var(--zone-air) 0 var(--s4);
+}
+.zone__t { font-size: 16px; }
+.zone__s { color: var(--ink-3); font-size: 13px; }
+/* scroll-margin so a rail jump lands the heading below the sticky stack rather
+   than under it — the offset is the stack's own published height */
+.zone { scroll-margin-top: calc(var(--stick-bar) + var(--stick-head) + var(--s2)); }
+
+
+/* ── FIELDS ──────────────────────────────────────────────────────────────
+   Two columns of 8pt-aligned field groups. A label sits above its control
+   because 78 left-aligned labels in two columns produce four ragged edges;
+   above, they produce two. */
+.fg { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s4) var(--s5); align-items: start; }
+.fw { min-width: 0; }
+.fw--span { grid-column: 1 / -1; }
+
+/* a subsection inside a zone: a rule and a caps label, no surface */
+.fsec {
+  grid-column: 1 / -1;
+  margin-top: var(--s3);
+  padding-top: var(--s3);
+  box-shadow: inset 0 1px 0 var(--line-2);
+  color: var(--ink-3); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+}
+.fg > .fsec:first-child { margin-top: 0; padding-top: 0; box-shadow: none; }
+
+.fl { display: block; margin-bottom: 5px; color: var(--ink-2); font-size: 13px; font-weight: 600; }
+.fl--req::after { content: "*"; margin-left: 3px; color: var(--danger); font-weight: 700; }
+.fh { margin-top: 5px; color: var(--ink-3); font-size: 12px; line-height: 1.45; }
+.fh .mono { font-size: 11.5px; color: var(--ink-2); }
+
+/* THE editable control. One hairline ring, one height, one radius — and a
+   focus ring that is an outline and nothing else (DESIGN.md §12). */
+.fld {
+  width: 100%;
+  height: var(--field-h);
+  padding: 0 12px;
+  border: 0; border-radius: var(--r-inner);
+  background: var(--sheet);
+  box-shadow: inset 0 0 0 1px var(--line-3);
+  font-size: 14px; color: var(--ink);
+  transition: box-shadow var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.fld:hover { box-shadow: inset 0 0 0 1px var(--ink-4); }
+.fld:focus { box-shadow: inset 0 0 0 1px var(--brand); }
+.fld::placeholder { color: var(--ink-4); }
+.fld--area { height: auto; min-height: 62px; padding: 8px 12px; resize: vertical; line-height: 1.5; }
+.fld--num { font-variant-numeric: tabular-nums; }
+select.fld {
+  appearance: none; padding-right: 32px; cursor: pointer;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23697181' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>");
+  background-repeat: no-repeat; background-position: right 10px center;
+}
+/* a select with a free-text escape beside it, as production ships it */
+.fpair { display: flex; gap: var(--s2); }
+.fpair > .fld:first-child { flex: 0 0 148px; }
+.fpair > .fld:last-child { flex: 1 1 auto; min-width: 0; }
+
+/* choice groups — a real segmented track, so "which one is set" is legible at
+   a glance across a long form. Current choice = white thumb on a sunken track
+   (DESIGN.md §6); it is not a blue fill, because the blue fill is Save. */
+.seg {
+  display: inline-flex; flex-wrap: wrap; gap: 3px;
+  padding: 4px; border-radius: var(--r-pill);
+  background: var(--well);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.seg__o { position: relative; display: inline-flex; }
+.seg__o input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.seg__o span {
+  display: inline-flex; align-items: center;
+  height: 30px; padding: 0 var(--s3);
+  border-radius: var(--r-pill);
+  color: var(--ink-2); font-size: 13px; white-space: nowrap;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.seg__o:hover span { background: rgba(255,255,255,.66); color: var(--ink); }
+.seg__o input:checked + span { background: var(--sheet); color: var(--brand-ink); font-weight: 600; box-shadow: var(--sh-pill); }
+.seg__o input:focus-visible + span { outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); }
+/* nothing chosen yet is a real state on a new record; it is quiet, not absent */
+.seg--unset { box-shadow: inset 0 0 0 1px var(--line-3); }
+
+/* a single checkbox, and a row of them */
+.opt { display: inline-flex; align-items: center; gap: var(--s2); min-height: var(--field-h); font-size: 14px; cursor: pointer; }
+/* a checkbox whose only label is the field label above it keeps the field's
+   height, so it lines up with the control in the column beside it */
+.opt--bare { padding-left: 2px; }
+.opts { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); }
+.ck {
+  appearance: none;
+  width: 17px; height: 17px; margin: 0; flex: none;
+  border-radius: var(--r-micro);
+  background: var(--sheet);
+  box-shadow: inset 0 0 0 1.5px var(--line-3);
+  display: grid; place-items: center; cursor: pointer;
+  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.ck:hover { box-shadow: inset 0 0 0 1.5px var(--ink-4); }
+.ck:checked { background: var(--brand); box-shadow: inset 0 0 0 1.5px var(--brand); }
+.ck:checked::after { content: ""; width: 9px; height: 5px; border: 2px solid #fff; border-top: 0; border-right: 0; transform: translateY(-1px) rotate(-45deg); }
+
+/* repeatable rows: billing emails, and the six domains */
+.rep { display: flex; flex-direction: column; gap: var(--s2); }
+.rep__r { display: flex; gap: var(--s2); }
+.rep__r .fld { flex: 1 1 auto; min-width: 0; }
+.xb {
+  display: inline-grid; place-items: center;
+  width: var(--field-h); height: var(--field-h); flex: none;
+  border-radius: var(--r-inner);
+  color: var(--ink-3);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+/* removing a row is destructive in the small: distinguishable, not theatrical */
+.xb:hover { background: var(--danger-soft); color: var(--danger); }
+.xb .i { width: 14px; height: 14px; }
+.addb {
+  align-self: flex-start;
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 32px; padding: 0 var(--s3);
+  border-radius: var(--r-pill);
+  color: var(--brand-ink); font-size: 13px; font-weight: 600;
+  transition: background var(--dur) var(--ease);
+}
+.addb:hover { background: var(--brand-soft); }
+.doms { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s2); }
+
+/* the two provisioning buttons, with the one line that says what they do */
+.projact { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); }
+.projact__hint { flex: 1 1 220px; min-width: 0; color: var(--ink-3); font-size: 12px; }
+
+
+/* ── SEAL — a stored secret. Not a field: there is nothing to type into until
+      you say so, so it is not shaped like a field. ─────────────────────── */
+.seal {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2);
+  min-height: var(--field-h); padding: 0 var(--s2) 0 var(--s3);
+  border-radius: var(--r-inner);
+  background: var(--wash);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.seal__lock { display: inline-flex; color: var(--ink-3); }
+.seal__lock .i { width: 14px; height: 14px; }
+.seal__dots { flex: 1 1 auto; min-width: 40px; font: 600 14px var(--mono); color: var(--ink-3); letter-spacing: .12em; }
+.seal__none { font: 400 13px var(--font); color: var(--ink-4); letter-spacing: 0; }
+.seal__b {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 28px; padding: 0 10px;
+  border-radius: var(--r-pill);
+  color: var(--ink-2); font-size: 12px; font-weight: 600; white-space: nowrap;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.seal__b:hover:not([disabled]) { background: var(--sheet); color: var(--brand-ink); box-shadow: var(--el-1); }
+.seal__b[disabled] { color: var(--ink-4); cursor: not-allowed; }
+.seal__b .i { width: 13px; height: 13px; }
+/* once you press Change it becomes an ordinary editable field with a way back */
+.seal--edit { background: var(--sheet); box-shadow: inset 0 0 0 1px var(--brand); padding: 0; gap: 0; }
+.seal--edit .fld { box-shadow: none; }
+.seal__cancel { margin-right: var(--s2); }
+
+
+/* ── ROUTING — the mailbox table. A table, because four parallel values per
+      row is a table; it stays inside the zone sheet with no surface of its
+      own. ───────────────────────────────────────────────────────────────── */
+.routing { display: flex; flex-direction: column; gap: var(--s3); }
+.routing__hint { color: var(--ink-3); font-size: 13px; }
+.routing__hint b { color: var(--ink-2); font-weight: 600; }
+.rtbl { width: 100%; border-collapse: collapse; }
+.rtbl th {
+  padding: 0 var(--s2) 6px 0;
+  text-align: left;
+  color: var(--ink-3); font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  white-space: nowrap;
+}
+.rtbl th:last-child { width: 44px; }
+.rtbl td { padding: 4px var(--s2) 4px 0; vertical-align: middle; }
+.rtbl td:last-child { padding-right: 0; }
+.rtbl tr.rt--warn .fld:first-child { box-shadow: inset 0 0 0 1px var(--signal-line); background: var(--signal-soft); }
+.rtbl .seg { padding: 3px; }
+.rtbl .seg__o span { height: 26px; padding: 0 10px; font-size: 12px; }
+.routing__xref { color: var(--ink-3); font-size: 12px; line-height: 1.55; }
+.routing__xref .mono { color: var(--ink-2); }
+
+
+/* ============================================================================
+   SIDE PANELS — three FLOATING objects. These are not the record: they are
+   what surrounds it, each with its own action, so each gets a gap on every
+   side, its own radius and one shadow. (DESIGN.md §2)
+   ========================================================================== */
+.side { position: sticky; top: var(--stick-rail-top); display: flex; flex-direction: column; gap: var(--s4); }
+.panel { border-radius: var(--r-panel); background: var(--sheet); box-shadow: var(--el-2); overflow: hidden; }
+.panel__hd {
+  display: flex; align-items: center; gap: var(--s2);
+  padding: var(--s3) var(--s4);
+  box-shadow: inset 0 -1px 0 var(--line-2);
+  font-size: 13px; font-weight: 600;
+}
+.panel__n {
+  min-width: 20px; padding: 1px 6px; border-radius: var(--r-pill);
+  background: var(--well); color: var(--ink-3);
+  font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; text-align: center;
+}
+.panel__bd { padding: var(--s3) var(--s4) var(--s4); }
+.panel__bd--stack { display: flex; flex-direction: column; gap: var(--s2); align-items: flex-start; }
+.panel__hint { color: var(--ink-3); font-size: 12px; line-height: 1.5; }
+.panel__hint .mono { font-size: 11.5px; color: var(--ink-2); }
+
+/* the note history is read-only: no box, no ring, no hover */
+.notes { display: flex; flex-direction: column; gap: var(--s3); max-height: 190px; overflow: auto; margin-bottom: var(--s3); }
+.note { display: flex; flex-direction: column; gap: 2px; }
+.note__who { font: 500 11px var(--mono); color: var(--ink-4); }
+.note__txt { font-size: 13px; color: var(--ink-2); }
+.panel__empty { color: var(--ink-3); font-size: 12.5px; line-height: 1.5; margin-bottom: var(--s3); }
+
+/* the flags. Each carries the sentence that says what it does, because five
+   nouns in a column do not. */
+.flag { display: block; padding: var(--s2) 0; cursor: pointer; }
+.flag + .flag { box-shadow: inset 0 1px 0 var(--line-2); }
+.flag__r { display: flex; align-items: flex-start; gap: var(--s2); }
+.flag__l { font-size: 13px; font-weight: 600; color: var(--ink); }
+.flag__why { display: block; margin-top: 2px; color: var(--ink-3); font-size: 12px; line-height: 1.45; }
+/* a flag whose change reaches beyond this record says so, in the signal tone */
+.flag__why--cas { color: var(--signal); font-weight: 500; }
+.flag .ck { margin-top: 2px; }
+
+.panel--danger .panel__hd { color: var(--danger); }
+
+
+/* ============================================================================
+   BUTTONS — one height per class, sized by their label (DESIGN.md §11)
+   ========================================================================== */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
+  height: var(--field-h); padding: 0 var(--s4);
+  border-radius: var(--r-pill);
+  font-size: 14px; font-weight: 600; white-space: nowrap;
+  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.btn--primary { background: var(--brand); color: #fff; box-shadow: 0 10px 22px -10px rgba(29,95,230,.7), inset 0 1px 0 rgba(255,255,255,.32); }
+.btn--primary:hover { background: var(--brand-hover); text-decoration: none; }
+.btn--sheet { background: var(--sheet); color: var(--ink); box-shadow: var(--sh-pill); }
+.btn--sheet:hover { background: var(--wash); text-decoration: none; }
+.btn--quiet { color: var(--ink-2); }
+.btn--quiet:hover { background: var(--well); color: var(--ink); text-decoration: none; }
+.btn--sm { height: 32px; padding: 0 var(--s3); font-size: 13px; }
+.btn .i { width: 16px; height: 16px; }
+/* Save + Lock is the one action on this page that changes who may edit the
+   record. It is marked, and it is the only thing in its panel, so there is
+   nothing beside it to hit by mistake. */
+.btn--lock { color: var(--danger); box-shadow: inset 0 0 0 1px var(--danger-line); }
+.btn--lock:hover { background: var(--danger-soft); color: var(--danger); box-shadow: inset 0 0 0 1px var(--danger); }
+
+
+/* ============================================================================
+   SAVE BAR — FLOATING, and the only thing on the page that commits. It is
+   pinned to the bottom because the commit for field 78 must not be 5,000px
+   from field 1.
+   ========================================================================== */
+.savebar {
+  position: fixed; z-index: var(--z-savebar);
+  left: 50%; bottom: var(--s4); transform: translateX(-50%);
+  display: flex; align-items: center; gap: var(--s3);
+  height: 60px; padding: 0 var(--s3) 0 var(--s5);
+  border-radius: var(--r-pill);
+  background: var(--glass);
+  box-shadow: var(--el-3);
+}
+@supports (backdrop-filter: blur(14px)) {
+  .savebar { -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px); }
+}
+.savebar__sp { width: var(--s2); }
+.savebar__dirty { display: inline-flex; align-items: center; gap: 6px; color: var(--signal); font-size: 13px; font-weight: 600; white-space: nowrap; }
+.savebar__dirty .i { width: 15px; height: 15px; }
+.savebar__kbd { display: inline-flex; align-items: center; gap: 2px; color: var(--ink-4); font-size: 12px; white-space: nowrap; }
+.savebar__kbd kbd { padding: 1px 5px; border-radius: var(--r-micro); background: var(--sheet); box-shadow: inset 0 0 0 1px var(--line); font: 600 11px var(--mono); }
+
+
+/* ============================================================================
+   MENUS + EMPTY STATE
+   ========================================================================== */
+.pop {
+  display: none;
+  position: absolute; top: calc(100% + var(--s2)); left: 0; z-index: var(--z-menu);
+  min-width: 232px; max-height: min(460px, 68vh);
+  padding: 6px;
+  border-radius: var(--r-panel);
+  background: var(--sheet); box-shadow: var(--el-3);
+  overflow: auto; overscroll-behavior: contain;
+}
+.pop--open { display: block; }
+.pop--r { left: auto; right: 0; }
+.pop__lab { padding: var(--s2) 10px 6px; }
+.mn__it { display: flex; align-items: center; gap: var(--s2); width: 100%; min-height: 34px; padding: 6px 10px; border-radius: var(--r-inner); color: var(--ink-2); font-size: 14px; text-align: left; }
+.mn__it:hover { background: var(--wash); color: var(--ink); text-decoration: none; }
+.mn__who { padding: var(--s2) 10px; color: var(--ink-3); font-size: 12px; }
+.mn__who b { display: block; color: var(--ink); font-size: 14px; }
+.nav .pop { min-width: 244px; }
+
+.miss {
+  grid-column: 1 / -1;
+  display: flex; flex-direction: column; align-items: center; gap: var(--s3);
+  padding: var(--s9) var(--s5);
+  border-radius: var(--r-card);
+  background: var(--sheet); box-shadow: var(--sh-soft);
+  color: var(--ink-3); text-align: center;
+}
+.miss b { color: var(--ink); font-size: 16px; font-weight: 600; }
+.miss p { max-width: 56ch; line-height: 1.6; }
+.miss__links { display: flex; flex-wrap: wrap; gap: var(--s2); justify-content: center; }
+
+
+/* ============================================================================
+   RESPONSIVE — desktop only. 1366 is the binding width and zero horizontal
+   overflow is a hard requirement in every state.
+   ========================================================================== */
+@media (max-width: 1400px) {
+  :root { --gutter: var(--s2); }
+  .atlas__t { display: none; }
+  .atlas { width: 30px; padding: 0; justify-content: center; }
+  /* 208 + 288 + 48 of gap is 544px of the 1335px this width has; the form keeps
+     791px, which holds two 352px columns and the 24px between them. The two
+     side columns do not shrink: a 288px panel is already at the width its
+     longest flag sentence needs, and a 208px rail at its longest zone name. */
+  .body { gap: var(--s4); grid-template-columns: 200px minmax(0, 1fr) 280px; }
+  .zone { padding: 0 var(--s5) var(--s6); }
+  .head { padding: var(--s3) var(--s4); }
+  .head h1 { font-size: 19px; }
+}
+
+@media (max-width: 1340px) { .brand__env { display: none; } }
+
+@media (max-width: 1180px) {
+  /* Below the supported range the side column drops under the form rather than
+     squeezing both. The rail stays: it is how a 78-field record is navigated. */
+  .body { grid-template-columns: 188px minmax(0, 1fr); }
+  .side { position: static; grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; }
+  .panel { flex: 1 1 280px; }
+}
+
+/* the bar's growth steps, matched to the roster's so the shell is one shell */
+@media (min-width: 1520px) { .me__n { display: inline; } }
+@media (min-width: 1700px) {
+  .gsearch { width: 208px; padding: 0 var(--s2) 0 10px; justify-content: flex-start; }
+  .gsearch input, .gsearch kbd { display: block; }
+}
+@media (min-width: 1900px) {
+  .top { gap: var(--s1); padding: 0 16px; }
+  .brand { gap: var(--s2); padding: 0 var(--s2) 0 var(--s1); }
+  .brand__t { display: inline; }
+  .nav__b { padding: 0 10px; font-size: 14px; }
+}
+
+
+/* ============================================================================
+   MOTION — transitions are for disclosure and state, not for arrival.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* ============================================================================
+   PRINT — the dealer file is printed. Chrome and the controls' chrome are not.
+   ========================================================================== */
+@media print {
+  .top, .rail, .savebar, .pop, .head__quick, .head__back, .xb, .addb, .seal__b { display: none !important; }
+  body { background: #fff; }
+  .app { display: block; padding: 0; }
+  .head { position: static; background: none; box-shadow: none; padding: 0 0 12px; }
+  .body { display: block; }
+  .zones { box-shadow: none; border-radius: 0; }
+  .zone { break-inside: avoid; padding: 0 0 24px; }
+  .fld { box-shadow: inset 0 -1px 0 #bbb; border-radius: 0; height: auto; padding: 2px 0; }
+  .side { display: block; margin-top: 24px; }
+  .panel { box-shadow: none; border: 1px solid #ddd; margin-bottom: 12px; }
+}
+
+
+/* ============================================================================
+   NO-SCRIPT
+   ========================================================================== */
+.nojs {
+  display: none;
+  grid-row: 3;
+  margin-top: var(--s4);
+  padding: var(--s7) var(--gutter);
+  border-radius: var(--r-card);
+  background: var(--sheet); box-shadow: var(--el-1);
+  color: var(--ink-3); text-align: center;
+}
+html.no-js .nojs { display: block; }
+html.no-js .body, html.no-js .savebar { display: none; }
+
+/* ── [hidden] must actually hide ──────────────────────────────────────────
+   Component rules that set `display` beat the user-agent's
+   `[hidden] { display: none }`, because both are display declarations and the
+   author sheet wins. Two pages were painting a "Switch to dark theme" button
+   that markup had marked hidden — a control offering a mode Gen 11 does not
+   ship (DESIGN.md §5) — and hidden empty-state paragraphs alongside it.
+   One guard, applied family-wide so the semantic can be trusted. */
+[hidden] { display: none !important; }
+
+/* A grid item's `min-width` is `auto`, so a wide table can size the shell's
+   column and push the page sideways. Accounting did exactly that at 1440.
+   The same guard here, so the shell can never be wider than its viewport. */
+.app { grid-template-columns: minmax(0, 1fr); }
+
+/* ── the staff nav rail needs its air back before 1400 ────────────────────
+   Eight top-level menus want 992px. Once the shell stopped expanding past the
+   viewport (the `.app` column guard above), the rail was squeezed to 600px and
+   its items ran straight under the search and the account chip. Only the two
+   things that cause the collision are compressed here — the wordmark, the
+   search field and the menu padding — leaving gutters, headings and the tables
+   to the existing 1400px breakpoint. */
+@media (max-width: 1560px) {
+  .brand__t { display: none; }
+  .gsearch { width: 44px; padding: 0; justify-content: center; }
+  .gsearch input, .gsearch kbd { display: none; }
+  .nav__b { padding: 0 var(--s2); font-size: 13px; }
+  /* the chevron is redundant once the label is the only thing that fits —
+     the menus still open on click */
+  .nav__b > .i { display: none; }
+  .nav { gap: 0; }
+}

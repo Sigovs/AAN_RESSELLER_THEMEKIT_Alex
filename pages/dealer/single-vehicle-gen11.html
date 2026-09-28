@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vehicle · Chicago Motor Cars — AAN (Gen 11)</title>
+<script>/* Dark is gated off across Gen 11 while its palette is re-solved, and the
+   `aan-theme` key is shared with the other Gen pages, so a stored `dark` must not
+   land this page in a half-dark state at load. Temporary; the dark stage removes it. */
+try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
+<link rel="stylesheet" href="single-vehicle-gen11.css?v=202609282140">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5m6 6-6-6 6-6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></symbol>
+  <symbol id="i-cam" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.7l5.9-.9Z"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3.5 13.9 9l5.6 1.9-5.6 1.9L12 18.5 10.1 12.8 4.5 10.9 10.1 9z"/><path d="M18.5 3v3M20 4.5h-3"/></symbol>
+  <symbol id="i-undo" viewBox="0 0 24 24"><path d="M3 8h11a5 5 0 0 1 0 10H8"/><path d="m6.5 4.5-3.5 3.5 3.5 3.5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5M12 16.2h.01"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
+  <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+</svg>
+
+<div class="app" id="app">
+
+  <!-- ══ PLATFORM BAR — the same permanent navigation as every Gen 11 page ══ -->
+  <header class="top">
+    <a class="brand" href="../../index.html" title="All Auto Network · Backend"><span class="brand__mk">AAN</span><span class="brand__t">All Auto Network</span></a>
+    <nav class="nav" aria-label="Platform">
+      <div class="nav__it"><a class="nav__b" href="#">Home</a></div>
+      <div class="nav__it nav__it--on">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Inventory<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu">
+          <div class="menu__col"><div class="caps menu__t">Inventory</div>
+            <a class="menu__l menu__l--on" href="all-vehicles-gen11.html"><b>Inventory Manager</b><span>Every vehicle, by lane</span></a>
+            <a class="menu__l" href="#"><b>Auto Locator</b><span>Find a vehicle for a buyer</span></a>
+            <a class="menu__l" href="#"><b>Sort order</b><span>How vehicles list on your site</span></a>
+            <a class="menu__l" href="#"><b>New submissions</b><span>Vehicles waiting for review</span></a>
+          </div>
+          <div class="menu__col"><div class="caps menu__t">Reports</div>
+            <a class="menu__l" href="#"><b>Inventory aging</b><span>Days in stock, per vehicle</span></a>
+            <a class="menu__l" href="#"><b>Sold inventory</b><span>What sold, and when</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Leads<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Leads</div>
+          <a class="menu__l" href="#"><b>Lead Manager</b><span>Every enquiry, by stage</span></a>
+          <a class="menu__l" href="#"><b>Customers</b><span>People who enquired or bought</span></a>
+          <a class="menu__l" href="#"><b>Referrals</b><span>Where leads came from</span></a>
+        </div></div>
+      </div>
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Site<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Site management</div>
+          <a class="menu__l" href="#"><b>Site Content Manager</b><span>Pages, banners and copy</span></a>
+        </div></div>
+      </div>
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Marketing<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Marketing applications</div>
+          <a class="menu__l" href="#"><b>Newsletter tools</b><span>Compose and send</span></a>
+          <a class="menu__l" href="#"><b>Craigslist posting</b><span>Post vehicles to Craigslist</span></a>
+          <a class="menu__l" href="#"><b>Posting tools &amp; eBay</b><span>Other marketplaces</span></a>
+        </div></div>
+      </div>
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Dealer tools<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Dealer tools</div>
+          <a class="menu__l" href="#"><b>View site statistics <svg class="i"><use href="#i-ext"/></svg></b><span>Opens in a new tab</span></a>
+          <a class="menu__l" href="#"><b>Billing info</b><span>Invoices and balance</span></a>
+        </div></div>
+      </div>
+    </nav>
+    <span class="top__sp"></span>
+    <label class="gsearch"><svg class="i"><use href="#i-search"/></svg><input type="search" id="gsearch" name="gsearch" placeholder="Search anywhere" aria-label="Search anywhere" autocomplete="off"><kbd>⌘K</kbd></label>
+    <div class="nav__it">
+      <button class="tbtn" type="button" data-menu aria-haspopup="true" aria-expanded="false" aria-label="Support"><svg class="i"><use href="#i-buoy"/></svg></button>
+      <div class="menu menu--r"><div class="menu__col"><div class="caps menu__t">Support</div>
+        <a class="menu__l" href="#"><b>View tickets</b><span>Your requests to AAN</span></a>
+        <a class="menu__l" href="#"><b>Create ticket</b><span>Ask AAN for help</span></a>
+      </div></div>
+    </div>
+    <button class="tbtn" type="button" aria-label="Notifications"><svg class="i"><use href="#i-bell"/></svg><span class="tbtn__dot"></span></button>
+    <span class="top__div"></span>
+    <div class="nav__it">
+      <button class="dealer" type="button" data-menu aria-haspopup="true" aria-expanded="false"><span class="dealer__mk">CM</span><span class="dealer__n">Chicago Motor Cars</span><span class="dealer__id">#277</span><svg class="i"><use href="#i-chev"/></svg></button>
+      <div class="menu menu--r"><div class="menu__col"><div class="caps menu__t">Rooftops · 6</div>
+        <a class="menu__l menu__l--on" href="#"><b>All rooftops</b><span>Chicago Motor Cars group</span></a>
+        <a class="menu__l" href="#"><b>Chicago Motor Cars</b></a>
+        <a class="menu__l" href="#"><b>CMC · Naperville</b></a>
+        <a class="menu__l" href="#"><b>CMC · KC</b></a>
+        <a class="menu__l" href="#"><b>CMC · SC</b></a>
+        <a class="menu__l" href="#"><b>CMS Diesel</b></a>
+      </div></div>
+    </div>
+    <div class="nav__it">
+      <button class="avt" type="button" data-menu aria-haspopup="true" aria-expanded="false" aria-label="Account · Parin">P</button>
+      <div class="menu menu--r"><div class="menu__col">
+        <div class="menu__who"><b>Parin</b><span>Chicago Motor Cars · #277</span></div>
+        <a class="menu__l" href="#"><b>Account</b></a>
+        <a class="menu__l" href="#"><b>Log out</b></a>
+      </div></div>
+    </div>
+  </header>
+
+  <!-- ══ COCKPIT — the object identity module. Everything in it is read-only
+       except the actions; the editable copies of stock, VIN and price live in
+       their own zones below. ══ -->
+  <div class="cockpit" id="cockpit">
+    <a class="cock__back" href="all-vehicles-gen11.html" title="Back to the inventory list"><svg class="i"><use href="#i-back"/></svg>Inventory</a>
+    <span class="cock__thumb" id="cock-thumb"></span>
+    <div class="cock__id">
+      <div class="cock__l1">
+        <h1 class="cock__t" id="cock-title">Vehicle</h1>
+        <span class="pill pill--ok" id="cock-status">AVAILABLE</span>
+        <span class="pill" id="cock-type">USED</span>
+      </div>
+      <div class="cock__l2">
+        <span>Stock <b id="cock-stock"></b></span>
+        <button class="copy" type="button" data-copy="stock" aria-label="Copy stock number" title="Copy stock number"><svg class="i"><use href="#i-copy"/></svg></button>
+        <span class="vin" id="cock-vin"></span>
+        <button class="copy" type="button" data-copy="vin" aria-label="Copy VIN" title="Copy VIN"><svg class="i"><use href="#i-copy"/></svg></button>
+      </div>
+    </div>
+    <div class="cock__acts">
+      <span class="cock__price" id="cock-price"></span>
+      <span class="cock__nav">
+        <button class="btn btn--sheet btn--sm btn--icon" type="button" data-act="prev" aria-label="Previous vehicle in your current list" title="Previous vehicle in your current list"><svg class="i"><use href="#i-left"/></svg></button>
+        <button class="btn btn--sheet btn--sm btn--icon" type="button" data-act="next" aria-label="Next vehicle in your current list" title="Next vehicle in your current list"><svg class="i"><use href="#i-right"/></svg></button>
+      </span>
+      <button class="btn btn--sheet btn--sm" type="button" data-jump="zPhotos"><svg class="i"><use href="#i-cam"/></svg>Photos<span class="badge" id="cock-ph">0</span></button>
+      <span class="pop-wrap">
+        <button class="btn btn--sheet btn--sm" type="button" data-pop="p-prints" aria-haspopup="true" aria-expanded="false"><svg class="i"><use href="#i-print"/></svg>Prints<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="pop" id="p-prints" role="menu" aria-label="Prints"></div>
+      </span>
+      <button class="btn btn--primary btn--sm" type="button" data-act="save"><svg class="i"><use href="#i-save"/></svg>Save<span class="btn__n" id="cock-dirty">0</span></button>
+    </div>
+  </div>
+
+  <!-- ══ VITALS — read-only operational facts, on the ground, no surface ══ -->
+  <div class="vitals">
+    <span class="vitals__f">Added <b id="v-added"></b><span class="age" id="v-age"></span></span>
+    <span class="vitals__f">Modified <b id="v-modified"></b></span>
+    <span class="vitals__f">Views <b id="v-views"></b></span>
+    <span class="lock"><svg class="i"><use href="#i-lock"/></svg>You hold the edit lock</span>
+    <span class="vitals__sp"></span>
+    <button class="linkbtn" type="button" data-act="changelog">Change log<svg class="i"><use href="#i-ext"/></svg></button>
+  </div>
+
+  <div class="body">
+
+    <!-- ══ RAIL — the section index. A full object page uses a rail; that is
+         what lets eleven sections exist without accordions. ══ -->
+    <nav class="rail" id="rail" aria-label="Sections">
+      <button class="rail__i rail__i--on" type="button" data-jump="zStatus"><span>Status</span><span class="badge badge--ok" id="b-status">AVAIL</span></button>
+      <button class="rail__i" type="button" data-jump="zPricing"><span>Pricing</span><span class="badge" id="b-pricing"></span></button>
+      <button class="rail__i" type="button" data-jump="zPhotos"><span>Photos</span><span class="badge" id="b-photos"></span></button>
+      <button class="rail__i" type="button" data-jump="zSpecs"><span>Specs &amp; VIN</span></button>
+      <button class="rail__i" type="button" data-jump="zColors"><span>Colors</span></button>
+      <button class="rail__i" type="button" data-jump="zDesc"><span>Descriptions</span><span class="badge" id="b-desc"></span></button>
+      <button class="rail__i" type="button" data-jump="zFeat"><span>Features</span><span class="badge" id="b-feat"></span></button>
+      <button class="rail__i" type="button" data-jump="zFeeds"><span>Feeds</span><span class="badge badge--ok" id="b-feeds">all on</span></button>
+      <button class="rail__i" type="button" data-jump="zCustom"><span>Custom Fields</span><span class="badge" id="b-custom">10</span></button>
+      <button class="rail__i" type="button" data-jump="zMore"><span>More Details</span></button>
+      <button class="rail__i" type="button" data-jump="zUtil"><span>Utilities</span></button>
+    </nav>
+
+    <!-- ══ ZONES — one field, eleven attached regions ══ -->
+    <div class="zones" id="zones">
+
+      <!-- 1 · STATUS & VISIBILITY -->
+      <section class="zone" id="zStatus" aria-labelledby="t-status">
+        <div class="zone__h">
+          <h2 class="zone__t" id="t-status">Status &amp; Visibility</h2>
+          <span class="zone__s">the levers that decide where this car appears</span>
+        </div>
+        <div class="zone__b">
+          <div class="statusrow">
+            <div class="f">
+              <span class="f__l" id="l-sold">Status (sold)</span>
+              <div class="seg" role="group" aria-labelledby="l-sold" data-seg="status">
+                <button class="seg__b" type="button" data-v="Available" aria-pressed="false">Available</button>
+                <button class="seg__b" type="button" data-v="Sold" aria-pressed="false">Sold</button>
+                <button class="seg__b" type="button" data-v="Pending" aria-pressed="false">Pending</button>
+                <button class="seg__b" type="button" data-v="Staging" aria-pressed="false">Staging</button>
+              </div>
+            </div>
+            <div class="f">
+              <span class="f__l" id="l-type">Type</span>
+              <div class="seg" role="group" aria-labelledby="l-type" data-seg="vtype">
+                <button class="seg__b" type="button" data-v="Used" aria-pressed="false">Used</button>
+                <button class="seg__b" type="button" data-v="New" aria-pressed="false">New</button>
+              </div>
+            </div>
+            <div class="f">
+              <span class="f__l" id="l-cert">Certified</span>
+              <div class="seg" role="group" aria-labelledby="l-cert" data-seg="certified">
+                <button class="seg__b" type="button" data-v="on" aria-pressed="false">On</button>
+                <button class="seg__b" type="button" data-v="off" aria-pressed="false">Off</button>
+              </div>
+            </div>
+          </div>
+          <p class="f__help">Switching to <b>Sold</b> auto-clears Pending Sale on save (existing rule). Back to Available — consider the <b>Renew listing on save</b> switch in Utilities to re-sort as a fresh arrival (never automatic).</p>
+          <div class="vis" id="vis" style="margin-top:var(--s4)"></div>
+        </div>
+      </section>
+
+      <!-- 2 · PRICING -->
+      <section class="zone" id="zPricing" aria-labelledby="t-pricing">
+        <div class="zone__h">
+          <h2 class="zone__t" id="t-pricing">Pricing</h2>
+          <span class="zone__s">history from changeslog (legacy parity)</span>
+        </div>
+        <div class="zone__b">
+          <div class="grid">
+            <div class="f" data-f="price">
+              <label class="f__l" for="core-price">Price</label>
+              <div class="money money--lg"><input class="in" id="core-price" type="text" inputmode="numeric" autocomplete="off"></div>
+              <span id="prov-price"></span>
+            </div>
+            <div class="f" data-f="discount_price">
+              <label class="f__l" for="core-discount_price">Discount Price</label>
+              <div class="money"><input class="in" id="core-discount_price" type="text" inputmode="numeric" autocomplete="off"></div>
+              <span class="prov"><svg class="i"><use href="#i-undo"/></svg>no history</span>
+            </div>
+            <div class="f" data-f="invoice_price">
+              <label class="f__l" for="core-invoice_price">Invoice (Cost) Price</label>
+              <div class="money"><input class="in" id="core-invoice_price" type="text" inputmode="numeric" autocomplete="off"></div>
+              <span class="prov"><svg class="i"><use href="#i-undo"/></svg>no history</span>
+            </div>
+            <div class="f" data-f="lease_price">
+              <label class="f__l" for="core-lease_price">Lease Price</label>
+              <div class="money"><input class="in" id="core-lease_price" type="text" inputmode="numeric" autocomplete="off"></div>
+              <span class="prov"><svg class="i"><use href="#i-undo"/></svg>no history</span>
+            </div>
+            <div class="f" data-f="lease_term">
+              <label class="f__l" for="core-lease_term">Lease Term</label>
+              <select class="sel" id="core-lease_term" data-opt="leaseTerm"></select>
+              <span class="f__help">months</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 · PHOTOS -->
+      <section class="zone" id="zPhotos" aria-labelledby="t-photos">
+        <div class="zone__h">
+          <h2 class="zone__t" id="t-photos">Photos</h2>
+          <span class="zone__s" id="s-photos"></span>
+          <a class="btn btn--sheet btn--sm" href="#" data-act="studio">Open Photo Studio<svg class="i"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="zone__b">
+          <div class="photos" id="photos"></div>
+          <p class="f__help">Uploads, reorder (#1 = main), watermarks, feed selection and delete all live in the Photo Studio — same pipeline as today.</p>
+          <p class="f__help" id="photos-note"></p>
+        </div>
+      </section>
+
+      <!-- 4 · SPECS & VIN -->
+      <section class="zone" id="zSpecs" aria-labelledby="t-specs">
+        <div class="zone__h">
+          <h2 class="zone__t" id="t-specs">Specs &amp; VIN</h2>
+          <span class="zone__s">decode fills the form — you review, then Save</span>
+        </div>
+        <div class="zone__b">
+          <div class="vinbar">
+            <span class="caps">VIN</span>
+            <span class="vinbar__v" id="vinbar-v"></span>
+            <button class="copy" type="button" data-copy="vin" aria-label="Copy VIN" title="Copy VIN"><svg class="i"><use href="#i-copy"/></svg></button>
+            <span class="vinbar__sp"></span>
+            <span class="note" id="decode-note" hidden><svg class="i"><use href="#i-alert"/></svg>VIN decoding is not connected in this prototype.</span>
+            <button class="btn btn--sheet btn--sm" type="button" data-act="decode"><svg class="i"><use href="#i-zap"/></svg>Decode VIN</button>
+          </div>
+          <div class="grid">
+            <div class="f" data-f="stockno"><label class="f__l" for="core-stockno">Stock</label><input class="in" id="core-stockno" type="text" autocomplete="off"></div>
+            <div class="f" data-f="vin"><label class="f__l" for="core-vin">VIN</label><input class="in in--mono" id="core-vin" type="text" autocomplete="off" spellcheck="false"></div>
+            <div class="f" data-f="year"><label class="f__l" for="core-year">Year</label><input class="in" id="core-year" type="text" inputmode="numeric" autocomplete="off"></div>
+            <div class="f" data-f="make"><label class="f__l" for="core-make">Make</label><input class="in" id="core-make" type="text" autocomplete="off"></div>
+            <div class="f" data-f="model"><label class="f__l" for="core-model">Model</label><input class="in" id="core-model" type="text" autocomplete="off"></div>
+            <div class="f" data-f="trim"><label class="f__l" for="core-trim">Trim</label><input class="in" id="core-trim" type="text" autocomplete="off"></div>
+            <div class="f" data-f="body"><label class="f__l" for="core-body">Body</label><input class="in" id="core-body" type="text" autocomplete="off"></div>
+            <div class="f" data-f="mileage"><label class="f__l" for="core-mileage">Mileage</label><input class="in" id="core-mileage" type="text" inputmode="numeric" autocomplete="off"></div>
+            <div class="f" data-f="engine"><label class="f__l" for="core-engine">Engine</label><input class="in" id="core-engine" type="text" autocomplete="off"></div>
+            <div class="f" data-f="trans"><label class="f__l" for="core-trans">Transmission</label><input class="in" id="core-trans" type="text" autocomplete="off"></div>
+            <div class="f" data-f="mpg_cty"><label class="f__l" for="core-mpg_cty">MPG City</label><input class="in" id="core-mpg_cty" type="text" inputmode="numeric" autocomplete="off"></div>
+            <div class="f" data-f="mpg_hwy"><label class="f__l" for="core-mpg_hwy">MPG Highway</label><input class="in" id="core-mpg_hwy" type="text" inputmode="numeric" autocomplete="off"></div>
+            <div class="f" data-f="fuel"><label class="f__l" for="core-fuel">Fuel Type</label><input class="in" id="core-fuel" type="text" autocomplete="off"></div>
+            <div class="f" data-f="drivetrain"><label class="f__l" for="core-drivetrain">Drivetrain</label><input class="in" id="core-drivetrain" type="text" autocomplete="off"></div>
+            <div class="f" data-f="cylinders"><label class="f__l" for="core-cylinders">Cylinders</label><select class="sel" id="core-cylinders" data-opt="cylinders"></select></div>
+            <div class="f" data-f="displacement"><label class="f__l" for="core-displacement">Displacement</label><input class="in" id="core-displacement" type="text" autocomplete="off"></div>
+            <div class="f" data-f="curb_weight"><label class="f__l" for="core-curb_weight">Curb Weight</label><input class="in" id="core-curb_weight" type="text" inputmode="numeric" autocomplete="off"></div>
+            <div class="f" data-f="doors"><label class="f__l" for="core-doors">Doors</label><input class="in" id="core-doors" type="text" inputmode="numeric" autocomplete="off"></div>
+            <div class="f" data-f="vehicle_type"><label class="f__l" for="core-vehicle_type">Vehicle Type</label><input class="in" id="core-vehicle_type" type="text" autocomplete="off"></div>
+            <div class="f" data-f="YouTube_url"><label class="f__l" for="core-YouTube_url">YouTube URL</label><input class="in" id="core-YouTube_url" type="url" autocomplete="off" spellcheck="false"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 · COLORS -->
+      <section class="zone" id="zColors" aria-labelledby="t-colors">
+        <div class="zone__h">
+          <h2 class="zone__t" id="t-colors">Colors</h2>
+          <span class="zone__s">the basic colour is what the feeds read; the free-text colour is what the site shows</span>
+        </div>
+        <div class="zone__b">
+          <div class="grid">
+            <div class="f" data-f="ext_color"><label class="f__l" for="core-ext_color">Exterior Color</label><input class="in" id="core-ext_color" type="text" autocomplete="off"></div>
+            <div class="f" data-f="basic_ext_color">
+              <label class="f__l" for="core-basic_ext_color">Basic Exterior Color</label>
+              <select class="sel" id="core-basic_ext_color" data-opt="basicExt"></select>
+              <span class="f__help">On Save this copies into Exterior Color (existing rule)</span>
+            </div>
+            <div class="f" data-f="int_color"><label class="f__l" for="core-int_color">Interior Color</label><input class="in" id="core-int_color" type="text" autocomplete="off"></div>
+            <div class="f" data-f="basic_int_color">
+              <label class="f__l" for="core-basic_int_color">Basic Interior Color</label>
+              <select class="sel" id="core-basic_int_color" data-opt="basicInt"></select>
+              <span class="f__help">On Save this copies into Interior Color (existing rule)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6 · DESCRIPTIONS -->
+      <section class="zone" id="zDesc" aria-labelledby="t-desc">
+        <div class="zone__h">
+          <h2 class="zone__t" id="t-desc">Descriptions</h2>
+          <span class="zone__s">Main Text 1 is what sells — it gets the room</span>
+          <span class="chip-src">AI writer · not connected</span>
+          <button class="btn btn--sheet btn--sm" type="button" data-act="ai" id="ai-btn"><svg class="i"><use href="#i-spark"/></svg>AI Writer</button>
+        </div>
+        <div class="zone__b">
+          <button class="aicta" type="button" data-act="ai" id="ai-cta">
+            <span class="aicta__k"><svg class="i"><use href="#i-spark"/></svg></span>
+            <span class="aicta__x"><b>AI Description Writer</b> — reads this car's specs, options and your notes, then drafts tailored sales copy you can insert with one click.</span>
+            <span class="aicta__go">Open the writer →</span>
+          </button>
+
+          <div class="tabs" role="tablist" aria-label="Description field" id="desc-tabs"></div>
+
+          <div class="desc" id="desc">
+            <div id="desc-pane"></div>
+
+            <aside class="aidock" id="aidock" hidden aria-label="AI Description Writer">
+              <div class="aidock__h">
+                <span class="aidock__t"><svg class="i"><use href="#i-spark"/></svg>AI Description Writer</span>
+                <button class="aidock__x" type="button" data-act="ai-close" aria-label="Close the writer" title="Close the writer"><svg class="i"><use href="#i-x"/></svg></button>
+              </div>
+              <details>
+                <summary>How it works?</summary>
+                <p class="f__help">It reads the vehicle as it stands on this screen — year, make, model, trim, mileage, engine, drivetrain, MPG, colours, body, transmission and the options list from Features &amp; Equipment — writes a first draft, then keeps chatting: ask for changes in plain English and it revises. Nothing is saved until you Insert the draft into a description tab and click Save.</p>
+              </details>
+              <p class="aidock__zero">Nothing to fill in — it already reads this car's specs, options and your existing description. One click writes the first draft.</p>
+              <button class="btn btn--primary" type="button" disabled title="The writer is not connected in this prototype"><svg class="i"><use href="#i-spark"/></svg>Generate Now</button>
+              <p class="note"><svg class="i"><use href="#i-alert"/></svg>Not connected in this prototype — no draft is produced.</p>
+              <details>
+                <summary>Optional — mention special features or pick a tone first</summary>
+                <div class="f" style="margin-top:var(--s3)">
+                  <label class="f__l" for="ai-special-notes">Special Features</label>
+                  <textarea class="ta" id="ai-special-notes" rows="4" placeholder="Anything the specs don't say — options packages, recent service, one owner…" style="min-height:96px"></textarea>
+                </div>
+                <div class="f" style="margin-top:var(--s3)">
+                  <label class="f__l" for="ai-tone-style">What Style/Tone to use</label>
+                  <select class="sel" id="ai-tone-style" data-opt="tone"></select>
+                </div>
+              </details>
+              <p class="f__help">Output is a draft — nothing writes until you Save.</p>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 · FEATURES & EQUIPMENT -->
+      <section class="zone" id="zFeat" aria-labelledby="t-feat">
+        <div class="zone__h">
+          <h2 class="zone__t" id="t-feat">Features &amp; Equipment</h2>
+          <span class="zone__s">stored as the same features XML · decode refreshes Standard</span>
+        </div>
+        <div class="zone__b" id="feat"></div>
+      </section>
+
+      <!-- 8 · MARKETPLACE FEEDS -->
+      <section class="zone" id="zFeeds" aria-labelledby="t-feeds">
+        <div class="zone__h">
+          <h2 class="zone__t" id="t-feeds">Marketplace Feeds</h2>
+          <span class="zone__s" id="s-feeds"></span>
+        </div>
+        <div class="zone__b">
+          <div class="feedtools">
+            <input class="in in--sm" id="feed-q" type="search" placeholder="Filter feeds…" aria-label="Filter feeds" autocomplete="off">
+            <button class="btn btn--sheet btn--sm" type="button" data-act="feeds-all">Include all</button>
+            <button class="btn btn--sheet btn--sm" type="button" data-act="feeds-none">Exclude all</button>
+            <span class="f__help">Switch ON (green) = sending to that feed · merge-safe save (untouched feeds keep their tokens) · excluding ALL auto-flips “Do Not Feed Out”</span>
+          </div>
+          <div class="feeds" id="feeds"></div>
+          <div class="feedfoot">
+            <button class="btn btn--sheet" type="button" data-act="save-feeds">Save Feed Control</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9 · CUSTOM FIELDS -->
+      <section class="zone" id="zCustom" aria-labelledby="t-custom">
+        <div class="zone__h">
+          <h2 class="zone__t" id="t-custom">Custom Fields</h2>
+          <span class="zone__s">this dealer's 10 extra columns · friendly labels, raw name kept as hint</span>
+        </div>
+        <div class="zone__b"><div class="grid" id="custom"></div></div>
+      </section>
+
+      <!-- 10 · MORE DETAILS -->
+      <section class="zone" id="zMore" aria-labelledby="t-more">
+        <div class="zone__h">
+          <h2 class="zone__t" id="t-more">More Details</h2>
+          <span class="zone__s">the long-tail core columns this dealer carries</span>
+        </div>
+        <div class="zone__b">
+          <div class="grid">
+            <div class="f" data-f="bookvalue"><label class="f__l" for="core-bookvalue">Bookvalue</label><div class="money"><input class="in" id="core-bookvalue" type="text" inputmode="numeric" autocomplete="off"></div></div>
+            <div class="f" data-f="discount"><label class="f__l" for="core-discount">Discount</label><input class="in" id="core-discount" type="text" inputmode="numeric" autocomplete="off"></div>
+            <div class="f" data-f="original_price"><label class="f__l" for="core-original_price">Original Price</label><div class="money"><input class="in" id="core-original_price" type="text" inputmode="numeric" autocomplete="off"></div></div>
+            <div class="f" data-f="location"><label class="f__l" for="core-location">Location</label><select class="sel" id="core-location" data-opt="location"></select></div>
+            <div class="f" data-f="modelnumber"><label class="f__l" for="core-modelnumber">Modelnumber</label><input class="in" id="core-modelnumber" type="text" autocomplete="off"></div>
+            <div class="f" data-f="bodyCode"><label class="f__l" for="core-bodyCode">BodyCode</label><input class="in" id="core-bodyCode" type="text" autocomplete="off"></div>
+            <div class="f" data-f="add_options"><label class="f__l" for="core-add_options">Add Options</label><input class="in" id="core-add_options" type="text" autocomplete="off"></div>
+            <div class="f" data-f="video_url"><label class="f__l" for="core-video_url">Video Url</label><input class="in" id="core-video_url" type="url" autocomplete="off" spellcheck="false"></div>
+            <div class="swrow" style="align-self:end;box-shadow:none">
+              <span class="swrow__x"><b>Zero Down</b></span>
+              <label class="sw"><input type="checkbox" id="core-zero_down" data-sw="zero_down" aria-label="Zero Down"><span class="sw__t"></span></label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 11 · UTILITIES -->
+      <section class="zone" id="zUtil" aria-labelledby="t-util">
+        <div class="zone__h">
+          <h2 class="zone__t" id="t-util">Utilities</h2>
+        </div>
+        <div class="zone__b">
+          <div class="refbox">
+            <span class="caps">Listing freshness</span>
+            <div class="swrow" style="box-shadow:none;padding-top:0">
+              <span class="swrow__x"><b>Renew listing on save</b><span>Resets “when added” to now — the car re-sorts as a fresh arrival (the legacy renew flag)</span></span>
+              <label class="sw"><input type="checkbox" id="reset-when-added" data-sw="reset_when_added" aria-label="Renew listing on save"><span class="sw__t"></span></label>
+            </div>
+          </div>
+          <div class="refbox">
+            <span class="caps">Carfax</span>
+            <div id="carfax"></div>
+            <span class="f__help">Read-only, from the vehicle's cfx columns (legacy header parity).</span>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /.zones -->
+  </div><!-- /.body -->
+
+  <!-- the document extender: JS grows this by exactly the shortfall when a jump
+       target sits past the end of the document. It measures 0 at rest; it is
+       load-bearing. · DESIGN.md §8 -->
+  <div id="jump-space" style="height:0"></div>
+
+  <!-- ══ SAVE BAR ══ -->
+  <div class="savebar" id="savebar">
+    <span class="savebar__n" id="save-n"><b>0</b> unsaved change(s)</span>
+    <span class="savebar__hint">only changed fields post (dirty-diff) · conflict check on save · Ctrl+S</span>
+    <span class="savebar__say" id="save-say" hidden></span>
+    <span class="savebar__div"></span>
+    <span class="pop-wrap">
+      <button class="savebar__b" type="button" data-pop="p-changes" aria-haspopup="true" aria-expanded="false" id="review-btn" disabled><svg class="i"><use href="#i-list"/></svg>Review changes</button>
+      <div class="pop pop--up" id="p-changes" aria-label="Changed fields"></div>
+    </span>
+    <button class="savebar__b savebar__b--discard" type="button" data-act="discard" id="discard-btn" disabled><svg class="i"><use href="#i-undo"/></svg>Discard</button>
+    <button class="savebar__b savebar__b--save" type="button" data-act="save" id="save-btn" disabled><svg class="i"><use href="#i-save"/></svg>Save Vehicle</button>
+  </div>
+</div>
+
+<noscript>
+  <div style="padding:16px;margin:16px;border-radius:14px;background:#fff2dc;color:#945000;font:14px/1.5 system-ui">
+    This editor needs JavaScript: the vehicle's values, the 31 feed rows and the
+    features list are rendered from <code>single-vehicle-gen11.data.js</code>.
+    The section structure above is real and readable without it.
+  </div>
+</noscript>
+
+<script src="single-vehicle-gen11.data.js?v=202609282140"></script>
+<script src="single-vehicle-gen11.js?v=202609282140"></script>
+</body>
+</html>

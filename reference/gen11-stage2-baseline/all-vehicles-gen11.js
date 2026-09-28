@@ -38,9 +38,7 @@
   var S = {
     sort: 'days', dir: 'desc', attn: {}, age: null, sel: {}, lane: 'Available', dock: null, cur: null, fq: '', allMakes: false,
     f: { make: {}, model: {}, year: {}, price: {}, mile: {}, loc: {}, type: {}, merch: {}, color: {}, opt: {} },
-    /* Open state for both disclosure families: the vehicle sheet's four stacked
-       regions, then the Filters dock's facet groups. */
-    acc: { health: true, market: false, spec: false, hist: false, 'f-make': true, 'f-price': true, 'f-year': false, 'f-model': false, 'f-mile': false, 'f-loc': false, 'f-type': false, 'f-merch': false, 'f-color': false, 'f-opt': false, 'f-audit': false }
+    acc: { health: true, market: false, comps: false, spec: false, hist: false, 'f-make': true, 'f-price': true, 'f-year': false, 'f-model': false, 'f-mile': false, 'f-loc': false, 'f-type': false, 'f-merch': false, 'f-color': false, 'f-opt': false, 'f-audit': false }
   };
 
   function band(d) { return d <= 30 ? 'fresh' : d <= 90 ? 'mid' : d <= 365 ? 'late' : 'stale'; }
@@ -117,40 +115,15 @@
       '</div>';
   }
 
-  /* CSS publishes the sticky geometry; JS reads it rather than keeping a second
-     copy. Custom properties are substituted but not evaluated, so --stick-total
-     comes back as the literal text "calc(68px + 72px + 52px)" and parseFloat
-     returns NaN — the three plain values are summed here instead. The same trap
-     silently disabled the old --stick-hd-top read, which survived only because
-     its fallback happened to equal the right number. */
-  var CSSV = getComputedStyle(document.documentElement);
-  function cssPx(n, f) { var v = parseFloat(CSSV.getPropertyValue(n)); return isNaN(v) ? f : v; }
-  function stickTotal() { return cssPx('--stick-bar', 68) + cssPx('--stick-cmd', 72) + cssPx('--stick-hd', 52); }
-  function reducedMotion() { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
-
-  /* The anchor. The selected row comes to rest at a named position under the
-     sticky stack — the behaviour All Leads has always had, where it is spelled
-     `- 56 - 58 - 48 - 10` in the source. Near the end of the list there is not
-     enough page left to scroll, so #exp-space lends the document the shortfall. */
-  function anchorRow(id) {
-    var r = $('.row[data-id="' + id + '"]'); if (!r) return;
-    var y = Math.max(0, Math.round(r.getBoundingClientRect().top + window.scrollY - stickTotal() - cssPx('--anchor-gap', 10)));
-    var sp = $('#exp-space');
-    if (sp) {
-      sp.style.height = '0px';
-      var need = y - (document.documentElement.scrollHeight - window.innerHeight);
-      sp.style.height = need > 0 ? Math.ceil(need) + 'px' : '0px';
-    }
-    window.scrollTo({ top: y, behavior: reducedMotion() ? 'auto' : 'smooth' });
-  }
-
   function render() {
     var L = list(), F = filtered();
     $('#tb').innerHTML = L.length ? L.map(function (v) { return row(v) + (S.cur === v.id ? '<div class="exp" id="exp"><div><div class="exp__in">' + vehicleSheet(v) + '</div></div></div>' : ''); }).join('') + (S.cur ? '<div class="exp-space" id="exp-space"></div>' : '') : '<div class="empty">No vehicles match these filters.<button type="button" data-act="clear-all">Clear all</button></div>';
     $('.field').classList.toggle('has-open', !!S.cur);
-    // the sheet sits in the list; reading offsetWidth commits the inserted
-    // element before the state class lands, so the entrance actually plays
-    var ex = $('#exp'); if (ex) { void ex.offsetWidth; ex.classList.add('exp--open'); }
+    // car preview behaves like Gen 9's popover: one floating block pinned under its row,
+    // the table underneath keeps its place instead of reflowing
+    var ex = $('#exp'); if (ex) { var rw = $('.row[data-id="' + S.cur + '"]'), host = $('#tb');
+      if (rw && host) { var hb = host.getBoundingClientRect(), rb = rw.getBoundingClientRect(); ex.style.top = Math.round(rb.bottom - hb.top + 8) + 'px'; }
+      ex.classList.add('exp--open'); S.expNow = true; }
     $('#shown').textContent = (L.length ? '1–' + L.length : '0') + ' of ' + (F ? L.length : 359);
 
     var chips = [];
@@ -246,17 +219,16 @@
   function showVehicle(id) {
     var v = byId(id); if (!v) return;
     if (S.cur === id) { closeVehicle(); return; }
-    // switching is an ordinary open of another row: the old sheet went through a
-    // 200ms exit fade on an element the next render destroyed anyway
-    S.cur = id;
-    render();
-    anchorRow(id);
+    var ex = $('#exp');
+    S.cur = id; S.expNow = false;
+    // a popover comes to the row — no scrolling the page to it, no spacer to make room
+    var go = function () { render(); };
+    if (ex) { ex.classList.remove('exp--open'); setTimeout(go, 200); } else go();
   }
-  /* Closing does nothing to the scroll. Restoring the pre-open position was
-     measured against the shipped product and against the user: someone who
-     opens at 1623, scrolls to 2223 to read, then closes would be thrown 723px
-     away from what they were reading. Scroll anchoring absorbs the reflow. */
-  function closeVehicle() { S.cur = null; render(); }
+  function closeVehicle() {
+    var ex = $('#exp'); S.cur = null;
+    if (ex) { ex.classList.remove('exp--open'); setTimeout(render, 200); } else render();
+  }
 
   function vehicleSheet(v) {
     var has = function (t) { return v.f.indexOf(t) >= 0; };
@@ -266,15 +238,8 @@
       ab('btn--sheet', 'i-file', 'Carfax') + ab('btn--sheet', 'i-rss', has('Feed off') ? 'Include in feeds' : 'Exclude feeds') +
       ab('btn--sheet', 'i-eye', has('Hidden') ? 'Show on site' : 'Hide on site') + ab('btn--sheet btn--del', 'i-trash', 'Delete…') + '</div>';
     var p = vehicleBody(v);
-    /* The sheet is an object header and then a stack of regions, not two tall
-       columns. The figures, price rows and actions belong beside the photo —
-       leaving them under it made the left column 578px against a 344px right
-       column, which is where the 234px of white came from. The regions then
-       take the whole sheet width instead of two thirds of it. */
-    return '<div class="exp__l">' + p.img + '</div>' +
-      '<div class="exp__r"><div class="exp__top"><div><h3 class="veh__n"><em>' + v.y + '</em>' + esc(v.mk) + ' ' + esc(v.md) + '</h3>' + p.meta + p.tags + '</div><button class="exp__x" type="button" data-act="close-veh" aria-label="Close vehicle">' + ic('i-x') + '</button></div>' +
-        p.kv + (p.pricing || '') + acts + '</div>' +
-      '<div class="exp__accs">' + p.accs + '</div>';
+    return '<div class="exp__l">' + p.img + p.kv + (p.pricing || '') + acts + '</div>' +
+      '<div class="exp__r"><div class="exp__top"><div><h3 class="veh__n"><em>' + v.y + '</em>' + esc(v.mk) + ' ' + esc(v.md) + '</h3>' + p.meta + p.tags + '</div><button class="exp__x" type="button" data-act="close-veh" aria-label="Close vehicle">' + ic('i-x') + '</button></div><div class="exp__accs">' + p.accs + '</div></div>';
   }
 
   function vehicleBody(v) {
@@ -287,13 +252,8 @@
       ['ok', 'i-check', 'VIN decoded'],
       has('Pending') ? ['vio', 'i-clock', 'Sale pending'] : ['ok', 'i-check', 'No pending sale']
     ];
-    var bad = H.filter(function (h) { return h[0] !== 'ok'; });
-    var good = H.filter(function (h) { return h[0] === 'ok'; });
-    var issues = bad.length;
+    var issues = H.filter(function (h) { return h[0] !== 'ok'; }).length;
     var healthSum = issues ? '<span class="' + (has('Feed off') ? 'red' : 'bad') + '">' + issues + ' of 6 need work</span>' : '<span class="good">All clear</span>';
-    /* the checks that pass need naming, not six rows of green ticks */
-    var healthIn = '<div class="health">' + bad.map(function (h) { return '<div class="hl hl--' + h[0] + '"><i>' + ic(h[1]) + '</i>' + esc(h[2]) + '</div>'; }).join('') + '</div>' +
-      (good.length ? '<p class="health__ok">' + (issues ? '<b>Passing · </b>' : '') + good.map(function (h) { return esc(h[2]); }).join(' · ') + '</p>' : '');
 
     /* market & pricing */
     var span = m.max - m.min, pos = function (x) { return Math.max(0, Math.min(100, (x - m.min) / span * 100)); }, mx = Math.max.apply(null, m.bins);
@@ -302,7 +262,6 @@
     var deltaTxt = flat ? 'At market' : (Math.abs(d) * 100).toFixed(1) + '% ' + (d < 0 ? 'below' : 'above');
     var mktSum = v.p != null ? '<span class="' + (flat ? '' : d < 0 ? 'good' : 'bad') + '">' + deltaTxt + (flat ? '' : ' market') + '</span>' : '<span class="bad">Suggested ' + k(m.med) + '</span>';
     var mktIn =
-      '<div class="prov"><b>visor.vin market data</b><span>· not connected</span></div>' +
       '<div class="mkt__row">' +
         (v.p != null ? '<div><div class="mkt__v">' + fmt(v.p) + '</div><div class="mkt__l">Your asking price</div></div>' : '<div><div class="mkt__v warn">No price</div><div class="mkt__l">Your asking price</div></div>') +
         '<div><div class="mkt__v">' + fmt(m.med) + '</div><div class="mkt__l">Market median</div></div>' +
@@ -312,7 +271,7 @@
         (v.p != null ? '<span class="dist__mk" style="left:' + pos(v.p).toFixed(1) + '%"><b>You</b></span>' : '<span class="dist__mk dist__mk--med" style="left:' + pos(m.med).toFixed(1) + '%"><b>Median</b></span>') + '</div>' +
       '<div class="dist__ax" aria-hidden="true"><span>' + k(m.min) + '</span><span>Price distribution · ' + m.n + ' listings</span><span>' + k(m.max) + '</span></div>' +
       (v.p == null ? '<div class="suggest"><span>Price at the market median: <b>' + fmt(m.med) + '</b></span><button class="btn btn--sheet btn--sm" type="button">Set price</button></div>' : '') +
-      '<dl class="kvl"><div><dt>Typical range</dt><dd>' + k(m.lo) + ' – ' + k(m.hi) + '</dd></div><div><dt>Comparable listings</dt><dd>' + m.n + ' · last 90 days</dd></div><div><dt>Median days to sell</dt><dd>' + m.dts + ' days</dd></div></dl>';
+      '<dl class="kvl"><div><dt>Typical range</dt><dd>' + k(m.lo) + ' – ' + k(m.hi) + '</dd></div><div><dt>Comparable listings</dt><dd>' + m.n + ' · last 90 days</dd></div><div><dt>Median days to sell</dt><dd>' + m.dts + ' days</dd></div><div><dt>Source</dt><dd>visor.vin market data · not connected</dd></div></dl>';
 
     /* recent comps */
     var compsIn = '<ul class="cps">' + m.comps.map(function (c) {
@@ -320,7 +279,6 @@
       return '<li class="cp"><div class="cp__id"><b>' + c.y + ' ' + esc(v.mk) + ' ' + esc(v.md) + '</b><span>' + (c.mi != null ? nf(c.mi) + ' mi · ' : '') + 'listed ' + c.ago + 'd ago · ' + c.dist + ' mi away, ' + c.st + '</span></div>' +
         '<div class="cp__p"><b>' + fmt(c.p) + '</b>' + (diff != null ? '<span class="' + (diff >= 0 ? 'up' : 'dn') + '" title="Compared with your asking price">' + (diff >= 0 ? '+' : '−') + k(Math.abs(diff)) + ' vs yours</span>' : '') + '</div></li>';
     }).join('') + '</ul><button class="linkbtn" type="button">All ' + m.n + ' comparable listings' + ic('i-right') + '</button>';
-    mktIn += '<div class="reg__sub">Recent comps<span class="demo">Demo</span></div>' + compsIn;
 
     /* history */
     var sd = hash(v.s), T = [['i-edit', 'Edited by Parin', '3 days ago']];
@@ -338,11 +296,9 @@
       tags: (v.f.length ? '<div class="veh__tags">' + v.f.map(tag).join('') + '</div>' : ''),
       kv: '<div class="veh__kv"><div><div class="v' + (v.p == null ? ' warn' : '') + '">' + (v.p == null ? 'No price' : fmt(v.p)) + '</div><div class="l">price</div></div><div><div class="v" style="color:' + (b === 'stale' ? 'var(--danger)' : b === 'fresh' ? 'var(--ok)' : 'var(--ink)') + '">' + lab(v.d) + '</div><div class="l">' + nf(v.d) + ' days</div></div><div><div class="v">' + (v.ph || 0) + '</div><div class="l">photos</div></div></div>',
       pricing: (v.disc || v.inv || v.lease) ? '<div class="veh__pr">' + (v.disc ? '<div><span>Discount Price</span><b class="ok">' + fmt(v.disc) + '</b></div>' : '') + (v.inv ? '<div><span>Invoice (Cost) Price</span><b>' + fmt(v.inv) + '</b></div>' : '') + (v.lease ? '<div><span>Lease Price</span><b>' + fmt(v.lease) + '/mo</b></div>' : '') + (v.lt ? '<div><span>Lease Term</span><b>' + v.lt + ' months</b></div>' : '') + '</div>' : '',
-      /* Four regions stacked down one column, each opening in place and pushing
-         the ones below it. Independent — any number may be open at once, and
-         health, which opens by default, can be closed like the rest. */
-      accs: acc('health', 'Merchandising health', healthSum, healthIn) +
-        acc('market', 'Market intelligence', mktSum, mktIn, ' <span class="demo">Demo</span>') +
+      accs: acc('health', 'Merchandising health', healthSum, '<div class="health">' + H.map(function (h) { return '<div class="hl hl--' + h[0] + '"><i>' + ic(h[1]) + '</i>' + esc(h[2]) + '</div>'; }).join('') + '</div>') +
+        acc('market', 'Market &amp; pricing', mktSum, mktIn, ' <span class="demo">Demo</span>') +
+        acc('comps', 'Recent comps', '5 of ' + m.n + ' listings', compsIn, ' <span class="demo">Demo</span>') +
         acc('spec', 'Specification', esc(v.tr || 'No trim recorded'), specIn) +
         acc('hist', 'History', 'Edited 3 days ago', histIn, ' <span class="demo">Demo</span>')
     };
@@ -504,15 +460,13 @@
     var cmd = $('.cmd'); if (!cmd) return;
     var hd = $('.hd');
     var stuck = null, hdStuck = null;
+    var css = getComputedStyle(document.documentElement);
+    var px = function (name, fallback) { var v = parseFloat(css.getPropertyValue(name)); return isNaN(v) ? fallback : v; };
     var cmdTop, hdTop;
-    function readStack() { cmdTop = cssPx('--stick-bar', 68); hdTop = cmdTop + cssPx('--stick-cmd', 72); }
-    var app = document.getElementById('app');
+    function readStack() { cmdTop = px('--stick-cmd-top', 68); hdTop = px('--stick-hd-top', 140); }
     function onScroll() {
       var s = window.scrollY > 0 && cmd.getBoundingClientRect().top <= cmdTop + 0.5;
-      // the platform bar cannot see the command band in the selector tree — they
-      // are siblings — so the engaged state is published on the shell as well,
-      // which is what lets the bar square the two corners the band parks against
-      if (s !== stuck) { stuck = s; cmd.classList.toggle('cmd--stuck', s); app.classList.toggle('is-stuck', s); }
+      if (s !== stuck) { stuck = s; cmd.classList.toggle('cmd--stuck', s); }
       if (hd) {
         var h = window.scrollY > 0 && hd.getBoundingClientRect().top <= hdTop + 0.5;
         if (h !== hdStuck) { hdStuck = h; hd.classList.toggle('hd--stuck', h); }

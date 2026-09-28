@@ -1,0 +1,456 @@
+/* ============================================================================
+   AAN · Dealer UI · ALL LEADS — GENERATION 11
+
+   This sheet sits on `all-vehicles-gen11.css`, which is the Gen 11 SYSTEM layer:
+   the single token block, the surface rules (ATTACHED / FLOATING), the sticky
+   stack, the layer ladder, the focus indicator, the in-flow expansion and the
+   8pt spacing ladder. Nothing in this file redeclares any of that, and nothing
+   in this file touches that file. The relationship is the one All Leads Gen 10
+   had to its own base.
+
+   What this file owns:
+     1  the Lead Desk's column grid (eleven tracks, addressed semantically)
+     2  the lane rail, which on this page is a view control on a sunken track
+     3  the two command-band toggles as facet cards
+     4  the row's cell anatomy and the lead status badge
+     5  the board's "By status" inset
+     6  the inline lead workspace: buyer's message, identity, five regions
+     7  pagination and the assign tray
+     8  one breakpoint, at 1400
+
+   Defects carried over from Gen 10 and NOT reproduced here, each on purpose:
+     · `.hd--veil` — no rule and no JS branch hides the column header. Content
+       travels under chrome by the layer ladder instead (DESIGN.md §7).
+     · `.field.has-open .row:not(.open) { opacity: .55 }` — unrelated rows are
+       never dimmed. Opening one lead says nothing about the other sixty-nine.
+     · three different horizontal insets in the sticky stack — every layer on
+       this page takes `--gutter`, at rest and engaged (DESIGN.md §1).
+     · the grey command band and its white-on-grey control inks — Gen 11's band
+       is white glass, so the controls carry page ink.
+   ========================================================================== */
+
+
+/* ============================================================================
+   1 · COLUMNS — ☐ · Lead · Contact · Vehicle · Type · Source · Status ·
+                 Assigned · Created · Follow-up · Activity
+
+   Eleven tracks. The three identification columns are the flexible ones; every
+   operational column is fixed, because a fixed column is what makes a value
+   comparable down the list. `--col-gap` stays 8px at every width — the flexible
+   tracks absorb the difference instead of the gaps shrinking (DESIGN.md §15).
+   ========================================================================== */
+.field {
+  --cols:
+    26px                        /* checkbox   */
+    minmax(150px, 1.2fr)        /* Lead       */
+    minmax(160px, 1.35fr)       /* Contact    */
+    minmax(140px, 1.1fr)        /* Vehicle    */
+    112px                       /* Type       */
+    104px                       /* Source     */
+    132px                       /* Status     */
+    116px                       /* Assigned   */
+    96px                        /* Created    */
+    96px                        /* Follow-up  */
+    124px;                      /* Activity   */
+  /* Follow-up is 96 rather than 88 because its own column label is the widest
+     thing in it: `FOLLOW-UP` measures 85px at the header's 13px/700/.06em, and
+     at 88 it sat 1px over its track and crowded the Created arrow beside it.
+     The eight pixels come off Activity, whose label needs 74. */
+}
+
+/* One gutter and one column gap, restated at this file's cascade position so
+   the base sheet's own 13-column geometry and its 6px gap cannot reach here. */
+.hd, .row { gap: var(--col-gap); padding: 0 var(--gutter); }
+
+/* The lane rail and the scope line join the same vertical line as the rows. */
+.cmdtop { margin: 0; padding: var(--s3) var(--gutter) var(--s2); gap: var(--s3); }
+.sub { padding: var(--s2) var(--gutter); }
+
+/* Created reads right-aligned, as a figure column does. */
+.hd > .c-created { text-align: right; justify-self: end; }
+
+/* The field is FLOATING and carries `--r-card`, but it cannot clip: the command
+   band's and the scope line's popovers have to leave it, so `overflow` is
+   visible. Measured consequence: the footer is the last full-width opaque layer
+   inside it, square, so ~7px of white overhung each of the field's rounded
+   bottom corners against the page ground. An attached layer takes no radius at
+   a seam — but the footer's bottom edge is not a seam, it is the pane's own
+   outer boundary, the same case as the expansion's bottom corners. It gets the
+   pane's radius there and stays square where it meets the list. */
+.foot { border-radius: 0 0 var(--r-card) var(--r-card); }
+
+/* ── the operational group ────────────────────────────────────────────────
+   Lead · Contact · Vehicle · Type · Source identify the enquiry. Status ·
+   Assigned · Created · Follow-up · Activity are what you act on. One hairline
+   marks where the second group begins, and nothing else does (DESIGN.md §10).
+   Named cells, never nth-child: the Lead Desk gains and loses columns. */
+.hd > .c-status,
+.row > .st { box-shadow: inset 1px 0 0 var(--line-2); padding-left: var(--s3); }
+/* on the focal surface the page hairline disappears, so the open row draws its own */
+.row.open > .st, .row.open:hover > .st { box-shadow: inset 1px 0 0 rgba(255, 255, 255, .20); }
+
+
+/* ============================================================================
+   2 · THE LANE RAIL — a view control, on a sunken track
+
+   In Gen 10 the five lanes lived inside the dark Lead Board card, as translucent
+   tags that went solid white when active. Two things were wrong with that. The
+   card was then carrying a 16,574 hero, a five-lane grid and a five-row status
+   breakdown at once, which is the measured "By status feels cramped" defect; and
+   a lane is a *view*, whose Gen 11 means is a white thumb on a sunken track
+   (DESIGN.md §6) — the same object the view switcher uses on All Vehicles.
+
+   Moving the rail into the command zone fixes both. It deliberately does NOT
+   stick: pinning it would add ~52px to a 192px stack, i.e. a third of a 768px
+   viewport. The scope line under the band already carries the active lane.
+   ========================================================================== */
+.cmdtop .lanes { flex-wrap: wrap; padding: 5px; gap: var(--s1); }
+.cmdtop .lane { height: 40px; padding: 0 var(--s4); gap: var(--s2); font-size: 14px; }
+.cmdtop .lane b { font-size: 13px; font-weight: 600; }
+/* a zero lane stays legible rather than being greyed out of reach */
+.cmdtop .lane--zero, .cmdtop .lane--zero b { color: var(--ink-3); }
+/* `All on file` spanned the row when the lanes were a 2-column grid in the card;
+   on a horizontal rail it is simply the last segment. */
+.cmdtop .lane--all { grid-column: auto; margin-left: 0; }
+
+
+/* ============================================================================
+   3 · COMMAND BAND — search, sort, and the two list-wide toggles
+
+   The band is 72px: 8 + 56 + 8. That arithmetic is load-bearing — `--stick-cmd`
+   declares it and the selected-row anchor is derived from the sum (DESIGN.md §7).
+   Nothing in this section may change the band's height.
+
+   The two toggles are the same 56px facet card as Sort, so the band holds one
+   class of control rather than three. Engaged, they take the facet's own
+   engaged treatment — a white pill with a brand underline. That is not a blue
+   fill: the blue fill is reserved for the primary action.
+   ========================================================================== */
+.cmd .tog { min-width: 124px; }
+.cmd .tog .tog__k { font-size: 12px; font-weight: 500; color: var(--ink-3); }
+.cmd .tog .tog__v { font-size: 14px; font-weight: 600; color: var(--ink); }
+.cmd .tog[aria-pressed="true"] { box-shadow: var(--sh-pill), inset 0 -2px 0 var(--brand); }
+.cmd .tog[aria-pressed="true"] .tog__k { color: var(--brand); }
+.cmd .tog[aria-pressed="true"] .tog__v { color: var(--brand-ink); }
+
+/* long, searchable option lists — bounded by the viewport, not by a magic 420 */
+.mn { max-height: 60vh; overflow: auto; }
+.more { min-width: 420px; }
+.more .pop__row .fld { flex: 1; min-width: 0; }
+
+
+/* ============================================================================
+   4 · ROW ANATOMY
+
+   Every cell the Lead Desk row carries, in the Gen 11 type sizes. Gen 10 ran
+   seven cell types at 12–13.5px across all seventy rows; here the primary run
+   in each cell is 14px and only the mono qualifier lines sit at 12px — the same
+   split the All Vehicles row uses for stock number over VIN.
+
+   Two-line cells are the row's grammar: subject on top, qualifier under it.
+   Activity, Created and Follow-up adopt it too, which is what lets them hold
+   14px type inside a 132 / 96 / 88px track without truncating.
+   ========================================================================== */
+
+/* — Lead: name, record number, and the unread-reply marker as text, not an icon */
+.ld { min-width: 0; line-height: 1.25; }
+.ld__n { display: block; font-size: 14px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ld__n a { color: inherit; }
+.ld__n a:hover { text-decoration: underline; }
+.ld__id { display: block; margin-top: var(--s1); font: 12px var(--mono); color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ld__nm { font-family: var(--font); font-weight: 600; color: var(--signal); }
+
+/* — Contact */
+.ct { min-width: 0; line-height: 1.25; }
+.ct__e { display: block; font-size: 14px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ct__p { display: block; margin-top: var(--s1); font: 12px var(--mono); color: var(--ink-3); white-space: nowrap; }
+.ct__p.none { color: var(--ink-4); }
+
+/* — Vehicle of interest */
+.vh { min-width: 0; line-height: 1.25; }
+.vh__n { display: block; font-size: 14px; font-weight: 500; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vh__s { display: block; margin-top: var(--s1); font: 12px var(--mono); color: var(--ink-3); }
+.vh--none .vh__n { color: var(--ink-4); font-weight: 400; }
+
+/* — Type · Source · Assigned */
+.ty { min-width: 0; font: 12px var(--mono); color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sc { min-width: 0; font-size: 14px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sc em { font-style: normal; color: var(--ink-3); }
+.as { min-width: 0; font-size: 14px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.as--none { color: var(--ink-4); }
+
+/* — Created: date over time, right-aligned, tabular */
+.cr { min-width: 0; text-align: right; line-height: 1.25; font-variant-numeric: tabular-nums; }
+.cr b { display: block; font-size: 14px; font-weight: 500; color: var(--ink-2); white-space: nowrap; }
+.cr span { display: block; margin-top: var(--s1); font-size: 12px; color: var(--ink-4); white-space: nowrap; }
+
+/* — Follow-up: the date, and the overdue state as a labelled second line */
+.fu { min-width: 0; line-height: 1.25; font-variant-numeric: tabular-nums; }
+.fu b { display: block; font-size: 14px; font-weight: 500; color: var(--ink-2); white-space: nowrap; }
+.fu--none b { color: var(--ink-4); font-weight: 400; }
+.fu__due { display: inline-flex; align-items: center; gap: var(--s1); margin-top: var(--s1); font-size: 12px; font-weight: 600; color: var(--danger); white-space: nowrap; }
+.fu__due .i { width: 13px; height: 13px; }
+
+/* — Activity: what happened, and when */
+.ac { min-width: 0; line-height: 1.25; }
+.ac b { display: block; font-size: 14px; font-weight: 500; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ac span { display: block; margin-top: var(--s1); font-size: 12px; color: var(--ink-4); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ac--none b { color: var(--ink-4); font-weight: 400; }
+
+/* ── the status badge — the Lead Desk's own statuses on the Gen 11 tag ─────
+   Five tones for fourteen statuses, grouped by what the status means for the
+   day's work: incoming · working · urgent · committed · appraising · dormant ·
+   closed-won. The tone is never the only carrier — the label is always there. */
+.st .stat { height: 24px; padding: 0 8px; font-size: 13px; }
+.stat--new    { color: var(--brand-ink); background: var(--brand-soft); box-shadow: inset 0 0 0 1px var(--brand-soft-2); }
+.stat--active { color: var(--ok);        background: var(--ok-soft);    box-shadow: inset 0 0 0 1px var(--ok-line); }
+.stat--hot    { color: var(--danger);    background: var(--danger-soft); box-shadow: inset 0 0 0 1px var(--danger-line); }
+.stat--pend   { color: var(--violet);    background: var(--violet-soft); box-shadow: inset 0 0 0 1px var(--violet-line); }
+.stat--trade  { color: var(--signal);    background: var(--signal-soft); box-shadow: inset 0 0 0 1px var(--signal-line); }
+.stat--quiet  { color: var(--slate);     background: var(--slate-soft);  box-shadow: inset 0 0 0 1px var(--line-3); }
+.stat--won    { color: var(--ok);        background: var(--sheet);       box-shadow: inset 0 0 0 1px var(--ok-fill); }
+
+/* ── bulk selected vs open for inspection ─────────────────────────────────
+   `--brand-soft` is the bulk-selection tint (DESIGN.md §6), and `New Lead` uses
+   the same tint for its badge. On a checked row the two would cancel out, so on
+   that row alone the badge inverts to the sheet. The two states co-occur and
+   must stay tellable apart. */
+.row.sel .stat--new { background: var(--sheet); box-shadow: inset 0 0 0 1px var(--brand-soft-2); }
+
+/* ── the open row is the workspace's header: on-dark inks ─────────────────
+   The focal surface is the "open for inspection" means. Every ink in the row
+   is restated against it; nothing is left to inherit a light-surface colour. */
+.row.open .ld__n, .row.open .ct__e, .row.open .vh__n { color: var(--focal-on); }
+.row.open .ld__id, .row.open .ct__p, .row.open .vh__s { color: var(--focal-ink-2); }
+.row.open .vh--none .vh__n, .row.open .as--none,
+.row.open .cr span, .row.open .ac span,
+.row.open .fu--none b, .row.open .ac--none b { color: var(--focal-ink-3); }
+.row.open .ty, .row.open .sc, .row.open .as,
+.row.open .cr b, .row.open .fu b, .row.open .ac b { color: var(--focal-ink); }
+.row.open .sc em { color: var(--focal-ink-3); }
+.row.open .ld__nm { color: var(--signal-fill); }
+.row.open .fu__due, .row.open .fu__due .i { color: #ffc7bf; }
+.row.open .ck { border-color: rgba(255, 255, 255, .6); background: transparent; }
+
+
+/* ============================================================================
+   5 · THE BOARD — hero and the "By status" inset
+
+   Measured cause of the Gen 10 defect: a 626px card holding a hero number, a
+   five-lane grid and a five-row status breakdown, so the breakdown was squeezed
+   into a sub-column with a 112px label track and 30px rows. The lanes are gone
+   from this card (§2), which leaves the same two-part object All Vehicles has —
+   scope on the left, an analytic inset on the right — and the inset gets the
+   room it needs: a 104px label track that holds `Active Prospect` whole, rows
+   on the 8pt ladder, and 5 rows instead of 4.
+   ========================================================================== */
+.bento { grid-template-columns: minmax(560px, 1.4fr) 236px minmax(0, 1.35fr); }
+.focal { grid-template-columns: minmax(0, 1fr) 268px; }
+.agemix { padding: var(--s5) var(--s5) var(--s5) var(--s5); }
+.agerows { display: flex; flex-direction: column; gap: var(--s1); margin: 0 calc(var(--s2) * -1); }
+.agerow {
+  grid-template-columns: 104px minmax(0, 1fr) 28px 36px;
+  gap: var(--s2);
+  height: 32px;
+  padding: 0 var(--s2);
+  border-radius: var(--r-inner);
+}
+.agerow__l { overflow: hidden; text-overflow: ellipsis; }
+.agerow b { min-width: 0; }
+
+/* Assigned — three figures, so the number and its label sit on one line each */
+.value .kv > div { padding: var(--s3) 0; }
+.value .kv .l { text-align: right; }
+
+/* Flags — six queues, 2 x 3. No glow and no drive-in animation: this is an
+   operational queue, and a chromatic halo on a meter is decoration that reads
+   as a state the meter has not got. Removed for this page only — the rule it
+   overrides lives in the shared base. */
+.attn .ar__m i,
+.attn .ar:hover .ar__m i,
+.attn .ar:focus-visible .ar__m i,
+.attn .ar--on .ar__m i { box-shadow: none; filter: none; animation: none; }
+.attn__g { gap: var(--s2); }
+
+
+/* ============================================================================
+   6 · THE INLINE LEAD WORKSPACE
+
+   The interaction is Gen 10's, unchanged: the lead opens in flow under its own
+   row, the pair comes to rest at a named position under the sticky stack, the
+   document extender lends the page whatever scroll is missing, and closing does
+   nothing to the scroll position. What changes is the composition, onto the
+   Gen 11 contract (DESIGN.md §9):
+
+     object header   the buyer's message  |  identity · figures · actions
+     region stack    full width, five sections, any number open at once
+
+   Gen 10 ran a 320px left column carrying the message, the figures AND the
+   actions, with five accordions crammed into the remainder. Here the message is
+   the object — it is the only thing on this page that is the lead itself — and
+   the regions get the full width they are read in.
+   ========================================================================== */
+
+/* — the object: the buyer's own words, on the focal material.
+     Flat. The Gen 10 box carried a blue radial wash across the text; a scrim
+     over a quotation is decoration on the one piece of content that has to be
+     read verbatim. */
+.exp .exp__l { display: flex; }
+.lsheet__msg {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  padding: var(--s5);
+  border-radius: var(--r-panel);
+  background: var(--focal);
+  color: var(--focal-ink);
+}
+.lsheet__msg .caps { color: var(--focal-ink-3); }
+.lsheet__msg p { margin: var(--s3) 0 0; font-size: 15px; line-height: 1.5; color: var(--focal-ink); }
+.lsheet__msg .via { margin-top: auto; padding-top: var(--s4); font-size: 13px; color: var(--focal-ink-2); }
+
+/* The object column is wider here than on All Vehicles, and deliberately.
+   There it holds a photograph, whose job is done at 420px; here it holds prose
+   the reader has to take in verbatim, and at 360px a three-line message became
+   six. Measured at 1366 before this: the right column ran 890px against ~520px
+   of content, so ~330px of the header band was white for no reason. Giving the
+   message the difference puts the mass on the one thing that is the lead. */
+.exp .exp__in { grid-template-columns: 480px minmax(0, 1fr); }
+
+/* — identity: the person, their record, their status, their flags */
+.exp .exp__top { gap: var(--s3); }
+.exp .veh__m { gap: var(--s2); margin-top: var(--s2); }
+.exp .veh__m .stat { height: 22px; font-size: 12px; }
+.exp .exp__x { width: 40px; height: 40px; border-radius: var(--r-control); }
+
+/* — figures: three numbers. Capped near the action group's own width so the
+     two blocks under the identity read as one column rather than two ragged
+     ones; still a stat row, not a banner across the whole band. */
+.exp .veh__kv { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 560px; }
+
+/* ── the region stack ──────────────────────────────────────────────────────
+   Vehicle of interest → Contact & address → Activity → Emails → Trade-in.
+   Attached to one another: no radius between sections, one hairline, no shadow.
+   The base sheet already publishes that; what is set here is the content. */
+
+/* Vehicle of interest */
+.vcard { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: var(--s4); align-items: start; }
+.vcard .none {
+  width: 120px;
+  height: 80px;
+  border-radius: var(--r-inner);
+  background: var(--well);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  display: grid;
+  place-items: center;
+  color: var(--ink-4);
+}
+.vcard .none .i { width: 20px; height: 20px; }
+.vcard b { display: block; font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+.vcard .m { display: block; margin-top: var(--s1); font: 13px var(--mono); color: var(--ink-3); }
+.vcard .acts2 { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s3); }
+
+/* Contact & address · Trade-in — a field list, three columns at this width */
+.cf { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 var(--s6); }
+.cf div { display: flex; justify-content: space-between; gap: var(--s3); padding: var(--s2) 0; border-bottom: 1px solid var(--line-2); font-size: 14px; min-width: 0; }
+.cf span { color: var(--ink-3); white-space: nowrap; }
+.cf b { font-weight: 500; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cf b.none { color: var(--ink-4); font-weight: 400; }
+
+/* Activity · Emails — a timeline.
+   Bounded. Across the stack's full 1273px a row is an icon, four words and a
+   date at the far end, with a thousand pixels of rule between them — the date
+   stops being readable against the entry it belongs to. 880 keeps the pair in
+   one eye span and is why the region stack is a stack rather than a grid. */
+.tl { display: flex; flex-direction: column; max-width: 880px; }
+.tl > div {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 112px;
+  gap: var(--s3);
+  align-items: center;
+  padding: var(--s2) 0;
+  border-bottom: 1px solid var(--line-2);
+  font-size: 14px;
+}
+.tl > div:last-child { border-bottom: 0; }
+.tl > div > div { min-width: 0; }
+.tl i { width: 28px; height: 28px; border-radius: var(--r-inner); display: grid; place-items: center; background: var(--well); color: var(--ink-2); }
+.tl i .i { width: 14px; height: 14px; }
+.tl b { display: block; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tl span { display: block; margin-top: 2px; font-size: 13px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tl em { font-style: normal; font-size: 13px; color: var(--ink-3); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.note { display: flex; gap: var(--s2); max-width: 880px; margin-top: var(--s3); }
+.note .fld { flex: 1; min-width: 0; }
+
+/* provenance sits beside the region title, before anything is read into the
+   region's contents (DESIGN.md §13) */
+.acc__t + .demo { margin-left: var(--s2); }
+
+
+/* ============================================================================
+   7 · PAGINATION AND THE ASSIGN TRAY
+   ========================================================================== */
+
+/* 70 per page, 237 pages. The current page is an ink fill — the fourth of the
+   five active-state means, and deliberately not the brand blue Gen 10 used:
+   "which page am I on" is a view, not an action. */
+.pg button, .pg span { min-width: 32px; height: 32px; padding: 0 var(--s2); border-radius: var(--r-inner); font-size: 14px; }
+.pg button:disabled { color: var(--ink-4); }
+.pg span { color: var(--ink-4); }
+
+/* Assign to… opens upward off the tray, which is pinned to the bottom */
+.tray { bottom: var(--s5); }
+.tray .facet { position: relative; }
+.tray .facet > button { display: inline-flex; align-items: center; gap: var(--s2); }
+.tray .pop { top: auto; bottom: calc(100% + var(--s2)); left: 0; }
+
+
+/* ============================================================================
+   8 · RESPONSIVE — one breakpoint, at 1400
+
+   1366 is the binding width. The base sheet's 1400 query hides the brand
+   wordmark and the page context, which is what removes the 26px overflow the
+   platform bar used to produce; this block only retunes the eleven tracks.
+   The gaps do not shrink — the three flexible columns absorb the difference.
+   ========================================================================== */
+@media (max-width: 1400px) {
+  .field {
+    --cols:
+      24px
+      minmax(112px, 1.2fr)
+      minmax(120px, 1.35fr)
+      minmax(104px, 1.1fr)
+      104px
+      96px
+      126px
+      104px
+      92px
+      92px
+      110px;
+  }
+  .hd, .row { gap: var(--col-gap); }
+  .bento { grid-template-columns: minmax(520px, 1.4fr) 224px minmax(0, 1.3fr); }
+  .focal { grid-template-columns: minmax(0, 1fr) 252px; }
+  .agemix { padding: var(--s4); }
+  .agerow { grid-template-columns: 100px minmax(0, 1fr) 26px 34px; }
+  .cmd .tog { min-width: 112px; }
+  .exp .exp__in { grid-template-columns: 420px minmax(0, 1fr); }
+  /* `.cf` keeps three columns at 1366: the stack is 1273px wide here, so two
+     tracks would put 620px of rule between a label and its value. */
+  .cf { gap: 0 var(--s5); }
+}
+
+/* ── [hidden] must actually hide ──────────────────────────────────────────
+   Component rules that set `display` beat the user-agent's
+   `[hidden] { display: none }`, because both are display declarations and the
+   author sheet wins. Two pages were painting a "Switch to dark theme" button
+   that markup had marked hidden — a control offering a mode Gen 11 does not
+   ship (DESIGN.md §5) — and hidden empty-state paragraphs alongside it.
+   One guard, applied family-wide so the semantic can be trusted. */
+[hidden] { display: none !important; }
+
+/* Pagination is one set, and it is the same set on every page that has it.
+   All Vehicles moved it to --s1 during the Phase 1 button pass; 2px left these
+   pills visually merged. One value across the family. */
+.pg { gap: var(--s1); }

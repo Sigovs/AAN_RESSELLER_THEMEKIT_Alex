@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Work · Work Queue — AAN (Gen 11)</title>
+<meta name="description" content="AAN staff work queue — Gen 11 build of the production ticket queue.">
+<script>document.documentElement.classList.remove('no-js');
+/* Dark is gated off across Gen 11 while the palette is re-solved, so a stored
+   `dark` — the key is shared with the other Gen pages — cannot land this page
+   in a half-dark state at load. */
+try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
+<link rel="stylesheet" href="my-work-queue-gen11.css?v=202609282140">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></symbol>
+  <symbol id="i-dn" viewBox="0 0 24 24"><path d="M12 5v14m6-6-6 6-6-6"/></symbol>
+  <symbol id="i-cog" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-2.89 1.2V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 7.96 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 3 15.04H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 8.96a1.7 1.7 0 0 0-.34-1.87l-.06-.06A2 2 0 1 1 7.03 4.2l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 2.89 1.2l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1Z"/></symbol>
+  <symbol id="i-grip" viewBox="0 0 24 24"><circle cx="9" cy="6" r="1.3"/><circle cx="15" cy="6" r="1.3"/><circle cx="9" cy="12" r="1.3"/><circle cx="15" cy="12" r="1.3"/><circle cx="9" cy="18" r="1.3"/><circle cx="15" cy="18" r="1.3"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 21V4h9l-1 3h8l-2 6 2 6H4"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
+  <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></symbol>
+</svg>
+
+<div class="app" id="app">
+
+  <!-- ══ PLATFORM BAR ══════════════════════════════════════════════════════
+       The employee shell as the export ships it: AAN · Backend, the eight
+       staff nav groups, the account. The collapsed side rail is not rebuilt —
+       Gen 11 keeps the header nav and drops the rail. -->
+  <header class="top">
+    <a class="brand" href="#" title="All Auto Network · Backend">
+      <span class="brand__mk">AAN</span>
+      <span class="brand__t">All Auto Network</span>
+      <span class="brand__env">Backend</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="System menu"></nav>
+    <span class="top__sp"></span>
+    <label class="gsearch">
+      <svg class="i"><use href="#i-search"/></svg>
+      <input type="search" id="gq" name="gq" placeholder="Search anywhere" aria-label="Search anywhere">
+      <kbd>/</kbd>
+    </label>
+    <a class="atlas" href="#" title="The Atlas — system architecture wiki"><span aria-hidden="true">▣</span>Atlas</a>
+    <button class="tbtn" type="button" hidden title="Dark theme is being re-solved" aria-label="Switch to dark theme"><svg class="i"><use href="#i-moon"/></svg></button>
+    <div class="nav__it">
+      <button class="tbtn" type="button" data-pop="p-help" aria-haspopup="true" aria-expanded="false" aria-label="Support"><svg class="i"><use href="#i-buoy"/></svg></button>
+      <div class="pop pop--r" id="p-help">
+        <div class="caps pop__lab">Support</div>
+        <a class="mn__it" href="#">Create A Ticket</a>
+        <a class="mn__it" href="#">Activity Report</a>
+      </div>
+    </div>
+    <span class="top__div"></span>
+    <div class="nav__it">
+      <button class="me" type="button" data-pop="p-me" aria-haspopup="true" aria-expanded="false">
+        <span class="me__mk">IG</span><span class="me__n">Ivaylo Guenkov</span>
+        <svg class="i"><use href="#i-chev"/></svg>
+      </button>
+      <div class="pop pop--r" id="p-me">
+        <div class="mn__who"><b>Ivaylo Guenkov</b>AAN · Backend</div>
+        <a class="mn__it" href="#">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ PAGE HEAD ════════════════════════════════════════════════════════ -->
+  <div class="head">
+    <div class="head__id">
+      <div class="head__ttl"><h1 id="page-t">My Work</h1><span class="head__ctx">Work</span></div>
+      <div class="head__meta" id="page-meta"></div>
+    </div>
+    <span class="head__sp"></span>
+    <div class="head__actions">
+      <div class="facet">
+        <button class="btn btn--quiet" type="button" data-pop="p-queue" aria-haspopup="true" aria-expanded="false">
+          viewing: <b id="queue-v">Ivaylo Guenkov</b><svg class="i"><use href="#i-chev"/></svg>
+        </button>
+        <div class="pop pop--r" id="p-queue">
+          <div class="caps pop__lab">Whose work queue</div>
+          <div id="queue-list"></div>
+        </div>
+      </div>
+      <a class="btn btn--primary" href="#"><svg class="i"><use href="#i-plus"/></svg> Create A Ticket</a>
+    </div>
+  </div>
+
+  <!-- ══ GO LIVE LIST ═════════════════════════════════════════════════════
+       Production's strip of dated go-live tickets. On the page ground, one
+       caps label, no card. -->
+  <div class="golive" id="golive" aria-label="Go Live List"></div>
+
+  <!-- ══ FIELD ════════════════════════════════════════════════════════════ -->
+  <section class="field" id="field" data-cols="mine" aria-label="Work queue">
+
+    <!-- lane rail — one exclusive control, one sunken track -->
+    <div class="cmdtop">
+      <div class="lanes" id="lanes" role="group" aria-label="Lane"></div>
+      <span class="cmdtop__sp"></span>
+      <button class="sw" type="button" id="arch" role="switch" aria-checked="false">
+        <span class="sw__t" aria-hidden="true"></span> Archived
+      </button>
+    </div>
+
+    <!-- command band · sticky 2 of 3 -->
+    <div class="cmd" id="cmd">
+      <div class="search">
+        <svg class="i"><use href="#i-search"/></svg>
+        <span class="search__chips" id="chips"></span>
+        <input type="search" id="q" name="q" placeholder="Search tickets… Enter to apply" autocomplete="off" aria-label="Search tickets">
+      </div>
+
+      <div class="facet">
+        <button class="facet__b" type="button" data-pop="p-sort" aria-haspopup="true" aria-expanded="false">
+          <span class="facet__k">Sort</span><span class="facet__v" id="sort-v">Default</span>
+          <svg class="i"><use href="#i-chev"/></svg>
+        </button>
+        <div class="pop pop--r pop--wide" id="p-sort">
+          <div class="caps pop__lab">Sort by — click again to reverse</div>
+          <div id="sort-list"></div>
+        </div>
+      </div>
+
+      <div class="facet">
+        <button class="facet__b facet__b--icon" type="button" data-pop="p-filt" aria-haspopup="true" aria-expanded="false">
+          <svg class="i"><use href="#i-sliders"/></svg>
+          <span class="facet__v">Filters</span>
+          <span class="facet__cnt" id="fcnt" hidden>0</span>
+        </button>
+        <div class="pop pop--r pop--wide" id="p-filt">
+          <div class="caps pop__lab">Add filter</div>
+          <div id="filt-list"></div>
+        </div>
+      </div>
+
+      <span class="cmd__div"></span>
+      <button class="btn btn--quiet" type="button" data-act="clear">Clear</button>
+    </div>
+
+    <!-- scope line -->
+    <div class="sub">
+      <span class="scope" id="scope"></span>
+      <span class="sub__sp"></span>
+      <label for="per">Per page</label>
+      <select class="sel" id="per"></select>
+    </div>
+
+    <!-- the list -->
+    <div class="rows" id="rows" role="table" aria-labelledby="page-t">
+      <div class="hd" id="hd" role="row"></div>
+      <div id="tb" role="rowgroup"></div>
+    </div>
+
+    <div class="empty nojs">
+      <b>This page renders its list with JavaScript.</b>
+      The 94 rows of the work queue are not available with scripting turned off.
+    </div>
+
+    <!-- footer -->
+    <div class="foot">
+      <span class="tot" id="totals"></span>
+      <span class="foot__sp"></span>
+      <span id="shown"></span>
+      <nav class="pg" id="pg" aria-label="Pagination"></nav>
+    </div>
+  </section>
+</div>
+
+<script src="my-work-queue-gen11.data.js?v=202609282140"></script>
+<script src="my-work-queue-gen11.js?v=202609282140"></script>
+</body>
+</html>

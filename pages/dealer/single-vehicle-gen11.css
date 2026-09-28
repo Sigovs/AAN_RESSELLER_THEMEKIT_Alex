@@ -1,0 +1,1414 @@
+/* ============================================================================
+   AAN · Dealer UI · SINGLE VEHICLE — GENERATION 11
+
+   The vehicle editor, built to the locked Gen 11 design system (DESIGN.md) over
+   the behaviour and content of the production editor
+   (aan-design-export-2026-09-09/pages/d05-vehicle-editor-{1,2,3}.html and
+   d06-vehicle-editor-more-{2,3}.html).
+
+   Composition K-3 from AAN_CROSS_PAGE_DESIGN_AUDIT.md §9 / AAN_DESIGN_SYSTEM_INPUT.md:
+     sticky identity cockpit → section rail with counts → one continuous scroll of
+     sections → sticky save bar.
+   That document's rule candidate is explicit — "a full object page uses a section
+   rail; a contextual workspace does not. The rail is what lets eleven sections
+   exist without accordions" — which is why DESIGN.md §9's no-rail clause (written
+   for the in-list workspace) does not bind here, and why the eleven zones do not
+   collapse.
+
+   Sticky budget: 68 (platform bar) + 72 (cockpit) = 140px. Object pages in this
+   product run 104–145px (AAN_CROSS_PAGE_VERIFICATION.md §12); the production
+   editor runs 145.
+
+   Index
+     TOKENS ............ the one authoritative layer
+     BASE
+     SHELL ............. app grid, sticky stack, z ladder
+     PLATFORM BAR
+     COCKPIT ........... the object identity module
+     VITALS ............ added / modified / views / lock / change log
+     RAIL .............. the section index
+     ZONES ............. the field, and the attached regions inside it
+     CONTROLS .......... label, input, select, money, switch, segment, help
+     ZONE SPECIFICS .... photos, VIN bar, descriptions + AI dock, features, feeds
+     SAVE BAR
+     MENUS
+     FOCUS
+     RESPONSIVE
+   ========================================================================== */
+
+
+/* ============================================================================
+   1 · TOKENS
+   The Gen 11 layer, at the values all-vehicles-gen11 actually renders (measured,
+   not transcribed). Nothing below this block hardcodes what is named in it.
+   ========================================================================== */
+:root {
+  color-scheme: light;
+
+  --font: "Archivo", "Segoe UI", system-ui, sans-serif;
+  --mono: "Plex Mono", ui-monospace, monospace;
+
+  /* ── 8pt ladder · DESIGN.md §1 ─────────────────────────────────────── */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 40px;
+  --s8: 48px;
+  --s9: 64px;
+
+  --gutter: var(--s4);      /* page gutter — every layer's left and right edge */
+  --sheet-inset: var(--s4); /* field gutter — zone headers, zone bodies, rail    */
+  --col-gap: var(--s2);
+  --anchor-gap: 10px;       /* off the scale on purpose · DESIGN.md §8           */
+
+  /* ── colour roles · DESIGN.md §5 ───────────────────────────────────── */
+  --ground: #e5e9ef;
+  --ground-2: #e3e7ee;
+  --sheet: #ffffff;
+  --well: #eef1f5;
+  --wash: #f3f5f8;
+  --focal: #172234;
+  --focal-2: #223049;
+  --focal-line: #2b3850;
+  --focal-ink: #f3f6fb;
+  --focal-ink-2: #bdc6d5;
+  --focal-ink-3: #97a3b7;
+
+  --ink: #0d1320;
+  --ink-2: #353e4e;
+  --ink-3: #576070;
+  --ink-4: #697181;
+
+  --line: #dfe3ea;
+  --line-2: #e9ecf1;
+  --line-3: #c5cbd5;
+
+  --brand: #1f5fe0;
+  --brand-hover: #1a50c4;
+  --brand-ink: #1747b3;
+  --brand-soft: #e9f0fe;
+
+  --ok: #12704a;
+  --ok-fill: #2fb46f;
+  --ok-soft: #e0f4e8;
+  --ok-line: #b9e2c9;
+
+  --signal: #945000;
+  --signal-fill: #f2a12b;
+  --signal-soft: #fff2dc;
+  --signal-line: #efcd93;
+
+  --danger: #bd3328;
+  --danger-fill: #e35548;
+  --danger-soft: #fde8e5;
+  --danger-line: #f1bab3;
+
+  --slate: #586171;
+  --slate-soft: #eceef2;
+  --violet: #5c42c9;
+  --violet-soft: #eeeafc;
+  --violet-line: #d1c6f4;
+
+  /* ── radius · DESIGN.md §3 ─────────────────────────────────────────── */
+  --r-pill: 999px;
+  --r-card: 24px;
+  --r-panel: 18px;
+  --r-control: 14px;
+  --r-inner: 10px;
+  --r-micro: 5px;
+
+  /* ── elevation · DESIGN.md §4 · one shadow per floating object ─────── */
+  --el-1: 0 1px 2px rgba(16,24,40,.08), 0 0 0 1px rgba(16,24,40,.06);
+  --el-2: 0 12px 30px -14px rgba(16,24,40,.22), 0 0 0 1px rgba(16,24,40,.05);
+  --el-3: 0 30px 64px -18px rgba(16,24,40,.34), 0 0 0 1px rgba(16,24,40,.06);
+  --glass: rgba(255,255,255,.76);
+  --sh-soft: 0 28px 64px -34px rgba(34,58,118,.42), 0 2px 8px -3px rgba(34,58,118,.10), inset 0 1px 0 rgba(255,255,255,.95);
+  --sh-pill: 0 1px 2px rgba(34,58,118,.12), 0 6px 14px -8px rgba(34,58,118,.32), inset 0 1px 0 #fff;
+  --sh-thumb: 0 1px 2px rgba(18,23,20,.16), 0 0 0 1px rgba(18,23,20,.06);
+
+  /* ── sticky stack · CSS publishes, JS reads · DESIGN.md §7 ─────────────
+     --bar-track is the grid row the platform bar sits in; --stick-bar is the
+     bar's own height. Two different numbers. --stick-total is deliberately
+     never read with parseFloat: a custom property is substituted but not
+     evaluated, so it comes back as literal calc() text. The JS sums the two
+     plain values instead. */
+  --bar-track: 88px;
+  --stick-bar: 68px;
+  --stick-cockpit: 72px;
+  --stick-cockpit-top: var(--stick-bar);
+  --stick-total: calc(var(--stick-bar) + var(--stick-cockpit));
+
+  /* ── layer ladder · no component writes a raw z-index ──────────────── */
+  --z-ground: 0;
+  --z-content: 1;
+  --z-raised: 3;
+  --z-rail: 8;
+  --z-sticky-cockpit: 12;
+  --z-platform: 20;
+  --z-savebar: 30;
+  --z-menu: 40;
+
+  /* ── focus owns `outline` and nothing else owns it · DESIGN.md §12 ─── */
+  --focus-w: 2px;
+  --focus-offset: 2px;
+  --focus-color: var(--brand);
+  --focus-color-on-dark: #ffd98a;
+
+  /* ── page geometry ─────────────────────────────────────────────────── */
+  --rail: 224px;
+  --fcols: repeat(3, minmax(0, 1fr));
+  --ctl-h: 40px;        /* one height for every editable control            */
+  --btn-h: 44px;        /* sheet actions                                    */
+  --btn-h-sm: 36px;     /* actions that live inside a band or a zone header */
+  --zone-hd: 52px;      /* region header · DESIGN.md §9                     */
+
+  /* ── motion · DESIGN.md §14 ────────────────────────────────────────── */
+  --dur: 160ms;
+  --dur2: 240ms;
+  --ease: cubic-bezier(.2,0,0,1);
+}
+
+
+/* ============================================================================
+   2 · FONTS
+   ========================================================================== */
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url("../../ds/fonts/archivo-latin-var.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../../ds/fonts/plex-mono-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Plex Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../../ds/fonts/plex-mono-600.woff2") format("woff2");
+}
+
+
+/* ============================================================================
+   3 · BASE
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+h1, h2, h3, p, ul, dl, dd, figure { margin: 0; padding: 0; }
+ul { list-style: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+button:disabled { cursor: default; }
+input, select, textarea { font: inherit; color: inherit; }
+svg { display: block; }
+a { color: var(--brand-ink); text-decoration: none; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font: 14px/1.4 var(--font);
+  font-feature-settings: "tnum" 1;
+  -webkit-font-smoothing: antialiased;
+  /* the scrollbar track is always reserved: nothing drifts sideways when a
+     zone's height changes */
+  overflow-y: scroll;
+}
+
+.i { width: 16px; height: 16px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.mono { font-family: var(--mono); font-feature-settings: "tnum" 1; }
+.caps {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+[hidden] { display: none !important; }
+
+/* ── focus · one property, never clipped, never on box-shadow ────────── */
+:focus { outline: none; }
+:focus-visible {
+  outline: var(--focus-w) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+}
+.savebar :focus-visible,
+.photo--main :focus-visible { outline-color: var(--focus-color-on-dark); }
+
+
+/* ============================================================================
+   4 · SHELL
+   ========================================================================== */
+.app {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: var(--bar-track) auto auto max-content;
+  min-height: 100vh;
+  /* the save bar is fixed at the bottom (48px tall, 24px clear of the edge);
+     the last zone must be able to scroll clear of it */
+  padding: 0 var(--gutter) calc(var(--s8) + var(--s5) + var(--gutter));
+}
+
+
+/* ============================================================================
+   5 · PLATFORM BAR — the permanent navigation.
+   Same object as all-vehicles-gen11: a floating glass panel, FLOATING at rest,
+   ATTACHED to the cockpit once engaged.
+   ========================================================================== */
+.top {
+  grid-row: 1;
+  position: sticky;
+  top: 0;
+  z-index: var(--z-platform);
+  align-self: start;
+  display: flex;
+  align-items: center;
+  gap: var(--s1);
+  height: var(--stick-bar);
+  margin-top: var(--s4);
+  padding: 0 var(--s4);
+  border-radius: var(--r-card);
+  background: var(--glass);
+  box-shadow: var(--sh-soft);
+  transition: border-radius var(--dur) var(--ease);
+}
+@supports (backdrop-filter: blur(14px)) {
+  .top { -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px); }
+}
+
+.brand { display: flex; align-items: center; gap: 10px; margin-right: 20px; color: var(--ink); }
+.brand__mk {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--r-inner);
+  background: var(--brand);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+.brand__t { font-size: 15px; font-weight: 600; letter-spacing: -.01em; white-space: nowrap; }
+
+.nav { display: flex; align-items: center; gap: 2px; height: 100%; }
+.nav__it { position: relative; display: flex; align-items: center; height: 100%; }
+.nav__b {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--btn-h-sm);
+  padding: 0 var(--s3);
+  border-radius: var(--r-pill);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-2);
+  white-space: nowrap;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.nav__b .i { width: 13px; height: 13px; color: var(--ink-4); transition: transform var(--dur) var(--ease); }
+.nav__b:hover, .nav__it--open > .nav__b { background: var(--wash); color: var(--ink); }
+/* current nav section — tinted, no fill · DESIGN.md §6 */
+.nav__it--on > .nav__b { background: var(--brand-soft); color: var(--brand-ink); }
+.nav__it--on > .nav__b .i { color: inherit; opacity: .8; }
+.nav__it--open > .nav__b .i { transform: rotate(180deg); }
+
+.menu {
+  display: none;
+  position: absolute;
+  top: calc(100% - 6px);
+  left: 0;
+  z-index: var(--z-menu);
+  gap: 6px;
+  padding: var(--s2);
+  background: var(--sheet);
+  border-radius: var(--r-control);
+  box-shadow: var(--el-3);
+}
+.menu--r { left: auto; right: 0; }
+.nav__it--open > .menu { display: flex; }
+@media (hover: hover) {
+  .nav__it:hover > .menu { display: flex; }
+  .nav__it:hover > .nav__b .i { transform: rotate(180deg); }
+}
+.menu__col { display: flex; flex-direction: column; gap: 2px; min-width: 244px; }
+.menu__t { padding: var(--s2) 10px 6px; }
+.menu__l { display: flex; flex-direction: column; gap: 1px; padding: var(--s2) 10px; border-radius: 9px; color: var(--ink); }
+.menu__l b { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; }
+.menu__l b .i { width: 13px; height: 13px; color: var(--ink-3); }
+.menu__l span { font-size: 14px; color: var(--ink-3); }
+.menu__l:hover { background: var(--wash); }
+.menu__l--on { color: var(--brand-ink); }
+.menu__who { padding: 6px 10px 10px; border-bottom: 1px solid var(--line-2); margin-bottom: 4px; }
+.menu__who b { display: block; font-size: 14px; font-weight: 600; }
+.menu__who span { font-size: 14px; color: var(--ink-3); }
+
+.top__sp { flex: 1; }
+.top__div { width: 1px; height: var(--s5); background: var(--line); margin: 0 var(--s2); }
+
+.gsearch {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  width: 224px;
+  height: var(--btn-h-sm);
+  padding: 0 10px;
+  border-radius: var(--r-pill);
+  background: var(--wash);
+  color: var(--ink-3);
+}
+.gsearch .i { width: 15px; height: 15px; }
+.gsearch input { flex: 1; min-width: 0; background: transparent; border: 0; color: var(--ink); font-size: 14px; }
+/* --ink-4 on --wash measures 4.49:1 — one hundredth short of AA. --ink-3 is 5.80:1. */
+.gsearch input::placeholder { color: var(--ink-3); }
+kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line); border-radius: var(--r-micro); padding: 1px 5px; background: var(--sheet); }
+
+.tbtn {
+  position: relative;
+  width: var(--btn-h-sm);
+  height: var(--btn-h-sm);
+  border-radius: var(--r-pill);
+  display: grid;
+  place-items: center;
+  color: var(--ink-2);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.tbtn .i { width: 18px; height: 18px; }
+.tbtn:hover, .nav__it--open > .tbtn { background: var(--wash); color: var(--ink); }
+.tbtn__dot {
+  position: absolute;
+  top: 7px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--signal-fill);
+  box-shadow: 0 0 0 2px var(--sheet);
+}
+
+.dealer {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  height: var(--btn-h-sm);
+  padding: 0 10px 0 6px;
+  border-radius: var(--r-pill);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  transition: background var(--dur) var(--ease);
+}
+.dealer:hover, .nav__it--open > .dealer { background: var(--wash); }
+.dealer__mk {
+  width: var(--s5);
+  height: var(--s5);
+  border-radius: 7px;
+  background: var(--ink);
+  color: var(--sheet);
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+.dealer__id { color: var(--ink-3); font-weight: 500; }
+.dealer .i { width: 13px; height: 13px; color: var(--ink-4); }
+
+.avt {
+  width: 34px;
+  height: 34px;
+  margin-left: 6px;
+  border-radius: 50%;
+  background: var(--well);
+  box-shadow: inset 0 0 0 1px var(--line);
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.avt:hover, .nav__it--open > .avt { background: var(--wash); }
+
+
+/* ============================================================================
+   6 · COCKPIT — the object identity module (C-16).
+   Back · thumbnail · title · stock+copy · VIN+copy · status · type · price ·
+   prev/next · photos · prints · save. FLOATING at rest, ATTACHED to the bar
+   once engaged: square touching corners, one hairline, no interior shadow.
+   ========================================================================== */
+.cockpit {
+  grid-row: 2;
+  position: sticky;
+  top: var(--stick-cockpit-top);
+  z-index: var(--z-sticky-cockpit);
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  height: var(--stick-cockpit);
+  margin-top: var(--s3);
+  padding: 0 var(--s4);
+  border-radius: var(--r-card);
+  background: rgba(255,255,255,.88);
+  box-shadow: var(--sh-soft);
+  /* A sticky bar must not change shape at the moment it becomes fixed: it
+     reads as an accident rather than an intention, and animating margin
+     and border-radius thrashes layout. DESIGN.md §2, §14. */
+  transition: background var(--dur) var(--ease);
+}
+@supports (backdrop-filter: blur(14px)) {
+  .cockpit { -webkit-backdrop-filter: saturate(1.35) blur(14px); backdrop-filter: saturate(1.35) blur(14px); }
+}
+
+/* ── engaged: the bar and the cockpit become one stack ─────────────────
+   Published in two places by one scroll handler, because the cockpit is a
+   sibling of the bar and cannot reach it in the selector tree.
+   Hairlines are drawn with inset box-shadow, never border: a border would add
+   a pixel to a layer whose height --stick-total depends on. */
+.app.is-stuck .top {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  background: rgba(255,255,255,.94);
+  box-shadow: inset 0 -1px 0 var(--line-2);
+}
+.cockpit--stuck {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-top: 0;
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 1px 0 var(--line), 0 10px 20px -16px rgba(34,58,118,.45);
+}
+
+.cock__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--btn-h-sm);
+  padding: 0 var(--s3) 0 10px;
+  border-radius: var(--r-pill);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-2);
+  white-space: nowrap;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.cock__back:hover { background: var(--wash); color: var(--ink); }
+
+.cock__thumb {
+  flex: 0 0 auto;
+  width: 60px;
+  height: var(--btn-h-sm);
+  border-radius: var(--r-inner);
+  background: var(--focal);
+  display: grid;
+  place-items: center;
+  color: var(--focal-ink-3);
+  overflow: hidden;   /* an intentional crop, not a hidden layout bug */
+}
+.cock__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cock__thumb .i { width: 15px; height: 15px; }
+
+.cock__id { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.cock__l1 { display: flex; align-items: center; gap: var(--s2); min-width: 0; }
+.cock__t {
+  font-size: 18px;
+  font-weight: 600;
+  font-stretch: 94%;
+  letter-spacing: -.016em;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cock__l2 { display: flex; align-items: center; gap: 6px; min-width: 0; font-size: 13px; color: var(--ink-3); }
+.cock__l2 b { font: 600 13px/1 var(--mono); color: var(--ink-2); }
+.cock__l2 .vin { font: 400 13px/1 var(--mono); color: var(--ink-3); }
+
+/* read-only identity values are copyable but never editable: mono, no box */
+.copy {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  color: var(--ink-4);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.copy .i { width: 13px; height: 13px; }
+.copy:hover { background: var(--wash); color: var(--ink-2); }
+.copy--done { color: var(--ok); background: var(--ok-soft); }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 7px;
+  border-radius: var(--r-micro);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--slate);
+  background: var(--slate-soft);
+}
+.pill--ok { color: var(--ok); background: var(--ok-soft); box-shadow: inset 0 0 0 1px var(--ok-line); }
+.pill--warn { color: var(--signal); background: var(--signal-soft); box-shadow: inset 0 0 0 1px var(--signal-line); }
+.pill--bad { color: var(--danger); background: var(--danger-soft); box-shadow: inset 0 0 0 1px var(--danger-line); }
+.pill--violet { color: var(--violet); background: var(--violet-soft); box-shadow: inset 0 0 0 1px var(--violet-line); }
+
+.cock__acts { display: flex; align-items: center; gap: var(--s2); flex: 0 0 auto; }
+
+.cock__price {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  margin-right: var(--s1);
+  font-size: 20px;
+  font-weight: 600;
+  font-stretch: 90%;
+  letter-spacing: -.015em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.cock__price small { font-size: 13px; font-weight: 600; color: var(--ink-3); }
+/* deficient values are stated plainly, not hidden · export d05-3 */
+.cock__price--zero { color: var(--signal); }
+
+.cock__nav { display: inline-flex; gap: 2px; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  min-width: 18px;
+  padding: 0 6px;
+  border-radius: var(--r-micro);
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+  background: var(--well);
+}
+.badge--ok { color: var(--ok); background: var(--ok-soft); }
+.badge--warn { color: var(--signal); background: var(--signal-soft); }
+.badge--dot { padding: 0; min-width: 8px; width: 8px; height: 8px; border-radius: 50%; background: var(--ok-fill); }
+
+
+/* ── buttons · DESIGN.md §11 ──────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: var(--btn-h);
+  padding: 0 18px;
+  border-radius: var(--r-pill);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.btn .i { width: 16px; height: 16px; }
+.btn--sm { height: var(--btn-h-sm); padding: 0 12px; }
+.btn--icon { width: var(--btn-h-sm); height: var(--btn-h-sm); padding: 0; }
+.btn--sheet { background: var(--sheet); color: var(--ink); box-shadow: var(--sh-pill); }
+.btn--sheet:hover { background: var(--wash); }
+.btn--primary { background: var(--brand); color: #fff; }
+.btn--primary:hover { background: var(--brand-hover); }
+.btn--quiet { color: var(--ink-2); }
+.btn--quiet:hover { background: rgba(18,23,20,.05); color: var(--ink); }
+/* a disabled button is restyled, not faded: fading a primary leaves white ink
+   on a washed-out fill, and a hover that repaints the surface white leaves
+   white on white. It reads as unavailable and stays legible (5.59:1). */
+.btn:disabled,
+.btn:disabled:hover { background: var(--well); color: var(--ink-3); box-shadow: none; }
+.btn__n {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  min-width: 18px;
+  padding: 0 5px;
+  margin-left: 2px;
+  border-radius: var(--r-micro);
+  background: var(--well);
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+}
+/* a white veil over the brand fill leaves white-on-rgb(80,130,231) at 3.68:1;
+   darkening the plate instead gives 7.96:1 */
+.btn--primary .btn__n { background: rgba(0,0,0,.24); color: #fff; }
+.btn--primary .btn__n--dirty { background: #fff; color: var(--brand-ink); }
+
+
+/* ============================================================================
+   7 · VITALS — open line on the ground, not a surface.
+   Added / Modified / Views / edit lock / change log. All read-only: mono values,
+   no box, no focus ring on the facts themselves.
+   ========================================================================== */
+.vitals {
+  grid-row: 3;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s2) var(--s5);
+  min-height: var(--s8);
+  padding: var(--s3) var(--s2) var(--s2);
+  font-size: 13px;
+  color: var(--ink-3);
+}
+.vitals__f { display: inline-flex; align-items: center; gap: 6px; }
+.vitals__f b { font: 600 13px/1 var(--mono); color: var(--ink-2); }
+.vitals__sp { flex: 1; }
+
+.age {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 7px;
+  border-radius: var(--r-micro);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+  background: var(--well);
+}
+.age--fresh { color: var(--ok); background: var(--ok-soft); }
+.age--mid { color: var(--ink-2); background: var(--well); }
+.age--late { color: var(--signal); background: var(--signal-soft); }
+.age--stale { color: var(--danger); background: var(--danger-soft); }
+
+/* the lock is a full, readable statement — not a 20x20 padlock with a title
+   attribute (AAN_CROSS_PAGE_DESIGN_AUDIT.md F33) */
+.lock {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: var(--r-pill);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ok);
+  background: var(--ok-soft);
+  box-shadow: inset 0 0 0 1px var(--ok-line);
+}
+.lock .i { width: 14px; height: 14px; }
+
+.linkbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brand-ink);
+}
+.linkbtn .i { width: 13px; height: 13px; }
+.linkbtn:hover { text-decoration: underline; }
+
+
+/* ============================================================================
+   8 · EDIT BODY — rail | zone column, two floating panes one gutter apart
+   ========================================================================== */
+.body {
+  grid-row: 4;
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  column-gap: var(--gutter);
+  align-items: start;
+}
+
+
+/* ── RAIL · the section index (C-17) ──────────────────────────────────── */
+.rail {
+  position: sticky;
+  top: calc(var(--stick-bar) + var(--stick-cockpit) + var(--s4));
+  z-index: var(--z-rail);
+  max-height: calc(100vh - var(--stick-bar) - var(--stick-cockpit) - var(--s4) - var(--gutter));
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: var(--s2);
+  border-radius: var(--r-card);
+  background: var(--sheet);
+  box-shadow: var(--el-2);
+  overflow: auto;
+}
+.rail__i {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  width: 100%;
+  height: var(--ctl-h);
+  padding: 0 10px;
+  border-radius: var(--r-inner);
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-2);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.rail__i > span:first-child { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rail__i > .badge { flex: 0 0 auto; }
+.rail__i:hover { background: var(--wash); color: var(--ink); }
+/* current section — tinted, no fill · DESIGN.md §6 state 3.
+   Only the primary action on this page is a blue fill. */
+.rail__i--on {
+  background: var(--brand-soft);
+  color: var(--brand-ink);
+  font-weight: 600;
+  box-shadow: inset 2px 0 0 var(--brand);
+}
+
+
+/* ============================================================================
+   9 · ZONES — the field is the FLOATING surface; the regions are ATTACHED
+   inside it: square corners, one hairline between, no shadow, one inset.
+   ========================================================================== */
+.zones {
+  min-width: 0;
+  border-radius: var(--r-card);
+  background: var(--sheet);
+  box-shadow: var(--sh-soft);
+  overflow: hidden;   /* the field's own radius clipping its attached regions */
+}
+.zone { position: relative; }
+.zone + .zone { box-shadow: inset 0 1px 0 var(--line-2); }
+
+.zone__h {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  min-height: var(--zone-hd);
+  padding: var(--s2) var(--sheet-inset);
+}
+.zone__t { font-size: 15px; font-weight: 600; letter-spacing: -.008em; color: var(--ink); white-space: nowrap; }
+.zone__s {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  color: var(--ink-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.zone__s b { color: var(--ink); font-weight: 600; }
+.zone__s .warn { color: var(--signal); font-weight: 600; }
+.zone__s .bad { color: var(--danger); font-weight: 600; }
+.zone__s .good { color: var(--ok); font-weight: 600; }
+.zone__b { padding: var(--s1) var(--sheet-inset) var(--s6); }
+
+/* a provenance chip beside a region title · DESIGN.md §13 */
+.chip-src {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: var(--r-micro);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--violet);
+  background: var(--violet-soft);
+  box-shadow: inset 0 0 0 1px var(--violet-line);
+  white-space: nowrap;
+}
+
+
+/* ============================================================================
+   10 · CONTROLS
+   Editable and read-only must not look alike:
+     editable  → white surface, one hairline, a focus ring
+     read-only → no surface, no hairline, mono, never focusable as a field
+   ========================================================================== */
+.grid { display: grid; grid-template-columns: var(--fcols); gap: var(--s5) var(--s4); }
+.grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid--1 { grid-template-columns: minmax(0, 1fr); }
+
+.f { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.f__l {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+/* a field changed in this session, not yet saved */
+.f__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--signal-fill);
+  box-shadow: 0 0 0 2px var(--signal-soft);
+  flex: 0 0 auto;
+  align-self: center;
+}
+.f__raw {
+  margin-left: auto;
+  font: 400 11px/1 var(--mono);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink-4);
+}
+.f__help { font-size: 13px; line-height: 1.45; color: var(--ink-3); }
+.f__help b { color: var(--ink-2); font-weight: 600; }
+
+.in, .sel, .ta {
+  width: 100%;
+  min-width: 0;
+  height: var(--ctl-h);
+  padding: 0 12px;
+  border-radius: var(--r-inner);
+  border: 1px solid var(--line-3);
+  background: var(--sheet);
+  color: var(--ink);
+  font-size: 14px;
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.in::placeholder, .ta::placeholder { color: var(--ink-4); }
+.in:hover, .sel:hover, .ta:hover { border-color: var(--ink-4); }
+.in:focus, .sel:focus, .ta:focus { border-color: var(--brand); }
+.in--sm { height: var(--btn-h-sm); font-size: 14px; }
+.in--mono { font-family: var(--mono); font-size: 13px; }
+.ta {
+  height: auto;
+  min-height: 132px;
+  padding: 10px 12px;
+  line-height: 1.55;
+  resize: vertical;
+}
+.ta--tall { min-height: 300px; font-family: var(--mono); font-size: 13px; }
+.sel {
+  appearance: none;
+  padding-right: 32px;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23697181' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 15px 15px;
+}
+.f--dirty > .in, .f--dirty > .sel, .f--dirty > .ta,
+.f--dirty > .money > .in { border-color: var(--signal-line); }
+
+/* money — the currency mark belongs to the control, not beside it */
+.money { position: relative; display: flex; align-items: center; }
+.money::before {
+  content: "$";
+  position: absolute;
+  left: 11px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-4);
+  pointer-events: none;
+}
+.money .in { padding-left: 24px; font-variant-numeric: tabular-nums; }
+.money--lg .in { height: var(--s8); font-size: 18px; font-weight: 600; padding-left: 30px; }
+.money--lg::before { left: 13px; font-size: 16px; }
+
+/* read-only value plates: sunken, no hairline, nothing to type into */
+.ro {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  min-height: var(--ctl-h);
+  padding: 0 12px;
+  border-radius: var(--r-inner);
+  background: var(--well);
+  font: 400 13px/1.4 var(--mono);
+  color: var(--ink-2);
+  word-break: break-all;
+}
+
+/* field-level provenance (C-20) — "2 changes · last −$300" / "no history" */
+.prov { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; color: var(--ink-4); }
+.prov .i { width: 13px; height: 13px; }
+.prov--has { color: var(--brand-ink); font-weight: 600; }
+button.prov:hover { text-decoration: underline; }
+
+/* ── segmented control — one object: sunken track, white thumb ────────── */
+.seg {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 46px;
+  padding: 5px;
+  border-radius: var(--r-pill);
+  background: rgba(18,23,20,.06);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.seg__b {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--btn-h-sm);
+  padding: 0 16px;
+  border-radius: var(--r-pill);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-2);
+  white-space: nowrap;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.seg__b:hover { color: var(--ink); }
+.seg__b--on {
+  background: var(--sheet);
+  color: var(--brand-ink);
+  box-shadow: var(--sh-thumb);
+}
+
+/* ── switch — the same grammar as the segmented control, two positions ───
+   OFF: thumb on a sunken track. ON: thumb on a filled track. The fill is
+   graphite by default; danger for the two switches whose ON state takes the
+   car off the market; green for a feed row, which is the export's own
+   convention ("Switch ON (green) = sending to that feed"). None of them is
+   blue — the blue fill on this page belongs to Save alone. */
+.sw { display: inline-flex; flex: 0 0 auto; }
+.sw input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.sw__t {
+  position: relative;
+  display: block;
+  width: 42px;
+  height: 24px;
+  border-radius: var(--r-pill);
+  background: var(--well);
+  box-shadow: inset 0 0 0 1px var(--line-3);
+  cursor: pointer;
+  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.sw__t::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--sheet);
+  box-shadow: var(--sh-thumb);
+  transition: transform var(--dur2) var(--ease);
+}
+.sw input:checked + .sw__t { background: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.sw input:checked + .sw__t::after { transform: translateX(18px); }
+.sw--danger input:checked + .sw__t { background: var(--danger); box-shadow: inset 0 0 0 1px var(--danger); }
+.sw--ok input:checked + .sw__t { background: var(--ok); box-shadow: inset 0 0 0 1px var(--ok); }
+.sw input:focus-visible + .sw__t { outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); }
+
+.swrow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s4);
+  padding: var(--s3) 0;
+}
+.swrow + .swrow { box-shadow: inset 0 1px 0 var(--line-2); }
+.swrow__x { flex: 1; min-width: 0; }
+.swrow__x b { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--ink); }
+.swrow__x span { display: block; margin-top: 3px; font-size: 13px; line-height: 1.45; color: var(--ink-3); }
+.swrow--danger .swrow__x b { color: var(--danger); }
+
+
+/* ============================================================================
+   11 · ZONE SPECIFICS
+   ========================================================================== */
+
+/* ── Status & Visibility ──────────────────────────────────────────────── */
+.statusrow { display: flex; flex-wrap: wrap; gap: var(--s5); margin-bottom: var(--s4); }
+.statusrow .f { min-width: 0; }
+.vis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s6); }
+
+/* ── Photos ───────────────────────────────────────────────────────────── */
+.photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  gap: var(--s2);
+  margin-bottom: var(--s3);
+}
+.photo {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  border-radius: var(--r-inner);
+  background: var(--well);
+  box-shadow: inset 0 0 0 1px var(--line);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  color: var(--ink-4);
+}
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo__ix {
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--r-micro);
+  background: rgba(13,19,32,.72);
+  color: #fff;
+  font: 700 11px/18px var(--font);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.photo__star {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--r-micro);
+  background: var(--signal-soft);
+  color: var(--signal);
+  display: grid;
+  place-items: center;
+}
+.photo__star .i { width: 12px; height: 12px; fill: currentColor; }
+/* a placeholder must look like a placeholder · content-provenance CP4 */
+.photo--ph {
+  background:
+    repeating-linear-gradient(135deg, var(--wash) 0 7px, var(--well) 7px 14px);
+}
+.photo--ph .i { width: 18px; height: 18px; opacity: .55; }
+.photo--more { font-size: 15px; font-weight: 600; color: var(--ink-2); background: var(--wash); }
+.photo--add {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: var(--sheet);
+  box-shadow: inset 0 0 0 1px var(--line-3);
+  color: var(--brand-ink);
+  font-size: 13px;
+  font-weight: 600;
+  transition: background var(--dur) var(--ease);
+}
+.photo--add:hover { background: var(--brand-soft); }
+.photo--add .i { width: 18px; height: 18px; }
+
+/* ── Specs & VIN ──────────────────────────────────────────────────────── */
+.vinbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s2) var(--s3);
+  padding: 10px var(--s3);
+  margin-bottom: var(--s5);
+  border-radius: var(--r-control);
+  background: var(--wash);
+}
+.vinbar__v { font: 600 15px/1 var(--mono); letter-spacing: .01em; color: var(--ink); }
+.vinbar__sp { flex: 1; }
+
+.note {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--signal);
+}
+.note .i { width: 14px; height: 14px; }
+
+/* ── Descriptions ─────────────────────────────────────────────────────── */
+.aicta {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  width: 100%;
+  padding: var(--s3) var(--s4);
+  margin-bottom: var(--s4);
+  border-radius: var(--r-control);
+  background: var(--wash);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  text-align: left;
+  transition: background var(--dur) var(--ease);
+}
+.aicta:hover { background: var(--well); }
+.aicta__k { flex: 0 0 auto; color: var(--violet); }
+.aicta__k .i { width: 18px; height: 18px; }
+.aicta__x { flex: 1; min-width: 0; font-size: 14px; line-height: 1.45; color: var(--ink-3); }
+.aicta__x b { color: var(--ink); font-weight: 600; }
+.aicta__go { flex: 0 0 auto; font-size: 14px; font-weight: 600; color: var(--brand-ink); white-space: nowrap; }
+
+.tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  max-width: 100%;
+  padding: 5px;
+  margin-bottom: var(--s4);
+  border-radius: var(--r-pill);
+  background: rgba(18,23,20,.06);
+  box-shadow: inset 0 0 0 1px var(--line);
+  overflow-x: auto;
+}
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: var(--btn-h-sm);
+  padding: 0 12px;
+  border-radius: var(--r-pill);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-2);
+  white-space: nowrap;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.tab:hover { color: var(--ink); }
+.tab--on { background: var(--sheet); color: var(--brand-ink); box-shadow: var(--sh-thumb); }
+.tab__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok-fill); flex: 0 0 auto; }
+.tab__dot--empty { background: transparent; box-shadow: inset 0 0 0 1px var(--line-3); }
+
+.desc { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s4); }
+.desc--dock { grid-template-columns: minmax(0, 1fr) 316px; align-items: start; }
+.desc__foot { display: flex; align-items: center; gap: var(--s3); margin-top: var(--s3); flex-wrap: wrap; }
+.desc__foot .f__help { flex: 1; min-width: 200px; }
+
+/* the AI dock is an inline panel in the export, not a high-z overlay
+   (AAN_CROSS_PAGE_VERIFICATION.md §10.5) — so it is ATTACHED to the region,
+   not floated over it */
+.aidock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  padding: var(--s4);
+  border-radius: var(--r-panel);
+  background: var(--wash);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+}
+.aidock__h { display: flex; align-items: center; gap: var(--s2); }
+.aidock__t { flex: 1; display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 600; color: var(--ink); }
+.aidock__t .i { width: 16px; height: 16px; color: var(--violet); }
+.aidock__x { width: 28px; height: 28px; border-radius: var(--r-micro); display: grid; place-items: center; color: var(--ink-3); }
+.aidock__x:hover { background: var(--well); color: var(--ink); }
+.aidock details > summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brand-ink);
+  list-style: none;
+}
+.aidock details > summary::-webkit-details-marker { display: none; }
+.aidock details > summary::before { content: "› "; display: inline-block; transition: transform var(--dur) var(--ease); }
+.aidock details[open] > summary::before { content: "⌄ "; }
+.aidock details p { margin-top: 6px; }
+.aidock__zero { font-size: 13px; line-height: 1.5; color: var(--ink-3); }
+
+/* ── Features & Equipment ─────────────────────────────────────────────── */
+.featgrp + .featgrp { margin-top: var(--s5); }
+.featgrp__h { display: flex; align-items: center; gap: var(--s3); margin-bottom: var(--s2); }
+.featgrp__h .caps { flex: 1; }
+.featcat {
+  margin: var(--s4) 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+.featcat:first-of-type { margin-top: var(--s2); }
+.featrow { display: grid; grid-template-columns: 200px minmax(0, 1fr) var(--btn-h-sm); gap: var(--s2); margin-bottom: 6px; }
+.featnone { font-size: 13px; color: var(--ink-4); }
+
+.rowx {
+  width: var(--btn-h-sm);
+  height: var(--btn-h-sm);
+  border-radius: var(--r-inner);
+  display: grid;
+  place-items: center;
+  color: var(--ink-4);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.rowx:hover { background: var(--danger-soft); color: var(--danger); }
+
+/* ── Marketplace Feeds ────────────────────────────────────────────────── */
+.feedtools { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s2) var(--s3); margin-bottom: var(--s4); }
+.feedtools .in { width: 220px; }
+.feedtools .f__help { flex: 1 1 260px; }
+.feeds { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s6); }
+.feedrow { display: flex; align-items: center; gap: var(--s3); padding: 7px 0; min-width: 0; }
+.feedrow + .feedrow, .feeds > .feedrow:nth-child(n+3) { box-shadow: inset 0 1px 0 var(--line-2); }
+.feedrow__n { flex: 1; min-width: 0; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.feedrow__t { font: 400 12px/1 var(--mono); color: var(--ink-4); flex: 0 0 auto; }
+.feedrow--off .feedrow__n { color: var(--ink-4); }
+.feedfoot { display: flex; align-items: center; gap: var(--s3); margin-top: var(--s5); }
+
+/* ── Utilities ────────────────────────────────────────────────────────── */
+.refbox { display: flex; flex-direction: column; gap: var(--s2); padding: var(--s3) 0; }
+.refbox + .refbox { box-shadow: inset 0 1px 0 var(--line-2); }
+
+
+/* ============================================================================
+   12 · SAVE BAR — FLOATING, the focal dark surface, above content.
+   Discard is separated from Save and marked, but not theatrical.
+   ========================================================================== */
+.savebar {
+  position: fixed;
+  left: 50%;
+  bottom: var(--s5);
+  transform: translateX(-50%);
+  z-index: var(--z-savebar);
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  max-width: calc(100vw - var(--s9));
+  height: var(--s8);
+  padding: 0 var(--s2) 0 var(--s4);
+  border-radius: var(--r-control);
+  background: var(--focal);
+  box-shadow: var(--el-3);
+  color: var(--focal-ink);
+}
+.savebar__n { font-size: 14px; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.savebar__n b { color: var(--focal-ink); }
+.savebar__n--dirty b { color: #ffd98a; }
+.savebar__hint { font-size: 13px; color: var(--focal-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.savebar__div { width: 1px; height: 22px; background: var(--focal-line); flex: 0 0 auto; }
+.savebar__b {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: var(--r-inner);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--focal-ink);
+  white-space: nowrap;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.savebar__b:hover { background: var(--focal-2); }
+.savebar__b:disabled { color: var(--focal-ink-3); }
+.savebar__b:disabled:hover { background: none; }
+/* discard throws this session's work away — distinguishable, separated,
+   and not shouted */
+.savebar__b--discard { color: #ffb4a9; }
+.savebar__b--discard:hover { background: rgba(227,85,72,.18); }
+.savebar__b--save { background: var(--brand); }
+.savebar__b--save:hover { background: var(--brand-hover); }
+.savebar__b--save:disabled { background: var(--focal-2); }
+.savebar__say { font-size: 13px; color: #ffd98a; white-space: nowrap; }
+
+
+/* ============================================================================
+   13 · MENUS / POPOVERS — FLOATING, one shadow, above everything
+   ========================================================================== */
+.pop-wrap { position: relative; display: inline-flex; }
+.pop {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: var(--z-menu);
+  min-width: 272px;
+  max-width: 360px;
+  max-height: 60vh;
+  overflow: auto;
+  padding: 6px;
+  border-radius: var(--r-panel);
+  background: var(--sheet);
+  box-shadow: var(--el-3);
+  color: var(--ink);
+  text-align: left;
+}
+.pop--up { top: auto; bottom: calc(100% + 6px); }
+.pop--open { display: block; }
+.pop__t { padding: 8px 10px 5px; }
+.pop__i {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 9px;
+  font-size: 14px;
+  color: var(--ink);
+  text-align: left;
+}
+.pop__i:hover { background: var(--wash); }
+.pop__i .i { width: 15px; height: 15px; color: var(--ink-3); }
+.pop__i span { flex: 1; min-width: 0; }
+.pop__sep { height: 1px; background: var(--line-2); margin: 6px 4px; }
+.pop__empty { padding: var(--s3) 10px; font-size: 13px; color: var(--ink-3); }
+.pop__i code { font: 400 12px/1 var(--mono); color: var(--ink-4); }
+
+
+/* ============================================================================
+   14 · RESPONSIVE — desktop only. 1366 is the binding width.
+   Zero horizontal overflow in every state is a hard requirement.
+   ========================================================================== */
+@media (max-width: 1400px) {
+  :root {
+    --rail: 200px;
+    --fcols: repeat(3, minmax(0, 1fr));
+  }
+  .gsearch { width: 168px; }
+  .brand__t { display: none; }
+  .dealer__n { max-width: 128px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .desc--dock { grid-template-columns: minmax(0, 1fr) 288px; }
+  .featrow { grid-template-columns: 170px minmax(0, 1fr) var(--btn-h-sm); }
+}
+
+/* Below the supported floor the page must still not push sideways. The
+   platform bar is a row of fixed-width objects, and `button.avt` is the one
+   that overflows first — the same offender AAN_CROSS_PAGE_VERIFICATION §13
+   records on All Leads and Single Lead at 1366. It is shed here before it can
+   widen the document. */
+@media (max-width: 1280px) {
+  :root { --fcols: repeat(2, minmax(0, 1fr)); }
+  .gsearch { display: none; }
+  .feeds { grid-template-columns: minmax(0, 1fr); }
+  .feedrow + .feedrow { box-shadow: inset 0 1px 0 var(--line-2); }
+  .desc--dock { grid-template-columns: minmax(0, 1fr); }
+  .vis { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 1160px) {
+  .dealer__n { display: none; }
+  .nav__b { padding: 0 10px; }
+}
+
+
+/* ============================================================================
+   15 · REDUCED MOTION — the same positions, arrived at instantly
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── [hidden] must actually hide ──────────────────────────────────────────
+   Component rules that set `display` beat the user-agent's
+   `[hidden] { display: none }`, because both are display declarations and the
+   author sheet wins. Two pages were painting a "Switch to dark theme" button
+   that markup had marked hidden — a control offering a mode Gen 11 does not
+   ship (DESIGN.md §5) — and hidden empty-state paragraphs alongside it.
+   One guard, applied family-wide so the semantic can be trusted. */
+[hidden] { display: none !important; }

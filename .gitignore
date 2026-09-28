@@ -15,3 +15,15 @@ reference/gen9-concepts/
 
 # Gen 11 reference material — kept locally, never published
 reference/gen11 ref/
+
+# Impeccable — third-party design tool, unpacked locally. Not project source.
+skill/
+
+# one-off artefact from the account switch
+CLAUDE_ACCOUNT_SWITCH_BACKUP.diff
+
+# Stage 1 evidence — 129 MB of screenshots and fingerprints from a completed,
+# reported stage. Kept locally, never published; the Stage 1 report carries the
+# numbers. Add them deliberately if they are ever needed on another machine.
+reference/gen11-stage1-after/
+reference/gen11-stage1-baseline/

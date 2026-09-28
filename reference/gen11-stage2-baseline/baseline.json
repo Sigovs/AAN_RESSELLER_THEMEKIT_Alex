@@ -1,0 +1,40 @@
+{
+  "captured": "2026-09-27",
+  "cacheKey": "202609271700",
+  "stage1Intact": { "cssRules": 742, "rootBlocks": 1, "overflowAllWidths": 0 },
+  "tokens": { "--stick-total": "calc(68px + 72px + 52px) = 192px", "--exp-offset": "8px" },
+  "stickyBottom": { "atRest": 635, "engaged": 192 },
+  "rowsVisibleAtRest": { "1280x800": 2, "1366x768": 1, "1440x900": 3, "1920x1042": 5, "note": "1440 was not measured during the baseline sweep; the figure here is the measured post-Stage-2 value, which is unchanged because the bento and the two control rows above the list were not touched" },
+  "bentoAt1280": { "gridTemplateColumns": "540px 240px 423.733px", "height": 220, "misassigned": false },
+  "expansion": {
+    "position": "absolute", "zIndex": 3,
+    "topSetBy": "JS one-shot ex.style.top = rowBottom - hostTop + 8",
+    "edgeDeltaLeftPx": 8, "edgeDeltaRightPx": -8,
+    "seamGapPx": 8,
+    "innerRadiusPx": 18,
+    "innerShadow": "rgba(16,24,40,.34) 0 30px 64px -18px  (360 degree drop)",
+    "expSpace": { "present": true, "computedHeight": "0px", "display": "none", "role": "dead" }
+  },
+  "perState": {
+    "note": "identical at 1280/1366/1440/1920 unless stated; doc height 1882 with nothing open",
+    "vehicle-top":          { "docHeight": 1893, "workspaceH": 696,  "docGrowth": 11,  "anchorDelta": 84,   "rowsCovered": 10, "rowsDimmed": 15, "footBelowWorkspace": true },
+    "vehicle-market":       { "docHeight": 1893, "workspaceH": 795,  "docGrowth": 11,  "anchorDelta": 84,   "rowsCovered": 11, "rowsDimmed": 15, "footBelowWorkspace": true },
+    "vehicle-all-regions":  { "docHeight": 2335, "workspaceH": 1535, "docGrowth": 453, "anchorDelta": 84,   "rowsCovered": 14, "rowsDimmed": 15, "footBelowWorkspace": false },
+    "filters-plus-vehicle": { "docHeight": 1893, "workspaceH": 696,  "docGrowth": 11,  "anchorDelta": 84,   "rowsCovered": 10, "rowsDimmed": 15, "footBelowWorkspace": true },
+    "tray-plus-vehicle":    { "docHeight": 1893, "workspaceH": 696,  "docGrowth": 11,  "anchorDelta": 454,  "rowsCovered": 9,  "rowsDimmed": 15, "footBelowWorkspace": false },
+    "vehicle-mid@1440":     { "anchorDelta": 602 },
+    "vehicle-last@1440":    { "anchorDelta": 1120 }
+  },
+  "anchor": { "exists": false, "evidence": "scrollY stays 0 on every open; the row rests wherever it already was (84 / 454 / 602 / 1120 px below the sticky stack)" },
+  "hitTests@1920": {
+    "trayClickableWithVehicleOpen": true,
+    "headerOpacityDuringScroll": [{"y":600,"opacity":1,"cls":"hd hd--stuck"},{"y":900,"opacity":1,"cls":"hd hd--stuck"},{"y":1200,"opacity":1,"cls":"hd hd--stuck"},{"y":1500,"opacity":1,"cls":"hd hd--stuck"}],
+    "hdVeilPresent": false
+  },
+  "detailArchitecture": {
+    "container": ".exp__accs { display:grid; grid-template-columns: 1fr 1fr }",
+    "openRule": ".exp .acc--open { grid-column: 1 / -1 }",
+    "regions": ["health (open by default)", "market", "comps", "spec", "hist"],
+    "defect": "opening one region reflows the 2-col grid and relocates the others"
+  }
+}

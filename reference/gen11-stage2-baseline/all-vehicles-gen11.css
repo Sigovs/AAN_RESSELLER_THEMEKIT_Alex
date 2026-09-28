@@ -137,28 +137,11 @@
   --z-tray: 30;       /* selection tray */
   --z-menu: 40;       /* menus and popovers */
 
-  /* ── 8pt spacing scale ─────────────────────────────────────────────────
-     One ladder for the whole page. 4 and 12 are the half-steps that compact
-     controls need; everything structural lands on 8. The rule is that the
-     same relationship always takes the same token, so a gap can be read as
-     an intention rather than guessed at. */
-  --s1: 4px;
-  --s2: 8px;
-  --s3: 12px;
-  --s4: 16px;
-  --s5: 24px;
-  --s6: 32px;
-  --s7: 40px;
-  --s8: 48px;
-  --s9: 64px;
-
-  /* ── structural spacing, expressed in that scale ─────────────────────── */
-  --gutter: var(--s4);      /* page gutter: every layer's left and right edge */
-  --sheet-inset: var(--s4); /* field gutter: header cells, rows, scope, footer */
-  --col-gap: var(--s2);     /* between row columns */
-  --anchor-gap: 10px;       /* the selected row's rest position below the sticky stack —
-                               not on the scale: it is a measured shipped value (§3) */
-  --exp-detach: var(--s2);  /* air between the selected pair and the row above it */
+  /* ── structural spacing — only the values that cross component boundaries.
+     Intra-component padding stays literal until the composition stage. */
+  --sheet-inset: 16px;   /* field gutter: header cells, rows, scope, footer */
+  --col-gap: 8px;        /* between row columns */
+  --exp-offset: 8px;     /* expanded sheet's offset below its row */
 
   /* ── radius ladder, named at the values Gen 11 already renders ───────── */
   --r-pill: 999px;
@@ -300,7 +283,7 @@ svg { display: block; }
 /* ── APP GRID ─────────────────────────────────────────────────────────── */
 
 /* ── PLATFORM BAR ─────────────────────────────────────────────────────── */
-.brand { display: flex; align-items: center; gap: 10px; margin-right: 24px; color: var(--ink); }
+.brand { display: flex; align-items: center; gap: 10px; margin-right: 20px; color: var(--ink); }
 .brand__mk {
   width: 34px;
   height: 34px;
@@ -456,13 +439,13 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
 .head h1 { font-size: 28px; font-weight: 600; font-stretch: 92%; letter-spacing: -.022em; line-height: 1; white-space: nowrap; }
 .head__ctx { margin-left: 10px; font-size: 14px; color: var(--ink-3); white-space: nowrap; }
 .head__ctx::before { content: "·"; margin-right: 10px; color: var(--ink-4); }
-.live { display: inline-flex; align-items: center; gap: 7px; margin-left: 16px; color: var(--ink-3); font-size: 14px; white-space: nowrap; }
+.live { display: inline-flex; align-items: center; gap: 7px; margin-left: 14px; color: var(--ink-3); font-size: 14px; white-space: nowrap; }
 .live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--ok-fill); box-shadow: 0 0 0 3px var(--ok-soft); }
 .head__sp { flex: 1; }
 .btn .i { width: 16px; height: 16px; }
 .btn--quiet { color: var(--ink-2); }
 .dock .btn--quiet:hover, .pop .btn--quiet:hover { background: var(--wash); }
-.btn--lg { height: 44px; padding: 0 16px; font-size: 15px; }
+.btn--lg { height: 44px; padding: 0 18px; font-size: 15px; }
 .btn--icon { width: 38px; padding: 0; }
 .btn--lg.btn--icon { width: 44px; }
 
@@ -479,7 +462,7 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
 }
 .focal .caps { color: var(--focal-ink-3); }
 .focal__h .s { font-size: 14px; color: var(--focal-ink-3); }
-.hero { display: flex; align-items: flex-end; gap: 16px; }
+.hero { display: flex; align-items: flex-end; gap: 14px; }
 .hero__l { font-size: 14px; color: var(--focal-ink-2); line-height: 1.25; padding-bottom: 3px; }
 .hero__l b { display: block; color: var(--focal-ink); font-weight: 600; font-size: 17px; }
 .kv { display: grid; grid-template-columns: 1.15fr 1fr .9fr; gap: 10px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--focal-line); }
@@ -560,7 +543,7 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
 .pop__row .fld, .pop__row .sel { flex: 1; min-width: 0; }
 .pop__quick { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
 .pop__quick .on { box-shadow: var(--el-1), inset 0 0 0 1px var(--brand); color: var(--brand-ink); }
-.pop__empty { padding: 16px 16px; color: var(--ink-3); font-size: 14px; }
+.pop__empty { padding: 16px 14px; color: var(--ink-3); font-size: 14px; }
 .mn { padding: 6px; min-width: 224px; }
 .mn__it {
   display: flex;
@@ -597,7 +580,7 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
 .fld:focus, .sel:focus { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-soft); }
 .sel {
   appearance: none;
-  padding-right: 32px;
+  padding-right: 28px;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7383' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>");
   background-repeat: no-repeat;
   background-position: right 8px center;
@@ -666,10 +649,10 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
   position: relative;
   display: grid;
   grid-template-columns: var(--cols);
-  gap: 16px;
+  gap: 14px;
   align-items: center;
   height: var(--row);
-  padding: 0 16px;
+  padding: 0 18px;
   border-bottom: 1px solid var(--line-2);
   cursor: pointer;
   transition: background var(--dur) var(--ease);
@@ -677,6 +660,7 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
 .row:hover { background: var(--well); }
 .row:focus-visible { border-radius: 0; box-shadow: inset 0 0 0 2px var(--brand); }
 .row.sel { background: var(--brand-soft); }
+.row.sel::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--brand); }
 .th--none { display: grid; place-items: center; border: 1px dashed var(--line-3); color: var(--ink-4); box-shadow: none; }
 .id__n em { font-style: normal; font-weight: 400; color: var(--ink-3); margin-right: 6px; font-variant-numeric: tabular-nums; }
 .idtag {
@@ -692,9 +676,9 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
   white-space: nowrap;
 }
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .row:hover .idtag, .row.open .idtag { background: var(--sheet); }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 .lock { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 5px; color: var(--brand); background: var(--brand-soft); }
 .lock .i { width: 12px; height: 12px; }
 .spec__t i { font-style: normal; color: var(--ink-4); }
@@ -726,7 +710,7 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
 .tag--slate { --tone: var(--slate); --tone-soft: var(--slate-soft); --tone-line: var(--line-3); }
 .tag--violet { --tone: var(--violet); --tone-soft: var(--violet-soft); --tone-line: var(--violet-line); }
 .tag--more { --tone: var(--ink-2); --tone-soft: var(--wash); --tone-line: var(--line); letter-spacing: 0; font-weight: 600; }
-.empty { padding: 48px 16px; text-align: center; color: var(--ink-3); font-size: 14px; }
+.empty { padding: 48px 18px; text-align: center; color: var(--ink-3); font-size: 14px; }
 .empty button { color: var(--brand); font-weight: 600; margin-left: 6px; }
 .foot .sp { flex: 1; }
 .pg { display: inline-flex; align-items: center; gap: 2px; }
@@ -756,14 +740,14 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
 /* >> QUARANTINE · Filters-dock-open */
 .app.dock-open .dock { opacity: 1; transform: none; visibility: visible; transition: opacity var(--dur2) var(--ease), transform var(--dur2) var(--ease); }
 /* << end QUARANTINE · Filters-dock-open */
-.dock__h { display: flex; align-items: center; gap: 8px; height: 58px; padding: 0 12px 0 24px; border-bottom: 1px solid var(--line-2); }
+.dock__h { display: flex; align-items: center; gap: 8px; height: 58px; padding: 0 12px 0 20px; border-bottom: 1px solid var(--line-2); }
 .dock__t { font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
 .dock__c { flex: 1; font-size: 14px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
 .dock__nav { display: inline-flex; gap: 2px; }
 .dock__nav button, .dock__x { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; color: var(--ink-2); }
 .dock__nav button:hover, .dock__x:hover { background: var(--wash); color: var(--ink); }
-.dock__b { flex: 1; min-height: 0; overflow: auto; padding: 16px 24px 8px; }
-.dock__f { padding: 12px 24px 16px; border-top: 1px solid var(--line-2); background: var(--sheet); }
+.dock__b { flex: 1; min-height: 0; overflow: auto; padding: 16px 20px 8px; }
+.dock__f { padding: 12px 20px 16px; border-top: 1px solid var(--line-2); background: var(--sheet); }
 .dock__f:empty { display: none; }
 .dock__f--row { display: flex; align-items: center; gap: 10px; }
 .dock__note { flex: 1; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: var(--ink-3); }
@@ -794,7 +778,7 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
   font-size: 14px;
   font-weight: 600;
   color: #fff;
-  padding: 5px 8px;
+  padding: 5px 9px;
   border-radius: 8px;
   background: rgba(10,16,28,.66);
 }
@@ -811,7 +795,7 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
   grid-template-columns: 1.35fr 1fr .8fr;
   gap: 12px;
   margin: 16px 0 6px;
-  padding: 16px 16px;
+  padding: 14px 16px;
   border-radius: 14px;
   background: var(--well);
 }
@@ -856,11 +840,11 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
 .acc__p { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--dur2) var(--ease); }
 .acc__p > div { min-height: 0; overflow: hidden; }
 .acc--open > .acc__p { grid-template-rows: 1fr; }
-.acc__in { padding: 0 2px 16px; }
+.acc__in { padding: 0 2px 18px; }
 
 /* merchandising health */
-.health { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
-.hl { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink-2); }
+.health { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; }
+.hl { display: flex; align-items: center; gap: 9px; font-size: 14px; color: var(--ink-2); }
 .hl i { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; flex: 0 0 auto; }
 .hl i .i { width: 12px; height: 12px; stroke-width: 2.4; }
 .hl--bad { color: var(--ink); font-weight: 600; }
@@ -880,7 +864,7 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
   align-items: center;
   gap: 4px;
   height: 26px;
-  padding: 0 8px;
+  padding: 0 9px;
   border-radius: 7px;
   font-size: 14px;
   font-weight: 600;
@@ -898,7 +882,7 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
   align-items: flex-end;
   gap: 3px;
   height: 72px;
-  margin-top: 32px;
+  margin-top: 34px;
   padding: 0 0 1px;
   border-bottom: 1px solid var(--line);
 }
@@ -936,8 +920,8 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-top: 16px;
-  padding: 12px 16px;
+  margin-top: 14px;
+  padding: 12px 14px;
   border-radius: 12px;
   background: var(--signal-soft);
   box-shadow: inset 0 0 0 1px var(--signal-line);
@@ -964,7 +948,7 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
 .hint { margin-top: 8px; font-size: 14px; color: var(--ink-3); }
 
 /* specification + history */
-.spec2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; font-size: 14px; }
+.spec2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; font-size: 14px; }
 .spec2 div { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line-2); min-width: 0; }
 .spec2 span:first-child { color: var(--ink-3); white-space: nowrap; }
 .spec2 span:last-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: right; }
@@ -984,13 +968,13 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
 
 /* vehicle actions footer */
 .vf .btn--primary { flex: 1; }
-.vf .btn--sheet:not(.btn--icon) { padding: 0 16px; }
+.vf .btn--sheet:not(.btn--icon) { padding: 0 14px; }
 
 /* filters — facet accordion with counts */
 .fsearch {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   height: 40px;
   margin-bottom: 4px;
   padding: 0 12px;
@@ -1036,7 +1020,7 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
 .swb {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   height: 38px;
   padding: 0 8px;
   border-radius: 9px;
@@ -1057,7 +1041,7 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
 
 /* >> QUARANTINE · Filters-dock-open */
 .app.dock-open .lot { gap: 10px; }
-.app.dock-open .focal { padding: 16px 12px 16px; border-radius: 14px; }
+.app.dock-open .focal { padding: 14px 12px 14px; border-radius: 14px; }
 .app.dock-open .focal__h .s, .app.dock-open .lanes, .app.dock-open .kv, .app.dock-open .agemix, .app.dock-open .hero__of, .app.dock-open .attn__h .s, .app.dock-open .ar__m, .app.dock-open .ar__p, .app.dock-open .full {
   display: none;
 }
@@ -1098,7 +1082,7 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
   display: grid;
   grid-template-columns: 96px minmax(0, 1fr) 34px 34px;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   height: 24px;
   padding: 0 6px;
   border-radius: 7px;
@@ -1119,17 +1103,17 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
 
 /* ── rows: the open vehicle becomes a sheet under its row ───────────── */
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .exp--open .exp__in { opacity: 1; transform: none; }
 .exp__r { min-width: 0; }
 .exp .veh__acts .btn--primary { grid-column: 1 / -1; }
 .exp .exp__x { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; color: var(--ink-2); }
 .exp .exp__x:hover { background: var(--wash); color: var(--ink); }
 .exp .exp__accs .acc:first-of-type { border-top: 0; }
-.exp .exp__accs .acc__in { padding-bottom: 16px; }
+.exp .exp__accs .acc__in { padding-bottom: 14px; }
 .exp .health { grid-template-columns: 1fr 1fr 1fr; }
 .exp .spec2 { grid-template-columns: 1fr 1fr 1fr; }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 
 /* while a vehicle is open, secondary facets keep their place (no dock) */
 
@@ -1145,11 +1129,11 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
 .app.dock-open .bento .ar__p { display: block; }
 .app.dock-open .bento .focal { padding: 0; border-radius: var(--r-l); }
 .app.dock-open .bento .focal__h { margin-bottom: 8px; }
-.app.dock-open .bento .hero { flex-direction: row; align-items: flex-end; gap: 16px; }
+.app.dock-open .bento .hero { flex-direction: row; align-items: flex-end; gap: 14px; }
 .app.dock-open .bento .hero__n { font-size: 60px; }
 .app.dock-open .bento .hero__l { padding-bottom: 3px; }
 .app.dock-open .bento .hero__l b { font-size: 17px; }
-.app.dock-open .bento .attn { padding: 16px 12px 10px; }
+.app.dock-open .bento .attn { padding: 14px 12px 10px; }
 .app.dock-open .bento .attn__h { padding: 0 8px 8px; }
 .app.dock-open .bento .attn__h h2 { font-size: 15px; font-weight: 600; letter-spacing: -.005em; text-transform: none; color: var(--focal-ink); }
 .app.dock-open .bento .ar { grid-template-columns: 50px minmax(0, 1fr) 38px; gap: 8px; height: 44px; padding: 0 10px; }
@@ -1173,7 +1157,7 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
   display: inline-flex;
   align-items: center;
   height: 24px;
-  padding: 0 8px;
+  padding: 0 9px;
   border-radius: 7px;
   font-size: 13px;
   font-weight: 600;
@@ -1233,9 +1217,9 @@ html, body { height: 100%; height: auto; }
 
 /* ── the open car pops: tinted lifted header row + the sheet, one raised object ── */
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .row.open .id__n { color: var(--brand-ink); }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 
 /* ── columns as in the original: Stock · Year · Make · Model · Trim · Ext colour · Price · Status · Health · Age · Actions ── */
 .hd, .row { gap: 8px; padding: 0 16px; }
@@ -1255,9 +1239,9 @@ html, body { height: 100%; height: auto; }
 .md { font-weight: 500; color: var(--ink); }
 .age i { width: 30px; height: 4px; border-radius: 2px; background: var(--line-2); position: relative; overflow: hidden; width: 26px; }
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .row.open .mk, .row.open .md { color: var(--brand-ink); }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 .acts button {
   width: 32px;
   height: 32px;
@@ -1273,7 +1257,7 @@ html, body { height: 100%; height: auto; }
 
 /* ── the drop-down details are a distinct, tinted plane: obviously expandable ── */
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .exp .exp__accs .acc { border-top: 0; margin: 2px 0; border-radius: 9px; }
 .exp .exp__accs .acc__h { min-height: 44px; padding: 0 10px; border-radius: 9px; transition: background var(--dur) var(--ease); }
 .exp .exp__accs .acc__h:hover { background: var(--sheet); }
@@ -1295,7 +1279,7 @@ html, body { height: 100%; height: auto; }
   box-shadow: inset 0 0 0 1px var(--line);
 }
 .exp .exp__accs .acc__t { font-size: 14px; }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 
 /* >> QUARANTINE · dark theme — INACTIVE */
 [data-aan-dark][data-theme="dark"] .exp .exp__accs { background: var(--wash); }
@@ -1303,14 +1287,16 @@ html, body { height: 100%; height: auto; }
 
 /* ── the selected car cannot blend in: its row goes focal-dark, the rest of the list steps back ── */
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .row.open .price em { color: var(--focal-ink-3); }
 .row.open .trim i { color: var(--focal-ink-3); }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+.field.has-open .row:not(.open) { opacity: .55; transition: opacity var(--dur2) var(--ease); }
+.field.has-open .row:not(.open):hover { opacity: 1; }
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 
 /* ── selected row: the command-bar grey instead of navy, white text on it ── */
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .row.open .yr, .row.open .trim, .row.open .ext, .row.open .stk__vin, .row.open .age { color: var(--focal-ink-2); color: rgba(255,255,255,.88); }
 .row.open .mk, .row.open .md, .row.open .price { color: var(--focal-ink); color: #fff; }
 .row.open .price em, .row.open .trim i { color: rgba(255,255,255,.7); }
@@ -1323,7 +1309,7 @@ html, body { height: 100%; height: auto; }
 .row.open .acts button { color: var(--focal-ink-2); color: rgba(255,255,255,.9); }
 .row.open .acts button:hover { background: var(--focal-2); color: #fff; background: rgba(255,255,255,.18); }
 .row.open .ck { border-color: rgba(255,255,255,.4); background: transparent; border-color: rgba(255,255,255,.6); }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 
 /* >> QUARANTINE · dark theme — INACTIVE */
 [data-aan-dark][data-theme="dark"] .row.open, [data-aan-dark][data-theme="dark"] .row.open:hover { background: #4f576a; }
@@ -1366,10 +1352,10 @@ html, body { height: 100%; height: auto; }
 .app.dock-open .field .row.open { padding: 0 16px; }
 /* << end QUARANTINE · Filters-dock-open */
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .exp .veh__acts .btn--del { color: var(--danger); }
 .exp .veh__acts .btn--del:hover { background: var(--danger-soft); }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 
 /* >> QUARANTINE · dark theme — INACTIVE */
 [data-aan-dark][data-theme="dark"] .exp__in::before { background: #4f576a; }
@@ -1433,9 +1419,9 @@ html, body { height: 100%; height: auto; }
 
 /* ── the open sheet breathes: even air above the image and below the actions ── */
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .exp .exp__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding-top: 6px; padding-top: 0; }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 .tags { display: flex; gap: 4px; min-width: 0; overflow: hidden; flex-wrap: nowrap; }
 
 /* ── stuck state: the band goes edge to edge and fully grey, no white shoulders ── */
@@ -1480,7 +1466,7 @@ html, body { height: 100%; height: auto; }
 
 /* ── selected row: flat grey tab — square corners, no shadow; it simply becomes the top of the sheet ── */
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .row.open, .row.open:hover {
   background: var(--focal);
   background-image: radial-gradient(120% 140% at 0% 0%, rgba(36,97,74,.42) 0, rgba(36,97,74,0) 60%);
@@ -1513,13 +1499,13 @@ html, body { height: 100%; height: auto; }
   background: #fff;
   display: none;
 }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 
 /* ── stacking order while scrolling: band over everything, then the scope line (its popups), then the sticky
       column header, then the open row — so nothing slides over the grey band or the header ── */
 .sub { position: relative; display: flex; align-items: center; gap: 4px; min-height: 48px; padding: 8px 16px 4px; padding: 6px 16px;  }
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .row.open {
   background: var(--sheet);
   box-shadow: var(--el-2), 0 0 0 1px var(--brand-soft-2);
@@ -1536,7 +1522,7 @@ html, body { height: 100%; height: auto; }
   margin: 10px 6px 0;
   height: calc(var(--row) + 6px);
 }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 
 /* ── column header: casts a shadow only once it is stuck under the band ── */
 
@@ -1601,13 +1587,13 @@ html, body { height: 100%; height: auto; }
 
 /* ── open sheet, left column: everything under the photo is locked to the photo's edges (300px), nothing can push past ── */
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .exp__l { min-width: 0; width: 300px; max-width: 100%; overflow: hidden; }
 .exp .veh__kv > div { min-width: 0; }
 .exp .veh__kv .v, .exp .veh__kv .l { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .exp .veh__acts .btn > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .exp .veh__acts .btn .i { flex: none; }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 
 /* ── three dark boxes on top, one material as the Lot: same navy, each lit from a different edge ──
       Lot: blue, top-left (existing) · Value: cool blue, bottom-right · Attention: warm amber, top-right */
@@ -1639,7 +1625,7 @@ html, body { height: 100%; height: auto; }
   gap: 10px;
   padding: 7px 0;
   border-bottom: 1px solid var(--line-2);
-  padding: 8px 0;
+  padding: 9px 0;
   border-bottom-color: var(--line);
   border-bottom-color: var(--focal-line);
 }
@@ -1674,22 +1660,22 @@ html, body { height: 100%; height: auto; }
   background: var(--sheet);
   border-radius: var(--r-l);
   box-shadow: var(--el-1);
-  padding: 16px 24px 16px;
+  padding: 18px 20px 16px;
   display: flex;
   flex-direction: column;
   min-width: 0;
   background-image: radial-gradient(90% 80% at 104% 112%, rgba(36,97,74,.50) 0, rgba(36,97,74,.16) 40%, rgba(36,97,74,0) 70%), radial-gradient(50% 40% at -10% -10%, rgba(36,97,74,.14) 0, rgba(36,97,74,0) 60%);
-  padding-bottom: 24px;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-bottom: 22px;
+  padding-left: 26px;
+  padding-right: 26px;
 }
 .attn {
   flex: 0 0 auto;
   background: var(--sheet);
   border-radius: var(--r-l);
   box-shadow: var(--el-1);
-  padding: 16px 8px 8px;
-  padding: 16px 12px 10px;
+  padding: 14px 8px 8px;
+  padding: 14px 12px 10px;
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -1706,9 +1692,9 @@ html, body { height: 100%; height: auto; }
   --violet: #c3b6ff;
   --violet-soft: rgba(150,129,240,.18);
   --violet-line: rgba(150,129,240,.5);
-  padding-bottom: 16px;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-bottom: 18px;
+  padding-left: 18px;
+  padding-right: 18px;
 }
 
 /* ── Lot a touch narrower; Attention takes the room ── */
@@ -1725,23 +1711,23 @@ html, body { height: 100%; height: auto; }
   grid-template-columns: minmax(540px, 1.3fr) 240px minmax(0, 1.55fr);
 }
 .agemix {
-  margin: 12px -24px 0;
-  padding: 10px 24px 12px;
+  margin: 12px -20px 0;
+  padding: 10px 20px 12px;
   background: var(--focal-inset);
   border-top: 1px solid var(--focal-line);
   margin: 0;
-  padding: 16px 16px 16px;
+  padding: 16px 18px 14px;
   border-top: 0;
   border-left: 1px solid var(--focal-line);
   border-radius: 0 var(--r-l) var(--r-l) 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-bottom: 24px;
+  padding-bottom: 20px;
   padding-left: 24px;
   padding-right: 24px;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 .focal {
   position: relative;
@@ -1749,7 +1735,7 @@ html, body { height: 100%; height: auto; }
   background: var(--focal);
   color: var(--focal-ink);
   border-radius: var(--r-l);
-  padding: 24px 24px 0;
+  padding: 20px 20px 0;
   box-shadow: var(--el-2);
   overflow: hidden;
   background-image: radial-gradient(124% 86% at 0% -30%, rgba(36,97,74,.46) 0, rgba(36,97,74,.16) 38%, rgba(36,97,74,0) 68%), radial-gradient(60% 52% at 108% -18%, rgba(36,97,74,.24) 0, rgba(36,97,74,0) 60%);
@@ -1792,7 +1778,7 @@ html, body { height: 100%; height: auto; }
 
 /* lanes as an orderly 2-column grid of tags; 'All on file' spans the row */
 .lane--all { grid-column: 1 / -1; grid-column: auto; margin-left: auto; margin-left: 0; grid-column: 1 / -1; }
-.focal__main { padding: 16px 24px 16px; min-width: 0; padding-bottom: 24px; padding-left: 24px; padding-right: 24px; padding-bottom: 24px; }
+.focal__main { padding: 18px 20px 18px; min-width: 0; padding-bottom: 24px; padding-left: 26px; padding-right: 26px; padding-bottom: 20px; }
 .lanes {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1801,7 +1787,7 @@ html, body { height: 100%; height: auto; }
   display: flex;
   flex-wrap: nowrap;
   gap: 4px;
-  margin-top: 16px;
+  margin-top: 14px;
   flex-wrap: wrap;
   gap: 4px 6px;
   margin-top: 12px;
@@ -1810,7 +1796,7 @@ html, body { height: 100%; height: auto; }
   display: grid;
   gap: 4px;
   gap: 8px 10px;
-  margin-top: 16px;
+  margin-top: 14px;
 }
 
 /* ── Health column stands out a little: a quiet tinted band down the column, firmer header, tags with a touch more edge ── */
@@ -1825,10 +1811,10 @@ html, body { height: 100%; height: auto; }
 }
 .row:hover .tags { background: var(--wash); }
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .field.has-open .row:not(.open) .tags { background: var(--well); }
 .row.open .tags, .row.open:hover .tags { background: rgba(255,255,255,.08); }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 .tag {
   display: inline-flex;
   align-items: center;
@@ -1898,18 +1884,18 @@ html, body { height: 100%; height: auto; }
 .price__sub s { text-decoration: line-through; text-decoration-color: var(--ink-4); color: var(--ink-4); }
 .price__sub--lease em { font-style: normal; color: var(--ink-4); }
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .row.open .price__sub, .row.open .price__sub s, .row.open .price__sub--lease em { color: rgba(255,255,255,.75); }
 .row.open .price__sub--disc b { color: #b9f0d2; }
 .row.open .price__sub--lease i { color: #cfe0ff; }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 
 /* >> QUARANTINE · Filters-dock-open */
 .app.dock-open .field .price__sub { display: none; }
 /* << end QUARANTINE · Filters-dock-open */
 
 /* sheet: pricing lines under the stats */
-.veh__pr { display: grid; gap: 0; margin-top: 10px; padding: 4px 16px; border-radius: 12px; background: var(--well); }
+.veh__pr { display: grid; gap: 0; margin-top: 10px; padding: 4px 14px; border-radius: 12px; background: var(--well); }
 .veh__pr div { display: flex; justify-content: space-between; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line-2); font-size: 13px; }
 .veh__pr div:last-child { border-bottom: 0; }
 .veh__pr span { color: var(--ink-3); }
@@ -1988,10 +1974,10 @@ body {
 
 /* 13) an open row's sheet is part of the list, not a floating card: flat bottom, one divider into the next row */
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
-.row.open + .exp { margin-bottom: 10px; margin-bottom: 16px; margin-bottom: 0; }
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
+.row.open + .exp { margin-bottom: 10px; margin-bottom: 14px; margin-bottom: 0; }
 .row.open + .exp + .row { border-top: 1px solid var(--line-2); border-top: 0; }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 
 /* >> QUARANTINE · dark theme — INACTIVE */
 [data-aan-dark][data-theme="dark"] .exp__in {
@@ -2046,7 +2032,7 @@ body {
   justify-content: center;
   gap: 7px;
   height: 38px;
-  padding: 0 16px;
+  padding: 0 14px;
   border-radius: var(--r-m);
   border: 1px solid transparent;
   font-size: 14px;
@@ -2054,11 +2040,11 @@ body {
   white-space: nowrap;
   transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease);
   height: 40px;
-  padding: 0 16px;
+  padding: 0 15px;
   border-radius: 12px;
   border: 0;
   height: 44px;
-  padding: 0 16px;
+  padding: 0 18px;
   border-radius: 999px;
 }
 .btn--sm {
@@ -2067,10 +2053,10 @@ body {
   border-radius: 8px;
   font-size: 14px;
   height: 34px;
-  padding: 0 12px;
+  padding: 0 11px;
   border-radius: 10px;
   height: 36px;
-  padding: 0 12px;
+  padding: 0 13px;
   border-radius: 999px;
 }
 .btn--sheet { background: var(--sheet); color: var(--ink); box-shadow: var(--el-1); box-shadow: var(--sh-ctl); box-shadow: var(--sh-pill); }
@@ -2079,7 +2065,7 @@ body {
   align-items: center;
   gap: 6px;
   height: 46px;
-  padding: 0 12px;
+  padding: 0 13px;
   border-radius: var(--r-m);
   color: var(--ink-2);
   font-size: 14px;
@@ -2123,18 +2109,18 @@ body {
   gap: 8px;
   flex: 0 0 auto;
   height: 34px;
-  padding: 0 12px;
+  padding: 0 11px;
   height: 32px;
   padding: 0 10px;
   font-size: 13px;
   gap: 6px;
-  padding: 0 8px;
+  padding: 0 9px;
   height: 34px;
   padding: 0 7px;
   background: rgba(255,255,255,.06);
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.10);
   border-radius: 9px;
-  padding: 0 8px;
+  padding: 0 9px;
   transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease), transform var(--dur) var(--ease);
   height: 30px;
   flex: none;
@@ -2150,7 +2136,7 @@ body {
   min-width: 180px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   height: 40px;
   padding: 0 10px 0 12px;
   border-radius: var(--r-m);
@@ -2210,7 +2196,7 @@ body {
   align-items: center;
   gap: 12px;
   height: 48px;
-  padding: 0 16px;
+  padding: 0 18px;
   border-top: 1px solid var(--line-2);
   color: var(--ink-3);
   font-size: 14px;
@@ -2285,7 +2271,7 @@ body {
   color: var(--brand);
 }
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .row.open .stock {
   background: var(--sheet);
   background: var(--focal-on);
@@ -2295,7 +2281,7 @@ body {
   color: #1b4a38;
   color: var(--brand-ink);
 }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
 
 /* ── Gen 9's top bar: a floating glass panel with blur, not a full-width strip ── */
@@ -2315,7 +2301,7 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
   align-self: center;
   height: 68px;
   margin: 12px 0 0;
-  padding: 0 16px;
+  padding: 0 14px;
   border-radius: 24px;
   background: var(--glass);
   box-shadow: var(--sh-soft);
@@ -2404,7 +2390,7 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
 .cmd .search {
   flex: 1 1 auto;
   height: 44px;
-  padding: 0 12px 0 16px;
+  padding: 0 12px 0 14px;
   border-radius: 11px;
   flex: 1 1 420px;
   height: 56px;
@@ -2422,7 +2408,7 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
 
 /* ── car preview as Gen 9's popover: one block, floating over the list, table stays put ── */
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 #tb { position: relative; }
 .exp {
   display: grid;
@@ -2430,6 +2416,9 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
   transition: grid-template-rows var(--dur2) var(--ease);
   margin: 0 6px;
   margin: 0;
+  position: absolute;
+  left: 8px;
+  right: 8px;
   display: block;
   grid-template-rows: none;
   opacity: 0;
@@ -2444,7 +2433,7 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
   display: grid;
   grid-template-columns: 332px minmax(0, 1fr);
   gap: 24px;
-  padding: 6px 24px 24px 24px;
+  padding: 6px 20px 20px 20px;
   background: var(--sheet);
   border-radius: 0 0 12px 12px;
   box-shadow: var(--el-2), 0 0 0 1px var(--brand-soft-2);
@@ -2457,13 +2446,15 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
   box-shadow: var(--el-3), 0 0 0 1px var(--focal-line);
   box-shadow: var(--el-3), 0 0 0 1px #6A7285;
   box-shadow: var(--el-3), inset 0 0 0 1px #6A7285;
-  padding: 24px 24px 24px;
+  padding: 22px 20px 26px;
   padding-left: 16px;
   padding-right: 16px;
   box-shadow: inset 0 0 0 1px #6A7285;
   border-radius: 0;
   box-shadow: inset 1px 0 0 #6A7285, inset -1px 0 0 #6A7285, inset 0 -1px 0 #6A7285;
-  padding: 16px 24px 24px;
+  border-radius: 18px;
+  box-shadow: var(--sh-pop, 0 30px 64px -18px rgba(16,24,40,.34), 0 0 0 1px rgba(16,24,40,.06));
+  padding: 18px 20px 20px;
   opacity: 1;
   transform: none;
 }
@@ -2484,8 +2475,8 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
   left: 0;
   display: none;
 }
-.exp-space { display: block; height: 0; }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+.exp-space { display: block; height: 0; display: none; }
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 @media (prefers-reduced-motion: reduce) {
   .exp { transition: none; transform: none; }
 }
@@ -2503,7 +2494,7 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
 
 /* the instruction was doing a composition's job */
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .exp .exp__accs::before {
   content: "More details · tap a section to expand";
   display: block;
@@ -2515,32 +2506,32 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
   color: var(--ink-3);
   content: none;
 }
-.exp .exp__in { grid-template-columns: 420px minmax(0, 1fr); gap: 32px; padding: 24px 24px 24px; align-items: start; }
+.exp .exp__in { grid-template-columns: 420px minmax(0, 1fr); gap: 28px; padding: 22px 24px 24px; align-items: start; }
 .exp .exp__l, .exp .exp__r { align-self: start; }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 
 /* dominant: the vehicle as an object, with the price attached to it */
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .exp .veh__img { height: 208px; height: 188px; width: 100%; height: 264px; border-radius: 16px; }
 .exp .veh__kv {
-  margin: 16px 0 0;
-  padding: 12px 16px;
+  margin: 14px 0 0;
+  padding: 12px 14px;
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr) minmax(0, .8fr);
   gap: 8px;
   box-sizing: border-box;
   width: 100%;
   margin: 16px 0 0;
-  padding: 16px 16px;
+  padding: 16px 18px;
   border-radius: 16px;
 }
 .exp .veh__kv .v { font-size: 20px; font-size: 26px; }
-.exp .veh__pr { margin-top: 12px; padding: 16px 16px; border-radius: 16px; background: var(--well); }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+.exp .veh__pr { margin-top: 12px; padding: 14px 18px; border-radius: 16px; background: var(--well); }
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 
 /* actions resolve as a grid: the primary spans, the rest pair off */
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .exp .veh__acts {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -2550,38 +2541,42 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
   width: 100%;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
-  margin-top: 16px;
+  margin-top: 14px;
 }
 .exp .veh__acts > :first-child { grid-column: 1 / -1; }
 .exp .veh__acts .btn { min-width: 0; width: 100%; padding: 0 10px; font-size: 13px; overflow: hidden; }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 
 /* subordinate: identity reads before the evidence */
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .exp .veh__n { margin-top: 0; font-size: 22px; font-size: 28px; }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 
 /* support: evidence as a card field, the open section taking the full width */
 
-/* >> STAGE 2 · vehicle expansion (in flow) */
+/* >> QUARANTINE · vehicle expansion (absolute popover) */
 .exp .exp__accs {
   margin-top: 8px;
   border-top: 1px solid var(--line-2);
-  margin-top: 16px;
+  margin-top: 14px;
   padding: 6px 8px;
   border-top: 0;
   border-radius: 12px;
   background: var(--well);
   box-shadow: inset 0 0 0 1px var(--line);
-  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-content: start;
+  margin-top: 18px;
 }
 .exp .acc { border-top: 0; border-radius: 14px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line-2); }
-.exp .acc__h { min-height: 46px; min-height: 48px; padding: 0 16px; }
+.exp .acc__h { min-height: 46px; min-height: 48px; padding: 0 14px; }
 .exp .acc__t { font-size: 14px; }
-.exp .acc--open { background: var(--sheet); box-shadow: var(--sh-pill); }
-.exp .acc__in { padding: 0 16px 16px; }
-/* << end STAGE 2 · vehicle expansion (in flow) */
+.exp .acc--open { grid-column: 1 / -1; background: var(--sheet); box-shadow: var(--sh-pill); }
+.exp .acc__in { padding: 0 14px 14px; }
+/* << end QUARANTINE · vehicle expansion (absolute popover) */
 
 /* ══ sticky zone: the two bars the list travels under must stay readable ══
    Both were already sticky; the failure was that they were transparent — the
@@ -2620,7 +2615,7 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
   align-items: center;
   gap: 8px;
   min-height: 44px;
-  padding: 8px 16px 6px;
+  padding: 8px 18px 6px;
   font-size: 14px;
   color: var(--ink-3);
   flex-wrap: wrap;
@@ -2629,18 +2624,18 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
   position: sticky;
   top: 160px;
   margin: 0;
-  padding: 8px 16px;
+  padding: 8px 18px;
   background: rgba(255,255,255,.93);
   box-shadow: 0 0 0 1px rgba(34,58,118,.09);
   position: static;
   background: none;
   box-shadow: none;
-  padding: 8px 16px 6px;
+  padding: 8px 18px 6px;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
 
-/* last gap: 24px of daylight between the floating bar and the band let a row edge
+/* last gap: 20px of daylight between the floating bar and the band let a row edge
    flicker through. The band now meets the bar, and the header meets the band —
    one uninterrupted sticky stack, 192px total. */
 .cmd {
@@ -2672,10 +2667,10 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
 .hd {
   display: grid;
   grid-template-columns: var(--cols);
-  gap: 16px;
+  gap: 14px;
   align-items: center;
   height: 34px;
-  padding: 0 16px;
+  padding: 0 18px;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .08em;
@@ -2866,440 +2861,5 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
    rule was never re-scoped. And Needs-attention changed its padding when the
    dock opened, so the queue jumped as the panel appeared. */
 .app.dock-open .cmdtop .lanes { display: inline-flex; }
-.app.dock-open .bento .attn { padding: 16px 16px 16px; }
+.app.dock-open .bento .attn { padding: 14px 18px 18px; }
 .app.dock-open .bento .attn__h { padding: 0 8px 8px; }
-
-/* ============================================================================
-   STAGE 2 · THE SELECTED VEHICLE AS AN IN-FLOW WORKSPACE
-
-   Measured before this stage, at every one of 1280 / 1366 / 1440 / 1920: the
-   expansion was `position: absolute`, inset 8px inside its own row's edges,
-   separated from it by an 8px gap, wearing an 18px radius and a 360-degree
-   drop shadow, painting over as many as fourteen rows while the other fifteen
-   were dimmed to .55 — and the document grew 11px to make room for 696px of
-   content. The selected row came to rest 84, 454, 602 or 1120px below the
-   sticky stack depending only on where it already happened to be, because
-   opening a vehicle scrolled nothing.
-
-   Every one of those is a modal's signature worn by something that is not a
-   modal. Here the expansion is part of the list: in flow, reserving its own
-   height, sharing the row's edges, continuing the row's surface — and the page
-   brings the selected row to a named rest position, which is the behaviour
-   All Leads has shipped all along.
-   ========================================================================== */
-
-/* ── 1 · IN FLOW ──────────────────────────────────────────────────────────
-   Height belongs to the layout engine. It used to belong to a one-shot
-   `ex.style.top` written once at render and never corrected, so any later
-   reflow — a filter, the dock, a resize — left the sheet behind its row. */
-.exp {
-  position: static;
-  left: auto;
-  right: auto;
-  margin: 0;
-  transform: none;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--dur) var(--ease);
-}
-.exp--open { opacity: 1; pointer-events: auto; }
-.exp > div { overflow: visible; }
-
-/* The document extender. Without it the last rows can never reach the anchor,
-   because there is no page left to scroll. JS owns its height; CSS owns only
-   the fact that it takes part in the flow at all. */
-.exp-space { display: block; height: 0; }
-
-/* ── 2 · ROW AND WORKSPACE ARE ONE OBJECT ─────────────────────────────────
-   The row is the workspace's header. It keeps the dark focal surface the file
-   already defines — and that every `.row.open` ink rule was written against —
-   instead of the orphaned #6A7285 that was matched to Gen 10's grey command
-   band, a band Gen 11 no longer has. It is deliberately not `--brand-soft`:
-   that token means bulk selection, and two different states must not share
-   one appearance. */
-.row.open, .row.open:hover {
-  margin: var(--exp-detach) 0 0;
-  padding: 0 16px;
-  height: var(--row);
-  background: var(--focal);
-  background-image: none;
-  color: var(--focal-ink);
-  border-radius: var(--r-panel) var(--r-panel) 0 0;
-  border-bottom-color: transparent;
-  box-shadow: none;
-}
-.row.open + .exp { margin-bottom: var(--exp-detach); }
-
-/* No elevation, no seam, no inset: the sheet is the bottom of the row. Its
-   only boundary is the hairline the list already uses everywhere else. */
-.exp__in {
-  border-radius: 0 0 var(--r-panel) var(--r-panel);
-  box-shadow: inset 0 0 0 1px var(--line);
-  padding: 24px 24px 24px;
-}
-
-/* ── 3 · DETAIL AS FOUR CONTINUOUS REGIONS ────────────────────────────────
-   Five equal bars in a 2x2 grid asked which of five equally-weighted things
-   you wanted, and rearranged the other four whenever you answered: an opened
-   section claimed the full width and pushed its neighbours into new columns.
-   One ordered column instead — health, market, specification, history — where
-   opening a region changes the size of exactly one thing. */
-.exp .exp__accs {
-  display: block;
-  margin-top: 16px;
-  padding: 0;
-  background: none;
-  border-radius: 0;
-  box-shadow: none;
-}
-.exp .acc {
-  margin: 0;
-  border-radius: 0;
-  background: none;
-  box-shadow: none;
-}
-.exp .acc + .acc { border-top: 1px solid var(--line-2); }
-.exp .acc--open { background: none; box-shadow: none; }
-/* the quarantine's `.exp .exp__accs .acc__h` is (0,3,0) and outranks a (0,2,0)
-   rule however late it comes, so the region headings are matched at its weight
-   — otherwise the three disclosed ones keep a 10px indent the static one has
-   not got, and the four titles do not line up. */
-.exp .exp__accs .acc__h,
-.exp .exp__accs .acc__hd { min-height: 52px; padding: 0 2px; border-radius: 0; }
-/* the chevron is the only state indicator the header carries */
-.exp .acc__h:hover { background: none; }
-.exp .acc__h:hover .acc__t { color: var(--brand-ink); }
-.exp .acc__t { font-size: 15px; font-weight: 600; }
-.exp .acc__in { padding: 0 2px 24px; }
-
-/* the chevron is a quiet affordance again, not a filled pill */
-.exp .exp__accs .acc__h > .i,
-.exp .exp__accs .acc--open > h3 > .acc__h > .i {
-  width: 15px;
-  height: 15px;
-  padding: 0;
-  border-radius: 0;
-  background: none;
-  box-shadow: none;
-  color: var(--ink-3);
-}
-.exp .exp__accs .acc--open > h3 > .acc__h { background: none; border-radius: 0; box-shadow: none; }
-.exp .exp__accs .acc--open > .acc__p > div > .acc__in { background: none; border-radius: 0; box-shadow: none; padding: 0 2px 24px; }
-
-/* The stack keeps each region's one-line verdict legible while it is open, so
-   a reader can take in all four states without collapsing anything. An ordinary
-   accordion hides the summary on open; a stack of four is read as a whole. */
-.exp .exp__accs .acc--open > h3 .acc__s { visibility: visible; }
-
-/* the passing checks, collapsed to one quiet line so the failing ones read */
-.health__ok { margin: var(--s2) 0 0; font-size: 13px; line-height: 1.55; color: var(--ink-3); }
-.health__ok b { font-weight: 600; color: var(--ink-2); }
-.exp .health:empty { display: none; }
-
-/* where the market region's evidence changes hands */
-.reg__sub {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin: 24px 0 10px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line-2);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ink-2);
-}
-.reg__sub .demo { margin-left: 0; }
-
-/* provenance before the picture, not after it: the reader learns the numbers
-   are not connected to a live feed before they read anything into them */
-.prov {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  margin: 0 0 16px;
-  font-size: 12.5px;
-  color: var(--ink-3);
-}
-.prov b { font-weight: 600; color: var(--ink-2); }
-
-/* ============================================================================
-   PHASE 1 · STICKY SURFACE SYSTEM — ATTACHED vs FLOATING
-
-   Measured before this section, engaged at 1440: the platform bar ended at
-   y=68 wearing a 24px radius on all four corners; the command band began at
-   exactly y=68 wearing its own 24px top radius and inset 26px against its
-   neighbours' 16px; the column header ended the stack at y=192. Three layers,
-   three different insets, three shadows, two rounded corners pressed into a
-   flat surface — which is where the light holes at the seam came from, and why
-   list content was visible through them.
-
-   The rule applied from here on:
-
-     ATTACHED   touching corners square · one shared edge · one shadow, at the
-                outer boundary only · one inset · no gap, real or implied
-     FLOATING   a visible gap on every side · its own complete radius · one
-                restrained shadow · never intersecting another rounded surface
-
-   The whole engaged stack — platform bar, command band, column header — is one
-   ATTACHED surface. The field, the dock, the tray and the menus are FLOATING.
-   ========================================================================== */
-
-/* ── one inset, at rest and engaged ───────────────────────────────────────
-   The band used to sit 10px inside the field and animate its margin and radius
-   as it stuck, so it changed shape at the moment it was supposed to feel most
-   fixed. It is a full-width band now; what distinguishes it is its material,
-   not a floating outline. */
-.cmd {
-  margin: 0;
-  /* vertical padding is load-bearing: --stick-cmd says this band is 72px and
-     --stick-total, which the selected-row anchor is derived from, adds it up.
-     8 + 56 + 8. Horizontal padding is the page gutter, so the search field
-     starts on the same line as the rows below it. */
-  padding: var(--s2) var(--gutter);
-  border-radius: 0;
-  box-shadow: none;
-  transition: background var(--dur) var(--ease);
-}
-
-/* ── the engaged stack ───────────────────────────────────────────────────
-   One glass value instead of three. The .76 / .88 / 1.0 ladder was a depth cue
-   for three separate cards; across three surfaces that touch, it reads as
-   banding — the "stacked unrelated translucent cards" the screenshots show.
-   The stack keeps its glass, and keeps it consistent. */
-.app.is-stuck .top,
-.cmd--stuck {
-  background: rgba(255, 255, 255, .94);
-  -webkit-backdrop-filter: saturate(1.35) blur(14px);
-  backdrop-filter: saturate(1.35) blur(14px);
-}
-
-/* the two corners the band parks against */
-.app.is-stuck .top { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
-
-/* interior shadows are invisible where layers touch and only ever produce a
-   dark fragment at the seam — the stack casts one shadow, at its bottom edge */
-.app.is-stuck .top { box-shadow: none; border-bottom: 0; }
-.cmd--stuck { box-shadow: none; border-bottom: 0; }
-.hd--stuck { box-shadow: 0 1px 0 var(--line), 0 10px 20px -16px rgba(34, 58, 118, .45); }
-
-/* ── the field is the floating surface; what is inside it is attached ─────
-   A 10px-radius white block with its own 1px ring, sitting inside a 28px-radius
-   translucent card, is two cards for one region. The field owns the surface. */
-.field { border-radius: var(--r-card); }
-.rows { border-radius: 0; box-shadow: none; border-top: 0; }
-.foot { border-radius: 0; }
-
-/* the column header belongs to the list, so it shares the row gutter */
-.hd { padding-left: var(--gutter); padding-right: var(--gutter); }
-
-/* ── the shared edge ─────────────────────────────────────────────────────
-   Attached does not mean invisible. Each boundary inside the stack gets one
-   hairline and nothing else — drawn with an inset shadow rather than a border
-   so it cannot add a pixel to a layer whose height --stick-total depends on. */
-.app.is-stuck .top { box-shadow: inset 0 -1px 0 var(--line-2); }
-.cmd--stuck { box-shadow: inset 0 -1px 0 var(--line-2); }
-
-/* ============================================================================
-   PHASE 1 · THE OPERATIONAL COLUMN GROUP
-
-   Measured: not one cell in this table is `position: sticky`. There is no
-   frozen rail — the grey band running down the HEALTH column was a background
-   on the header cell plus a background on every row's tag cell, and together
-   they read as a slab that had drifted in from somewhere else. It signalled a
-   behaviour the table does not have, and it made the one column that is
-   usually just "OK" the loudest thing in the row.
-
-   Price · Status · Health · Age · Actions really are a group — they are what
-   you act on rather than what you identify the car by — so the group is shown
-   the honest way: one divider where it begins, and no fill.
-   ========================================================================== */
-.hd > .c-health { background: none; margin: 0; color: var(--ink-3); }
-.row .tags, .field.has-open .row:not(.open) .tags { background: none; }
-
-/* one line where identification ends and operation begins. Named, not counted:
-   Stage 1 took the nth-child selectors out of this table for a reason. */
-.hd > .c-price,
-.row > .price {
-  box-shadow: inset 1px 0 0 var(--line-2);
-  padding-left: var(--s3);
-}
-
-/* ============================================================================
-   PHASE 1 · THE SELECTED-VEHICLE WORKSPACE
-
-   Measured with only Merchandising health open: the left column ran 578px and
-   the right 344px, so 234px of the sheet was white for no reason, and the four
-   regions were reading in two thirds of the available width while the widest
-   thing on the page sat beside them doing nothing.
-
-   The sheet is now an object header — photograph, identity, figures, actions —
-   and then the region stack across the full width beneath it.
-   ========================================================================== */
-.exp .exp__in {
-  grid-template-columns: 420px minmax(0, 1fr);
-  gap: var(--s5);
-  padding: var(--s5) var(--s5) var(--s6);
-  align-items: stretch;
-}
-.exp .exp__accs { grid-column: 1 / -1; margin-top: var(--s1); }
-
-/* The photograph fills the header band rather than leaving a hole under it.
-   Both columns need `align-self` restating: the quarantined `.exp .exp__l,
-   .exp .exp__r { align-self: start }` is the same weight and later in file
-   order, so the grid's own `align-items: stretch` never reached them. */
-.exp .exp__l, .exp .exp__r { align-self: stretch; }
-/* A floor, not a ceiling. A ceiling kept the band at 264 and left a hole under
-   the photo whenever the facts column grew past it — which it does as soon as
-   the dock narrows the sheet and the action row wraps. The band is now as tall
-   as the taller column, never shorter than 264. */
-.exp .exp__l { width: auto; min-height: 264px; }
-/* the photo box is capped so the band is only as tall as it needs to be —
-   at 420 wide the image's own ratio was making it 321px, which pushed the
-   identity block 105px away from the figures it belongs with. The crop is
-   deliberate, which is the one case overflow may hide something. */
-.exp .veh__img { height: 100%; min-height: 0; overflow: hidden; border-radius: var(--r-panel); }
-.exp .veh__img img { width: 100%; height: 100%; object-fit: cover; }
-
-/* Identity, figures, price rows and actions read as one column of facts, laid
-   out over the band's full height. Collapsing the actions to a single row left
-   106px under them; distributing the three blocks uses that height instead of
-   padding it out. */
-.exp .exp__r {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: var(--s4);
-}
-.exp .veh__kv { margin: 0; }
-.exp .veh__pr { margin: 0; }
-
-/* seven actions across a wide band: the primary keeps its own line, the rest
-   share four tracks instead of stacking four rows deep in a narrow column */
-.exp .veh__acts { margin: 0; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s2); }
-.exp .veh__acts > :first-child { grid-column: 1 / -1; }
-
-/* ── the region stack: attached, so no radius between touching sections ──
-   `.exp .exp__accs .acc` is (0,3,0) and was still applying a 9px radius to
-   every section, which is the card-inside-card look the stack must not have. */
-.exp .exp__accs .acc {
-  margin: 0;
-  border-radius: 0;
-  background: none;
-  box-shadow: none;
-}
-.exp .exp__accs .acc + .acc { border-top: 1px solid var(--line-2); }
-.exp .exp__accs .acc__h { min-height: 52px; padding: 0 var(--s1); }
-.exp .exp__accs .acc__in { padding: 0 var(--s1) var(--s5); }
-.exp .exp__accs .acc--open > h3 > .acc__h { box-shadow: none; }
-
-/* ============================================================================
-   PHASE 1 · ACTION GROUP GEOMETRY
-
-   In a narrow column a 2-track grid of full-width pills was reasonable. Across
-   a 1124px band it made "Edit vehicle" a slab and gave six secondary actions
-   275px each to hold a two-word label — and it put "Hide on site" hard against
-   "Delete…", which is the pair that prompted this. Buttons are sized by their
-   label now, the group reads left to right, and the destructive action is
-   pushed to the far end where it cannot be hit on the way to something else.
-   ========================================================================== */
-.exp .veh__acts {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--s2);
-  grid-template-columns: none;
-}
-.exp .veh__acts > :first-child { grid-column: auto; }
-.exp .veh__acts .btn {
-  width: auto;
-  min-width: 0;
-  padding: 0 var(--s4);
-  font-size: 13px;
-}
-.exp .veh__acts .btn--primary { padding: 0 var(--s5); }
-
-/* The one action that cannot be undone sits at the end of the band, away from
-   the group. A fixed gap plus a divider was tried and rejected: when the row
-   wraps at 1366 the divider survives onto the next line with nothing beside
-   it. Right-aligning holds in both cases — last on one line, last on two. */
-.exp .veh__acts .btn--del { margin-left: auto; }
-
-/* ── the key figures are three numbers, not a banner ─────────────────── */
-.exp .veh__kv { width: auto; max-width: 520px; }
-
-/* ── control geometry, page-wide ─────────────────────────────────────────
-   One height per class of control and one gap between neighbours, so no two
-   rounded controls ever appear to merge unless they are a segmented group. */
-.veh__acts .btn, .exp__top .btn { height: 40px; }
-.btn + .btn { margin-left: 0; }
-
-/* ============================================================================
-   PHASE 1 · ACTIVE STATE HIERARCHY
-
-   Too many states were saying the same thing in the same colour. Blue is the
-   page's primary-action colour; when the view switcher's active segment is
-   also a blue fill with a 22px glow, "which view am I in" and "what is the
-   main action here" arrive with equal force, and the eye has to sort them out.
-
-   The ladder now reads:
-     primary action        solid brand fill              (Edit vehicle)
-     current view / lane   white thumb on a sunken track (segmented controls)
-     current nav section   tinted, no fill               (top navigation)
-     open for inspection   dark focal surface            (the selected row)
-     bulk selected         brand-soft tint               (checkbox rows)
-   Five states, five different means. Only one of them is a blue fill.
-   ========================================================================== */
-.seg__b--on, .seg__b[aria-pressed="true"] {
-  background: var(--sheet);
-  color: var(--brand-ink);
-  box-shadow: 0 1px 2px rgba(18, 23, 20, .16), 0 0 0 1px rgba(18, 23, 20, .06);
-}
-.seg__b--on .i, .seg__b[aria-pressed="true"] .i { color: var(--brand-ink); }
-
-/* pagination is a set, not a strip of touching pills */
-.foot .pg { gap: var(--s1); }
-
-/* ============================================================================
-   PHASE 1 · DETECTOR FINDINGS
-
-   From the Impeccable detector, each verified in context. Two of its findings
-   were false positives and are recorded rather than "fixed":
-
-   · nested-cards ×8 — `.veh__kv` and `.veh__pr` are sunken wells (`--well`,
-     no shadow, no ring) inside a surface, not stacked cards. A change of
-     material at the same elevation is not nesting.
-   · dark-glow #e35548 — a conic-gradient on the "Other" colour swatch in the
-     filter list. It is a colour wheel, not a halo.
-   ========================================================================== */
-
-/* 10px functional text in the platform bar, below the 11px legibility floor */
-.dealer__mk { font-size: 11px; }
-
-/* 18px and 20px were the last off-scale gutters on the page */
-.foot { padding: 0 var(--gutter); }
-.dock__h { padding: 0 var(--s3) 0 var(--s5); }
-
-/* Bulk selection is the `--brand-soft` fill and nothing else; the 3px brand
-   stripe that said the same thing a second time has been removed at source
-   (it was `.row.sel::before`). */
-
-/* Layout properties are not animated. The thumbnail's width/height transition
-   never fires — the size is static per breakpoint — and the command band's
-   margin/radius transition is left over from when the band changed shape as it
-   stuck, which it no longer does. Both are removed rather than left to imply
-   motion the page does not have. */
-.th { transition: none; }
-.cmd { transition: background var(--dur) var(--ease); }
-
-/* the lease marker rendered at 9.5px — under the 11px legibility floor for
-   functional text, and it carries a real term ("LEASE 48") */
-.price__sub--lease i { font-size: 11px; }
-
-/* ── [hidden] must actually hide ──────────────────────────────────────────
-   Component rules that set `display` beat the user-agent's
-   `[hidden] { display: none }`, because both are display declarations and the
-   author sheet wins. Two pages were painting a "Switch to dark theme" button
-   that markup had marked hidden — a control offering a mode Gen 11 does not
-   ship (DESIGN.md §5) — and hidden empty-state paragraphs alongside it.
-   One guard, applied family-wide so the semantic can be trusted. */
-[hidden] { display: none !important; }

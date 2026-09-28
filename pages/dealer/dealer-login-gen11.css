@@ -1,0 +1,250 @@
+/* ============================================================================
+   AAN · Dealer Login — GENERATION 11
+
+   Content and controls are the production front door (`g01-front-door-1.html`):
+   the marketing panel, the support block, User Name / Password with a reveal
+   toggle, the submit, the password-reset link and the legal footer. Nothing is
+   added; the dark-mode toggle is left out because Gen 11 ships with dark mode
+   gated off (DESIGN.md §5), exactly as All Vehicles does.
+
+   The system is DESIGN.md: one 8pt ladder, attached vs floating decided for
+   every boundary, one blue fill for the primary action and nothing else.
+   ========================================================================== */
+
+:root {
+  /* 8pt ladder */
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px; --s5: 24px;
+  --s6: 32px; --s7: 40px; --s8: 48px; --s9: 64px;
+  --gutter: var(--s4);
+
+  /* radius */
+  --r-pill: 999px;
+  --r-card: 24px;
+  --r-panel: 18px;
+  --r-control: 14px;
+
+  /* colour roles */
+  --ink: #0d1320;
+  --ink-2: #353e4e;
+  --ink-3: #576070;
+  --line: #dfe3ea;
+  --line-2: #e9ecf1;
+  --sheet: #ffffff;
+  --well: #eef1f5;
+  --wash: #f3f5f8;
+  --brand: #1f5fe0;
+  --brand-ink: #1747b3;
+  --brand-soft: #e9f0fe;
+  --focal: #172234;
+  --focal-ink: #f3f6fb;
+  --focal-ink-2: #bdc6d5;
+  --focal-ink-3: #97a3b7;
+  --focal-line: #2b3850;
+  --danger: #bd3328;
+
+  /* elevation */
+  --el-1: 0 1px 2px rgba(16,24,40,.08), 0 0 0 1px rgba(16,24,40,.06);
+  --el-2: 0 12px 30px -14px rgba(16,24,40,.22), 0 0 0 1px rgba(16,24,40,.05);
+
+  /* focus owns outline and nothing else owns it */
+  --focus-w: 2px;
+  --focus-offset: 2px;
+  --focus-color: var(--brand);
+  --focus-color-on-dark: #ffd98a;
+
+  --dur: 160ms;
+  --ease: cubic-bezier(.2,0,0,1);
+
+  --sans: "Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font: 400 15px/1.55 var(--sans);
+  color: var(--ink);
+  background: var(--wash);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, p { margin: 0; }
+a { color: var(--brand-ink); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* focus is its own layer */
+:focus-visible {
+  outline: var(--focus-w) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+}
+.panel :focus-visible { outline-color: var(--focus-color-on-dark); }
+
+/* ── the page is two floating panes on one gutter ───────────────────────── */
+.auth {
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(430px, .95fr);
+  gap: var(--s5);
+  padding: var(--gutter);
+  align-items: stretch;
+}
+
+/* ── left: who AAN is, and how to reach a human ─────────────────────────── */
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--s8);
+  padding: var(--s8);
+  border-radius: var(--r-card);
+  background: var(--focal);
+  color: var(--focal-ink);
+  box-shadow: var(--el-2);
+  overflow: hidden;
+}
+.panel__brand { display: flex; align-items: center; gap: var(--s3); }
+.mark {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border-radius: var(--r-control);
+  background: var(--brand);
+  color: #fff;
+  font-size: 13px; font-weight: 800; letter-spacing: .04em;
+}
+.panel__brand b { font-size: 16px; font-weight: 650; letter-spacing: -.01em; }
+
+.panel__say { max-width: 46ch; }
+.panel__say h2 {
+  font-size: clamp(30px, 3.2vw, 44px);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -.022em;
+}
+.panel__say p {
+  margin-top: var(--s4);
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--focal-ink-2);
+}
+
+.support { display: grid; gap: var(--s2); padding-top: var(--s5); border-top: 1px solid var(--focal-line); }
+.caps {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .09em; text-transform: uppercase;
+  color: var(--focal-ink-3);
+}
+.support__rows { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s6); }
+.support a { color: var(--focal-ink); font-size: 14px; }
+.support a:hover { color: #fff; }
+
+/* ── right: the form, a floating sheet ──────────────────────────────────── */
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--s8);
+  border-radius: var(--r-card);
+  background: var(--sheet);
+  box-shadow: var(--el-2);
+}
+.form__in { width: 100%; max-width: 380px; margin: 0 auto; }
+
+.form h1 { font-size: 28px; font-weight: 700; letter-spacing: -.02em; }
+.form h1 span { display: block; font-size: 15px; font-weight: 400; color: var(--ink-3); letter-spacing: 0; margin-top: var(--s1); }
+
+form { margin-top: var(--s6); display: grid; gap: var(--s4); }
+
+.field label {
+  display: block;
+  margin-bottom: var(--s2);
+  font-size: 13px; font-weight: 600;
+  color: var(--ink-2);
+}
+.control { position: relative; display: flex; }
+.control input {
+  width: 100%;
+  height: var(--s8);
+  padding: 0 var(--s4);
+  font: 400 15px var(--sans);
+  color: var(--ink);
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  border-radius: var(--r-control);
+  transition: border-color var(--dur) var(--ease);
+}
+.control input::placeholder { color: var(--ink-3); }
+.control input:hover { border-color: #c9cfda; }
+.control input:focus { border-color: var(--brand); }
+.control--pw input { padding-right: var(--s8); }
+
+/* the reveal toggle is attached to the field: it sits inside, on its line */
+.eye {
+  position: absolute;
+  right: var(--s1);
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--s7);
+  height: var(--s7);
+  display: grid; place-items: center;
+  border: 0; border-radius: var(--r-control);
+  background: none;
+  color: var(--ink-3);
+  cursor: pointer;
+}
+.eye:hover { background: var(--well); color: var(--ink); }
+.eye svg { width: 18px; height: 18px; }
+
+/* Buttons are pills across the whole Gen 11 family — nine of the ten pages
+   already were, and this one was the outlier at 14px. `--r-control` belongs to
+   inputs and fields, which is what it is used for above. */
+.btn {
+  height: var(--s8);
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--s2);
+  padding: 0 var(--s5);
+  font: 600 15px var(--sans);
+  border: 0; border-radius: var(--r-pill);
+  cursor: pointer;
+  transition: background var(--dur) var(--ease);
+}
+.btn--primary { width: 100%; background: var(--brand); color: #fff; }
+.btn--primary:hover { background: var(--brand-ink); }
+
+.form__foot { margin-top: var(--s5); text-align: center; }
+.form__foot a { font-size: 14px; }
+
+/* ── legal, attached to the bottom of the form sheet ────────────────────── */
+.legal {
+  margin-top: var(--s8);
+  padding-top: var(--s5);
+  border-top: 1px solid var(--line-2);
+  display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5);
+  align-items: baseline;
+  font-size: 12.5px;
+  color: var(--ink-3);
+}
+.legal a { color: var(--ink-2); }
+
+/* ── desktop only, but it must not break between the tested widths ──────── */
+@media (max-width: 1100px) {
+  .auth { grid-template-columns: minmax(0, 1fr); }
+  .panel { gap: var(--s6); padding: var(--s6); }
+  .panel__say h2 { font-size: 30px; }
+  .form { padding: var(--s6); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+/* ── [hidden] must actually hide ──────────────────────────────────────────
+   Component rules that set `display` beat the user-agent's
+   `[hidden] { display: none }`, because both are display declarations and the
+   author sheet wins. Two pages were painting a "Switch to dark theme" button
+   that markup had marked hidden — a control offering a mode Gen 11 does not
+   ship (DESIGN.md §5) — and hidden empty-state paragraphs alongside it.
+   One guard, applied family-wide so the semantic can be trusted. */
+[hidden] { display: none !important; }
