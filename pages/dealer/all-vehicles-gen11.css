@@ -2189,6 +2189,11 @@ body {
   border-radius: 18px;
   box-shadow: var(--sh-soft);
 }
+/* This `.pop` block lands ~1600 lines below `.pop--open { display: block }`,
+   and at equal specificity the later rule won — so every popover on the page
+   (Sort, Make, Year, Price, Columns) got the open class and stayed hidden.
+   Pairing the two classes settles it by specificity instead of by order. */
+.pop.pop--open { display: block; }
 
 /* tags — pills */
 .tag, .chip, .veh__tags > *, .idtag { border-radius: 999px; }
@@ -3356,3 +3361,85 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
 
 /* the identifiers lead: stock is the key a dealer searches on */
 .stock { font-weight: 700; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   COLUMNS — the Columns control (Gen 11.1)
+   The panel is the page's existing popover surface with the page's existing
+   checkbox row. Nothing new is invented: `.pop` gives the surface, `.pop__it`
+   the row, `.ck` the checkbox, `.mn__lab` the caps key and `.mn__sep` the
+   rule. Only the header line, the locked rows and the reset are new.
+   ══════════════════════════════════════════════════════════════════════════ */
+.pop.cols { min-width: 268px; padding: 6px; }
+.cols__h {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  padding: 6px 10px 4px;
+}
+.cols__t { font-size: 14px; font-weight: 650; letter-spacing: -.01em; color: var(--ink); }
+.cols__n { font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cols__set { display: flex; flex-direction: column; }
+/* 6px rows, not 7: at the page's resting scroll position the Columns button
+   sits low in the toolbar, and the seven extra pixels pushed Reset below the
+   fold. The panel now ends inside the viewport at 1440x900. */
+.cols__it { padding: 6px 8px; font-size: 14px; }
+.cols__it > span:first-of-type { flex: 1; min-width: 0; }
+
+/* the locked columns are stated, not offered: one line, no controls, so the
+   panel reads as seven switches plus a fact — not twelve switches, five of
+   which refuse to move */
+.cols__lock {
+  display: flex; align-items: flex-start; gap: 8px;
+  margin: 0; padding: 6px 10px 8px;
+  font-size: 12.5px; line-height: 1.45; color: var(--ink-3);
+}
+.cols__lock .i { width: 13px; height: 13px; margin-top: 3px; color: var(--ink-4); flex: 0 0 auto; }
+.cols__lock b { font-weight: 600; color: var(--ink-2); }
+
+/* an optional column the open Filters panel is standing on */
+.cols__it--sus { color: var(--ink-3); cursor: default; }
+.cols__it--sus .ck { opacity: .5; }
+.cols__note {
+  font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--ink-4);
+}
+
+.cols__reset {
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; height: 32px;
+  border: 0; border-radius: 8px;
+  background: none;
+  font-family: var(--font); font-size: 13.5px; font-weight: 600; color: var(--brand-ink);
+  cursor: pointer;
+}
+.cols__reset:hover { background: var(--wash); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   HEALTH CHIPS — the worst row needs 241px and the column gives 180 (Gen 11.1)
+
+   Four of sixteen rows overflowed their Health cell at and below 1400, worst
+   case "NO PRICE · NO PHOTOS · +2". Nothing was hidden or clipped by design —
+   the cell simply ran past its track and the last chip was cut.
+
+   Two moves, no extra table width:
+     · the chips give back the loose fitting they were carrying — the tracking
+       and the side padding were set for a chip standing alone, not for three
+       in a row. The type size stays readable uppercase bold.
+     · the column takes the difference out of Model, which is the flexible
+       track, so the row still sums to exactly the same width.
+   ══════════════════════════════════════════════════════════════════════════ */
+.row .tags { gap: 3px; }
+.row .tags .tag {
+  padding: 0 6px;
+  letter-spacing: .02em;
+  font-size: 11.5px;
+}
+.row .tags .tag--more { padding: 0 5px; }
+
+/* the panel is a column so its heading and Reset stay put while the optional
+   list takes the scroll on a short viewport */
+.pop.cols { display: none; flex-direction: column; }
+.pop.cols.pop--open { display: flex; }
+.cols__set--scroll { min-height: 0; }
+/* while open the panel lives in <body>, placed by the script in viewport
+   coordinates — the sheet clips its overflow and the command band is a
+   containing block for fixed descendants, so neither ancestor can hold it */
+.pop.cols.pop--open { position: fixed; top: 0; left: 0; right: auto; bottom: auto; }

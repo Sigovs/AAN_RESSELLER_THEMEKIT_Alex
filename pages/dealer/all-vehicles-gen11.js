@@ -40,8 +40,218 @@
     f: { make: {}, model: {}, year: {}, price: {}, mile: {}, loc: {}, type: {}, merch: {}, color: {}, opt: {} },
     /* Open state for both disclosure families: the vehicle sheet's four stacked
        regions, then the Filters dock's facet groups. */
-    acc: { health: true, market: false, spec: false, hist: false, 'f-make': true, 'f-price': true, 'f-year': false, 'f-model': false, 'f-mile': false, 'f-loc': false, 'f-type': false, 'f-merch': false, 'f-color': false, 'f-opt': false, 'f-audit': false }
+    acc: { health: true, market: false, spec: false, hist: false, 'f-make': true, 'f-price': true, 'f-year': false, 'f-model': false, 'f-mile': false, 'f-loc': false, 'f-type': false, 'f-merch': false, 'f-color': false, 'f-opt': false, 'f-audit': false },
+    cols: null
   };
+
+  /* ══ COLUMNS ═══════════════════════════════════════════════════════════
+     One configuration drives four things: the cells the header renders, the
+     cells each row renders, the grid template both sit on, and the Columns
+     control. Nothing about a column is stated twice.
+
+     `track` holds the approved Gen 11 widths per tier — the same numbers the
+     stylesheet used to carry, moved here so the template can be built from
+     the visible set instead of padding hidden columns out to 0px:
+       lg      > 1400, Filters closed        sm      ≤ 1400, Filters closed
+       dock    > 1400, Filters open           dockSm  ≤ 1400, Filters open
+     (1400 is where the stylesheet actually switches — an inner comment says
+     1320, but a later `@media (max-width: 1400px)` block is the one that
+     wins, and the row gap steps from 8px to 6px on the same line.)
+     `grow` marks the columns that absorb width freed by a hidden column, in
+     the order the brief asks for: Model first, then Stock / Trim / Colour.
+     Health deliberately has no weight — its minimum track is already wider
+     than any fr share it could win, so a weight there would never resolve to
+     a single extra pixel. Its `sm` track is 194 rather than 168 because the
+     widest chip row needs 204px of cell once the chips are tightened; the
+     26px comes out of Model, which is the flexible track, so the row still
+     sums to the same width. Model's `sm` floor drops to 88 for the same
+     reason — at 1280 it is pinned to that floor either way.
+     `dockOff` preserves the approved behaviour where opening Filters drops
+     the three widest optional columns — existing layout, not a new rule. */
+  var COLS = [
+    { id: 'select',  label: 'Select',    locked: true, system: true, track: { lg: 26, sm: 24, dock: 24, dockSm: 22 } },
+    { id: 'thumb',   label: 'Thumbnail', track: { lg: 92, sm: 76, dock: 68, dockSm: 60 } },
+    { id: 'stock',   label: 'Stock',     locked: true, sort: 'stock', track: { lg: 104, sm: 92, dock: 100, dockSm: 88 }, grow: 1 },
+    { id: 'year',    label: 'Year',      sort: 'year', track: { lg: 46, sm: 42, dock: 40, dockSm: 40 } },
+    { id: 'make',    label: 'Make',      locked: true, sort: 'make', track: { lg: 104, sm: 92, dock: 86, dockSm: 84 } },
+    { id: 'model',   label: 'Model',     locked: true, track: { lg: 100, sm: 88, dock: 80, dockSm: 80 }, grow: 6 },
+    { id: 'trim',    label: 'Trim',      cls: 'c-trim', dockOff: true, track: { lg: 84, sm: 88 }, grow: 1 },
+    { id: 'colour',  label: 'Colour',    cls: 'c-ext', dockOff: true, track: { lg: 92, sm: 84 }, grow: 1 },
+    { id: 'price',   label: 'Price',     locked: true, sort: 'price', align: 'r', cls: 'c-price', track: { lg: 118, sm: 84, dock: 80, dockSm: 76 } },
+    { id: 'status',  label: 'Status',    cls: 'c-status', dockOff: true, track: { lg: 80, sm: 80 } },
+    { id: 'health',  label: 'Health',    sort: 'issues', cls: 'c-health', track: { lg: 218, sm: 194, dock: 120, dockSm: 116 } },
+    { id: 'age',     label: 'Age',       sort: 'days', align: 'r', track: { lg: 76, sm: 72, dock: 72, dockSm: 68 } },
+    { id: 'actions', label: 'Actions',   locked: true, align: 'r', track: { lg: 108, sm: 112, dock: 104, dockSm: 92 } }
+  ];
+  var COLKEY = 'aan.gen11.allVehicles.columns';
+
+  function colDefaults() { var o = {}; COLS.forEach(function (c) { o[c.id] = true; }); return o; }
+
+  /* Anything in storage is treated as a suggestion: unknown ids are ignored,
+     non-boolean values are ignored, locked columns are forced back on, and a
+     malformed blob falls through to the approved default. */
+  function loadCols() {
+    var d = colDefaults();
+    try {
+      var raw = window.localStorage.getItem(COLKEY);
+      if (!raw) return d;
+      var saved = JSON.parse(raw);
+      if (!saved || typeof saved !== 'object' || Array.isArray(saved)) return d;
+      COLS.forEach(function (c) {
+        if (c.locked || c.system) return;
+        if (typeof saved[c.id] === 'boolean') d[c.id] = saved[c.id];
+      });
+    } catch (e) { return colDefaults(); }
+    return d;
+  }
+  function saveCols() {
+    try {
+      var o = {};
+      COLS.forEach(function (c) { if (!c.locked && !c.system) o[c.id] = S.cols[c.id] !== false; });
+      window.localStorage.setItem(COLKEY, JSON.stringify(o));
+    } catch (e) { /* private mode: the session still works, it just will not remember */ }
+  }
+
+  function dockOpen() { return S.dock === 'filters'; }
+  /* The tier is watched, not sampled. A first render can happen before the
+     viewport has settled on its final width, and the template would then keep
+     the tier it was born with; the media query tells us when to rebuild. */
+  var COLMQ = window.matchMedia('(max-width: 1400px)');
+  function colTier() {
+    var narrow = COLMQ.matches;
+    return dockOpen() ? (narrow ? 'dockSm' : 'dock') : (narrow ? 'sm' : 'lg');
+  }
+  function colOn(c) { return c.locked || c.system || S.cols[c.id] !== false; }
+  function visibleCols() {
+    var dk = dockOpen();
+    return COLS.filter(function (c) { return (!dk || !c.dockOff) && colOn(c); });
+  }
+  function hiddenCount() {
+    return COLS.filter(function (c) { return !c.locked && !c.system && S.cols[c.id] === false; }).length;
+  }
+  /* The template is the visible columns and nothing else — no zero-width
+     tracks. With every column on, Model alone takes the slack, which is the
+     approved layout exactly. Once something is hidden, Stock / Trim / Colour
+     share the freed width with it, weighted so Model still leads. */
+  function colTemplate() {
+    var tier = colTier(), freed = hiddenCount() > 0;
+    return visibleCols().map(function (c) {
+      var px = (c.track[tier] != null ? c.track[tier] : c.track.lg) + 'px';
+      if (!c.grow) return px;
+      if (c.id === 'model') return 'minmax(' + px + ', ' + (freed ? c.grow : 1) + 'fr)';
+      return freed ? 'minmax(' + px + ', ' + c.grow + 'fr)' : px;
+    }).join(' ');
+  }
+
+  function headerHTML() {
+    return visibleCols().map(function (c) {
+      var cls = [];
+      if (c.align === 'r') cls.push('r');
+      if (c.sort) { cls.push('s'); if (c.sort === S.sort) cls.push('on'); }
+      if (c.cls) cls.push(c.cls);
+      var label = (c.system || c.id === 'thumb') ? '' : esc(c.label);
+      var arrow = (c.sort && c.sort === S.sort) ? ' ' + ic(S.dir === 'asc' ? 'i-up' : 'i-dn') : '';
+      return '<span' + (cls.length ? ' class="' + cls.join(' ') + '"' : '') +
+        (c.sort ? ' data-sort="' + c.sort + '"' : '') + '>' + label + arrow + '</span>';
+    }).join('');
+  }
+
+  function applyCols() {
+    var f = $('.field');
+    if (f) f.style.setProperty('--cols', colTemplate());
+    var hd = $('#hd');
+    if (hd) hd.innerHTML = headerHTML();
+    var btn = $('#cols-btn');
+    if (btn) btn.classList.toggle('facet__b--on', hiddenCount() > 0);
+    /* the open panel is not rebuilt here — that would destroy the checkbox
+       under the pointer and drop focus; only its counter moves */
+    var n = $('#p-cols .cols__n');
+    if (n) n.textContent = visibleCols().filter(function (c) { return !c.system; }).length + ' of ' + (COLS.length - 1) + ' shown';
+  }
+
+  if (COLMQ.addEventListener) COLMQ.addEventListener('change', function () { applyCols(); });
+  else if (COLMQ.addListener) COLMQ.addListener(function () { applyCols(); });
+  window.addEventListener('load', function () { applyCols(); });
+
+  /* The panel is placed against the viewport, not just hung off the button.
+     The Columns button sits low in a sticky toolbar, so on a short screen the
+     panel ran past the bottom edge and Reset became unreachable.
+
+     Two things in the page make the naive fix fail, and both are why the panel
+     is moved to <body> while it is open:
+       · the sheet sets `overflow: clip`, so a panel opening upward is cut at
+         the sheet's top edge;
+       · the command band carries a backdrop-filter, which makes it the
+         containing block for `position: fixed` descendants — "fixed" inside it
+         is fixed to the band, not to the viewport.
+     Out in <body> neither applies, so the coordinates mean what they say. Only
+     the optional list scrolls, so the heading and Reset are always reachable. */
+  var colsHome = null;
+  function placeColsPop() {
+    var p = $('#p-cols'), b = $('#cols-btn');
+    if (!p || !b || !p.classList.contains('pop--open')) return;
+    var GAP = 8, EDGE = 8;
+    var topBar = $('.top');
+    var TOPLIMIT = (topBar ? topBar.getBoundingClientRect().bottom : 68) + 8;
+    var list = p.querySelector('.cols__set--scroll');
+
+    if (list) { list.style.maxHeight = ''; list.style.overflowY = ''; }
+    p.style.maxHeight = '';
+    var btn = b.getBoundingClientRect();
+    var w = Math.round(p.getBoundingClientRect().width);
+    var natural = p.scrollHeight;
+
+    var below = window.innerHeight - btn.bottom - GAP - EDGE;
+    var above = btn.top - GAP - TOPLIMIT;
+    var up = natural > below && above > below;
+    var room = Math.max(120, up ? above : below);
+
+    p.classList.toggle('pop--up', up);
+    var h = Math.min(natural, room);
+    p.style.left = Math.round(Math.max(EDGE, btn.right - w)) + 'px';
+    p.style.top = Math.round(up ? Math.max(TOPLIMIT, btn.top - GAP - h) : btn.bottom + GAP) + 'px';
+
+    if (natural > room) {
+      p.style.maxHeight = room + 'px';
+      if (list) {
+        var fixed = natural - list.scrollHeight;
+        list.style.maxHeight = Math.max(72, room - fixed) + 'px';
+        list.style.overflowY = 'auto';
+      }
+    }
+  }
+  window.addEventListener('resize', placeColsPop);
+  window.addEventListener('scroll', placeColsPop, { passive: true });
+
+  function colsPopHTML() {
+    var dk = dockOpen();
+    var opt = COLS.filter(function (c) { return !c.locked && !c.system; });
+    var lock = COLS.filter(function (c) { return c.locked && !c.system; });
+    var shown = visibleCols().filter(function (c) { return !c.system; }).length;
+    return '<div class="cols__h"><span class="cols__t">Columns</span>' +
+        '<span class="cols__n">' + shown + ' of ' + (COLS.length - 1) + ' shown</span></div>' +
+      '<div class="caps mn__lab" id="cols-opt-lab">Optional</div>' +
+      '<div class="cols__set cols__set--scroll" role="group" aria-labelledby="cols-opt-lab">' +
+      opt.map(function (c) {
+        var sus = dk && c.dockOff;
+        return '<label class="pop__it cols__it' + (sus ? ' cols__it--sus' : '') + '">' +
+          '<input class="ck" type="checkbox" data-col="' + c.id + '"' +
+          (S.cols[c.id] !== false ? ' checked' : '') + (sus ? ' disabled' : '') + '>' +
+          '<span>' + esc(c.label) + '</span>' +
+          (sus ? '<span class="cols__note" title="Not shown while the Filters panel is open">Filters</span>' : '') +
+          '</label>';
+      }).join('') + '</div>' +
+      '<div class="mn__sep"></div>' +
+      /* The locked columns are a statement, not five more rows: naming them on
+         one line keeps the panel short enough to sit inside the viewport and
+         stops the list reading as twelve switches, five of which fail. */
+      '<p class="cols__lock">' + ic('i-lock') + '<span><b>Always shown:</b> ' +
+        lock.map(function (c) { return esc(c.label); }).join(' · ') + '</span></p>' +
+      '<div class="mn__sep"></div>' +
+      '<button class="cols__reset" type="button" data-act="cols-reset">Reset to default</button>';
+  }
+
+  S.cols = loadCols();
 
   function band(d) { return d <= 30 ? 'fresh' : d <= 90 ? 'mid' : d <= 365 ? 'late' : 'stale'; }
   function lab(d) { return d > 365 ? (d / 365).toFixed(1) + 'y' : d + 'd'; }
@@ -97,23 +307,31 @@
     return h + '</div>';
   }
   function kfmt(n) { if (n < 1000) return '$' + nf(n); var k = (n / 1000).toFixed(1); return '$' + k.replace(/\.0$/, '') + 'K'; }
-  function row(v) {
-    var b = band(v.d), max = S.dock === 'filters' ? 1 : 2, tags = v.f.slice(0, max), rest = v.f.length - tags.length;
+  /* The row builds every cell, then emits the ones the model says are visible
+     — in the model's order, so header and row can never drift apart. */
+  function rowCells(v) {
+    var b = band(v.d), max = dockOpen() ? 1 : 2, tags = v.f.slice(0, max), rest = v.f.length - tags.length;
     var name = v.y + ' ' + v.mk + ' ' + v.md;
+    return {
+      select: '<input class="ck" type="checkbox" data-sel="' + v.id + '"' + (S.sel[v.id] ? ' checked' : '') + ' aria-label="Select ' + esc(name) + '">',
+      thumb: (v.t ? '<img class="th" alt="" src="img/' + esc(v.t) + '">' : '<span class="th th--none" title="No photos uploaded">' + ic('i-cam-off') + '</span>'),
+      stock: '<div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop title="Open in the vehicle editor">' + esc(v.s) + '</a>' + (v.lock ? '<span class="lock" title="Being edited by another user">' + ic('i-lock') + '</span>' : '') + '</span><span class="stk__vin" title="VIN ' + esc(v.vin) + '">' + esc(v.vin) + '</span></div>',
+      year: '<div class="yr">' + v.y + '</div>',
+      make: '<div class="mk" title="' + esc(v.mk) + '">' + esc(v.mk) + '</div>',
+      model: '<div class="md" title="' + esc(v.md) + '">' + esc(v.md) + '</div>',
+      trim: '<div class="trim" title="' + esc(v.tr) + '">' + (v.tr ? esc(v.tr) : '<i>—</i>') + '</div>',
+      colour: '<div class="ext" title="' + esc(v.c) + '"><span class="sw" style="--c:' + v.hx + '"></span><span>' + esc(v.c) + '</span></div>',
+      price: priceCell(v),
+      status: '<div class="st"><span class="stat stat--' + (S.lane === 'Sold' ? 'sold' : S.lane === 'Staging' ? 'staging' : 'ok') + '">' + (S.lane === 'All' ? 'Available' : esc(S.lane)) + '</span></div>',
+      health: '<div class="tags">' + (v.f.length ? tags.map(tag).join('') + (rest > 0 ? '<span class="tag tag--more" title="' + esc(v.f.slice(tags.length).join(' · ')) + '">+' + rest + '</span>' : '') : '<span class="okmark" title="No attention flags">' + ic('i-check') + 'OK</span>') + '</div>',
+      age: '<div class="age age--' + b + '" title="' + nf(v.d) + ' days in stock"><i style="--w:' + Math.min(100, Math.round(v.d / 730 * 100)) + '%;--b:' + COL[b] + '"></i>' + lab(v.d) + '</div>',
+      actions: '<span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop>' + ic('i-edit') + '</button><button type="button" title="Photos" aria-label="Photos" data-stop>' + ic('i-cam') + '</button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop>' + ic('i-print') + '</button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop>' + ic('i-trash') + '</button></span>'
+    };
+  }
+  function row(v) {
+    var cells = rowCells(v), name = v.y + ' ' + v.mk + ' ' + v.md;
     return '<div class="row' + (S.sel[v.id] ? ' sel' : '') + (S.cur === v.id ? ' open' : '') + '" data-id="' + v.id + '" tabindex="0" aria-label="' + esc(name) + '">' +
-      '<input class="ck" type="checkbox" data-sel="' + v.id + '"' + (S.sel[v.id] ? ' checked' : '') + ' aria-label="Select ' + esc(name) + '">' +
-      (v.t ? '<img class="th" alt="" src="img/' + esc(v.t) + '">' : '<span class="th th--none" title="No photos uploaded">' + ic('i-cam-off') + '</span>') +
-      '<div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop title="Open in the vehicle editor">' + esc(v.s) + '</a>' + (v.lock ? '<span class="lock" title="Being edited by another user">' + ic('i-lock') + '</span>' : '') + '</span><span class="stk__vin" title="VIN ' + esc(v.vin) + '">' + esc(v.vin) + '</span></div>' +
-      '<div class="yr">' + v.y + '</div>' +
-      '<div class="mk" title="' + esc(v.mk) + '">' + esc(v.mk) + '</div>' +
-      '<div class="md" title="' + esc(v.md) + '">' + esc(v.md) + '</div>' +
-      '<div class="trim" title="' + esc(v.tr) + '">' + (v.tr ? esc(v.tr) : '<i>—</i>') + '</div>' +
-      '<div class="ext" title="' + esc(v.c) + '"><span class="sw" style="--c:' + v.hx + '"></span><span>' + esc(v.c) + '</span></div>' +
-      priceCell(v) +
-      '<div class="st"><span class="stat stat--' + (S.lane === 'Sold' ? 'sold' : S.lane === 'Staging' ? 'staging' : 'ok') + '">' + (S.lane === 'All' ? 'Available' : esc(S.lane)) + '</span></div>' +
-      '<div class="tags">' + (v.f.length ? tags.map(tag).join('') + (rest > 0 ? '<span class="tag tag--more" title="' + esc(v.f.slice(tags.length).join(' · ')) + '">+' + rest + '</span>' : '') : '<span class="okmark" title="No attention flags">' + ic('i-check') + 'OK</span>') + '</div>' +
-      '<div class="age age--' + b + '" title="' + nf(v.d) + ' days in stock"><i style="--w:' + Math.min(100, Math.round(v.d / 730 * 100)) + '%;--b:' + COL[b] + '"></i>' + lab(v.d) + '</div>' +
-      '<span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop>' + ic('i-edit') + '</button><button type="button" title="Photos" aria-label="Photos" data-stop>' + ic('i-cam') + '</button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop>' + ic('i-print') + '</button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop>' + ic('i-trash') + '</button></span>' +
+      visibleCols().map(function (c) { return cells[c.id]; }).join('') +
       '</div>';
   }
 
@@ -146,6 +364,7 @@
 
   function render() {
     var L = list(), F = filtered();
+    applyCols();
     $('#tb').innerHTML = L.length ? L.map(function (v) { return row(v) + (S.cur === v.id ? '<div class="exp" id="exp"><div><div class="exp__in">' + vehicleSheet(v) + '</div></div></div>' : ''); }).join('') + (S.cur ? '<div class="exp-space" id="exp-space"></div>' : '') : '<div class="empty">No vehicles match these filters.<button type="button" data-act="clear-all">Clear all</button></div>';
     $('.field').classList.toggle('has-open', !!S.cur);
     // the sheet sits in the list; reading offsetWidth commits the inserted
@@ -431,12 +650,52 @@
   }
 
   /* ── events ───────────────────────────────────────────────────────── */
-  function closePops() { $$('.pop--open').forEach(function (p) { p.classList.remove('pop--open'); }); }
+  function closePops() {
+    var had = $('#p-cols') && $('#p-cols').classList.contains('pop--open');
+    var inside = had && $('#p-cols').contains(document.activeElement);
+    $$('.pop--open').forEach(function (p) { p.classList.remove('pop--open'); });
+    var cp = $('#p-cols');
+    if (cp && colsHome && cp.parentNode === document.body) {
+      cp.removeAttribute('style');
+      cp.classList.remove('pop--up');
+      colsHome.appendChild(cp);
+    }
+    $$('[data-pop]').forEach(function (b) { if (b.hasAttribute('aria-expanded')) b.setAttribute('aria-expanded', 'false'); });
+    /* focus must not vanish with the panel that held it */
+    if (inside && $('#cols-btn')) $('#cols-btn').focus();
+  }
+  function openColsPop() {
+    var p = $('#p-cols'), b = $('#cols-btn');
+    p.innerHTML = colsPopHTML();
+    if (!colsHome) colsHome = p.parentNode;
+    if (p.parentNode !== document.body) document.body.appendChild(p);
+    p.classList.add('pop--open');
+    if (b) b.setAttribute('aria-expanded', 'true');
+    placeColsPop();
+    /* Focus stays on the trigger. The panel is the trigger's next sibling, so
+       Tab walks straight into it — the seven toggles, then Reset — and Escape
+       hands focus back. Pulling focus in would fight the browser's own
+       post-click focus and would be wrong for a non-modal disclosure. */
+  }
   document.addEventListener('click', function (e) {
     var t = e.target, el;
     if ((el = t.closest('[data-menu]'))) { var it = el.closest('.nav__it'), open = !it.classList.contains('nav__it--open'); closeMenus(it); it.classList.toggle('nav__it--open', open); el.setAttribute('aria-expanded', open); return; }
     if (!t.closest('.nav__it')) closeMenus();
-    if ((el = t.closest('[data-pop]'))) { var p = $('#' + el.dataset.pop), wasOpen = p.classList.contains('pop--open'); closePops(); if (!wasOpen) p.classList.add('pop--open'); return; }
+    if ((el = t.closest('[data-pop]'))) {
+      var p = $('#' + el.dataset.pop), wasOpen = p.classList.contains('pop--open');
+      closePops();
+      if (!wasOpen) {
+        if (el.dataset.pop === 'p-cols') openColsPop();
+        else { p.classList.add('pop--open'); if (el.hasAttribute('aria-expanded')) el.setAttribute('aria-expanded', 'true'); }
+      }
+      return;
+    }
+    if ((el = t.closest('[data-act="cols-reset"]'))) {
+      S.cols = colDefaults(); saveCols(); render();
+      $('#p-cols').innerHTML = colsPopHTML();
+      var rb = $('#p-cols .cols__reset'); if (rb) rb.focus();
+      return;
+    }
     if (!t.closest('.pop')) closePops();
     if ((el = t.closest('.acc__h'))) { var sec = el.closest('.acc'), key = sec.dataset.acc; S.acc[key] = !sec.classList.contains('acc--open'); setAccOpen(sec, S.acc[key]); return; }
     if ((el = t.closest('[data-act="theme"]'))) { setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true); return; }
@@ -460,6 +719,8 @@
     if (t.closest('a[href="#"]')) e.preventDefault();
   });
   document.addEventListener('change', function (e) {
+    var col = e.target.closest ? e.target.closest('input[data-col]') : null;
+    if (col) { S.cols[col.dataset.col] = col.checked; saveCols(); render(); return; }
     var t = e.target;
     if (t.matches('[data-f]')) { tog(t.dataset.f, t.dataset.k, t.checked); return; }
     if (t.matches('[data-sel]')) { S.sel[t.dataset.sel] = t.checked; render(); }
@@ -520,7 +781,7 @@
     }
     readStack();
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', function () { readStack(); onScroll(); });
+    window.addEventListener('resize', function () { readStack(); onScroll(); applyCols(); });
     onScroll();
   })();
 
