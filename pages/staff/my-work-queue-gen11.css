@@ -113,10 +113,10 @@
   --glass: rgba(255,255,255,.76);
 
   /* ── sticky stack (DESIGN.md §7) — CSS publishes, JS reads ───────────── */
-  --bar-track: 88px;
-  --stick-bar: 68px;
-  --stick-cmd: 72px;   /* 8 + 56 + 8 — the vertical padding is load-bearing */
-  --stick-hd: 52px;
+  --bar-track: 76px;
+  --stick-bar: 56px;
+  --stick-cmd: 56px;   /* 8 + 56 + 8 — the vertical padding is load-bearing */
+  --stick-hd: 40px;
   --stick-cmd-top: var(--stick-bar);
   --stick-hd-top: calc(var(--stick-bar) + var(--stick-cmd));
 
@@ -1145,4 +1145,129 @@ html.no-js .cmdtop, html.no-js .cmd, html.no-js .sub, html.no-js .hd, html.no-js
      the menus still open on click */
   .nav__b > .i { display: none; }
   .nav { gap: 0; }
+}
+
+/* Sticky stack reduced from 68 / 72 / 52 = 192px to 56 / 56 / 40 = 152px.
+   The slack was measured, not guessed: a 68px bar around 36px controls, a
+   72px band around a search field overridden to 56px against the family's
+   own 36-40px control default, and a 52px header around 13px caps text.
+   Heights already derive from these tokens, so --stick-total and the
+   selected-row anchor follow without a hardcoded offset. */
+
+/* ============================================================================
+   FINAL VISUAL PASS — density, and the end of the capsule field
+
+   Measured at 1440x900 before this block: the Go-live list wrapped onto two
+   rows of 26px capsules and took 104px of the page before the operator saw a
+   single ticket; the lane rail was a 44px capsule holding 34px capsules; the
+   search slab was 56px tall inside a 56px band; and the header ran off the
+   right edge because the global search had already collapsed to a puck.
+
+   Nothing is removed. Every go-live, every lane, every column and every
+   action is still here — they are just given operational density instead of
+   decorative shape.
+   ========================================================================== */
+
+/* ── the go-live list is a ticker, not a field of pills ───────────────────
+   One line, scrolls horizontally when it must, separated by hairlines. The
+   domain carries the weight; the date is the quiet half. */
+.golive {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  align-items: center;
+  gap: 0;
+  padding: 0 0 var(--s2);
+  max-width: 100%;
+}
+.golive::-webkit-scrollbar { height: 6px; }
+.golive::-webkit-scrollbar-thumb { background: var(--line-3); border-radius: 3px; }
+.golive__l {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  padding: 0 var(--s3) 0 0;
+  background: linear-gradient(90deg, var(--ground) 76%, transparent);
+}
+.gl {
+  height: 22px;
+  padding: 0 var(--s3);
+  border-radius: 0;
+  background: none;
+  box-shadow: inset -1px 0 0 var(--line);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.gl:first-of-type { padding-left: 0; }
+.gl:hover { box-shadow: inset -1px 0 0 var(--line); color: var(--brand-ink); }
+.gl:hover b { color: var(--brand-ink); }
+.gl:last-of-type { box-shadow: none; }
+
+/* ── the lane rail is a segmented control, so the lanes keep their pill —
+   the tray around them does not need to be one too ─────────────────────── */
+.lanes {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  gap: 2px;
+  padding: 3px;
+  border-radius: var(--r-control);
+}
+.lanes::-webkit-scrollbar { display: none; }
+.lane { height: 28px; padding: 0 10px; font-size: 12.5px; }
+.lane b { font-size: 11.5px; }
+.cmdtop { min-height: 0; padding: var(--s2) var(--gutter); }
+
+/* ── the ticket list reads as a list ──────────────────────────────────────
+   Priority, ticket and age are numeric columns: tabular figures, right-set
+   where they are counted and left-set where they are identifiers. Status
+   keeps its chip — that is what a chip is for — at a chip's size. */
+.row { font-size: 13px; }
+.row .c-pri, .row .c-age, .row .c-est, .row .c-rem { font-variant-numeric: tabular-nums; }
+.tkt { font-variant-numeric: tabular-nums; }
+
+.st {
+  height: 22px;
+  padding: 0 9px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+/* the drag grip is a utility, not a column of its own weight */
+.grip { color: var(--line-3); }
+
+/* ── the toolbar row above the list ──────────────────────────────────────
+   "Showing 1-94 of 94" was 14px ink-3 sitting on the same line weight as the
+   lane labels. It is metadata: it goes quiet and lets the lanes lead. */
+.cmd__meta, .shown { font-size: 12.5px; color: var(--ink-4); }
+
+/* ── below 1340 the seventeen columns stop fitting, so the list scrolls ───
+   Measured at 1280x720: the grid needs 1312px and the workspace offers 1248,
+   so the page itself was scrolling sideways — 48px of document overflow. The
+   columns are the product here; none is dropped and none is frozen. The list
+   gets its own horizontal scroll, which is the pattern this page already used
+   below 1180, applied at the width where the pressure actually starts. */
+@media (max-width: 1340px) {
+  .rows { overflow-x: auto; }
+  .hd, .row { min-width: 1312px; }
+}
+
+/* the ticker's scrollbar is a permanent grey line under the go-live row when
+   it is always painted — overlay it, and only while the row is being used */
+.golive { scrollbar-width: none; }
+.golive::-webkit-scrollbar { height: 0; }
+.golive:hover { scrollbar-width: thin; }
+.golive:hover::-webkit-scrollbar { height: 5px; }
+
+/* a menu label may be caps; the instruction after it is a sentence and reads
+   as one — 32 characters of 11px uppercase was the least legible text on the
+   page, and it was the text explaining how the control works */
+.pop__lab { display: flex; align-items: baseline; gap: var(--s2); }
+.pop__hint {
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--ink-4);
 }

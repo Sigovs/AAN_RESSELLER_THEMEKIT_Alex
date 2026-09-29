@@ -1,0 +1,494 @@
+/* ============================================================================
+   AAN · GEN 11 — FAMILY LAYER
+
+   Ten pages were built as three implementation families and drifted apart:
+   three different AAN marks (40x40 r14 blue · 34x34 r10 blue · 38x30 r5 navy),
+   two page grounds (#f3f5f8 and #e5e9ef), a 24px capsule for every platform
+   bar, and 98 rules setting a 999px radius — on nav items, account controls,
+   toolbars and search fields as well as on the chips and segments that
+   actually want one.
+
+   This sheet loads last on every Gen 11 page and reconciles the shared layer
+   against the shipped product (`aan-design-export-2026-09-09`, theme.css):
+
+     · the AAN mark is one object, mono, white on brand, small radius, as the
+       backend ships it — `.ui-topbar__brand-mark { font-family: mono;
+       color: brand-ink; background: brand; border-radius: 3px; padding 1px 6px }`
+     · navigation carries its current section with a rule under the label and
+       a soft brand tint, as `.ui-topnav__trigger` does, not with a capsule
+     · one page ground, so the 16px gutter reads as air on every page
+
+   It does NOT touch content, fields, columns, workflow or page composition,
+   and it deliberately leaves the pill on the things a pill is for: status,
+   segmented controls, filter chips, avatars, switch tracks.
+   ========================================================================== */
+
+/* ── 1 · one ground ────────────────────────────────────────────────────────
+   Five pages carried --ground: #e5e9ef, which is darker than the system's own
+   --wash. Against a white workspace that reads as a second shell and turns the
+   16px gutter into a decorative rail down both sides of the page. */
+:root {
+  --ground: var(--wash);
+
+  /* ── 2 · one radius scale ────────────────────────────────────────────────
+     The shipped backend runs 3 / 5 / 8. Gen 11 is allowed to be softer than
+     that, but 10 / 16 / 24 / 999 on structural containers is a different
+     product. These values keep Gen 11's character and stop the nesting from
+     reading as a pile of capsules. */
+  --r-l: 14px;        /* page-level surfaces: bento, dock, workspace */
+  --r-m: 10px;        /* controls inside a surface */
+  --r-s: 7px;         /* small controls, inputs */
+
+  --r-card: 14px;     /* was 24 */
+  --r-panel: 12px;    /* was 18 */
+  --r-control: 9px;   /* was 14 */
+  --r-inner: 7px;     /* was 10 */
+  --r-micro: 4px;     /* was 5 */
+  /* --r-pill stays 999px — see §5 for what is allowed to use it */
+
+  --aan-bar-r: 12px;  /* the platform bar */
+}
+
+/* ── 3 · the AAN mark, measured off the shipped backend ───────────────────
+   The shipped backend's `.ui-topbar__brand-mark`, computed on the running export:
+   IBM Plex Mono 13px/600, white on #1f5eb8, radius 3px, padding 1px 6px, and
+   the wordmark beside it at 15px/600. That is the mark. It is the same object
+   on a dealer page and on a staff page; role is carried by the environment
+   word and by the identity on the right, never by the colour of the mark. */
+.brand { gap: 8px; align-items: baseline; }
+.brand__mk {
+  width: auto;
+  min-width: 0;
+  height: auto;
+  padding: 2px 7px;
+  display: inline-block;
+  border-radius: 4px;
+  background: var(--brand);
+  color: #fff;
+  font: 600 12.5px/1.15 var(--mono);
+  letter-spacing: .02em;
+  align-self: center;
+}
+.brand__t {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: .015em;
+  color: var(--ink);
+}
+.brand__env {
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  color: var(--ink-4);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  align-self: center;
+}
+/* the login panel carries the mark larger, same mark */
+.mark {
+  width: auto;
+  min-width: 0;
+  height: auto;
+  padding: 4px 11px;
+  border-radius: 6px;
+  font: 600 18px/1.15 var(--mono);
+  letter-spacing: .02em;
+}
+
+/* ── 4 · the platform bar: one header family, two rosters ────────────────
+   The shipped header is a 46px white strip with a hairline under it and a
+   36px navigation strip under that, whose triggers are brand-blue 14px/600
+   links carrying the current section on a 2px rule. Gen 11 keeps its floating
+   bar, but the contents are that header: the destinations lead in brand blue,
+   the utilities recede to grey glyphs, and nothing in the bar is a capsule.
+
+   That is the primary/secondary hierarchy the bar was missing — every item
+   used to be the same 13.5px grey pill, so a destination and a theme toggle
+   read as equals. */
+.top {
+  border-radius: var(--aan-bar-r);
+  gap: 0;
+}
+.nav { gap: 0; }
+
+.nav__b,
+.top .nav__b {
+  height: 30px;
+  padding: 0 11px;
+  border-radius: 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .03em;
+  color: var(--brand);
+  box-shadow: inset 0 -2px 0 transparent;
+  transition: color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.nav__b .i { color: currentColor; opacity: .55; }
+.nav__b:hover,
+.nav__it--open > .nav__b {
+  background: none;
+  color: var(--brand-ink);
+  box-shadow: inset 0 -2px 0 var(--brand-soft-2, var(--brand-soft));
+}
+.nav__it--on > .nav__b,
+.nav__b--on {
+  background: none;
+  color: var(--ink);
+  font-weight: 700;
+  box-shadow: inset 0 -2px 0 var(--brand);
+}
+.nav__it--on > .nav__b .i { color: var(--ink-3); opacity: .8; }
+
+/* a hairline between the destinations and the utilities, as the shipped
+   header has between its two strips */
+.top__sp { position: relative; }
+.top__div { width: 1px; height: 20px; background: var(--line); margin: 0 var(--s2); }
+
+/* utility controls recede: grey glyphs on no fill until touched */
+.tbtn,
+.gsearch,
+.dealer,
+.me,
+.atlas,
+.cock__back,
+.lock {
+  border-radius: var(--r-s);
+}
+.tbtn { width: 30px; height: 30px; color: var(--ink-3); }
+.tbtn .i { width: 17px; height: 17px; }
+.tbtn:hover { background: var(--well); color: var(--ink-2); box-shadow: none; }
+.gsearch {
+  height: 30px;
+  font-size: 13px;
+  background: var(--sheet);
+  box-shadow: inset 0 0 0 1px var(--line);
+  color: var(--ink-4);
+}
+.gsearch input { font-size: 13px; }
+.gsearch .i { width: 14px; height: 14px; }
+
+/* the identity is a name, not a button — the shipped header renders it as
+   13px plain text and only the chevron says it opens */
+.dealer, .me {
+  height: 30px;
+  padding: 0 var(--s2) 0 var(--s1);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.dealer:hover, .me:hover { background: var(--well); }
+.me__n { font-size: 13px; font-weight: 600; color: var(--ink-2); }
+.dealer .i, .me .i { color: var(--ink-4); }
+.atlas {
+  height: 24px;
+  padding: 0 var(--s2);
+  background: none;
+  box-shadow: inset 0 0 0 1px var(--line);
+  color: var(--ink-3);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.atlas:hover { background: var(--well); color: var(--ink-2); }
+
+/* avatars are the only circles in the header */
+.av, .me__mk { border-radius: 50%; }
+.av { width: 28px; height: 28px; font-size: 13px; }
+.me__mk { width: 26px; height: 26px; font-size: 11px; }
+
+/* ── 4b · the five surfaces, and a real step between them ────────────────
+   The page was #f3f5f8 against a #ffffff workspace — a 3% step, so the sheet
+   never read as a sheet and every region inside it had to earn its edge with
+   a shadow. The shipped backend runs its page at #eef1f5 against white, which
+   is twice the separation and is why its tables sit on the page instead of
+   floating over it.
+
+     PAGE               --wash    #eef1f5   the ground everything sits on
+     WORK SURFACE       --sheet   #ffffff   the list, the form, the record
+     SECONDARY REGION   --well    #e4e9f0   trays, insets, toolbars, wells
+     CONTROL            --sheet + 1px --line hairline
+     FOCAL / PRIMARY    --brand fill, or the dark --focal panel
+
+   Nothing is flattened: the dark bento panels, the brand gradients and the
+   glow on a true primary all stay. What changes is that the four quiet
+   levels are now told apart by material instead of by shadow. */
+:root {
+  --wash: #eef1f5;
+  --well: #e4e9f0;
+  --line: #d8dee7;
+  --line-2: #e5e9ef;
+}
+
+/* ── 5 · the pill, returned to what a pill is for ──────────────────────────
+   Kept: status, segmented/current-state controls, filter chips, counters,
+   avatars, switch tracks. Everything structural gets a radius from the scale.
+   `.btn` is the big one — it was a capsule on all ten pages. */
+.btn {
+  border-radius: var(--r-control);
+}
+.btn--sm, .btn.btn--sm { border-radius: var(--r-inner); }
+.facet__b { border-radius: var(--r-s); }
+
+/* ── 6 · hierarchy that does not depend on a card ──────────────────────────
+   The family's default had settled into "13px grey text" for label, value and
+   metadata alike. Column headers and section labels get the caps treatment
+   the shipped backend uses, values keep the ink. */
+.caps {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+
+/* ── 7 · focus is one thing everywhere ─────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+/* ── 8 · [hidden] must actually hide ─────────────────────────────────────
+   Component rules that set `display` beat the user agent's [hidden] rule. */
+[hidden] { display: none !important; }
+
+/* ── 9 · one working surface, not two ─────────────────────────────────────
+   The staff pages set `.field` to rgba(255,255,255,.58) over the page ground
+   and then put an opaque white list inside it. Three tones at the page edge
+   is what reads as a shell inside a shell. One material for the workspace. */
+.field { background: var(--sheet); }
+
+/* ── 10 · the command band holds its own controls ─────────────────────────
+   `.search` was pinned at 56px inside a 56px band that has 8px of padding, so
+   it overflowed its own layer by 16px and read as a slab. The field is the
+   band minus its padding — and that keeps --stick-total honest. */
+.cmd .search,
+.cmd > .search {
+  height: calc(var(--stick-cmd) - var(--s2) * 2);
+}
+
+/* ── 11 · one page gutter ─────────────────────────────────────────────────
+   The staff pages dropped the shell gutter to 8px below 1400 to buy table
+   track budget. The budget is real; a different page edge on half the family
+   is not. The row inset keeps the saving, the page edge keeps the 16px.  */
+@media (max-width: 1400px) {
+  :root { --gutter: var(--s4); }
+}
+
+/* ── 12 · the header survives 1366 without eating itself ──────────────────
+   Collapsing the global search to a 44px puck at 1560 meant it was a puck on
+   every screen anyone actually uses. The nav is 32px tall and 10px padded
+   now, which buys the room back; the search only collapses below 1300. */
+@media (max-width: 1560px) {
+  .gsearch { width: 160px; padding: 0 var(--s2) 0 10px; justify-content: flex-start; }
+  .gsearch input { display: block; }
+  .gsearch kbd { display: none; }
+  .nav__b, .top .nav__b { padding: 0 9px; font-size: 13.5px; }
+  .nav__b > .i, .top .nav__b > .i { width: 11px; height: 11px; }
+}
+@media (max-width: 1400px) {
+  .gsearch { width: 132px; }
+  .nav__b, .top .nav__b { padding: 0 8px; font-size: 13px; letter-spacing: .02em; }
+  .atlas__t { display: none; }
+  .atlas { padding: 0 7px; }
+}
+@media (max-width: 1300px) {
+  .gsearch { width: 32px; padding: 0; justify-content: center; }
+  .gsearch input { display: none; }
+}
+
+/* ── 13 · the page title's context is a word, not a badge ────────────────
+   `WORK`, `LEADS`, `BILLING` sat in grey capsules beside the h1. They are
+   context, and context is typography. */
+.head__ctx {
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  color: var(--ink-4);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* the navigation never lets a label spill onto the control beside it —
+   it yields its own width first, and scrolls only if the labels still win */
+.nav { min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.nav::-webkit-scrollbar { display: none; }
+.nav__it { flex: none; }
+
+/* ── 14 · one segmented control across the family ────────────────────────
+   Three pages carry a "which section am I reading" control and each sized it
+   differently: 56px tray / 48px thumb on the two detail pages, 38px / 30px on
+   Dealer Edit. The capsule is right for a segmented control; three heights
+   for the same control are not. One tier: 38px tray, 30px thumb. */
+.secnav {
+  height: 38px;
+  padding: 4px;
+  border-radius: var(--r-control);
+}
+.secnav__b {
+  height: 30px;
+  padding: 0 13px;
+  font-size: 13px;
+  border-radius: var(--r-inner);
+}
+.secnav__b b { border-radius: var(--r-pill); }
+
+/* ── 15 · the last structural capsules ───────────────────────────────────
+   Swept at 1440 across all nine shell pages: everything still wearing a
+   999px radius on a box wider than 60px and taller than 28px, minus the
+   chips, statuses, segmented thumbs, switch tracks and avatars that have
+   earned it. What was left was a tab strip, two facet buttons and three
+   small action buttons — controls, not pills. */
+.tabs { height: 38px; padding: 4px; border-radius: var(--r-control); }
+.tab  { height: 30px; padding: 0 13px; font-size: 13px; border-radius: var(--r-inner); }
+
+.cmd .facet__b,
+.cmd.cmd--sec .facet__b,
+.cmdtop .facet__b { border-radius: var(--r-s); }
+
+.addb, .seal__b { border-radius: var(--r-inner); }
+
+/* ── 16 · nothing functional reads below 11px ────────────────────────────
+   Caps micro-labels are still functional text: the column headers, the
+   section labels, the "LEASE 48" flag on a price, the dealer initials in the
+   header. Several sat at 9.5–10.5px, which fails on a high-DPI 1366 panel
+   the moment the operator is not leaning in. 11px is the floor; the caps
+   tracking and weight keep them reading as labels, not as body copy. */
+.caps,
+.brand__env,
+.head__ctx,
+.dealer__mk,
+.price__sub--lease i,
+.golive__l,
+.panel__hint .mono,
+.sub__l,
+.zone__s .caps { font-size: 11px; }
+
+/* three page-local labels were still under the floor: the lead's status pip,
+   the email direction markers on Single Lead and the "removed" note on
+   Single Ticket's attachments */
+.st, .em__dir, .att__gone, .vcar__img .st { font-size: 11px; }
+
+/* ── 17 · the lane rail is a segmented strip, not a capsule of capsules ──
+   Measured on All Vehicles: a 50px `--well` capsule holding 40px white
+   capsules, sitting on the page above the workspace. That is three rounded
+   containers deep for "which lane am I in".
+
+   The shipped backend renders lanes as a joined strip with shared borders
+   (`d13-leads-1.html`), and Gen 11 already says the current thing is marked
+   with a brand rule under it — the platform nav does exactly that. So the
+   lanes become one strip with one hairline and one language for "current". */
+.lanes,
+.cmdtop .lanes,
+.statuses {
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  gap: 0;
+  border-radius: var(--r-s);
+  background: var(--sheet);
+  box-shadow: inset 0 0 0 1px var(--line);
+  overflow: hidden;
+}
+.lane,
+.cmdtop .lane,
+.statuses .lane {
+  height: 34px;
+  padding: 0 13px;
+  border-radius: 0;
+  color: var(--ink-2);
+  box-shadow: inset -1px 0 0 var(--line-2);
+}
+.lane:last-child { box-shadow: none; }
+.lane:hover { background: var(--well); color: var(--ink); }
+.lane--on,
+.cmdtop .lane--on,
+.cmdtop .lane--on:hover,
+.lane--on:hover,
+.lane[aria-current="page"],
+.lane[aria-pressed="true"] {
+  background: var(--brand-soft);
+  color: var(--brand-ink);
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 var(--brand), inset -1px 0 0 var(--line-2);
+}
+.lane--on b, .lane[aria-current="page"] b { color: var(--brand-ink); }
+.lanes__div { display: none; }
+
+/* the lane strip is ATTACHED to the workspace below it: the edge they share
+   is square on both sides and drawn once */
+.cmdtop .lanes {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: inset 1px 0 0 var(--line), inset -1px 0 0 var(--line), inset 0 1px 0 var(--line);
+}
+
+/* ── 18 · the header keeps its identity and sheds its decoration ─────────
+   The staff pages were hiding "All Auto Network" from 1560 down, so at every
+   width anyone uses the staff header said `AAN BACKEND` and the dealer header
+   said `AAN All Auto Network BACKEND` — two headers, not one family.
+
+   The order things are given up in is now explicit, and the wordmark is not
+   in it until the very end: the environment word goes first, then the nav
+   tightens, then the Atlas label, then the search collapses to its glyph. */
+.brand__t { display: inline !important; }
+
+@media (max-width: 1500px) {
+  .brand__env { display: none; }
+  .gsearch { width: 136px; }
+  .atlas__t { display: none; }
+  .atlas { padding: 0 7px; }
+  .nav__b, .top .nav__b { padding: 0 7px; font-size: 13px; letter-spacing: .01em; }
+  .nav__b > .i, .top .nav__b > .i { width: 10px; height: 10px; }
+}
+@media (max-width: 1320px) {
+  .brand__t { display: none !important; }
+}
+
+/* ── 19 · the section rail is one component on both editor pages ─────────
+   Single Vehicle carried a floating white card with a drop shadow holding
+   rounded brand blocks; Dealer Edit carried a flat hairline panel holding
+   full-width rows with a brand edge. Same job, two components. The flat
+   panel wins: it is attached to the same grid as the form it indexes and it
+   does not put a capsule inside a card inside a page.  */
+.rail {
+  border-radius: var(--r-panel);
+  background: var(--sheet);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  padding: var(--s2) 0;
+  overflow: hidden;
+}
+.rail__i,
+.rail__b {
+  border-radius: 0;
+  min-height: 32px;
+  height: auto;
+  padding: 5px var(--s3) 5px 13px;
+  font-size: 13px;
+}
+.rail__i:hover, .rail__b:hover { background: var(--well); }
+.rail__i--on, .rail__i--on:hover,
+.rail__b--on, .rail__b--on:hover {
+  background: var(--brand-soft);
+  color: var(--brand-ink);
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 var(--brand);
+}
+
+/* ── 20 · a section title has to outrank the fields under it ─────────────
+   Measured on Single Vehicle: section title 15px/600 over 14px/400 body — a
+   one-pixel step doing the work of a heading. Both editor pages get a real
+   step, and the section's subtitle drops to metadata so the title is the
+   only thing at that level. */
+.zone__t, .sec__t {
+  font-size: 17px;
+  font-weight: 650;
+  letter-spacing: -.012em;
+  color: var(--ink);
+}
+.zone__s, .sec__s {
+  font-size: 13px;
+  color: var(--ink-4);
+}

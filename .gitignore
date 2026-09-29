@@ -27,3 +27,6 @@ CLAUDE_ACCOUNT_SWITCH_BACKUP.diff
 # numbers. Add them deliberately if they are ever needed on another machine.
 reference/gen11-stage1-after/
 reference/gen11-stage1-baseline/
+
+# Impeccable detector hook cache — local, regenerated on every run
+.impeccable/hook.cache.json

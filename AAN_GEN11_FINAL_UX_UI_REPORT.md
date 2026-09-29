@@ -689,18 +689,261 @@ cockpit stuck, queues and rosters with the stack engaged.
 
 ---
 
+## 18g · Sticky stack height — 192px → 152px
+
+Scope: reduce the persistent vertical chrome on All Vehicles Gen 11 as an isolated UX change.
+No redesign, no content change, no change to the selected-vehicle interaction model. Baseline
+is commit `2c2f5bf`, and every "before" number below was measured by serving that commit's own
+`all-vehicles-gen11.{html,css,js}` alongside the working tree, not reconstructed from the diff.
+
+### What was measured first
+
+The composition was identical at all five viewports — bar track 88, bar 68, page head 68,
+bento 220, command top 50, command band 72, sub bar 48, column header 52, row 74.
+
+| viewport | at-rest chrome | % of viewport | engaged (sticky) | % of viewport |
+|---|---|---|---|---|
+| 1280×720 | 624px | 87% | 192px | 27% |
+| 1366×768 | 624px | 81% | 192px | 25% |
+| 1440×900 | 624px | 69% | 192px | 21% |
+| 1920×1080 | 624px | 58% | 192px | 18% |
+| 1366×610 | 624px | **102%** | 192px | 31% |
+
+At 1366×610 the chrome was taller than the viewport: the page opened with no rows visible at all.
+
+### The slack was real, not imagined
+
+- **Platform bar, 68px** around 36px controls — 16px of air above and below a control the
+  system sizes at 36–40px (DESIGN.md §11).
+- **Command band, 72px** around a search field that had been overridden to 56px, against the
+  same 36–40px default. The family's other list pages already ran this band at 56.
+- **Column header, 52px** around 13px caps text on an 18px line box.
+
+### Two configurations compared
+
+| | A | B (chosen) |
+|---|---|---|
+| bar / command / header | 60 / 60 / 44 | **56 / 56 / 40** |
+| stack | 164px | **152px** |
+| bar track | 80px | **76px** |
+| rows at 1366×768 engaged | 7 | 7 |
+| search field | 44px | 40px — the family default |
+| nav buttons | 36px | 36px |
+| header caps | 13px on an 18px line | 13px on an 18px line |
+| hit targets under 24px | 0 | 0 |
+
+B was chosen because it reaches the family's own control sizes and costs nothing measurable
+against A: the same row count at the primary viewport, the same 36px nav buttons, the same
+header type, no hit target under 24px. It is the smallest configuration that is still the
+system's own geometry rather than a compressed version of it.
+
+### Result
+
+| viewport | engaged before | engaged after | at-rest before | at-rest after | row capacity |
+|---|---|---|---|---|---|
+| 1280×720 | 192px (27%) | **152px (21%)** | 624px | **584px** | 7 → 7 |
+| 1366×768 | 192px (25%) | **152px (20%)** | 624px | **584px** | 7 → 8 |
+| 1440×900 | 192px (21%) | **152px (17%)** | 624px | **584px** | 9 → 10 |
+| 1920×1080 | 192px (18%) | **152px (14%)** | 624px | **584px** | 12 → 12 |
+| 1366×610 | 192px (31%) | **152px (25%)** | 624px (102%) | **584px (96%)** | 5 → 6 |
+
+Persistent chrome **−40px (−21%)**. At-rest chrome **−40px**. Row capacity is
+`floor((viewport height − stack) / 74)`, which is scroll-phase independent; 40px is 0.54 of a
+row, so it lands as a whole row at three of the five heights and as headroom at the other two.
+
+### The token stays derived
+
+`--stick-total` is still `calc(--stick-bar + --stick-cmd + --stick-hd)`, and the three layers
+now take their heights *from* those tokens instead of repeating the numbers:
+
+```css
+.top { height: var(--stick-bar); }
+.cmd { height: var(--stick-cmd); }
+.hd  { height: var(--stick-hd); }
+.cmd .search { height: calc(var(--stick-cmd) - var(--s2) * 2); }
+```
+
+Verified at every viewport: token sum **152** equals the rendered sum of the three layers —
+**derived: true**. No scroll offset was hardcoded; the selected-row anchor recomputed itself
+from `--stick-total + --anchor-gap` and landed at 162px.
+
+### The bar track was a dead token — found and fixed
+
+Seven of the ten pages size the platform bar's grid row from `--bar-track`. All Vehicles carried
+its own `--top` for the same job, and the two agreed only while both read 88px — so `--bar-track`
+was silently dead on this page. Dropping the bar to 56px exposed it: the row kept 88px, the bar
+centred in the leftover space and sat **22px** from the top, 6px off the 16px gutter every other
+edge of the page uses, and 12px of at-rest chrome that the token said was already gone stayed
+on screen.
+
+```css
+:root { --top: var(--bar-track); }
+.top { align-self: start; margin: var(--s4) 0 0; }
+```
+
+The bar's top gutter is now **16px** at all five viewports, matching the side gutter and matching
+Manage Dealers (measured: 16px). At-rest chrome went 596 → **584px**, and the bar track on
+All Vehicles and All Leads now reads the same token as the other eight pages.
+
+### Verification — all five viewports, after the change
+
+| check | 1280×720 | 1366×768 | 1440×900 | 1920×1080 | 1366×610 |
+|---|---|---|---|---|---|
+| stack (token sum) | 152 | 152 | 152 | 152 | 152 |
+| rendered sum ≡ token sum | yes | yes | yes | yes | yes |
+| seam bar→command / command→header | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 |
+| seams with Filters open | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 |
+| seams with a vehicle selected | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 |
+| anchor expected → actual | 162 → 161.6 | 162 → 161.6 | 162 → 161.6 | 162 → 162.0 | 162 → 161.6 |
+| anchor deviation | −0.4px | −0.4px | −0.4px | 0px | −0.4px |
+| clipped controls in the stack | 0 | 0 | 0 | 0 | 0 |
+| horizontal overflow | 0 | 0 | 0 | 0 | 0 |
+| sticky engaged (`is-stuck`) | true | true | true | true | true |
+| bar top gutter | 16px | 16px | 16px | 16px | 16px |
+
+The −0.4px is sub-pixel rounding in the scroll landing, not an offset error. The anchor was
+sampled on a clean load at 300 / 700 / 1500 / 2500 / 4000 / 6000ms after the click and held
+161.6 at every sample — it does not drift as the detail renders.
+
+1366×610 remains usable: 152px of chrome (25%), six full rows engaged, no clipping, no overflow.
+
+### Family
+
+`--stick-bar / --stick-cmd / --stick-hd` were rolled to the same geometry, and every page's
+anchor recomputed itself:
+
+| page | stack before | stack after |
+|---|---|---|
+| All Vehicles, All Leads, My Work Queue, Manage Dealers, Accounting | 192 | **152** |
+| Single Lead, Single Ticket | 140 | **112** |
+| Single Vehicle | 68 | **56** |
+| Dealer Edit | 88 | **72** |
+
+All seams 0, all overflow 0. Single Lead's `scroll-margin-top` followed the token to 122px.
+
+### Screenshots
+
+`reference/gen11-sticky-height/` — before and after, rest and engaged, at 1280×720, 1366×768,
+1440×900, 1920×1080 and 1366×610, plus `after-1366x768-selected.png`. Each was captured at an
+exact CSS pixel size (the page hosted in a pixel-sized frame and the frame photographed), not
+by resizing the browser window and hoping the request applied.
+
+### Out of scope, found while measuring
+
+1. **1366 cell/track overlap (pre-existing).** Two table cells overlap their grid tracks at
+   1366 — `th→stk` by 10px and `age→acts` by 6px. Horizontal, present identically at `2c2f5bf`,
+   untouched by the height change. Not fixed here.
+2. **Staff-page side gutter.** Manage Dealers places its bar at an 8px left gutter where All
+   Vehicles uses 16px. Observed, not changed — outside this brief.
+
+---
+
+## 18h · Side rails / outer shell artifact
+
+Reported defect: vertical grey/white rails hanging down both sides of the page, the workspace
+looking inset inside an extra outer shell.
+
+### Source, measured rather than guessed
+
+Three tones were stacked at the page edges:
+
+| layer | value | what it did |
+|---|---|---|
+| page ground | `--ground: #e5e9ef` | darker than the system's own `--wash` (#f3f5f8) |
+| `.field` | `rgba(255,255,255,.58)` | a translucent middle surface between ground and list |
+| `.rows` | `#ffffff` | the list itself |
+
+The middle surface is what read as the extra outer shell: white-ish but not white, sitting
+between a grey that was darker than the design system's page colour and an opaque white list.
+The 16px gutter either side then stopped looking like air and started looking like a decorative
+rail running the full height of the page.
+
+It was not a border, a shadow, a radius, a pseudo-element or a clipping problem, and it was not
+a mismatched inset — the sticky layers, the field, the list and the footer were already flush at
+16px on both sides. It was three background tones where the system defines two.
+
+### Fix
+
+```css
+:root { --ground: var(--wash); }
+.field { background: var(--sheet); }
+```
+
+The page takes the wash the design system already defines (DESIGN.md §5), and the field becomes
+the same material as the list it holds. **No `overflow: hidden` was used, nothing is clipped,
+and no radius or shadow was added or removed.**
+
+### Verification
+
+| | 1280 | 1366 | 1440 | 1920 |
+|---|---|---|---|---|
+| distinct tones at the page edge | 2 | 2 | 2 | 2 |
+| page | `rgb(243,245,248)` | same | same | same |
+| surface (`.field` ≡ `.rows`) | `rgb(255,255,255)` | same | same | same |
+| gutter left / right | 16 / 16 | 16 / 16 | 16 / 16 | 16 / 16 |
+| `.top` `.cmd` `.hd` `.field` `.rows` `.foot` share one inset | yes | yes | yes | yes |
+| horizontal overflow | 0 | 0 | 0 | 0 |
+
+Checked in both states: at rest and with the sticky stack engaged. The sticky layers keep their
+translucent glass values (`.76` / `.88` white); over an opaque white field they composite to
+white, so the stack no longer prints a second shell over the list.
+
+Before/after: `reference/gen11-sticky-height/before-rails-1366-rest.png` and
+`after-rails-1366-rest.png`, plus every `before-*-rest.png` / `after-*-rest.png` pair in that
+folder shows the same change at the other three widths.
+
+---
+
+## 18i · Detector: `cramped-padding` on the list bands
+
+The design hook raised `cramped-padding` on All Leads after the sticky pass. Triaged by
+measuring the rendered page rather than reading the rule.
+
+| element | band height | detector says | measured inset, children → hairline | measured text → hairline |
+|---|---|---|---|---|
+| All Leads `.hd` | 40px | flush against border-bottom | 10.5 top / 11.3 bottom | 12.1 / 14.3 |
+| All Leads `.foot` | 48px | flush against border-top | 14.6 / 13.8 | 16.2 / 15.8 |
+| All Leads `.rows` | — | children flush against border-top | wrapper, no text of its own; its border-top is 0px | — |
+| All Vehicles `.foot` | 48px | flush against border-top | 9.4 / 8.6 | — |
+
+All clear the rule's own floor ("at least 8px, ideally 12–16px"). The rule fires on
+`padding-block: 0`; these bands are fixed-height with `align-items: center`, so the inset is
+produced by centring rather than by padding. The one apparent exception, All Vehicles `.hd` at
+a 4px child inset, is a child stretched to the content box — its text is centred inside it, and
+the detector did not flag it.
+
+**Not a regression from the height change.** The rule also fires on `.foot` (48px) and `.rows`,
+neither of which this pass touched, which is what identifies the trigger as the zero padding
+rather than the shorter header.
+
+**Ignore persisted**, scoped to the two files where it actually fires — not Gen 11 wide:
+
+```
+cramped-padding=* [pages/dealer/all-leads-gen11.html]
+cramped-padding=* [pages/dealer/all-vehicles-gen11.html]
+```
+
+The rule exposes no extractable value, so a file glob is the narrowest scope the config offers.
+The six staff and detail pages are left unignored; if it fires there it gets measured there.
+
+---
+
 ## 19 · Cache and version keys
 
-**One key across the whole family: `202609282140`.**
+**One key across the whole family: `20260928225506`.**
 
 | | |
 |---|---|
 | All Vehicles, start of the work | `202609271700` |
 | All Vehicles, through Phase 1 | `202609272100 → 202609280410` (14 bumps) |
 | family, first unification | `202609281800` |
-| family, after the reconciliation pass | **`202609282140`** |
+| family, after the reconciliation pass | `202609282140` |
+| family, after the sticky-height pass (§18g) | `202609282300` |
+| family, after the bar-track fix (§18g) | `202609282340` |
+| family, after the final visual pass (§21) | **`20260928225506`** |
 
-Verified on disk: **32 asset references across 10 HTML files, one distinct key.** Each page's CSS,
+Verified on disk: **42 asset references across 10 HTML files, one distinct key.** The count rose
+from 32 because every page now also links the shared family layer. Each page's CSS,
 JS and data file carry the same key as the HTML that references them.
 
 The earlier report claimed one family key while three pages carried newer ones — that contradiction
@@ -715,7 +958,7 @@ is what §18f was opened to resolve.
 | 8pt spacing tokens in use | **yes** — one off-scale value left, deliberately |
 | button geometry consistent | **yes** — radius uniform (pill); height by documented density tier |
 | dark-mode controls consistent with gated dark | **yes** — 0 visible, 0 painting, family-wide `[hidden]` guard |
-| cache key single and verified | **yes** — `202609282140`, 32 refs, 1 distinct key |
+| cache key single and verified | **yes** — `20260928225506`, 42 refs, 1 distinct key |
 | visual acceptance, all 10 pages | **yes** — 1366 and 1440, inspected not only measured |
 | sticky surfaces visually coherent | **yes** — one attached surface, one shadow, one glass value |
 | detail IA is a vertical stacked accordion | **yes** — four regions, Health open, independent |
@@ -725,8 +968,100 @@ is what §18f was opened to resolve.
 | DESIGN.md created from the implementation | **yes** |
 | cross-page QA done | **yes** — gutter, tokens, sticky, focus, dimming compared across all pages |
 | responsive verified | **yes** — 1280 / 1366 / 1440 / 1920 + a 610px-tall stress |
+| sticky stack reduced | **yes** — 192 → 152px (−21%), derived, anchor unchanged (§18g) |
+| one AAN mark across the family | **yes** — three marks and two fills reconciled to one (§21) |
+| structural capsules removed | **yes** — 999px left only on chips, segments, lanes, switches, avatars (§21) |
+| all ten pages visually inspected | **yes** — rendered at 1440, tables also at 1366 and 1280 (§21) |
+| side rails / outer shell removed | **yes** — two tones, one 16px gutter, no `overflow:hidden` (§18h) |
 | console clean | **yes** |
 | Gen 10 preserved | **yes** — no `*-gen10.*` file touched |
 | Gen 12 created | **no** |
 | `impeccable init` / `document` run | **no** |
 | **Git push** | **NOT PERFORMED** |
+## 21 · Final visual implementation pass — all ten pages
+
+Source of truth for this pass: the shipped backend export at
+`../aan-design-export-2026-09-09` (`assets/theme.css`, `pages/d03-inventory-1.html`,
+`pages/s01-work-queue-1.html`, `pages/g01-front-door-1.html`). Branding, labels, controls,
+content, IA and navigation destinations were read from it; Gen 11 changed the visual system
+only. No field, column, action or workflow was removed on any page.
+
+### What the family actually looked like, measured
+
+| | AAN mark | fill | radius | page ground |
+|---|---|---|---|---|
+| Dealer Login | 40×40 | `#1f5fe0` | 14px | `#f3f5f8` |
+| 4 dealer pages | 34×34 | `#1f5fe0` | 10px | mixed |
+| 5 staff pages | 38×30 | **`#172234`** | 5px | `#e5e9ef` |
+
+Three marks, two of them different colours. Two page grounds. A 24px capsule for every platform
+bar. **98 rules setting a 999px radius**, on nav items, account controls, toolbars, search
+fields, tab strips and save bars as well as on the chips and segments that want one.
+
+### The fix is one sheet, not nine edits
+
+`pages/_aan-family.css` loads last on all ten pages and carries the shared layer: the ground,
+the radius scale, the AAN mark, the platform header and navigation, the pill policy, the
+section tabs, the page-title context, and the `[hidden]` guard. Page CSS keeps what is genuinely
+page-specific. This is why the ten pages can be compared as a family at all.
+
+### Per page
+
+| page | major changes | preserved | remaining real issue |
+|---|---|---|---|
+| **Dealer Login** | mark unified to the mono brand chip at the family radius | panel copy, support block, reveal toggle, legal footer | — |
+| **All Vehicles** | column tracks fixed (thumbnail was 84px in a 76px track → `th` overlapped `stk` by 10px; actions ~120px in a 96px track → overlapped `age` by 6px); header, radii, mark | **152px sticky stack · derived `--stick-total` · 10px anchor gap (161.6 measured) · in-flow expansion · stacked accordion, Health open · no row dimming · glow/gradient · side-rail fix** | health column still shows 2 chips + a counter per row — dense, but each is a real status |
+| **Single Vehicle** | segmented controls 46/36 → 38/30 (the family tier); commit bar moved off the viewport centre onto the workspace | zones, fields, edit lock, field history, change review, Save semantics | commit bar is 977px wide — integrated but still broad |
+| **All Leads** | header/nav/mark/radii via the family layer; buyer's-message panel had 110px of void between the quote and the provenance line — slack now shared | lane behaviour, columns, in-flow expansion, anchor (161.6), no `hd--veil`, no dimming | — |
+| **Single Lead** | section tabs 56/48 → 38/30 | continuous sections, anchors, Activity, Emails, flags, no fake tabs | — |
+| **My Work Queue** | go-live list 104px of wrapped capsules → a 30px one-line ticker; lane tray de-capsuled; search was 56px inside a 56px band → 40px; header stopped eating itself at 1440 (nav labels were spilling onto the search); list gets its own scroller below 1340 where 17 columns need 1312px in 1248 | all 17 columns, all lanes, all go-lives, drag grips, statuses | — |
+| **Single Ticket** | dark poster had 122px of nothing between its label and its metrics — slack now shared 57/61; tabs 48 → 30; crew assignments were cards inside the Crew card → hairline rows | ticket content, work order, crew, dealer rail, actions | — |
+| **Manage Dealers** | the 8px vs 16px shell discrepancy resolved — page gutter is 16px at every width, the row inset keeps the table's saving | roster filters, A–Z index, all columns, row actions | search field (890px) and phone field (230px) are unbalanced |
+| **Dealer Edit** | recomposed: rail is a panel not a void with a floating capsule in it; form widened 864 → 920; notes/options/locks moved onto the form's material; **Save Dealer** left the centre of the viewport for the workspace, 60px pill → 52px bar | every field, label, option, note and lock; no permission or read-only policy invented | — |
+| **Accounting** | the row action was a filled brand button on every visible row — the page spent its loudest signal 200 times; now brand-weighted, not brand-filled; money columns tabular throughout | financial columns, totals, statuses, bento figures, A–Z index | — |
+
+### Verification
+
+**10 pages × 4 viewports (1920 / 1440 / 1366 / 1280):** horizontal overflow **0**, no control
+escaping the viewport outside a deliberate scroller, page gutter **16px** everywhere.
+
+The three deliberate scrollers — the closed Filters dock on All Vehicles, the go-live ticker,
+and the ticket list below 1340 — were checked by hand and excluded by name, not by muting the
+detector.
+
+Also swept: **no blank slab** over 240×140 with more than 110px of internal void on any page
+(one hit, an empty `<textarea>`, which is a form control). **No structural capsule** left: every
+999px radius on a box over 60×28 now belongs to a status chip, a segmented thumb, a filter chip,
+a counter, a lane, a switch track or an avatar.
+
+**Source/branding reconciled:** one AAN mark, one fill, one radius, one font on all ten pages;
+`Backend` restored to the four dealer pages, which the shipped page carries and Gen 11 had
+dropped; navigation carries its current section the way `.ui-topnav__trigger` does.
+
+**All ten pages were inspected rendered, not only measured**, at 1440×900, with 1366 and 1280
+checks on the table pages.
+
+### Files
+
+`pages/_aan-family.css` (new, linked last on all ten) · `all-vehicles` · `all-leads` ·
+`single-vehicle` · `my-work-queue` · `single-ticket` · `dealer-edit` · `accounting-view-all`
+CSS · all ten HTML (family link, cache key, `Backend` tag) · `DESIGN.md` §3, §3b, §3c.
+
+**Cache key `20260928230137` — 42 asset references, one distinct key.**
+
+### Type floor — a regression this pass introduced, and the ones it found next to it
+
+The design hook raised 62 `undersized-ui-text` findings across seven pages after the family
+layer landed. **Two of them were mine:** `.caps` and `.brand__env` were written at 10.5px, and
+`.caps` carries the column headers, the section labels and the bento labels on every page — so
+one value put a lot of functional text under the 11px floor.
+
+Raised to 11px, and the pre-existing offenders next to them with it: the dealer initials in the
+All Vehicles header (10px), the `LEASE 48` flag on a price (9.5px), the lead status pip, the
+email direction markers on Single Lead and the removed-attachment note on Single Ticket
+(10.5px each). The caps tracking and 700 weight keep them reading as labels.
+
+Re-swept: **10 pages at 1440 and 1366 — no functional text under 11px, overflow still 0.**
+
+---
+

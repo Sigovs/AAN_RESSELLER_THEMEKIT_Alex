@@ -8,7 +8,8 @@
    `aan-theme` key is shared with the other Gen pages, so a stored `dark` must not
    land this page in a half-dark state at load. Temporary; the dark stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="single-vehicle-gen11.css?v=202609282140">
+<link rel="stylesheet" href="single-vehicle-gen11.css?v=20260929091529">
+<link rel="stylesheet" href="../_aan-family.css?v=20260929091529">
 </head>
 <body>
 
@@ -44,7 +45,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 
   <!-- ══ PLATFORM BAR — the same permanent navigation as every Gen 11 page ══ -->
   <header class="top">
-    <a class="brand" href="../../index.html" title="All Auto Network · Backend"><span class="brand__mk">AAN</span><span class="brand__t">All Auto Network</span></a>
+    <a class="brand" href="../../index.html" title="All Auto Network · Backend"><span class="brand__mk">AAN</span><span class="brand__t">All Auto Network</span><span class="brand__env">Backend</span></a>
     <nav class="nav" aria-label="Platform">
       <div class="nav__it"><a class="nav__b" href="#">Home</a></div>
       <div class="nav__it nav__it--on">
@@ -504,7 +505,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   </div>
 </noscript>
 
-<script src="single-vehicle-gen11.data.js?v=202609282140"></script>
-<script src="single-vehicle-gen11.js?v=202609282140"></script>
+<script src="single-vehicle-gen11.data.js?v=20260929091529"></script>
+<script src="single-vehicle-gen11.js?v=20260929091529"></script>
 </body>
 </html>

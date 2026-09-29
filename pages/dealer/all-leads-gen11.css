@@ -454,3 +454,26 @@
    All Vehicles moved it to --s1 during the Phase 1 button pass; 2px left these
    pills visually merged. One value across the family. */
 .pg { gap: var(--s1); }
+
+/* ============================================================================
+   FINAL VISUAL PASS — the buyer's message is a quote, not a frame with a hole
+
+   Measured at 1440x900 in the expanded lead: the dark message panel is 264px
+   tall because the column beside it is, and it spent 110px of that on nothing
+   between the enquiry text and the provenance line. The quote now sits under
+   its label and the provenance stays at the foot, with the slack shared.
+   ========================================================================== */
+.lsheet__msg { justify-content: flex-start; }
+.lsheet__msg > .via { margin-top: auto; }
+.lsheet__msg > p { margin-bottom: var(--s4); }
+
+/* the page context here is a metadata sentence ("16,574 leads · newest first ·
+   Dealer #277"), not the one-word section label the other four pages put in
+   this slot — it must not be set in caps */
+.head > .head__ctx {
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink-3);
+}

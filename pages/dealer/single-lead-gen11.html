@@ -7,8 +7,9 @@
 <script>/* Dark is gated off for Gen 11 (DESIGN.md §5) — a stored `dark` from another Gen page
    cannot land this one in a half-dark state. Only an explicit `light` is honoured. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="all-vehicles-gen11.css?v=202609282140">
-<link rel="stylesheet" href="single-lead-gen11.css?v=202609282140">
+<link rel="stylesheet" href="all-vehicles-gen11.css?v=20260929091529">
+<link rel="stylesheet" href="single-lead-gen11.css?v=20260929091529">
+<link rel="stylesheet" href="../_aan-family.css?v=20260929091529">
 </head>
 <body>
 
@@ -68,7 +69,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 
 <div class="app dock-open" id="app">
   <header class="top">
-    <a class="brand" href="#" title="All Auto Network · Backend"><span class="brand__mk">AAN</span><span class="brand__t">All Auto Network</span></a>
+    <a class="brand" href="#" title="All Auto Network · Backend"><span class="brand__mk">AAN</span><span class="brand__t">All Auto Network</span><span class="brand__env">Backend</span></a>
     <nav class="nav" aria-label="Platform">
       <div class="nav__it"><a class="nav__b" href="#">Home</a></div>
       <div class="nav__it">
@@ -381,8 +382,8 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   <div id="sec-space" aria-hidden="true"></div>
 </div>
 
-<script src="all-vehicles-gen11.data.js?v=202609282140"></script>
-<script src="all-leads-gen10.data.js?v=202609282140"></script>
-<script src="single-lead-gen11.js?v=202609282140"></script>
+<script src="all-vehicles-gen11.data.js?v=20260929091529"></script>
+<script src="all-leads-gen10.data.js?v=20260929091529"></script>
+<script src="single-lead-gen11.js?v=20260929091529"></script>
 </body>
 </html>

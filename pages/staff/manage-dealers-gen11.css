@@ -112,10 +112,10 @@
   --glass: rgba(255,255,255,.76);
 
   /* ── sticky stack (DESIGN.md §7) — CSS publishes, JS reads ───────────── */
-  --bar-track: 88px;
-  --stick-bar: 68px;
-  --stick-cmd: 72px;   /* 8 + 56 + 8 — the vertical padding is load-bearing */
-  --stick-hd: 52px;
+  --bar-track: 76px;
+  --stick-bar: 56px;
+  --stick-cmd: 56px;   /* 8 + 56 + 8 — the vertical padding is load-bearing */
+  --stick-hd: 40px;
   --stick-cmd-top: var(--stick-bar);
   --stick-hd-top: calc(var(--stick-bar) + var(--stick-cmd));
 
@@ -1093,3 +1093,10 @@ html.no-js .field, html.no-js .tally { display: none; }
   .nav__b > .i { display: none; }
   .nav { gap: 0; }
 }
+
+/* Sticky stack reduced from 68 / 72 / 52 = 192px to 56 / 56 / 40 = 152px.
+   The slack was measured, not guessed: a 68px bar around 36px controls, a
+   72px band around a search field overridden to 56px against the family's
+   own 36-40px control default, and a 52px header around 13px caps text.
+   Heights already derive from these tokens, so --stick-total and the
+   selected-row anchor follow without a hardcoded offset. */

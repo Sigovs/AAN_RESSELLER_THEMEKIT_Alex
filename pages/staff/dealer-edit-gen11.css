@@ -117,8 +117,8 @@
      This page's stack is two layers, not three: the platform bar and the record
      head. There is no command band and no column header, so --stick-cmd and
      --stick-hd do not exist here rather than being declared and left unused. */
-  --bar-track: 88px;
-  --stick-bar: 68px;
+  --bar-track: 76px;
+  --stick-bar: 56px;
   --stick-head: 96px;              /* the record head once engaged */
   --stick-rail-top: calc(var(--stick-bar) + var(--stick-head) + var(--s4));
 
@@ -870,3 +870,84 @@ html.no-js .body, html.no-js .savebar { display: none; }
   .nav__b > .i { display: none; }
   .nav { gap: 0; }
 }
+
+/* Platform bar aligned to the family's new 56px. */
+
+/* ============================================================================
+   FINAL VISUAL PASS — the record owns the page
+
+   Measured at 1440x900 before this block: a 208px rail holding 331px of links
+   beside a 5,224px form, so the left sixth of the page was empty ground for
+   4,893px; one rounded brand capsule floating in that ground as the current
+   section; three separate floating surfaces (rail ground · form card · notes
+   cards) reading as three products; and a 60px pill fixed to the centre of
+   the viewport for Save Dealer, which is the shape a marketing site uses for
+   "Get started", not the shape a record uses for "commit".
+
+   No field, no label, no option and no panel is removed or renamed.
+   ========================================================================== */
+
+/* ── the rail is a panel, so the column is not a void ────────────────────
+   Same material as the form it indexes, attached to the same grid, with the
+   current section as a full-width row carrying a brand edge — not a capsule
+   floating in grey. */
+.rail {
+  padding: var(--s2) 0;
+  border-radius: var(--r-panel);
+  background: var(--sheet);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  overflow: hidden;
+}
+.rail__b {
+  min-height: 32px;
+  padding: 5px var(--s3) 5px 13px;
+  border-radius: 0;
+  font-size: 13px;
+}
+.rail__b:hover { background: var(--well); }
+.rail__b--on, .rail__b--on:hover {
+  background: var(--brand-soft);
+  box-shadow: inset 3px 0 0 var(--brand);
+}
+.rail__sep { margin: var(--s2) 0; }
+.rail__hint { padding: var(--s2) 13px 0; }
+
+/* ── the form is the page ────────────────────────────────────────────────
+   The rail gives back 24px and the notes column 16px; both still hold every
+   control they held. The zone breathes on the 8pt ladder instead of a 40px
+   custom value that only this page used. */
+.body { grid-template-columns: 184px minmax(0, 1fr) 272px; gap: var(--s4); }
+:root { --zone-air: var(--s6); }
+.zone { padding: 0 var(--s5) var(--s6); }
+.zone__hd { padding: var(--zone-air) 0 var(--s3); }
+
+/* ── notes, options and locks belong to the same workspace ───────────────
+   They were floating cards with a drop shadow next to a form that is a flat
+   sheet. Same sheet, same hairline, same radius: one system, three panels. */
+.panel {
+  border-radius: var(--r-panel);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+}
+.panel__hd { padding: var(--s2) var(--s3); }
+.panel__bd { padding: var(--s3); }
+
+/* ── Save Dealer commits a record; it is not a campaign ──────────────────
+   The bar leaves the centre of the viewport and sits over the workspace it
+   commits, right-aligned with the form, at control height and control
+   radius. It still floats — the record is 5,000px long and the commit has to
+   stay reachable — but it reads as the workspace's own footer. */
+.savebar {
+  left: auto;
+  right: calc(var(--gutter) + 272px + var(--s4));
+  transform: none;
+  height: 52px;
+  padding: 0 var(--s2) 0 var(--s4);
+  border-radius: var(--r-card);
+  box-shadow: var(--el-2);
+}
+@media (max-width: 1200px) {
+  .savebar { right: var(--gutter); }
+}
+
+/* ── the record head stops competing with the page title ────────────────- */
+.head__quick a { font-weight: 500; }

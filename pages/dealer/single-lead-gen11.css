@@ -57,7 +57,7 @@
 
 /* the platform bar's own sticky height is the base's; restated as a comment
    rather than a declaration so there is only one place it is set:
-   --stick-bar: 68px  →  stack = 68 + 56 = 124px  →  anchor = 134px */
+   --stick-bar: 56px  →  stack = 68 + 56 = 124px  →  anchor = 134px */
 
 
 /* ══ 2 · 1366 — THE BINDING WIDTH ════════════════════════════════════════
@@ -993,3 +993,5 @@
    ship (DESIGN.md §5) — and hidden empty-state paragraphs alongside it.
    One guard, applied family-wide so the semantic can be trusted. */
 [hidden] { display: none !important; }
+
+/* Platform bar aligned to the family's new 56px. */

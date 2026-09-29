@@ -10,7 +10,8 @@
    `aan-theme` key is shared with the Gen 10 pages, so a stored `dark` must not land this
    page in a half-dark state at load. Temporary; the dark-theme stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="single-ticket-gen11.css?v=202609282140">
+<link rel="stylesheet" href="single-ticket-gen11.css?v=20260929091529">
+<link rel="stylesheet" href="../_aan-family.css?v=20260929091529">
 </head>
 <body>
 
@@ -313,7 +314,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   <p class="nojs">This page renders its ticket with script. Enable JavaScript to read it.</p>
 </div>
 
-<script src="single-ticket-gen11.data.js?v=202609282140"></script>
-<script src="single-ticket-gen11.js?v=202609282140"></script>
+<script src="single-ticket-gen11.data.js?v=20260929091529"></script>
+<script src="single-ticket-gen11.js?v=20260929091529"></script>
 </body>
 </html>

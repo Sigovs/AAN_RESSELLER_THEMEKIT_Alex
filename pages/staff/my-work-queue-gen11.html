@@ -10,7 +10,8 @@
    `dark` — the key is shared with the other Gen pages — cannot land this page
    in a half-dark state at load. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="my-work-queue-gen11.css?v=202609282140">
+<link rel="stylesheet" href="my-work-queue-gen11.css?v=20260929091529">
+<link rel="stylesheet" href="../_aan-family.css?v=20260929091529">
 </head>
 <body>
 
@@ -128,7 +129,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
           <svg class="i"><use href="#i-chev"/></svg>
         </button>
         <div class="pop pop--r pop--wide" id="p-sort">
-          <div class="caps pop__lab">Sort by — click again to reverse</div>
+          <div class="caps pop__lab">Sort by<span class="pop__hint">click again to reverse</span></div>
           <div id="sort-list"></div>
         </div>
       </div>
@@ -178,7 +179,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   </section>
 </div>
 
-<script src="my-work-queue-gen11.data.js?v=202609282140"></script>
-<script src="my-work-queue-gen11.js?v=202609282140"></script>
+<script src="my-work-queue-gen11.data.js?v=20260929091529"></script>
+<script src="my-work-queue-gen11.js?v=20260929091529"></script>
 </body>
 </html>

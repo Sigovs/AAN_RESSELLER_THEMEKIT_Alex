@@ -1,0 +1,88 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "pages/dealer/all-leads-gen11.html"
+        ],
+        "createdAt": "2026-09-29T02:31:17.476Z"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "pages/dealer/all-vehicles-gen11.html"
+        ],
+        "createdAt": "2026-09-29T02:31:17.620Z"
+      },
+      {
+        "rule": "nested-cards",
+        "value": "*",
+        "files": [
+          "pages/**/*-gen11.html"
+        ],
+        "createdAt": "2026-09-29T14:11:24.563Z"
+      },
+      {
+        "rule": "dark-glow",
+        "value": "*",
+        "files": [
+          "pages/**/*-gen11.html"
+        ],
+        "createdAt": "2026-09-29T14:11:24.690Z"
+      },
+      {
+        "rule": "repeating-stripes-gradient",
+        "value": "*",
+        "files": [
+          "pages/**/*-gen11.html"
+        ],
+        "createdAt": "2026-09-29T14:11:24.816Z"
+      },
+      {
+        "rule": "tiny-text",
+        "value": "*",
+        "files": [
+          "pages/**/*-gen11.html"
+        ],
+        "createdAt": "2026-09-29T14:11:24.944Z"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "pages/**/*-gen11.html"
+        ],
+        "createdAt": "2026-09-29T14:11:25.076Z"
+      },
+      {
+        "rule": "monotonous-spacing",
+        "value": "*",
+        "files": [
+          "pages/staff/my-work-queue-gen11.html"
+        ],
+        "createdAt": "2026-09-29T14:15:56.112Z"
+      },
+      {
+        "rule": "monotonous-spacing",
+        "value": "*",
+        "files": [
+          "pages/staff/single-ticket-gen11.html"
+        ],
+        "createdAt": "2026-09-29T14:16:38.830Z"
+      },
+      {
+        "rule": "em-dash-overuse",
+        "value": "*",
+        "files": [
+          "pages/dealer/single-vehicle-gen11.html"
+        ],
+        "createdAt": "2026-09-29T14:16:38.953Z"
+      }
+    ]
+  }
+}

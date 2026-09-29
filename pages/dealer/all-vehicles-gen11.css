@@ -116,10 +116,10 @@
      with the layout and switch the engaged state off entirely.
      --bar-track is the grid row the platform bar sits in; --stick-bar is the
      bar's own height. They are different numbers and used to be one token. */
-  --bar-track: 88px;
-  --stick-bar: 68px;
-  --stick-cmd: 72px;
-  --stick-hd: 52px;
+  --bar-track: 76px;
+  --stick-bar: 56px;
+  --stick-cmd: 56px;
+  --stick-hd: 40px;
   --stick-cmd-top: var(--stick-bar);
   --stick-hd-top: calc(var(--stick-bar) + var(--stick-cmd));
   --stick-total: calc(var(--stick-bar) + var(--stick-cmd) + var(--stick-hd));
@@ -3303,3 +3303,108 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
    ship (DESIGN.md §5) — and hidden empty-state paragraphs alongside it.
    One guard, applied family-wide so the semantic can be trusted. */
 [hidden] { display: none !important; }
+
+/* ============================================================================
+   STICKY STACK HEIGHT — the layers are driven by their tokens
+
+   Measured before this section: the engaged stack was 68 + 72 + 52 = 192px,
+   which is 25% of a 1366×768 viewport, 27% of 1280×720 and 31% of 1366×610 —
+   and at rest the chrome above the list came to 624px, taller than a 610px
+   viewport, so that screen showed no rows at all before scrolling.
+
+   The slack was real, not imagined. The platform bar was 68px around 36px
+   controls. The command band was 72px around a search field that had been
+   overridden to 56px, against the family's own 36–40px default for a control
+   (DESIGN.md §11). The column header was 52px around 13px caps text on an
+   18px line.
+
+   Heights now read from the three tokens instead of repeating their numbers,
+   so --stick-total stays derived from what the layers actually measure and the
+   selected-row anchor keeps deriving from it.
+   ========================================================================== */
+.top { height: var(--stick-bar); }
+.cmd { height: var(--stick-cmd); }
+.hd  { height: var(--stick-hd); }
+
+/* the search field sits inside the band's own padding */
+.cmd .search { height: calc(var(--stick-cmd) - var(--s2) * 2); }
+
+/* ============================================================================
+   PAGE EDGE — one gutter, two tones, no third shell
+
+   Measured at the viewport edges: three greys stacked up the page. `--ground`
+   #e5e9ef behind everything, `.field` at rgba(255,255,255,.58) over it, and
+   `.rows` opaque white inside that. The middle one is what read as an extra
+   outer shell, and because --ground is darker than the system's own --wash the
+   16px gutter either side stopped looking like air and started looking like a
+   decorative rail running the full height of the page.
+
+   Nothing is hidden and no overflow is clipped. The middle surface is removed
+   by making the field the same material as the list it holds, and the page
+   takes the wash the design system already defines (DESIGN.md §5). What is
+   left is a wash page, one white pane, and the 16px gutter between them —
+   which is the gutter doing its intended job.
+   ========================================================================== */
+:root { --ground: var(--wash); }
+.field { background: var(--sheet); }
+
+/* ============================================================================
+   BAR TRACK — the grid row the platform bar sits in
+
+   The other seven Gen 11 pages size that row from --bar-track. All Vehicles
+   carried its own --top for the same job, and the two agreed only while both
+   read 88px, so --bar-track was quietly dead on this page. With the bar down
+   to 56px the row kept its old 88px: the bar centred in the leftover space
+   and sat 22px from the top, 6px off the 16px gutter every other edge on the
+   page uses, and 12px of at-rest chrome that the token said was already gone
+   stayed on screen.
+
+   The row now reads the same token as the rest of the family, and the bar is
+   placed against the top of that row instead of centred in whatever is left,
+   so the space above it is the gutter and not a remainder.
+   ========================================================================== */
+:root { --top: var(--bar-track); }
+.top { align-self: start; margin: var(--s4) 0 0; }
+
+/* ============================================================================
+   COLUMN TRACKS — two cells were wider than the tracks that hold them
+
+   Measured at 1366x768: the thumbnail is a fixed 84px image in a 76px track
+   and the action group is ~120px of buttons in a 96px track, so `th` sat 10px
+   into `stk` and `acts` sat 6px into `age`. It reads as two columns that do
+   not line up with their own headers.
+
+   Nothing is dropped and nothing is frozen. The thumbnail takes the width of
+   its track instead of insisting on its own, and the action track is widened
+   from the flexible Model column, which has 232px at this width.
+   ========================================================================== */
+.row > .th,
+.row > .th--none {
+  width: 100%;
+  max-width: 84px;
+  justify-self: start;
+}
+.acts { justify-self: end; }
+
+@media (max-width: 1400px) {
+  .field { --cols: 24px 76px 92px 42px 92px minmax(96px, 1fr) 88px 84px 84px 80px 168px 72px 112px; }
+}
+
+/* ── table hierarchy: the exceptions are exceptions ─────────────────────
+   Every row carries two or three health chips plus a counter, and at the
+   old weight they were the loudest thing in the row — louder than the
+   vehicle, the price and the age, which are what the list is read for.
+   They keep their colour, which is the signal; they give up their fill
+   weight, which was not. */
+.tags > * {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .03em;
+  padding: 2px 6px;
+}
+.hl { background: none; box-shadow: inset 0 0 0 1px currentColor; }
+.hl i { opacity: .9; }
+.tags .more { color: var(--ink-4); box-shadow: inset 0 0 0 1px var(--line); }
+
+/* the identifiers lead: stock is the key a dealer searches on */
+.stock { font-weight: 700; }

@@ -133,10 +133,10 @@
      68 + 72 + 52 = 192  →  the open-row anchor = 192 + 10 = 202.
      --stick-cmd's 72 is 8 + 56 + 8: the band's vertical padding plus the control
      height. Change the padding and the anchor changes. */
-  --bar-track: 88px;
-  --stick-bar: 68px;
-  --stick-cmd: 72px;
-  --stick-hd: 52px;
+  --bar-track: 76px;
+  --stick-bar: 56px;
+  --stick-cmd: 56px;
+  --stick-hd: 40px;
   --stick-cmd-top: var(--stick-bar);
   --stick-hd-top: calc(var(--stick-bar) + var(--stick-cmd));
 
@@ -1069,3 +1069,36 @@ html.no-js .deck, html.no-js .field, html.no-js .utils { display: none; }
   .nav__b > .i { display: none; }
   .nav { gap: 0; }
 }
+
+/* Sticky stack reduced from 68 / 72 / 52 = 192px to 56 / 56 / 40 = 152px.
+   The slack was measured, not guessed: a 68px bar around 36px controls, a
+   72px band around a search field overridden to 56px against the family's
+   own 36-40px control default, and a 52px header around 13px caps text.
+   Heights already derive from these tokens, so --stick-total and the
+   selected-row anchor follow without a hardcoded offset. */
+
+/* ============================================================================
+   FINAL VISUAL PASS — one primary per page, numbers that line up
+
+   Measured at 1440x900 before this block: every visible row carried a filled
+   brand button, so the page spent its single loudest signal two hundred times
+   and the eye had nowhere to land. The row action is still the row's main
+   action — it just stops shouting over the four bento figures that are the
+   actual headline of a billing page.
+   ========================================================================== */
+
+/* the inline row action is brand-weighted, not brand-filled */
+.row .btn--primary.btn--xs {
+  background: var(--sheet);
+  color: var(--brand-ink);
+  box-shadow: inset 0 0 0 1px var(--brand-soft-2, var(--line));
+  font-weight: 600;
+}
+.row .btn--primary.btn--xs:hover {
+  background: var(--brand-soft);
+  color: var(--brand-ink);
+  box-shadow: inset 0 0 0 1px var(--brand);
+}
+
+/* money reads as money wherever it appears, not only in the two num columns */
+.c-lp, .c-bal, .c-mo { font-variant-numeric: tabular-nums; }

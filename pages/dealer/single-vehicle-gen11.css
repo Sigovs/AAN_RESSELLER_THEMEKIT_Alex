@@ -135,8 +135,8 @@
      never read with parseFloat: a custom property is substituted but not
      evaluated, so it comes back as literal calc() text. The JS sums the two
      plain values instead. */
-  --bar-track: 88px;
-  --stick-bar: 68px;
+  --bar-track: 76px;
+  --stick-bar: 56px;
   --stick-cockpit: 72px;
   --stick-cockpit-top: var(--stick-bar);
   --stick-total: calc(var(--stick-bar) + var(--stick-cockpit));
@@ -1412,3 +1412,39 @@ button.prov:hover { text-decoration: underline; }
    ship (DESIGN.md §5) — and hidden empty-state paragraphs alongside it.
    One guard, applied family-wide so the semantic can be trusted. */
 [hidden] { display: none !important; }
+
+/* Platform bar aligned to the family's new 56px. */
+
+/* ============================================================================
+   FINAL VISUAL PASS — the editor at the family's control sizes
+
+   Measured at 1440x900 before this block: the Status / Type / Certified
+   segmented controls were 46px trays holding 36px thumbs, a tier above every
+   other control on the page and two tiers above the same control on Dealer
+   Edit (38px tray, 30px thumb). The commit bar floated in the centre of the
+   viewport, where Dealer Edit's now sits over its own workspace.
+
+   Nothing is renamed, no zone or field is touched, and the edit lock, field
+   history and change review all keep their behaviour.
+   ========================================================================== */
+
+/* one segmented control across the family: 38px tray, 30px thumb */
+.seg { height: 38px; padding: 4px; border-radius: var(--r-control); }
+.seg__b { height: 30px; padding: 0 13px; font-size: 13px; border-radius: var(--r-inner); }
+
+/* the commit bar belongs to the workspace it commits, like Dealer Edit's */
+.savebar {
+  left: auto;
+  right: var(--gutter);
+  bottom: var(--s4);
+  transform: none;
+  border-radius: var(--r-card);
+}
+
+/* an empty photo slot says "empty" with the system's own well and a dashed
+   edge — the 135° hatch was surface decoration standing in for a state */
+.photo--ph {
+  background: var(--well);
+  box-shadow: inset 0 0 0 1px var(--line-3);
+  border-radius: var(--r-inner);
+}

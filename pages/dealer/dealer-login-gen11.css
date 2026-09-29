@@ -248,3 +248,63 @@ form { margin-top: var(--s6); display: grid; gap: var(--s4); }
    ship (DESIGN.md §5) — and hidden empty-state paragraphs alongside it.
    One guard, applied family-wide so the semantic can be trusted. */
 [hidden] { display: none !important; }
+
+/* ============================================================================
+   FINAL VISUAL PASS — the front door earns the brand
+
+   Before: a flat navy rectangle beside a white rectangle, with the form
+   floating in the middle of 360px of empty sheet and no illumination
+   anywhere. The panel is the first thing a dealer sees of AAN, and it was
+   saying nothing that the rest of the product says.
+
+   The content does not change: the same headline, the same paragraph, the
+   same support block, the same two fields, the same submit, the same reset
+   link and the same legal footer.
+   ========================================================================== */
+
+/* the panel gets depth and one directional brand illumination — the same
+   character the dark bento panels carry inside the product, not a new one */
+.panel {
+  background:
+    radial-gradient(120% 90% at 8% 0%, rgba(47, 106, 226, .30) 0%, rgba(47, 106, 226, 0) 58%),
+    radial-gradient(90% 70% at 100% 100%, rgba(31, 95, 224, .18) 0%, rgba(31, 95, 224, 0) 62%),
+    linear-gradient(168deg, #1b2740 0%, var(--focal) 46%, #101a2b 100%);
+}
+.panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07);
+  border-radius: inherit;
+}
+.panel__say h2 { text-wrap: balance; }
+.panel__say p { max-width: 44ch; }
+
+/* the mark reads at the scale of the panel it opens */
+.panel__brand { gap: var(--s3); }
+
+/* the sheet holds its content instead of letting it float mid-air: the form
+   block sits on the optical centre and the legal footer sits at the foot */
+.form { justify-content: space-between; padding: var(--s8) var(--s8) var(--s6); }
+.form__in { margin: auto; }
+.legal { margin-top: var(--s8); }
+
+/* fields are the family's control geometry, and the submit is the one focal
+   control on the page — it is allowed the restrained glow */
+.control input { height: 44px; border-radius: var(--r-control); }
+.btn { height: 44px; border-radius: var(--r-control); }
+.btn--primary {
+  box-shadow:
+    0 1px 2px rgba(20, 44, 104, .22),
+    0 10px 22px -10px rgba(31, 95, 224, .55);
+}
+.btn--primary:hover {
+  box-shadow:
+    0 1px 2px rgba(20, 44, 104, .26),
+    0 14px 28px -10px rgba(31, 95, 224, .62);
+}
+.eye { width: 36px; height: 36px; border-radius: var(--r-inner); right: 4px; }
+
+.form h1 { letter-spacing: -.022em; }
+.form h1 span { color: var(--ink-3); }

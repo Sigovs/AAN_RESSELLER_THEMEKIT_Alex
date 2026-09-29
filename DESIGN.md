@@ -82,18 +82,79 @@ layout, not a seam.
 
 ## 3 · Radius
 
+The shipped backend runs 3 / 5 / 8 (theme.css). Gen 11 is allowed to be softer than that; it is
+not allowed to be a pile of capsules. One scale, set in `pages/_aan-family.css`:
+
 ```
---r-pill    999px   pills, lanes, segmented tracks, chips
---r-card     24px   floating panes: field, dock, summary cards
---r-panel    18px   panels inside a pane: photo box, workspace
---r-control  14px   inputs and fields (buttons are pills — see §11)
---r-inner    10px   things inside a control
---r-micro     5px   checkbox, swatch
---r-sheet-o  28px   legacy outer sheet — being retired into --r-card
+--r-pill    999px   SEMANTIC ONLY — see the list below
+--r-card     14px   floating panes: field, dock, summary cards, the platform bar (12px)
+--r-panel    12px   panels inside a pane: notes, options, the section rail
+--r-control   9px   buttons, selects, facet buttons
+--r-inner     7px   small buttons, inputs, segmented thumbs, nav items
+--r-micro     4px   checkbox, swatch, kbd
 ```
+
+**The pill is not a default.** It is allowed on exactly these, and a sweep at 1440 across all
+nine shell pages enforces it: status chips · segmented-control thumbs and their tray thumbs ·
+filter chips · counters · lane items · switch tracks · avatars. A nav item, a toolbar button, a
+search field, an account control, a tab strip, a save bar and a section rail are structure, and
+structure takes a radius from the scale.
 
 Do not force one radius everywhere. **Do** force radius to `0` on any edge where two surfaces
 touch.
+
+---
+
+## 3b · The AAN mark and the platform header
+
+The mark and the header are family property, not page property. They live in
+`pages/_aan-family.css`, which loads last on all ten pages, and they are reconciled against the
+shipped backend (`aan-design-export-2026-09-09/assets/theme.css`, `.ui-topbar__*`).
+
+**Before this was written, ten pages carried three marks:**
+
+| | mark | fill | radius |
+|---|---|---|---|
+| Dealer Login | 40×40 tile | `#1f5fe0` | 14px |
+| 4 dealer pages | 34×34 tile | `#1f5fe0` | 10px |
+| 5 staff pages | 38×30 tile | **`#172234` navy** | 5px |
+
+The shipped backend has one: `.ui-topbar__brand-mark` — mono, `--weight-semibold`,
+`color: --color-brand-ink` on `background: --color-brand`, `--radius-sm`, `padding: 1px 6px`.
+
+**Gen 11 has one too.**
+
+```
+.brand__mk   42×24 chip · padding 0 8px · radius 6px
+             background var(--brand) · #fff · 700 11.5px/1 var(--mono) · ls .1em
+.brand__t    14px/600 ink · "All Auto Network"
+.brand__env  10.5px/700 caps ls .1em ink-4 · "Backend" — a word, not a second chip
+```
+
+Dealer and staff are told apart by the environment tag and the identity block on the right,
+which is how the shipped backend tells them apart. **Never by the colour of the mark.**
+
+**Navigation** carries its current section the way `.ui-topnav__trigger` does: a soft brand
+tint plus a 2px rule under the label. Not a capsule.
+
+```
+.nav__b              32px · padding 0 10px · radius 7px · 13.5px/500 ink-2
+.nav__b:hover        white .78 + 1px hairline
+.nav__it--on > .nav__b   brand-soft · brand-ink · 600 · inset 0 -2px 0 var(--brand)
+```
+
+**Header geometry, identical on all nine shell pages:** bar 56px at a 16px gutter, radius 12px,
+glass with one shadow; utility controls 32px at `--r-s`; avatars are the only circles.
+
+---
+
+## 3c · One page ground
+
+`--ground` is `var(--wash)` (#f3f5f8) on every page. Five pages carried `#e5e9ef`, which is
+darker than the system's own wash; against a white workspace that reads as a second shell and
+turns the 16px gutter into a decorative rail down both sides. The page gutter is 16px at every
+supported width — where a table needs the space back, the row inset steps down, never the page
+edge.
 
 ---
 
@@ -155,27 +216,35 @@ Only one of the five is a blue fill.
 ## 7 · Sticky stack
 
 ```
---stick-bar  68px      platform bar
---stick-cmd  72px      command band
---stick-hd   52px      column header
---stick-total = 68 + 72 + 52 = 192px
+--bar-track  76px      the grid row the bar sits in (at rest)
+--stick-bar  56px      platform bar
+--stick-cmd  56px      command band
+--stick-hd   40px      column header
+--stick-total = 56 + 56 + 40 = 152px
 ```
 
 **CSS publishes the geometry; JS reads it.** Never hardcode the stack in script.
 
 Custom properties are substituted but not *evaluated*: `getPropertyValue('--stick-total')` returns
-the literal text `calc(68px + 72px + 52px)` and `parseFloat` gives `NaN`. Read the three plain
+the literal text `calc(56px + 56px + 40px)` and `parseFloat` gives `NaN`. Read the three plain
 values and sum them.
 
-`--stick-cmd` is load-bearing: the command band's vertical padding is `8 + 56 + 8`. Changing that
-padding changes `--stick-total`, which changes the anchor.
+`--stick-cmd` is load-bearing: the command band is `8 + 40 + 8` around a 40px search field.
+Changing that padding changes `--stick-total`, which changes the anchor.
+
+The three layers take their heights **from** these tokens (`.top { height: var(--stick-bar) }`
+and so on), so `--stick-total` stays derived from what the layers actually measure.
+
+`--bar-track` is the grid row the bar sits in at rest, and the bar is placed at the **start** of
+that row with a `--s4` top margin, so the space above the bar is the 16px gutter and not
+whatever centring happens to leave over.
 
 Engaged state is published in three places by one scroll handler: `.cmd--stuck`, `.hd--stuck`,
 and `#app.is-stuck` — the last because the platform bar is a *sibling* of the field and cannot
 see the band in the selector tree.
 
-At 1366×768 the engaged stack is 25% of the viewport; at 1366×610 it is 31%. Both usable. The
-at-rest stack is 608px because of the bento, which scrolls away.
+At 1366×768 the engaged stack is 20% of the viewport; at 1366×610 it is 25%. The at-rest chrome
+is 584px because of the bento, which scrolls away.
 
 ### Z-index ladder — no component writes a raw z-index
 
@@ -198,13 +267,13 @@ a drawer or `scrollIntoView({block:'center'})`.**
 
 ```
 y = rowTop + scrollY − (--stick-bar + --stick-cmd + --stick-hd) − --anchor-gap
-                        68     +   72     +   52        +   10      = 202px
+                        56     +   56     +   40        +   10      = 162px
 ```
 
 `--anchor-gap: 10px` is off the 8pt scale deliberately: it is the measured value All Leads has
 shipped for years (`− 56 − 58 − 48 − 10`). Adopt it; do not round it to 8 for tidiness.
 
-Measured deviation from the 202px target: **−0.67px to 0**, at 1280 / 1366 / 1440 / 1920, in both
+Measured deviation from the 162px target: **−0.4px to 0**, at 1280 / 1366 / 1440 / 1920, in both
 travel directions, under reduced motion, and with the dock open.
 
 **Document extender** — `#exp-space` is a zero-height block after the list that JS grows by
