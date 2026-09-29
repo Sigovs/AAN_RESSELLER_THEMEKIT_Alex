@@ -701,3 +701,24 @@
 /* the page-context label and the quick-facet row, by their real selectors */
 .head .head__ctx { color: var(--ink-3); }
 .qf .facet__b, .sub .facet__b { height: 36px; padding: 0 12px; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   VERTICAL BLOCK RHYTHM — nothing touches, and a break outranks a gap
+   (spacing-taste I5, I1)
+
+   Measured across the record pages: the platform bar left 4px to the page
+   head, the head butted into the dark module at 0px, and the module cleared
+   the working sheet by 16px — exactly the gap used INSIDE the module between
+   its own cards. So the joint Alex flagged was a light surface meeting a dark
+   one with no air at all, and the one gap that did exist carried no hierarchy
+   because it equalled the internal one.
+
+   Three values on the scale, one rhythm:
+     · 16px  chrome → page identity
+     · 16px  inside a block (the bento's own card gap, unchanged)
+     · 24px  block → block, so the break reads louder than the gap within
+   The dense-tooling yield on D1 applies — this is operational backend, so the
+   smaller step above the internal gap is taken rather than the generous one.
+   ══════════════════════════════════════════════════════════════════════════ */
+.app > .head { margin-top: 12px; margin-bottom: 24px; }
+.app > .bento { margin-bottom: 24px; }
