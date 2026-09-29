@@ -663,7 +663,16 @@
    Single Vehicle's bar was authored dark, and its unsaved-changes count kept
    `--focal-ink` — white on white, 1.08:1, an invisible number. Buttons keep
    the styling they already have. */
-.savebar__n, .savebar__hint, .savebar .savebar__b { color: var(--ink-2); }
+.savebar__n, .savebar__hint,
+.savebar .savebar__b:not(.savebar__b--save):not(.savebar__b--discard) { color: var(--ink-2); }
+/* the primary action keeps its own dark fill, so it keeps light text — the
+   blanket rule above had given it --ink-2 on a navy disabled background,
+   about 1.2:1, which is what made the label look broken */
+.savebar .savebar__b--save { color: #fff; }
+.savebar .savebar__b--save:disabled { color: rgba(255, 255, 255, .62); }
+/* discard was authored salmon for a dark bar; on a white one it needs the
+   light-surface danger ink */
+.savebar .savebar__b--discard { color: var(--danger, #c0362c); }
 .savebar__n b, .savebar__n--dirty b { color: var(--ink); }
 .savebar__div { background: var(--line); }
 .savebar .savebar__b:hover { background: var(--well); color: var(--ink); }

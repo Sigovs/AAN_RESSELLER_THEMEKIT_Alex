@@ -835,12 +835,13 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 
 /* status / priority badge — the department tone family */
 .bdg {
-  display: inline-block; max-width: 100%;
-  padding: 2px 8px 3px;
+  display: inline-flex; align-items: center; max-width: 100%;
+  min-height: 26px;
+  padding: 0 11px;
   border-radius: var(--r-pill);
   background: var(--bdg-bg, var(--t-slate-bg));
   color: var(--bdg-ink, var(--t-slate-ink));
-  font-size: 12px; font-weight: 600;
+  font-size: 13.5px; font-weight: 600; line-height: 1;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .bdg--open,              .bdg--priority_normal      { --bdg-bg: var(--t-blue-bg);    --bdg-ink: var(--t-blue-ink); }
@@ -874,9 +875,10 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .c-mod b > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .c-mod i { font-style: normal; color: var(--ink-3); font: 500 12px var(--mono); }
 .c-mod--flag {
-  box-shadow: inset 2px 0 0 var(--signal-fill);
-  padding-left: 7px;
-  margin-left: -7px;
+  padding: 4px 8px;
+  margin: -4px -8px;
+  border-radius: 7px;
+  background: var(--t-amber-bg, rgba(214, 158, 46, .13));
 }
 .c-mod__f { display: inline-flex; align-items: center; color: var(--signal); }
 .c-mod__f .i { width: 12px; height: 12px; margin-right: 3px; }

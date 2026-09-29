@@ -314,6 +314,20 @@
       c.classList.toggle('composer--on', on);
     });
   }
+  /* A thread you can answer. Alex asked for this: a note is a post, and a post
+     can be replied to, so the history reads as a conversation instead of a
+     transcript. The reply is an internal note that remembers what it answers —
+     no new record type, no new field on the ticket. */
+  var replyOpen = null;
+  function replyBox(e) {
+    return '<li class="rbox"><form class="rbox__f" data-reply-to="' + esc(e.id) + '">'
+      + '<textarea class="rbox__t" name="body" rows="3" placeholder="Reply to ' + esc(e.who || 'this entry') + '…" aria-label="Reply"></textarea>'
+      + '<div class="rbox__r"><span class="rbox__who">Internal note · visible to the crew, not the dealer</span>'
+      + '<button class="btn btn--quiet btn--sm" type="button" data-reply-cancel>Cancel</button>'
+      + '<button class="btn btn--primary btn--sm" type="submit">Post reply</button></div>'
+      + '</form></li>';
+  }
+
   function renderThread() {
     var rows = thread.filter(function (e) { return lane === 'all' || e.kind === lane; });
     var msgs = laneCount('message'), notes = laneCount('note'), todos = laneCount('todo');
@@ -326,16 +340,19 @@
             return '<span class="evatt__f">' + ic('i-file') + esc(a) + ' <em>(file missing)</em></span>';
           }).join('') + '</div>'
         : '';
-      return '<li class="ev ev--' + e.kind + '" data-ev="' + esc(e.id) + '">'
+      return '<li class="ev ev--' + e.kind + (e.replyTo ? ' ev--reply' : '') + '" data-ev="' + esc(e.id) + '">'
         + '<span class="ev__i">' + ic(KINDI[e.kind]) + '</span>'
         + '<div class="ev__b">'
         + '<div class="ev__t"><span class="kind">' + esc(KINDW[e.kind]) + '</span><span class="who">' + esc(e.who || '—') + '</span></div>'
         + (e.body ? '<span class="ev__n' + (long && !e.open ? ' ev__n--clamp' : '') + '">' + esc(e.body) + '</span>' : '')
         + (long ? '<button class="ev__more" type="button" data-more="' + esc(e.id) + '">' + (e.open ? 'Show less' : 'Show all') + '</button>' : '')
         + atts
+        + '<div class="ev__acts"><button class="ev__reply" type="button" data-reply="' + esc(e.id) + '">'
+        + ic('i-hist') + 'Reply</button></div>'
         + '</div>'
         + '<div class="ev__d">' + esc(w.d) + '<small>' + esc(w.t) + '</small></div>'
-        + '</li>';
+        + '</li>'
+        + (replyOpen === e.id ? replyBox(e) : '');
     }).join('');
     $('#thread-empty').hidden = rows.length > 0;
   }
@@ -585,9 +602,33 @@
     renderLanes(); renderThread(); renderSecnav(); sizeExtender();
   }
 
+  function postReply(parentId, text) {
+    text = (text || '').trim();
+    if (!text) return false;
+    var when = stamp(new Date());
+    var at = -1;
+    thread.forEach(function (x, i) { if (x.id === parentId) at = i; });
+    var entry = {
+      id: 'note-reply-' + Date.now(), kind: 'note', who: D.me.name,
+      when: when, body: text, atts: [], k: key(when), open: false, replyTo: parentId
+    };
+    /* directly under what it answers, not at the top of the list */
+    if (at >= 0) thread.splice(at + 1, 0, entry); else thread.unshift(entry);
+    replyOpen = null;
+    renderLanes(); renderThread(); renderSecnav(); sizeExtender();
+    return true;
+  }
+
   /* ══ EVENTS ════════════════════════════════════════════════════════════ */
   document.addEventListener('click', function (e) {
     var t = e.target, el;
+    if ((el = t.closest('[data-reply]'))) {
+      replyOpen = replyOpen === el.dataset.reply ? null : el.dataset.reply;
+      renderThread(); sizeExtender();
+      var box = $('.rbox__t'); if (box) box.focus();
+      return;
+    }
+    if (t.closest('[data-reply-cancel]')) { replyOpen = null; renderThread(); sizeExtender(); return; }
 
     if ((el = t.closest('[data-pop]'))) {
       var pop = $('#' + el.dataset.pop);
@@ -691,6 +732,14 @@
   });
 
   /* the four composers, each with the post action production gives it */
+  document.addEventListener('submit', function (e) {
+    var f = e.target.closest ? e.target.closest('form[data-reply-to]') : null;
+    if (!f) return;
+    e.preventDefault();
+    var ta = f.querySelector('.rbox__t');
+    if (!postReply(f.dataset.replyTo, ta.value)) { ta.classList.add('fld--bad'); ta.focus(); }
+  }, true);
+
   $('#c-message').addEventListener('submit', function (e) { e.preventDefault(); post('message', 'in-message'); });
   $('#c-note').addEventListener('submit', function (e) { e.preventDefault(); post('note', 'in-note'); });
   $('#c-woc').addEventListener('submit', function (e) { e.preventDefault(); post('woc', 'in-woc'); });

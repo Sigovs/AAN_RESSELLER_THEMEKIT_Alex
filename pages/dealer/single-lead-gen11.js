@@ -63,6 +63,16 @@
   function fd(iso) { var p = iso.slice(0, 10).split('-'); return p[1] + '/' + p[2] + '/' + p[0]; }
   function fdt(iso) { var d = new Date(iso); var p = function (n) { return (n < 10 ? '0' : '') + n; }; return fd(iso) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes()); }
   function carOf(l) { if (!l.stock) return null; return CARS.filter(function (c) { return c.s === l.stock; })[0] || null; }
+  /* The lead names a real vehicle — 2015 Aston Martin Vanquish, stock 21902 —
+     that is not inside the demo inventory slice this prototype ships, so there
+     is no inventory thumbnail to draw and both cards fell back to the empty
+     state. The PHOTO is simulated here, and only the photo: the stock number,
+     the model and the VIN still come from the record. */
+  var DEMO_PHOTOS = { '21902': 'lead-21902-aston-vantage.jpg' };
+  function photoOf(l, car) {
+    if (car && car.t) return car.t;
+    return (l && l.stock && DEMO_PHOTOS[l.stock]) || null;
+  }
   function repOf(l) { return l.rep === 'Unassigned' ? DEALER : l.rep; }
 
   /* ── sticky geometry: published by CSS, read here ───────────────────────── */
@@ -161,7 +171,7 @@
     var v = $('#vcar');
     v.className = 'vcar' + (L.car ? '' : ' vcar--none');
     v.innerHTML = '<div class="vcar__cap">Vehicle of interest</div>' + (L.car
-      ? '<div class="vcar__img">' + (car && car.t ? '<img src="img/' + esc(car.t) + '" alt="">' : ic('i-cam-off'))
+      ? '<div class="vcar__img">' + (photoOf(L, car) ? '<img src="img/' + esc(photoOf(L, car)) + '" alt="">' : ic('i-cam-off'))
         + '<span class="st' + (car && car.sold ? ' st--sold' : '') + '">' + (car && car.sold ? 'Sold' : 'Available') + '</span></div>'
         + '<div class="vcar__t" title="' + esc(L.car) + '">' + esc(L.car) + '</div>'
         + '<div class="vcar__m">' + (L.stock ? 'Stock ' + esc(L.stock) : 'no stock #') + '</div>'
@@ -229,7 +239,7 @@
     };
 
     rec.innerHTML =
-      (car && car.t ? '<div class="rec__img"><img src="img/' + esc(car.t) + '" alt=""></div>' : '<div class="rec__none">' + ic('i-cam-off') + '</div>')
+      (photoOf(L, car) ? '<div class="rec__img"><img src="img/' + esc(photoOf(L, car)) + '" alt=""></div>' : '<div class="rec__none">' + ic('i-cam-off') + '</div>')
       + '<div class="rec__b">'
       + '<span class="rec__cap">' + ic('i-lock') + ' Inventory record · read here, edit below</span>'
       + '<div class="rec__n">' + esc(L.car)

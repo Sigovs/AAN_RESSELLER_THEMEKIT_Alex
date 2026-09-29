@@ -1255,3 +1255,88 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 }
 .ev__n { line-height: 1.55; }
 .ev { padding: var(--s4) 0; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   TICKET HISTORY — a thread, not a transcript (Gen 11.1)
+
+   Twenty entries ran as one flat list: same ground, same indent, the author
+   set smaller than the kind label, and nothing between one entry and the next.
+   At a distance it is a wall of text with no unit — you cannot see where an
+   entry starts, so you cannot skim and you cannot answer one.
+
+   Each entry becomes an object on the chapter's warm ground: a white surface
+   with its own air. The author leads, because a thread is people talking; the
+   kind is demoted to a quiet mark. A reply nests under the entry it answers,
+   so a conversation reads as a conversation.
+   ══════════════════════════════════════════════════════════════════════════ */
+#s-thread .ev {
+  background: var(--sheet);
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  border-bottom: 0;
+}
+#s-thread .ev:hover { box-shadow: inset 0 0 0 1px var(--line); }
+
+/* the author leads the entry */
+#s-thread .ev__t { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+#s-thread .ev__t .who { order: 1; font-size: 14px; font-weight: 650; color: var(--ink); }
+#s-thread .ev__t .kind {
+  order: 2;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--ink-4);
+}
+#s-thread .ev__n { font-size: 13.5px; line-height: 1.5; color: var(--ink-2); }
+
+/* the reply affordance sits with the entry it belongs to */
+.ev__acts { display: flex; align-items: center; gap: 4px; margin-top: 8px; }
+.ev__reply {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 26px; padding: 0 9px;
+  border: 0; border-radius: 7px;
+  background: none;
+  font-family: var(--font); font-size: 12.5px; font-weight: 600; color: var(--ink-3);
+  cursor: pointer;
+}
+.ev__reply:hover { background: var(--wash); color: var(--brand-ink); }
+.ev__reply .i { width: 13px; height: 13px; }
+
+/* a reply is nested under what it answers, and says so with an indent and a
+   connector rather than another card inside a card */
+#s-thread .ev--reply {
+  margin-left: 30px;
+  border-radius: 10px;
+  background: var(--wash);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  position: relative;
+}
+#s-thread .ev--reply::before {
+  content: "";
+  position: absolute; left: -16px; top: -8px; bottom: 50%;
+  width: 14px;
+  border-left: 1px solid var(--line-3);
+  border-bottom: 1px solid var(--line-3);
+  border-bottom-left-radius: 8px;
+}
+
+/* the inline reply composer, opened under its entry */
+.rbox { margin: 8px 0 12px 30px; }
+.rbox__f {
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--sheet);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.rbox__t {
+  width: 100%; min-height: 66px; resize: vertical;
+  padding: 9px 11px;
+  border: 0; border-radius: 8px;
+  background: var(--wash);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  font-family: var(--font); font-size: 13.5px; color: var(--ink);
+}
+.rbox__t:focus { outline: 2px solid var(--brand); outline-offset: 1px; }
+.rbox__r { display: flex; align-items: center; gap: 8px; }
+.rbox__who { flex: 1; min-width: 0; font-size: 12.5px; color: var(--ink-3); }

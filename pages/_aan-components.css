@@ -381,7 +381,12 @@ input, textarea, select { font-weight: 400; }
    button, lane, cell — is a centred box: the text sits on the optical middle
    of its own height and never against a border. One rule, everywhere, so a
    page cannot reintroduce a label pressed to the bottom of its pill. */
-.btn, .sel, .tl, .tag, .bdg, .badge, .chip, .pill, .lane, .seg > *,
+/* `.seg > *` is deliberately NOT in this list: the segmented control's
+   buttons are `inline-grid` with `place-items: center`, which already centres
+   on both axes. Flattening them to `inline-flex` here kept the vertical
+   centring and threw away the horizontal, so every icon sat against the left
+   edge of its slot. */
+.btn, .sel, .tl, .tag, .bdg, .badge, .chip, .pill, .lane,
 .ui-view, .ui-filter, .ui-nav__i, .ui-ctl, .facet__b, .kbd, kbd, .tbtn,
 .rlink, .mn__it, .gl, .nav__b {
   display: inline-flex;
@@ -444,3 +449,47 @@ select.sel, select.ui-ctl, .rows select, .cmd select, .zone select, .form select
 .focal:hover, .value:hover, .attn:hover,
 [class*="--on"].tile:hover { background: var(--focal-2, #223049); }
 .tile--on:hover .tile__k, .tile--on:hover .tile__s { color: var(--focal-ink-3); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   CHAPTERS — a long one-page record stops being one sheet
+   Single Lead · Single Ticket
+
+   Whole-page read on Single Lead: the page spends its entire tonal budget in
+   the first 400px on the dark bento, then runs ~3,300px of identical white —
+   sections with the same ground, the same padding and titles at the same
+   weight. Nothing carries dominance below the fold and nothing marks position,
+   so the eye has no stop and no way to count where it is. That is the "one
+   bedsheet" reading: a rhythm failure, not a shortage of decoration.
+
+   Built from what these pages already own — tone, a rule, the type scale. No
+   new component, no card, no stripe:
+     · the ground alternates, so the masses read as separate
+     · every boundary is a full-bleed rule and a wider interval — the stop
+     · every chapter opens with its number, so position becomes countable
+     · the chapter where the work actually happens takes the one warm ground
+   ══════════════════════════════════════════════════════════════════════════ */
+.secs {
+  counter-reset: chapter;
+  --chapter-wash: #f5f8fc;
+  --chapter-live: #fdf9f2;
+}
+.sec { counter-increment: chapter; padding: 30px 0 40px; position: relative; }
+.sec:nth-of-type(even) { background: var(--chapter-wash); }
+
+/* the chapter the record is actually worked in */
+.sec#s-activity, .sec#s-thread { background: var(--chapter-live); }
+
+/* the stop: a full-bleed rule on the boundary, not a 1px inset that vanishes
+   at a distance */
+.sec + .sec { box-shadow: none; border-top: 1px solid var(--line); }
+
+/* the chapter mark — position you can count, in the page's own caps voice */
+.sec__h { gap: 10px; padding-bottom: 12px; margin-bottom: 4px; box-shadow: inset 0 -1px 0 var(--line-2); }
+.sec__h::before {
+  content: counter(chapter, decimal-leading-zero);
+  flex: none; align-self: center; min-width: 26px;
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 12px; font-weight: 600; letter-spacing: .04em;
+  color: var(--ink-4); font-variant-numeric: tabular-nums;
+}
+.sec__h h2 { font-size: 19px; }
