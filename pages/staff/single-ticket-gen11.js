@@ -215,12 +215,12 @@
   }
 
   function renderRail() {
-    $('#rail').innerHTML = '<div class="rail__who"><b>' + esc(T.dealer) + '</b><span>' + esc(T.dealerMeta) + '</span></div>'
+    $('#rail').innerHTML = '<div class="rail__k">Dealer</div>'
+      + '<div class="rail__who"><b>' + esc(T.dealer) + '</b><span>' + esc(T.dealerMeta) + '</span></div>'
       + '<div class="rail__ls">' + T.links.map(function (l) {
         var label = l.label.replace(/\s*\(Potential Dev Link\)\s*$/i, '');
         return '<a class="rlink' + (l.dev ? ' rlink--dev' : '') + '" href="' + esc(l.href) + '"'
           + (/^https?:/.test(l.href) ? ' rel="noreferrer"' : '') + '>'
-          + '<span class="rlink__g" aria-hidden="true">' + esc(l.glyph) + '</span>'
           + '<span class="rlink__l">' + esc(label) + '</span>'
           + (l.dev ? '' : ic('i-ext'))
           + '</a>';
@@ -306,7 +306,7 @@
   }
   function renderLanes() {
     $('#thread-lanes').innerHTML = LANES.map(function (l) {
-      return '<button class="lane' + (l.k === lane ? ' lane--on' : '') + '" type="button" data-lane="' + l.k
+      return '<button class="lane ui-view' + (l.k === lane ? ' lane--on ui-view--on' : '') + '" type="button" data-lane="' + l.k
         + '" aria-pressed="' + (l.k === lane) + '">' + esc(l.label) + '<b>' + laneCount(l.k) + '</b></button>';
     }).join('');
     $$('.composer').forEach(function (c) {
@@ -563,6 +563,7 @@
     app.classList.toggle('dock-open', on);
     $$('[data-act="dock"]').forEach(function (b) {
       b.classList.toggle('facet__b--on', on);
+      b.classList.toggle('btn--on', on);
       b.setAttribute('aria-expanded', String(on));
     });
     sizeExtender();

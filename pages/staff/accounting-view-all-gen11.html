@@ -10,8 +10,9 @@
    `aan-theme` key is shared with the Gen 10 pages, so a stored `dark` must not land this
    page in a half-dark state at load. Temporary; the dark-theme stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="accounting-view-all-gen11.css?v=20260929091529">
-<link rel="stylesheet" href="../_aan-family.css?v=20260929091529">
+<link rel="stylesheet" href="accounting-view-all-gen11.css?v=20260929K5">
+<link rel="stylesheet" href="../_aan-family.css?v=20260929K5">
+<link rel="stylesheet" href="../_aan-components.css?v=20260929K5">
 </head>
 <body>
 
@@ -96,14 +97,14 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   <section class="field" id="field" aria-label="Dealer billing">
 
     <!-- which population — one exclusive control on one sunken track -->
-    <div class="cmdtop">
-      <div class="lanes" id="lanes" role="group" aria-label="Which dealers"></div>
+    <div class="cmdtop ui-toolbar ui-toolbar--sub">
+      <div class="lanes ui-views" id="lanes" role="group" aria-label="Which dealers"></div>
       <span class="cmdtop__sp"></span>
-      <div class="statuses" id="statuses" role="group" aria-label="Dealer status"></div>
+      <div class="statuses ui-filters" id="statuses" role="group" aria-label="Dealer status"></div>
     </div>
 
     <!-- command band · sticky #2 of 3 -->
-    <div class="cmd" id="cmd">
+    <div class="cmd ui-toolbar" id="cmd">
       <label class="search">
         <svg class="i"><use href="#i-search"/></svg>
         <input type="search" id="q" placeholder="Search name, billing email, or #invoice…" autocomplete="off"
@@ -113,19 +114,19 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         <kbd>/</kbd>
       </label>
       <span class="cmd__div"></span>
-      <label class="facet facet--sel"><span class="facet__k">Reseller</span><select class="sel" id="f-reseller" aria-label="Reseller"></select></label>
-      <label class="facet facet--sel"><span class="facet__k">Group</span><select class="sel" id="f-group" aria-label="Reseller group"></select></label>
+      <label class="facet facet--sel ui-select"><select class="sel" id="f-reseller" aria-label="Reseller"></select></label>
+      <label class="facet facet--sel ui-select"><select class="sel" id="f-group" aria-label="Reseller group"></select></label>
     </div>
 
     <!-- scope line + the A–Z index -->
-    <div class="sub">
+    <div class="sub ui-toolbar ui-toolbar--sub">
       <span class="scope" id="scope"></span>
       <span class="sub__sp"></span>
       <nav class="az" id="az" aria-label="Jump to initial"></nav>
     </div>
 
-    <div class="rows" id="rows">
-      <div class="hd" id="hd">
+    <div class="rows ui-table" id="rows">
+      <div class="hd ui-thead" id="hd">
         <span class="c-stat" title="Dealer status, and whether billing is active">Bill</span>
         <span class="s c-name" data-sort="name">Company Name</span>
         <span class="s c-to" data-sort="billTo" title="Whose account the invoice is raised against">Bill To</span>
@@ -158,7 +159,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   <p class="nojs">This page renders its dealer list with script. Enable JavaScript to read it.</p>
 </div>
 
-<script src="accounting-view-all-gen11.data.js?v=20260929091529"></script>
-<script src="accounting-view-all-gen11.js?v=20260929091529"></script>
+<script src="accounting-view-all-gen11.data.js?v=20260929K1"></script>
+<script src="accounting-view-all-gen11.js?v=20260929K1"></script>
 </body>
 </html>

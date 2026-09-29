@@ -157,7 +157,7 @@ a:hover { text-decoration: underline; }
 
 form { margin-top: var(--s6); display: grid; gap: var(--s4); }
 
-.field label {
+.formrow label {
   display: block;
   margin-bottom: var(--s2);
   font-size: 13px; font-weight: 600;

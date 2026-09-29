@@ -10,8 +10,9 @@
    `aan-theme` key is shared with the Gen 10 pages, so a stored `dark` must not land this
    page in a half-dark state at load. Temporary; the dark-theme stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="single-ticket-gen11.css?v=20260929091529">
-<link rel="stylesheet" href="../_aan-family.css?v=20260929091529">
+<link rel="stylesheet" href="single-ticket-gen11.css?v=20260929K5">
+<link rel="stylesheet" href="../_aan-family.css?v=20260929K5">
+<link rel="stylesheet" href="../_aan-components.css?v=20260929K5">
 </head>
 <body>
 
@@ -125,12 +126,12 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 
     <!-- SECTION BAND · sticky #2 of 2. Not tabs — a segmented track whose pills
          move the scroll to a section already in the document (DESIGN.md §6). -->
-    <div class="cmd cmd--sec" id="band">
-      <nav class="secnav" id="secnav" aria-label="Sections on this page"></nav>
+    <div class="cmd cmd--sec ui-toolbar" id="band">
+      <nav class="secnav ui-views" id="secnav" aria-label="Sections on this page"></nav>
       <span class="cmd__sp"></span>
       <span class="secnav__note">one page · five sections</span>
-      <button class="facet__b facet__b--on" type="button" data-act="dock" aria-expanded="true" aria-controls="dock">
-        <svg class="i"><use href="#i-users"/></svg><span class="facet__v">Crew</span><span class="facet__cnt" id="crew-cnt">0</span>
+      <button class="btn btn--sheet btn--sm ui-ctl" type="button" data-act="dock" aria-expanded="true" aria-controls="dock">
+        <svg class="i"><use href="#i-users"/></svg> Crew <b class="btn__n" id="crew-cnt">0</b>
       </button>
     </div>
 
@@ -187,7 +188,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <section class="sec" id="s-thread" aria-labelledby="t-thread">
         <div class="sec__h"><h2 id="t-thread">Ticket History</h2><span class="s" id="thread-s"></span></div>
         <div class="sec__b">
-          <div class="lanes" id="thread-lanes" role="group" aria-label="Which entries are in view"></div>
+          <div class="lanes ui-views" id="thread-lanes" role="group" aria-label="Which entries are in view"></div>
 
           <div class="composers" id="composers">
             <form class="composer" id="c-message" data-lane="message" novalidate>
@@ -314,7 +315,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   <p class="nojs">This page renders its ticket with script. Enable JavaScript to read it.</p>
 </div>
 
-<script src="single-ticket-gen11.data.js?v=20260929091529"></script>
-<script src="single-ticket-gen11.js?v=20260929091529"></script>
+<script src="single-ticket-gen11.data.js?v=20260929K1"></script>
+<script src="single-ticket-gen11.js?v=20260929K1"></script>
 </body>
 </html>

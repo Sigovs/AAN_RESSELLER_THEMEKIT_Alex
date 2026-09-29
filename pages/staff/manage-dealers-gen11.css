@@ -31,7 +31,6 @@
      RESPONSIVE     one breakpoint, max-width 1400px
    ========================================================================== */
 
-
 /* ============================================================================
    TOKENS — one authoritative layer. Values are DESIGN.md's, verbatim, except
    the two marked LOCAL, each of which carries the reason it differs.
@@ -149,7 +148,6 @@
   --focus-color-on-dark: #ffd98a;
 }
 
-
 /* ============================================================================
    BASE
    ========================================================================== */
@@ -224,7 +222,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
   padding: 0 var(--gutter) var(--gutter);
   min-height: 100vh;
 }
-
 
 /* ============================================================================
    PLATFORM BAR — FLOATING at rest, ATTACHED once engaged (DESIGN.md §2)
@@ -334,7 +331,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .me__n { display: none; font-size: 13px; font-weight: 600; white-space: nowrap; }
 .me .i { width: 12px; height: 12px; opacity: .6; }
 
-
 /* ============================================================================
    PAGE HEAD
    ========================================================================== */
@@ -382,7 +378,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .btn--sm { height: 32px; padding: 0 var(--s3); font-size: 13px; }
 .btn .i { width: 16px; height: 16px; }
 
-
 /* ── ROSTER COUNTS ───────────────────────────────────────────────────────
    Production's stat strip. Read-only counts on the page ground with one caps
    label — not in a card, and not inside the field, because they describe the
@@ -403,7 +398,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 }
 .tl span { color: var(--ink-3); }
 .tl b { font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
-
 
 /* ============================================================================
    FIELD — FLOATING: one radius, one shadow. Everything inside it is ATTACHED:
@@ -433,25 +427,20 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
   display: inline-flex; flex-wrap: wrap; align-items: center;
   gap: 3px;
   padding: 5px;
-  border-radius: var(--r-pill);
   background: var(--well);
   box-shadow: inset 0 0 0 1px var(--line);
 }
-.lane {
-  display: inline-flex; align-items: center; gap: 6px;
-  height: 34px; padding: 0 12px;
-  border-radius: var(--r-pill);
+.lane { align-items: center;
   color: var(--ink-2); font-size: 13px; font-weight: 500; white-space: nowrap;
   transition: background var(--dur) var(--ease), color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
-.lane:hover { background: rgba(255,255,255,.62); color: var(--ink); }
+.lane:hover { color: var(--ink); }
 .lane b { color: var(--ink); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.lane--on, .lane--on:hover { background: var(--sheet); color: var(--brand-ink); box-shadow: var(--sh-pill); }
+.lane--on, .lane--on:hover { color: var(--brand-ink); }
 .lane--on b { color: var(--brand-ink); }
 /* a saved filter the export ships no row sample for: it still switches, and
    the list then says so rather than showing a filled-in guess */
 .lane--nodata b { color: var(--ink-4); }
-
 
 /* ── command band · sticky #2 of 3 ──────────────────────────────────────── */
 .cmd {
@@ -525,7 +514,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 
 .cmd__div { width: 1px; height: 32px; flex: none; background: rgba(18,23,20,.14); }
 
-
 /* ── scope line ─────────────────────────────────────────────────────────── */
 .sub {
   display: flex; align-items: center; gap: var(--s2);
@@ -550,7 +538,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 }
 .az__b:hover { background: var(--sheet); color: var(--brand-ink); }
 .az__b[disabled] { color: var(--line-3); cursor: default; }
-
 
 /* ============================================================================
    THE LIST
@@ -821,7 +808,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .foot__prov { color: var(--ink-3); font-size: 12px; }
 .foot__prov b { font: 500 12px var(--mono); color: var(--ink-2); }
 
-
 /* ============================================================================
    THE ENGAGED STACK — platform bar + command band + column header are ONE
    attached surface: one glass value, one hairline per boundary, no interior
@@ -839,7 +825,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .app.is-stuck .top { box-shadow: inset 0 -1px 0 var(--line-2); }
 .cmd--stuck { box-shadow: inset 0 -1px 0 var(--line-2); }
 .hd--stuck { box-shadow: 0 1px 0 var(--line), 0 10px 20px -16px rgba(34,58,118,.45); }
-
 
 /* ============================================================================
    MENUS — FLOATING, above content, one shadow
@@ -891,7 +876,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 select.fld { appearance: none; padding-right: 32px;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23697181' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>");
   background-repeat: no-repeat; background-position: right 9px center; }
-
 
 /* ============================================================================
    MODAL — the Dealer Package dialog. FLOATING: a gap on every side, its own
@@ -957,7 +941,6 @@ select.fld { appearance: none; padding-right: 32px;
   transform: translateY(-1px) rotate(-45deg);
 }
 
-
 /* ============================================================================
    RESPONSIVE — desktop only, one breakpoint. 1366 is the binding width and
    zero horizontal overflow is a hard requirement in every state.
@@ -1014,10 +997,9 @@ select.fld { appearance: none; padding-right: 32px;
 @media (max-width: 1220px) {
   /* Below the supported range the list is allowed to scroll horizontally
      rather than lie about fitting. The page itself still never scrolls. */
-  .rows { overflow-x: auto; }
+  .rows { overflow-x: hidden; }
   .hd, .row { min-width: 1168px; }
 }
-
 
 /* ============================================================================
    MOTION — transitions are for disclosure and state, not for arrival.
@@ -1029,7 +1011,6 @@ select.fld { appearance: none; padding-right: 32px;
     scroll-behavior: auto !important;
   }
 }
-
 
 /* ============================================================================
    PRINT — the roster is printed. Chrome is not.
@@ -1044,7 +1025,6 @@ select.fld { appearance: none; padding-right: 32px;
   .row { box-shadow: inset 0 -1px 0 #ddd; height: auto; min-height: 0; }
   .c-act { display: none; }
 }
-
 
 /* ============================================================================
    NO-SCRIPT — the roster is rendered by script, so say so rather than showing

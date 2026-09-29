@@ -148,7 +148,7 @@
 
     $$('.lane').forEach(function (b) {
       var on = b.dataset.lane === S.lane;
-      b.classList.toggle('lane--on', on);
+      b.classList.toggle('lane--on', on); b.classList.toggle('ui-view--on', on);
       b.setAttribute('aria-pressed', on);
     });
 

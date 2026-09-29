@@ -7,9 +7,10 @@
 <script>/* Dark is gated off for Gen 11 (DESIGN.md §5) — a stored `dark` from another Gen page
    cannot land this one in a half-dark state. Only an explicit `light` is honoured. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="all-vehicles-gen11.css?v=20260929091529">
-<link rel="stylesheet" href="single-lead-gen11.css?v=20260929091529">
-<link rel="stylesheet" href="../_aan-family.css?v=20260929091529">
+<link rel="stylesheet" href="all-vehicles-gen11.css?v=20260929K5">
+<link rel="stylesheet" href="single-lead-gen11.css?v=20260929K5">
+<link rel="stylesheet" href="../_aan-family.css?v=20260929K5">
+<link rel="stylesheet" href="../_aan-components.css?v=20260929K5">
 </head>
 <body>
 
@@ -204,17 +205,17 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
     <!-- SECTION NAVIGATOR. Not tabs. A segmented track (DESIGN.md section 6:
          current view = white thumb on a sunken track, never a blue fill) whose
          pills move the scroll to a section that is already in the document. -->
-    <div class="cmd cmd--sec">
-      <nav class="secnav" id="secnav" aria-label="Sections on this page">
-        <a class="secnav__b secnav__b--on" href="#s-overview" data-sec="s-overview">Overview</a>
-        <a class="secnav__b" href="#s-contact" data-sec="s-contact">Contact</a>
-        <a class="secnav__b" href="#s-trade" data-sec="s-trade">Trade-in</a>
-        <a class="secnav__b" href="#s-activity" data-sec="s-activity">Activity <b id="n-act">0</b></a>
-        <a class="secnav__b" href="#s-emails" data-sec="s-emails">Emails <b id="n-em">0</b></a>
+    <div class="cmd cmd--sec ui-toolbar">
+      <nav class="secnav ui-views" id="secnav" aria-label="Sections on this page">
+        <a class="secnav__b secnav__b--on ui-view ui-view--on" href="#s-overview" data-sec="s-overview">Overview</a>
+        <a class="secnav__b ui-view" href="#s-contact" data-sec="s-contact">Contact</a>
+        <a class="secnav__b ui-view" href="#s-trade" data-sec="s-trade">Trade-in</a>
+        <a class="secnav__b ui-view" href="#s-activity" data-sec="s-activity">Activity <b id="n-act">0</b></a>
+        <a class="secnav__b ui-view" href="#s-emails" data-sec="s-emails">Emails <b id="n-em">0</b></a>
       </nav>
       <span class="cmd__sp"></span>
       <span class="secnav__note">one page · five sections</span>
-      <button class="facet__b facet__b--on" type="button" data-act="dock" aria-expanded="true" aria-controls="dock"><svg class="i"><use href="#i-sliders"/></svg><span class="facet__v">Workflow</span></button>
+      <button class="btn btn--sheet btn--sm ui-ctl btn--on" type="button" data-act="dock" aria-expanded="true" aria-controls="dock"><svg class="i"><use href="#i-sliders"/></svg> Workflow</button>
     </div>
 
     <div class="secs">
@@ -382,8 +383,8 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   <div id="sec-space" aria-hidden="true"></div>
 </div>
 
-<script src="all-vehicles-gen11.data.js?v=20260929091529"></script>
-<script src="all-leads-gen10.data.js?v=20260929091529"></script>
-<script src="single-lead-gen11.js?v=20260929091529"></script>
+<script src="all-vehicles-gen11.data.js?v=20260929K1"></script>
+<script src="all-leads-gen10.data.js?v=20260929K1"></script>
+<script src="single-lead-gen11.js?v=20260929K1"></script>
 </body>
 </html>

@@ -489,7 +489,7 @@
     }
     $$('.rail__i').forEach(function (b) {
       var on = b.dataset.jump === cur;
-      b.classList.toggle('rail__i--on', on);
+      b.classList.toggle('rail__i--on', on); b.classList.toggle('ui-nav__i--on', on);
       if (on) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
     });
   }
@@ -750,4 +750,24 @@
   load(0);
 
   window.SV11demo = { S: S, load: load, changes: changes, jump: jump, stickTotal: stickTotal };
+})();
+
+/* ── the page reserves exactly the height of its save footer ────────────────
+   The footer is fixed, so it is out of flow; the working surface has to hold
+   its height back or the last field of the form sits underneath it. The bar
+   grows when the unsaved-changes note appears, so it is measured rather than
+   assumed. */
+(function () {
+  function sizeSaveBar() {
+    var bar = document.querySelector('.savebar');
+    if (!bar) return;
+    document.documentElement.style.setProperty('--savebar-h', Math.ceil(bar.getBoundingClientRect().height) + 'px');
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', sizeSaveBar);
+  else sizeSaveBar();
+  window.addEventListener('resize', sizeSaveBar);
+  if (window.ResizeObserver) {
+    var bar = document.querySelector('.savebar');
+    if (bar) new ResizeObserver(sizeSaveBar).observe(bar);
+  }
 })();

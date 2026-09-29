@@ -10,8 +10,9 @@
    `dark` — the key is shared with the other Gen pages — cannot land this page
    in a half-dark state at load. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="my-work-queue-gen11.css?v=20260929091529">
-<link rel="stylesheet" href="../_aan-family.css?v=20260929091529">
+<link rel="stylesheet" href="my-work-queue-gen11.css?v=20260929K5">
+<link rel="stylesheet" href="../_aan-family.css?v=20260929K5">
+<link rel="stylesheet" href="../_aan-components.css?v=20260929K5">
 </head>
 <body>
 
@@ -101,14 +102,14 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   <!-- ══ GO LIVE LIST ═════════════════════════════════════════════════════
        Production's strip of dated go-live tickets. On the page ground, one
        caps label, no card. -->
-  <div class="golive" id="golive" aria-label="Go Live List"></div>
+  <div class="golive ui-strip" id="golive" aria-label="Go Live List"></div>
 
   <!-- ══ FIELD ════════════════════════════════════════════════════════════ -->
   <section class="field" id="field" data-cols="mine" aria-label="Work queue">
 
     <!-- lane rail — one exclusive control, one sunken track -->
-    <div class="cmdtop">
-      <div class="lanes" id="lanes" role="group" aria-label="Lane"></div>
+    <div class="cmdtop ui-toolbar ui-toolbar--sub">
+      <div class="lanes ui-views" id="lanes" role="group" aria-label="Lane"></div>
       <span class="cmdtop__sp"></span>
       <button class="sw" type="button" id="arch" role="switch" aria-checked="false">
         <span class="sw__t" aria-hidden="true"></span> Archived
@@ -116,7 +117,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
     </div>
 
     <!-- command band · sticky 2 of 3 -->
-    <div class="cmd" id="cmd">
+    <div class="cmd ui-toolbar" id="cmd">
       <div class="search">
         <svg class="i"><use href="#i-search"/></svg>
         <span class="search__chips" id="chips"></span>
@@ -151,7 +152,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
     </div>
 
     <!-- scope line -->
-    <div class="sub">
+    <div class="sub ui-toolbar ui-toolbar--sub">
       <span class="scope" id="scope"></span>
       <span class="sub__sp"></span>
       <label for="per">Per page</label>
@@ -159,8 +160,8 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
     </div>
 
     <!-- the list -->
-    <div class="rows" id="rows" role="table" aria-labelledby="page-t">
-      <div class="hd" id="hd" role="row"></div>
+    <div class="rows ui-table" id="rows" role="table" aria-labelledby="page-t">
+      <div class="hd ui-thead" id="hd" role="row"></div>
       <div id="tb" role="rowgroup"></div>
     </div>
 
@@ -179,7 +180,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   </section>
 </div>
 
-<script src="my-work-queue-gen11.data.js?v=20260929091529"></script>
-<script src="my-work-queue-gen11.js?v=20260929091529"></script>
+<script src="my-work-queue-gen11.data.js?v=20260929K1"></script>
+<script src="my-work-queue-gen11.js?v=20260929K1"></script>
 </body>
 </html>

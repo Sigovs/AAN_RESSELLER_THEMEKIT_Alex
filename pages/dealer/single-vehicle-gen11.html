@@ -8,8 +8,9 @@
    `aan-theme` key is shared with the other Gen pages, so a stored `dark` must not
    land this page in a half-dark state at load. Temporary; the dark stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="single-vehicle-gen11.css?v=20260929091529">
-<link rel="stylesheet" href="../_aan-family.css?v=20260929091529">
+<link rel="stylesheet" href="single-vehicle-gen11.css?v=20260929K5">
+<link rel="stylesheet" href="../_aan-family.css?v=20260929K5">
+<link rel="stylesheet" href="../_aan-components.css?v=20260929K5">
 </head>
 <body>
 
@@ -173,18 +174,18 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 
     <!-- ══ RAIL — the section index. A full object page uses a rail; that is
          what lets eleven sections exist without accordions. ══ -->
-    <nav class="rail" id="rail" aria-label="Sections">
-      <button class="rail__i rail__i--on" type="button" data-jump="zStatus"><span>Status</span><span class="badge badge--ok" id="b-status">AVAIL</span></button>
-      <button class="rail__i" type="button" data-jump="zPricing"><span>Pricing</span><span class="badge" id="b-pricing"></span></button>
-      <button class="rail__i" type="button" data-jump="zPhotos"><span>Photos</span><span class="badge" id="b-photos"></span></button>
-      <button class="rail__i" type="button" data-jump="zSpecs"><span>Specs &amp; VIN</span></button>
-      <button class="rail__i" type="button" data-jump="zColors"><span>Colors</span></button>
-      <button class="rail__i" type="button" data-jump="zDesc"><span>Descriptions</span><span class="badge" id="b-desc"></span></button>
-      <button class="rail__i" type="button" data-jump="zFeat"><span>Features</span><span class="badge" id="b-feat"></span></button>
-      <button class="rail__i" type="button" data-jump="zFeeds"><span>Feeds</span><span class="badge badge--ok" id="b-feeds">all on</span></button>
-      <button class="rail__i" type="button" data-jump="zCustom"><span>Custom Fields</span><span class="badge" id="b-custom">10</span></button>
-      <button class="rail__i" type="button" data-jump="zMore"><span>More Details</span></button>
-      <button class="rail__i" type="button" data-jump="zUtil"><span>Utilities</span></button>
+    <nav class="rail ui-nav" id="rail" aria-label="Sections">
+      <button class="rail__i ui-nav__i rail__i--on ui-nav__i--on" type="button" data-jump="zStatus"><span>Status</span><span class="badge badge--ok" id="b-status">AVAIL</span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zPricing"><span>Pricing</span><span class="badge" id="b-pricing"></span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zPhotos"><span>Photos</span><span class="badge" id="b-photos"></span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zSpecs"><span>Specs &amp; VIN</span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zColors"><span>Colors</span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zDesc"><span>Descriptions</span><span class="badge" id="b-desc"></span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zFeat"><span>Features</span><span class="badge" id="b-feat"></span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zFeeds"><span>Feeds</span><span class="badge badge--ok" id="b-feeds">all on</span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zCustom"><span>Custom Fields</span><span class="badge" id="b-custom">10</span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zMore"><span>More Details</span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zUtil"><span>Utilities</span></button>
     </nav>
 
     <!-- ══ ZONES — one field, eleven attached regions ══ -->
@@ -505,7 +506,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   </div>
 </noscript>
 
-<script src="single-vehicle-gen11.data.js?v=20260929091529"></script>
-<script src="single-vehicle-gen11.js?v=20260929091529"></script>
+<script src="single-vehicle-gen11.data.js?v=20260929K1"></script>
+<script src="single-vehicle-gen11.js?v=20260929K1"></script>
 </body>
 </html>

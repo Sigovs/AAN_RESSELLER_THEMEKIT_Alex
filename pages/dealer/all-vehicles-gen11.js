@@ -199,7 +199,7 @@
   }
   function setLane(l) {
     S.lane = l;
-    $$('[data-lane]').forEach(function (b) { var on = b.dataset.lane === l; b.classList.toggle('lane--on', on); b.setAttribute('aria-pressed', on); });
+    $$('[data-lane]').forEach(function (b) { var on = b.dataset.lane === l; b.classList.toggle('lane--on', on); b.classList.toggle('ui-view--on', on); b.setAttribute('aria-pressed', on); });
     countTo($('#scope-n'), $('[data-lane="' + l + '"] b').textContent); $('#scope-l').textContent = l === 'All' ? 'All on file' : l;
     render();
   }

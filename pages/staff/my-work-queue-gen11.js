@@ -109,13 +109,71 @@
   }
 
   function renderGoLive() {
-    $('#golive').innerHTML = '<span class="caps golive__l">Go Live List</span>' +
+    $('#golive').innerHTML = '<span class="caps golive__l">Go Live List<b class="golive__n">' + D.goLive.length + '</b></span>' +
       D.goLive.map(function (g) {
         return '<a class="gl" href="#" title="' + esc(g.host + ' — go live ' + g.date) + '">' +
           '<b>' + esc(g.host.replace(/^www\./, '')) + '</b><i>' + esc(g.date) + '</i></a>';
       }).join('') +
       '<a class="gl gl--all" href="#">All Go Lives</a>';
+    fitGoLive();
   }
+
+  /* The strip never scrolls sideways. It shows the dealers that fit on the
+     line and hands the rest to "All Go Lives", which carries the remainder so
+     nothing is silently dropped.
+
+     The room is the CONTENT box, not clientWidth: clientWidth includes the
+     strip's own 16px of padding on each side, so measuring against it let the
+     last chip run 62px past the inner edge at 1366 and get clipped by the
+     overflow. */
+  /* The strip's own 16px of right padding is the edge air, and the overflow
+     action is pushed to that inner edge, so no extra tail is withheld here —
+     withholding one cost a dealer that missed the line by four pixels. */
+  var GOLIVE_TAIL = 0;
+  function fitGoLive() {
+    var strip = $('#golive'); if (!strip) return;
+    var cs = getComputedStyle(strip);
+    var room = strip.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - GOLIVE_TAIL;
+    var all = strip.querySelector('.gl--all');
+    var items = [].slice.call(strip.querySelectorAll('.gl:not(.gl--all)'));
+
+    items.forEach(function (el) { el.hidden = false; });
+    if (all) { all.hidden = false; all.textContent = 'All Go Lives +' + items.length; }
+
+    var label = strip.querySelector('.golive__l');
+    var used = label ? label.offsetWidth : 0;
+    var reserve = all ? all.offsetWidth + 8 : 0;
+
+    /* Two passes: the first reserve is measured against the widest possible
+       remainder label, so the fit is safe; once the real remainder is known
+       the label is narrower, and the second pass spends the width that frees
+       up. Without it the row dropped a dealer it had room for. */
+    var shown = 0, pass;
+    for (pass = 0; pass < 3; pass++) {
+      var run = used, count = 0;
+      for (var i = 0; i < items.length; i++) {
+        var w = items[i].offsetWidth;
+        if (run + w + reserve > room) break;
+        run += w; count++;
+      }
+      if (count === shown && pass > 0) break;
+      shown = count;
+      if (!all) break;
+      all.textContent = 'All Go Lives +' + (items.length - shown);
+      var next = all.offsetWidth + 8;
+      if (next === reserve) break;
+      reserve = next;
+    }
+
+    for (var j = 0; j < items.length; j++) items[j].hidden = j >= shown;
+    var rest = items.length - shown;
+    if (all) {
+      all.hidden = rest === 0;
+      all.textContent = 'All Go Lives +' + rest;
+    }
+  }
+  window.addEventListener('resize', fitGoLive);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitGoLive);
 
   function renderQueues() {
     $('#queue-list').innerHTML = D.queues.map(function (q) {
@@ -136,7 +194,7 @@
     function lane(x) {
       var on = x.k === cur;
       var hot = x.t === 'hot' && !on;
-      return '<button class="lane' + (on ? ' lane--on' : '') + (hot ? ' lane--hot' : '') + '" type="button"' +
+      return '<button class="lane ui-view' + (on ? ' lane--on ui-view--on' : '') + (hot ? ' lane--hot' : '') + '" type="button"' +
         ' data-lane="' + x.k + '" aria-pressed="' + (on ? 'true' : 'false') + '"' +
         (x.off ? ' disabled title="' + esc(x.off) + '"' : '') + '>' +
         '<span>' + esc(x.l) + '</span>' + (x.c ? '<b>' + esc(x.c) + '</b>' : '') + '</button>';

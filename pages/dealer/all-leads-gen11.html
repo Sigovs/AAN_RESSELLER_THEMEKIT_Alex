@@ -11,9 +11,10 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 <!-- The Gen 11 system layer (tokens, surfaces, sticky stack, layer ladder, focus,
      in-flow expansion) is declared once, in the All Vehicles sheet. This page adds
      only what the Lead Desk owns. Same relationship All Leads Gen 10 had to its base. -->
-<link rel="stylesheet" href="all-vehicles-gen11.css?v=20260929091529">
-<link rel="stylesheet" href="all-leads-gen11.css?v=20260929091529">
-<link rel="stylesheet" href="../_aan-family.css?v=20260929091529">
+<link rel="stylesheet" href="all-vehicles-gen11.css?v=20260929K5">
+<link rel="stylesheet" href="all-leads-gen11.css?v=20260929K5">
+<link rel="stylesheet" href="../_aan-family.css?v=20260929K5">
+<link rel="stylesheet" href="../_aan-components.css?v=20260929K5">
 </head>
 <body>
 
@@ -183,17 +184,17 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 
     <!-- The lane rail deliberately does NOT stick: pinning it would put ~250px of
          chrome above a 768px viewport. The sticky stack stays at 68 + 72 + 52. -->
-    <div class="cmdtop">
-      <div class="lanes" role="group" aria-label="Lane">
-        <button class="lane" type="button" data-lane="newmail" aria-pressed="false"><span>New Mail</span><b id="ln-newmail">0</b></button>
-        <button class="lane" type="button" data-lane="uncat" aria-pressed="false"><span>Uncategorized</span><b>16,502</b></button>
-        <button class="lane" type="button" data-lane="today" aria-pressed="false"><span>Today</span><b id="ln-today">0</b></button>
-        <button class="lane" type="button" data-lane="pastdue" aria-pressed="false"><span>Past Due</span><b id="ln-pastdue">2</b></button>
-        <button class="lane lane--on lane--all" type="button" data-lane="search" aria-pressed="true"><span>Search — all leads</span><b>16,574</b></button>
+    <div class="cmdtop ui-toolbar ui-toolbar--sub">
+      <div class="lanes ui-views" role="group" aria-label="Lane">
+        <button class="lane ui-view" type="button" data-lane="newmail" aria-pressed="false"><span>New Mail</span><b id="ln-newmail">0</b></button>
+        <button class="lane ui-view" type="button" data-lane="uncat" aria-pressed="false"><span>Uncategorized</span><b>16,502</b></button>
+        <button class="lane ui-view" type="button" data-lane="today" aria-pressed="false"><span>Today</span><b id="ln-today">0</b></button>
+        <button class="lane ui-view" type="button" data-lane="pastdue" aria-pressed="false"><span>Past Due</span><b id="ln-pastdue">2</b></button>
+        <button class="lane lane--on lane--all ui-view ui-view--on" type="button" data-lane="search" aria-pressed="true"><span>Search — all leads</span><b>16,574</b></button>
       </div>
     </div>
 
-    <div class="cmd">
+    <div class="cmd ui-toolbar">
       <label class="search"><svg class="i"><use href="#i-search"/></svg><input type="search" id="q" placeholder="Search name, email, phone, stock #…" autocomplete="off"><kbd>/</kbd></label>
       <div class="facet"><button class="facet__b" type="button" data-pop="p-sort"><span class="facet__k">Sort</span><span class="facet__v" id="sort-v">Newest first</span><svg class="i"><use href="#i-chev"/></svg></button>
         <div class="pop pop--right mn" id="p-sort"><div class="caps mn__lab">Sort by</div><button class="mn__it mn__it--on" type="button" data-sort="created"><svg class="i"><use href="#i-check"/></svg>Created</button><button class="mn__it" type="button" data-sort="name"><svg class="i"><use href="#i-check"/></svg>Lead</button><button class="mn__it" type="button" data-sort="status"><svg class="i"><use href="#i-check"/></svg>Status</button><button class="mn__it" type="button" data-sort="rep"><svg class="i"><use href="#i-check"/></svg>Assigned</button><button class="mn__it" type="button" data-sort="follow"><svg class="i"><use href="#i-check"/></svg>Follow-up</button><div class="mn__sep"></div><button class="mn__it" type="button" data-dir="asc"><svg class="i"><use href="#i-up"/></svg>Ascending</button><button class="mn__it mn__it--on" type="button" data-dir="desc"><svg class="i"><use href="#i-dn"/></svg>Descending</button></div></div>
@@ -202,7 +203,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <button class="facet__b tog" type="button" data-act="archived" aria-pressed="false" title="Show archived leads"><span class="facet__k tog__k">Archived</span><span class="facet__v tog__v" id="ar-v">Hidden</span></button>
     </div>
 
-    <div class="sub">
+    <div class="sub ui-toolbar ui-toolbar--sub">
       <div class="scope" id="scope"></div>
       <div class="qf" id="qf" aria-label="Filters">
         <div class="facet"><button class="facet__b" type="button" data-pop="p-rep"><span class="facet__k">Rep</span><span class="facet__v" id="rep-v">any</span><svg class="i"><use href="#i-chev"/></svg></button><div class="pop mn" id="p-rep"><div class="caps mn__lab">Sales Rep</div><button class="mn__it mn__it--on" type="button" data-rep="Any"><svg class="i"><use href="#i-check"/></svg>Any</button><button class="mn__it" type="button" data-rep="Unassigned"><svg class="i"><use href="#i-check"/></svg>Unassigned</button><button class="mn__it" type="button" data-rep="Chicago Motor Cars"><svg class="i"><use href="#i-check"/></svg>Chicago Motor Cars</button><button class="mn__it" type="button" data-rep="Parin"><svg class="i"><use href="#i-check"/></svg>Parin</button><button class="mn__it" type="button" data-rep="Tony McFarland"><svg class="i"><use href="#i-check"/></svg>Tony McFarland</button><button class="mn__it" type="button" data-rep="Karen Conrad"><svg class="i"><use href="#i-check"/></svg>Karen Conrad</button><button class="mn__it" type="button" data-rep="Dmitriy Lebedev"><svg class="i"><use href="#i-check"/></svg>Dmitriy Lebedev</button><button class="mn__it" type="button" data-rep="Chicago Motor Cars - Justin"><svg class="i"><use href="#i-check"/></svg>Chicago Motor Cars - Justin</button><button class="mn__it" type="button" data-rep="Chicago Motor Cars - Chris Moran"><svg class="i"><use href="#i-check"/></svg>Chicago Motor Cars - Chris Moran</button><button class="mn__it" type="button" data-rep="Marcus Davis"><svg class="i"><use href="#i-check"/></svg>Marcus Davis</button><button class="mn__it" type="button" data-rep="Chicago Motor Cars - Mike Salerno"><svg class="i"><use href="#i-check"/></svg>Chicago Motor Cars - Mike Salerno</button><button class="mn__it" type="button" data-rep="David Bakalov"><svg class="i"><use href="#i-check"/></svg>David Bakalov</button><button class="mn__it" type="button" data-rep="Mike Verthein"><svg class="i"><use href="#i-check"/></svg>Mike Verthein</button><button class="mn__it" type="button" data-rep="Chicago Motor Cars - Sam Salameh"><svg class="i"><use href="#i-check"/></svg>Chicago Motor Cars - Sam Salameh</button><button class="mn__it" type="button" data-rep="Scott McFarland"><svg class="i"><use href="#i-check"/></svg>Scott McFarland</button><button class="mn__it" type="button" data-rep="Ivaylo Guenkov"><svg class="i"><use href="#i-check"/></svg>Ivaylo Guenkov</button></div></div>
@@ -224,8 +225,8 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 
     <!-- Header cells are addressed by semantic class, never nth-child (DESIGN.md §10).
          One divider marks where identification ends and operation begins: .c-status. -->
-    <div class="rows" id="rows">
-      <div class="hd">
+    <div class="rows ui-table" id="rows">
+      <div class="hd ui-thead">
         <span></span>
         <span class="s c-lead" data-sort="name">Lead</span>
         <span class="c-contact">Contact</span>
@@ -247,7 +248,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   </section>
 </div>
 
-<script src="all-leads-gen11.data.js?v=20260929091529"></script>
-<script src="all-leads-gen11.js?v=20260929091529"></script>
+<script src="all-leads-gen11.data.js?v=20260929K1"></script>
+<script src="all-leads-gen11.js?v=20260929K1"></script>
 </body>
 </html>

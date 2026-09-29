@@ -27,7 +27,6 @@
      RESPONSIVE     one breakpoint, max-width 1400px
    ========================================================================== */
 
-
 /* ============================================================================
    TOKENS — one authoritative layer. Values are DESIGN.md's, verbatim, except
    the four marked LOCAL, each of which carries the reason it differs.
@@ -161,7 +160,6 @@
   --focus-color-on-dark: #ffd98a;
 }
 
-
 /* ============================================================================
    BASE
    ========================================================================== */
@@ -242,7 +240,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
   padding: 0 var(--gutter) var(--gutter);
   min-height: 100vh;
 }
-
 
 /* ============================================================================
    PLATFORM BAR — FLOATING at rest, ATTACHED once engaged (DESIGN.md §2)
@@ -349,7 +346,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .me__n { font-size: 13px; font-weight: 600; white-space: nowrap; }
 .me .i { width: 12px; height: 12px; opacity: .6; }
 
-
 /* ============================================================================
    PAGE HEAD
    ========================================================================== */
@@ -397,13 +393,13 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
    not inside the field, because it is not part of the list's chrome. */
 .golive {
   grid-row: 3;
-  display: flex; flex-wrap: wrap; align-items: baseline;
-  gap: var(--s1) var(--s2);
+  display: flex; flex-wrap: nowrap; align-items: center;
+  gap: 0;
   padding: var(--s1) 0 var(--s3);
 }
 .golive__l { flex: 0 0 auto; padding-right: var(--s1); }
 .gl {
-  display: inline-flex; align-items: baseline; gap: 6px;
+  display: inline-flex; align-items: center; gap: 7px;
   height: 26px; padding: 0 10px;
   border-radius: var(--r-pill);
   background: var(--sheet); box-shadow: var(--el-1);
@@ -414,7 +410,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .gl b { font-weight: 600; color: var(--ink); }
 .gl i { font-style: normal; color: var(--ink-3); font-variant-numeric: tabular-nums; }
 .gl--all { background: none; box-shadow: inset 0 0 0 1px var(--line-3); color: var(--ink-2); font-weight: 600; }
-
 
 /* ============================================================================
    FIELD — FLOATING: one radius, one shadow. Everything inside it is ATTACHED:
@@ -444,21 +439,17 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
   display: inline-flex; flex-wrap: wrap; align-items: center;
   gap: 3px;
   padding: 5px;
-  border-radius: var(--r-pill);
   background: var(--well);
   box-shadow: inset 0 0 0 1px var(--line);
 }
 .lanes__div { width: 1px; align-self: stretch; margin: 2px var(--s1); background: var(--line-3); }
-.lane {
-  display: inline-flex; align-items: center; gap: 6px;
-  height: 34px; padding: 0 12px;
-  border-radius: var(--r-pill);
+.lane { align-items: center;
   color: var(--ink-2); font-size: 13px; font-weight: 500; white-space: nowrap;
   transition: background var(--dur) var(--ease), color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
-.lane:hover { background: rgba(255,255,255,.62); color: var(--ink); }
+.lane:hover { color: var(--ink); }
 .lane b { color: var(--ink); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.lane--on, .lane--on:hover { background: var(--sheet); color: var(--brand-ink); box-shadow: var(--sh-pill); }
+.lane--on, .lane--on:hover { color: var(--brand-ink); }
 .lane--on b { color: var(--brand-ink); }
 /* a lane with no archive is genuinely unavailable, not merely quiet */
 .lane[disabled] { color: var(--ink-4); cursor: not-allowed; }
@@ -466,7 +457,7 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
    light with a red edge, and it must stay legible beside the white thumb. */
 .lane--hot { background: var(--danger-soft); box-shadow: inset 0 0 0 1px var(--danger-line); color: var(--danger); font-weight: 600; }
 .lane--hot b { color: var(--danger); }
-.lane--hot:hover { background: #fbdcd8; color: var(--danger); }
+.lane--hot:hover { color: var(--danger); }
 
 .cmdtop__sp { flex: 1 1 auto; }
 
@@ -591,7 +582,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
   background: var(--sheet); box-shadow: var(--el-1);
   font-size: 13px; color: var(--ink);
 }
-
 
 /* ============================================================================
    THE LIST
@@ -800,16 +790,19 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .grip:active { cursor: grabbing; }
 .grip .i { width: 14px; height: 14px; }
 
-/* an inline-editable value: it looks like the value, and says so on hover */
+/* An inline-editable value looks like the value. It used to be brand-blue,
+   which put ~370 blue numerals on one screen and left the ticket links — the
+   only real links in the table — with nothing to distinguish them. The
+   affordance belongs on hover, where it is asked for. */
 .ed {
   display: inline-block; max-width: 100%;
   padding: 2px 5px; margin: -2px -5px;
   border-radius: var(--r-micro);
-  color: var(--brand-ink); font: inherit; font-variant-numeric: tabular-nums;
+  color: var(--ink); font: inherit; font-variant-numeric: tabular-nums;
   text-align: inherit;
-  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease);
 }
-.ed:hover { background: var(--brand-soft); box-shadow: inset 0 0 0 1px var(--brand-soft); }
+.ed:hover { background: var(--brand-soft); color: var(--brand-ink); box-shadow: inset 0 0 0 1px var(--brand-soft-2, var(--brand-soft)); }
 .ed--num { font-weight: 600; }
 .edin {
   width: 100%; min-width: 0;
@@ -918,7 +911,7 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
   content: ""; width: 6px; height: 6px; flex: none;
   border-radius: var(--r-pill); background: var(--signal-fill);
 }
-.c-beg .ed, .c-done .ed { font: 500 12px var(--mono); color: var(--brand-ink); }
+.c-beg .ed, .c-done .ed { font: 500 12px var(--mono); color: var(--ink-2); }
 .c-beg .d, .c-done .d { font: 500 12px var(--mono); color: var(--ink-2); }
 
 /* numeric tracks — tabular, right-aligned, and quiet when the value is absent.
@@ -994,7 +987,6 @@ mark {
 .pg .on, .pg .on:hover { background: var(--ink); color: var(--sheet); }
 .pg .i { width: 14px; height: 14px; }
 
-
 /* ============================================================================
    THE ENGAGED STACK — platform bar + command band + column header are ONE
    attached surface: one glass value, one hairline per boundary, no interior
@@ -1012,7 +1004,6 @@ mark {
 .app.is-stuck .top { box-shadow: inset 0 -1px 0 var(--line-2); }
 .cmd--stuck { box-shadow: inset 0 -1px 0 var(--line-2); }
 .hd--stuck { box-shadow: 0 1px 0 var(--line), 0 10px 20px -16px rgba(34,58,118,.45); }
-
 
 /* ============================================================================
    MENUS — FLOATING, above content, one shadow
@@ -1052,7 +1043,6 @@ mark {
 
 .nav .pop { min-width: 244px; }
 
-
 /* ============================================================================
    RESPONSIVE — desktop only, one breakpoint. 1366 is the binding width and
    zero horizontal overflow is a hard requirement in every state.
@@ -1077,10 +1067,9 @@ mark {
 @media (max-width: 1180px) {
   /* Below the supported range the list is allowed to scroll horizontally
      rather than lie about fitting. The page itself still never scrolls. */
-  .rows { overflow-x: auto; }
+  .rows { overflow-x: hidden; }
   .hd, .row { min-width: 1168px; }
 }
-
 
 /* ============================================================================
    MOTION — transitions are for disclosure and state, not for arrival.
@@ -1093,7 +1082,6 @@ mark {
   }
 }
 
-
 /* ============================================================================
    PRINT — the queue is printed. Chrome is not.
    ========================================================================== */
@@ -1105,7 +1093,6 @@ mark {
   .hd { position: static; box-shadow: inset 0 -1px 0 #999; }
   .row { box-shadow: inset 0 -1px 0 #ddd; height: auto; min-height: 0; }
 }
-
 
 /* ============================================================================
    NO-SCRIPT — the list is rendered by script, so say so rather than showing an
@@ -1168,53 +1155,63 @@ html.no-js .cmdtop, html.no-js .cmd, html.no-js .sub, html.no-js .hd, html.no-js
    decorative shape.
    ========================================================================== */
 
-/* ── the go-live list is a ticker, not a field of pills ───────────────────
-   One line, scrolls horizontally when it must, separated by hairlines. The
-   domain carries the weight; the date is the quiet half. */
+/* ── the go-live list shows what fits ────────────────────────────────────
+   One line, no sideways scrolling, no sticky label sitting on top of the
+   first dealer. Whatever does not fit is counted in the label and reachable
+   through "All Go Lives". */
 .golive {
+  display: flex;
   flex-wrap: nowrap;
-  overflow-x: auto;
-  scrollbar-width: thin;
   align-items: center;
   gap: 0;
-  padding: 0 0 var(--s2);
+  min-height: 34px;
+  padding: 0 0 6px;
   max-width: 100%;
+  overflow: hidden;
 }
-.golive::-webkit-scrollbar { height: 6px; }
-.golive::-webkit-scrollbar-thumb { background: var(--line-3); border-radius: 3px; }
 .golive__l {
-  position: sticky;
-  left: 0;
-  z-index: 1;
-  padding: 0 var(--s3) 0 0;
-  background: linear-gradient(90deg, var(--ground) 76%, transparent);
+  display: inline-flex; align-items: center; gap: 6px;
+  flex: 0 0 auto;
+  padding: 0 14px 0 0;
 }
+.golive__n { font-size: 11px; font-weight: 700; color: var(--ink-4); font-variant-numeric: tabular-nums; }
 .gl {
-  height: 22px;
-  padding: 0 var(--s3);
+  display: inline-flex; align-items: center; gap: 7px;
+  flex: 0 0 auto;
+  height: 26px;
+  padding: 0 14px;
   border-radius: 0;
   background: none;
   box-shadow: inset -1px 0 0 var(--line);
-  font-size: 12px;
+  font-size: 13px;
   white-space: nowrap;
 }
 .gl:first-of-type { padding-left: 0; }
+.gl b { font-weight: 600; color: var(--ink); }
+.gl i { font-style: normal; font-size: 12px; color: var(--ink-4); font-variant-numeric: tabular-nums; }
 .gl:hover { box-shadow: inset -1px 0 0 var(--line); color: var(--brand-ink); }
 .gl:hover b { color: var(--brand-ink); }
-.gl:last-of-type { box-shadow: none; }
+/* the overflow action ends the row: it is pushed to the right edge, so the
+   width the strip could not spend reads as structure and not as a hole */
+.gl--all {
+  margin-left: auto;
+  padding-right: 0;
+  box-shadow: none;
+  font-weight: 600;
+  color: var(--brand-ink);
+}
+.gl[hidden] { display: none; }
 
 /* ── the lane rail is a segmented control, so the lanes keep their pill —
    the tray around them does not need to be one too ─────────────────────── */
 .lanes {
   flex-wrap: nowrap;
-  overflow-x: auto;
+  overflow-x: hidden;
   scrollbar-width: none;
   gap: 2px;
   padding: 3px;
-  border-radius: var(--r-control);
 }
-.lanes::-webkit-scrollbar { display: none; }
-.lane { height: 28px; padding: 0 10px; font-size: 12.5px; }
+.lane { font-size: 12.5px; }
 .lane b { font-size: 11.5px; }
 .cmdtop { min-height: 0; padding: var(--s2) var(--gutter); }
 
@@ -1249,7 +1246,7 @@ html.no-js .cmdtop, html.no-js .cmd, html.no-js .sub, html.no-js .hd, html.no-js
    gets its own horizontal scroll, which is the pattern this page already used
    below 1180, applied at the width where the pressure actually starts. */
 @media (max-width: 1340px) {
-  .rows { overflow-x: auto; }
+  .rows { overflow-x: hidden; }
   .hd, .row { min-width: 1312px; }
 }
 

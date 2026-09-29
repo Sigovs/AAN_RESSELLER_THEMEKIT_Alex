@@ -10,8 +10,9 @@
    `dark` — the key is shared with the other Gen pages — cannot land this page
    in a half-dark state at load. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="manage-dealers-gen11.css?v=20260929091529">
-<link rel="stylesheet" href="../_aan-family.css?v=20260929091529">
+<link rel="stylesheet" href="manage-dealers-gen11.css?v=20260929K5">
+<link rel="stylesheet" href="../_aan-family.css?v=20260929K5">
+<link rel="stylesheet" href="../_aan-components.css?v=20260929K5">
 </head>
 <body>
 
@@ -106,12 +107,12 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   <section class="field" id="field" aria-label="Dealer roster">
 
     <!-- saved filters — one exclusive control, one sunken track -->
-    <div class="cmdtop">
-      <div class="lanes" id="modes" role="group" aria-label="Saved filters"></div>
+    <div class="cmdtop ui-toolbar ui-toolbar--sub">
+      <div class="lanes ui-views" id="modes" role="group" aria-label="Saved filters"></div>
     </div>
 
     <!-- command band · sticky 2 of 3 -->
-    <div class="cmd" id="cmd">
+    <div class="cmd ui-toolbar" id="cmd">
       <label class="search">
         <svg class="i"><use href="#i-search"/></svg>
         <span class="vh">Company name</span>
@@ -151,16 +152,16 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
     </div>
 
     <!-- scope line: what is shown, what is filtering it, and the A–Z jump -->
-    <div class="sub">
+    <div class="sub ui-toolbar ui-toolbar--sub">
       <span class="scope" id="scope"></span>
       <span class="sub__sp"></span>
       <nav class="az" id="az" aria-label="Jump to letter"></nav>
     </div>
 
-    <div class="rows" id="rows">
+    <div class="rows ui-table" id="rows">
       <!-- column header · sticky 3 of 3. Sort is on the six columns the
            export makes sortable; the other seven are labels. -->
-      <div class="hd" id="hd" role="row">
+      <div class="hd ui-thead" id="hd" role="row">
         <span class="c-mark" title="Account status">
           <span class="vh">Account status</span>
         </span>
@@ -230,7 +231,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   </form>
 </dialog>
 
-<script src="manage-dealers-gen11.data.js?v=20260929091529"></script>
-<script src="manage-dealers-gen11.js?v=20260929091529"></script>
+<script src="manage-dealers-gen11.data.js?v=20260929K1"></script>
+<script src="manage-dealers-gen11.js?v=20260929K1"></script>
 </body>
 </html>

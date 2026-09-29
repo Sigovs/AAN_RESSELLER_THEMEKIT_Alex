@@ -135,11 +135,13 @@
   /* ══ COMMAND ════════════════════════════════════════════════════════════ */
   function renderLanes() {
     $('#lanes').innerHTML = D.lanes.map(function (l) {
-      return '<button class="lane' + (S.lane === l.k ? ' lane--on' : '') + '" type="button" data-lane="' + l.k
+      return '<button class="lane ui-view' + (S.lane === l.k ? ' lane--on ui-view--on' : '') + '" type="button" data-lane="' + l.k
         + '" aria-pressed="' + (S.lane === l.k) + '">' + esc(l.label) + '<b>' + l.n.toLocaleString('en-US') + '</b></button>';
     }).join('');
-    $('#statuses').innerHTML = D.statuses.map(function (s) {
-      return '<button class="lane' + (S.status === s.k ? ' lane--on' : '') + '" type="button" data-status="' + esc(s.k)
+    /* status is a filter, not a view: it narrows what the current view shows,
+       so it wears the filter chip and never the view track's pill. */
+    $('#statuses').innerHTML = '<span class="caps flt__k">Status</span>' + D.statuses.map(function (s) {
+      return '<button class="tl ui-filter' + (S.status === s.k ? ' tl--on' : '') + '" type="button" data-status="' + esc(s.k)
         + '" aria-pressed="' + (S.status === s.k) + '">' + esc(s.k) + '<b>' + s.n + '</b></button>';
     }).join('');
   }

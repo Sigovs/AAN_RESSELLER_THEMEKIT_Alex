@@ -42,7 +42,6 @@
      SEAL · ROUTING TABLE · SIDE PANELS · SAVE BAR · RESPONSIVE · PRINT
    ========================================================================== */
 
-
 /* ============================================================================
    TOKENS — one authoritative layer. Values are DESIGN.md's, verbatim, except
    the one marked LOCAL.
@@ -152,7 +151,6 @@
   --focus-color-on-dark: #ffd98a;
 }
 
-
 /* ============================================================================
    BASE
    ========================================================================== */
@@ -211,7 +209,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
   padding: 0 var(--gutter) calc(var(--s9) + var(--s5));  /* room under the save bar */
   min-height: 100vh;
 }
-
 
 /* ============================================================================
    PLATFORM BAR — FLOATING at rest, ATTACHED once engaged (DESIGN.md §2).
@@ -301,7 +298,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .me__n { display: none; font-size: 13px; font-weight: 600; white-space: nowrap; }
 .me .i { width: 12px; height: 12px; opacity: .6; }
 
-
 /* ============================================================================
    RECORD HEAD — read-only, and shaped so that it cannot be mistaken for the
    form. It sticks under the platform bar so that WHICH dealer you are editing
@@ -375,7 +371,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .head__quick .i { width: 12px; height: 12px; }
 .head__quick .sep { color: var(--line-3); }
 
-
 /* ============================================================================
    BODY — rail · zones · side
    ========================================================================== */
@@ -387,7 +382,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
   align-items: start;
   padding-top: var(--s4);
 }
-
 
 /* ── RAIL — where am I in 78 fields. It is navigation, not a form control, so
       it has no surface of its own: labels on the page ground, and the current
@@ -408,7 +402,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .rail__b:hover { background: rgba(255,255,255,.66); color: var(--ink); }
 .rail__b--on, .rail__b--on:hover {
   background: var(--brand-soft); color: var(--brand-ink); font-weight: 600;
-  box-shadow: inset 2px 0 0 var(--brand);
 }
 /* The dot is production's own per-zone marker. The export ships no legend for
    it, so the words below are this build's reading of green / amber / grey and
@@ -420,7 +413,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .rail__sep { height: 1px; margin: var(--s2) 10px; background: var(--line); }
 .rail__hint { padding: 0 10px; color: var(--ink-4); font-size: 12px; }
 .rail__hint kbd { padding: 1px 5px; border-radius: var(--r-micro); background: var(--sheet); box-shadow: inset 0 0 0 1px var(--line); font: 600 11px var(--mono); }
-
 
 /* ── ZONES — ONE floating sheet, eight attached regions inside it ────────
       The zone column is the FLOATING surface: --r-card, one shadow, nothing
@@ -449,7 +441,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 /* scroll-margin so a rail jump lands the heading below the sticky stack rather
    than under it — the offset is the stack's own published height */
 .zone { scroll-margin-top: calc(var(--stick-bar) + var(--stick-head) + var(--s2)); }
-
 
 /* ── FIELDS ──────────────────────────────────────────────────────────────
    Two columns of 8pt-aligned field groups. A label sits above its control
@@ -573,7 +564,6 @@ select.fld {
 .projact { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); }
 .projact__hint { flex: 1 1 220px; min-width: 0; color: var(--ink-3); font-size: 12px; }
 
-
 /* ── SEAL — a stored secret. Not a field: there is nothing to type into until
       you say so, so it is not shaped like a field. ─────────────────────── */
 .seal {
@@ -602,7 +592,6 @@ select.fld {
 .seal--edit .fld { box-shadow: none; }
 .seal__cancel { margin-right: var(--s2); }
 
-
 /* ── ROUTING — the mailbox table. A table, because four parallel values per
       row is a table; it stays inside the zone sheet with no surface of its
       own. ───────────────────────────────────────────────────────────────── */
@@ -624,7 +613,6 @@ select.fld {
 .rtbl .seg__o span { height: 26px; padding: 0 10px; font-size: 12px; }
 .routing__xref { color: var(--ink-3); font-size: 12px; line-height: 1.55; }
 .routing__xref .mono { color: var(--ink-2); }
-
 
 /* ============================================================================
    SIDE PANELS — three FLOATING objects. These are not the record: they are
@@ -669,7 +657,6 @@ select.fld {
 
 .panel--danger .panel__hd { color: var(--danger); }
 
-
 /* ============================================================================
    BUTTONS — one height per class, sized by their label (DESIGN.md §11)
    ========================================================================== */
@@ -694,7 +681,6 @@ select.fld {
 .btn--lock { color: var(--danger); box-shadow: inset 0 0 0 1px var(--danger-line); }
 .btn--lock:hover { background: var(--danger-soft); color: var(--danger); box-shadow: inset 0 0 0 1px var(--danger); }
 
-
 /* ============================================================================
    SAVE BAR — FLOATING, and the only thing on the page that commits. It is
    pinned to the bottom because the commit for field 78 must not be 5,000px
@@ -717,7 +703,6 @@ select.fld {
 .savebar__dirty .i { width: 15px; height: 15px; }
 .savebar__kbd { display: inline-flex; align-items: center; gap: 2px; color: var(--ink-4); font-size: 12px; white-space: nowrap; }
 .savebar__kbd kbd { padding: 1px 5px; border-radius: var(--r-micro); background: var(--sheet); box-shadow: inset 0 0 0 1px var(--line); font: 600 11px var(--mono); }
-
 
 /* ============================================================================
    MENUS + EMPTY STATE
@@ -751,7 +736,6 @@ select.fld {
 .miss b { color: var(--ink); font-size: 16px; font-weight: 600; }
 .miss p { max-width: 56ch; line-height: 1.6; }
 .miss__links { display: flex; flex-wrap: wrap; gap: var(--s2); justify-content: center; }
-
 
 /* ============================================================================
    RESPONSIVE — desktop only. 1366 is the binding width and zero horizontal
@@ -794,7 +778,6 @@ select.fld {
   .nav__b { padding: 0 10px; font-size: 14px; }
 }
 
-
 /* ============================================================================
    MOTION — transitions are for disclosure and state, not for arrival.
    ========================================================================== */
@@ -805,7 +788,6 @@ select.fld {
     scroll-behavior: auto !important;
   }
 }
-
 
 /* ============================================================================
    PRINT — the dealer file is printed. Chrome and the controls' chrome are not.
@@ -822,7 +804,6 @@ select.fld {
   .side { display: block; margin-top: 24px; }
   .panel { box-shadow: none; border: 1px solid #ddd; margin-bottom: 12px; }
 }
-
 
 /* ============================================================================
    NO-SCRIPT
@@ -907,7 +888,6 @@ html.no-js .body, html.no-js .savebar { display: none; }
 .rail__b:hover { background: var(--well); }
 .rail__b--on, .rail__b--on:hover {
   background: var(--brand-soft);
-  box-shadow: inset 3px 0 0 var(--brand);
 }
 .rail__sep { margin: var(--s2) 0; }
 .rail__hint { padding: var(--s2) 13px 0; }

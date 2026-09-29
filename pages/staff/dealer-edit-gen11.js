@@ -110,7 +110,7 @@
     if (!R) { $('#rail').innerHTML = ''; return; }
     $('#rail').innerHTML = D.zones.map(function (z, i) {
       var dot = (R.dots || {})[z.id] || 'grey';
-      return '<button class="rail__b' + (i === 0 ? ' rail__b--on' : '') + '" type="button" data-zone="' + z.id + '">' +
+      return '<button class="rail__b ui-nav__i' + (i === 0 ? ' rail__b--on ui-nav__i--on' : '') + '" type="button" data-zone="' + z.id + '">' +
         '<span class="dot dot--' + dot + '" aria-hidden="true"></span>' +
         '<span>' + esc(z.t) + '</span>' +
         '<span class="vh">— ' + DOT_WORD[dot] + '</span></button>';
@@ -562,7 +562,7 @@
   function mark(id) {
     $$('.rail__b').forEach(function (b) {
       var on = b.getAttribute('data-zone') === id;
-      b.classList.toggle('rail__b--on', on);
+      b.classList.toggle('rail__b--on', on); b.classList.toggle('ui-nav__i--on', on);
       b.setAttribute('aria-current', on ? 'true' : 'false');
     });
   }
@@ -599,4 +599,24 @@
   spy();
 
   window.DE11 = { V: V, key: KEY, record: R };
+})();
+
+/* ── the page reserves exactly the height of its save footer ────────────────
+   The footer is fixed, so it is out of flow; the working surface has to hold
+   its height back or the last field of the form sits underneath it. The bar
+   grows when the unsaved-changes note appears, so it is measured rather than
+   assumed. */
+(function () {
+  function sizeSaveBar() {
+    var bar = document.querySelector('.savebar');
+    if (!bar) return;
+    document.documentElement.style.setProperty('--savebar-h', Math.ceil(bar.getBoundingClientRect().height) + 'px');
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', sizeSaveBar);
+  else sizeSaveBar();
+  window.addEventListener('resize', sizeSaveBar);
+  if (window.ResizeObserver) {
+    var bar = document.querySelector('.savebar');
+    if (bar) new ResizeObserver(sizeSaveBar).observe(bar);
+  }
 })();

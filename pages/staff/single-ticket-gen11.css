@@ -55,7 +55,6 @@
     16  MOTION · PRINT · NO-SCRIPT
    ========================================================================== */
 
-
 /* ============================================================================
    1 · TOKENS — one authoritative layer. DESIGN.md's values, verbatim, except
    the three marked LOCAL, each carrying the reason it differs.
@@ -186,7 +185,6 @@
   --focus-color-on-dark: #ffd98a;
 }
 
-
 /* ============================================================================
    2 · BASE
    ========================================================================== */
@@ -262,7 +260,6 @@ svg { display: block; }
   min-height: 100vh;
 }
 .app.dock-open { grid-template-columns: minmax(0, 1fr) var(--dock); column-gap: var(--gutter); }
-
 
 /* ============================================================================
    3 · PLATFORM BAR — FLOATING at rest, ATTACHED once engaged (DESIGN.md §2)
@@ -370,7 +367,6 @@ svg { display: block; }
 .me__n { font-size: 13px; font-weight: 600; white-space: nowrap; }
 .me .i { width: 12px; height: 12px; opacity: .6; }
 
-
 /* ============================================================================
    4 · HEAD — identity, chips, record navigation
    ========================================================================== */
@@ -432,7 +428,6 @@ svg { display: block; }
 .btn--del { color: var(--danger); }
 .btn--del:hover { background: var(--danger-soft); color: var(--danger); }
 
-
 /* ============================================================================
    5 · BENTO — two slots, placed by NAMED AREA (DESIGN.md §2)
    ========================================================================== */
@@ -458,28 +453,33 @@ svg { display: block; }
   box-shadow: var(--sh-card);
   color: var(--focal-ink);
 }
-.focal__h { display: flex; align-items: baseline; gap: var(--s3); margin-bottom: var(--s3); }
+.focal__h { display: flex; align-items: baseline; gap: var(--s3); margin-bottom: 22px; }
 .focal__h .caps { color: var(--focal-ink-3); }
 .focal__h .s { margin-left: auto; min-width: 0; font-size: 13px; color: var(--focal-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* five production figures, one row of equal cells, divided not boxed */
-.pulse { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; margin-top: auto; }
-.tile { min-width: 0; padding: 0 var(--s4); }
+.pulse { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; margin-top: 0; }
+/* 12px, not 16: at 16 the widest figure on the card — "Yes $15,996.00" —
+   overran its column by two pixels and lost the last glyph. */
+.tile { min-width: 0; padding: 0 12px; }
 .tile:first-child { padding-left: 0; }
 .tile:last-child { padding-right: 0; }
 .tile + .tile { box-shadow: inset 1px 0 0 var(--focal-line); }
 .tile__k { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--focal-ink-3); }
 .tile__v {
-  margin-top: 6px;
-  font-size: 22px; font-weight: 600; letter-spacing: -.02em; line-height: 1.1;
+  /* 22px is the ceiling here: "Yes $15,996.00" fills a 172px tile at that
+     size, and every step above it truncated the figure. The row height comes
+     from spacing, not from the numerals. */
+  margin-top: 14px;
+  font-size: 22px; font-weight: 600; letter-spacing: -.02em; line-height: 1.12;
   font-variant-numeric: tabular-nums;
   color: var(--focal-ink);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.tile__v small { display: block; margin-top: 3px; font-size: 12px; font-weight: 500; letter-spacing: 0; color: var(--focal-ink-2); }
+.tile__v small { display: block; margin-top: 6px; font-size: 12px; font-weight: 500; letter-spacing: 0; color: var(--focal-ink-2); }
 .tile__v--range { font-size: 17px; }
 .tile__v--none { color: var(--focal-ink-3); font-weight: 400; }
-.tile__s { margin-top: 6px; font-size: 12px; color: var(--focal-ink-3); }
+.tile__s { margin-top: 16px; font-size: 12px; color: var(--focal-ink-3); }
 /* a figure that is money reads as money, on the focal surface too */
 .tile__v .cash { color: #9ce0b8; }
 
@@ -487,20 +487,34 @@ svg { display: block; }
 .rail {
   display: flex; flex-direction: column;
   min-width: 0;
-  padding: var(--s4);
+  padding: 16px 0 10px;
   border-radius: var(--r-card);
   background: var(--sheet);
   box-shadow: var(--sh-soft);
 }
-.rail__who { padding-bottom: var(--s3); box-shadow: inset 0 -1px 0 var(--line-2); }
-.rail__who b { display: block; font-size: 15px; font-weight: 600; letter-spacing: -.01em; }
+/* the same micro-caps key the dark module opposite uses for "THIS TICKET" */
+.rail__k {
+  padding: 0 18px 10px;
+  font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink-4);
+}
+.rail__who { padding: 0 18px 12px; border-bottom: 1px solid var(--line-2); }
+.rail__who b { display: block; font-size: 17px; font-weight: 650; letter-spacing: -.012em; line-height: 1.25; }
 .rail__who span { display: block; margin-top: 2px; font-size: 13px; color: var(--ink-3); }
-.rail__ls { display: flex; flex-direction: column; gap: 1px; margin: var(--s2) calc(var(--s2) * -1) 0; }
+/* Five quick links stacked one per row made this panel 128px taller than the
+   summary beside it, and the row left a grey cavity under the dark card. The
+   links are a utility index, so they sit two to a row; the one that carries a
+   tag keeps a row of its own. Same links, same order, same actions. */
+.rail__ls {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 2px 4px; margin: 8px 0 0; padding: 0 8px;
+}
+.rail__ls > .rlink--dev, .rail__ls > .rlink:last-child { grid-column: 1 / -1; }
 .rlink {
-  display: flex; align-items: center; gap: var(--s2);
-  min-height: 32px; padding: 4px var(--s2);
-  border-radius: var(--r-inner);
-  font-size: 13px; color: var(--ink-2);
+  display: flex; align-items: center; gap: 10px;
+  min-height: 34px; padding: 0 10px;
+  border-radius: 7px;
+  font-size: 13.5px; color: var(--ink-2);
   transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
 }
 .rlink:hover { background: var(--wash); color: var(--brand-ink); text-decoration: none; }
@@ -516,7 +530,6 @@ svg { display: block; }
   background: var(--slate-soft); color: var(--slate);
   font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
 }
-
 
 /* ============================================================================
    6 · SECTION BAND — the navigator, and the bottom of the sticky stack
@@ -568,15 +581,12 @@ svg { display: block; }
 .secnav {
   display: inline-flex; gap: 2px;
   padding: 5px;
-  border-radius: var(--r-pill);
   background: var(--well);
   box-shadow: inset 0 0 0 1px var(--line);
   min-width: 0;
 }
 .secnav__b {
-  display: inline-flex; align-items: center; gap: var(--s2);
-  height: 38px; padding: 0 var(--s4);
-  border-radius: var(--r-pill);
+  display: inline-flex; align-items: center; gap: var(--s2); padding: 0 var(--s4);
   color: var(--ink-2); font-size: 14px; font-weight: 500; white-space: nowrap;
   transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
 }
@@ -588,10 +598,9 @@ svg { display: block; }
 /* a count is a quantity, not a state: neutral in both positions */
 .secnav__b b {
   display: inline-grid; place-items: center;
-  min-width: 20px; height: 20px; padding: 0 6px;
-  border-radius: var(--r-pill);
+  min-width: 20px; padding: 0 6px;
   background: var(--line-2); color: var(--ink-2);
-  font-size: 12px; font-weight: 600; line-height: 1;
+  font-size: 12px; font-weight: 600; line-
   font-variant-numeric: tabular-nums;
 }
 .secnav__b--on b { background: var(--well); color: var(--ink); }
@@ -618,7 +627,6 @@ svg { display: block; }
   font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums;
 }
 .facet__b--on .facet__cnt { background: var(--brand-soft); color: var(--brand-ink); }
-
 
 /* ============================================================================
    7 · SECTIONS — one attached stack, no cards
@@ -660,7 +668,6 @@ svg { display: block; }
 
 /* the extender is placed explicitly: last row, spanning the grid */
 #sec-space { grid-row: 5; grid-column: 1 / -1; height: 0; }
-
 
 /* ============================================================================
    8 · FORM — the work order
@@ -742,7 +749,6 @@ textarea.fld { height: auto; min-height: 64px; padding: var(--s2) var(--s3); res
 .form__msg { font-size: 13px; font-weight: 600; color: var(--ok); }
 .form__msg--bad { color: var(--danger); }
 
-
 /* ============================================================================
    9 · THREAD — the Gen 11 timeline
    One connector, a per-kind chip, author, body, right-aligned date. The lane
@@ -754,20 +760,16 @@ textarea.fld { height: auto; min-height: 64px; padding: var(--s2) var(--s3); res
   display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--s1);
   margin-bottom: var(--s4);
   padding: 5px;
-  border-radius: var(--r-pill);
   background: var(--well);
   box-shadow: inset 0 0 0 1px var(--line);
 }
-.lane {
-  display: inline-flex; align-items: center; gap: var(--s1);
-  height: 34px; padding: 0 12px;
-  border-radius: var(--r-pill);
+.lane { align-items: center;
   color: var(--ink-2); font-size: 13px; font-weight: 500; white-space: nowrap;
   transition: background var(--dur) var(--ease), color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
-.lane:hover { background: rgba(255,255,255,.62); color: var(--ink); }
+.lane:hover { color: var(--ink); }
 .lane b { color: var(--ink); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.lane--on, .lane--on:hover { background: var(--sheet); color: var(--brand-ink); box-shadow: var(--sh-pill); }
+.lane--on, .lane--on:hover { color: var(--brand-ink); }
 .lane--on b { color: var(--brand-ink); }
 
 .composers { margin-bottom: var(--s5); }
@@ -862,7 +864,6 @@ textarea.fld { height: auto; min-height: 64px; padding: var(--s2) var(--s3); res
 .evatt__f .i { width: 12px; height: 12px; color: var(--ink-4); }
 .evatt__f em { font-style: normal; font-family: var(--font); color: var(--ink-4); }
 
-
 /* ============================================================================
    10 · CHANGELOG — the same timeline, reading field changes
    Collapsed by default, as production ships it. The entries are the same `.ev`
@@ -883,7 +884,6 @@ textarea.fld { height: auto; min-height: 64px; padding: var(--s2) var(--s3); res
 .feed--clog .prev--none { background: none; box-shadow: inset 0 0 0 1px var(--line-2); color: var(--ink-4); font-family: var(--font); }
 .feed--clog .for { margin-top: 5px; font-size: 13px; color: var(--ink-3); }
 .feed--clog .for b { font-weight: 600; color: var(--ink-2); }
-
 
 /* ============================================================================
    11 · ATTACHMENTS
@@ -907,7 +907,6 @@ textarea.fld { height: auto; min-height: 64px; padding: var(--s2) var(--s3); res
   background: var(--slate-soft); color: var(--slate);
   font-family: var(--font); font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
 }
-
 
 /* ============================================================================
    12 · DOCK — crew, with a resting and a dirty state
@@ -1059,7 +1058,6 @@ textarea.fld { height: auto; min-height: 64px; padding: var(--s2) var(--s3); res
 .legend p { margin-top: var(--s2); font-size: 12.5px; line-height: 1.6; color: var(--ink-3); }
 .legend .mono { color: var(--ink-2); }
 
-
 /* ============================================================================
    13 · MENUS — FLOATING, above content, one shadow
    ========================================================================== */
@@ -1092,15 +1090,13 @@ textarea.fld { height: auto; min-height: 64px; padding: var(--s2) var(--s3); res
 .mn__who b { display: block; color: var(--ink); font-size: 14px; }
 .nav .pop { min-width: 252px; }
 
-
 /* ============================================================================
    14 · FOCUS — owns `outline`, and nothing else owns it (DESIGN.md §12)
    ========================================================================== */
-.secnav__b:focus-visible, .lane:focus-visible, .btn:focus-visible { border-radius: var(--r-pill); }
+.secnav__b:focus-visible, .lane:focus-visible, .btn:focus-visible { }
 .focal :focus-visible { outline-color: var(--focus-color-on-dark); }
 .fld:focus-visible, .sel:focus-visible, textarea.fld:focus-visible { border-radius: var(--r-inner); }
 .ring:focus-visible { border-radius: 50%; }
-
 
 /* ============================================================================
    15 · RESPONSIVE — desktop only, one breakpoint. 1366 is the binding width and
@@ -1138,7 +1134,6 @@ textarea.fld { height: auto; min-height: 64px; padding: var(--s2) var(--s3); res
   .app.dock-open .pulse { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: var(--s4); }
   .app.dock-open .tile:nth-child(4) { padding-left: 0; box-shadow: none; }
 }
-
 
 /* ============================================================================
    16 · MOTION · PRINT · NO-SCRIPT
@@ -1210,22 +1205,29 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
    crew list put a card inside a card inside the dock.
    ========================================================================== */
 
-/* ── the ticket panel reads as a poster, not as a gap ────────────────────
-   The label stays at the top where it belongs; the numbers take the middle
-   of whatever height the rail beside them demands, so the slack is shared
-   above and below instead of stacked into one hole. */
-.focal.slot--pulse { justify-content: flex-start; }
-.focal.slot--pulse .pulse { margin-top: auto; margin-bottom: auto; }
+/* ── the ticket panel is as tall as what is in it ────────────────────────
+   The dealer panel beside it is a five-item list — 277px of real content.
+   This panel is five numbers — about 150px. Every attempt to reconcile them
+   put the slack somewhere: centred (two holes), pushed to the bottom (one
+   hole), spread through the tiles (five holes). So they are no longer
+   reconciled. Each card is the height of its own content and the leftover
+   is page ground, which is air rather than an empty card. */
+/* One row, one height. The two cards are a pair: the summary keeps its label
+   at the top and its figures directly under it; the dealer panel is compact
+   enough that neither has to carry a hole. */
+.bento { align-items: stretch; }
+.focal.slot--pulse { justify-content: flex-start; padding: 20px 24px; }
+.focal.slot--pulse .pulse { margin: 0; }
 
 /* and the rail asks for less height in the first place */
-.rail__ls > * { min-height: 28px; }
+.rail__ls > * { min-height: 32px; }
 
 /* ── the section tabs are a segmented control at a control's size ────────
    The capsule is right for "which of five sections am I reading"; 48px of it
    inside a 56px band is not. */
-.secnav { height: 34px; padding: 3px; border-radius: var(--r-control); }
-.secnav__b { height: 28px; padding: 0 12px; font-size: 13px; border-radius: var(--r-inner); }
-.secnav__b b { border-radius: var(--r-pill); }
+.secnav { padding: 3px; }
+.secnav__b { padding: 0 12px; font-size: 13px; }
+.secnav__b b { }
 
 /* ── the crew list is a list ─────────────────────────────────────────────
    Each assignment was a card floating inside the Crew card. Rows separated

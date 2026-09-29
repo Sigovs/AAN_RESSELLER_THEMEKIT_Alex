@@ -50,7 +50,6 @@
     12  MOTION · PRINT · NO-SCRIPT
    ========================================================================== */
 
-
 /* ============================================================================
    1 · TOKENS — one authoritative layer. DESIGN.md's values, verbatim, except
    the two marked LOCAL, each carrying the reason it differs.
@@ -177,7 +176,6 @@
   --focus-color-on-dark: #ffd98a;
 }
 
-
 /* ============================================================================
    2 · BASE
    ========================================================================== */
@@ -256,7 +254,6 @@ svg { display: block; }
   padding: 0 var(--gutter) var(--gutter);
   min-height: 100vh;
 }
-
 
 /* ============================================================================
    3 · PLATFORM BAR — FLOATING at rest, ATTACHED once engaged (DESIGN.md §2)
@@ -360,7 +357,6 @@ kbd {
 .me__n { font-size: 13px; font-weight: 600; white-space: nowrap; }
 .me .i { width: 12px; height: 12px; opacity: .6; }
 
-
 /* ============================================================================
    4 · HEAD + the utility nav
    Production ships five accounting utilities as a text rail in the page header:
@@ -416,7 +412,6 @@ kbd {
 .btn--xs { height: 28px; padding: 0 10px; font-size: 12px; }
 .btn .i { width: 15px; height: 15px; }
 
-
 /* ============================================================================
    5 · DECK — THE TOTALS
    Four figures, one row, each one a FLOATING card with its own radius and one
@@ -454,7 +449,7 @@ kbd {
   text-align: left;
   transition: box-shadow var(--dur) var(--ease), background var(--dur) var(--ease);
 }
-button.tile:hover { background: var(--wash); }
+button.tile:not(.tile--on):hover { background: var(--wash); }
 .tile__k { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); }
 .tile__v {
   margin-top: 6px;
@@ -494,7 +489,6 @@ button.tile:hover .tile__f { color: var(--brand-ink); }
   vertical-align: 1px;
 }
 
-
 /* ============================================================================
    6 · COMMAND — lanes, band, scope, A–Z
    ========================================================================== */
@@ -515,24 +509,16 @@ button.tile:hover .tile__f { color: var(--brand-ink); }
 }
 .cmdtop__sp { flex: 1 1 auto; }
 
-.lanes, .statuses {
-  display: inline-flex; flex-wrap: wrap; align-items: center; gap: 3px;
-  padding: 5px;
-  border-radius: var(--r-pill);
-  background: var(--well);
-  box-shadow: inset 0 0 0 1px var(--line);
+.lanes, .statuses { align-items: center;
 }
-.lane {
-  display: inline-flex; align-items: center; gap: 6px;
-  height: 34px; padding: 0 12px;
-  border-radius: var(--r-pill);
+.lane { align-items: center;
   color: var(--ink-2); font-size: 13px; font-weight: 500; white-space: nowrap;
   transition: background var(--dur) var(--ease), color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
-.lane:hover { background: rgba(255,255,255,.62); color: var(--ink); }
+.lane:hover { color: var(--ink); }
 .lane b { color: var(--ink); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
 /* current lane = white thumb on a sunken track (DESIGN.md §6) */
-.lane--on, .lane--on:hover { background: var(--sheet); color: var(--brand-ink); box-shadow: var(--sh-pill); }
+.lane--on, .lane--on:hover { color: var(--brand-ink); }
 .lane--on b { color: var(--brand-ink); }
 
 /* ── command band · sticky #2 of 3 ─── 8 + 56 + 8 = --stick-cmd ─────────── */
@@ -620,7 +606,6 @@ button.tile:hover .tile__f { color: var(--brand-ink); }
 .az button:hover:not([disabled]) { background: var(--sheet); color: var(--brand-ink); }
 .az button[disabled] { color: var(--line-3); cursor: default; }
 .az .on, .az .on:hover { background: var(--ink); color: var(--sheet); }
-
 
 /* ============================================================================
    7 · THE LIST
@@ -801,7 +786,6 @@ button.tile:hover .tile__f { color: var(--brand-ink); }
 }
 .empty b { color: var(--ink); font-size: 15px; font-weight: 600; }
 
-
 /* ============================================================================
    8 · THE OPEN ROW — in-flow expansion (DESIGN.md §8)
    `position: static`, in flow, reserving its own height. It shares the row's
@@ -923,7 +907,6 @@ button.tile:hover .tile__f { color: var(--brand-ink); }
 }
 .lgtabs a:hover { background: var(--brand-soft); color: var(--brand-ink); text-decoration: none; }
 
-
 /* ============================================================================
    9 · FOOTER — the shown set and its sums
    ========================================================================== */
@@ -941,7 +924,6 @@ button.tile:hover .tile__f { color: var(--brand-ink); }
 .tot span { display: inline-flex; align-items: baseline; gap: 6px; }
 .tot b { color: var(--ink); font-weight: 700; font-family: var(--mono); font-size: 13.5px; }
 .tot .due { color: var(--danger); }
-
 
 /* ============================================================================
    10 · MENUS · FOCUS
@@ -974,10 +956,9 @@ button.tile:hover .tile__f { color: var(--brand-ink); }
 .mn__who b { display: block; color: var(--ink); font-size: 14px; }
 .nav .pop { min-width: 252px; }
 
-.btn:focus-visible, .lane:focus-visible { border-radius: var(--r-pill); }
+.btn:focus-visible, .lane:focus-visible { }
 .row.open :focus-visible, .tile--on :focus-visible { outline-color: var(--focus-color-on-dark); }
 .sel:focus-visible { border-radius: var(--r-inner); }
-
 
 /* ============================================================================
    11 · RESPONSIVE — desktop only, one breakpoint. 1366 is the binding width and
@@ -1002,12 +983,11 @@ button.tile:hover .tile__f { color: var(--brand-ink); }
 @media (max-width: 1180px) {
   /* Below the supported range the list scrolls horizontally rather than lie
      about fitting. The page itself still never scrolls. */
-  .rows { overflow-x: auto; }
+  .rows { overflow-x: hidden; }
   .hd, .row { min-width: 1044px; }
   .exp { min-width: 1044px; }
   .deck { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-
 
 /* ============================================================================
    12 · MOTION · PRINT · NO-SCRIPT

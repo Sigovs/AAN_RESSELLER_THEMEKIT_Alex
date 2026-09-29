@@ -29,7 +29,6 @@
        is white glass, so the controls carry page ink.
    ========================================================================== */
 
-
 /* ============================================================================
    1 · COLUMNS — ☐ · Lead · Contact · Vehicle · Type · Source · Status ·
                  Assigned · Created · Follow-up · Activity
@@ -89,7 +88,6 @@
 /* on the focal surface the page hairline disappears, so the open row draws its own */
 .row.open > .st, .row.open:hover > .st { box-shadow: inset 1px 0 0 rgba(255, 255, 255, .20); }
 
-
 /* ============================================================================
    2 · THE LANE RAIL — a view control, on a sunken track
 
@@ -105,14 +103,13 @@
    viewport. The scope line under the band already carries the active lane.
    ========================================================================== */
 .cmdtop .lanes { flex-wrap: wrap; padding: 5px; gap: var(--s1); }
-.cmdtop .lane { height: 40px; padding: 0 var(--s4); gap: var(--s2); font-size: 14px; }
+.cmdtop .lane { font-size: 14px; }
 .cmdtop .lane b { font-size: 13px; font-weight: 600; }
 /* a zero lane stays legible rather than being greyed out of reach */
 .cmdtop .lane--zero, .cmdtop .lane--zero b { color: var(--ink-3); }
 /* `All on file` spanned the row when the lanes were a 2-column grid in the card;
    on a horizontal rail it is simply the last segment. */
 .cmdtop .lane--all { grid-column: auto; margin-left: 0; }
-
 
 /* ============================================================================
    3 · COMMAND BAND — search, sort, and the two list-wide toggles
@@ -137,7 +134,6 @@
 .mn { max-height: 60vh; overflow: auto; }
 .more { min-width: 420px; }
 .more .pop__row .fld { flex: 1; min-width: 0; }
-
 
 /* ============================================================================
    4 · ROW ANATOMY
@@ -232,7 +228,6 @@
 .row.open .fu__due, .row.open .fu__due .i { color: #ffc7bf; }
 .row.open .ck { border-color: rgba(255, 255, 255, .6); background: transparent; }
 
-
 /* ============================================================================
    5 · THE BOARD — hero and the "By status" inset
 
@@ -271,7 +266,6 @@
 .attn .ar:focus-visible .ar__m i,
 .attn .ar--on .ar__m i { box-shadow: none; filter: none; animation: none; }
 .attn__g { gap: var(--s2); }
-
 
 /* ============================================================================
    6 · THE INLINE LEAD WORKSPACE
@@ -387,7 +381,6 @@
    region's contents (DESIGN.md §13) */
 .acc__t + .demo { margin-left: var(--s2); }
 
-
 /* ============================================================================
    7 · PAGINATION AND THE ASSIGN TRAY
    ========================================================================== */
@@ -404,7 +397,6 @@
 .tray .facet { position: relative; }
 .tray .facet > button { display: inline-flex; align-items: center; gap: var(--s2); }
 .tray .pop { top: auto; bottom: calc(100% + var(--s2)); left: 0; }
-
 
 /* ============================================================================
    8 · RESPONSIVE — one breakpoint, at 1400

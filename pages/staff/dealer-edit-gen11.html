@@ -10,8 +10,9 @@
    `dark` — the key is shared with the other Gen pages — cannot land this page
    in a half-dark state at load. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="dealer-edit-gen11.css?v=20260929091529">
-<link rel="stylesheet" href="../_aan-family.css?v=20260929091529">
+<link rel="stylesheet" href="dealer-edit-gen11.css?v=20260929K5">
+<link rel="stylesheet" href="../_aan-family.css?v=20260929K5">
+<link rel="stylesheet" href="../_aan-components.css?v=20260929K5">
 </head>
 <body>
 
@@ -84,7 +85,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   <!-- ══ BODY ═════════════════════════════════════════════════════════════
        rail (where am I) · zones (the record) · side (what surrounds it) -->
   <div class="body" id="body">
-    <nav class="rail" id="rail" aria-label="Dealer file sections"></nav>
+    <nav class="rail ui-nav" id="rail" aria-label="Dealer file sections"></nav>
     <div class="zones" id="zones"></div>
     <aside class="side" id="side" aria-label="Notes, options and locks"></aside>
   </div>
@@ -103,7 +104,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   <p class="nojs">This dealer file is rendered by script. Enable JavaScript to open the record.</p>
 </div>
 
-<script src="dealer-edit-gen11.data.js?v=20260929091529"></script>
-<script src="dealer-edit-gen11.js?v=20260929091529"></script>
+<script src="dealer-edit-gen11.data.js?v=20260929K1"></script>
+<script src="dealer-edit-gen11.js?v=20260929K1"></script>
 </body>
 </html>

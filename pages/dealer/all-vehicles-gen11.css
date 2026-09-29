@@ -20,7 +20,6 @@
      >> QUARANTINE · dark theme ........... fenced AND inactive
    ========================================================================== */
 
-
 /* ============================================================================
    TOKENS — the one authoritative layer. Nothing below may hardcode what is
    named here. Values are the ones Gen 11 actually rendered, not the ones the
@@ -175,7 +174,6 @@
   --focus-color: var(--brand);
   --focus-color-on-dark: #ffd98a;
 }
-
 
 /* ============================================================================
    AAN · Dealer UI · All Vehicles — GENERATION 8
@@ -1138,7 +1136,6 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
 /* >> QUARANTINE · Filters-dock-open */
 .app.dock-open .bento .focal__h .s, .app.dock-open .bento .hero__of, .app.dock-open .bento .attn__h .s, .app.dock-open .bento .full { display: inline; }
 .app.dock-open .bento .short { display: none; }
-.app.dock-open .bento .lanes { display: flex; }
 .app.dock-open .bento .kv { display: grid; }
 .app.dock-open .bento .agemix { display: flex; }
 .app.dock-open .bento .ar__m { display: block; }
@@ -1779,37 +1776,22 @@ html, body { height: 100%; height: auto; }
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   font-size: 13px;
-  padding: 1px 6px;
-  border-radius: 6px;
-  background: rgba(255,255,255,.10);
   font-size: 12px;
 }
-.lane--on, .lane--on:hover { background: var(--focal-on); color: var(--focal-on-ink); box-shadow: 0 2px 8px rgba(0,0,0,.25); transform: none; }
-.lane--on b { color: var(--focal-on-ink); background: rgba(15,22,38,.08); }
+.lane--on, .lane--on:hover { color: var(--focal-on-ink); transform: none; }
+.lane--on b { color: var(--focal-on-ink); }
 .lane--zero { color: var(--focal-ink-3); opacity: .7; }
-.lane--zero b { color: var(--focal-ink-3); background: transparent; box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
+.lane--zero b { color: var(--focal-ink-3); }
 .lane:focus-visible { outline: 2px solid var(--focal-on); outline-offset: 1px; }
 
 /* lanes as an orderly 2-column grid of tags; 'All on file' spans the row */
 .lane--all { grid-column: 1 / -1; grid-column: auto; margin-left: auto; margin-left: 0; grid-column: 1 / -1; }
 .focal__main { padding: 16px 24px 16px; min-width: 0; padding-bottom: 24px; padding-left: 24px; padding-right: 24px; padding-bottom: 24px; }
 .lanes {
-  display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2px 6px;
   margin-top: 10px;
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 4px;
   margin-top: 16px;
-  flex-wrap: wrap;
-  gap: 4px 6px;
   margin-top: 12px;
-  gap: 4px;
-  gap: 4px 3px;
-  display: grid;
-  gap: 4px;
-  gap: 8px 10px;
   margin-top: 16px;
 }
 
@@ -2110,41 +2092,14 @@ body {
   box-shadow: var(--sh-pill), inset 0 -2px 0 var(--brand);
 }
 .lane {
-  display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 40px;
-  padding: 0 12px;
-  border-radius: 10px;
   font-size: 14px;
   color: var(--focal-ink-2);
   transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
-  height: 36px;
-  gap: 8px;
-  flex: 0 0 auto;
-  height: 34px;
-  padding: 0 12px;
-  height: 32px;
-  padding: 0 10px;
   font-size: 13px;
-  gap: 6px;
-  padding: 0 8px;
-  height: 34px;
-  padding: 0 7px;
-  background: rgba(255,255,255,.06);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.10);
-  border-radius: 9px;
-  padding: 0 8px;
   transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease), transform var(--dur) var(--ease);
-  height: 30px;
-  flex: none;
-  width: auto;
-  padding: 0 10px;
-  height: 46px;
-  padding: 0 16px;
-  border-radius: 999px;
 }
-.lane--on, .lane.on { background: var(--sheet); box-shadow: var(--sh-pill); }
 .search {
   flex: 1 1 300px;
   min-width: 180px;
@@ -2369,18 +2324,11 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
 /* ── the reference's command zone: a lane track on top, search + two-line facets below ── */
 .cmdtop { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; }
 .cmdtop .lanes {
-  display: inline-flex;
-  gap: 3px;
   margin: 0;
-  padding: 5px;
-  border-radius: 999px;
-  background: var(--well);
-  box-shadow: inset 0 0 0 1px var(--line);
 }
-.cmdtop .lane { height: 40px; padding: 0 16px; border-radius: 999px; gap: 8px; color: var(--ink-2); background: transparent; box-shadow: none; }
+.cmdtop .lane { color: var(--ink-2); }
 .cmdtop .lane b { color: var(--ink); font-variant-numeric: tabular-nums; }
-.cmdtop .lane:hover { background: rgba(255,255,255,.6); }
-.cmdtop .lane--on, .cmdtop .lane--on:hover { background: var(--sheet); color: var(--brand-ink); box-shadow: var(--sh-pill); }
+.cmdtop .lane--on, .cmdtop .lane--on:hover { color: var(--brand-ink); }
 .cmdtop .lane--on b { color: var(--brand-ink); }
 .cmdtop .lane--zero { color: var(--ink-4); }
 .cmdtop .lane--zero b { color: var(--ink-4); }

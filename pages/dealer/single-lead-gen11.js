@@ -531,7 +531,7 @@
     var on = open == null ? !app.classList.contains('dock-open') : open;
     app.classList.toggle('dock-open', on);
     $$('[data-act="dock"]').forEach(function (b) {
-      b.classList.toggle('facet__b--on', on);
+      b.classList.toggle('facet__b--on', on); b.classList.toggle('btn--on', on);
       b.setAttribute('aria-expanded', String(on));
     });
     sizeExtender();

@@ -139,7 +139,7 @@
     $('#modes').innerHTML = D.modes.map(function (m) {
       var on = m.k === S.mode;
       var nod = modeRows(m.k) === null;
-      return '<button class="lane' + (on ? ' lane--on' : '') + (nod ? ' lane--nodata' : '') +
+      return '<button class="lane ui-view' + (on ? ' lane--on ui-view--on' : '') + (nod ? ' lane--nodata' : '') +
         '" type="button" data-mode="' + m.k + '" aria-pressed="' + (on ? 'true' : 'false') +
         (nod ? '" title="No row sample for this saved filter in the 2026-09-09 export' : '') + '">' +
         '<span>' + esc(m.l) + '</span>' + (m.n == null ? '' : '<b>' + nf(m.n) + '</b>') + '</button>';
