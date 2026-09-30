@@ -388,11 +388,23 @@ input, textarea, select { font-weight: 400; }
    edge of its slot. */
 .btn, .sel, .tl, .tag, .bdg, .badge, .chip, .pill, .lane,
 .ui-view, .ui-filter, .ui-nav__i, .ui-ctl, .facet__b, .kbd, kbd, .tbtn,
-.rlink, .mn__it, .gl, .nav__b {
+.rlink, .gl, .nav__b {
   display: inline-flex;
   align-items: center;
   line-height: 1;
 }
+/* `.mn__it` is deliberately NOT in that list. A menu item is a full-width row
+   in a column of choices, so it keeps the BLOCK-level flex it already had —
+   `inline-flex` put all fourteen dealers of All Leads’ bulk-assign menu on
+   one line, 2426px wide, and the workspace’s clip then cut off eleven of
+   them. It still gets the vertical centring this rule exists for. */
+.mn__it {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  line-height: 1.25;
+}
+
 /* vertical only: horizontal placement stays whatever each object already had,
    so a card's caps label does not slide to the middle of its card */
 .btn, .sel, .tbtn, .kbd, kbd { justify-content: center; }

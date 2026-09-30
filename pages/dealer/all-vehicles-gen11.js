@@ -664,6 +664,17 @@
     /* focus must not vanish with the panel that held it */
     if (inside && $('#cols-btn')) $('#cols-btn').focus();
   }
+  /* A popover is left-anchored to its trigger. For a facet in the right half
+     of the toolbar that runs the panel past the workspace edge, and the
+     workspace clips — the Price filter lost 105px of its quick-range buttons
+     at 1440. Flip to right-anchored when, and only when, it would overflow. */
+  function fitPop(p) {
+    p.classList.remove('pop--right');
+    var host = p.closest('.field') || document.documentElement;
+    var hb = host.getBoundingClientRect(), b = p.getBoundingClientRect();
+    if (b.right > hb.right - 1) p.classList.add('pop--right');
+  }
+
   function openColsPop() {
     var p = $('#p-cols'), b = $('#cols-btn');
     p.innerHTML = colsPopHTML();
@@ -686,7 +697,7 @@
       closePops();
       if (!wasOpen) {
         if (el.dataset.pop === 'p-cols') openColsPop();
-        else { p.classList.add('pop--open'); if (el.hasAttribute('aria-expanded')) el.setAttribute('aria-expanded', 'true'); }
+        else { p.classList.add('pop--open'); fitPop(p); if (el.hasAttribute('aria-expanded')) el.setAttribute('aria-expanded', 'true'); }
       }
       return;
     }

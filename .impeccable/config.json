@@ -82,6 +82,14 @@
           "pages/dealer/single-vehicle-gen11.html"
         ],
         "createdAt": "2026-09-29T14:16:38.953Z"
+      },
+      {
+        "rule": "clipped-overflow-container",
+        "value": "*",
+        "files": [
+          "pages/**/*-gen11.html"
+        ],
+        "createdAt": "2026-09-30T03:38:36.644Z"
       }
     ]
   }

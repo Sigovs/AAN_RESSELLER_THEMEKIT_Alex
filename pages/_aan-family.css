@@ -722,3 +722,19 @@
    ══════════════════════════════════════════════════════════════════════════ */
 .app > .head { margin-top: 12px; margin-bottom: 24px; }
 .app > .bento { margin-bottom: 24px; }
+
+/* ── 21 · a menu is a column of choices, not a line of them ──────────────
+   An absolutely-positioned popover sizes to max-content, and `.mn__it`'s
+   `width: 100%` cannot constrain that. Measured on All Leads in bulk-select:
+   the Assign menu's fourteen dealer names rendered the popover **2426px
+   wide** — 1662px past the workspace's `overflow: clip`, so the menu was
+   cut in half and most of the dealers were unreachable.
+
+   The cap is what was missing; the clip was only what made it visible. */
+.pop {
+  max-width: min(420px, calc(100vw - var(--s6)));
+}
+.mn__it {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
