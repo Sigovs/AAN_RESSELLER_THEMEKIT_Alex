@@ -30,7 +30,12 @@
    list below. Only the current lane is an object; the rest are labels. */
 .ui-views {
   display: inline-flex; align-items: center; flex-wrap: wrap;
-  gap: 3px 1px;
+  /* 1px put four bordered section tabs a hairline apart — Overview,
+     Contact, Trade-in read as one segmented slab rather than four choices.
+     The row gap stays tight because a wrapped second line of lanes belongs
+     to the same control; the column gap is separation and gets the tier
+     below the standalone-action 8px. */
+  gap: 4px 6px;
   min-height: var(--ctl); padding: 0; width: auto;
   border: 0; border-radius: 0;
   background: none;

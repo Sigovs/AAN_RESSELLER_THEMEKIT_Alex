@@ -111,7 +111,11 @@
   border-radius: var(--aan-bar-r);
   gap: 0;
 }
-.nav { gap: 0; }
+/* Nav items carry a filled surface now (brand-soft when current, --well on
+   hover), so zero gap means two lit destinations share an edge and read as
+   one blob. The system already publishes its own answer for this — "one
+   primary per group, 8px apart, never touching" — so the nav uses it. */
+.nav { gap: var(--s2); }
 
 .nav__b,
 .top .nav__b {
@@ -619,8 +623,20 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-/* 16px short at 1440 with eight destinations — the last notch */
-@media (max-width: 1520px) { .top .nav__b { padding: 0 5px; } .top .nav { column-gap: 0; } }
+/* Eight destinations were 16px short at 1440, and the width was bought by
+   deleting the gap between them. That is the one place it must never come
+   from: the nav items carry a filled surface, so at column-gap 0 two lit
+   destinations share an edge and read as a single blob — Leads and Site
+   glued together.
+
+   The width comes out of the global search instead, which is elastic and
+   still legible at 120px. Separation is never the elastic member. */
+@media (max-width: 1520px) {
+  .top .nav__b { padding: 0 6px; }
+  .top .nav { column-gap: 6px; }
+  /* the 132px floor set further up is what the width has to clear here */
+  .gsearch { width: 112px; min-width: 112px; }
+}
 
 /* ── 11m · the command row shrinks instead of pushing the sheet ──────────────
    All Leads: the band's content measured 1403px inside a 1393px sheet, so the
@@ -738,3 +754,40 @@
   white-space: normal;
   overflow-wrap: anywhere;
 }
+
+/* ── 22 · SEPARATION IS NOT NEGOTIABLE ──────────────────────────────────
+   Adjacent interactive surfaces never touch and never come close enough to
+   read as one object. This has been fixed one component at a time three
+   times now — the platform nav at 0px, the section tabs at 1px, the record
+   arrows at 2px — so it is written once, by name, for every container that
+   holds a row of controls.
+
+   The value is the system’s own: "one primary per group, 8px apart, never
+   touching". Segmented members share a tray and sit at 6px, which is the
+   tier below and still reads as separate boxes.
+
+   Gap and padding only. No display, no positioning, no width — the failure
+   this repeats is a spacing failure and the fix stays a spacing fix. */
+
+/* rows of standalone actions */
+.head__actions,
+.cock__acts,
+.chips,
+.tally,
+.statuses,
+.savebar,
+.tray { column-gap: var(--s2); }
+
+/* segmented and tabbed members: one tray, still visibly separate boxes */
+.secnav,
+.tabs,
+.seg,
+.cock__nav { column-gap: 6px; }
+
+/* the platform bar: the utility cluster is as much a control row as the nav */
+.top { column-gap: 6px; }
+
+/* an inline action pair in a table cell — dense, but not touching */
+.row .c-act,
+.row .c > .btn + .btn { margin-left: 0; }
+.c-act { column-gap: var(--s2); }
