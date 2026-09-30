@@ -125,6 +125,84 @@
   .g11-list code { font: 12.5px/1 ui-monospace, SFMono-Regular, Menlo, monospace; padding: 1px 5px; border-radius: 5px; background: rgba(18,23,20,.06); }
 
   /* ── the Gen 10 family: pages built on the same system, side by side ── */
+  /* ── GEN 11 · FINAL ASSEMBLY ─────────────────────────────────────────────
+     The current build presented as one delivery. Same dark surfaces, radii and
+     type as the rest of the catalogue — the previews are the content, so they
+     get the scale, and everything else stays quiet. */
+  .a11-top { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
+  .a11-sum { margin: 0 0 22px; max-width: 78ch; font-size: 15px; line-height: 1.6; color: var(--on-2); }
+  /* the build's own status — a spec plate, not a notice. No amber field, no
+     warning surface: the state is carried by one badge and three quiet dots. */
+  .a11-st { display: flex; flex-wrap: wrap; align-items: stretch; gap: 18px 26px; margin-bottom: 30px;
+            padding: 17px 20px; border-radius: 14px;
+            background: linear-gradient(180deg, rgba(77,134,255,.11), rgba(77,134,255,.035));
+            box-shadow: inset 0 0 0 1px rgba(77,134,255,.24); }
+  .a11-st__m { flex: 1 1 440px; min-width: 0; }
+  .a11-st__k { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+  .a11-st__beta { display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: 6px;
+                  background: var(--brand-2); color: #06122e;
+                  font-size: 11px; font-weight: 800; letter-spacing: .1em; }
+  .a11-st__k span { font: 700 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: #a8c5ff; }
+  .a11-st__m p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--on-2); max-width: 74ch; }
+  .a11-st__s { flex: 0 1 auto; display: flex; flex-direction: column; justify-content: center; gap: 7px;
+               padding-left: 26px; border-left: 1px solid rgba(77,134,255,.22); }
+  .a11-st__i { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--on-2); white-space: nowrap; }
+  .a11-st__i i { flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
+  .a11-st__i--ds i { background: var(--brand-2); }
+  .a11-st__i--go i { background: var(--amber); }
+  @media (max-width: 900px) {
+    .a11-st__s { padding-left: 0; padding-top: 16px; border-left: 0; border-top: 1px solid rgba(77,134,255,.22);
+                 flex: 1 1 100%; flex-direction: row; flex-wrap: wrap; gap: 8px 20px; }
+  }
+
+  .a11-grp { margin-top: 30px; }
+  .a11-grp__h { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px;
+                padding-bottom: 10px; border-bottom: 1px solid var(--line-on); }
+  .a11-grp__h b { font-size: 15px; letter-spacing: -.01em; }
+  .a11-grp__h span { font-size: 12.5px; color: var(--on-3); }
+  .a11-grp__n { margin-left: auto; font: 400 12px/1 var(--mono); color: var(--on-3); }
+
+  .a11-g { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+  .a11-c { display: flex; flex-direction: column; border-radius: 14px; overflow: hidden;
+           background: rgba(255,255,255,.04); box-shadow: inset 0 0 0 1px var(--line-on);
+           text-decoration: none; color: inherit;
+           transition: transform .15s ease, box-shadow .15s ease; }
+  .a11-c:hover { transform: translateY(-2px); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18), 0 20px 40px -20px rgba(0,0,0,.7); }
+  /* height:auto or the width/height attributes (kept, so the box is reserved
+     before the JPEG arrives) win over aspect-ratio and the preview renders square */
+  .a11-c__s { display: block; width: 100%; height: auto; aspect-ratio: 16/10; object-fit: cover; object-position: top center;
+              background: #1a2334; border-bottom: 1px solid var(--line-on); }
+  .a11-c__b { display: flex; flex-direction: column; gap: 10px; padding: 13px 14px 14px; }
+  .a11-c__r { display: flex; align-items: center; gap: 10px; }
+  .a11-c__b p { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--on-2); }
+  .a11-c__t { min-width: 0; }
+  .a11-c__t b { display: block; font-size: 15px; letter-spacing: -.01em; }
+  .a11-c__t small { display: block; margin-top: 2px; font: 400 11.5px/1 var(--mono); color: var(--on-3); }
+  .a11-c__go { margin-left: auto; flex: none; display: inline-flex; align-items: center; gap: 6px;
+               height: 30px; padding: 0 11px; border-radius: 8px;
+               background: rgba(31,95,224,.22); color: #a8c5ff;
+               box-shadow: inset 0 0 0 1px rgba(77,134,255,.34);
+               font-size: 12.5px; font-weight: 650; white-space: nowrap; }
+  .a11-c:hover .a11-c__go { background: rgba(31,95,224,.34); color: #cfe0ff; }
+
+  /* the handoff resource — deliberately not another product card */
+  .a11-ds { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 18px; margin-top: 30px;
+            padding: 18px 20px; border-radius: 14px;
+            background: linear-gradient(180deg, rgba(31,95,224,.13), rgba(31,95,224,.05));
+            box-shadow: inset 0 0 0 1px rgba(77,134,255,.26); text-decoration: none; color: inherit; }
+  .a11-ds:hover { box-shadow: inset 0 0 0 1px rgba(77,134,255,.5); }
+  .a11-ds__t { min-width: 0; flex: 1 1 380px; }
+  .a11-ds__t b { display: block; font-size: 15.5px; letter-spacing: -.01em; }
+  .a11-ds__t p { margin: 5px 0 0; font-size: 13px; line-height: 1.55; color: var(--on-2); max-width: 70ch; }
+  .a11-ds__go { flex: none; display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 15px;
+                border-radius: 9px; background: var(--brand); color: #fff; font-size: 13.5px; font-weight: 650; }
+  .a11-ds:hover .a11-ds__go { background: #1a50c4; }
+
+  @media (max-width: 760px) {
+    .a11-g { grid-template-columns: 1fr; }
+    .sec-h p { text-align: left; }
+  }
+
   .fam { grid-column: 1 / -1; margin-top: 8px; padding-top: 26px; border-top: 1px solid var(--line-on); }
   .fam__h { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
   .fam__h b { font-size: 15px; } .fam__h span { font-size: 13px; color: var(--on-3); }
@@ -265,7 +343,8 @@
 <div class="bar"><div class="wrap">
   <span class="logo"><i>AAN</i> All Vehicles · redesign</span>
   <nav>
-    <a href="#gen11">Gen 11 · current</a>
+    <a href="#gen11">Gen 11 · final assembly</a>
+    <a href="design-system/gen11/index.html">Design system</a>
     <a href="#candidates">Candidates</a>
     <a href="#preview">Preview</a>
     <a href="#compare">Compare</a>
@@ -303,32 +382,118 @@
 </div></div>
 
 
-<!-- ── GEN 11 · CURRENT ────────────────────────────────────────────────────
-     The current family. Kept at the top of the page on purpose: older
-     generations stay published below for comparison, but this is the one
-     being built on. Only pages that exist are linked. ── -->
+<!-- ── GEN 11 · FINAL ASSEMBLY · CURRENT ───────────────────────────────────
+     The delivered build, presented as one thing. The preview carries the card,
+     so it gets the width; everything else is a caption. Older generations stay
+     published below, unchanged, for comparison. ── -->
 <section id="gen11"><div class="wrap">
   <div class="sec-h">
-    <span class="caps">Gen 11 · current</span>
-    <h2>The current UX/UI upgrade</h2>
-    <p>One visual system across the family: a single 8pt spacing ladder, a sticky stack that behaves as one attached surface, contextual detail that opens inside the list at a named position, and an active-state hierarchy where only one state is a blue fill. The system is written down in <a href="DESIGN.md">DESIGN.md</a>, extracted from the running implementation rather than proposed in advance.</p>
+    <span class="caps">Gen 11 &middot; Final assembly &middot; Current</span>
+    <h2>The current build</h2>
+    <p>Ten pages, dealer and employee, on one component system &mdash; one gutter, one attached sticky stack, contextual detail that opens inside the list, and a single 8pt ladder behind every gap.</p>
   </div>
 
-  <div class="fam" id="gen11-family">
-    <div class="fam__h"><b>The Gen 11 family</b><span>ten pages, dealer and employee, on one system — one gutter · attached sticky stack · in-flow contextual detail · 8pt spacing</span></div>
-    <div class="fam__g" id="gen11-pages">
-      <a class="pg pg--new" href="pages/dealer/all-vehicles-gen11.html"><img src="previews/gen11.jpg" alt=""><span><b>All Vehicles</b><small>Dealer · Inventory Manager · 359 available</small><p>The reference implementation of the system. The selected vehicle opens in the list at a named anchor 202px under the sticky stack, its workspace shares the row's edges exactly, and its detail is four stacked regions — Merchandising Health, Market Intelligence, Specification, History.</p><span class="k">pages/dealer/all-vehicles-gen11</span></span></a>
-      <a class="pg pg--new" href="pages/dealer/dealer-login-gen11.html"><span><b>Dealer Login</b><small>Front door · all dealers</small><p>The production front door on the Gen 11 system: the marketing panel and support block as one dark focal pane, the form as a floating sheet beside it. User Name, Password with its reveal toggle, and the password-reset link — nothing added.</p><span class="k">pages/dealer/dealer-login-gen11</span></span></a>
-      <a class="pg pg--new" href="pages/dealer/all-leads-gen11.html"><span><b>All Leads</b><small>Dealer · Lead Desk · 70 per page</small><p>The lead desk on the Gen 11 system. The header no longer veils itself when the list travels under it, the command band shares the page gutter, unrelated rows are not dimmed, and a lead opens in the list at the same 202px anchor as a vehicle.</p><span class="k">pages/dealer/all-leads-gen11</span></span></a>
-      <a class="pg pg--new" href="pages/dealer/single-lead-gen11.html"><span><b>Single Lead</b><small>Dealer · lead dossier</small><p>Five continuous sections — Overview, Contact, Trade-in, Activity, Emails — as real anchors on one page, never tabs. The buyer's message is one of four facts at the top instead of dominating them, and the section navigator lands each heading exactly under the sticky stack.</p><span class="k">pages/dealer/single-lead-gen11</span></span></a>
-      <a class="pg pg--new" href="pages/dealer/single-vehicle-gen11.html"><span><b>Single Vehicle</b><small>Dealer · vehicle editor · 12 zones</small><p>The production editor's own architecture — status, pricing, photos, specs, colours, description, features, feeds, custom — rebuilt on the Gen 11 surfaces. 456 fields, the warning state included.</p><span class="k">pages/dealer/single-vehicle-gen11</span></span></a>
-      <a class="pg pg--new" href="pages/staff/my-work-queue-gen11.html"><span><b>My Work Queue</b><small>AAN employee · 94 open · 16 columns</small><p>A dense operational lane kept dense. Zero mid-word breaks across 467 cells; the clean two-line wraps are left exactly as they were, because they are not the defect.</p><span class="k">pages/staff/my-work-queue-gen11</span></span></a>
-      <a class="pg pg--new" href="pages/staff/single-ticket-gen11.html"><span><b>Single Ticket</b><small>AAN employee · work object</small><p>A ticket as thread, crew, todos and changelog — the chronological parts reuse the Gen 11 timeline rather than inventing one. The empty-crew and closed states are real states from the source.</p><span class="k">pages/staff/single-ticket-gen11</span></span></a>
-      <a class="pg pg--new" href="pages/staff/manage-dealers-gen11.html"><span><b>Manage Dealers</b><small>AAN employee · 365-row roster</small><p>The roster at full density, thirteen columns on the Gen 11 table treatment. No column is sticky, so none pretends to be: the operational group is marked by one divider, not a grey slab.</p><span class="k">pages/staff/manage-dealers-gen11</span></span></a>
-      <a class="pg pg--new" href="pages/staff/dealer-edit-gen11.html"><span><b>Dealer Edit</b><small>AAN employee · dealer file</small><p>105 fields across seven real zones — identity, people, access, communications, integrations, web, email — separated by rhythm and hairlines instead of being wrapped in cards.</p><span class="k">pages/staff/dealer-edit-gen11</span></span></a>
-      <a class="pg pg--new" href="pages/staff/accounting-view-all-gen11.html"><span><b>Accounting — View All</b><small>AAN employee · billing · 205 billable</small><p>Money, so the numbers are tabular and the totals are unmistakable. Past Due carries its own honest note where the figure does not resolve to the rows in the snapshot.</p><span class="k">pages/staff/accounting-view-all-gen11</span></span></a>
+  <div class="a11-st">
+    <div class="a11-st__m">
+      <div class="a11-st__k"><b class="a11-st__beta">BETA</b><span>Current review build</span></div>
+      <p>Gen&nbsp;11 is complete as a ten-page Dealer&nbsp;+&nbsp;Employee UI system and is ready for review. Minor visual refinements, edge-case fixes, and production integration work are still in progress.</p>
+    </div>
+    <div class="a11-st__s">
+      <div class="a11-st__i"><i></i>10 Pages Complete</div>
+      <div class="a11-st__i a11-st__i--ds"><i></i>Design System Included</div>
+      <div class="a11-st__i a11-st__i--go"><i></i>Final Polish Ongoing</div>
     </div>
   </div>
+
+  <div class="a11-grp">
+    <div class="a11-grp__h"><b>Dealer UI</b><span>what the dealership works in every day</span><span class="a11-grp__n">5 pages</span></div>
+    <div class="a11-g">
+      <a class="a11-c" href="pages/dealer/all-vehicles-gen11.html">
+        <img class="a11-c__s" src="dash/thumbs/all-vehicles.jpg" alt="All Vehicles — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <span class="a11-c__b">
+          <span class="a11-c__r"><span class="a11-c__t"><b>All Vehicles</b><small>Dealer &middot; Inventory Manager</small></span><span class="a11-c__go">Open page &rarr;</span></span>
+          <p>The reference implementation: a vehicle opens inside the list at a named anchor, and the columns are the dealer&rsquo;s to choose.</p>
+        </span>
+      </a>
+      <a class="a11-c" href="pages/dealer/all-leads-gen11.html">
+        <img class="a11-c__s" src="dash/thumbs/all-leads.jpg" alt="All Leads — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <span class="a11-c__b">
+          <span class="a11-c__r"><span class="a11-c__t"><b>All Leads</b><small>Dealer &middot; Lead Desk</small></span><span class="a11-c__go">Open page &rarr;</span></span>
+          <p>The lead desk on the same table grammar &mdash; lanes, facets, and a lead that opens in flow at the same anchor as a vehicle.</p>
+        </span>
+      </a>
+      <a class="a11-c" href="pages/dealer/single-lead-gen11.html">
+        <img class="a11-c__s" src="dash/thumbs/single-lead.jpg" alt="Single Lead — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <span class="a11-c__b">
+          <span class="a11-c__r"><span class="a11-c__t"><b>Single Lead</b><small>Dealer &middot; Lead dossier</small></span><span class="a11-c__go">Open page &rarr;</span></span>
+          <p>Five continuous sections as real anchors &mdash; Overview, Contact, Trade-in, Activity, Emails. Never tabs.</p>
+        </span>
+      </a>
+      <a class="a11-c" href="pages/dealer/single-vehicle-gen11.html">
+        <img class="a11-c__s" src="dash/thumbs/single-vehicle.jpg" alt="Single Vehicle — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <span class="a11-c__b">
+          <span class="a11-c__r"><span class="a11-c__t"><b>Single Vehicle</b><small>Dealer &middot; Vehicle editor</small></span><span class="a11-c__go">Open page &rarr;</span></span>
+          <p>The production editor&rsquo;s own twelve zones on Gen&nbsp;11 surfaces, with the commit bar over the form it commits.</p>
+        </span>
+      </a>
+      <a class="a11-c" href="pages/dealer/dealer-login-gen11.html">
+        <img class="a11-c__s" src="dash/thumbs/dealer-login.jpg" alt="Dealer Login — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <span class="a11-c__b">
+          <span class="a11-c__r"><span class="a11-c__t"><b>Dealer Login</b><small>Dealer &middot; Front door</small></span><span class="a11-c__go">Open page &rarr;</span></span>
+          <p>The only page without a platform bar: one dark focal panel, one floating form, one focal action.</p>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <div class="a11-grp">
+    <div class="a11-grp__h"><b>AAN Employee UI</b><span>the internal side &mdash; queue, tickets, roster, billing</span><span class="a11-grp__n">5 pages</span></div>
+    <div class="a11-g">
+      <a class="a11-c" href="pages/staff/my-work-queue-gen11.html">
+        <img class="a11-c__s" src="dash/thumbs/my-work-queue.jpg" alt="My Work Queue — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <span class="a11-c__b">
+          <span class="a11-c__r"><span class="a11-c__t"><b>My Work Queue</b><small>AAN employee &middot; Operations</small></span><span class="a11-c__go">Open page &rarr;</span></span>
+          <p>Seventeen columns of live work kept dense. Nothing dropped, nothing frozen &mdash; the list scrolls, the page does not.</p>
+        </span>
+      </a>
+      <a class="a11-c" href="pages/staff/single-ticket-gen11.html">
+        <img class="a11-c__s" src="dash/thumbs/single-ticket.jpg" alt="Single Ticket — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <span class="a11-c__b">
+          <span class="a11-c__r"><span class="a11-c__t"><b>Single Ticket</b><small>AAN employee &middot; Work object</small></span><span class="a11-c__go">Open page &rarr;</span></span>
+          <p>Thread, crew, todos and changelog, with the conversation carried by a real threaded composer.</p>
+        </span>
+      </a>
+      <a class="a11-c" href="pages/staff/manage-dealers-gen11.html">
+        <img class="a11-c__s" src="dash/thumbs/manage-dealers.jpg" alt="Manage Dealers — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <span class="a11-c__b">
+          <span class="a11-c__r"><span class="a11-c__t"><b>Manage Dealers</b><small>AAN employee &middot; Roster</small></span><span class="a11-c__go">Open page &rarr;</span></span>
+          <p>The 365-row roster at full density on the shared table treatment, grouped by one divider rather than a slab.</p>
+        </span>
+      </a>
+      <a class="a11-c" href="pages/staff/dealer-edit-gen11.html">
+        <img class="a11-c__s" src="dash/thumbs/dealer-edit.jpg" alt="Dealer Edit — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <span class="a11-c__b">
+          <span class="a11-c__r"><span class="a11-c__t"><b>Dealer Edit</b><small>AAN employee &middot; Dealer file</small></span><span class="a11-c__go">Open page &rarr;</span></span>
+          <p>105 fields across seven zones, separated by chapter rhythm and hairlines instead of being wrapped in cards.</p>
+        </span>
+      </a>
+      <a class="a11-c" href="pages/staff/accounting-view-all-gen11.html">
+        <img class="a11-c__s" src="dash/thumbs/accounting-view-all.jpg" alt="Accounting — View All — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <span class="a11-c__b">
+          <span class="a11-c__r"><span class="a11-c__t"><b>Accounting &mdash; View All</b><small>AAN employee &middot; Billing</small></span><span class="a11-c__go">Open page &rarr;</span></span>
+          <p>Money, so the figures are tabular and the totals are unmistakable, with Past Due carrying its own honest note.</p>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <a class="a11-ds" href="design-system/gen11/index.html">
+    <span class="a11-ds__t">
+      <b>Design System &amp; Reseller Theme Kit</b>
+      <p>The catalogue behind the ten pages &mdash; tokens, components, patterns and rules, every specimen rendered by the product&rsquo;s own stylesheets, plus the distributable bundle for a reseller build.</p>
+    </span>
+    <span class="a11-ds__go">Open the kit &rarr;</span>
+  </a>
 
   <div class="sec-h" style="margin-top:44px">
     <span class="caps">What changed</span>
