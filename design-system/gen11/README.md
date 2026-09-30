@@ -1,103 +1,186 @@
-# AAN Gen 11 — Design System & Reseller Theme Kit
+# AAN Gen 11 — living design system
 
-The system that already exists in the ten shipped Gen 11 pages, extracted,
-measured and packaged so another page can be migrated into the same language.
+The shipped Gen 11 UI, extracted from the ten live pages. Every specimen in the
+catalogue is the product's own DOM, rendered by the product's own stylesheets.
+Nothing is drawn for the catalogue.
 
-**This is not a redesign.** Nothing here was invented. Every value was read out of
-the running implementation, and every rule exists because its opposite was built
-in Gen 11 at some point and had to be undone.
+    open:  design-system/gen11/index.html
 
 ---
 
-## Provenance
+## Why this was rebuilt
+
+The first version of this catalogue drew its own components — a `Primary /
+Sheet / Quiet / Pressed / Disabled` button set that existed nowhere in the
+product. That was not laziness; it was forced by the architecture.
+
+`dist/aan-gen11.css` is `pages/_aan-family.css` + `pages/_aan-components.css`.
+Those two files are **override layers**: they correct and normalise components,
+they do not define them. Measured across the ten pages:
 
 | | |
 |---|---|
-| Source of truth | `pages/_aan-family.css` · `pages/_aan-components.css` |
-| Extracted from | `4be2ce7` |
-| Method | each of the ten pages loaded at 1440×900 (and 1366 / 1280 / 1920 / 1366×610 for responsive checks); every value read back with `getComputedStyle` |
-| Pages changed by this work | **none** — `git diff` on `pages/` is empty |
+| class tokens on visible boxes | **667** |
+| component blocks | **309** |
+| blocks the shared layer styles outright | **36** |
+| blocks that need at least one page stylesheet | **273** |
 
-The distributable stylesheet is **generated**, never hand-edited:
-
-```bash
-bash design-system/gen11/dist/build.sh
-```
-
-It concatenates the two source files with a provenance header naming the commit,
-and marks the header if the sources are dirty. **If the bundle and the sources
-disagree, the sources win and the bundle is stale.**
+A catalogue loading only the bundle can render 36 of 309 blocks. The other 273
+render as unstyled divs — so the previous catalogue had no choice but to
+approximate. `SOURCE-MAP.md` has the full measurement.
 
 ---
 
-## Read in this order
+## How the catalogue renders real components
 
-| File | What it answers |
-|---|---|
-| **[index.html](index.html)** | *Show me.* The working catalogue — every component live, running on the real stylesheet. |
-| **[TOKENS.md](TOKENS.md)** | *What are the values?* Colour, type, spacing, tiers, radius, depth, layers — with their semantic roles. |
-| **[COMPONENTS.md](COMPONENTS.md)** | *What is the markup and what are its states?* |
-| **[PATTERNS.md](PATTERNS.md)** | *How does a whole page go together?* Four archetypes. |
-| **[RULES.md](RULES.md)** | *What must I not get wrong?* Hard implementation rules + the exceptions register. |
-| **[ANTI-PATTERNS.md](ANTI-PATTERNS.md)** | *What must I never build?* With the evidence for each. |
-| **[MIGRATION.md](MIGRATION.md)** | *How do I convert an old backend page?* Step by step, with worked examples. |
+Ten pages use **eight distinct stylesheet stacks**, and the stacks collide: each
+page declares its own `.app` grid, its own `--row`, its own `--cols`. They cannot
+be concatenated into one document.
+
+So each chapter of the catalogue is an `<iframe>` pointing at a **specimen host**
+that loads exactly one page's stack, from `pages/`, in the page's own order:
+
+    specimens/lead.html
+      ../../../pages/dealer/all-vehicles-gen11.css
+      ../../../pages/dealer/single-lead-gen11.css
+      ../../../pages/_aan-family.css
+      ../../../pages/_aan-components.css
+      _specimen.css          ← catalogue chrome, every rule namespaced sp-*
+
+Nothing is copied. The specimen loads the same file the shipped page loads, so a
+specimen **cannot** drift from the product: change the product and the catalogue
+changes with it.
+
+### The ancestor chain
+
+Gen 11 scopes a great deal of its CSS. `.veh__acts` has no rules of its own —
+every rule that gives it layout is written `.exp .veh__acts`. A leaf lifted out of
+its context renders unstyled, which is the other half of why the old catalogue had
+to redraw things.
+
+So each specimen carries the real ancestor chain, taken from the live DOM:
+
+    <div class="app" data-sp-chain><section class="field has-open" data-sp-chain>…
+      <div class="veh__acts">…the real fragment…</div>
+    …</section></div>
+
+The wrappers are marked `data-sp-chain` and flattened by `_specimen.css` — they
+exist to satisfy a selector, not to be seen. `.app` is a 100vh page grid; left
+alone it would make every specimen 900px tall and nine-tenths empty. **The
+specimen itself is never in that set**, and no catalogue rule ever touches it.
+
+The chain is printed under every specimen as CONTEXT.
+
+### The stage stands in for the container
+
+Flattening the chain removes the boxes that did the sizing, and almost nothing
+in Gen 11 sizes itself. A status chip is the width of its grid cell. A metric
+tile is as tall as the tallest tile in its strip. The global search is the width
+of its flex basis inside the platform bar, not the width its own rule declares.
+
+Measured before this was addressed: **80 of 120 specimens rendered at the wrong
+size.** The chip that ships at 80px was 1396px wide.
+
+So each stage is given the box the extractor measured on the shipped page, and
+then four containers are tried — block, grid, a grid whose track fills the
+stage, and a flex row — and whichever reproduces the product's box is kept. The
+chosen one is written onto the stage as `data-sp-fit`, with the score for each,
+so it can be read in devtools.
+
+Nothing in this lands on the specimen. That is the point of searching for the
+container rather than declaring the size on the component.
+
+Two things the stage also handles, both measured rather than declared:
+
+- a component that ships `position: fixed` — the commit bar — anchors to the
+  stage rather than the viewport, because the stage is given a transform and
+  becomes its containing block. The specimen keeps its own `position: fixed`.
+- a component wider than its stage scrolls inside it, and only then.
+
+**Where the catalogue still differs from the product**, at 1440, is four
+specimens out of 120, all in height only, and two of those are the product
+clipping its own content — see the head row under *Known product defects* in
+`ANTI-PATTERNS.md`. Run `_tools/qa.html` to see the current list.
 
 ---
 
-## Using it in a page
-
-```html
-<link rel="stylesheet" href="path/to/aan-gen11.css">
-```
-
-or, inside this repo, the two sources in order — the component layer **must** load
-second, because it is the normalised system and has to outrank whatever a page's
-own stylesheet still carries:
-
-```html
-<link rel="stylesheet" href="../_aan-family.css">
-<link rel="stylesheet" href="../_aan-components.css">
-```
-
-Fonts ship from `ds/fonts/` — Archivo (variable, 100–900) and IBM Plex Mono. No
-CDN font.
-
----
-
-## The shape of the system, in numbers
+## Files
 
 | | |
 |---|---|
-| Tokens found | **193** — 188 identical on every page, 5 varying |
-| Distinct classes across the ten pages | **753** |
-| Classes shared by six or more pages | **41** — the shared layer |
-| Classes used on exactly one page | **505** — page implementation, not system |
-| Page archetypes | **4** — Gateway · List · Record · Editor |
-| Documented exceptions | **9** |
+| `index.html` | the catalogue — ten chapters, one per page stack |
+| `specimens/*.html` | **generated.** one host per stack, 120 specimens |
+| `specimens/_specimen.css` | catalogue chrome. Every rule namespaced `sp-` |
+| each host's `<svg>` sprite | **the page's own**, copied verbatim. Ten pages ship ten different sets — 34 symbols on All Vehicles, 24 on Single Ticket, 2 on Login — and one shared sprite left 24 icons pointing at symbols that were not there |
+| `specimens/_specimen.js` | reports host height to the catalogue frame |
+| `_tools/spec.json` | which components to extract, and what to say about them |
+| `_tools/extract.html` | **step 1.** reads the ten live pages, writes the census |
+| `_tools/gen-specimens.js` | **step 2.** writes the ten specimen hosts |
+| `_tools/gen-docs.js` | writes INVENTORY.md and PAGE-SPECIFIC.md |
+| `_tools/gen-tokens.js` | writes TOKENS.md from computed values |
+| `_tools/gen-components.js` | writes COMPONENTS.md |
+| `_tools/qa.html` | the width sweep: overflow, bleed, clipping, inset, drift |
+| `_tools/compare.html` | one component, product vs catalogue, every value |
+| `_tools/probe.html` | rule lookup for one element on one page |
+| `dist/aan-gen11.css` | the shared layer, for consumers outside this repo |
+| `dist/build.sh` | regenerates the bundle with provenance |
 
-### What is genuinely normalised
+### Documents
 
-The `ui-*` components render **identically on every page that uses them** —
-`ui-view`, `ui-view--on`, `ui-thead`, `ui-nav__i`, `ui-filter`, `tbtn`. Measured,
-not asserted.
-
-### What still drifts
-
-The older per-page classes do not. `.btn--primary` has five variants across the
-ten pages; `.ck` has three radii including `0`; `.bdg` has heights of 26px and
-12px. These are listed in COMPONENTS §9 and RULES §10 and are **migration
-targets** — they were not silently fixed during extraction.
-
-**Practical rule:** when migrating, reach for the `ui-*` component first. If a
-component appears in the exceptions register, use the role value from TOKENS.md,
-not the value on whatever page you are copying from.
+| | |
+|---|---|
+| `SOURCE-MAP.md` | which file styles what. Generated, 309 blocks |
+| `INVENTORY.md` | every reusable element, role, geometry, usage. Generated |
+| `PAGE-SPECIFIC.md` | the 205 families that belong to one page. Generated |
+| `TOKENS.md` | 193 custom properties as the pages compute them. Generated |
+| `RULES.md` | the contracts: spacing, separation, surfaces, controls, states |
+| `PATTERNS.md` | how the pieces are assembled on a real page |
+| `ANTI-PATTERNS.md` | what the system refuses, and what it does instead |
+| `MIGRATION.md` | taking an old backend page to Gen 11 |
 
 ---
 
-## One honest tension
+## Regenerating
 
-The Gen 11 table cell is **13px** — the single most common type in the product
-(5,821 occurrences). The house design DNA sets a 14px floor for functional text.
-This kit documents what the product does rather than changing it; the 13px cell is
-recorded as the measured role, and raising it would be a deliberate product
-decision, not an extraction.
+The census comes first. Everything else is written from it.
+
+    # 1 · read the product. Open in a browser, then in the console:
+    #     design-system/gen11/_tools/extract.html
+    #     await window.extract()          → downloads frags.json
+    #
+    #     It has to be a browser: a specimen is the element as it exists at
+    #     runtime, after the page's script has built the rows and opened the
+    #     expansion. The HTML file alone is the markup before any of that.
+
+    # 2 · write the catalogue and the documents from it
+    set FRAGS=<path to frags.json>
+    node design-system/gen11/_tools/gen-specimens.js
+    node design-system/gen11/_tools/gen-components.js
+    node design-system/gen11/_tools/gen-docs.js
+    node design-system/gen11/_tools/gen-tokens.js
+
+    # 3 · after changing the shared layer
+    bash design-system/gen11/dist/build.sh
+
+    # 4 · check it
+    #     design-system/gen11/_tools/qa.html
+    #     await window.sweep(1440)   also 1920, 1366, 1280
+
+The bundle build warns when the working tree is dirty: if the bundle and the
+sources disagree, **the sources win** and the bundle is stale.
+
+Generated hosts link every stylesheet with a build stamp. Without it the browser
+serves a cached product stylesheet and the catalogue quietly shows last week's
+product — which it did, until the queue's lane strip wrapped onto two lines here
+and one line there and gave it away.
+
+---
+
+## The one rule this system is built on
+
+**If it is not shipped in Gen 11, it is not a specimen.**
+
+Every visible thing in the catalogue maps to a real selector, a real source file,
+a real page and real effective CSS. Where a pattern could not be traced, it was
+recorded in `PAGE-SPECIFIC.md` rather than tidied into a shared abstraction that
+does not exist.

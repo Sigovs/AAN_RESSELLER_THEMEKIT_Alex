@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en" data-theme="light" class="sp-doc">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Specimens — My Work Queue</title>
+
+<!-- ══ GENERATED FILE ═════════════════════════════════════════════════════
+     design-system/gen11/_tools/gen-specimens.js writes this from fragments
+     pulled out of the running product. Do not hand-edit: the next run will
+     overwrite it. Change the specimen list in _tools/spec.json instead.
+
+     THE STYLESHEETS BELOW ARE THE PRODUCT'S OWN, IN THE PRODUCT'S OWN ORDER.
+     Copied from pages/staff/my-work-queue-gen11.html. Not a bundle, not an extract —
+     the same files the shipped page loads. A specimen therefore cannot drift
+     from the product: if the product changes, so does the specimen.
+     ─────────────────────────────────────────────────────────────────── -->
+<link rel="stylesheet" href="../../../pages/staff/my-work-queue-gen11.css?b=muo5f98w">
+<link rel="stylesheet" href="../../../pages/_aan-family.css?b=muo5f98w">
+<link rel="stylesheet" href="../../../pages/_aan-components.css?b=muo5f98w">
+<!-- catalogue chrome last; every rule in it is namespaced sp-* -->
+<link rel="stylesheet" href="_specimen.css?b=muo5f98w">
+<script src="_specimen.js?b=muo5f98w" defer></script>
+</head>
+
+<body class="sp-host" data-specimen-id="queue">
+
+<!-- THIS PAGE'S OWN ICON SPRITE, copied verbatim from pages/staff/my-work-queue-gen11.html.
+     Not a shared one: every Gen 11 page inlines a different set — All
+     Vehicles 34 symbols, Single Ticket 24, Dealer Edit 16 — and a
+     catalogue built on one page's sprite leaves the other pages' icons
+     pointing at symbols that do not exist. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.35-4.35"></path></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"></path></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"></path></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"></path></symbol>
+  <symbol id="i-dn" viewBox="0 0 24 24"><path d="M12 5v14m6-6-6 6-6-6"></path></symbol>
+  <symbol id="i-cog" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-2.89 1.2V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 7.96 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 3 15.04H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 8.96a1.7 1.7 0 0 0-.34-1.87l-.06-.06A2 2 0 1 1 7.03 4.2l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 2.89 1.2l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1Z"></path></symbol>
+  <symbol id="i-grip" viewBox="0 0 24 24"><circle cx="9" cy="6" r="1.3"></circle><circle cx="15" cy="6" r="1.3"></circle><circle cx="9" cy="12" r="1.3"></circle><circle cx="15" cy="12" r="1.3"></circle><circle cx="9" cy="18" r="1.3"></circle><circle cx="15" cy="18" r="1.3"></circle></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 21V4h9l-1 3h8l-2 6 2 6H4"></path></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"></path></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"></path></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"></path></symbol>
+  <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="4"></circle><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"></path></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></symbol>
+</svg>
+
+<!-- Each specimen carries the real ancestor chain it was found in. Gen 11
+     scopes a great deal of its CSS (`.exp .veh__acts`, `.row > .th`,
+     `.top .nav__b`), so a leaf lifted out of its context renders unstyled.
+     The chain is listed under CONTEXT in every provenance block below.
+     Ids repeat across specimens on this page; that is invalid HTML but CSS
+     id selectors still match, which is what a specimen host needs. -->
+
+<h2 class="sp-group">Staff chrome</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Platform bar</span>
+    <span class="sp-role">the staff roster of destinations</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x56">
+<div id="app" class="app" data-sp-chain><header class="top">
+    <a class="brand" href="#" title="All Auto Network · Backend">
+      <span class="brand__mk">AAN</span>
+      <span class="brand__t">All Auto Network</span>
+      <span class="brand__env">Backend</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="System menu"><div class="nav__it"><button class="nav__b" type="button" data-pop="p-nav-0" aria-haspopup="true" aria-expanded="false">User Management<svg class="i" aria-hidden="true"><use href="#i-chev"></use></svg></button><div class="pop" id="p-nav-0"><div class="caps pop__lab">User Management</div><a class="mn__it" href="#">Add New User</a><a class="mn__it" href="#">View Users</a><a class="mn__it" href="#">View User Tracking Log</a><a class="mn__it" href="#">Add New Reseller</a><a class="mn__it" href="#">View Reseller Accounts</a><a class="mn__it" href="#">Add New Reseller Group</a><a class="mn__it" href="#">View Reseller Groups</a><a class="mn__it" href="#">Add New OEM</a><a class="mn__it" href="#">View OEM Accounts</a></div></div><div class="nav__it"><button class="nav__b" type="button" data-pop="p-nav-1" aria-haspopup="true" aria-expanded="false">Dealer Management<svg class="i" aria-hidden="true"><use href="#i-chev"></use></svg></button><div class="pop" id="p-nav-1"><div class="caps pop__lab">Dealer Management</div><a class="mn__it" href="#">Add New Dealer</a><a class="mn__it" href="#">View Dealers</a><a class="mn__it" href="#">View New Dealer Orders</a><a class="mn__it" href="#">View Pending Dealers</a></div></div><div class="nav__it"><button class="nav__b" type="button" data-pop="p-nav-2" aria-haspopup="true" aria-expanded="false">System Tools<svg class="i" aria-hidden="true"><use href="#i-chev"></use></svg></button><div class="pop" id="p-nav-2"><div class="caps pop__lab">System Tools</div><a class="mn__it" href="#">Sites Components/Versions</a></div></div><div class="nav__it"><button class="nav__b" type="button" data-pop="p-nav-3" aria-haspopup="true" aria-expanded="false">Marketing<svg class="i" aria-hidden="true"><use href="#i-chev"></use></svg></button><div class="pop" id="p-nav-3"><div class="caps pop__lab">Marketing</div><a class="mn__it" href="#">Sales CRM</a><a class="mn__it" href="#">Co-Op Generator</a><a class="mn__it" href="#">GMB Posting Scheduler DBA</a><a class="mn__it" href="#">Master Marketing Project</a><a class="mn__it" href="#">Master Marketing List</a><a class="mn__it" href="#">Manychat - Social Message Bot</a></div></div><div class="nav__it"><button class="nav__b" type="button" data-pop="p-nav-4" aria-haspopup="true" aria-expanded="false">AAN Projects<svg class="i" aria-hidden="true"><use href="#i-chev"></use></svg></button><div class="pop" id="p-nav-4"><div class="caps pop__lab">AAN Projects</div><a class="mn__it" href="#">Home</a><a class="mn__it" href="#">My Project Work List</a><a class="mn__it" href="#">View All Projects</a><a class="mn__it" href="#">All Projects Overview</a><a class="mn__it" href="#">Client Content Calendar</a></div></div><div class="nav__it nav__it--on"><button class="nav__b" type="button" data-pop="p-nav-5" aria-haspopup="true" aria-expanded="false">Work<svg class="i" aria-hidden="true"><use href="#i-chev"></use></svg></button><div class="pop" id="p-nav-5"><div class="caps pop__lab">Work</div><a class="mn__it" href="#">My Work</a><a class="mn__it" href="#">Create A Ticket</a><a class="mn__it" href="#">Pending Work</a><a class="mn__it" href="#">All Open Work</a><a class="mn__it" href="#">Open Support Work</a><a class="mn__it" href="#">Archived Support Work</a><a class="mn__it" href="#">Open Client Project Work</a><a class="mn__it" href="#">Holding Project Work</a><a class="mn__it" href="#">Archived Client Project Work</a><a class="mn__it" href="#">Open Mktg Proj Work</a><a class="mn__it" href="#">Archived Mktg Proj Work</a><a class="mn__it" href="#">Open Int Proj Work</a><a class="mn__it" href="#">Archived Int Proj Work</a><a class="mn__it" href="#">Client Leads Work</a><a class="mn__it" href="#">Archived Client Leads Work</a><a class="mn__it" href="#">Billing Work</a><a class="mn__it" href="#">Archived Billing Work</a><a class="mn__it" href="#">Activity Report</a></div></div><div class="nav__it"><button class="nav__b" type="button" data-pop="p-nav-6" aria-haspopup="true" aria-expanded="false">Feed Management<svg class="i" aria-hidden="true"><use href="#i-chev"></use></svg></button><div class="pop" id="p-nav-6"><div class="caps pop__lab">Feed Management</div><a class="mn__it" href="#">Feeds Incoming</a><a class="mn__it" href="#">Feeds Outgoing</a><a class="mn__it" href="#">Craigslist stats</a><a class="mn__it" href="#">Homenet Feeds</a><a class="mn__it" href="#">Dealer Specialties Feeds</a><a class="mn__it" href="#">Auto Uplink Feeds</a><a class="mn__it" href="#">Auction123 Feeds</a><a class="mn__it" href="#">Arkona Feeds</a><a class="mn__it" href="#">Big Voice Feeds</a><a class="mn__it" href="#">CDM Data Feeds</a><a class="mn__it" href="#">Cobalt Feeds</a><a class="mn__it" href="#">Diamond Lot Feeds</a><a class="mn__it" href="#">eCarList Feeds</a><a class="mn__it" href="#">Zeus Feeds</a><a class="mn__it" href="#">Chicagoland Auto Search Feeds</a><a class="mn__it" href="#">Out - AutoTrader Used Feeds</a><a class="mn__it" href="#">Out - AutoTrader New Feeds</a><a class="mn__it" href="#">Out - Cars.com Image Feeds</a><a class="mn__it" href="#">Out - Cobalt Feeds</a><a class="mn__it" href="#">Out - Dealer Specialty Feeds</a><a class="mn__it" href="#">Out - eBizAutos Feeds</a></div></div><div class="nav__it"><button class="nav__b" type="button" data-pop="p-nav-7" aria-haspopup="true" aria-expanded="false">Accounting<svg class="i" aria-hidden="true"><use href="#i-chev"></use></svg></button><div class="pop" id="p-nav-7"><div class="caps pop__lab">Accounting</div><a class="mn__it" href="#">Accounting</a></div></div></nav>
+    <span class="top__sp"></span>
+    <label class="gsearch">
+      <svg class="i"><use href="#i-search"></use></svg>
+      <input type="search" id="gq" name="gq" placeholder="Search anywhere" aria-label="Search anywhere">
+      <kbd>/</kbd>
+    </label>
+    <a class="atlas" href="#" title="The Atlas — system architecture wiki"><span aria-hidden="true">▣</span>Atlas</a>
+    <button class="tbtn" type="button" hidden="" title="Dark theme is being re-solved" aria-label="Switch to dark theme"><svg class="i"><use href="#i-moon"></use></svg></button>
+    <div class="nav__it">
+      <button class="tbtn" type="button" data-pop="p-help" aria-haspopup="true" aria-expanded="false" aria-label="Support"><svg class="i"><use href="#i-buoy"></use></svg></button>
+      <div class="pop pop--r" id="p-help">
+        <div class="caps pop__lab">Support</div>
+        <a class="mn__it" href="#">Create A Ticket</a>
+        <a class="mn__it" href="#">Activity Report</a>
+      </div>
+    </div>
+    <span class="top__div"></span>
+    <div class="nav__it">
+      <button class="me" type="button" data-pop="p-me" aria-haspopup="true" aria-expanded="false">
+        <span class="me__mk">IG</span><span class="me__n">Ivaylo Guenkov</span>
+        <svg class="i"><use href="#i-chev"></use></svg>
+      </button>
+      <div class="pop pop--r" id="p-me">
+        <div class="mn__who"><b>Ivaylo Guenkov</b>AAN · Backend</div>
+        <a class="mn__it" href="#">Logout</a>
+      </div>
+    </div>
+  </header></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>header.top</dd>
+    <dt>Context</dt><dd>.app</dd>
+    <dt>Source</dt><dd>pages/staff/my-work-queue-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">My Work Queue</dd>
+    <dt>Measured</dt><dd>1396x56 · padding 0px 16px · gap 0px 6px · radius 12px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Account</span>
+    <span class="sp-role">who is working</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="156.4x30">
+<div id="app" class="app" data-sp-chain><header class="top" data-sp-chain><div class="nav__it" data-sp-chain><button class="me" type="button" data-pop="p-me" aria-haspopup="true" aria-expanded="false">
+        <span class="me__mk">IG</span><span class="me__n">Ivaylo Guenkov</span>
+        <svg class="i"><use href="#i-chev"></use></svg>
+      </button></div></header></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>button.me</dd>
+    <dt>Context</dt><dd>.app › .top › .nav__it</dd>
+    <dt>Source</dt><dd>pages/staff/my-work-queue-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">My Work Queue</dd>
+    <dt>Measured</dt><dd>156x30 · padding 0px 8px 0px 4px · gap 8px · radius 7px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Atlas</span>
+    <span class="sp-role">the system wiki</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="56.49x24">
+<div id="app" class="app" data-sp-chain><header class="top" data-sp-chain><a class="atlas" href="#" title="The Atlas — system architecture wiki"><span aria-hidden="true">▣</span>Atlas</a></header></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>a.atlas</dd>
+    <dt>Context</dt><dd>.app › .top</dd>
+    <dt>Source</dt><dd>pages/staff/my-work-queue-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">My Work Queue</dd>
+    <dt>Measured</dt><dd>56x24 · padding 0px 8px · gap 5px · radius 7px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Go-live ticker</span>
+    <span class="sp-role">what ships next, on one line</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x46">
+<div id="app" class="app" data-sp-chain><div class="golive ui-strip" id="golive" aria-label="Go Live List"><span class="caps golive__l">Go Live List<b class="golive__n">9</b></span><a class="gl" href="#" title="www.czingerlosgatos.com — go live 11/26/2025"><b>czingerlosgatos.com</b><i>11/26/2025</i></a><a class="gl" href="#" title="www.wsmwa.com — go live 06/30/2026"><b>wsmwa.com</b><i>06/30/2026</i></a><a class="gl" href="#" title="www.prestigeimports.com — go live 07/16/2026"><b>prestigeimports.com</b><i>07/16/2026</i></a><a class="gl" href="#" title="www.sportscarrescue.com — go live 08/27/2026"><b>sportscarrescue.com</b><i>08/27/2026</i></a><a class="gl" href="#" title="www.vegasautogallery.com — go live 08/27/2026"><b>vegasautogallery.com</b><i>08/27/2026</i></a><a class="gl" href="#" title="www.ibuylc.com — go live 09/01/2026" hidden=""><b>ibuylc.com</b><i>09/01/2026</i></a><a class="gl" href="#" title="www.360autocareny.com — go live 09/08/2026" hidden=""><b>360autocareny.com</b><i>09/08/2026</i></a><a class="gl" href="#" title="www.chicagomotorcars.com — go live 09/14/2026" hidden=""><b>chicagomotorcars.com</b><i>09/14/2026</i></a><a class="gl" href="#" title="www.thevipleasing.com — go live 09/21/2026" hidden=""><b>thevipleasing.com</b><i>09/21/2026</i></a><a class="gl gl--all" href="#">All Go Lives +4</a></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.golive.ui-strip</dd>
+    <dt>Context</dt><dd>.app</dd>
+    <dt>Source</dt><dd>pages/staff/my-work-queue-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">My Work Queue</dd>
+    <dt>Measured</dt><dd>1396x46 · padding 10px 16px · gap 0px · radius 0px</dd>
+  </dl>
+  <p class="sp-note">Was a two-row field of capsules taking 104px before the list started. A hairline-separated ticker says the same thing in 30px.</p>
+</section>
+
+<h2 class="sp-group">Scope</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Lane strip</span>
+    <span class="sp-role">twelve lanes of work</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1233.46x36">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" data-cols="mine" aria-label="Work queue" data-sp-chain><div class="cmdtop ui-toolbar ui-toolbar--sub" data-sp-chain><div class="lanes ui-views" id="lanes" role="group" aria-label="Lane"><button class="lane ui-view lane--on ui-view--on" type="button" data-lane="work_assigned" aria-pressed="true"><span>My Work</span><b>94</b></button><button class="lane ui-view" type="button" data-lane="work_following" aria-pressed="false"><span>My Following</span><b>4</b></button><span class="lanes__div" aria-hidden="true"></span><button class="lane ui-view" type="button" data-lane="all_open" aria-pressed="false"><span>All Open</span><b>802</b></button><button class="lane ui-view lane--hot" type="button" data-lane="pending" aria-pressed="false"><span>Pending</span><b>4</b></button><button class="lane ui-view" type="button" data-lane="open" aria-pressed="false"><span>Support</span><b>25</b></button><button class="lane ui-view" type="button" data-lane="project_open" aria-pressed="false"><span>Client Projects</span><b>120</b></button><button class="lane ui-view" type="button" data-lane="project_ongoing" aria-pressed="false"><span>Marketing</span><b>110</b></button><button class="lane ui-view" type="button" data-lane="projdevopen" aria-pressed="false"><span>Internal</span><b>108</b></button><button class="lane ui-view" type="button" data-lane="leadtracking_open" aria-pressed="false"><span>Client Leads</span><b>374</b></button><button class="lane ui-view" type="button" data-lane="billing_open" aria-pressed="false"><span>Billing</span><b>12</b></button><button class="lane ui-view" type="button" data-lane="project_hold" aria-pressed="false"><span>Holding</span><b>53</b></button></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.lanes.ui-views</dd>
+    <dt>Context</dt><dd>.app › .field › .cmdtop.ui-toolbar.ui-toolbar--sub</dd>
+    <dt>Source</dt><dd>pages/staff/my-work-queue-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">My Work Queue</dd>
+    <dt>Measured</dt><dd>1233x36 · padding 0px · gap 4px 6px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Command row</span>
+    <span class="sp-role">search, sort, filters, clear</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x56">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" data-cols="mine" aria-label="Work queue" data-sp-chain><div class="cmd ui-toolbar" id="cmd">
+      <div class="search">
+        <svg class="i"><use href="#i-search"></use></svg>
+        <span class="search__chips" id="chips"></span>
+        <input type="search" id="q" name="q" placeholder="Search tickets… Enter to apply" autocomplete="off" aria-label="Search tickets">
+      </div>
+
+      <div class="facet">
+        <button class="facet__b" type="button" data-pop="p-sort" aria-haspopup="true" aria-expanded="false">
+          <span class="facet__k">Sort</span><span class="facet__v" id="sort-v">Default</span>
+          <svg class="i"><use href="#i-chev"></use></svg>
+        </button>
+        <div class="pop pop--r pop--wide" id="p-sort">
+          <div class="caps pop__lab">Sort by<span class="pop__hint">click again to reverse</span></div>
+          <div id="sort-list"><button class="mn__it mn__it--on" type="button" data-sort=""><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>Default order</button><div class="pop__sep"></div><button class="mn__it" type="button" data-sort="rank"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>Priority<span class="sp"></span></button><button class="mn__it" type="button" data-sort="ticket"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>Ticket<span class="sp"></span></button><button class="mn__it" type="button" data-sort="dealer"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>Dealership<span class="sp"></span></button><button class="mn__it" type="button" data-sort="subject"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>Subject<span class="sp"></span></button><button class="mn__it" type="button" data-sort="status"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>Status<span class="sp"></span></button><button class="mn__it" type="button" data-sort="work"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>Work Type<span class="sp"></span></button><button class="mn__it" type="button" data-sort="age"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>Ticket Age<span class="sp"></span></button><button class="mn__it" type="button" data-sort="mod"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>Last Modified<span class="sp"></span></button><button class="mn__it" type="button" data-sort="begin"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>Begin Date<span class="sp"></span></button><button class="mn__it" type="button" data-sort="done"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>Completion Date<span class="sp"></span></button></div>
+        </div>
+      </div>
+
+      <div class="facet">
+        <button class="facet__b facet__b--icon" type="button" data-pop="p-filt" aria-haspopup="true" aria-expanded="false">
+          <svg class="i"><use href="#i-sliders"></use></svg>
+          <span class="facet__v">Filters</span>
+          <span class="facet__cnt" id="fcnt" hidden="">0</span>
+        </button>
+        <div class="pop pop--r pop--wide" id="p-filt">
+          <div class="caps pop__lab">Add filter</div>
+          <div id="filt-list"><div class="mn__row"><label class="caps" style="min-width:74px" for="f-dealer">Dealer</label><select class="sel" id="f-dealer" data-filter="dealer" style="max-width:240px"><option value="" selected="">All dealers</option><option value="1055">30A Car Barn</option><option value="1136">360 Auto Care Inc</option><option value="264">AAN</option><option value="968">Ace Motor Works</option><option value="829">Acton Auto Werks</option><option value="357">American Dream Machines</option><option value="1064">August Luxury Motorcars</option><option value="677">Auto Collection of Murfreesboro</option><option value="878">Autobyzack Inc</option><option value="1035">AutoMeister Gruppe (formerly ACSM)</option><option value="933">Autopro Nashville</option><option value="917">Autosport Designs Inc.</option><option value="820">Barnaba Auto Sport</option><option value="210">Bentley Long Island</option><option value="900">Beverly Hills Auto Group</option><option value="178">Beverly Hills Car Club</option><option value="1034">Blackdog Performance Cars</option><option value="1126">Braman Motorcars - Bentley</option><option value="1127">Braman Motorcars - Rolls-Royce</option><option value="775">Car Xoom</option><option value="167">Cars Dawydiak</option><option value="252">Cauley Ferrari</option><option value="1066">Chicago Auto Sports</option><option value="277">Chicago Motor Cars</option><option value="986">Clutch</option><option value="1093">Corsa Auto Shield Invictus Partners LLC</option><option value="987">Czinger Charlotte</option><option value="1068">Design Auto LLC</option><option value="525">Diamond Motorworks</option><option value="967">Dig Ready</option><option value="992">Drive Motor Hub</option><option value="306">Exclusive Automotive Group</option><option value="1054">Exotic Car Factory</option><option value="514">Exotic Motor Cars</option><option value="738">Exotic Motorsports of Oklahoma</option><option value="804">Exotics Hunter / Premier Motos</option><option value="1072">Fantasy Factory Motorsports</option><option value="353">FC Kerbeck</option><option value="371">FC Kerbeck - Rolls-Royce</option><option value="1118">Ferrari of Quebec</option><option value="1017">Garage Kept Motors</option><option value="1142">Geneva Motor Haus</option><option value="1129">GM Motors Inc.</option><option value="1120">GTA Motorcars USA</option><option value="520">Guidance Development</option><option value="241">Gullwing Motor Cars</option><option value="805">iBuy Luxury Cars (Marshall Goldman Motor Sales)</option><option value="262">Illinois Lift Equipment</option><option value="811">Karma Atlanta</option><option value="1096">Key Cars Auto Group (aka JJ Motor Company) - Key Hyundai of Milford</option><option value="652">Lift Inventory</option><option value="586">Loyal Signature Motors Inc</option><option value="885">Lux Cars Chicago</option><option value="286">LuxSport Motor Group, LLC</option><option value="518">M.I.L.D Collection LLC</option><option value="733">Marshall Goldman Beverly Hills</option><option value="615">McLaren Charlotte</option><option value="947">MGM Classic Cars</option><option value="1139">Midwest Cobras, LLC</option><option value="1077">Mileone Auto Group</option><option value="186">Miller Motorcars</option><option value="746">Momentum Motorcars Inc</option><option value="888">Montis Auto Center</option><option value="403">Motorcars Louisiana</option><option value="822">Motorcars of Palm Beach</option><option value="562">Motorcars of the Mainline</option><option value="674">Muscle Cars for Sale Inc.</option><option value="701">MVP Atlanta</option><option value="702">MVP Charlotte</option><option value="620">MVP Miami</option><option value="825">Naples Motorsports Inc</option><option value="910">Naples Motorsports Inc - Morgan</option><option value="830">NFI Empire (Auctions)</option><option value="966">One Exotics Luxury Vehicles LLC</option><option value="1043">Patton Motors</option><option value="697">Perfect Auto Collection</option><option value="937">Platinum Cars (Portal)</option><option value="1014">Pole Position Classics</option><option value="849">Premiere Motorsports</option><option value="1095">Prestige Imports</option><option value="944">Private Collection Chicago</option><option value="850">Private Collection Motors Inc</option><option value="135">Quest Water Sports</option><option value="530">Road Show International</option><option value="501">Robb Francis Sport Cars</option><option value="907">Rolls-Royce Motor Cars Charlotte</option><option value="149">Rolls-Royce Motor Cars Long Island</option><option value="1058">RPF Motorcars</option><option value="584">Select Jeeps</option><option value="1015">Show Cars of Boca Raton</option><option value="503">Sierra Classics &amp; Imports</option><option value="726">Silicon Valley Enthusiast</option><option value="1121">Sports Car Rescue</option><option value="1091">Stryker Equipment</option><option value="846">Tampa Bay Auto Network</option><option value="1078">TBTFW Exotics</option><option value="203">The Last Detail</option><option value="1080">The Luxury Collection</option><option value="1069">The Luxury Collection - McLaren San Francisco</option><option value="1023">The Luxury Collection Los Gatos</option><option value="1049">The Luxury Collection Los Gatos - Czinger</option><option value="757">The Luxury Collection Walnut Creek</option><option value="1137">The Vip Leasing</option><option value="972">Towbin Motorcars</option><option value="1090">Twins Auto Of Dublin</option><option value="1119">Unique Motor Collection LLC</option><option value="769">VB Autosports</option><option value="765">Vegas Auto Gallery</option><option value="1128">Wes Financial Auto</option><option value="772">West Coast Exotic Cars</option><option value="1009">West State Motorsport</option><option value="678">zz-AAN - AutoInventorySearch</option><option value="487">zz-AAN Blow Out Auto Sales</option><option value="1135">zz-AAN Master Template 2027</option></select></div><div class="mn__row"><label class="caps" style="min-width:74px" for="f-status">Status</label><select class="sel" id="f-status" data-filter="status" style="max-width:200px"><option value="" selected="">Any in lane</option><option value="open">Open</option><option value="project_open">Project Open</option><option value="project_ongoing">Project Ongoing</option><option value="projdevopen">Project Dev Open</option><option value="leadtracking_open">Lead Tracking Open</option><option value="billing_open">Billing Open</option></select></div><div class="mn__row"><label class="caps" style="min-width:74px" for="f-dept">Work Type</label><select class="sel" id="f-dept" data-filter="dept" style="max-width:200px"><option value="" selected="">Any</option><option value="Billing Issues">Billing Issues</option><option value="Dealer Shutdown">Dealer Shutdown</option><option value="DNS Records/Settings">DNS Records/Settings</option><option value="Feed - Fix/Update">Feed - Fix/Update</option><option value="Feed - New">Feed - New</option><option value="Fix">Fix</option><option value="Marketing - Miscellaneous">Marketing - Misc.</option><option value="Marketing - PPC">Marketing - PPC</option><option value="Marketing - SEO">Marketing - SEO</option><option value="Marketing - Social Media">Marketing - Social Media</option><option value="Marketing - Tag Manager">Marketing - Tag Manager</option><option value="Miscellaneous">Misc.</option><option value="Modification">Modification</option><option value="New Billables">New Billables</option><option value="New Lead Contact">New Lead Contact</option><option value="New Lead Quote">New Lead Quote</option><option value="Past Due Accounts">Past Due Accounts</option><option value="Project">Project</option><option value="Quote">Quote</option><option value="System Enhancement">System Enhance</option></select></div><div class="mn__row"><label class="caps" style="min-width:74px" for="f-priority">Priority</label><select class="sel" id="f-priority" data-filter="priority" style="max-width:170px"><option value="" selected="">Any</option><option value="Hot 24">Hot 24</option><option value="Go Live">Go Live</option><option value="High">High</option><option value="As Scheduled">As Scheduled</option><option value="Medium">Medium</option><option value="Low">Low</option></select></div><div class="mn__row"><label class="caps" style="min-width:74px" for="f-assignee">Assigned</label><select class="sel" id="f-assignee" data-filter="assignee" style="max-width:190px"><option value="" selected="">Any assigned</option><option value="1">Alex Sigoff</option><option value="40">Aliakbar Badshah</option><option value="2">Anthony Labalestra</option><option value="3">Bill Simons</option><option value="4">Chris Jungheim</option><option value="5">Dmitriy Lebedev</option><option value="45">Husain Arif</option><option value="39">Ivaylo Guenkov</option><option value="51">Jake Astigarraga</option><option value="7">Karen Conrad</option><option value="9">Kirsten McFarland</option><option value="38">Marshena Greene</option><option value="27">Matthew Jungheim</option><option value="49">Max Hansen</option><option value="41">New Guy</option><option value="34">Nick Jungheim</option><option value="50">Rahul Jain</option><option value="46">Rashid Rangrej</option><option value="32">Samantha McFarland</option><option value="14">Scott McFarland</option><option value="21">Sergey Bukreev</option><option value="15">Tony McFarland</option><option value="16">Client/Dealer</option><option value="17">3rd Party</option><option value="18">Reseller</option><option value="19">Other</option></select></div></div>
+        </div>
+      </div>
+
+      <span class="cmd__div"></span>
+      <button class="btn btn--quiet" type="button" data-act="clear">Clear</button>
+    </div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.cmd.ui-toolbar</dd>
+    <dt>Context</dt><dd>.app › .field</dd>
+    <dt>Source</dt><dd>pages/staff/my-work-queue-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">My Work Queue</dd>
+    <dt>Measured</dt><dd>1396x56 · padding 10px 16px · gap 8px · radius 0px</dd>
+  </dl>
+</section>
+
+<h2 class="sp-group">Dense table</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Column header</span>
+    <span class="sp-role">seventeen columns</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x48">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" data-cols="mine" aria-label="Work queue" data-sp-chain><div id="rows" class="rows ui-table" role="table" aria-labelledby="page-t" data-sp-chain><div class="hd ui-thead" id="hd" role="row"><span class="c-grip" role="columnheader"></span><span class="c-rank ctr" role="columnheader" aria-sort="none"><button class="s" type="button" data-sort="rank">Priority<svg class="i" aria-hidden="true"><use href="#i-up"></use></svg></button></span><span class="c-tkt" role="columnheader" aria-sort="none"><button class="s" type="button" data-sort="ticket">Ticket<svg class="i" aria-hidden="true"><use href="#i-up"></use></svg></button></span><span class="c-dlr" role="columnheader" aria-sort="none"><button class="s" type="button" data-sort="dealer">Dealership<svg class="i" aria-hidden="true"><use href="#i-up"></use></svg></button></span><span class="c-sub" role="columnheader" aria-sort="none"><button class="s" type="button" data-sort="subject">Subject<svg class="i" aria-hidden="true"><use href="#i-up"></use></svg></button></span><span class="c-st" role="columnheader" aria-sort="none"><button class="s" type="button" data-sort="status">Status<svg class="i" aria-hidden="true"><use href="#i-up"></use></svg></button></span><span class="c-wt" role="columnheader" aria-sort="none"><button class="s" type="button" data-sort="work">Work Type<svg class="i" aria-hidden="true"><use href="#i-up"></use></svg></button></span><span class="c-age r" role="columnheader" aria-sort="none"><button class="s" type="button" data-sort="age">Ticket Age<svg class="i" aria-hidden="true"><use href="#i-up"></use></svg></button></span><span class="c-amt r" role="columnheader">Dollar Amount</span><span class="c-est r" role="columnheader">My Est. Time</span><span class="c-left r" role="columnheader">Remaining Time</span><span class="c-mod" role="columnheader" aria-sort="none"><button class="s" type="button" data-sort="mod">Last Modified<svg class="i" aria-hidden="true"><use href="#i-up"></use></svg></button></span><span class="c-who" role="columnheader">Assigned</span><span class="c-beg" role="columnheader" aria-sort="none"><button class="s" type="button" data-sort="begin">Begin Date<svg class="i" aria-hidden="true"><use href="#i-up"></use></svg></button></span><span class="c-done" role="columnheader" aria-sort="none"><button class="s" type="button" data-sort="done">Completion Date<svg class="i" aria-hidden="true"><use href="#i-up"></use></svg></button></span><span class="c-act" role="columnheader"></span></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.hd.ui-thead</dd>
+    <dt>Context</dt><dd>.app › .field › .rows.ui-table</dd>
+    <dt>Source</dt><dd>pages/staff/my-work-queue-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">My Work Queue</dd>
+    <dt>Measured</dt><dd>1396x48 · padding 9px 16px · gap 8px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Row</span>
+    <span class="sp-role">one ticket</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x64">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" data-cols="mine" aria-label="Work queue" data-sp-chain><div id="rows" class="rows ui-table" role="table" aria-labelledby="page-t" data-sp-chain><div id="tb" role="rowgroup" data-sp-chain><div class="row" role="row" data-id="48637"><span class="c c-grip" role="cell"><button class="grip" type="button" draggable="true" aria-label="Reorder ticket 1048637" title="Drag to reorder"><svg class="i" aria-hidden="true"><use href="#i-grip"></use></svg></button></span><span class="c c-rank ctr" role="cell"><button class="ed ed--num" type="button" data-ed="rank" data-kind="rank" title="Set work priority (0–299)">2</button></span><span class="c c-tkt" role="cell"><a class="tkt" href="https://newbackendcert.aandemo.com/work/tickets/48637">1048637</a></span><span class="c c-dlr" role="cell"><a class="dlr" href="https://www.chicagoas.com" target="_blank" rel="noopener" title="Chicago Auto Sports — opens in a new tab"><span>Chicago Auto Sports</span><svg class="i" aria-hidden="true"><use href="#i-ext"></use></svg></a></span><span class="c c-sub" role="cell"><a href="https://newbackendcert.aandemo.com/work/tickets/48637" title="SEO">SEO</a></span><span class="c c-st" role="cell"><span class="bdg bdg--project_ongoing" title="Marketing Project Open">Mktg Open</span></span><span class="c c-wt" role="cell" title="Marketing - Misc."><span>Marketing - Misc.</span></span><span class="c c-age" role="cell"><span>7</span></span><span class="c c-amt" role="cell"><span class="na">N/A</span></span><span class="c c-est" role="cell"><button class="ed ed--num" type="button" data-ed="est" data-kind="time" title="Edit my estimated time">0</button></span><span class="c c-left" role="cell"><span>0</span></span><span class="c c-mod" role="cell"><b><span>Ivaylo G.</span></b><i>9/8/26 18:25</i></span><span class="c c-who" role="cell" title="Ivaylo"><span class="c-who__l"><span>Ivaylo</span></span></span><span class="c c-beg" role="cell"><button class="ed" type="button" data-ed="begin" data-kind="date" title="Edit ticket begin date">9/3/26</button></span><span class="c c-done" role="cell"><button class="ed" type="button" data-ed="done" data-kind="date" title="Edit ticket completion date">9/8/26</button></span><span class="c c-act" role="cell"><a class="gear" href="https://newbackendcert.aandemo.com/work/tickets/48637" title="Open ticket 1048637" aria-label="Open ticket 1048637"><svg class="i" aria-hidden="true"><use href="#i-cog"></use></svg></a></span></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.row</dd>
+    <dt>Context</dt><dd>.app › .field › .rows.ui-table › div</dd>
+    <dt>Source</dt><dd>pages/staff/my-work-queue-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">My Work Queue</dd>
+    <dt>Measured</dt><dd>1396x64 · padding 0px 16px · gap 8px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Status badge</span>
+    <span class="sp-role">the work state</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="100x26">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" data-cols="mine" aria-label="Work queue" data-sp-chain><div id="rows" class="rows ui-table" role="table" aria-labelledby="page-t" data-sp-chain><div id="tb" role="rowgroup" data-sp-chain><div class="row" role="row" data-id="48663" data-sp-chain><span class="c c-st" role="cell" data-sp-chain><span class="bdg bdg--project_ongoing" title="Marketing Project Open">Mktg Open</span></span></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>span.bdg.bdg--project_ongoing</dd>
+    <dt>Context</dt><dd>.app › .field › .rows.ui-table › div › .row › .c.c-st</dd>
+    <dt>Source</dt><dd>pages/staff/my-work-queue-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">My Work Queue</dd>
+    <dt>Measured</dt><dd>100x26 · padding 0px 11px · radius 999px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Numeric cell</span>
+    <span class="sp-role">hours and money, tabular</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="64x17.55">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" data-cols="mine" aria-label="Work queue" data-sp-chain><div id="rows" class="rows ui-table" role="table" aria-labelledby="page-t" data-sp-chain><div id="tb" role="rowgroup" data-sp-chain><div class="row" role="row" data-id="48637" data-sp-chain><span class="c c-est" role="cell"><button class="ed ed--num" type="button" data-ed="est" data-kind="time" title="Edit my estimated time">0</button></span></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>span.c.c-est</dd>
+    <dt>Context</dt><dd>.app › .field › .rows.ui-table › div › .row</dd>
+    <dt>Source</dt><dd>pages/staff/my-work-queue-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">My Work Queue</dd>
+    <dt>Measured</dt><dd>64x18 · padding 0px · gap 1px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Modified cell</span>
+    <span class="sp-role">who touched it and when</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="92x32.95">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" data-cols="mine" aria-label="Work queue" data-sp-chain><div id="rows" class="rows ui-table" role="table" aria-labelledby="page-t" data-sp-chain><div id="tb" role="rowgroup" data-sp-chain><div class="row" role="row" data-id="48637" data-sp-chain><span class="c c-mod" role="cell"><b><span>Ivaylo G.</span></b><i>9/8/26 18:25</i></span></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>span.c.c-mod</dd>
+    <dt>Context</dt><dd>.app › .field › .rows.ui-table › div › .row</dd>
+    <dt>Source</dt><dd>pages/staff/my-work-queue-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">My Work Queue</dd>
+    <dt>Measured</dt><dd>92x33 · padding 0px · gap 1px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Grip</span>
+    <span class="sp-role">drag to reprioritise</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="20x32">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" data-cols="mine" aria-label="Work queue" data-sp-chain><div id="rows" class="rows ui-table" role="table" aria-labelledby="page-t" data-sp-chain><div id="tb" role="rowgroup" data-sp-chain><div class="row" role="row" data-id="48637" data-sp-chain><span class="c c-grip" role="cell" data-sp-chain><button class="grip" type="button" draggable="true" aria-label="Reorder ticket 1048637" title="Drag to reorder"><svg class="i" aria-hidden="true"><use href="#i-grip"></use></svg></button></span></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>button.grip</dd>
+    <dt>Context</dt><dd>.app › .field › .rows.ui-table › div › .row › .c.c-grip</dd>
+    <dt>Source</dt><dd>pages/staff/my-work-queue-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">My Work Queue</dd>
+    <dt>Measured</dt><dd>20x32 · padding 0px · radius 4px</dd>
+  </dl>
+</section>
+
+</body>
+</html>

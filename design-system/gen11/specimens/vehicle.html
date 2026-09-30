@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en" data-theme="light" class="sp-doc">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Specimens — Single Vehicle</title>
+
+<!-- ══ GENERATED FILE ═════════════════════════════════════════════════════
+     design-system/gen11/_tools/gen-specimens.js writes this from fragments
+     pulled out of the running product. Do not hand-edit: the next run will
+     overwrite it. Change the specimen list in _tools/spec.json instead.
+
+     THE STYLESHEETS BELOW ARE THE PRODUCT'S OWN, IN THE PRODUCT'S OWN ORDER.
+     Copied from pages/dealer/single-vehicle-gen11.html. Not a bundle, not an extract —
+     the same files the shipped page loads. A specimen therefore cannot drift
+     from the product: if the product changes, so does the specimen.
+     ─────────────────────────────────────────────────────────────────── -->
+<link rel="stylesheet" href="../../../pages/dealer/single-vehicle-gen11.css?b=muo5f98w">
+<link rel="stylesheet" href="../../../pages/_aan-family.css?b=muo5f98w">
+<link rel="stylesheet" href="../../../pages/_aan-components.css?b=muo5f98w">
+<!-- catalogue chrome last; every rule in it is namespaced sp-* -->
+<link rel="stylesheet" href="_specimen.css?b=muo5f98w">
+<script src="_specimen.js?b=muo5f98w" defer></script>
+</head>
+
+<body class="sp-host" data-specimen-id="vehicle">
+
+<!-- THIS PAGE'S OWN ICON SPRITE, copied verbatim from pages/dealer/single-vehicle-gen11.html.
+     Not a shared one: every Gen 11 page inlines a different set — All
+     Vehicles 34 symbols, Single Ticket 24, Dealer Edit 16 — and a
+     catalogue built on one page's sprite leaves the other pages' icons
+     pointing at symbols that do not exist. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"></path></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5m6 6-6-6 6-6"></path></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.35-4.35"></path></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"></path></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"></path></symbol>
+  <symbol id="i-cam" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="m21 15-5-5L5 21"></path></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.7l5.9-.9Z"></path></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="7"></rect></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8"></path></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"></path></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3.5 13.9 9l5.6 1.9-5.6 1.9L12 18.5 10.1 12.8 4.5 10.9 10.1 9z"></path><path d="M18.5 3v3M20 4.5h-3"></path></symbol>
+  <symbol id="i-undo" viewBox="0 0 24 24"><path d="M3 8h11a5 5 0 0 1 0 10H8"></path><path d="m6.5 4.5-3.5 3.5 3.5 3.5"></path></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"></path></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5M12 16.2h.01"></path></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"></path></symbol>
+  <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="4"></circle><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"></path></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"></path></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><path d="M17 21v-8H7v8M7 3v5h8"></path></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"></path></symbol>
+</svg>
+
+<!-- Each specimen carries the real ancestor chain it was found in. Gen 11
+     scopes a great deal of its CSS (`.exp .veh__acts`, `.row > .th`,
+     `.top .nav__b`), so a leaf lifted out of its context renders unstyled.
+     The chain is listed under CONTEXT in every provenance block below.
+     Ids repeat across specimens on this page; that is invalid HTML but CSS
+     id selectors still match, which is what a specimen host needs. -->
+
+<h2 class="sp-group">Editor chrome</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Cockpit</span>
+    <span class="sp-role">which vehicle, its price, and what you can do to it</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x72">
+<div id="app" class="app" data-sp-chain><div class="cockpit" id="cockpit">
+    <a class="cock__back" href="../../../pages/dealer/all-vehicles-gen11.html" title="Back to the inventory list"><svg class="i"><use href="#i-back"></use></svg>Inventory</a>
+    <span class="cock__thumb" id="cock-thumb" title="Main photo"><img src="../../../pages/dealer/img/277624e2-13868_main_t.jpg" alt="Main photo of the 2023 Ferrari 812 GTS"></span>
+    <div class="cock__id">
+      <div class="cock__l1">
+        <h1 class="cock__t" id="cock-title">2023 Ferrari 812 GTS</h1>
+        <span class="pill pill--ok" id="cock-status">AVAILABLE</span>
+        <span class="pill" id="cock-type">USED</span>
+      </div>
+      <div class="cock__l2">
+        <span>Stock <b id="cock-stock">0P0300236 PS</b></span>
+        <button class="copy" type="button" data-copy="stock" aria-label="Copy stock number" title="Copy stock number"><svg class="i"><use href="#i-copy"></use></svg></button>
+        <span class="vin" id="cock-vin">ZFF97CMA0P0300236</span>
+        <button class="copy" type="button" data-copy="vin" aria-label="Copy VIN" title="Copy VIN"><svg class="i"><use href="#i-copy"></use></svg></button>
+      </div>
+    </div>
+    <div class="cock__acts">
+      <span class="cock__price" id="cock-price" title="$1,099,500"><small>$</small>1,099,500</span>
+      <span class="cock__nav">
+        <button class="btn btn--sheet btn--sm btn--icon" type="button" data-act="prev" aria-label="Previous vehicle in your current list" title="Previous vehicle in your current list"><svg class="i"><use href="#i-left"></use></svg></button>
+        <button class="btn btn--sheet btn--sm btn--icon" type="button" data-act="next" aria-label="Next vehicle in your current list" title="Next vehicle in your current list"><svg class="i"><use href="#i-right"></use></svg></button>
+      </span>
+      <button class="btn btn--sheet btn--sm" type="button" data-jump="zPhotos"><svg class="i"><use href="#i-cam"></use></svg>Photos<span class="badge" id="cock-ph">64</span></button>
+      <span class="pop-wrap">
+        <button class="btn btn--sheet btn--sm" type="button" data-pop="p-prints" aria-haspopup="true" aria-expanded="false"><svg class="i"><use href="#i-print"></use></svg>Prints<svg class="i"><use href="#i-chev"></use></svg></button>
+        <div class="pop" id="p-prints" role="menu" aria-label="Prints"><div class="caps pop__t">Window sticker</div><button class="pop__i" type="button" role="menuitem" data-print="Window Sticker"><svg class="i"><use href="#i-print"></use></svg><span>Window Sticker</span></button><div class="pop__sep"></div><div class="caps pop__t">Buyers guides</div><div class="pop__empty">Printing autosaves the additional text.</div><button class="pop__i" type="button" role="menuitem" data-print="Print &quot;As Is&quot; Buyers Guide"><svg class="i"><use href="#i-file"></use></svg><span>Print "As Is" Buyers Guide</span></button><button class="pop__i" type="button" role="menuitem" data-print="Print &quot;As Is&quot; Buyers Guide w/ No Service Contract"><svg class="i"><use href="#i-file"></use></svg><span>Print "As Is" Buyers Guide w/ No Service Contract</span></button><button class="pop__i" type="button" role="menuitem" data-print="Print &quot;As Is&quot; Buyers Guide w/ Manufacturer Warranty"><svg class="i"><use href="#i-file"></use></svg><span>Print "As Is" Buyers Guide w/ Manufacturer Warranty</span></button><button class="pop__i" type="button" role="menuitem" data-print="Print &quot;In House&quot; Limited Buyers Guide"><svg class="i"><use href="#i-file"></use></svg><span>Print "In House" Limited Buyers Guide</span></button><button class="pop__i" type="button" role="menuitem" data-print="Print &quot;Factory&quot; Buyers Guide"><svg class="i"><use href="#i-file"></use></svg><span>Print "Factory" Buyers Guide</span></button><button class="pop__i" type="button" role="menuitem" data-print="Print &quot;Factory Full&quot; Buyers Guide"><svg class="i"><use href="#i-file"></use></svg><span>Print "Factory Full" Buyers Guide</span></button><button class="pop__i" type="button" role="menuitem" data-print="Print &quot;Text Only&quot; Buyers Guide"><svg class="i"><use href="#i-file"></use></svg><span>Print "Text Only" Buyers Guide</span></button><button class="pop__i" type="button" role="menuitem" data-print="Print Buyers Guide Back Page"><svg class="i"><use href="#i-file"></use></svg><span>Print Buyers Guide Back Page</span></button></div>
+      </span>
+      <button class="btn btn--primary btn--sm" type="button" data-act="save"><svg class="i"><use href="#i-save"></use></svg>Save<span class="btn__n" id="cock-dirty">0</span></button>
+    </div>
+  </div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.cockpit</dd>
+    <dt>Context</dt><dd>.app</dd>
+    <dt>Source</dt><dd>pages/dealer/single-vehicle-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Single Vehicle</dd>
+    <dt>Measured</dt><dd>1396x72 · padding 0px 16px · gap 12px · radius 14px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Provenance row</span>
+    <span class="sp-role">added, modified, views, who holds the lock</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="364x18.2">
+<div id="app" class="app" data-sp-chain><div class="body" data-sp-chain><div id="zones" class="zones" data-sp-chain><section id="zPricing" class="zone" aria-labelledby="t-pricing" data-sp-chain><div class="zone__b" data-sp-chain><div class="grid" data-sp-chain><div class="f" data-f="price" data-sp-chain><button class="prov prov--has" type="button" id="prov-price" data-act="pricehist"><svg class="i"><use href="#i-undo"></use></svg>2 changes · last −$300</button></div></div></div></section></div></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>button.prov.prov--has</dd>
+    <dt>Context</dt><dd>.app › .body › .zones › .zone › .zone__b › .grid › .f</dd>
+    <dt>Source</dt><dd>pages/dealer/single-vehicle-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Single Vehicle</dd>
+    <dt>Measured</dt><dd>364x18 · padding 0px · gap 5px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Section rail</span>
+    <span class="sp-role">where am I in the record</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="224x410">
+<div id="app" class="app" data-sp-chain><div class="body" data-sp-chain><nav class="rail ui-nav" id="rail" aria-label="Sections">
+      <button class="rail__i ui-nav__i rail__i--on ui-nav__i--on" type="button" data-jump="zStatus" aria-current="true"><span>Status</span><span class="badge badge--ok" id="b-status">AVAIL</span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zPricing"><span>Pricing</span><span class="badge" id="b-pricing">$1100k</span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zPhotos"><span>Photos</span><span class="badge" id="b-photos">64</span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zSpecs"><span>Specs &amp; VIN</span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zColors"><span>Colors</span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zDesc"><span>Descriptions</span><span class="badge badge--ok" id="b-desc" title="Has description copy">●</span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zFeat"><span>Features</span><span class="badge" id="b-feat">183</span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zFeeds"><span>Feeds</span><span class="badge badge--ok" id="b-feeds">all on</span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zCustom"><span>Custom Fields</span><span class="badge" id="b-custom">10</span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zMore"><span>More Details</span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zUtil"><span>Utilities</span></button>
+    </nav></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>nav.rail.ui-nav</dd>
+    <dt>Context</dt><dd>.app › .body</dd>
+    <dt>Source</dt><dd>pages/dealer/single-vehicle-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Single Vehicle</dd>
+    <dt>Measured</dt><dd>224x410 · padding 8px · gap 2px · radius 12px</dd>
+  </dl>
+  <p class="sp-note">A flat panel attached to the same grid as the form, with the current section on a brand edge. Not a floating card with a capsule inside it.</p>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Commit bar</span>
+    <span class="sp-role">the only thing that saves</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1428x48">
+<div id="app" class="app" data-sp-chain><div class="savebar" id="savebar">
+    <span class="savebar__n" id="save-n"><b>0</b> unsaved change(s)</span>
+    <span class="savebar__hint">only changed fields post (dirty-diff) · conflict check on save · Ctrl+S</span>
+    <span class="savebar__say" id="save-say" hidden=""></span>
+    <span class="savebar__div"></span>
+    <span class="pop-wrap">
+      <button class="savebar__b" type="button" data-pop="p-changes" aria-haspopup="true" aria-expanded="false" id="review-btn" disabled=""><svg class="i"><use href="#i-list"></use></svg>Review changes</button>
+      <div class="pop pop--up" id="p-changes" aria-label="Changed fields"><div class="pop__empty">Nothing changed yet.</div></div>
+    </span>
+    <button class="savebar__b savebar__b--discard" type="button" data-act="discard" id="discard-btn" disabled=""><svg class="i"><use href="#i-undo"></use></svg>Discard</button>
+    <button class="savebar__b savebar__b--save" type="button" data-act="save" id="save-btn" disabled=""><svg class="i"><use href="#i-save"></use></svg>Save Vehicle</button>
+  </div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.savebar</dd>
+    <dt>Context</dt><dd>.app</dd>
+    <dt>Source</dt><dd>pages/dealer/single-vehicle-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Single Vehicle</dd>
+    <dt>Measured</dt><dd>1428x48 · padding 10px 24px · gap 10px 8px · radius 0px</dd>
+  </dl>
+</section>
+
+<h2 class="sp-group">Forms</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Zone</span>
+    <span class="sp-role">one section of the record</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1156x412.85">
+<div id="app" class="app" data-sp-chain><div class="body" data-sp-chain><div id="zones" class="zones" data-sp-chain><section class="zone" id="zStatus" aria-labelledby="t-status">
+        <div class="zone__h">
+          <h2 class="zone__t" id="t-status">Status &amp; Visibility</h2>
+          <span class="zone__s">the levers that decide where this car appears</span>
+        </div>
+        <div class="zone__b">
+          <div class="statusrow">
+            <div class="f">
+              <span class="f__l" id="l-sold">Status (sold)</span>
+              <div class="seg" role="group" aria-labelledby="l-sold" data-seg="status">
+                <button class="seg__b seg__b--on" type="button" data-v="Available" aria-pressed="true">Available</button>
+                <button class="seg__b" type="button" data-v="Sold" aria-pressed="false">Sold</button>
+                <button class="seg__b" type="button" data-v="Pending" aria-pressed="false">Pending</button>
+                <button class="seg__b" type="button" data-v="Staging" aria-pressed="false">Staging</button>
+              </div>
+            </div>
+            <div class="f">
+              <span class="f__l" id="l-type">Type</span>
+              <div class="seg" role="group" aria-labelledby="l-type" data-seg="vtype">
+                <button class="seg__b seg__b--on" type="button" data-v="Used" aria-pressed="true">Used</button>
+                <button class="seg__b" type="button" data-v="New" aria-pressed="false">New</button>
+              </div>
+            </div>
+            <div class="f">
+              <span class="f__l" id="l-cert">Certified</span>
+              <div class="seg" role="group" aria-labelledby="l-cert" data-seg="certified">
+                <button class="seg__b" type="button" data-v="on" aria-pressed="false">On</button>
+                <button class="seg__b seg__b--on" type="button" data-v="off" aria-pressed="true">Off</button>
+              </div>
+            </div>
+          </div>
+          <p class="f__help">Switching to <b>Sold</b> auto-clears Pending Sale on save (existing rule). Back to Available — consider the <b>Renew listing on save</b> switch in Utilities to re-sort as a fresh arrival (never automatic).</p>
+          <div class="vis" id="vis" style="margin-top:var(--s4)"><div class="swrow"><span class="swrow__x"><b>Specials</b><span>Feature this car in the site's Specials rail</span></span><label class="sw"><input type="checkbox" id="core-specials" name="core-specials" data-vis="specials" aria-label="Specials"><span class="sw__t"></span></label></div><div class="swrow"><span class="swrow__x"><b>Incoming Data Feed</b><span>Allow the nightly DMS feed to update this car — turn OFF to protect manual edits</span></span><label class="sw"><input type="checkbox" id="core-incoming_data_feed" name="core-incoming_data_feed" data-vis="incoming_data_feed" aria-label="Incoming Data Feed" checked=""><span class="sw__t"></span></label></div><div class="swrow swrow--danger"><span class="swrow__x"><b>Do Not Display on Site</b><span>Hides the car from the public website entirely</span></span><label class="sw sw--danger"><input type="checkbox" id="core-no_display" name="core-no_display" data-vis="no_display" aria-label="Do Not Display on Site"><span class="sw__t"></span></label></div><div class="swrow"><span class="swrow__x"><b>Pending Sale</b><span>Shows the "sale pending" ribbon on the site</span></span><label class="sw"><input type="checkbox" id="core-pending_sale" name="core-pending_sale" data-vis="pending_sale" aria-label="Pending Sale"><span class="sw__t"></span></label></div><div class="swrow swrow--danger"><span class="swrow__x"><b>Do Not Feed Out</b><span>Master off-switch for all marketplace feeds · auto-flips ON when every feed in the Feeds section is excluded</span></span><label class="sw sw--danger"><input type="checkbox" id="core-nofeedout" name="core-nofeedout" data-vis="nofeedout" aria-label="Do Not Feed Out"><span class="sw__t"></span></label></div></div>
+        </div>
+      </section></div></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>section.zone</dd>
+    <dt>Context</dt><dd>.app › .body › .zones</dd>
+    <dt>Source</dt><dd>pages/dealer/single-vehicle-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Single Vehicle</dd>
+    <dt>Measured</dt><dd>1156x413 · padding 0px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Field</span>
+    <span class="sp-role">label over control</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="306.41x58.8">
+<div id="app" class="app" data-sp-chain><div class="body" data-sp-chain><div id="zones" class="zones" data-sp-chain><section id="zStatus" class="zone" aria-labelledby="t-status" data-sp-chain><div class="zone__b" data-sp-chain><div class="statusrow" data-sp-chain><div class="f">
+              <span class="f__l" id="l-sold">Status (sold)</span>
+              <div class="seg" role="group" aria-labelledby="l-sold" data-seg="status">
+                <button class="seg__b seg__b--on" type="button" data-v="Available" aria-pressed="true">Available</button>
+                <button class="seg__b" type="button" data-v="Sold" aria-pressed="false">Sold</button>
+                <button class="seg__b" type="button" data-v="Pending" aria-pressed="false">Pending</button>
+                <button class="seg__b" type="button" data-v="Staging" aria-pressed="false">Staging</button>
+              </div>
+            </div></div></div></section></div></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.f</dd>
+    <dt>Context</dt><dd>.app › .body › .zones › .zone › .zone__b › .statusrow</dd>
+    <dt>Source</dt><dd>pages/dealer/single-vehicle-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Single Vehicle</dd>
+    <dt>Measured</dt><dd>306x59 · padding 0px · gap 6px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Segmented control</span>
+    <span class="sp-role">one of a small set of states</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="306.41x36">
+<div id="app" class="app" data-sp-chain><div class="body" data-sp-chain><div id="zones" class="zones" data-sp-chain><section id="zStatus" class="zone" aria-labelledby="t-status" data-sp-chain><div class="zone__b" data-sp-chain><div class="statusrow" data-sp-chain><div class="f" data-sp-chain><div class="seg" role="group" aria-labelledby="l-sold" data-seg="status">
+                <button class="seg__b seg__b--on" type="button" data-v="Available" aria-pressed="true">Available</button>
+                <button class="seg__b" type="button" data-v="Sold" aria-pressed="false">Sold</button>
+                <button class="seg__b" type="button" data-v="Pending" aria-pressed="false">Pending</button>
+                <button class="seg__b" type="button" data-v="Staging" aria-pressed="false">Staging</button>
+              </div></div></div></div></section></div></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.seg</dd>
+    <dt>Context</dt><dd>.app › .body › .zones › .zone › .zone__b › .statusrow › .f</dd>
+    <dt>Source</dt><dd>pages/dealer/single-vehicle-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Single Vehicle</dd>
+    <dt>Measured</dt><dd>306x36 · padding 3px · gap 2px 6px · radius 999px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Switch row</span>
+    <span class="sp-role">a boolean with its consequence spelled out</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="546x65.45">
+<div id="app" class="app" data-sp-chain><div class="body" data-sp-chain><div id="zones" class="zones" data-sp-chain><section id="zStatus" class="zone" aria-labelledby="t-status" data-sp-chain><div class="zone__b" data-sp-chain><div id="vis" class="vis" data-sp-chain><div class="swrow"><span class="swrow__x"><b>Specials</b><span>Feature this car in the site's Specials rail</span></span><label class="sw"><input type="checkbox" id="core-specials" name="core-specials" data-vis="specials" aria-label="Specials"><span class="sw__t"></span></label></div></div></div></section></div></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.swrow</dd>
+    <dt>Context</dt><dd>.app › .body › .zones › .zone › .zone__b › .vis</dd>
+    <dt>Source</dt><dd>pages/dealer/single-vehicle-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Single Vehicle</dd>
+    <dt>Measured</dt><dd>546x65 · padding 12px 0px · gap 16px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Switch</span>
+    <span class="sp-role">on or off</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="42x24">
+<div id="app" class="app" data-sp-chain><div class="body" data-sp-chain><div id="zones" class="zones" data-sp-chain><section id="zStatus" class="zone" aria-labelledby="t-status" data-sp-chain><div class="zone__b" data-sp-chain><div id="vis" class="vis" data-sp-chain><div class="swrow" data-sp-chain><label class="sw"><input type="checkbox" id="core-specials" name="core-specials" data-vis="specials" aria-label="Specials"><span class="sw__t"></span></label></div></div></div></section></div></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>label.sw</dd>
+    <dt>Context</dt><dd>.app › .body › .zones › .zone › .zone__b › .vis › .swrow</dd>
+    <dt>Source</dt><dd>pages/dealer/single-vehicle-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Single Vehicle</dd>
+    <dt>Measured</dt><dd>42x24 · padding 0px · radius 999px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Money field</span>
+    <span class="sp-role">a price, with its change history</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="364x48">
+<div id="app" class="app" data-sp-chain><div class="body" data-sp-chain><div id="zones" class="zones" data-sp-chain><section id="zPricing" class="zone" aria-labelledby="t-pricing" data-sp-chain><div class="zone__b" data-sp-chain><div class="grid" data-sp-chain><div class="f" data-f="price" data-sp-chain><div class="money money--lg"><input class="in" id="core-price" type="text" inputmode="numeric" autocomplete="off"></div></div></div></div></section></div></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.money.money--lg</dd>
+    <dt>Context</dt><dd>.app › .body › .zones › .zone › .zone__b › .grid › .f</dd>
+    <dt>Source</dt><dd>pages/dealer/single-vehicle-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Single Vehicle</dd>
+    <dt>Measured</dt><dd>364x48 · padding 0px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Feature row</span>
+    <span class="sp-role">a long checklist, densely set</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1124x36">
+<div id="app" class="app" data-sp-chain><div class="body" data-sp-chain><div id="zones" class="zones" data-sp-chain><section id="zFeat" class="zone" aria-labelledby="t-feat" data-sp-chain><div id="feat" class="zone__b" data-sp-chain><div class="featgrp" data-sp-chain><div class="featrow"><input class="in in--sm" type="text" id="feat-0-cat" name="feat-0-cat" placeholder="Category" value="Entertainment_and_Technology" data-feat="0" data-col="0" aria-label="Category of feature row 1"><input class="in in--sm" type="text" id="feat-0-val" name="feat-0-val" placeholder="Value" value="Audio System : Antenna type : diversity" data-feat="0" data-col="1" aria-label="Value of feature row 1"><button class="rowx" type="button" data-featx="0" aria-label="Remove this feature row" title="Remove"><svg class="i"><use href="#i-x"></use></svg></button></div></div></div></section></div></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.featrow</dd>
+    <dt>Context</dt><dd>.app › .body › .zones › .zone › .zone__b › .featgrp</dd>
+    <dt>Source</dt><dd>pages/dealer/single-vehicle-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Single Vehicle</dd>
+    <dt>Measured</dt><dd>1124x36 · padding 0px · gap 8px · radius 0px</dd>
+  </dl>
+</section>
+
+<h2 class="sp-group">Media</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Photo tile</span>
+    <span class="sp-role">one photo in the set</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="117.78x78.51">
+<div id="app" class="app" data-sp-chain><div class="body" data-sp-chain><div id="zones" class="zones" data-sp-chain><section id="zPhotos" class="zone" aria-labelledby="t-photos" data-sp-chain><div class="zone__b" data-sp-chain><div id="photos" class="photos" data-sp-chain><figure class="photo"><img src="../../../pages/dealer/img/277624e2-13868_main_t.jpg" alt="Photo 1 of the 2023 Ferrari 812 GTS"><span class="photo__ix">1</span><span class="photo__star" title="Main photo"><svg class="i"><use href="#i-star"></use></svg></span></figure></div></div></section></div></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>figure.photo</dd>
+    <dt>Context</dt><dd>.app › .body › .zones › .zone › .zone__b › .photos</dd>
+    <dt>Source</dt><dd>pages/dealer/single-vehicle-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Single Vehicle</dd>
+    <dt>Measured</dt><dd>118x79 · padding 0px · radius 7px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Empty photo slot</span>
+    <span class="sp-role">a slot with nothing in it yet</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="117.78x78.51">
+<div id="app" class="app" data-sp-chain><div class="body" data-sp-chain><div id="zones" class="zones" data-sp-chain><section id="zPhotos" class="zone" aria-labelledby="t-photos" data-sp-chain><div class="zone__b" data-sp-chain><div id="photos" class="photos" data-sp-chain><figure class="photo photo--ph" title="Image file not in this kit"><svg class="i"><use href="#i-image"></use></svg><span class="photo__ix">2</span></figure></div></div></section></div></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>figure.photo.photo--ph</dd>
+    <dt>Context</dt><dd>.app › .body › .zones › .zone › .zone__b › .photos</dd>
+    <dt>Source</dt><dd>pages/dealer/single-vehicle-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Single Vehicle</dd>
+    <dt>Measured</dt><dd>118x79 · padding 0px · radius 7px</dd>
+  </dl>
+</section>
+
+</body>
+</html>

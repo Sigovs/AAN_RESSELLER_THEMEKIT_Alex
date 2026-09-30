@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en" data-theme="light" class="sp-doc">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Specimens — Accounting — View All</title>
+
+<!-- ══ GENERATED FILE ═════════════════════════════════════════════════════
+     design-system/gen11/_tools/gen-specimens.js writes this from fragments
+     pulled out of the running product. Do not hand-edit: the next run will
+     overwrite it. Change the specimen list in _tools/spec.json instead.
+
+     THE STYLESHEETS BELOW ARE THE PRODUCT'S OWN, IN THE PRODUCT'S OWN ORDER.
+     Copied from pages/staff/accounting-view-all-gen11.html. Not a bundle, not an extract —
+     the same files the shipped page loads. A specimen therefore cannot drift
+     from the product: if the product changes, so does the specimen.
+     ─────────────────────────────────────────────────────────────────── -->
+<link rel="stylesheet" href="../../../pages/staff/accounting-view-all-gen11.css?b=muo5f98w">
+<link rel="stylesheet" href="../../../pages/_aan-family.css?b=muo5f98w">
+<link rel="stylesheet" href="../../../pages/_aan-components.css?b=muo5f98w">
+<!-- catalogue chrome last; every rule in it is namespaced sp-* -->
+<link rel="stylesheet" href="_specimen.css?b=muo5f98w">
+<script src="_specimen.js?b=muo5f98w" defer></script>
+</head>
+
+<body class="sp-host" data-specimen-id="accounting">
+
+<!-- THIS PAGE'S OWN ICON SPRITE, copied verbatim from pages/staff/accounting-view-all-gen11.html.
+     Not a shared one: every Gen 11 page inlines a different set — All
+     Vehicles 34 symbols, Single Ticket 24, Dealer Edit 16 — and a
+     catalogue built on one page's sprite leaves the other pages' icons
+     pointing at symbols that do not exist. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.35-4.35"></path></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"></path></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"></path></symbol>
+  <symbol id="i-dn" viewBox="0 0 24 24"><path d="M12 5v14m6-6-6 6-6-6"></path></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"></path></symbol>
+  <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="4"></circle><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"></path></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="7"></rect></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6"></path></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h8"></path></symbol>
+  <symbol id="i-cash" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2.6"></circle><path d="M6 12h.01M18 12h.01"></path></symbol>
+  <symbol id="i-dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="currentColor" stroke="none"></circle></symbol>
+  <symbol id="i-half" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"></circle><path d="M12 6a6 6 0 0 1 0 12Z" fill="currentColor" stroke="none"></path></symbol>
+</svg>
+
+<!-- Each specimen carries the real ancestor chain it was found in. Gen 11
+     scopes a great deal of its CSS (`.exp .veh__acts`, `.row > .th`,
+     `.top .nav__b`), so a leaf lifted out of its context renders unstyled.
+     The chain is listed under CONTEXT in every provenance block below.
+     Ids repeat across specimens on this page; that is invalid HTML but CSS
+     id selectors still match, which is what a specimen host needs. -->
+
+<h2 class="sp-group">Summary</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Metric strip</span>
+    <span class="sp-role">billable, recurring, open, past due</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x148.15">
+<div id="app" class="app" data-sp-chain><section class="deck" id="deck" aria-label="Billing totals"><button class="tile tile--on" type="button" data-tile="billable" aria-pressed="true" title="Show all dealers"><span class="tile__k">Billable dealers</span><span class="tile__v">205</span><span class="tile__s">363 listed</span><span class="tile__f"><svg class="i"><use href="#i-dn"></use></svg>showing</span></button><div class="tile tile--static"><span class="tile__k">Monthly recurring</span><span class="tile__v">$129,247.17</span><span class="tile__s">sum of active templates</span></div><button class="tile" type="button" data-tile="owing" aria-pressed="false" title="Dealers with an open balance"><span class="tile__k">Open balance</span><span class="tile__v">$182,377.18</span><span class="tile__s">136 dealers owe</span><span class="tile__f"><svg class="i"><use href="#i-dn"></use></svg>filter</span></button><div class="tile tile--danger tile--static" title="Dealers past due"><span class="tile__k">Past due</span><span class="tile__v">$126,126.93</span><span class="tile__s">40 past due</span><span class="tile__note">not resolvable to rows in this snapshot</span></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>section.deck</dd>
+    <dt>Context</dt><dd>.app</dd>
+    <dt>Source</dt><dd>pages/staff/accounting-view-all-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Accounting — View All</dd>
+    <dt>Measured</dt><dd>1396x148 · padding 0px 0px 16px · gap 16px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Metric tile</span>
+    <span class="sp-role">one figure</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="337x132.15">
+<div id="app" class="app" data-sp-chain><section id="deck" class="deck" aria-label="Billing totals" data-sp-chain><div class="tile tile--static"><span class="tile__k">Monthly recurring</span><span class="tile__v">$129,247.17</span><span class="tile__s">sum of active templates</span></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.tile.tile--static</dd>
+    <dt>Context</dt><dd>.app › .deck</dd>
+    <dt>Source</dt><dd>pages/staff/accounting-view-all-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Accounting — View All</dd>
+    <dt>Measured</dt><dd>337x132 · padding 16px 16px 12px · radius 14px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Dark focal tile</span>
+    <span class="sp-role">the figure the page is about</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="337x132.15">
+<div id="app" class="app" data-sp-chain><section id="deck" class="deck" aria-label="Billing totals" data-sp-chain><button class="tile tile--on" type="button" data-tile="billable" aria-pressed="true" title="Show all dealers"><span class="tile__k">Billable dealers</span><span class="tile__v">205</span><span class="tile__s">363 listed</span><span class="tile__f"><svg class="i"><use href="#i-dn"></use></svg>showing</span></button></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>button.tile.tile--on</dd>
+    <dt>Context</dt><dd>.app › .deck</dd>
+    <dt>Source</dt><dd>pages/staff/accounting-view-all-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Accounting — View All</dd>
+    <dt>Measured</dt><dd>337x132 · padding 16px 16px 12px · radius 14px</dd>
+  </dl>
+</section>
+
+<h2 class="sp-group">Scope</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Lane strip</span>
+    <span class="sp-role">billable or all</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="170.68x36">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" aria-label="Dealer billing" data-sp-chain><div class="cmdtop ui-toolbar ui-toolbar--sub" data-sp-chain><div class="lanes ui-views" id="lanes" role="group" aria-label="Which dealers"><button class="lane ui-view lane--on ui-view--on" type="button" data-lane="billable" aria-pressed="true">Billable<b>205</b></button><button class="lane ui-view" type="button" data-lane="all" aria-pressed="false">All<b>363</b></button></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.lanes.ui-views</dd>
+    <dt>Context</dt><dd>.app › .field › .cmdtop.ui-toolbar.ui-toolbar--sub</dd>
+    <dt>Source</dt><dd>pages/staff/accounting-view-all-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Accounting — View All</dd>
+    <dt>Measured</dt><dd>171x36 · padding 0px · gap 4px 6px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Status strip</span>
+    <span class="sp-role">active, pending, intake</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="351.86x30">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" aria-label="Dealer billing" data-sp-chain><div class="cmdtop ui-toolbar ui-toolbar--sub" data-sp-chain><div class="statuses ui-filters" id="statuses" role="group" aria-label="Dealer status"><span class="caps flt__k">Status</span><button class="tl ui-filter" type="button" data-status="Active" aria-pressed="false">Active<b>315</b></button><button class="tl ui-filter" type="button" data-status="Pending" aria-pressed="false">Pending<b>24</b></button><button class="tl ui-filter" type="button" data-status="Client Intake" aria-pressed="false">Client Intake<b>24</b></button></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.statuses.ui-filters</dd>
+    <dt>Context</dt><dd>.app › .field › .cmdtop.ui-toolbar.ui-toolbar--sub</dd>
+    <dt>Source</dt><dd>pages/staff/accounting-view-all-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Accounting — View All</dd>
+    <dt>Measured</dt><dd>352x30 · padding 0px · gap 6px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Filter pair</span>
+    <span class="sp-role">reseller and group</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x56">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" aria-label="Dealer billing" data-sp-chain><div class="cmd ui-toolbar" id="cmd">
+      <label class="search">
+        <svg class="i"><use href="#i-search"></use></svg>
+        <input type="search" id="q" placeholder="Search name, billing email, or #invoice…" autocomplete="off" title="Text matches company name or billing email; 4 or more digits also match a dealer number or an invoice number" aria-label="Search dealers">
+        <span class="fchips" id="fchips"></span>
+        <kbd>/</kbd>
+      </label>
+      <span class="cmd__div"></span>
+      <label class="facet facet--sel ui-select"><select class="sel" id="f-reseller" aria-label="Reseller" title="The export’s dealer rows do not carry a reseller key, so this control cannot narrow them here." disabled=""><option value="" selected="">Reseller: Show all</option><option value="All Auto Network">All Auto Network</option><option value="All Auto Network - A X A Boston">All Auto Network - A X A Boston</option><option value="All Auto Network - Acton Auto">All Auto Network - Acton Auto</option><option value="All Auto Network - Anthony Labalestra">All Auto Network - Anthony Labalestra</option><option value="All Auto Network - Aston Martin Summit">All Auto Network - Aston Martin Summit</option><option value="All Auto Network - Bentley Long Island">All Auto Network - Bentley Long Island</option><option value="All Auto Network - Bul Auto Sales">All Auto Network - Bul Auto Sales</option><option value="All Auto Network - Cauley Ferrari">All Auto Network - Cauley Ferrari</option><option value="All Auto Network - CFL">All Auto Network - CFL</option><option value="All Auto Network - CMC">All Auto Network - CMC</option><option value="All Auto Network - EAG">All Auto Network - EAG</option><option value="All Auto Network - FC Kerbeck">All Auto Network - FC Kerbeck</option><option value="All Auto Network - Fields Auto Group">All Auto Network - Fields Auto Group</option><option value="All Auto Network - FMoA">All Auto Network - FMoA</option><option value="All Auto Network - Glenview Luxury Imports">All Auto Network - Glenview Luxury Imports</option><option value="All Auto Network - Gravity">All Auto Network - Gravity</option><option value="All Auto Network - Group Seven Automotive">All Auto Network - Group Seven Automotive</option><option value="All Auto Network - Lawrence Motorsport">All Auto Network - Lawrence Motorsport</option><option value="All Auto Network - LFSC">All Auto Network - LFSC</option><option value="All Auto Network - Long Island Sports Cars">All Auto Network - Long Island Sports Cars</option><option value="All Auto Network - Marshall Goldman">All Auto Network - Marshall Goldman</option><option value="All Auto Network - McLaren and Rimac Boston">All Auto Network - McLaren and Rimac Boston</option><option value="All Auto Network - Miller">All Auto Network - Miller</option><option value="All Auto Network - Naples">All Auto Network - Naples</option><option value="All Auto Network - NYC Motorcars">All Auto Network - NYC Motorcars</option><option value="All Auto Network - OGara Coach">All Auto Network - OGara Coach</option><option value="All Auto Network - Paul Miller">All Auto Network - Paul Miller</option><option value="All Auto Network - Platinum Cars">All Auto Network - Platinum Cars</option><option value="All Auto Network - S &amp; E Auto Sales">All Auto Network - S &amp; E Auto Sales</option><option value="All Auto Network - Shift Digital">All Auto Network - Shift Digital</option><option value="All Auto Network - Summit">All Auto Network - Summit</option><option value="All Auto Network - TLC">All Auto Network - TLC</option><option value="All Auto Network - TLC LG">All Auto Network - TLC LG</option><option value="All Auto Network - TLC WC">All Auto Network - TLC WC</option><option value="All Auto Network - Towbin Motorcars">All Auto Network - Towbin Motorcars</option><option value="All Auto Network - zDev">All Auto Network - zDev</option><option value="All Auto Network - ZT AutoGroup">All Auto Network - ZT AutoGroup</option><option value="Aronson Advertising">Aronson Advertising</option><option value="Aronson Advertising - Ewald">Aronson Advertising - Ewald</option><option value="Arrowhead Advertising">Arrowhead Advertising</option><option value="Auto Conversion">Auto Conversion</option><option value="BBA &amp; Beyond">BBA &amp; Beyond</option><option value="Blugroup KS">Blugroup KS</option><option value="BluSolutions GA">BluSolutions GA</option><option value="BluSolutions Texas">BluSolutions Texas</option><option value="Cars By The Millions">Cars By The Millions</option><option value="Chicago Consortium">Chicago Consortium</option><option value="CMP Development">CMP Development</option><option value="Cypress Alliance">Cypress Alliance</option><option value="Eikon Mobile">Eikon Mobile</option><option value="Ella's Bubbles">Ella's Bubbles</option><option value="Ensure Productions">Ensure Productions</option><option value="esolutions">esolutions</option><option value="GD2">GD2</option><option value="Guidance Development">Guidance Development</option><option value="Infinity Publishing">Infinity Publishing</option><option value="Lifecycle Digital Marketing">Lifecycle Digital Marketing</option><option value="Marni McClennan">Marni McClennan</option><option value="Matrix Nationwide Inc.">Matrix Nationwide Inc.</option><option value="Mogulweb.com">Mogulweb.com</option><option value="Mojo Internet Marketing Company">Mojo Internet Marketing Company</option><option value="Omnibus Advertising">Omnibus Advertising</option><option value="Premier Solutionz">Premier Solutionz</option><option value="Redbumper LLC">Redbumper LLC</option><option value="Redline Edition">Redline Edition</option><option value="Simply Dealer">Simply Dealer</option><option value="Source One Services">Source One Services</option><option value="Steinberg Marketing">Steinberg Marketing</option><option value="The BluSolutions Group, Inc.">The BluSolutions Group, Inc.</option><option value="The Real BluSolutions, Inc. DBA - BluSolutions">The Real BluSolutions, Inc. DBA - BluSolutions</option></select></label>
+      <label class="facet facet--sel ui-select"><select class="sel" id="f-group" aria-label="Reseller group" title="The export’s dealer rows do not carry a reseller key, so this control cannot narrow them here." disabled=""><option value="" selected="">Group: Any</option><option value="Alex Test">Alex Test</option><option value="Aronson Advertising Admin">Aronson Advertising Admin</option><option value="Blu Solutions">Blu Solutions</option><option value="The Luxury Collection">The Luxury Collection</option></select></label>
+    </div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.cmd.ui-toolbar</dd>
+    <dt>Context</dt><dd>.app › .field</dd>
+    <dt>Source</dt><dd>pages/staff/accounting-view-all-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Accounting — View All</dd>
+    <dt>Measured</dt><dd>1396x56 · padding 10px 16px · gap 8px · radius 0px</dd>
+  </dl>
+</section>
+
+<h2 class="sp-group">Money table</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Column header</span>
+    <span class="sp-role">sticky header</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x48">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" aria-label="Dealer billing" data-sp-chain><div id="rows" class="rows ui-table" data-sp-chain><div class="hd ui-thead" id="hd">
+        <span class="c-stat" title="Dealer status, and whether billing is active">Bill</span>
+        <span class="s c-name s--on" data-sort="name" aria-sort="ascending">Company Name<svg class="i"><use href="#i-up"></use></svg></span>
+        <span class="s c-to" data-sort="billTo" title="Whose account the invoice is raised against" aria-sort="none">Bill To</span>
+        <span class="s c-pay" data-sort="payWith" aria-sort="none">Pay With</span>
+        <span class="c-mail">Billing Email</span>
+        <span class="s c-lp" data-sort="lpDate" aria-sort="none">Latest Payment</span>
+        <span class="r s c-bal" data-sort="bal" aria-sort="none">Balance</span>
+        <span class="r s c-mo" data-sort="mo" aria-sort="none">Monthly</span>
+        <span class="r c-act">Actions</span>
+      </div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.hd.ui-thead</dd>
+    <dt>Context</dt><dd>.app › .field › .rows.ui-table</dd>
+    <dt>Source</dt><dd>pages/staff/accounting-view-all-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Accounting — View All</dd>
+    <dt>Measured</dt><dd>1396x48 · padding 9px 16px · gap 8px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Row</span>
+    <span class="sp-role">one dealer's billing</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x52">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" aria-label="Dealer billing" data-sp-chain><div id="rows" class="rows ui-table" data-sp-chain><div id="tb" data-sp-chain><div class="row" data-id="835" tabindex="0" role="button" aria-expanded="false" aria-label="3 Pedal Stable — open ledger"><span class="c c-stat"><span class="bstat bstat--green" role="img" title="Active" aria-label="Active"><svg class="i"><use href="#i-check"></use></svg></span><input class="bck" type="checkbox" checked="" data-bill="835" title="Billing active for 3 Pedal Stable" aria-label="Billing active for 3 Pedal Stable"></span><span class="c c-name"><a href="#" data-id="835" class="c--1">3 Pedal Stable</a><span class="did">#835</span></span><span class="c c-to">D</span><span class="c c-pay">CC</span><span class="c c-mail"><span class="c--1">Shawn@3pedalstable.com</span></span><span class="c c-lp"><span class="pdot pdot--ok" title="paid this cycle"></span><span class="amt">$399.00</span><span class="paydate" title="2026-09-01">· Sep 1</span></span><span class="c num c-bal"><span class="zero">—</span></span><span class="c num c-mo">$399.00</span><span class="c c-act"><button class="btn btn--primary btn--xs" type="button" data-pay="835" title="Unpaid balances / post payments">Pay</button><button class="btn btn--sheet btn--xs" type="button" data-hist="835" title="Ledger / history">History</button></span></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.row</dd>
+    <dt>Context</dt><dd>.app › .field › .rows.ui-table › div</dd>
+    <dt>Source</dt><dd>pages/staff/accounting-view-all-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Accounting — View All</dd>
+    <dt>Measured</dt><dd>1396x52 · padding 0px 16px · gap 8px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Payment cell</span>
+    <span class="sp-role">amount, state dot and date</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="132x18.85">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" aria-label="Dealer billing" data-sp-chain><div id="rows" class="rows ui-table" data-sp-chain><div id="tb" data-sp-chain><div class="row" data-id="835" tabindex="0" role="button" aria-expanded="false" aria-label="3 Pedal Stable — open ledger" data-sp-chain><span class="c c-lp"><span class="pdot pdot--ok" title="paid this cycle"></span><span class="amt">$399.00</span><span class="paydate" title="2026-09-01">· Sep 1</span></span></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>span.c.c-lp</dd>
+    <dt>Context</dt><dd>.app › .field › .rows.ui-table › div › .row</dd>
+    <dt>Source</dt><dd>pages/staff/accounting-view-all-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Accounting — View All</dd>
+    <dt>Measured</dt><dd>132x19 · padding 0px · gap 6px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Balance cell</span>
+    <span class="sp-role">what is owed</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="108x18.13">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" aria-label="Dealer billing" data-sp-chain><div id="rows" class="rows ui-table" data-sp-chain><div id="tb" data-sp-chain><div class="row" data-id="835" tabindex="0" role="button" aria-expanded="false" aria-label="3 Pedal Stable — open ledger" data-sp-chain><span class="c num c-bal"><span class="zero">—</span></span></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>span.c.num.c-bal</dd>
+    <dt>Context</dt><dd>.app › .field › .rows.ui-table › div › .row</dd>
+    <dt>Source</dt><dd>pages/staff/accounting-view-all-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Accounting — View All</dd>
+    <dt>Measured</dt><dd>108x18 · padding 0px 0px 0px 12px · gap 6px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Row actions</span>
+    <span class="sp-role">pay, history</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="128x36">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" aria-label="Dealer billing" data-sp-chain><div id="rows" class="rows ui-table" data-sp-chain><div id="tb" data-sp-chain><div class="row" data-id="835" tabindex="0" role="button" aria-expanded="false" aria-label="3 Pedal Stable — open ledger" data-sp-chain><span class="c c-act"><button class="btn btn--primary btn--xs" type="button" data-pay="835" title="Unpaid balances / post payments">Pay</button><button class="btn btn--sheet btn--xs" type="button" data-hist="835" title="Ledger / history">History</button></span></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>span.c.c-act</dd>
+    <dt>Context</dt><dd>.app › .field › .rows.ui-table › div › .row</dd>
+    <dt>Source</dt><dd>pages/staff/accounting-view-all-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Accounting — View All</dd>
+    <dt>Measured</dt><dd>128x36 · padding 0px · gap 4px 8px · radius 0px</dd>
+  </dl>
+</section>
+
+</body>
+</html>

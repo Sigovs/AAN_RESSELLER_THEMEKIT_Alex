@@ -1,267 +1,214 @@
-# AAN Gen 11 — Implementation Rules
+# Gen 11 — RULES
 
-Rules, not advice. Each one is written because the opposite was built at some
-point in Gen 11 and had to be undone. Where a rule has an exit, the exit is
-stated; where it has none, it has none.
+Positive contracts. Every number here was measured on the ten shipped pages at
+1440×900; where the product is inconsistent, the inconsistency is named rather
+than averaged away.
 
----
-
-## 1 · Spacing
-
-### R1.1 — Every spacing value is on the scale
-
-`4 · 8 · 12 · 16 · 24 · 32 · 40 · 48 · 64` (`--s1`…`--s9`).
-
-There is no 20, no 28, no 36 step. A value off the scale is a defect unless it is
-in the exceptions register (§10).
-
-### R1.2 — Two insets, and they are not interchangeable
-
-- **Structural inset — 16px** (`--inset`, `--sheet-inset`, `--gutter`): sheet edge
-  to content, toolbar padding, table row padding, page gutter.
-- **Control inset — 12px** (`--inset-ctl`): text inside a chip, a view item, a nav
-  item, a select.
-
-A control padded to 16 looks inflated. A table row padded to 12 looks cramped.
-
-### R1.3 — A break between blocks exceeds the gap inside a block
-
-Measured and set on the record pages:
-
-| Joint | Value |
-|---|---|
-| chrome → page identity | 16px |
-| inside a block | 16px |
-| block → block | **24px** |
-
-If the break equals the internal gap, the break communicates nothing. This was the
-actual defect on the record pages: the module cleared the sheet by 16px — the same
-16px it used between its own cards.
-
-### R1.4 — Nothing touches
-
-No two elements meet unless the pattern names them as one compound control.
-
-- minimum air between adjacent controls: **8px**
-- no 1px, 2px or 3px accidental gaps
-- no negative margins used to fake grouping
-- every text-bearing surface has an inner inset; text never meets an edge
-- fixed chrome is a boundary: content stops short of it or it clears the content
-
-**Exit:** a deliberately joined control group (a segmented track), which shares a
-structural edge and is documented as one control.
-
-### R1.5 — Vertical centring, always
-
-Text inside a pill, chip, badge, button, lane, nav item or table-header cell is
-optically centred on its box. Never bottom-aligned, never baseline-aligned inside
-a control.
-
-**Two components are exempt from the blanket `inline-flex` treatment, and both
-exemptions are load-bearing:**
-
-- `.seg__b` centres with `display: inline-grid; place-items: center`. Flattening
-  it to `inline-flex` with `align-items` alone keeps the vertical centring and
-  throws away the horizontal — every icon ends up against the left edge of its
-  slot.
-- `.mn__it` is a **full-width row** in a column of choices. `inline-flex` laid
-  every menu out on one line; All Leads' bulk-assign menu became a single 2426px
-  row and the workspace clip made eleven of its fourteen items unreachable.
-
-**The general rule:** vertical centring is applied to *inline* objects. Before
-adding a class to that list, check whether the component is a row, a grid or a
-full-width control — if it is, give it its own rule instead.
+The companion documents are `ANTI-PATTERNS.md` (what the system refuses, and what
+it does instead) and `TOKENS.md` (the values, read out of the running product).
 
 ---
 
-## 2 · Surfaces — the attached / floating contract
+## 1 · The spacing contract
 
-### R2.1 — Decide which one it is, then commit
+The ladder is **4 · 8 · 12 · 16 · 24 · 32 · 40 · 48 · 64**, published as `--s1`…`--s9`.
+A value off the ladder is a decision, and a decision needs a comment.
 
-**ATTACHED** — the thing is part of the surface beneath it:
-- shares a structural edge, no gap
-- square corners on the joined edge
-- **no shadow between attached surfaces**
-- separation carried by a hairline (`--line-2`) or a change of ground
+### Structural
 
-**FLOATING** — the thing sits above its surroundings:
-- a real gap on every side
-- complete radius (`--r-card` 14px)
-- one restrained shadow (`--sh-soft`, `--el-1`…`--el-3`)
-- a clear layer on the z ladder
-
-### R2.2 — Never build these
-
-- a rounded card touching another rounded card
-- a fake gap made from a background sliver
-- a hanging or clipped side "ear"
-- a button visually glued to the panel it belongs to
-- a shadow sandwich — two shadowed surfaces stacked with no ground between
-
-### R2.3 — Clipping a sheet uses `clip`, not `hidden`
-
-`overflow: hidden` on a working surface makes it a **scroll container**, and a
-scroll container that is also the containing block pushes its own sticky child
-down by its `top` and then refuses to let it stick. This put 56px of empty white
-above the section band on Single Ticket. Use `overflow: clip`.
-
-Consequence: a popover that must escape the sheet cannot rely on `position: fixed`
-either — the command band carries a `backdrop-filter` and becomes the containing
-block. Move the element to `<body>` while it is open.
-
----
-
-## 3 · No white slabs
-
-### R3.1 — A light surface must have a named role
-
-Permitted roles: table sheet · form sheet · toolbar · reading surface · explicit
-panel · floating surface.
-
-**A section does not become a card because it needs separation.**
-
-### R3.2 — Separate with rhythm, not with another rectangle
-
-In order of preference:
-1. tonal rhythm — alternating ground between chapters
-2. a full-bleed rule on the boundary
-3. typographic hierarchy and a counted head
-4. spacing that makes the break larger than the internal gap
-
-Gen 11's own worked example: the record pages ran ~3,300px of identical white with
-five equally weighted titles. The fix added no card — it alternated the ground,
-made the boundary a full-bleed rule, numbered the chapters and gave the live
-chapter the one warm ground on the page.
-
-### R3.3 — No giant empty grey cavity either
-
-A card that is half empty is the same failure as a slab. On Single Ticket the dark
-summary sat beside a taller panel; every attempt to reconcile them put the slack
-somewhere (centred → two holes; bottom → one hole; spread → five holes). The
-answer was to stop reconciling: each card takes the height of its own content and
-the leftover is page ground, which is air rather than an empty card.
-
----
-
-## 4 · No pill soup
-
-### R4.1 — `--r-pill` is for status, not for structure
-
-Legitimate pill users:
-- status chips and tags (`.bdg`, `.tag`)
-- a true compact state indicator
-
-**Not** pills: toolbar buttons, navigation, filters, card titles, actions, section
-heads. Those take `--r-inner` 7px or `--r-control` 9px.
-
-### R4.2 — Locked or fixed facts are stated, not offered
-
-A thing the user cannot change is not a disabled control. In the Columns panel the
-five locked columns are one line of text — *Always shown: Stock · Make · Model ·
-Price · Actions* — not five dead switches.
-
----
-
-## 5 · Navigation, view, filter, section — four different things
-
-| Concept | Question it answers | Treatment |
+| relationship | value | measured on |
 |---|---|---|
-| **Platform nav** (`.nav__b`) | which area of the product | ink by default; current gets `--brand-soft` fill + `--brand-ink` |
-| **View / lane** (`.ui-views`) | which view of this list | raised light thumb on **no** track; only the current item is an object |
-| **Filter** (`.ui-filters`) | which records are visible | chips on the ground with a caps key; must not read as navigation |
-| **Section nav** (`.ui-nav`) | where in this record | inset pill, soft brand fill, no stripe |
+| page gutter | **16px** | all ten pages, every supported width |
+| structural inset — content inside a surface | **16px** (`--inset`) | table rows `0 16px`, column header `9px 16px` |
+| control inset — text inside a control | **12px** (`--inset-ctl`) | table cells, swatch meta, menu rows |
+| section padding | 24–32px top, 32–40px bottom | zones on the two editor pages |
+| block rhythm inside a section | 16px between blocks, 8px inside a block | Single Ticket worklog, Single Lead fields |
 
-### R5.1 — No legacy blue underline tabs
+**Every structural surface owns its content inset.** A child never relies on
+whatever padding its parent happens to have. If a surface holds text, the surface
+declares the inset — not the first element that noticed the problem.
 
-Not on the platform bar, not on a view track, not on a section nav. The rule that
-produced them has been removed from the family layer; do not reintroduce it.
+### Separation — the rule that keeps being broken
 
-### R5.2 — Section nav does not pretend to be tabs
+Two interactive surfaces never touch, and never come close enough to read as one
+object.
 
-If all the content stays in the document, the control **moves the scroll**. It
-does not hide the other sections.
+| group | gap | why |
+|---|---|---|
+| standalone actions in a row | **8px** | `.head__actions`, `.veh__acts`, `.cock__acts`, `.c-act` |
+| members of a segmented control | **6px** | `.secnav`, `.seg`, `.lanes`, `.tally`, `.statuses`, the platform bar |
+| the platform bar's own clusters | **6px** | `.top` |
 
----
+The 8px figure is the system's own: *one primary per group, 8px apart, never
+touching.* 6px is the tier below, for members that share a tray and are already
+read as one control.
 
-## 6 · Buttons
+This has been repaired three times — the platform nav at 0px, the section tabs at
+1px, the record arrows at 2px — each time because width was bought by deleting the
+gap. **Separation is never the elastic member.** When a row does not fit, the
+width comes out of a field, a label, or a scroller. It never comes out of the space
+between two things you can click.
 
-- one primary per group; a second primary means neither is
-- 8px between adjacent buttons; never less
-- tier follows context: dense 30 in a row or a compact bar, standard 36 in a
-  toolbar, large 44 only for a form's own submit
-- a toggle is a button with `.btn--on`, not a tab
-- a destructive action is `--danger` ink on a light surface; it is never the only
-  coloured thing on the screen
-- a primary on a dark bar keeps **light** ink, including when disabled
+### What is allowed to share an edge
 
----
+Some things are a list, not a row of buttons, and a hairline is the separator:
 
-## 7 · Colour discipline
+- the go-live ticker on My Work Queue — items butt, divided by `inset -1px 0 0`
+- rows in a table — divided by `inset 0 -1px 0`
+- zones in an editor — divided by a 1px top border
+- menu rows in a popover — full-bleed, divided by hover
 
-### R7.1 — Blue means link, or "you are here"
-
-Nothing else. Not a numeral, not an editable value, not a date. ~370 blue numerals
-once sat on My Work Queue and the 94 real ticket links had nothing to distinguish
-them.
-
-### R7.2 — A dark surface stays dark on hover
-
-A generic `button:hover { background: var(--wash) }` will, by specificity, reach
-the one dark card on the page and turn it into a pale slab with near-white text —
-1.2:1, the whole card gone. Scope hover rules away from `--on`/dark variants.
-
-### R7.3 — Contrast floor
-
-Body and control text: **4.5:1** against its **composited** background, not
-against the token it was authored for. Check the rendered pixel.
+In each case the text inside is still inset, and the divider is drawn once.
 
 ---
 
-## 8 · Sticky and layers
+## 2 · Controls
 
-- the stack is declared in tokens and **derived**, never copied:
-  `--stick-hd-top: calc(56px + 56px)`
-- All Vehicles stacks 56 + 56 + 40 = **152px**, with a **10px** selected-row anchor
-  gap; verified anchor error 0px
-- a selected row comes to rest at `stack + anchor-gap`; it is not centred with
-  `scrollIntoView`
-- no dimming of unrelated rows
-- a save footer is **attached**: full-bleed, flush to the bottom, square, top
-  hairline; the page reserves its **measured** height (`--savebar-h`), not a
-  guessed one. No floating save CTA where a sticky save bar is the pattern.
+Four heights, and each one means something.
 
----
+| tier | height | radius | horizontal padding | where |
+|---|---|---|---|---|
+| dense | **30px** | 7px | 11px | inside a section, inside a row, `.btn--sm` |
+| standard | **32–36px** | 9px | 12–14px | toolbars, the platform bar |
+| record | **40px** | 9px | 14–24px | the action row above a record |
+| field | **40–44px** | 7–9px | 12px | form controls, `.fld` |
 
-## 9 · Responsive
+`.btn--primary` is the brand fill and carries a restrained glow. **One per group.**
+`.btn--sheet` carries a surface; `.btn--quiet` sits on the ground. Destructive is
+carried by ink (`.btn--del`), never by a red fill.
 
-Verified widths: **1280 · 1366 · 1440 · 1920**, plus short viewport **1366×610**.
-
-- page gutter stays **16px** at every width
-- **no horizontal scrolling anywhere.** A strip that cannot fit shows what fits and
-  counts the rest in its label; a track wraps; a table's columns re-derive
-- the tier boundary in the current implementation is **1400px** — not the 1320 an
-  inner comment claims. The row gap steps 8 → 6 on the same line
-- nothing may be clipped at the resting viewport edge
-- a popover must remain fully reachable at 1366×610
+Icon-only actions are square at their tier's height. A row's action cluster is the
+dense tier at 27–30px, 8px apart.
 
 ---
 
-## 10 · Exceptions register
+## 3 · Surfaces
 
-Real inconsistencies in the current build. Documented so they are not mistaken for
-intent, and not silently redesigned.
+### Attached
 
-| # | Exception | Where | Status |
+Two surfaces that share a structural edge:
+
+- the edge is **square on both sides**
+- the line is drawn **once**, by one of them, as an inset shadow
+- **no gap**, and no shadow between them
+- radius survives only on the outer corners of the pair
+
+Examples: the lane strip attached to the top of the workspace; the column header
+attached to the first row; the record head attached to the bottom of the platform
+bar; a zone attached to the zone above it.
+
+### Floating
+
+A surface with air around it:
+
+- a **real gap** on every side
+- a **complete radius**
+- **one** shadow, never two on the same boundary
+- it sits above the ground, not on it
+
+Examples: the workspace sheet, the dock, a popover, the commit bar.
+
+### Sunken
+
+A track that holds controls: `--well` fill, one inset hairline, no drop shadow.
+
+### Dark focal
+
+The one panel per page allowed to dominate: `--focal` ground, a restrained
+directional gradient, `--focal-ink` type. It carries figures, never form controls.
+
+### The five levels, in order
+
+    PAGE              --wash    #eef1f5
+    WORK SURFACE      --sheet   #ffffff
+    SECONDARY REGION  --well    #e4e9f0
+    CONTROL           --sheet + 1px --line
+    FOCAL / PRIMARY   --brand fill, or the dark --focal panel
+
+The step from page to sheet is the one that has to be visible. It was 3% and is
+now twice that, which is why the workspace reads as a sheet instead of needing a
+shadow to prove it exists.
+
+---
+
+## 4 · The sticky stack
+
+CSS publishes the geometry; JS reads it.
+
+    --stick-bar  56px    platform bar
+    --stick-cmd  56px    command band
+    --stick-hd   40px    column header
+    --stick-total = calc(56px + 56px + 40px) = 152px
+
+`--stick-total` is **derived** — the three layers take their heights *from* the
+tokens, so the sum is always what the layers measure. Custom properties are
+substituted but not evaluated, so `getPropertyValue('--stick-total')` returns the
+literal `calc(...)` text: read the three plain values and add them.
+
+A hairline inside the stack is `box-shadow: inset`, never `border` — a border adds
+a pixel to a layer whose height the selected-row anchor depends on.
+
+The anchor is `--stick-total + --anchor-gap`, and nothing hardcodes a scroll offset.
+
+---
+
+## 5 · Type
+
+| role | size | weight | where |
 |---|---|---|---|
-| E1 | `--anchor-gap: 12px` instead of 10px | Single Ticket | unresolved |
-| E2 | `.btn--primary` renders white, not brand | Accounting | mis-classed button |
-| E3 | `.ck` radius 0 | Single Ticket | drift |
-| E4 | `.bdg` height 12px | Manage Dealers | below the readable floor |
-| E5 | `.search` radius 14px (a surface radius on a control) | All Vehicles | drift |
-| E6 | Section title at 19px and 15px | two pages | drift from the 17/650 role |
-| E7 | `--r-s`/`--r-inner` and `--r-card`/`--r-l` are aliases | shared layer | deprecate the `-s`/`-l` names |
-| E8 | `--ctl-h: 40px` is a fourth, unnamed tier | shared layer | role; should be named `--ctl-field` |
-| E9 | Health chips overflow at ≤1400 before the Gen 11.1 fix | All Vehicles | **resolved** in 11.1 |
+| page title | 19–26px | 650 | `h1` |
+| section title | 17px | 650 | `.zone__t`, `.sec__t` |
+| subject / record name | 15px | 600–650 | row subject, specimen name |
+| body / control | 13–14px | 400–500 | fields, buttons, cells |
+| metadata | 12.5–13px | 400 | under a title, beside a value |
+| caps micro-label | **11px** | 700, `.09em` | column headers, section labels |
 
-**None of these were "fixed" during extraction.** Changing them is a separate,
-deliberate pass.
+**11px is the floor** for anything functional. A caps label at 10.5px is not a
+style choice; it is a legibility failure that survives only because the person
+writing it was leaning into the screen.
+
+Numbers that line up vertically are `font-variant-numeric: tabular-nums`.
+
+---
+
+## 6 · States
+
+Only states the product actually implements:
+
+`default` · `hover` · `focus-visible` · `current` (a destination or lane) ·
+`selected` (a row picked for a bulk action) · `open` (an expansion or popover) ·
+`stuck` (the sticky stack engaged) · `dirty` (unsaved edits) · `disabled` ·
+`warning` / `error` / `success` (semantic, carried by ink and a soft fill).
+
+**Current and selected are different questions** — "which one am I reading" versus
+"which ones will this action hit" — and they co-occur, so they never look alike.
+
+Focus is one thing everywhere: `2px solid var(--brand)` at `2px` offset. Nothing
+else owns the outline.
+
+---
+
+## 7 · Overlays
+
+A popover is left-anchored to its trigger and flips to right-anchored when, and
+only when, it would overflow its workspace (`fitPop()`). It is capped at 420px so
+it cannot size to `max-content` and run off the page.
+
+A menu is a **column** of choices: `.mn__it` is block-level flex at full width.
+An inline-flex menu row is a bug — it puts every choice on one line.
+
+---
+
+## 8 · Tables
+
+One header voice: 11px caps, `.05em`, `--ink-3`, on an inset hairline.
+
+Row height is page-level density (`--row`): 74px where a row carries a thumbnail,
+64px for the work queue, 56px for the roster, 52px for money. Row padding is
+`0 16px` on every page.
+
+Numeric columns are right-set and tabular. Identifier columns are left-set and
+carry the weight. An action cell is the dense tier, 8px apart, right-aligned.
+
+When columns stop fitting, the **list** scrolls horizontally inside the workspace.
+Columns are never dropped, and never frozen.

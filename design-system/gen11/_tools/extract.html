@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Extract — the specimen census</title>
+
+<!-- ══ THE EXTRACTOR ══════════════════════════════════════════════════════
+     Reads _tools/spec.json, opens each of the ten shipped Gen 11 pages in an
+     iframe, finds every listed component in the live DOM, and writes out the
+     census that gen-specimens.js, gen-components.js and gen-docs.js all build
+     from.
+
+     This is the first step of the pipeline and the only one that touches the
+     product. It READS the pages; it never writes to them.
+
+         open  design-system/gen11/_tools/extract.html
+         then  await window.extract()          → downloads frags.json
+               await window.extract('av')      → one stack, printed
+
+     Put the downloaded frags.json somewhere the generators can see it and
+     run them with FRAGS pointing at it:
+
+         set FRAGS=...\frags.json
+         node _tools/gen-specimens.js
+         node _tools/gen-components.js
+
+     WHY A BROWSER. A specimen has to be the element as it exists at runtime,
+     after the page's own script has built the rows, opened the expansion and
+     laid the sticky stack out. Parsing the HTML file would give the markup
+     before any of that, which is not what the product shows.
+     ──────────────────────────────────────────────────────────────────── -->
+
+<style>
+  html, body { margin: 0; background: #1a1d23; color: #b9c2d0;
+               font: 400 12px/1.5 ui-monospace, monospace; }
+  #f { width: 1440px; height: 900px; border: 0; background: #fff; }
+  #log { position: fixed; right: 0; top: 0; width: 380px; height: 100vh; overflow: auto;
+         margin: 0; padding: 10px; background: #11141a; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<iframe id="f" src="about:blank"></iframe>
+<pre id="log">await window.extract()</pre>
+
+<script>
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const log = m => { const l = document.getElementById('log'); l.textContent += '\n' + m; l.scrollTop = 1e6; };
+
+/* The pages that must be in a particular state before anything is read: a
+   list page shows nothing interesting until a record is open, and a popover
+   does not exist in the DOM until it has been opened once. Each entry runs
+   inside the page and is the only interaction the extractor performs. */
+/* Row 6 is opened, not row 2. The cell specimens are taken from row 2
+   (`idx: 1`), and a row that is open is dark: its cells inherit white ink.
+   Lifted onto the catalogue's light stage — the `.row.open` wrapper is
+   flattened, so its dark ground goes with it — the lead and contact cells
+   came out white on white. The open row is a STATE; the cells are the
+   component, and they are read from a row in its default state. The open row
+   is still shown, whole, as the Expanded-lead composition. */
+const OPEN_ROW = 5;
+
+const PREPARE = {
+  'dealer/all-vehicles-gen11.html': async d => {
+    const r = [...d.querySelectorAll('#tb .row')][OPEN_ROW]; if (r) r.click();
+  },
+  'dealer/all-leads-gen11.html': async d => {
+    const r = [...d.querySelectorAll('#tb .row')][OPEN_ROW]; if (r) r.click();
+  },
+};
+
+/* Attributes NOT copied onto a chain wrapper.
+   `style` would reintroduce the inline geometry the wrapper exists to shed;
+   `hidden` and `aria-hidden` would hide the specimen; `on*` would run the
+   page's handlers inside the catalogue. Everything else is copied, because
+   Gen 11 scopes on attributes as well as classes and a wrapper that drops
+   them silently changes what the specimen is. */
+const SKIP_ATTR = /^(style|hidden|aria-hidden|on.+)$/i;
+
+function chainOf(el, doc) {
+  /* The ancestors a specimen's CSS is scoped to. Gen 11 writes rules like
+     `.exp .veh__acts`, `.top .nav__b` and `.field[data-cols="mine"]`, so a
+     leaf lifted out of its context renders unstyled — or, worse, renders
+     with a column template that collapsed to one track.
+
+     Measured: `--cols` on My Work Queue is declared on
+     `.field[data-cols="mine"]`. A chain that recorded only tag, class and id
+     did not match it, `--cols` resolved to nothing, and all sixteen cells of
+     the row specimen stacked into a single 1352px column. Attributes are
+     part of the chain. */
+  const out = [];
+  let n = el.parentElement;
+  while (n && n !== doc.body && n !== doc.documentElement) {
+    const a = {};
+    for (const at of n.attributes) {
+      if (at.name === 'class' || at.name === 'id' || SKIP_ATTR.test(at.name)) continue;
+      a[at.name] = at.value;
+    }
+    out.unshift({ t: n.tagName.toLowerCase(), c: n.getAttribute('class') || '', i: n.id || '', a });
+    n = n.parentElement;
+  }
+  return out;
+}
+
+function measure(el) {
+  const c = getComputedStyle(el), b = el.getBoundingClientRect();
+  return {
+    /* `box` is rounded, for the documents a person reads. `boxPx` keeps the
+       sub-pixel width, for the stage, because half a pixel decides a wrap:
+       the queue's lane strip is 1233.5px wide and its twelve lanes end at
+       exactly 1233.5. Rounded to 1233 the last lane no longer fits and the
+       specimen wrapped onto a second line the product never shows. */
+    box: Math.round(b.width) + 'x' + Math.round(b.height),
+    boxPx: Math.round(b.width * 100) / 100 + 'x' + Math.round(b.height * 100) / 100,
+    css: { pad: c.padding, gap: c.gap === 'normal' ? '' : c.gap, r: c.borderRadius },
+    hidden: b.width < 1 && b.height < 1,
+    position: c.position,
+  };
+}
+
+async function stack(key, S) {
+  const f = document.getElementById('f');
+  await new Promise(res => { f.onload = res; f.src = '../../../pages/' + S.page; });
+  const d0 = f.contentDocument;
+  /* Wait for the webfont. Measured before Archivo lands, a page head came out
+     32px tall against the 36px it settles at, and every specimen carrying
+     text was a line box short. A census taken mid-swap is not the product. */
+  if (d0.fonts && d0.fonts.ready) { try { await d0.fonts.ready; } catch (e) {} }
+  await sleep(1400);
+  const d = f.contentDocument;
+  const prep = PREPARE[S.page];
+  if (prep) {
+    await prep(d);
+    await sleep(1400);
+    /* Back to the top before measuring. Opening a record scrolls the page,
+       and Gen 11 puts `is-stuck` on `.app` once it has scrolled — which is a
+       real state, but it is not the state the page opens in, and a catalogue
+       that shows only the stuck platform bar is showing a variant as if it
+       were the component. The expansion stays open; only the scroll state
+       goes back. */
+    f.contentWindow.scrollTo(0, 0);
+    await sleep(900);
+  }
+
+  /* The page's own icon sprite, not a copy of one page's.
+     Each Gen 11 page inlines a different set: All Vehicles ships 34 symbols,
+     Single Ticket 24, Dealer Edit 16. A catalogue built on one hand-copied
+     sprite left 24 `<use>` references pointing at symbols that were not
+     there, and the icons simply did not draw. */
+  const sprite = [...d.querySelectorAll('svg')]
+    .filter(sv => sv.querySelector('symbol'))
+    .map(sv => sv.outerHTML).join(String.fromCharCode(10));
+
+  const out = { page: S.page, title: S.title, role: S.role, css: S.css,
+                sprite, groups: [] };
+  let found = 0, missing = 0, hid = 0;
+
+  for (const g of S.groups) {
+    const items = [];
+    for (const spec of g.items) {
+      const all = [...d.querySelectorAll(spec.sel)];
+      const el = all[spec.idx || 0];
+      if (!el) {
+        items.push({ name: spec.name, role: spec.role || null, note: spec.note || null,
+                     sel: spec.sel, missing: true });
+        missing++;
+        log('  MISSING  ' + spec.name + '  ' + spec.sel + (spec.idx ? ' [' + spec.idx + ']' : ''));
+        continue;
+      }
+      const m = measure(el);
+      /* A component that computes to zero at 1440 is not shipped UI at 1440.
+         It is recorded so the report can name it, and skipped by the
+         generator — the catalogue does not show something the product
+         does not. */
+      if (m.hidden) {
+        hid++;
+        log('  HIDDEN   ' + spec.name + '  ' + spec.sel +
+            (spec.idx ? ' [' + spec.idx + ']' : '') + '  — not shipped at this width');
+      }
+      items.push({
+        name: spec.name, role: spec.role || null, note: spec.note || null,
+        sel: spec.sel, cls: el.getAttribute('class') || '', tag: el.tagName.toLowerCase(),
+        html: el.outerHTML, chain: chainOf(el, d),
+        box: m.box, boxPx: m.boxPx, css: m.css, position: m.position,
+        hidden: m.hidden, missing: false,
+      });
+      found++;
+    }
+    out.groups.push({ group: g.group, items });
+  }
+  log(key + ': ' + found + ' found, ' + missing + ' missing, ' + hid + ' hidden');
+  return out;
+}
+
+window.extract = async only => {
+  const spec = await (await fetch('spec.json', { cache: 'reload' })).json();
+  const all = {};
+  for (const [key, S] of Object.entries(spec)) {
+    if (only && key !== only) continue;
+    log('── ' + key + '  ' + S.page);
+    all[key] = await stack(key, S);
+  }
+  if (only) { console.log(all); return all; }
+  const blob = new Blob([JSON.stringify(all)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'frags.json';
+  a.click();
+  log('\nwrote frags.json');
+  return all;
+};
+</script>
+</body></html>

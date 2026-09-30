@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en" data-theme="light" class="sp-doc">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Specimens — Manage Dealers</title>
+
+<!-- ══ GENERATED FILE ═════════════════════════════════════════════════════
+     design-system/gen11/_tools/gen-specimens.js writes this from fragments
+     pulled out of the running product. Do not hand-edit: the next run will
+     overwrite it. Change the specimen list in _tools/spec.json instead.
+
+     THE STYLESHEETS BELOW ARE THE PRODUCT'S OWN, IN THE PRODUCT'S OWN ORDER.
+     Copied from pages/staff/manage-dealers-gen11.html. Not a bundle, not an extract —
+     the same files the shipped page loads. A specimen therefore cannot drift
+     from the product: if the product changes, so does the specimen.
+     ─────────────────────────────────────────────────────────────────── -->
+<link rel="stylesheet" href="../../../pages/staff/manage-dealers-gen11.css?b=muo5f98w">
+<link rel="stylesheet" href="../../../pages/_aan-family.css?b=muo5f98w">
+<link rel="stylesheet" href="../../../pages/_aan-components.css?b=muo5f98w">
+<!-- catalogue chrome last; every rule in it is namespaced sp-* -->
+<link rel="stylesheet" href="_specimen.css?b=muo5f98w">
+<script src="_specimen.js?b=muo5f98w" defer></script>
+</head>
+
+<body class="sp-host" data-specimen-id="dealers">
+
+<!-- THIS PAGE'S OWN ICON SPRITE, copied verbatim from pages/staff/manage-dealers-gen11.html.
+     Not a shared one: every Gen 11 page inlines a different set — All
+     Vehicles 34 symbols, Single Ticket 24, Dealer Edit 16 — and a
+     catalogue built on one page's sprite leaves the other pages' icons
+     pointing at symbols that do not exist. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.35-4.35"></path></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"></path></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"></path></symbol>
+  <symbol id="i-dn" viewBox="0 0 24 24"><path d="M12 5v14m6-6-6 6-6-6"></path></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path></symbol>
+  <symbol id="i-cog" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-2.89 1.2V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 7.96 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 3 15.04H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 8.96a1.7 1.7 0 0 0-.34-1.87l-.06-.06A2 2 0 1 1 7.03 4.2l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 2.89 1.2l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1Z"></path></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18"></path></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="2.6"></circle></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"></path><path d="M12 9v4M12 17h.01"></path></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36M21 4v5h-5"></path></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path></symbol>
+  <symbol id="i-pkg" viewBox="0 0 24 24"><path d="M21 8v8l-9 5-9-5V8l9-5 9 5Z"></path><path d="m3 8 9 5 9-5M12 13v8"></path></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8"></path></symbol>
+  <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="4"></circle><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"></path></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="7"></rect></symbol>
+</svg>
+
+<!-- Each specimen carries the real ancestor chain it was found in. Gen 11
+     scopes a great deal of its CSS (`.exp .veh__acts`, `.row > .th`,
+     `.top .nav__b`), so a leaf lifted out of its context renders unstyled.
+     The chain is listed under CONTEXT in every provenance block below.
+     Ids repeat across specimens on this page; that is invalid HTML but CSS
+     id selectors still match, which is what a specimen host needs. -->
+
+<h2 class="sp-group">Scope</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Roster tally</span>
+    <span class="sp-role">the counts you can filter by</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x42">
+<div id="app" class="app" data-sp-chain><div class="tally" id="tally" aria-label="Roster counts"><span class="caps tally__l">Roster</span><span class="tl"><span>Active</span><b>317</b></span><span class="tl"><span>Client Intake</span><b>24</b></span><span class="tl"><span>Pending</span><b>24</b></span><span class="tl"><span>Inactive</span><b>744</b></span><span class="tl"><span>Has Marketing Package</span><b>58</b></span><span class="tl"><span>No Marketing Package</span><b>259</b></span></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.tally</dd>
+    <dt>Context</dt><dd>.app</dd>
+    <dt>Source</dt><dd>pages/staff/manage-dealers-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Manage Dealers</dd>
+    <dt>Measured</dt><dd>1396x42 · padding 0px 0px 12px · gap 6px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Lane strip</span>
+    <span class="sp-role">which roster</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="951.66x36">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" aria-label="Dealer roster" data-sp-chain><div class="cmdtop ui-toolbar ui-toolbar--sub" data-sp-chain><div class="lanes ui-views" id="modes" role="group" aria-label="Saved filters"><button class="lane ui-view lane--on ui-view--on" type="button" data-mode="active" aria-pressed="true"><span>View Active Dealers</span><b>365</b></button><button class="lane ui-view lane--nodata" type="button" data-mode="all" aria-pressed="false" title="No row sample for this saved filter in the 2026-09-09 export"><span>View All Dealers</span><b>1,109</b></button><button class="lane ui-view lane--nodata" type="button" data-mode="new_orders" aria-pressed="false" title="No row sample for this saved filter in the 2026-09-09 export"><span>New Dealer Orders</span></button><button class="lane ui-view" type="button" data-mode="marketing" aria-pressed="false"><span>Marketing Dealers</span><b>68</b></button><button class="lane ui-view lane--nodata" type="button" data-mode="inactive" aria-pressed="false" title="No row sample for this saved filter in the 2026-09-09 export"><span>Inactive Dealers</span><b>744</b></button><button class="lane ui-view" type="button" data-mode="pending" aria-pressed="false"><span>Pending Dealers</span><b>24</b></button></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.lanes.ui-views</dd>
+    <dt>Context</dt><dd>.app › .field › .cmdtop.ui-toolbar.ui-toolbar--sub</dd>
+    <dt>Source</dt><dd>pages/staff/manage-dealers-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Manage Dealers</dd>
+    <dt>Measured</dt><dd>952x36 · padding 0px · gap 4px 6px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Alphabet index</span>
+    <span class="sp-role">jump to a letter</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="622x24">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" aria-label="Dealer roster" data-sp-chain><div class="sub ui-toolbar ui-toolbar--sub" data-sp-chain><nav class="az" id="az" aria-label="Jump to letter"><button class="az__b" type="button" data-jump="A">A</button><button class="az__b" type="button" data-jump="B">B</button><button class="az__b" type="button" data-jump="C">C</button><button class="az__b" type="button" data-jump="D">D</button><button class="az__b" type="button" data-jump="E">E</button><button class="az__b" type="button" data-jump="F">F</button><button class="az__b" type="button" data-jump="G">G</button><button class="az__b" type="button" data-jump="H">H</button><button class="az__b" type="button" data-jump="I">I</button><button class="az__b" type="button" data-jump="J">J</button><button class="az__b" type="button" data-jump="K">K</button><button class="az__b" type="button" data-jump="L">L</button><button class="az__b" type="button" data-jump="M">M</button><button class="az__b" type="button" data-jump="N">N</button><button class="az__b" type="button" data-jump="O">O</button><button class="az__b" type="button" data-jump="P">P</button><button class="az__b" type="button" data-jump="Q">Q</button><button class="az__b" type="button" data-jump="R">R</button><button class="az__b" type="button" data-jump="S">S</button><button class="az__b" type="button" data-jump="T">T</button><button class="az__b" type="button" data-jump="U">U</button><button class="az__b" type="button" data-jump="V">V</button><button class="az__b" type="button" data-jump="W">W</button><button class="az__b" type="button" data-jump="X" disabled="">X</button><button class="az__b" type="button" data-jump="Y" disabled="">Y</button><button class="az__b" type="button" data-jump="Z">Z</button></nav></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>nav.az</dd>
+    <dt>Context</dt><dd>.app › .field › .sub.ui-toolbar.ui-toolbar--sub</dd>
+    <dt>Source</dt><dd>pages/staff/manage-dealers-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Manage Dealers</dd>
+    <dt>Measured</dt><dd>622x24 · padding 0px · gap 2px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Search pair</span>
+    <span class="sp-role">by name, or by phone digits</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x56">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" aria-label="Dealer roster" data-sp-chain><div class="cmd ui-toolbar" id="cmd">
+      <label class="search">
+        <svg class="i"><use href="#i-search"></use></svg>
+        <span class="vh">Company name</span>
+        <input type="search" id="q" placeholder="Company name…" autocomplete="off">
+        <span id="q-chips"></span>
+      </label>
+
+      <label class="search search--phone">
+        <svg class="i"><use href="#i-pin"></use></svg>
+        <span class="vh">Find by phone</span>
+        <input type="search" id="phone" placeholder="Find by phone — digits…" inputmode="numeric" autocomplete="off" title="Contact phone digit search — searches ALL dealers incl. disabled (legacy parity)">
+      </label>
+
+      <span class="cmd__div"></span>
+
+      <div class="facet">
+        <button class="facet__b" type="button" data-pop="p-rid" aria-haspopup="true" aria-expanded="false">
+          <span class="facet__k">Reseller</span>
+          <span class="facet__v" id="rid-v">Show all</span>
+          <svg class="i"><use href="#i-chev"></use></svg>
+        </button>
+        <div class="pop pop--wide" id="p-rid">
+          <div class="pop__find"><input class="fld" type="search" id="rid-f" placeholder="Search 71 resellers…" aria-label="Search resellers"></div>
+          <div id="rid-list"><button class="mn__it mn__it--on" type="button" data-rid=""><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Show all</span></button><button class="mn__it" type="button" data-rid="All Auto Network"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network</span></button><button class="mn__it" type="button" data-rid="All Auto Network - A X A Boston"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - A X A Boston</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Acton Auto"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Acton Auto</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Anthony Labalestra"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Anthony Labalestra</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Aston Martin Summit"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Aston Martin Summit</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Bentley Long Island"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Bentley Long Island</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Bul Auto Sales"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Bul Auto Sales</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Cauley Ferrari"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Cauley Ferrari</span></button><button class="mn__it" type="button" data-rid="All Auto Network - CFL"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - CFL</span></button><button class="mn__it" type="button" data-rid="All Auto Network - CMC"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - CMC</span></button><button class="mn__it" type="button" data-rid="All Auto Network - EAG"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - EAG</span></button><button class="mn__it" type="button" data-rid="All Auto Network - FC Kerbeck"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - FC Kerbeck</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Fields Auto Group"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Fields Auto Group</span></button><button class="mn__it" type="button" data-rid="All Auto Network - FMoA"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - FMoA</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Glenview Luxury Imports"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Glenview Luxury Imports</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Gravity"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Gravity</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Group Seven Automotive"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Group Seven Automotive</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Lawrence Motorsport"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Lawrence Motorsport</span></button><button class="mn__it" type="button" data-rid="All Auto Network - LFSC"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - LFSC</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Long Island Sports Cars"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Long Island Sports Cars</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Marshall Goldman"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Marshall Goldman</span></button><button class="mn__it" type="button" data-rid="All Auto Network - McLaren and Rimac Boston"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - McLaren and Rimac Boston</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Miller"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Miller</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Naples"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Naples</span></button><button class="mn__it" type="button" data-rid="All Auto Network - NYC Motorcars"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - NYC Motorcars</span></button><button class="mn__it" type="button" data-rid="All Auto Network - OGara Coach"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - OGara Coach</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Paul Miller"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Paul Miller</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Platinum Cars"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Platinum Cars</span></button><button class="mn__it" type="button" data-rid="All Auto Network - S &amp; E Auto Sales"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - S &amp; E Auto Sales</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Shift Digital"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Shift Digital</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Summit"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Summit</span></button><button class="mn__it" type="button" data-rid="All Auto Network - TLC"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - TLC</span></button><button class="mn__it" type="button" data-rid="All Auto Network - TLC LG"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - TLC LG</span></button><button class="mn__it" type="button" data-rid="All Auto Network - TLC WC"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - TLC WC</span></button><button class="mn__it" type="button" data-rid="All Auto Network - Towbin Motorcars"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - Towbin Motorcars</span></button><button class="mn__it" type="button" data-rid="All Auto Network - zDev"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - zDev</span></button><button class="mn__it" type="button" data-rid="All Auto Network - ZT AutoGroup"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">All Auto Network - ZT AutoGroup</span></button><button class="mn__it" type="button" data-rid="Aronson Advertising"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Aronson Advertising</span></button><button class="mn__it" type="button" data-rid="Aronson Advertising - Ewald"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Aronson Advertising - Ewald</span></button><button class="mn__it" type="button" data-rid="Arrowhead Advertising"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Arrowhead Advertising</span></button><button class="mn__it" type="button" data-rid="Auto Conversion"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Auto Conversion</span></button><button class="mn__it" type="button" data-rid="BBA &amp; Beyond"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">BBA &amp; Beyond</span></button><button class="mn__it" type="button" data-rid="Blugroup KS"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Blugroup KS</span></button><button class="mn__it" type="button" data-rid="BluSolutions GA"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">BluSolutions GA</span></button><button class="mn__it" type="button" data-rid="BluSolutions Texas"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">BluSolutions Texas</span></button><button class="mn__it" type="button" data-rid="Cars By The Millions"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Cars By The Millions</span></button><button class="mn__it" type="button" data-rid="Chicago Consortium"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Chicago Consortium</span></button><button class="mn__it" type="button" data-rid="CMP Development"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">CMP Development</span></button><button class="mn__it" type="button" data-rid="Cypress Alliance"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Cypress Alliance</span></button><button class="mn__it" type="button" data-rid="Eikon Mobile"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Eikon Mobile</span></button><button class="mn__it" type="button" data-rid="Ella's Bubbles"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Ella's Bubbles</span></button><button class="mn__it" type="button" data-rid="Ensure Productions"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Ensure Productions</span></button><button class="mn__it" type="button" data-rid="esolutions"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">esolutions</span></button><button class="mn__it" type="button" data-rid="GD2"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">GD2</span></button><button class="mn__it" type="button" data-rid="Guidance Development"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Guidance Development</span></button><button class="mn__it" type="button" data-rid="Infinity Publishing"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Infinity Publishing</span></button><button class="mn__it" type="button" data-rid="Lifecycle Digital Marketing"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Lifecycle Digital Marketing</span></button><button class="mn__it" type="button" data-rid="Marni McClennan"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Marni McClennan</span></button><button class="mn__it" type="button" data-rid="Matrix Nationwide Inc."><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Matrix Nationwide Inc.</span></button><button class="mn__it" type="button" data-rid="Mogulweb.com"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Mogulweb.com</span></button><button class="mn__it" type="button" data-rid="Mojo Internet Marketing Company"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Mojo Internet Marketing Company</span></button><button class="mn__it" type="button" data-rid="Omnibus Advertising"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Omnibus Advertising</span></button><button class="mn__it" type="button" data-rid="Premier Solutionz"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Premier Solutionz</span></button><button class="mn__it" type="button" data-rid="Redbumper LLC"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Redbumper LLC</span></button><button class="mn__it" type="button" data-rid="Redline Edition"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Redline Edition</span></button><button class="mn__it" type="button" data-rid="Simply Dealer"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Simply Dealer</span></button><button class="mn__it" type="button" data-rid="Source One Services"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Source One Services</span></button><button class="mn__it" type="button" data-rid="Steinberg Marketing"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Steinberg Marketing</span></button><button class="mn__it" type="button" data-rid="The BluSolutions Group, Inc."><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">The BluSolutions Group, Inc.</span></button><button class="mn__it" type="button" data-rid="The Real BluSolutions, Inc. DBA - BluSolutions"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">The Real BluSolutions, Inc. DBA - BluSolutions</span></button></div>
+        </div>
+      </div>
+
+      <div class="facet">
+        <button class="facet__b" type="button" data-pop="p-rgid" aria-haspopup="true" aria-expanded="false">
+          <span class="facet__k">Reseller Group</span>
+          <span class="facet__v" id="rgid-v">Any</span>
+          <svg class="i"><use href="#i-chev"></use></svg>
+        </button>
+        <div class="pop pop--r" id="p-rgid"><div id="rgid-list"><button class="mn__it mn__it--on" type="button" data-rgid=""><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Any</span></button><button class="mn__it" type="button" data-rgid="4"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Alex Test</span></button><button class="mn__it" type="button" data-rgid="8"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Aronson Advertising Admin</span></button><button class="mn__it" type="button" data-rgid="5"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">Blu Solutions</span></button><button class="mn__it" type="button" data-rgid="13"><svg class="i" aria-hidden="true"><use href="#i-check"></use></svg><span class="sp">The Luxury Collection</span></button></div></div>
+      </div>
+    </div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.cmd.ui-toolbar</dd>
+    <dt>Context</dt><dd>.app › .field</dd>
+    <dt>Source</dt><dd>pages/staff/manage-dealers-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Manage Dealers</dd>
+    <dt>Measured</dt><dd>1396x56 · padding 10px 16px · gap 8px · radius 0px</dd>
+  </dl>
+</section>
+
+<h2 class="sp-group">Table</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Column header</span>
+    <span class="sp-role">sticky header</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x48">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" aria-label="Dealer roster" data-sp-chain><div id="rows" class="rows ui-table" data-sp-chain><div class="hd ui-thead" id="hd" role="row">
+        <span class="c-mark" title="Account status">
+          <span class="vh">Account status</span>
+        </span>
+        <span class="c-name" aria-sort="ascending"><button class="s s--on s--asc" type="button" data-sort="name" aria-pressed="true">Company Name<svg class="i"><use href="#i-dn"></use></svg></button></span>
+        <span class="c-state"><button class="s" type="button" data-sort="state" aria-pressed="false">State<svg class="i"><use href="#i-dn"></use></svg></button></span>
+        <span class="c-res"><button class="s" type="button" data-sort="reseller" aria-pressed="false">Reseller<svg class="i"><use href="#i-dn"></use></svg></button></span>
+        <span class="c-st"><button class="s" type="button" data-sort="status" aria-pressed="false">Status<svg class="i"><use href="#i-dn"></use></svg></button></span>
+        <span class="c-cre"><button class="s" type="button" data-sort="created" aria-pressed="false">Date Created<svg class="i"><use href="#i-dn"></use></svg></button></span>
+        <span class="c-mod"><button class="s" type="button" data-sort="modified" aria-pressed="false">Last Modified<svg class="i"><use href="#i-dn"></use></svg></button></span>
+        <span class="c-pkg">Packages</span>
+        <span class="c-feat">Features</span>
+        <span class="c-sup">Support</span>
+        <span class="c-note">Notes</span>
+        <!-- production ships this header cell empty; the label is for screen readers -->
+        <span class="c-act r"><span class="vh">Actions</span></span>
+        <span class="c-ver">Version</span>
+      </div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.hd.ui-thead</dd>
+    <dt>Context</dt><dd>.app › .field › .rows.ui-table</dd>
+    <dt>Source</dt><dd>pages/staff/manage-dealers-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Manage Dealers</dd>
+    <dt>Measured</dt><dd>1396x48 · padding 9px 16px · gap 8px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Row</span>
+    <span class="sp-role">one dealer</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x56">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" aria-label="Dealer roster" data-sp-chain><div id="rows" class="rows ui-table" data-sp-chain><div id="tb" data-sp-chain><div class="row" data-id="835"><span class="c-mark" title="Active"><span class="mk mk--ok">A</span></span><span class="c-name c1"><a href="../../../pages/staff/dealer-edit-gen11.html?dealer=835" title="3 Pedal Stable">3 Pedal Stable<span class="id">#835</span></a></span><span class="c-state c1"><a href="https://www.google.com/maps/place/938%20N%20Sweetzer%20Ave%20Los%20Angeles%20CA%2090069" target="_blank" rel="noopener" title="938 N Sweetzer Ave Los Angeles CA 90069">CA</a></span><span class="c-res c1" title="All Auto Network">All Auto Network</span><span class="c-st c1 ">Active</span><span class="c-cre"><b>09-23-2021</b><i>12:00:44</i></span><span class="c-mod"><b>04-25-2025</b><i>15:55:23</i></span><span class="c-pkg"></span><span class="c-feat"><span class="vh">CRAIGSLIST — computed 2026-09-10 03:26:28</span><span class="ft" title="craigslist">CRAIGSLIST</span><button class="frf" type="button" data-refresh="835" title="Recompute this dealer’s features now" aria-label="Recompute features"><svg class="i" aria-hidden="true"><use href="#i-refresh"></use></svg></button></span><span class="c-sup c1"></span><span class="c-note"></span><span class="c-act"><a class="ra" href="../../../pages/staff/dealer-edit-gen11.html?dealer=835" title="Edit dealer" aria-label="Edit dealer"><svg class="i" aria-hidden="true"><use href="#i-edit"></use></svg></a><a class="ra" href="https://newbackendcert.aandemo.com/manage/dealers/835/setup" title="Setup" aria-label="Setup"><svg class="i" aria-hidden="true"><use href="#i-cog"></use></svg></a><a class="ra" href="https://www.3pedalstable.com" target="_blank" rel="noopener" title="https://www.3pedalstable.com" aria-label="Web site"><svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg></a></span><span class="c-ver"><b>2021</b></span></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.row</dd>
+    <dt>Context</dt><dd>.app › .field › .rows.ui-table › div</dd>
+    <dt>Source</dt><dd>pages/staff/manage-dealers-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Manage Dealers</dd>
+    <dt>Measured</dt><dd>1396x56 · padding 0px 16px · gap 8px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">State mark</span>
+    <span class="sp-role">active, intake, pending, inactive</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="20x20">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" aria-label="Dealer roster" data-sp-chain><div id="rows" class="rows ui-table" data-sp-chain><div id="tb" data-sp-chain><div class="row" data-id="835" data-sp-chain><span class="c-mark" title="Active" data-sp-chain><span class="mk mk--ok">A</span></span></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>span.mk.mk--ok</dd>
+    <dt>Context</dt><dd>.app › .field › .rows.ui-table › div › .row › .c-mark</dd>
+    <dt>Source</dt><dd>pages/staff/manage-dealers-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Manage Dealers</dd>
+    <dt>Measured</dt><dd>20x20 · padding 0px · radius 4px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Package badge</span>
+    <span class="sp-role">what they are subscribed to</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="71.97x12">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" aria-label="Dealer roster" data-sp-chain><div id="rows" class="rows ui-table" data-sp-chain><div id="tb" data-sp-chain><div class="row" data-id="1055" data-sp-chain><span class="c-pkg" data-sp-chain><span class="bdg bdg--high" title="High">Marketing</span></span></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>span.bdg.bdg--high</dd>
+    <dt>Context</dt><dd>.app › .field › .rows.ui-table › div › .row › .c-pkg</dd>
+    <dt>Source</dt><dd>pages/staff/manage-dealers-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Manage Dealers</dd>
+    <dt>Measured</dt><dd>72x12 · padding 0px 8px · radius 999px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Row actions</span>
+    <span class="sp-role">edit, settings, site</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="88x26">
+<div id="app" class="app" data-sp-chain><section id="field" class="field" aria-label="Dealer roster" data-sp-chain><div id="rows" class="rows ui-table" data-sp-chain><div id="tb" data-sp-chain><div class="row" data-id="835" data-sp-chain><span class="c-act"><a class="ra" href="../../../pages/staff/dealer-edit-gen11.html?dealer=835" title="Edit dealer" aria-label="Edit dealer"><svg class="i" aria-hidden="true"><use href="#i-edit"></use></svg></a><a class="ra" href="https://newbackendcert.aandemo.com/manage/dealers/835/setup" title="Setup" aria-label="Setup"><svg class="i" aria-hidden="true"><use href="#i-cog"></use></svg></a><a class="ra" href="https://www.3pedalstable.com" target="_blank" rel="noopener" title="https://www.3pedalstable.com" aria-label="Web site"><svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg></a></span></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>span.c-act</dd>
+    <dt>Context</dt><dd>.app › .field › .rows.ui-table › div › .row</dd>
+    <dt>Source</dt><dd>pages/staff/manage-dealers-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Manage Dealers</dd>
+    <dt>Measured</dt><dd>88x26 · padding 0px · gap 4px 8px · radius 0px</dd>
+  </dl>
+</section>
+
+</body>
+</html>

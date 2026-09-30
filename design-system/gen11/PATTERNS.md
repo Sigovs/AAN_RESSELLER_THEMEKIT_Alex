@@ -1,167 +1,141 @@
-# AAN Gen 11 — Page Patterns
+# Gen 11 — PATTERNS
 
-Four archetypes cover all ten shipped pages. **Do not force one layout on every
-page** — identify which archetype a page belongs to, then use that archetype's
-composition.
-
-| Archetype | Pages |
-|---|---|
-| A · Gateway | Login |
-| B · List / register | All Vehicles · All Leads · My Work Queue · Manage Dealers · Accounting |
-| C · Record / dossier | Single Lead · Single Ticket |
-| D · Editor | Single Vehicle · Dealer Edit |
+How the pieces are assembled on a real page. Each pattern below is rendered in the
+catalogue from the page named, and can be read there against its provenance.
 
 ---
 
-## A · Gateway
+## The page shell
 
-The only page in the kit with no data on it, and the only one allowed
-marketing-weight type (28px/600) and the outer shell radius `--r-sheet-o` 28px.
+Every page except the front door is the same three-part shell:
 
-```
-┌─────────────────────┬─────────────────────┐
-│  dark brand panel   │  the form           │
-│  wordmark           │  44px fields         │
-│  proposition        │  44px submit         │
-│  support line ↓     │  legal ↓             │
-└─────────────────────┴─────────────────────┘
-```
+    .app                      grid, 16px gutter, min-height 100vh
+      .top                    the platform bar — sticky, 56px, glass, radius 12
+      .head                   title, context, page actions
+      .field                  the workspace — white sheet, radius 14, one shadow
 
-Rules: fields and the one action that submits them share the **44px** tier. The
-form row wrapper must not be called `.field` — that name belongs to the working
-surface in the family layer.
+The bar's grid row is `--bar-track` (76px) and the bar sits at the **start** of it
+with a 16px top margin, so the space above the bar is the page gutter and not
+whatever centring left over.
 
 ---
 
-## B · List / register
+## The operational list — All Vehicles, All Leads, Manage Dealers, Accounting, My Work Queue
 
-The working archetype. Five pages, one composition, four densities.
+    .head                     title · context · actions (one primary, right)
+    .bento / .deck            the summary: one dark focal panel + lighter figures
+    .cmdtop > .lanes          the lane strip, attached to the top of the workspace
+    .field
+      .cmd                    sticky: search, sort, view switch
+      .sub                    scope line + facets
+      .rows
+        .hd                   sticky column header
+        #tb .row              the records
+      .foot                   count and pagination
 
-```
-platform bar                        sticky  z20   56px
-page identity (title · context · actions)
-┌── intelligence band (optional, dark) ──┐  --focal, r14
-│  figures · attention tiles             │
-└────────────────────────────────────────┘
-        ↕ 24px
-┌── the sheet ───────────────────────────┐  --sheet, r14, --sh-soft
-│  view track                    toolbar │  sticky z12  56px
-│  search · sort · filters    sub-toolbar│
-│  scope line                            │
-│  table header                  sticky z10  40px
-│  rows …                                │
-└────────────────────────────────────────┘
-```
+The three sticky layers are the bar, the command band and the column header:
+56 + 56 + 40 = **152px**, published as `--stick-total` and derived from the layers
+themselves.
 
-**Row height is the density dial** — 74 (media) / 64 (operational) / 56 (register)
-/ 52 (ledger). Everything else stays identical.
-
-The intelligence band is optional: All Vehicles, All Leads and Accounting carry
-one; My Work Queue and Manage Dealers do not. A page without one goes straight
-from identity to sheet.
-
-**Selected row** (All Vehicles, All Leads): the row opens **in flow**, directly
-under itself, and comes to rest at `stack + anchor-gap`. It is not a modal, not a
-side panel, and not centred by `scrollIntoView`.
+The summary is read before the list, so it scrolls away. The lane strip is
+attached to the workspace because it scopes what is in it.
 
 ---
 
-## C · Record / dossier
+## Contextual in-flow expansion — All Vehicles, All Leads
 
-A single record read top to bottom, with a working rail beside it.
+Clicking a row opens the record **under that row, in the flow of the list**. Not a
+modal, not a drawer, not a popover.
 
-```
-platform bar                        sticky  z20
-page identity (subject · state chips · prev/next · save)
-┌── focal summary (dark) ──┬── identity panel ──┐
-│  the figures that matter │  who this is about │
-└──────────────────────────┴────────────────────┘
-        ↕ 24px
-┌── the sheet ─────────────────┐ ┌── dock ──┐  400px
-│ section band        sticky z12│ │ workflow │
-│ 01 ▁▁▁ chapter (white)        │ │ state    │
-│ 02 ▒▒▒ chapter (wash)         │ │ actions  │
-│ 03 ▁▁▁ chapter                │ │          │
-│ 04 ▓▓▓ chapter (live, warm)   │ │          │
-│ 05 ▒▒▒ chapter                │ └──────────┘
-└───────────────────────────────┘
-```
+    #tb
+      .row.open               the selected row, dark
+      .exp.exp--open          the sheet, in flow
+        .exp__in
+          .exp__l / .exp__r   photo and identity, then facts and actions
+          .veh__acts          one primary, four neutral, 8px apart
+          .acc                stacked accordion — Health open, the rest closed
+      .exp-space              lends the document height near the end of the list
 
-### C.1 Chapters
-
-The rhythm that makes a long record readable:
-
-- ground **alternates** — `--chapter-wash #f5f8fc` on even chapters
-- the chapter where the work happens takes the one warm ground —
-  `--chapter-live #fdf9f2` (`#s-activity`, `#s-thread`)
-- every boundary is a **full-bleed rule**, not a 1px inset that vanishes
-- every chapter opens with its number via a CSS counter, so position is countable
-- chapter padding `30px 0 40px`; head padding-bottom 12px with a hairline under it
-
-Applies to `.sec` (record pages) and `.zone` (editor pages) from one shared block.
-
-### C.2 Conversation thread
-
-Where a record carries a history people talk in:
-
-- each entry is a **white object on the chapter's warm ground**, r10, pad `12px 14px`, 8px apart
-- the **author leads** (14px/650); the kind is demoted to a 10.5px caps mark
-- every entry offers **Reply**
-- a reply nests **directly under what it answers**, indented 30px, on `--wash`, with a corner connector
-- a reply is an ordinary internal note that remembers its parent — no new record type
+The selected row comes to rest at `--stick-total + --anchor-gap` — a named
+position under the sticky stack, measured at 161.6px against a 162px target.
+Closing does nothing to the scroll: someone who opened at 1623, scrolled to 2223
+to read, then closed would be thrown 723px from what they were reading.
 
 ---
 
-## D · Editor
+## The record page — Single Lead, Single Ticket
 
-A form long enough to need an index.
+    .head                     back · name · state · prev/next · actions
+    .bento                    the dark summary: message, activity, facts
+    .cmd.cmd--sec > .secnav   section navigation — scrolls the page, does not swap panels
+    .field > .secs > .sec     continuous sections, divided by a full-bleed rule
+    .dock                     the contextual panel: workflow, or crew
 
-```
-platform bar                        sticky z20
-page identity (record · state · external links)
-┌─ rail ─┐ ┌── zones ──────────────┐ ┌─ utilities ─┐
-│ 01 ●   │ │ 01 ▁▁▁ zone (white)   │ │ notes       │
-│ 02 ●   │ │ 02 ▒▒▒ zone (wash)    │ │ options     │
-│ 03 ○   │ │ 03 ▁▁▁ zone           │ │ danger      │
-│ …      │ │ …                      │ │             │
-│ Jump / │ └────────────────────────┘ └─────────────┘
-└────────┘
-┌── save bar ────────────────────────────────────┐ fixed, full-bleed
-```
-
-- the rail is `.ui-nav` with 8px of its own padding; the current item is an **inset
-  pill**, never a full-bleed slab with a stripe
-- zones carry the same chapter rhythm as C.1
-- fields sit in a two-column grid, label **above** control
-- the save bar is **attached**: full-bleed, flush, square, top hairline, and the
-  page reserves its **measured** height
+The page is **continuous**. The section control is a segmented control that moves
+you down the page; there are no tabs and no hidden panels. Every section is
+present, in order, and printable.
 
 ---
 
-## Cross-archetype patterns
+## The editor — Single Vehicle, Dealer Edit
 
-### P1 · Configurable columns (currently All Vehicles only)
+    .cockpit / .head          which record, its headline figure, what you can do
+    .prov                     added · modified · views · who holds the lock
+    .body
+      .rail                   the sections, a flat panel, current on a brand edge
+      .zones > .zone          the form, one zone per section
+      .side                   utilities: notes, options, locks
+    .savebar                  the commit bar, over the workspace it commits
 
-One `COLS` model drives header cells, row cells, the grid template and the
-control. Reusable, but **do not add it to another page without being asked**.
+The rail, the form and the utilities are the **same material** — one sheet, one
+hairline. The commit bar floats because the record is thousands of pixels long,
+but it is right-aligned with the form, not centred on the viewport.
 
-Contract: template built from visible columns only · locked columns stated not
-offered · freed width goes to the flexible columns in a documented order ·
-`localStorage` under a page-scoped key, validated on read, safe fallback to the
-approved default.
+---
 
-### P2 · Fitted strip
+## The dense staff table — My Work Queue
 
-A single-line rail that cannot scroll sideways. It measures its **content box**
-(not `clientWidth`, which includes padding), shows what fits, and hands the
-remainder to a tail action that carries the count and anchors the right edge.
+Seventeen columns of live work. Nothing is dropped and nothing is frozen.
 
-### P3 · Viewport-aware popover
+    .golive                   the go-live ticker: one line, hairline-separated
+    .lanes                    twelve lanes, a joined strip
+    .cmd                      search · sort · filters · clear
+    .rows                     below 1340 this scrolls horizontally, the page does not
 
-See COMPONENTS §8.1. Flip, cap, scroll the inner list only, move to `<body>` while
-open, restore focus on close.
+Row height is 64px because the row carries two lines in places. Status is a soft
+badge, priority is a number, time is tabular.
 
-### P4 · Measured fixed chrome
+---
 
-Any fixed bar publishes its own height to CSS and the page reserves that, plus one
-gutter. Never a guessed constant.
+## The front door — Dealer Login
+
+The only page with no platform bar.
+
+    .auth
+      .panel                  dark, one directional brand illumination, the mark
+      .form                   two fields and one action, on the optical centre
+        .legal                attached to the foot of the sheet
+
+The submit is the one focal control on the page and the only place the glow is
+used.
+
+---
+
+## Overlays
+
+A popover opens under its trigger, left-anchored, and flips right when it would
+overflow the workspace (`fitPop()`). It is capped at 420px. A menu is a column:
+`.mn__it` is block-level at full width.
+
+The Columns popover is the one that leaves its parent — it is moved to `<body>`
+and positioned, because it must escape the workspace's clip.
+
+---
+
+## Bulk selection
+
+    .row .ck                  per-row checkbox
+    .tray.tray--on            the action tray, appearing when a selection exists
+
+The tray carries the actions that apply to the selection, 8px apart, and a count.
+Selection and "currently open" are different states and never look alike.

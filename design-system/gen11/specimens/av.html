@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="en" data-theme="light" class="sp-doc">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Specimens — All Vehicles</title>
+
+<!-- ══ GENERATED FILE ═════════════════════════════════════════════════════
+     design-system/gen11/_tools/gen-specimens.js writes this from fragments
+     pulled out of the running product. Do not hand-edit: the next run will
+     overwrite it. Change the specimen list in _tools/spec.json instead.
+
+     THE STYLESHEETS BELOW ARE THE PRODUCT'S OWN, IN THE PRODUCT'S OWN ORDER.
+     Copied from pages/dealer/all-vehicles-gen11.html. Not a bundle, not an extract —
+     the same files the shipped page loads. A specimen therefore cannot drift
+     from the product: if the product changes, so does the specimen.
+     ─────────────────────────────────────────────────────────────────── -->
+<link rel="stylesheet" href="../../../pages/dealer/all-vehicles-gen11.css?b=muo5f98w">
+<link rel="stylesheet" href="../../../pages/_aan-family.css?b=muo5f98w">
+<link rel="stylesheet" href="../../../pages/_aan-components.css?b=muo5f98w">
+<!-- catalogue chrome last; every rule in it is namespaced sp-* -->
+<link rel="stylesheet" href="_specimen.css?b=muo5f98w">
+<script src="_specimen.js?b=muo5f98w" defer></script>
+</head>
+
+<body class="sp-host" data-specimen-id="av">
+
+<!-- THIS PAGE'S OWN ICON SPRITE, copied verbatim from pages/dealer/all-vehicles-gen11.html.
+     Not a shared one: every Gen 11 page inlines a different set — All
+     Vehicles 34 symbols, Single Ticket 24, Dealer Edit 16 — and a
+     catalogue built on one page's sprite leaves the other pages' icons
+     pointing at symbols that do not exist. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.35-4.35"></path></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"></path></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18M3 15h18M9 3v18"></path></symbol>
+  <symbol id="i-cam" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></symbol>
+  <symbol id="i-cam-off" viewBox="0 0 24 24"><path d="M2 2l20 20M7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h13M9.5 4h5L17 7h3a2 2 0 0 1 2 2v7.5"></path><path d="M14.1 15.1a3 3 0 0 1-4.2-4.2"></path></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="7"></rect></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"></path></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"></circle><circle cx="12" cy="12" r="1.2"></circle><circle cx="19" cy="12" r="1.2"></circle></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"></path><circle cx="12" cy="12" r="3"></circle></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"></path></symbol>
+  <symbol id="i-cols" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M9 4v16M15 4v16"></path></symbol>
+  <symbol id="i-table" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 10h18M3 15h18M9 10v10"></path></symbol>
+  <symbol id="i-cards" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="m21 15-5-5L5 21"></path></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"></path></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 7v6M12 17h.01"></path></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"></path><circle cx="7.5" cy="7.5" r="1.2"></circle></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"></path></symbol>
+  <symbol id="i-dn" viewBox="0 0 24 24"><path d="M12 5v14m6-6-6 6-6-6"></path></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"></path></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8"></path></symbol>
+  <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="4"></circle><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"></path></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"></path></symbol>
+  <symbol id="i-rss" viewBox="0 0 24 24"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></symbol>
+</svg>
+
+<!-- Each specimen carries the real ancestor chain it was found in. Gen 11
+     scopes a great deal of its CSS (`.exp .veh__acts`, `.row > .th`,
+     `.top .nav__b`), so a leaf lifted out of its context renders unstyled.
+     The chain is listed under CONTEXT in every provenance block below.
+     Ids repeat across specimens on this page; that is invalid HTML but CSS
+     id selectors still match, which is what a specimen host needs. -->
+
+<h2 class="sp-group">Global chrome</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Platform bar</span>
+    <span class="sp-role">the object every page opens with</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x56">
+<div id="app" class="app" data-sp-chain><header class="top">
+    <a class="brand" href="#" title="All Auto Network · Backend"><span class="brand__mk">AAN</span><span class="brand__t">All Auto Network</span><span class="brand__env">Backend</span></a>
+    <nav class="nav" aria-label="Platform">
+      <div class="nav__it"><a class="nav__b" href="#">Home</a></div>
+      <div class="nav__it nav__it--on">
+        <button class="nav__b" type="button" data-menu="" aria-haspopup="true" aria-expanded="false">Inventory<svg class="i"><use href="#i-chev"></use></svg></button>
+        <div class="menu">
+          <div class="menu__col"><div class="caps menu__t">Inventory</div>
+            <a class="menu__l menu__l--on" href="#" aria-current="page"><b>Inventory Manager</b><span>Every vehicle, by lane</span></a>
+            <a class="menu__l" href="#"><b>Auto Locator</b><span>Find a vehicle for a buyer</span></a>
+            <a class="menu__l" href="#"><b>Sort order</b><span>How vehicles list on your site</span></a>
+            <a class="menu__l" href="#"><b>New submissions</b><span>Vehicles waiting for review</span></a>
+          </div>
+          <div class="menu__col"><div class="caps menu__t">Reports</div>
+            <a class="menu__l" href="#"><b>Inventory aging</b><span>Days in stock, per vehicle</span></a>
+            <a class="menu__l" href="#"><b>Sold inventory</b><span>What sold, and when</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu="" aria-haspopup="true" aria-expanded="false">Leads<svg class="i"><use href="#i-chev"></use></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Leads</div>
+          <a class="menu__l" href="#"><b>Lead Manager</b><span>Every enquiry, by stage</span></a>
+          <a class="menu__l" href="#"><b>Customers</b><span>People who enquired or bought</span></a>
+          <a class="menu__l" href="#"><b>Referrals</b><span>Where leads came from</span></a>
+        </div></div>
+      </div>
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu="" aria-haspopup="true" aria-expanded="false">Site<svg class="i"><use href="#i-chev"></use></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Site management</div>
+          <a class="menu__l" href="#"><b>Site Content Manager</b><span>Pages, banners and copy</span></a>
+        </div></div>
+      </div>
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu="" aria-haspopup="true" aria-expanded="false">Marketing<svg class="i"><use href="#i-chev"></use></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Marketing applications</div>
+          <a class="menu__l" href="#"><b>Newsletter tools</b><span>Compose and send</span></a>
+          <a class="menu__l" href="#"><b>Craigslist posting</b><span>Post vehicles to Craigslist</span></a>
+          <a class="menu__l" href="#"><b>Posting tools &amp; eBay</b><span>Other marketplaces</span></a>
+        </div></div>
+      </div>
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu="" aria-haspopup="true" aria-expanded="false">Dealer tools<svg class="i"><use href="#i-chev"></use></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Dealer tools</div>
+          <a class="menu__l" href="#"><b>View site statistics <svg class="i"><use href="#i-ext"></use></svg></b><span>Opens in a new tab</span></a>
+          <a class="menu__l" href="#"><b>Billing info</b><span>Invoices and balance</span></a>
+        </div></div>
+      </div>
+    </nav>
+    <span class="top__sp"></span>
+    <label class="gsearch"><svg class="i"><use href="#i-search"></use></svg><input type="search" placeholder="Search anywhere" aria-label="Search anywhere"><kbd>⌘K</kbd></label>
+    <button class="tbtn" type="button" data-act="theme" aria-label="Switch to dark theme" hidden="" title="Dark theme is being re-solved"><svg class="i t-moon"><use href="#i-moon"></use></svg><svg class="i t-sun"><use href="#i-sun"></use></svg></button>
+    <div class="nav__it nav__it--r">
+      <button class="tbtn" type="button" data-menu="" aria-haspopup="true" aria-expanded="false" aria-label="Support"><svg class="i"><use href="#i-buoy"></use></svg></button>
+      <div class="menu menu--r"><div class="menu__col"><div class="caps menu__t">Support</div>
+        <a class="menu__l" href="#"><b>View tickets</b><span>Your requests to AAN</span></a>
+        <a class="menu__l" href="#"><b>Create ticket</b><span>Ask AAN for help</span></a>
+      </div></div>
+    </div>
+    <button class="tbtn" type="button" aria-label="Notifications"><svg class="i"><use href="#i-bell"></use></svg><span class="tbtn__dot"></span></button>
+    <span class="top__div"></span>
+    <div class="nav__it nav__it--r">
+      <button class="dealer" type="button" data-menu="" aria-haspopup="true" aria-expanded="false"><span class="dealer__mk">CM</span><span class="dealer__n">Chicago Motor Cars</span><span class="dealer__id">#277</span><svg class="i"><use href="#i-chev"></use></svg></button>
+      <div class="menu menu--r"><div class="menu__col"><div class="caps menu__t">Rooftops · 6</div>
+        <a class="menu__l menu__l--on" href="#"><b>All rooftops</b><span>Chicago Motor Cars group</span></a>
+        <a class="menu__l" href="#"><b>Chicago Motor Cars</b></a>
+        <a class="menu__l" href="#"><b>CMC · Naperville</b></a>
+        <a class="menu__l" href="#"><b>CMC · KC</b></a>
+        <a class="menu__l" href="#"><b>CMC · SC</b></a>
+        <a class="menu__l" href="#"><b>CMS Diesel</b></a>
+      </div></div>
+    </div>
+    <div class="nav__it nav__it--r">
+      <button class="av" type="button" data-menu="" aria-haspopup="true" aria-expanded="false" aria-label="Account · Parin">P</button>
+      <div class="menu menu--r"><div class="menu__col">
+        <div class="menu__who"><b>Parin</b><span>Chicago Motor Cars · #277</span></div>
+        <a class="menu__l" href="#"><b>Account</b></a>
+        <a class="menu__l" href="#"><b>Log out</b></a>
+      </div></div>
+    </div>
+  </header></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>header.top</dd>
+    <dt>Context</dt><dd>.app</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>1396x56 · padding 0px 16px · gap 0px 6px · radius 12px</dd>
+  </dl>
+  <p class="sp-note">56px, 16px gutter, glass with one shadow. The AAN mark, the wordmark, the environment word, the destinations, then the utilities, then who you are.</p>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Navigation item</span>
+    <span class="sp-role">a destination</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="87.03x76">
+<div id="app" class="app" data-sp-chain><header class="top" data-sp-chain><nav class="nav" aria-label="Platform" data-sp-chain><div class="nav__it nav__it--on">
+        <button class="nav__b" type="button" data-menu="" aria-haspopup="true" aria-expanded="false">Inventory<svg class="i"><use href="#i-chev"></use></svg></button>
+        <div class="menu">
+          <div class="menu__col"><div class="caps menu__t">Inventory</div>
+            <a class="menu__l menu__l--on" href="#" aria-current="page"><b>Inventory Manager</b><span>Every vehicle, by lane</span></a>
+            <a class="menu__l" href="#"><b>Auto Locator</b><span>Find a vehicle for a buyer</span></a>
+            <a class="menu__l" href="#"><b>Sort order</b><span>How vehicles list on your site</span></a>
+            <a class="menu__l" href="#"><b>New submissions</b><span>Vehicles waiting for review</span></a>
+          </div>
+          <div class="menu__col"><div class="caps menu__t">Reports</div>
+            <a class="menu__l" href="#"><b>Inventory aging</b><span>Days in stock, per vehicle</span></a>
+            <a class="menu__l" href="#"><b>Sold inventory</b><span>What sold, and when</span></a>
+          </div>
+        </div>
+      </div></nav></header></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.nav__it.nav__it--on</dd>
+    <dt>Context</dt><dd>.app › .top › .nav</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>87x76 · padding 0px · radius 0px</dd>
+  </dl>
+  <p class="sp-note">Brand-blue label. The current section carries a soft brand surface; hover carries the well. Adjacent items never touch — see the separation contract in RULES.md.</p>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Global search</span>
+    <span class="sp-role">search anywhere</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="232x30">
+<div id="app" class="app" data-sp-chain><header class="top" data-sp-chain><label class="gsearch"><svg class="i"><use href="#i-search"></use></svg><input type="search" placeholder="Search anywhere" aria-label="Search anywhere"><kbd>⌘K</kbd></label></header></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>label.gsearch</dd>
+    <dt>Context</dt><dd>.app › .top</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>232x30 · padding 0px 8px 0px 10px · gap 8px · radius 7px</dd>
+  </dl>
+  <p class="sp-note">The elastic member of the header. When eight destinations do not fit, the width comes out of here, never out of the gap between controls.</p>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Utility button</span>
+    <span class="sp-role">icon-only header action</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="36x30">
+<div id="app" class="app" data-sp-chain><header class="top" data-sp-chain><button class="tbtn" type="button" aria-label="Notifications"><svg class="i"><use href="#i-bell"></use></svg><span class="tbtn__dot"></span></button></header></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>button.tbtn</dd>
+    <dt>Context</dt><dd>.app › .top</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>36x30 · padding 0px 8px · radius 7px</dd>
+  </dl>
+  <p class="sp-note">36px square, the same radius as the buttons beside it. Index 2 is Notifications; index 0 is the theme toggle, which every Gen 11 page ships with `hidden` and the title "Dark theme is being re-solved". A control that ships hidden on all ten pages is not shipped UI, so the catalogue shows one of the two that are.</p>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Dealer identity</span>
+    <span class="sp-role">which dealer you are acting for</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="221.55x30">
+<div id="app" class="app" data-sp-chain><header class="top" data-sp-chain><div class="nav__it nav__it--r" data-sp-chain><button class="dealer" type="button" data-menu="" aria-haspopup="true" aria-expanded="false"><span class="dealer__mk">CM</span><span class="dealer__n">Chicago Motor Cars</span><span class="dealer__id">#277</span><svg class="i"><use href="#i-chev"></use></svg></button></div></header></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>button.dealer</dd>
+    <dt>Context</dt><dd>.app › .top › .nav__it.nav__it--r</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>222x30 · padding 0px 8px 0px 4px · gap 8px · radius 7px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Page head</span>
+    <span class="sp-role">title, context, page actions</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x32">
+<div id="app" class="app" data-sp-chain><div class="head">
+    <h1>Vehicle Inventory</h1>
+    <span class="head__ctx">Inventory Manager</span>
+    <span class="live">Updated 5 min ago</span>
+    <span class="head__sp"></span>
+    <button class="btn btn--quiet" type="button"><svg class="i"><use href="#i-grid"></use></svg> Inline edit</button>
+    <button class="btn btn--quiet" type="button"><svg class="i"><use href="#i-file"></use></svg> Carfax reports</button>
+    <button class="btn btn--sheet" type="button"><svg class="i"><use href="#i-down"></use></svg> Export</button>
+    <button class="btn btn--primary" type="button"><svg class="i"><use href="#i-plus"></use></svg> Add vehicle</button>
+  </div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.head</dd>
+    <dt>Context</dt><dd>.app</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>1396x32 · padding 0px · gap 8px · radius 0px</dd>
+  </dl>
+</section>
+
+<h2 class="sp-group">Actions</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Primary</span>
+    <span class="sp-role">the one committing action in a group</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="124.65x36">
+<div id="app" class="app" data-sp-chain><div class="head" data-sp-chain><button class="btn btn--primary" type="button"><svg class="i"><use href="#i-plus"></use></svg> Add vehicle</button></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>button.btn.btn--primary</dd>
+    <dt>Context</dt><dd>.app › .head</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>125x36 · padding 0px 14px · gap 7px · radius 9px</dd>
+  </dl>
+  <p class="sp-note">Brand fill, restrained glow. One per group — never two.</p>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Sheet</span>
+    <span class="sp-role">a neutral action that carries a surface</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="93.22x36">
+<div id="app" class="app" data-sp-chain><div class="head" data-sp-chain><button class="btn btn--sheet" type="button"><svg class="i"><use href="#i-down"></use></svg> Export</button></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>button.btn.btn--sheet</dd>
+    <dt>Context</dt><dd>.app › .head</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>93x36 · padding 0px 14px · gap 7px · radius 9px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Quiet</span>
+    <span class="sp-role">an action that sits on the ground</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="111.64x36">
+<div id="app" class="app" data-sp-chain><div class="head" data-sp-chain><button class="btn btn--quiet" type="button"><svg class="i"><use href="#i-grid"></use></svg> Inline edit</button></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>button.btn.btn--quiet</dd>
+    <dt>Context</dt><dd>.app › .head</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>112x36 · padding 0px 14px · gap 7px · radius 9px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Row action cluster</span>
+    <span class="sp-role">per-record icon actions</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="108x30">
+<div id="app" class="app" data-sp-chain><section class="field has-open" aria-label="Inventory" data-sp-chain><div id="rows" class="rows ui-table" data-sp-chain><div id="tb" data-sp-chain><div class="row" data-id="v3" tabindex="0" aria-label="2021 SUNDOWNER SUNLITE ARGO 40GN" data-sp-chain><span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop=""><svg class="i"><use href="#i-edit"></use></svg></button><button type="button" title="Photos" aria-label="Photos" data-stop=""><svg class="i"><use href="#i-cam"></use></svg></button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop=""><svg class="i"><use href="#i-print"></use></svg></button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop=""><svg class="i"><use href="#i-trash"></use></svg></button></span></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>span.acts</dd>
+    <dt>Context</dt><dd>.app › .field.has-open › .rows.ui-table › div › .row</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>108x30 · padding 0px · gap 0px · radius 10px</dd>
+  </dl>
+  <p class="sp-note">The dense tier. Icon-only, 27px, inside the Actions column of a table row.</p>
+</section>
+
+<h2 class="sp-group">Navigation and scope</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Lane strip</span>
+    <span class="sp-role">which slice of the list am I in</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="535.83x36">
+<div id="app" class="app" data-sp-chain><section class="field has-open" aria-label="Inventory" data-sp-chain><div class="cmdtop ui-toolbar ui-toolbar--sub" data-sp-chain><div class="lanes ui-views" role="group" aria-label="Lane">
+          <button class="lane lane--on ui-view ui-view--on" type="button" data-lane="Available" aria-pressed="true"><span>Available</span><b>359</b></button>
+          <button class="lane ui-view" type="button" data-lane="Sold" aria-pressed="false"><span>Sold</span><b>13,212</b></button>
+          <button class="lane ui-view" type="button" data-lane="Staging" aria-pressed="false"><span>Staging</span><b>16</b></button>
+          <button class="lane lane--zero ui-view" type="button" data-lane="Pending" aria-pressed="false"><span>Pending</span><b>0</b></button>
+          <button class="lane lane--all ui-view" type="button" data-lane="All" aria-pressed="false"><span>All on file</span><b>13,587</b></button>
+        </div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.lanes.ui-views</dd>
+    <dt>Context</dt><dd>.app › .field.has-open › .cmdtop.ui-toolbar.ui-toolbar--sub</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>536x36 · padding 0px · gap 4px 6px · radius 0px</dd>
+  </dl>
+  <p class="sp-note">A joined segmented strip attached to the top of the workspace. One hairline around it, dividers between, the current lane on a brand rule.</p>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Facet</span>
+    <span class="sp-role">a filter with a current value</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="109.38x36">
+<div id="app" class="app" data-sp-chain><section class="field has-open" aria-label="Inventory" data-sp-chain><div class="sub ui-toolbar ui-toolbar--sub" data-sp-chain><div id="qf" class="qf" aria-label="Quick filters" data-sp-chain><div class="facet"><button class="facet__b" type="button" data-pop="p-make"><span class="facet__k">Make</span><span class="facet__v" id="make-v">Any</span><svg class="i"><use href="#i-chev"></use></svg></button>
+          <div class="pop" id="p-make"><div class="pop__search"><input class="fld" type="search" placeholder="Search 23 makes…" data-filter="make-list" aria-label="Search makes"></div><div class="pop__list" id="make-list"><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Porsche"><span>Porsche</span><span class="c">54</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Ford"><span>Ford</span><span class="c">47</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Ferrari"><span>Ferrari</span><span class="c">42</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Lamborghini"><span>Lamborghini</span><span class="c">27</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="McLaren"><span>McLaren</span><span class="c">20</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Mercedes-Benz"><span>Mercedes-Benz</span><span class="c">20</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Chevrolet"><span>Chevrolet</span><span class="c">16</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Dodge"><span>Dodge</span><span class="c">12</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Land Rover"><span>Land Rover</span><span class="c">12</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Audi"><span>Audi</span><span class="c">11</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="BMW"><span>BMW</span><span class="c">9</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Bentley"><span>Bentley</span><span class="c">5</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Kenworth"><span>Kenworth</span><span class="c">4</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Peterbilt"><span>Peterbilt</span><span class="c">4</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Aston Martin"><span>Aston Martin</span><span class="c">3</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Rolls-Royce"><span>Rolls-Royce</span><span class="c">3</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Jensen"><span>Jensen</span><span class="c">2</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Toyota"><span>Toyota</span><span class="c">2</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Chaparral"><span>Chaparral</span><span class="c">1</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Honda"><span>Honda</span><span class="c">1</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Kia"><span>Kia</span><span class="c">1</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Terex"><span>Terex</span><span class="c">1</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="SUNDOWNER"><span>SUNDOWNER</span><span class="c">1</span></label></div><div class="pop__foot"><button class="btn btn--quiet btn--sm" type="button" data-act="clear-makes">Clear</button><span>counts = current lane</span></div></div></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.facet</dd>
+    <dt>Context</dt><dd>.app › .field.has-open › .sub.ui-toolbar.ui-toolbar--sub › .qf</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>109x36 · padding 0px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">View switch</span>
+    <span class="sp-role">rows, gallery or photos</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="144x36">
+<div id="app" class="app" data-sp-chain><section class="field has-open" aria-label="Inventory" data-sp-chain><div class="cmd ui-toolbar" data-sp-chain><div class="seg" role="group" aria-label="View"><button class="seg__b seg__b--on" type="button" aria-label="Rows" aria-pressed="true"><svg class="i"><use href="#i-table"></use></svg></button><button class="seg__b" type="button" aria-label="Gallery" aria-pressed="false"><svg class="i"><use href="#i-cards"></use></svg></button><button class="seg__b" type="button" aria-label="Photos" aria-pressed="false"><svg class="i"><use href="#i-image"></use></svg></button></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.seg</dd>
+    <dt>Context</dt><dd>.app › .field.has-open › .cmd.ui-toolbar</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>144x36 · padding 3px · gap 2px 6px · radius 999px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Sub bar</span>
+    <span class="sp-role">scope line plus the filter row</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x56">
+<div id="app" class="app" data-sp-chain><section class="field has-open" aria-label="Inventory" data-sp-chain><div class="sub ui-toolbar ui-toolbar--sub">
+      <div class="scope" id="scope"><span class="scope__n">Available</span><span>·</span><span><b>359</b> vehicles</span></div>
+      <div class="qf" id="qf" aria-label="Quick filters">
+        <div class="facet"><button class="facet__b" type="button" data-pop="p-make"><span class="facet__k">Make</span><span class="facet__v" id="make-v">Any</span><svg class="i"><use href="#i-chev"></use></svg></button>
+          <div class="pop" id="p-make"><div class="pop__search"><input class="fld" type="search" placeholder="Search 23 makes…" data-filter="make-list" aria-label="Search makes"></div><div class="pop__list" id="make-list"><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Porsche"><span>Porsche</span><span class="c">54</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Ford"><span>Ford</span><span class="c">47</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Ferrari"><span>Ferrari</span><span class="c">42</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Lamborghini"><span>Lamborghini</span><span class="c">27</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="McLaren"><span>McLaren</span><span class="c">20</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Mercedes-Benz"><span>Mercedes-Benz</span><span class="c">20</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Chevrolet"><span>Chevrolet</span><span class="c">16</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Dodge"><span>Dodge</span><span class="c">12</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Land Rover"><span>Land Rover</span><span class="c">12</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Audi"><span>Audi</span><span class="c">11</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="BMW"><span>BMW</span><span class="c">9</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Bentley"><span>Bentley</span><span class="c">5</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Kenworth"><span>Kenworth</span><span class="c">4</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Peterbilt"><span>Peterbilt</span><span class="c">4</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Aston Martin"><span>Aston Martin</span><span class="c">3</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Rolls-Royce"><span>Rolls-Royce</span><span class="c">3</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Jensen"><span>Jensen</span><span class="c">2</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Toyota"><span>Toyota</span><span class="c">2</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Chaparral"><span>Chaparral</span><span class="c">1</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Honda"><span>Honda</span><span class="c">1</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Kia"><span>Kia</span><span class="c">1</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Terex"><span>Terex</span><span class="c">1</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="SUNDOWNER"><span>SUNDOWNER</span><span class="c">1</span></label></div><div class="pop__foot"><button class="btn btn--quiet btn--sm" type="button" data-act="clear-makes">Clear</button><span>counts = current lane</span></div></div></div>
+        <div class="facet c-sec"><button class="facet__b" type="button" data-pop="p-model"><span class="facet__k">Model</span><span class="facet__v">Any</span><svg class="i"><use href="#i-chev"></use></svg></button><div class="pop" id="p-model"><div class="pop__empty">Pick a make first — models scope to it.</div></div></div>
+        <div class="facet c-sec"><button class="facet__b" type="button" data-pop="p-year"><span class="facet__k">Year</span><span class="facet__v" id="year-v">Any</span><svg class="i"><use href="#i-chev"></use></svg></button>
+          <div class="pop" id="p-year"><div class="pop__body"><div class="pop__row"><select class="sel" id="y1" aria-label="Year from"><option value="">From</option><option>2027</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option><option>2017</option><option>2016</option><option>2015</option><option>2014</option><option>2013</option><option>2012</option><option>2011</option><option>2010</option><option>2009</option><option>2008</option><option>2007</option><option>2006</option><option>2005</option><option>2004</option><option>2003</option><option>2002</option><option>2001</option><option>2000</option><option>1999</option><option>1998</option><option>1997</option><option>1996</option><option>1995</option><option>1994</option><option>1993</option><option>1992</option><option>1991</option><option>1990</option><option>1989</option><option>1988</option><option>1987</option><option>1986</option><option>1985</option><option>1984</option><option>1983</option><option>1982</option><option>1981</option><option>1980</option><option>1979</option><option>1978</option><option>1977</option><option>1976</option><option>1975</option><option>1974</option><option>1973</option><option>1972</option><option>1971</option><option>1970</option><option>1969</option><option>1968</option><option>1967</option><option>1966</option><option>1965</option><option>1964</option><option>1963</option><option>1962</option><option>1961</option><option>1960</option><option>1959</option><option>1958</option><option>1957</option><option>1956</option><option>1955</option><option>1954</option><option>1953</option><option>1952</option><option>1951</option><option>1950</option><option>1949</option><option>1948</option><option>1947</option><option>1946</option><option>1945</option><option>1944</option><option>1943</option><option>1942</option><option>1941</option><option>1940</option><option>1939</option><option>1938</option><option>1937</option><option>1936</option><option>1935</option><option>1934</option><option>1933</option><option>1932</option><option>1931</option><option>1930</option><option>1929</option></select><span>–</span><select class="sel" id="y2" aria-label="Year to"><option value="">To</option><option>2027</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option><option>2017</option><option>2016</option><option>2015</option><option>2014</option><option>2013</option><option>2012</option><option>2011</option><option>2010</option><option>2009</option><option>2008</option><option>2007</option><option>2006</option><option>2005</option><option>2004</option><option>2003</option><option>2002</option><option>2001</option><option>2000</option><option>1999</option><option>1998</option><option>1997</option><option>1996</option><option>1995</option><option>1994</option><option>1993</option><option>1992</option><option>1991</option><option>1990</option><option>1989</option><option>1988</option><option>1987</option><option>1986</option><option>1985</option><option>1984</option><option>1983</option><option>1982</option><option>1981</option><option>1980</option><option>1979</option><option>1978</option><option>1977</option><option>1976</option><option>1975</option><option>1974</option><option>1973</option><option>1972</option><option>1971</option><option>1970</option><option>1969</option><option>1968</option><option>1967</option><option>1966</option><option>1965</option><option>1964</option><option>1963</option><option>1962</option><option>1961</option><option>1960</option><option>1959</option><option>1958</option><option>1957</option><option>1956</option><option>1955</option><option>1954</option><option>1953</option><option>1952</option><option>1951</option><option>1950</option><option>1949</option><option>1948</option><option>1947</option><option>1946</option><option>1945</option><option>1944</option><option>1943</option><option>1942</option><option>1941</option><option>1940</option><option>1939</option><option>1938</option><option>1937</option><option>1936</option><option>1935</option><option>1934</option><option>1933</option><option>1932</option><option>1931</option><option>1930</option><option>1929</option></select></div><div class="pop__quick"><button class="btn btn--sheet btn--sm" type="button" data-fk="year:2020s" aria-pressed="false">2020s</button><button class="btn btn--sheet btn--sm" type="button" data-fk="year:2010s" aria-pressed="false">2010s</button><button class="btn btn--sheet btn--sm" type="button" data-fk="year:2000s" aria-pressed="false">2000s</button><button class="btn btn--sheet btn--sm" type="button" data-fk="year:1990s" aria-pressed="false">1990s</button></div></div></div></div>
+        <div class="facet c-sec"><button class="facet__b" type="button" data-pop="p-price"><span class="facet__k">Price</span><span class="facet__v" id="price-v">Any</span><svg class="i"><use href="#i-chev"></use></svg></button>
+          <div class="pop" id="p-price"><div class="pop__body"><div class="pop__row"><input class="fld" type="search" inputmode="numeric" placeholder="$ min" aria-label="Minimum price"><span>–</span><input class="fld" type="search" inputmode="numeric" placeholder="$ max" aria-label="Maximum price"></div><div class="pop__quick"><button class="btn btn--sheet btn--sm" type="button" data-fk="price:lt25" aria-pressed="false">Under $25K</button><button class="btn btn--sheet btn--sm" type="button" data-fk="price:50-100" aria-pressed="false">$50–100K</button><button class="btn btn--sheet btn--sm" type="button" data-fk="price:100-250" aria-pressed="false">$100–250K</button><button class="btn btn--sheet btn--sm" type="button" data-fk="price:none" aria-pressed="false">No price</button></div></div></div></div>
+        <button class="facet__b" type="button" data-act="filters"><svg class="i"><use href="#i-sliders"></use></svg><span class="facet__v">Filters</span><span class="facet__cnt" id="fcnt" hidden="">0</span></button>
+      </div>
+      <span class="sub__shown" id="sub-shown">1–16 shown</span>
+    </div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.sub.ui-toolbar.ui-toolbar--sub</dd>
+    <dt>Context</dt><dd>.app › .field.has-open</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>1396x56 · padding 8px 16px · gap 8px · radius 0px</dd>
+  </dl>
+</section>
+
+<h2 class="sp-group">Command</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Command band</span>
+    <span class="sp-role">the sticky search and sort layer</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x56">
+<div id="app" class="app" data-sp-chain><section class="field has-open" aria-label="Inventory" data-sp-chain><div class="cmd ui-toolbar">
+      <label class="search"><svg class="i"><use href="#i-search"></use></svg><input type="search" id="q" placeholder="Find a vehicle — stock, VIN, year, make, model, colour…" autocomplete="off"><kbd>/</kbd></label>
+      <div class="facet"><button class="facet__b" type="button" data-pop="p-sort"><span class="facet__k">Sort</span><span class="facet__v" id="sort-v">Age ↓</span><svg class="i"><use href="#i-chev"></use></svg></button>
+        <div class="pop pop--right mn" id="p-sort"><div class="caps mn__lab">Sort by</div><button class="mn__it" type="button" data-sort="stock"><svg class="i"><use href="#i-check"></use></svg>Stock</button><button class="mn__it" type="button" data-sort="year"><svg class="i"><use href="#i-check"></use></svg>Year</button><button class="mn__it" type="button" data-sort="make"><svg class="i"><use href="#i-check"></use></svg>Make</button><button class="mn__it" type="button" data-sort="price"><svg class="i"><use href="#i-check"></use></svg>Price</button><button class="mn__it mn__it--on" type="button" data-sort="days"><svg class="i"><use href="#i-check"></use></svg>Age</button><button class="mn__it" type="button" data-sort="issues"><svg class="i"><use href="#i-check"></use></svg>Attention first</button><div class="mn__sep"></div><button class="mn__it" type="button" data-dir="asc"><svg class="i"><use href="#i-up"></use></svg>Ascending</button><button class="mn__it mn__it--on" type="button" data-dir="desc"><svg class="i"><use href="#i-dn"></use></svg>Descending</button></div></div>
+      <span class="cmd__div"></span>
+      <div class="seg" role="group" aria-label="View"><button class="seg__b seg__b--on" type="button" aria-label="Rows" aria-pressed="true"><svg class="i"><use href="#i-table"></use></svg></button><button class="seg__b" type="button" aria-label="Gallery" aria-pressed="false"><svg class="i"><use href="#i-cards"></use></svg></button><button class="seg__b" type="button" aria-label="Photos" aria-pressed="false"><svg class="i"><use href="#i-image"></use></svg></button></div>
+      <div class="facet c-cols"><button class="facet__b" type="button" data-pop="p-cols" id="cols-btn" aria-expanded="false" aria-controls="p-cols" aria-haspopup="true"><svg class="i"><use href="#i-cols"></use></svg><span class="facet__v">Columns</span><svg class="i"><use href="#i-chev"></use></svg></button>
+        <div class="pop pop--right cols" id="p-cols" role="group" aria-label="Columns"></div></div>
+    </div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.cmd.ui-toolbar</dd>
+    <dt>Context</dt><dd>.app › .field.has-open</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>1396x56 · padding 10px 16px · gap 8px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Search field</span>
+    <span class="sp-role">find a vehicle</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="952.33x36">
+<div id="app" class="app" data-sp-chain><section class="field has-open" aria-label="Inventory" data-sp-chain><div class="cmd ui-toolbar" data-sp-chain><label class="search"><svg class="i"><use href="#i-search"></use></svg><input type="search" id="q" placeholder="Find a vehicle — stock, VIN, year, make, model, colour…" autocomplete="off"><kbd>/</kbd></label></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>label.search</dd>
+    <dt>Context</dt><dd>.app › .field.has-open › .cmd.ui-toolbar</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>952x36 · padding 0px 12px 0px 16px · gap 8px · radius 14px</dd>
+  </dl>
+</section>
+
+<h2 class="sp-group">Table</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Column header</span>
+    <span class="sp-role">the sticky header row</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x48">
+<div id="app" class="app" data-sp-chain><section class="field has-open" aria-label="Inventory" data-sp-chain><div id="rows" class="rows ui-table" data-sp-chain><div class="hd ui-thead" id="hd"><span></span><span></span><span class="s" data-sort="stock">Stock</span><span class="s" data-sort="year">Year</span><span class="s" data-sort="make">Make</span><span>Model</span><span class="c-trim">Trim</span><span class="c-ext">Colour</span><span class="r s c-price" data-sort="price">Price</span><span class="c-status">Status</span><span class="s c-health" data-sort="issues">Health</span><span class="r s on" data-sort="days">Age <svg class="i"><use href="#i-dn"></use></svg></span><span class="r">Actions</span></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.hd.ui-thead</dd>
+    <dt>Context</dt><dd>.app › .field.has-open › .rows.ui-table</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>1396x48 · padding 9px 16px · gap 8px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Row</span>
+    <span class="sp-role">one vehicle</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x74">
+<div id="app" class="app" data-sp-chain><section class="field has-open" aria-label="Inventory" data-sp-chain><div id="rows" class="rows ui-table" data-sp-chain><div id="tb" data-sp-chain><div class="row" data-id="v5" tabindex="0" aria-label="2016 Kenworth W900L"><input class="ck" type="checkbox" data-sel="v5" aria-label="Select 2016 Kenworth W900L"><img class="th" alt="" src="../../../pages/dealer/img/f7aed7d4-9678_main_t.jpg"><div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop="" title="Open in the vehicle editor">19495</a></span><span class="stk__vin" title="VIN GRPH1F2YJEPY0XL71">GRPH1F2YJEPY0XL71</span></div><div class="yr">2016</div><div class="mk" title="Kenworth">Kenworth</div><div class="md" title="W900L">W900L</div><div class="trim" title="ICON 900 SLEEPER 44">ICON 900 SLEEPER 44</div><div class="ext" title="Daydream Blue"><span class="sw" style="--c:#2a5db8"></span><span>Daydream Blue</span></div><div class="price"><div class="price__v"><em>$</em>100,800</div></div><div class="st"><span class="stat stat--ok">Available</span></div><div class="tags"><span class="okmark" title="No attention flags"><svg class="i"><use href="#i-check"></use></svg>OK</span></div><div class="age age--stale" title="1,566 days in stock"><i style="--w:100%;--b:var(--age-stale)"></i>4.3y</div><span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop=""><svg class="i"><use href="#i-edit"></use></svg></button><button type="button" title="Photos" aria-label="Photos" data-stop=""><svg class="i"><use href="#i-cam"></use></svg></button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop=""><svg class="i"><use href="#i-print"></use></svg></button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop=""><svg class="i"><use href="#i-trash"></use></svg></button></span></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.row</dd>
+    <dt>Context</dt><dd>.app › .field.has-open › .rows.ui-table › div</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>1396x74 · padding 0px 16px · gap 8px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Stock cell</span>
+    <span class="sp-role">the identifier a dealer searches on</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="104x38.2">
+<div id="app" class="app" data-sp-chain><section class="field has-open" aria-label="Inventory" data-sp-chain><div id="rows" class="rows ui-table" data-sp-chain><div id="tb" data-sp-chain><div class="row" data-id="v5" tabindex="0" aria-label="2016 Kenworth W900L" data-sp-chain><div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop="" title="Open in the vehicle editor">19495</a></span><span class="stk__vin" title="VIN GRPH1F2YJEPY0XL71">GRPH1F2YJEPY0XL71</span></div></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.stk</dd>
+    <dt>Context</dt><dd>.app › .field.has-open › .rows.ui-table › div › .row</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>104x38 · padding 0px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Price cell</span>
+    <span class="sp-role">money, with its discount history</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="118x17.6">
+<div id="app" class="app" data-sp-chain><section class="field has-open" aria-label="Inventory" data-sp-chain><div id="rows" class="rows ui-table" data-sp-chain><div id="tb" data-sp-chain><div class="row" data-id="v5" tabindex="0" aria-label="2016 Kenworth W900L" data-sp-chain><div class="price"><div class="price__v"><em>$</em>100,800</div></div></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.price</dd>
+    <dt>Context</dt><dd>.app › .field.has-open › .rows.ui-table › div › .row</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>118x18 · padding 0px 0px 0px 12px · gap 2px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Status chip</span>
+    <span class="sp-role">lot status</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="80x24">
+<div id="app" class="app" data-sp-chain><section class="field has-open" aria-label="Inventory" data-sp-chain><div id="rows" class="rows ui-table" data-sp-chain><div id="tb" data-sp-chain><div class="row" data-id="v5" tabindex="0" aria-label="2016 Kenworth W900L" data-sp-chain><div class="st"><span class="stat stat--ok">Available</span></div></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.st</dd>
+    <dt>Context</dt><dd>.app › .field.has-open › .rows.ui-table › div › .row</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>80x24 · padding 0px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Health tags</span>
+    <span class="sp-role">the exceptions on a vehicle</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="230x73.2">
+<div id="app" class="app" data-sp-chain><section class="field has-open" aria-label="Inventory" data-sp-chain><div id="rows" class="rows ui-table" data-sp-chain><div id="tb" data-sp-chain><div class="row" data-id="v3" tabindex="0" aria-label="2021 SUNDOWNER SUNLITE ARGO 40GN" data-sp-chain><div class="tags"><span class="tag">No price</span><span class="tag">No photos</span><span class="tag tag--more" title="Feed off · Hidden">+2</span></div></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.tags</dd>
+    <dt>Context</dt><dd>.app › .field.has-open › .rows.ui-table › div › .row</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>230x73 · padding 0px 10px · gap 3px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Age</span>
+    <span class="sp-role">days in stock, as a bar and a figure</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="76x19.6">
+<div id="app" class="app" data-sp-chain><section class="field has-open" aria-label="Inventory" data-sp-chain><div id="rows" class="rows ui-table" data-sp-chain><div id="tb" data-sp-chain><div class="row" data-id="v5" tabindex="0" aria-label="2016 Kenworth W900L" data-sp-chain><div class="age age--stale" title="1,566 days in stock"><i style="--w:100%;--b:var(--age-stale)"></i>4.3y</div></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.age.age--stale</dd>
+    <dt>Context</dt><dd>.app › .field.has-open › .rows.ui-table › div › .row</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>76x20 · padding 0px · gap 8px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Checkbox cell</span>
+    <span class="sp-role">bulk selection</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="16x16">
+<div id="app" class="app" data-sp-chain><section class="field has-open" aria-label="Inventory" data-sp-chain><div id="rows" class="rows ui-table" data-sp-chain><div id="tb" data-sp-chain><div class="row" data-id="v5" tabindex="0" aria-label="2016 Kenworth W900L" data-sp-chain><input class="ck" type="checkbox" data-sel="v5" aria-label="Select 2016 Kenworth W900L"></div></div></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>input.ck</dd>
+    <dt>Context</dt><dd>.app › .field.has-open › .rows.ui-table › div › .row</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>16x16 · padding 0px · radius 5px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Footer</span>
+    <span class="sp-role">count and pagination</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x48">
+<div id="app" class="app" data-sp-chain><section class="field has-open" aria-label="Inventory" data-sp-chain><div class="foot"><span id="shown">1–16 of 359</span><span class="sp"></span><span class="pg"><button type="button" aria-label="Previous page">‹</button><button type="button" class="on" aria-current="page">1</button><button type="button">2</button><button type="button">3</button><span>…</span><button type="button">23</button><button type="button" aria-label="Next page">›</button></span><span>16 per page</span></div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.foot</dd>
+    <dt>Context</dt><dd>.app › .field.has-open</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>1396x48 · padding 0px 16px · gap 12px · radius 0px</dd>
+  </dl>
+</section>
+
+<h2 class="sp-group">Surfaces</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Bento</span>
+    <span class="sp-role">the lot at a glance</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x220">
+<div id="app" class="app" data-sp-chain><section class="bento" aria-label="Lot intelligence">
+    <div class="focal">
+      <div class="focal__main">
+        <div class="focal__h"><span class="caps">Lot</span><span class="s">6 rooftops · updated 5 min ago</span></div>
+        <div class="hero"><div class="hero__n" id="scope-n">359</div><div class="hero__l"><b id="scope-l">Available</b><span class="hero__of">of 13,587 on file</span></div></div>
+      </div>
+      <div class="agemix">
+        <div class="agemix__h"><span class="caps">Age mix</span><a class="s" href="#">Aging report</a></div>
+        <div class="agerows"><button type="button" class="agerow" data-age="fresh" aria-pressed="false"><span class="agerow__l">≤ 30 days</span><span class="agerow__m"><i style="--seg:var(--age-fresh);width:56%"></i></span><b>73</b><em>20%</em></button><button type="button" class="agerow" data-age="mid" aria-pressed="false"><span class="agerow__l">31–90 days</span><span class="agerow__m"><i style="--seg:var(--age-mid-focal);width:88%"></i></span><b>115</b><em>32%</em></button><button type="button" class="agerow" data-age="late" aria-pressed="false"><span class="agerow__l">91–365 days</span><span class="agerow__m"><i style="--seg:var(--age-late);width:100%"></i></span><b>131</b><em>36%</em></button><button type="button" class="agerow" data-age="stale" aria-pressed="false"><span class="agerow__l">over 1 year</span><span class="agerow__m"><i style="--seg:var(--age-stale);width:31%"></i></span><b>40</b><em>11%</em></button></div>
+      </div>
+    </div>
+
+    <div class="value">
+      <div class="value__h"><span class="caps">Value</span><span class="s">asking, available</span></div>
+      <div class="kv"><div><div class="v" title="$66,311,600">$66.3M</div><div class="l">asking value</div></div><div><div class="v" title="$293,414">$293K</div><div class="l">average price</div></div><div><div class="v" title="Price mix — no price 133 · under $10k 4 · $10–25k 8 · $25–50k 24 · $50–100k 44 · $100k+ 146">146</div><div class="l">$100k+</div></div></div>
+    </div>
+
+    <section class="attn" aria-label="Needs attention">
+      <div class="attn__h"><h2><span class="full">Needs attention</span><span class="short">Attention</span></h2><span class="s">tap to filter the list</span></div>
+      <div class="attn__g">
+      <button class="ar" type="button" data-attn="no_price"><span class="ar__n">133</span><span class="ar__b"><span class="ar__l"><span class="full">No price</span><span class="short">No price</span></span><span class="ar__m"><i style="--w:37%"></i></span></span><span class="ar__p">37%</span></button>
+      <button class="ar" type="button" data-attn="no_photos"><span class="ar__n">95</span><span class="ar__b"><span class="ar__l"><span class="full">No photos</span><span class="short">No photos</span></span><span class="ar__m"><i style="--w:26%"></i></span></span><span class="ar__p">26%</span></button>
+      <button class="ar ar--danger" type="button" data-attn="feed_off"><span class="ar__n">67</span><span class="ar__b"><span class="ar__l"><span class="full">Feed excluded</span><span class="short">Feed off</span></span><span class="ar__m"><i style="--w:19%"></i></span></span><span class="ar__p">19%</span></button>
+      <button class="ar ar--slate" type="button" data-attn="hidden"><span class="ar__n">61</span><span class="ar__b"><span class="ar__l"><span class="full">Hidden on site</span><span class="short">Hidden</span></span><span class="ar__m"><i style="--w:17%"></i></span></span><span class="ar__p">17%</span></button>
+      <button class="ar ar--danger" type="button" data-attn="aging"><span class="ar__n">40</span><span class="ar__b"><span class="ar__l"><span class="full">Aging over 1 year</span><span class="short">Aging</span></span><span class="ar__m"><i style="--w:11%"></i></span></span><span class="ar__p">11%</span></button>
+      <button class="ar ar--violet" type="button" data-attn="pending"><span class="ar__n">49</span><span class="ar__b"><span class="ar__l"><span class="full">Sale pending</span><span class="short">Pending</span></span><span class="ar__m"><i style="--w:14%"></i></span></span><span class="ar__p">14%</span></button>
+      </div>
+    </section>
+  </section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>section.bento</dd>
+    <dt>Context</dt><dd>.app</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>1396x220 · padding 0px · gap 16px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Dark focal panel</span>
+    <span class="sp-role">the dominant summary object</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="540x220">
+<div id="app" class="app" data-sp-chain><section class="bento" aria-label="Lot intelligence" data-sp-chain><div class="focal">
+      <div class="focal__main">
+        <div class="focal__h"><span class="caps">Lot</span><span class="s">6 rooftops · updated 5 min ago</span></div>
+        <div class="hero"><div class="hero__n" id="scope-n">359</div><div class="hero__l"><b id="scope-l">Available</b><span class="hero__of">of 13,587 on file</span></div></div>
+      </div>
+      <div class="agemix">
+        <div class="agemix__h"><span class="caps">Age mix</span><a class="s" href="#">Aging report</a></div>
+        <div class="agerows"><button type="button" class="agerow" data-age="fresh" aria-pressed="false"><span class="agerow__l">≤ 30 days</span><span class="agerow__m"><i style="--seg:var(--age-fresh);width:56%"></i></span><b>73</b><em>20%</em></button><button type="button" class="agerow" data-age="mid" aria-pressed="false"><span class="agerow__l">31–90 days</span><span class="agerow__m"><i style="--seg:var(--age-mid-focal);width:88%"></i></span><b>115</b><em>32%</em></button><button type="button" class="agerow" data-age="late" aria-pressed="false"><span class="agerow__l">91–365 days</span><span class="agerow__m"><i style="--seg:var(--age-late);width:100%"></i></span><b>131</b><em>36%</em></button><button type="button" class="agerow" data-age="stale" aria-pressed="false"><span class="agerow__l">over 1 year</span><span class="agerow__m"><i style="--seg:var(--age-stale);width:31%"></i></span><b>40</b><em>11%</em></button></div>
+      </div>
+    </div></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.focal</dd>
+    <dt>Context</dt><dd>.app › .bento</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>540x220 · padding 0px · radius 14px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Attention queue</span>
+    <span class="sp-role">the exceptions, ranked</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="584x220">
+<div id="app" class="app" data-sp-chain><section class="bento" aria-label="Lot intelligence" data-sp-chain><section class="attn" aria-label="Needs attention">
+      <div class="attn__h"><h2><span class="full">Needs attention</span><span class="short">Attention</span></h2><span class="s">tap to filter the list</span></div>
+      <div class="attn__g">
+      <button class="ar" type="button" data-attn="no_price"><span class="ar__n">133</span><span class="ar__b"><span class="ar__l"><span class="full">No price</span><span class="short">No price</span></span><span class="ar__m"><i style="--w:37%"></i></span></span><span class="ar__p">37%</span></button>
+      <button class="ar" type="button" data-attn="no_photos"><span class="ar__n">95</span><span class="ar__b"><span class="ar__l"><span class="full">No photos</span><span class="short">No photos</span></span><span class="ar__m"><i style="--w:26%"></i></span></span><span class="ar__p">26%</span></button>
+      <button class="ar ar--danger" type="button" data-attn="feed_off"><span class="ar__n">67</span><span class="ar__b"><span class="ar__l"><span class="full">Feed excluded</span><span class="short">Feed off</span></span><span class="ar__m"><i style="--w:19%"></i></span></span><span class="ar__p">19%</span></button>
+      <button class="ar ar--slate" type="button" data-attn="hidden"><span class="ar__n">61</span><span class="ar__b"><span class="ar__l"><span class="full">Hidden on site</span><span class="short">Hidden</span></span><span class="ar__m"><i style="--w:17%"></i></span></span><span class="ar__p">17%</span></button>
+      <button class="ar ar--danger" type="button" data-attn="aging"><span class="ar__n">40</span><span class="ar__b"><span class="ar__l"><span class="full">Aging over 1 year</span><span class="short">Aging</span></span><span class="ar__m"><i style="--w:11%"></i></span></span><span class="ar__p">11%</span></button>
+      <button class="ar ar--violet" type="button" data-attn="pending"><span class="ar__n">49</span><span class="ar__b"><span class="ar__l"><span class="full">Sale pending</span><span class="short">Pending</span></span><span class="ar__m"><i style="--w:14%"></i></span></span><span class="ar__p">14%</span></button>
+      </div>
+    </section></section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>section.attn</dd>
+    <dt>Context</dt><dd>.app › .bento</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>584x220 · padding 16px · radius 14px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Workspace</span>
+    <span class="sp-role">the sheet the list lives on</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x2101.35">
+<div id="app" class="app" data-sp-chain><section class="field has-open" aria-label="Inventory" style="--cols: 26px 92px 104px 46px 104px minmax(100px, 1fr) 84px 92px 118px 80px 218px 76px 108px;">
+    <div class="cmdtop ui-toolbar ui-toolbar--sub">
+      <div class="lanes ui-views" role="group" aria-label="Lane">
+          <button class="lane lane--on ui-view ui-view--on" type="button" data-lane="Available" aria-pressed="true"><span>Available</span><b>359</b></button>
+          <button class="lane ui-view" type="button" data-lane="Sold" aria-pressed="false"><span>Sold</span><b>13,212</b></button>
+          <button class="lane ui-view" type="button" data-lane="Staging" aria-pressed="false"><span>Staging</span><b>16</b></button>
+          <button class="lane lane--zero ui-view" type="button" data-lane="Pending" aria-pressed="false"><span>Pending</span><b>0</b></button>
+          <button class="lane lane--all ui-view" type="button" data-lane="All" aria-pressed="false"><span>All on file</span><b>13,587</b></button>
+        </div>
+    </div>
+
+    <div class="cmd ui-toolbar">
+      <label class="search"><svg class="i"><use href="#i-search"></use></svg><input type="search" id="q" placeholder="Find a vehicle — stock, VIN, year, make, model, colour…" autocomplete="off"><kbd>/</kbd></label>
+      <div class="facet"><button class="facet__b" type="button" data-pop="p-sort"><span class="facet__k">Sort</span><span class="facet__v" id="sort-v">Age ↓</span><svg class="i"><use href="#i-chev"></use></svg></button>
+        <div class="pop pop--right mn" id="p-sort"><div class="caps mn__lab">Sort by</div><button class="mn__it" type="button" data-sort="stock"><svg class="i"><use href="#i-check"></use></svg>Stock</button><button class="mn__it" type="button" data-sort="year"><svg class="i"><use href="#i-check"></use></svg>Year</button><button class="mn__it" type="button" data-sort="make"><svg class="i"><use href="#i-check"></use></svg>Make</button><button class="mn__it" type="button" data-sort="price"><svg class="i"><use href="#i-check"></use></svg>Price</button><button class="mn__it mn__it--on" type="button" data-sort="days"><svg class="i"><use href="#i-check"></use></svg>Age</button><button class="mn__it" type="button" data-sort="issues"><svg class="i"><use href="#i-check"></use></svg>Attention first</button><div class="mn__sep"></div><button class="mn__it" type="button" data-dir="asc"><svg class="i"><use href="#i-up"></use></svg>Ascending</button><button class="mn__it mn__it--on" type="button" data-dir="desc"><svg class="i"><use href="#i-dn"></use></svg>Descending</button></div></div>
+      <span class="cmd__div"></span>
+      <div class="seg" role="group" aria-label="View"><button class="seg__b seg__b--on" type="button" aria-label="Rows" aria-pressed="true"><svg class="i"><use href="#i-table"></use></svg></button><button class="seg__b" type="button" aria-label="Gallery" aria-pressed="false"><svg class="i"><use href="#i-cards"></use></svg></button><button class="seg__b" type="button" aria-label="Photos" aria-pressed="false"><svg class="i"><use href="#i-image"></use></svg></button></div>
+      <div class="facet c-cols"><button class="facet__b" type="button" data-pop="p-cols" id="cols-btn" aria-expanded="false" aria-controls="p-cols" aria-haspopup="true"><svg class="i"><use href="#i-cols"></use></svg><span class="facet__v">Columns</span><svg class="i"><use href="#i-chev"></use></svg></button>
+        <div class="pop pop--right cols" id="p-cols" role="group" aria-label="Columns"></div></div>
+    </div>
+
+    <div class="sub ui-toolbar ui-toolbar--sub">
+      <div class="scope" id="scope"><span class="scope__n">Available</span><span>·</span><span><b>359</b> vehicles</span></div>
+      <div class="qf" id="qf" aria-label="Quick filters">
+        <div class="facet"><button class="facet__b" type="button" data-pop="p-make"><span class="facet__k">Make</span><span class="facet__v" id="make-v">Any</span><svg class="i"><use href="#i-chev"></use></svg></button>
+          <div class="pop" id="p-make"><div class="pop__search"><input class="fld" type="search" placeholder="Search 23 makes…" data-filter="make-list" aria-label="Search makes"></div><div class="pop__list" id="make-list"><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Porsche"><span>Porsche</span><span class="c">54</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Ford"><span>Ford</span><span class="c">47</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Ferrari"><span>Ferrari</span><span class="c">42</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Lamborghini"><span>Lamborghini</span><span class="c">27</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="McLaren"><span>McLaren</span><span class="c">20</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Mercedes-Benz"><span>Mercedes-Benz</span><span class="c">20</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Chevrolet"><span>Chevrolet</span><span class="c">16</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Dodge"><span>Dodge</span><span class="c">12</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Land Rover"><span>Land Rover</span><span class="c">12</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Audi"><span>Audi</span><span class="c">11</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="BMW"><span>BMW</span><span class="c">9</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Bentley"><span>Bentley</span><span class="c">5</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Kenworth"><span>Kenworth</span><span class="c">4</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Peterbilt"><span>Peterbilt</span><span class="c">4</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Aston Martin"><span>Aston Martin</span><span class="c">3</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Rolls-Royce"><span>Rolls-Royce</span><span class="c">3</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Jensen"><span>Jensen</span><span class="c">2</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Toyota"><span>Toyota</span><span class="c">2</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Chaparral"><span>Chaparral</span><span class="c">1</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Honda"><span>Honda</span><span class="c">1</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Kia"><span>Kia</span><span class="c">1</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="Terex"><span>Terex</span><span class="c">1</span></label><label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="SUNDOWNER"><span>SUNDOWNER</span><span class="c">1</span></label></div><div class="pop__foot"><button class="btn btn--quiet btn--sm" type="button" data-act="clear-makes">Clear</button><span>counts = current lane</span></div></div></div>
+        <div class="facet c-sec"><button class="facet__b" type="button" data-pop="p-model"><span class="facet__k">Model</span><span class="facet__v">Any</span><svg class="i"><use href="#i-chev"></use></svg></button><div class="pop" id="p-model"><div class="pop__empty">Pick a make first — models scope to it.</div></div></div>
+        <div class="facet c-sec"><button class="facet__b" type="button" data-pop="p-year"><span class="facet__k">Year</span><span class="facet__v" id="year-v">Any</span><svg class="i"><use href="#i-chev"></use></svg></button>
+          <div class="pop" id="p-year"><div class="pop__body"><div class="pop__row"><select class="sel" id="y1" aria-label="Year from"><option value="">From</option><option>2027</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option><option>2017</option><option>2016</option><option>2015</option><option>2014</option><option>2013</option><option>2012</option><option>2011</option><option>2010</option><option>2009</option><option>2008</option><option>2007</option><option>2006</option><option>2005</option><option>2004</option><option>2003</option><option>2002</option><option>2001</option><option>2000</option><option>1999</option><option>1998</option><option>1997</option><option>1996</option><option>1995</option><option>1994</option><option>1993</option><option>1992</option><option>1991</option><option>1990</option><option>1989</option><option>1988</option><option>1987</option><option>1986</option><option>1985</option><option>1984</option><option>1983</option><option>1982</option><option>1981</option><option>1980</option><option>1979</option><option>1978</option><option>1977</option><option>1976</option><option>1975</option><option>1974</option><option>1973</option><option>1972</option><option>1971</option><option>1970</option><option>1969</option><option>1968</option><option>1967</option><option>1966</option><option>1965</option><option>1964</option><option>1963</option><option>1962</option><option>1961</option><option>1960</option><option>1959</option><option>1958</option><option>1957</option><option>1956</option><option>1955</option><option>1954</option><option>1953</option><option>1952</option><option>1951</option><option>1950</option><option>1949</option><option>1948</option><option>1947</option><option>1946</option><option>1945</option><option>1944</option><option>1943</option><option>1942</option><option>1941</option><option>1940</option><option>1939</option><option>1938</option><option>1937</option><option>1936</option><option>1935</option><option>1934</option><option>1933</option><option>1932</option><option>1931</option><option>1930</option><option>1929</option></select><span>–</span><select class="sel" id="y2" aria-label="Year to"><option value="">To</option><option>2027</option><option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option><option>2017</option><option>2016</option><option>2015</option><option>2014</option><option>2013</option><option>2012</option><option>2011</option><option>2010</option><option>2009</option><option>2008</option><option>2007</option><option>2006</option><option>2005</option><option>2004</option><option>2003</option><option>2002</option><option>2001</option><option>2000</option><option>1999</option><option>1998</option><option>1997</option><option>1996</option><option>1995</option><option>1994</option><option>1993</option><option>1992</option><option>1991</option><option>1990</option><option>1989</option><option>1988</option><option>1987</option><option>1986</option><option>1985</option><option>1984</option><option>1983</option><option>1982</option><option>1981</option><option>1980</option><option>1979</option><option>1978</option><option>1977</option><option>1976</option><option>1975</option><option>1974</option><option>1973</option><option>1972</option><option>1971</option><option>1970</option><option>1969</option><option>1968</option><option>1967</option><option>1966</option><option>1965</option><option>1964</option><option>1963</option><option>1962</option><option>1961</option><option>1960</option><option>1959</option><option>1958</option><option>1957</option><option>1956</option><option>1955</option><option>1954</option><option>1953</option><option>1952</option><option>1951</option><option>1950</option><option>1949</option><option>1948</option><option>1947</option><option>1946</option><option>1945</option><option>1944</option><option>1943</option><option>1942</option><option>1941</option><option>1940</option><option>1939</option><option>1938</option><option>1937</option><option>1936</option><option>1935</option><option>1934</option><option>1933</option><option>1932</option><option>1931</option><option>1930</option><option>1929</option></select></div><div class="pop__quick"><button class="btn btn--sheet btn--sm" type="button" data-fk="year:2020s" aria-pressed="false">2020s</button><button class="btn btn--sheet btn--sm" type="button" data-fk="year:2010s" aria-pressed="false">2010s</button><button class="btn btn--sheet btn--sm" type="button" data-fk="year:2000s" aria-pressed="false">2000s</button><button class="btn btn--sheet btn--sm" type="button" data-fk="year:1990s" aria-pressed="false">1990s</button></div></div></div></div>
+        <div class="facet c-sec"><button class="facet__b" type="button" data-pop="p-price"><span class="facet__k">Price</span><span class="facet__v" id="price-v">Any</span><svg class="i"><use href="#i-chev"></use></svg></button>
+          <div class="pop" id="p-price"><div class="pop__body"><div class="pop__row"><input class="fld" type="search" inputmode="numeric" placeholder="$ min" aria-label="Minimum price"><span>–</span><input class="fld" type="search" inputmode="numeric" placeholder="$ max" aria-label="Maximum price"></div><div class="pop__quick"><button class="btn btn--sheet btn--sm" type="button" data-fk="price:lt25" aria-pressed="false">Under $25K</button><button class="btn btn--sheet btn--sm" type="button" data-fk="price:50-100" aria-pressed="false">$50–100K</button><button class="btn btn--sheet btn--sm" type="button" data-fk="price:100-250" aria-pressed="false">$100–250K</button><button class="btn btn--sheet btn--sm" type="button" data-fk="price:none" aria-pressed="false">No price</button></div></div></div></div>
+        <button class="facet__b" type="button" data-act="filters"><svg class="i"><use href="#i-sliders"></use></svg><span class="facet__v">Filters</span><span class="facet__cnt" id="fcnt" hidden="">0</span></button>
+      </div>
+      <span class="sub__shown" id="sub-shown">1–16 shown</span>
+    </div>
+
+    <div class="rows ui-table" id="rows">
+      <div class="hd ui-thead" id="hd"><span></span><span></span><span class="s" data-sort="stock">Stock</span><span class="s" data-sort="year">Year</span><span class="s" data-sort="make">Make</span><span>Model</span><span class="c-trim">Trim</span><span class="c-ext">Colour</span><span class="r s c-price" data-sort="price">Price</span><span class="c-status">Status</span><span class="s c-health" data-sort="issues">Health</span><span class="r s on" data-sort="days">Age <svg class="i"><use href="#i-dn"></use></svg></span><span class="r">Actions</span></div>
+      <div id="tb"><div class="row" data-id="v3" tabindex="0" aria-label="2021 SUNDOWNER SUNLITE ARGO 40GN"><input class="ck" type="checkbox" data-sel="v3" aria-label="Select 2021 SUNDOWNER SUNLITE ARGO 40GN"><span class="th th--none" title="No photos uploaded"><svg class="i"><use href="#i-cam-off"></use></svg></span><div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop="" title="Open in the vehicle editor">18421</a></span><span class="stk__vin" title="VIN MZMXA07G6DWM0C9LA">MZMXA07G6DWM0C9LA</span></div><div class="yr">2021</div><div class="mk" title="SUNDOWNER">SUNDOWNER</div><div class="md" title="SUNLITE ARGO 40GN">SUNLITE ARGO 40GN</div><div class="trim" title="TRAILER">TRAILER</div><div class="ext" title="White"><span class="sw" style="--c:#eeeeec"></span><span>White</span></div><div class="price price--none" aria-label="No price">—</div><div class="st"><span class="stat stat--ok">Available</span></div><div class="tags"><span class="tag">No price</span><span class="tag">No photos</span><span class="tag tag--more" title="Feed off · Hidden">+2</span></div><div class="age age--stale" title="1,917 days in stock"><i style="--w:100%;--b:var(--age-stale)"></i>5.3y</div><span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop=""><svg class="i"><use href="#i-edit"></use></svg></button><button type="button" title="Photos" aria-label="Photos" data-stop=""><svg class="i"><use href="#i-cam"></use></svg></button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop=""><svg class="i"><use href="#i-print"></use></svg></button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop=""><svg class="i"><use href="#i-trash"></use></svg></button></span></div><div class="row" data-id="v5" tabindex="0" aria-label="2016 Kenworth W900L"><input class="ck" type="checkbox" data-sel="v5" aria-label="Select 2016 Kenworth W900L"><img class="th" alt="" src="../../../pages/dealer/img/f7aed7d4-9678_main_t.jpg"><div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop="" title="Open in the vehicle editor">19495</a></span><span class="stk__vin" title="VIN GRPH1F2YJEPY0XL71">GRPH1F2YJEPY0XL71</span></div><div class="yr">2016</div><div class="mk" title="Kenworth">Kenworth</div><div class="md" title="W900L">W900L</div><div class="trim" title="ICON 900 SLEEPER 44">ICON 900 SLEEPER 44</div><div class="ext" title="Daydream Blue"><span class="sw" style="--c:#2a5db8"></span><span>Daydream Blue</span></div><div class="price"><div class="price__v"><em>$</em>100,800</div></div><div class="st"><span class="stat stat--ok">Available</span></div><div class="tags"><span class="okmark" title="No attention flags"><svg class="i"><use href="#i-check"></use></svg>OK</span></div><div class="age age--stale" title="1,566 days in stock"><i style="--w:100%;--b:var(--age-stale)"></i>4.3y</div><span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop=""><svg class="i"><use href="#i-edit"></use></svg></button><button type="button" title="Photos" aria-label="Photos" data-stop=""><svg class="i"><use href="#i-cam"></use></svg></button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop=""><svg class="i"><use href="#i-print"></use></svg></button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop=""><svg class="i"><use href="#i-trash"></use></svg></button></span></div><div class="row" data-id="v4" tabindex="0" aria-label="2017 Kia Forte"><input class="ck" type="checkbox" data-sel="v4" aria-label="Select 2017 Kia Forte"><img class="th" alt="" src="../../../pages/dealer/img/d91496ae-10166_main_t.jpg"><div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop="" title="Open in the vehicle editor">18837C</a></span><span class="stk__vin" title="VIN RCCVEPTCNPA153LLN">RCCVEPTCNPA153LLN</span></div><div class="yr">2017</div><div class="mk" title="Kia">Kia</div><div class="md" title="Forte">Forte</div><div class="trim" title="LX Sedan Snow White">LX Sedan Snow White</div><div class="ext" title="Snow White Pearl"><span class="sw" style="--c:#eeeeec"></span><span>Snow White Pearl</span></div><div class="price price--none" aria-label="No price">—</div><div class="st"><span class="stat stat--ok">Available</span></div><div class="tags"><span class="tag">No price</span><span class="tag tag--danger">Feed off</span><span class="tag tag--more" title="Hidden · Pending">+2</span></div><div class="age age--stale" title="1,409 days in stock"><i style="--w:100%;--b:var(--age-stale)"></i>3.9y</div><span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop=""><svg class="i"><use href="#i-edit"></use></svg></button><button type="button" title="Photos" aria-label="Photos" data-stop=""><svg class="i"><use href="#i-cam"></use></svg></button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop=""><svg class="i"><use href="#i-print"></use></svg></button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop=""><svg class="i"><use href="#i-trash"></use></svg></button></span></div><div class="row" data-id="v6" tabindex="0" aria-label="1995 Ford Mustang SVT"><input class="ck" type="checkbox" data-sel="v6" aria-label="Select 1995 Ford Mustang SVT"><span class="th th--none" title="No photos uploaded"><svg class="i"><use href="#i-cam-off"></use></svg></span><div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop="" title="Open in the vehicle editor">19953</a></span><span class="stk__vin" title="VIN B6ENWJG33JZCD24UC">B6ENWJG33JZCD24UC</span></div><div class="yr">1995</div><div class="mk" title="Ford">Ford</div><div class="md" title="Mustang SVT">Mustang SVT</div><div class="trim" title="Cobra R Coupe Only">Cobra R Coupe Only</div><div class="ext" title="White"><span class="sw" style="--c:#eeeeec"></span><span>White</span></div><div class="price price--none" aria-label="No price">—</div><div class="st"><span class="stat stat--ok">Available</span></div><div class="tags"><span class="tag">No price</span><span class="tag">No photos</span><span class="tag tag--more" title="Feed off · Hidden">+2</span></div><div class="age age--stale" title="1,332 days in stock"><i style="--w:100%;--b:var(--age-stale)"></i>3.6y</div><span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop=""><svg class="i"><use href="#i-edit"></use></svg></button><button type="button" title="Photos" aria-label="Photos" data-stop=""><svg class="i"><use href="#i-cam"></use></svg></button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop=""><svg class="i"><use href="#i-print"></use></svg></button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop=""><svg class="i"><use href="#i-trash"></use></svg></button></span></div><div class="row" data-id="v8" tabindex="0" aria-label="2010 Peterbilt 384"><input class="ck" type="checkbox" data-sel="v8" aria-label="Select 2010 Peterbilt 384"><img class="th" alt="" src="../../../pages/dealer/img/86a2b92c-10640_main_t.jpg"><div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop="" title="Open in the vehicle editor">20171</a><span class="lock" title="Being edited by another user"><svg class="i"><use href="#i-lock"></use></svg></span></span><span class="stk__vin" title="VIN 1TCRBUYKRRYSALS7X">1TCRBUYKRRYSALS7X</span></div><div class="yr">2010</div><div class="mk" title="Peterbilt">Peterbilt</div><div class="md" title="384">384</div><div class="trim" title="Single Axle">Single Axle</div><div class="ext" title="White"><span class="sw" style="--c:#eeeeec"></span><span>White</span></div><div class="price"><div class="price__v"><em>$</em>42,800</div></div><div class="st"><span class="stat stat--ok">Available</span></div><div class="tags"><span class="okmark" title="No attention flags"><svg class="i"><use href="#i-check"></use></svg>OK</span></div><div class="age age--stale" title="1,241 days in stock"><i style="--w:100%;--b:var(--age-stale)"></i>3.4y</div><span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop=""><svg class="i"><use href="#i-edit"></use></svg></button><button type="button" title="Photos" aria-label="Photos" data-stop=""><svg class="i"><use href="#i-cam"></use></svg></button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop=""><svg class="i"><use href="#i-print"></use></svg></button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop=""><svg class="i"><use href="#i-trash"></use></svg></button></span></div><div class="row open" data-id="v9" tabindex="0" aria-label="2010 Terex PT100F"><input class="ck" type="checkbox" data-sel="v9" aria-label="Select 2010 Terex PT100F"><span class="th th--none" title="No photos uploaded"><svg class="i"><use href="#i-cam-off"></use></svg></span><div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop="" title="Open in the vehicle editor">20536</a></span><span class="stk__vin" title="VIN CVLAXF738GFJFEC9M">CVLAXF738GFJFEC9M</span></div><div class="yr">2010</div><div class="mk" title="Terex">Terex</div><div class="md" title="PT100F">PT100F</div><div class="trim" title="High Flow Compact Track">High Flow Compact Track</div><div class="ext" title="White"><span class="sw" style="--c:#eeeeec"></span><span>White</span></div><div class="price price--none" aria-label="No price">—</div><div class="st"><span class="stat stat--ok">Available</span></div><div class="tags"><span class="tag">No price</span><span class="tag">No photos</span></div><div class="age age--stale" title="1,069 days in stock"><i style="--w:100%;--b:var(--age-stale)"></i>2.9y</div><span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop=""><svg class="i"><use href="#i-edit"></use></svg></button><button type="button" title="Photos" aria-label="Photos" data-stop=""><svg class="i"><use href="#i-cam"></use></svg></button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop=""><svg class="i"><use href="#i-print"></use></svg></button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop=""><svg class="i"><use href="#i-trash"></use></svg></button></span></div><div class="exp exp--open" id="exp"><div><div class="exp__in"><div class="exp__l"><div class="veh__img"><div class="none"><svg class="i"><use href="#i-cam-off"></use></svg>No photos uploaded<button class="btn btn--sm" type="button"><svg class="i"><use href="#i-plus"></use></svg> Upload photos</button></div></div></div><div class="exp__r"><div class="exp__top"><div><h3 class="veh__n"><em>2010</em>Terex PT100F</h3><div class="veh__m"><span class="idtag">20536</span><span class="mono">VIN CVLAXF738GFJFEC9M</span><span class="veh__st">Available</span></div><div class="veh__tags"><span class="tag">No price</span><span class="tag">No photos</span></div></div><button class="exp__x" type="button" data-act="close-veh" aria-label="Close vehicle"><svg class="i"><use href="#i-x"></use></svg></button></div><div class="veh__kv"><div><div class="v warn">No price</div><div class="l">price</div></div><div><div class="v" style="color:var(--danger)">2.9y</div><div class="l">1,069 days</div></div><div><div class="v">0</div><div class="l">photos</div></div></div><div class="veh__acts"><button class="btn btn--primary" type="button"><svg class="i"><use href="#i-edit"></use></svg><span>Edit vehicle</span></button><button class="btn btn--sheet" type="button"><svg class="i"><use href="#i-cam"></use></svg><span>Photos</span></button><button class="btn btn--sheet" type="button"><svg class="i"><use href="#i-print"></use></svg><span>Window sticker</span></button><button class="btn btn--sheet" type="button"><svg class="i"><use href="#i-file"></use></svg><span>Carfax</span></button><button class="btn btn--sheet" type="button"><svg class="i"><use href="#i-rss"></use></svg><span>Exclude feeds</span></button><button class="btn btn--sheet" type="button"><svg class="i"><use href="#i-eye"></use></svg><span>Hide on site</span></button><button class="btn btn--sheet btn--del" type="button"><svg class="i"><use href="#i-trash"></use></svg><span>Delete…</span></button></div></div><div class="exp__accs"><section class="acc acc--open" data-acc="health"><h3><button class="acc__h" type="button" aria-expanded="true" aria-controls="acc-health"><span class="acc__t">Merchandising health</span><span class="acc__s"><span class="bad">2 of 6 need work</span></span><svg class="i"><use href="#i-chev"></use></svg></button></h3><div class="acc__p" id="acc-health"><div><div class="acc__in"><div class="health"><div class="hl hl--bad"><i><svg class="i"><use href="#i-alert"></use></svg></i>No asking price</div><div class="hl hl--bad"><i><svg class="i"><use href="#i-alert"></use></svg></i>No photos</div></div><p class="health__ok"><b>Passing · </b>Feeding to partners · Shown on site · VIN decoded · No pending sale</p></div></div></div></section><section class="acc" data-acc="market"><h3><button class="acc__h" type="button" aria-expanded="false" aria-controls="acc-market"><span class="acc__t">Market intelligence</span> <span class="demo">Demo</span><span class="acc__s"><span class="bad">Suggested $37.8K</span></span><svg class="i"><use href="#i-chev"></use></svg></button></h3><div class="acc__p" id="acc-market" inert=""><div><div class="acc__in"><div class="prov"><b>visor.vin market data</b><span>· not connected</span></div><div class="mkt__row"><div><div class="mkt__v warn">No price</div><div class="mkt__l">Your asking price</div></div><div><div class="mkt__v">$37,800</div><div class="mkt__l">Market median</div></div><span></span></div><div class="dist" aria-hidden="true"><span class="dist__band" style="left:31.5%;right:30.6%"></span><i class="" style="height:24%"></i><i class="" style="height:25%"></i><i class="" style="height:28%"></i><i class="" style="height:38%"></i><i class="" style="height:46%"></i><i class="" style="height:57%"></i><i class="in" style="height:78%"></i><i class="in" style="height:61%"></i><i class="in" style="height:88%"></i><i class="in" style="height:71%"></i><i class="in" style="height:100%"></i><i class="in" style="height:79%"></i><i class="in" style="height:75%"></i><i class="in" style="height:71%"></i><i class="" style="height:52%"></i><i class="" style="height:61%"></i><i class="" style="height:45%"></i><i class="" style="height:34%"></i><i class="" style="height:30%"></i><i class="" style="height:22%"></i><span class="dist__mk dist__mk--med" style="left:50.0%"><b>Median</b></span></div><div class="dist__ax" aria-hidden="true"><span>$20.8K</span><span>Price distribution · 23 listings</span><span>$54.8K</span></div><div class="suggest"><span>Price at the market median: <b>$37,800</b></span><button class="btn btn--sheet btn--sm" type="button">Set price</button></div><dl class="kvl"><div><dt>Typical range</dt><dd>$31.5K – $44.4K</dd></div><div><dt>Comparable listings</dt><dd>23 · last 90 days</dd></div><div><dt>Median days to sell</dt><dd>34 days</dd></div></dl><div class="reg__sub">Recent comps<span class="demo">Demo</span></div><ul class="cps"><li class="cp"><div class="cp__id"><b>2010 Terex PT100F</b><span>listed 2d ago · 420 mi away, OH</span></div><div class="cp__p"><b>$33,300</b></div></li><li class="cp"><div class="cp__id"><b>2009 Terex PT100F</b><span>listed 7d ago · 235 mi away, KY</span></div><div class="cp__p"><b>$40,800</b></div></li><li class="cp"><div class="cp__id"><b>2012 Terex PT100F</b><span>listed 13d ago · 347 mi away, MI</span></div><div class="cp__p"><b>$39,300</b></div></li><li class="cp"><div class="cp__id"><b>2010 Terex PT100F</b><span>listed 15d ago · 198 mi away, MO</span></div><div class="cp__p"><b>$38,600</b></div></li><li class="cp"><div class="cp__id"><b>2011 Terex PT100F</b><span>listed 26d ago · 441 mi away, KY</span></div><div class="cp__p"><b>$39,800</b></div></li></ul><button class="linkbtn" type="button">All 23 comparable listings<svg class="i"><use href="#i-right"></use></svg></button></div></div></div></section><section class="acc" data-acc="spec"><h3><button class="acc__h" type="button" aria-expanded="false" aria-controls="acc-spec"><span class="acc__t">Specification</span><span class="acc__s">High Flow Compact Track</span><svg class="i"><use href="#i-chev"></use></svg></button></h3><div class="acc__p" id="acc-spec" inert=""><div><div class="acc__in"><div class="spec2"><div><span>Trim</span><span title="High Flow Compact Track">High Flow Compact Track</span></div><div><span>Exterior</span><span>White</span></div><div><span>Type</span><span>Used</span></div><div><span>Mileage</span><span>Not recorded</span></div><div><span>Location</span><span>Chicago Motor Cars</span></div><div><span>Stock #</span><span class="mono">20536</span></div></div></div></div></div></section><section class="acc" data-acc="hist"><h3><button class="acc__h" type="button" aria-expanded="false" aria-controls="acc-hist"><span class="acc__t">History</span> <span class="demo">Demo</span><span class="acc__s">Edited 3 days ago</span><svg class="i"><use href="#i-chev"></use></svg></button></h3><div class="acc__p" id="acc-hist" inert=""><div><div class="acc__in"><ul class="tl"><li><span class="tl__i"><svg class="i"><use href="#i-edit"></use></svg></span><span>Edited by Parin</span><span>3 days ago</span></li><li><span class="tl__i"><svg class="i"><use href="#i-plus"></use></svg></span><span>Added to inventory</span><span>1,069 days ago</span></li></ul></div></div></div></section></div></div></div></div><div class="row" data-id="v12" tabindex="0" aria-label="1992 Jensen Interceptor S4"><input class="ck" type="checkbox" data-sel="v12" aria-label="Select 1992 Jensen Interceptor S4"><img class="th" alt="" src="../../../pages/dealer/img/1f033fea-12610_main_t.jpg"><div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop="" title="Open in the vehicle editor">21790</a></span><span class="stk__vin" title="VIN M4SZDH1JPMTSVK1VD">M4SZDH1JPMTSVK1VD</span></div><div class="yr">1992</div><div class="mk" title="Jensen">Jensen</div><div class="md" title="Interceptor S4">Interceptor S4</div><div class="trim" title="Fastback Extremely Rare British">Fastback Extremely Rare British</div><div class="ext" title="Green"><span class="sw" style="--c:#2f6b47"></span><span>Green</span></div><div class="price"><div class="price__v"><em>$</em>99,500</div><div class="price__sub price__sub--disc" title="Discount Price $95,000 · $4,500 off Price"><s>$99,500</s><b>$95,000</b></div></div><div class="st"><span class="stat stat--ok">Available</span></div><div class="tags"><span class="okmark" title="No attention flags"><svg class="i"><use href="#i-check"></use></svg>OK</span></div><div class="age age--stale" title="468 days in stock"><i style="--w:64%;--b:var(--age-stale)"></i>1.3y</div><span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop=""><svg class="i"><use href="#i-edit"></use></svg></button><button type="button" title="Photos" aria-label="Photos" data-stop=""><svg class="i"><use href="#i-cam"></use></svg></button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop=""><svg class="i"><use href="#i-print"></use></svg></button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop=""><svg class="i"><use href="#i-trash"></use></svg></button></span></div><div class="row" data-id="v13" tabindex="0" aria-label="2006 Ford Super Duty F-750 XL"><input class="ck" type="checkbox" data-sel="v13" aria-label="Select 2006 Ford Super Duty F-750 XL"><img class="th" alt="" src="../../../pages/dealer/img/fc28a6e8-12633_main_t.jpg"><div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop="" title="Open in the vehicle editor">21814</a></span><span class="stk__vin" title="VIN CK5L5C5DY1CF4YSEU">CK5L5C5DY1CF4YSEU</span></div><div class="yr">2006</div><div class="mk" title="Ford">Ford</div><div class="md" title="Super Duty F-750 XL">Super Duty F-750 XL</div><div class="trim" title=""><i>—</i></div><div class="ext" title="White"><span class="sw" style="--c:#eeeeec"></span><span>White</span></div><div class="price"><div class="price__v"><em>$</em>48,800</div></div><div class="st"><span class="stat stat--ok">Available</span></div><div class="tags"><span class="okmark" title="No attention flags"><svg class="i"><use href="#i-check"></use></svg>OK</span></div><div class="age age--stale" title="457 days in stock"><i style="--w:63%;--b:var(--age-stale)"></i>1.3y</div><span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop=""><svg class="i"><use href="#i-edit"></use></svg></button><button type="button" title="Photos" aria-label="Photos" data-stop=""><svg class="i"><use href="#i-cam"></use></svg></button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop=""><svg class="i"><use href="#i-print"></use></svg></button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop=""><svg class="i"><use href="#i-trash"></use></svg></button></span></div><div class="row" data-id="v14" tabindex="0" aria-label="2016 Chaparral 243"><input class="ck" type="checkbox" data-sel="v14" aria-label="Select 2016 Chaparral 243"><img class="th" alt="" src="../../../pages/dealer/img/40c6feea-12654_main_t.jpg"><div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop="" title="Open in the vehicle editor">21834</a></span><span class="stk__vin" title="VIN L5S9EKRKT0M37E63D">L5S9EKRKT0M37E63D</span></div><div class="yr">2016</div><div class="mk" title="Chaparral">Chaparral</div><div class="md" title="243">243</div><div class="trim" title="Jet Boat">Jet Boat</div><div class="ext" title="Black"><span class="sw" style="--c:#1c1d21"></span><span>Black</span></div><div class="price"><div class="price__v"><em>$</em>42,800</div></div><div class="st"><span class="stat stat--ok">Available</span></div><div class="tags"><span class="okmark" title="No attention flags"><svg class="i"><use href="#i-check"></use></svg>OK</span></div><div class="age age--stale" title="450 days in stock"><i style="--w:62%;--b:var(--age-stale)"></i>1.2y</div><span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop=""><svg class="i"><use href="#i-edit"></use></svg></button><button type="button" title="Photos" aria-label="Photos" data-stop=""><svg class="i"><use href="#i-cam"></use></svg></button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop=""><svg class="i"><use href="#i-print"></use></svg></button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop=""><svg class="i"><use href="#i-trash"></use></svg></button></span></div><div class="row" data-id="v15" tabindex="0" aria-label="1993 Toyota Supra"><input class="ck" type="checkbox" data-sel="v15" aria-label="Select 1993 Toyota Supra"><img class="th" alt="" src="../../../pages/dealer/img/da19ce2a-12687_main_t.jpg"><div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop="" title="Open in the vehicle editor">21848</a></span><span class="stk__vin" title="VIN CNAXMUKU6S21XX2KV">CNAXMUKU6S21XX2KV</span></div><div class="yr">1993</div><div class="mk" title="Toyota">Toyota</div><div class="md" title="Supra">Supra</div><div class="trim" title="Turbo Built and Fresh">Turbo Built and Fresh</div><div class="ext" title="Orange"><span class="sw" style="--c:#e8721c"></span><span>Orange</span></div><div class="price"><div class="price__v"><em>$</em>119,500</div><div class="price__sub price__sub--disc" title="Discount Price $114,100 · $5,400 off Price"><s>$119,500</s><b>$114,100</b></div><div class="price__sub price__sub--lease" title="Lease Price $1,289 per month · Lease Term 48 months"><span>$1,289<em>/mo</em></span><i>lease 48</i></div></div><div class="st"><span class="stat stat--ok">Available</span></div><div class="tags"><span class="okmark" title="No attention flags"><svg class="i"><use href="#i-check"></use></svg>OK</span></div><div class="age age--stale" title="441 days in stock"><i style="--w:60%;--b:var(--age-stale)"></i>1.2y</div><span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop=""><svg class="i"><use href="#i-edit"></use></svg></button><button type="button" title="Photos" aria-label="Photos" data-stop=""><svg class="i"><use href="#i-cam"></use></svg></button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop=""><svg class="i"><use href="#i-print"></use></svg></button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop=""><svg class="i"><use href="#i-trash"></use></svg></button></span></div><div class="row" data-id="v7" tabindex="0" aria-label="2018 Mercedes-Benz G550 4X4 Squared"><input class="ck" type="checkbox" data-sel="v7" aria-label="Select 2018 Mercedes-Benz G550 4X4 Squared"><img class="th" alt="" src="../../../pages/dealer/img/bda50d2c-13478_main_t.jpg"><div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop="" title="Open in the vehicle editor">1X289324 JJ</a></span><span class="stk__vin" title="VIN S83J551J3S8BMA4X6">S83J551J3S8BMA4X6</span></div><div class="yr">2018</div><div class="mk" title="Mercedes-Benz">Mercedes-Benz</div><div class="md" title="G550 4X4 Squared">G550 4X4 Squared</div><div class="trim" title="B40-500 Brabus Amazing Combo">B40-500 Brabus Amazing Combo</div><div class="ext" title="Black"><span class="sw" style="--c:#1c1d21"></span><span>Black</span></div><div class="price"><div class="price__v"><em>$</em>199,500</div><div class="price__sub price__sub--lease" title="Lease Price $2,450 per month · Lease Term 48 months"><span>$2,450<em>/mo</em></span><i>lease 48</i></div></div><div class="st"><span class="stat stat--ok">Available</span></div><div class="tags"><span class="okmark" title="No attention flags"><svg class="i"><use href="#i-check"></use></svg>OK</span></div><div class="age age--late" title="156 days in stock"><i style="--w:21%;--b:var(--age-late)"></i>156d</div><span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop=""><svg class="i"><use href="#i-edit"></use></svg></button><button type="button" title="Photos" aria-label="Photos" data-stop=""><svg class="i"><use href="#i-cam"></use></svg></button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop=""><svg class="i"><use href="#i-print"></use></svg></button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop=""><svg class="i"><use href="#i-trash"></use></svg></button></span></div><div class="row" data-id="v2" tabindex="0" aria-label="1967 Chevrolet Corvette"><input class="ck" type="checkbox" data-sel="v2" aria-label="Select 1967 Chevrolet Corvette"><img class="th" alt="" src="../../../pages/dealer/img/97253f70-13663_main_t.jpg"><div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop="" title="Open in the vehicle editor">1284NEBR MS</a></span><span class="stk__vin" title="VIN 1NCCV07E5EHD174HY">1NCCV07E5EHD174HY</span></div><div class="yr">1967</div><div class="mk" title="Chevrolet">Chevrolet</div><div class="md" title="Corvette">Corvette</div><div class="trim" title="LS3 525hp Restomod Coffman">LS3 525hp Restomod Coffman</div><div class="ext" title="Goodwood Green"><span class="sw" style="--c:#2f6b47"></span><span>Goodwood Green</span></div><div class="price"><div class="price__v"><em>$</em>259,500</div></div><div class="st"><span class="stat stat--ok">Available</span></div><div class="tags"><span class="okmark" title="No attention flags"><svg class="i"><use href="#i-check"></use></svg>OK</span></div><div class="age age--late" title="100 days in stock"><i style="--w:14%;--b:var(--age-late)"></i>100d</div><span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop=""><svg class="i"><use href="#i-edit"></use></svg></button><button type="button" title="Photos" aria-label="Photos" data-stop=""><svg class="i"><use href="#i-cam"></use></svg></button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop=""><svg class="i"><use href="#i-print"></use></svg></button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop=""><svg class="i"><use href="#i-trash"></use></svg></button></span></div><div class="row" data-id="v11" tabindex="0" aria-label="1971 Lamborghini Espada Series II"><input class="ck" type="checkbox" data-sel="v11" aria-label="Select 1971 Lamborghini Espada Series II"><img class="th" alt="" src="../../../pages/dealer/img/80d11de6-13745_main_t.jpg"><div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop="" title="Open in the vehicle editor">21577C</a></span><span class="stk__vin" title="VIN V60R1P185J4L9HZW0">V60R1P185J4L9HZW0</span></div><div class="yr">1971</div><div class="mk" title="Lamborghini">Lamborghini</div><div class="md" title="Espada Series II">Espada Series II</div><div class="trim" title="V12 5 Speed Manual">V12 5 Speed Manual</div><div class="ext" title="Silver"><span class="sw" style="--c:#b7bbc1"></span><span>Silver</span></div><div class="price"><div class="price__v"><em>$</em>149,500</div></div><div class="st"><span class="stat stat--ok">Available</span></div><div class="tags"><span class="okmark" title="No attention flags"><svg class="i"><use href="#i-check"></use></svg>OK</span></div><div class="age age--mid" title="71 days in stock"><i style="--w:10%;--b:var(--age-mid)"></i>71d</div><span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop=""><svg class="i"><use href="#i-edit"></use></svg></button><button type="button" title="Photos" aria-label="Photos" data-stop=""><svg class="i"><use href="#i-cam"></use></svg></button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop=""><svg class="i"><use href="#i-print"></use></svg></button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop=""><svg class="i"><use href="#i-trash"></use></svg></button></span></div><div class="row" data-id="v1" tabindex="0" aria-label="2023 Ferrari 812 GTS"><input class="ck" type="checkbox" data-sel="v1" aria-label="Select 2023 Ferrari 812 GTS"><img class="th" alt="" src="../../../pages/dealer/img/277624e2-13868_main_t.jpg"><div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop="" title="Open in the vehicle editor">0P0300236 PS</a></span><span class="stk__vin" title="VIN NC8BUDPYEE9XA5ZG9">NC8BUDPYEE9XA5ZG9</span></div><div class="yr">2023</div><div class="mk" title="Ferrari">Ferrari</div><div class="md" title="812 GTS">812 GTS</div><div class="trim" title="Convertible Tailor Made Only">Convertible Tailor Made Only</div><div class="ext" title="Verde Zeltweg"><span class="sw" style="--c:#245c3e"></span><span>Verde Zeltweg</span></div><div class="price"><div class="price__v"><em>$</em>1,099,500</div><div class="price__sub price__sub--lease" title="Lease Price $9,800 per month · Lease Term 48 months"><span>$9,800<em>/mo</em></span><i>lease 48</i></div></div><div class="st"><span class="stat stat--ok">Available</span></div><div class="tags"><span class="okmark" title="No attention flags"><svg class="i"><use href="#i-check"></use></svg>OK</span></div><div class="age age--mid" title="40 days in stock"><i style="--w:5%;--b:var(--age-mid)"></i>40d</div><span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop=""><svg class="i"><use href="#i-edit"></use></svg></button><button type="button" title="Photos" aria-label="Photos" data-stop=""><svg class="i"><use href="#i-cam"></use></svg></button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop=""><svg class="i"><use href="#i-print"></use></svg></button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop=""><svg class="i"><use href="#i-trash"></use></svg></button></span></div><div class="row" data-id="v0" tabindex="0" aria-label="2005 Porsche Carrera GT"><input class="ck" type="checkbox" data-sel="v0" aria-label="Select 2005 Porsche Carrera GT"><img class="th" alt="" src="../../../pages/dealer/img/8ccfc032-12441_main_t.jpg"><div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop="" title="Open in the vehicle editor">001253 PS</a></span><span class="stk__vin" title="VIN U6018SDN2D6DUS78G">U6018SDN2D6DUS78G</span></div><div class="yr">2005</div><div class="mk" title="Porsche">Porsche</div><div class="md" title="Carrera GT">Carrera GT</div><div class="trim" title="Only 953 Miles Serviced">Only 953 Miles Serviced</div><div class="ext" title="GT Silver Metallic"><span class="sw" style="--c:#b7bbc1"></span><span>GT Silver Metallic</span></div><div class="price price--none" aria-label="No price">—</div><div class="st"><span class="stat stat--ok">Available</span></div><div class="tags"><span class="tag">No price</span></div><div class="age age--fresh" title="23 days in stock"><i style="--w:3%;--b:var(--age-fresh)"></i>23d</div><span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop=""><svg class="i"><use href="#i-edit"></use></svg></button><button type="button" title="Photos" aria-label="Photos" data-stop=""><svg class="i"><use href="#i-cam"></use></svg></button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop=""><svg class="i"><use href="#i-print"></use></svg></button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop=""><svg class="i"><use href="#i-trash"></use></svg></button></span></div><div class="row" data-id="v10" tabindex="0" aria-label="2014 Dodge SRT Viper"><input class="ck" type="checkbox" data-sel="v10" aria-label="Select 2014 Dodge SRT Viper"><img class="th" alt="" src="../../../pages/dealer/img/4412bb96-13918_main_t.jpg"><div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop="" title="Open in the vehicle editor">20834E</a></span><span class="stk__vin" title="VIN 1ZWVH2ECG9LXP8P5N">1ZWVH2ECG9LXP8P5N</span></div><div class="yr">2014</div><div class="mk" title="Dodge">Dodge</div><div class="md" title="SRT Viper">SRT Viper</div><div class="trim" title="GTS Prefix 9L Xtreme">GTS Prefix 9L Xtreme</div><div class="ext" title="Venom Black Clear coat"><span class="sw" style="--c:#1c1d21"></span><span>Venom Black Clear coat</span></div><div class="price price--none" aria-label="No price">—</div><div class="st"><span class="stat stat--ok">Available</span></div><div class="tags"><span class="okmark" title="No attention flags"><svg class="i"><use href="#i-check"></use></svg>OK</span></div><div class="age age--fresh" title="23 days in stock"><i style="--w:3%;--b:var(--age-fresh)"></i>23d</div><span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop=""><svg class="i"><use href="#i-edit"></use></svg></button><button type="button" title="Photos" aria-label="Photos" data-stop=""><svg class="i"><use href="#i-cam"></use></svg></button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop=""><svg class="i"><use href="#i-print"></use></svg></button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop=""><svg class="i"><use href="#i-trash"></use></svg></button></span></div><div class="exp-space" id="exp-space" style="height: 0px;"></div></div>
+    </div>
+
+    <div class="foot"><span id="shown">1–16 of 359</span><span class="sp"></span><span class="pg"><button type="button" aria-label="Previous page">‹</button><button type="button" class="on" aria-current="page">1</button><button type="button">2</button><button type="button">3</button><span>…</span><button type="button">23</button><button type="button" aria-label="Next page">›</button></span><span>16 per page</span></div>
+
+    <div class="tray" id="tray"><b><span id="tray-n">0</span> selected</b><button type="button">Inline edit</button><button type="button">Show / hide</button><button type="button">Feed on / off</button><button type="button">Stickers</button><button type="button">Export</button><button type="button" class="d">Delete…</button><button type="button" class="x" data-act="clear-sel" aria-label="Clear selection"><svg class="i"><use href="#i-x"></use></svg></button></div>
+  </section></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>section.field.has-open</dd>
+    <dt>Context</dt><dd>.app</dd>
+    <dt>Source</dt><dd>pages/dealer/all-vehicles-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">All Vehicles</dd>
+    <dt>Measured</dt><dd>1396x2101 · padding 0px · radius 14px</dd>
+  </dl>
+</section>
+
+</body>
+</html>

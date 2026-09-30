@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta charset="utf-8"><title>probe</title>
+<style>html,body{margin:0;padding:0;overflow:hidden}iframe{display:block;border:0;width:1440px;height:900px}</style></head>
+<body><iframe id="f"></iframe>
+<script>
+var BASE='../../../pages/';
+window.load=function(u){return new Promise(function(r){var f=document.getElementById('f');f.onload=function(){setTimeout(r,1600)};f.src=BASE+u+'?cb='+Date.now();});};
+window.size=function(w,h){var f=document.getElementById('f');f.style.width=w+'px';f.style.height=h+'px';};
+window.rulesFor=function(el,doc){
+  var out=[];
+  function walk(rules,sheet,cond){
+    for(var i=0;i<rules.length;i++){var r=rules[i];
+      if(r.cssRules&&r.conditionText!==undefined){ walk(r.cssRules,sheet,(cond?cond+' and ':'')+r.conditionText); continue; }
+      if(!r.selectorText) continue;
+      var m=false; try{ m=el.matches(r.selectorText); }catch(e){}
+      if(!m) continue;
+      if(cond && !doc.defaultView.matchMedia(cond).matches) continue;
+      out.push({file:sheet,cond:cond||null,sel:r.selectorText,css:r.style.cssText});
+    }}
+  var sh=doc.styleSheets;
+  for(var i=0;i<sh.length;i++){ try{ walk(sh[i].cssRules, sh[i].href?sh[i].href.split('/').pop().split('?')[0]:'inline'); }catch(e){} }
+  return out;
+};
+</script></body></html>

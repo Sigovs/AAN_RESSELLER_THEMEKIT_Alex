@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>QA — catalogue at width</title>
+
+<!-- ══ THE WIDTH SWEEP ════════════════════════════════════════════════════
+     Loads each specimen host into a pixel-exact iframe at a given width and
+     reports what is wrong at that width. The iframe is sized in pixels
+     because resizing the browser window is not exact — the page's own
+     `resize_page` scale factor drifts, and a 1366 that is really 1372 proves
+     nothing about the 1366 someone actually uses.
+
+     Drive it from the console:
+
+         await window.sweep(1366)      one width, all ten hosts
+         await window.sweep(1366, 'leads')
+
+     It reports, per host:
+       ovf       document horizontal overflow, in px. Must be 0.
+       bleed     specimens wider than the stage that holds them
+       clipped   controls cut off by an ancestor's overflow
+       touching  text within 4px of a surface edge that owns an inset
+       tiny      functional text under 11px
+       unsized   a specimen whose stage collapsed to nothing
+       drift     rendered size vs the size measured in the product
+     ──────────────────────────────────────────────────────────────────── -->
+
+<style>
+  html, body { margin: 0; background: #22262d; }
+  #f { display: block; border: 0; background: #fff; }
+  #out { position: fixed; right: 0; top: 0; width: 360px; height: 100vh; overflow: auto;
+         margin: 0; padding: 10px; background: #11141a; color: #b9c2d0;
+         font: 400 11px/1.45 ui-monospace, monospace; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<iframe id="f" src="about:blank"></iframe>
+<pre id="out">window.sweep(1366)</pre>
+
+<script>
+const HOSTS = ['av','leads','lead','vehicle','login','queue','ticket','dealers','dealer-edit','accounting'];
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+function load(src, w, h) {
+  return new Promise(res => {
+    const f = document.getElementById('f');
+    f.style.width = w + 'px';
+    f.style.height = (h || 900) + 'px';
+    f.onload = () => res(f);
+    /* the host is a generated file that changes on every build — never sweep
+       a cached copy of it */
+    f.src = src + (src.indexOf('?') < 0 ? '?' : '&') + 'sweep=' + Date.now();
+  });
+}
+
+/* Surfaces that own a content inset — the rule the product is held to.
+   Text sitting flush against one of these edges is the defect the whole
+   spacing contract exists to prevent, so it is detected, not eyeballed. */
+const INSET = ['.field', '.exp__in', '.sec', '.zone', '.dock', '.bento', '.card',
+               '.panel', '.form', '.mn', '.pop', '.side', '.rail', '.cell', '.cmd',
+               '.head', '.foot', '.sub', '.savebar', '.golive', '.prov', '.deck'];
+
+function audit(doc, win, w) {
+  const de = doc.documentElement;
+  /* Horizontal overflow is measured on the BODY, not the documentElement.
+     Once a vertical scrollbar appears, `documentElement.scrollWidth` reports
+     the full viewport width while `clientWidth` reports it minus the
+     scrollbar — a phantom 12px that is not overflow and cannot be fixed.
+     Verified on av.html at 1440: body.scrollWidth 1428 = clientWidth 1428,
+     while de.scrollWidth read 1438. */
+  const r = {
+    ovf: Math.max(0, doc.body.scrollWidth - de.clientWidth),
+    bleed: [], clipped: [], touching: [], tiny: [], unsized: [], drift: [],
+  };
+
+  const name = e => e.tagName.toLowerCase() +
+    (e.getAttribute('class') ? '.' + e.getAttribute('class').trim().split(/\s+/).join('.') : '');
+  const spOf = e => { let n = e; while (n && !(n.classList && n.classList.contains('sp'))) n = n.parentElement;
+                      const h = n && n.querySelector('.sp-name'); return h ? h.textContent.trim() : '?'; };
+
+  /* An element reaching past the stage is only a defect if nothing between
+     it and the stage scrolls. Gen 11 deliberately scrolls the LIST sideways
+     inside the workspace rather than dropping a column — at 1280 the All
+     Vehicles row is wider than the sheet, and that is the shipped behaviour,
+     not a bleed. */
+  const inScroller = (el, stage) => {
+    let p = el.parentElement;
+    while (p && p !== stage) {
+      if (p.scrollWidth > p.clientWidth + 1) return true;
+      p = p.parentElement;
+    }
+    return false;
+  };
+
+  for (const stage of doc.querySelectorAll('.sp-stage')) {
+    const sb = stage.getBoundingClientRect();
+    if (sb.height < 4) r.unsized.push(spOf(stage));
+    for (const e of stage.querySelectorAll('*')) {
+      if (e.namespaceURI !== 'http://www.w3.org/1999/xhtml') continue;
+      const b = e.getBoundingClientRect();
+      if (b.width < 1 || b.height < 1) continue;
+      if (b.right > sb.right + 1.5 && stage.scrollWidth <= stage.clientWidth + 1 &&
+          !inScroller(e, stage)) {
+        r.bleed.push(spOf(e) + ' · ' + name(e) + ' +' + (b.right - sb.right).toFixed(0) + 'px');
+      }
+    }
+  }
+
+  /* clipped: an element whose box extends past a non-visible-overflow ancestor */
+  for (const e of doc.querySelectorAll('.sp-stage button, .sp-stage a, .sp-stage input, .sp-stage select, .sp-stage .btn')) {
+    const b = e.getBoundingClientRect();
+    if (b.width < 1) continue;
+    let p = e.parentElement;
+    let sawScrollX = false, sawScrollY = false;
+    while (p && !p.classList.contains('sp-stage')) {
+      const c = getComputedStyle(p);
+      /* A chain wrapper is `display: contents` — it generates no box, so its
+         rect is 0x0 and every descendant would read as clipped by it. It
+         clips nothing, because it is nothing. */
+      if (c.display === 'contents') { p = p.parentElement; continue; }
+      /* A collapsed disclosure is not a clip. Gen 11 closes an accordion with
+         `grid-template-rows: 0fr` over a panel that is `overflow: hidden`, so
+         its contents legitimately sit outside a zero-height box — that is
+         what "closed" means. Measured: 9 of 14 findings were the closed
+         Health accordion on All Vehicles, the closed sections of an expanded
+         lead, and the closed panels of the ticket crew dock. */
+      if (p.getBoundingClientRect().height < 1) { p = p.parentElement; continue; }
+      const pb = p.getBoundingClientRect();
+      const hides = c.overflow !== 'visible' || c.overflowX !== 'visible' || c.overflowY !== 'visible';
+      const scrollsX = p.scrollWidth > p.clientWidth + 1;
+      const scrollsY = p.scrollHeight > p.clientHeight + 1;
+      /* Once something between here and the stage scrolls, the element is
+         reachable and nothing above it can clip it away: scrolling that panel
+         brings it into the outer box too. The ticket's crew dock is exactly
+         this — `.dock__b` scrolls 714/1084 inside an `aside.dock` that does
+         not, and stopping at the aside reported five reachable controls as
+         clipped. */
+      if (scrollsX) sawScrollX = true;
+      if (scrollsY) sawScrollY = true;
+      if (hides) {
+        /* Content past the bottom of a panel that SCROLLS vertically is not
+           clipped, it is below the fold — the ticket's crew dock is a
+           scrolling panel and reported five of its own controls as clipped
+           purely for being further down it. */
+        const cutX = !sawScrollX && (b.right > pb.right + 1 || b.left < pb.left - 1);
+        const cutY = !sawScrollY && b.bottom > pb.bottom + 1;
+        if (cutX || cutY) {
+          r.clipped.push(spOf(e) + ' · ' + name(e) + ' in ' + name(p) +
+                         (cutX ? ' (x)' : '') + (cutY ? ' (y)' : ''));
+          break;
+        }
+      }
+      p = p.parentElement;
+    }
+  }
+
+  /* touching: a text node's box flush against a surface that owns an inset */
+  for (const sel of INSET) {
+    for (const s of doc.querySelectorAll('.sp-stage ' + sel)) {
+      const sb = s.getBoundingClientRect();
+      const cs = getComputedStyle(s);
+      if (parseFloat(cs.paddingLeft) < 1 && parseFloat(cs.paddingRight) < 1) continue;
+      for (const e of s.querySelectorAll('*')) {
+        if (e.namespaceURI !== 'http://www.w3.org/1999/xhtml') continue;
+        if (!e.firstChild || e.firstChild.nodeType !== 3 || !e.textContent.trim()) continue;
+        if (e.querySelector('*')) continue;
+        const b = e.getBoundingClientRect();
+        if (b.width < 1 || b.height < 1) continue;
+        const dl = b.left - sb.left, dr = sb.right - b.right;
+        if (dl > -1 && dl < 4) r.touching.push(spOf(e) + ' · ' + name(e) + ' L' + dl.toFixed(1) + ' in ' + sel);
+        else if (dr > -1 && dr < 4) r.touching.push(spOf(e) + ' · ' + name(e) + ' R' + dr.toFixed(1) + ' in ' + sel);
+      }
+    }
+  }
+
+  for (const e of doc.querySelectorAll('.sp-stage *')) {
+    if (e.namespaceURI !== 'http://www.w3.org/1999/xhtml') continue;
+    if (!e.textContent.trim() || e.querySelector('*')) continue;
+    const fs = parseFloat(getComputedStyle(e).fontSize);
+    if (fs && fs < 11) r.tiny.push(spOf(e) + ' · ' + name(e) + ' ' + fs + 'px');
+  }
+
+  /* DRIFT — the check that decides whether this catalogue is a mirror.
+
+     Every stage carries `data-sp-box`, the WxH the generator measured on the
+     shipped page at 1440. The specimen is re-measured here. If the two
+     disagree, the specimen is not the component: it is the component in the
+     wrong container, and whatever it demonstrates about size, wrapping or
+     truncation is false.
+
+     Only checked at 1440, the width the census was taken at. At other widths
+     a difference is the product being responsive, which is the point. */
+  if (w === 1440) {
+    for (const stage of doc.querySelectorAll('.sp-stage[data-sp-box]')) {
+      const want = stage.getAttribute('data-sp-box').split('x').map(Number);
+      let el = stage.firstElementChild;
+      while (el && el.hasAttribute('data-sp-chain')) el = el.firstElementChild;
+      if (!el) continue;
+      const b = el.getBoundingClientRect();
+      const got = [Math.round(b.width * 10) / 10, Math.round(b.height * 10) / 10];
+      const dw = got[0] - want[0], dh = got[1] - want[1];
+      /* 2px absorbs sub-pixel rounding in a fractional grid track. */
+      if (Math.abs(dw) > 2 || Math.abs(dh) > 2) {
+        r.drift.push(spOf(el) + ' · product ' + want.join('x') +
+                     ' → catalogue ' + got.join('x') +
+                     ' (' + (dw >= 0 ? '+' : '') + dw.toFixed(1) + ', ' +
+                     (dh >= 0 ? '+' : '') + dh.toFixed(1) + ')');
+      }
+    }
+  }
+
+  for (const k of ['bleed','clipped','touching','tiny','unsized','drift']) r[k] = [...new Set(r[k])];
+  return r;
+}
+
+/* `await window.sweep(1366, null, 610)` — the short viewport. A laptop at
+   1366x768 with browser chrome leaves about 610px of page, which is the height
+   the sticky stack has to fit into before the list gets any room at all. */
+window.sweep = async (w, only, vh) => {
+  /* Revalidate the catalogue chrome before measuring. The hosts are static
+     files and the browser will happily serve a cached _specimen.js, so a
+     sweep can otherwise report on the previous build's behaviour. */
+  await Promise.all(['_specimen.js', '_specimen.css'].map(
+    f => fetch('../specimens/' + f, { cache: 'reload' }).catch(() => {})));
+  const list = only ? [only] : HOSTS;
+  const all = {};
+  for (const h of list) {
+    /* The frame stays 900px tall on purpose. Grown to its content height it
+       loses its vertical scrollbar, every specimen gains the scrollbar's 12px,
+       and the drift check reports a 12px error on every full-width component
+       that is really the harness measuring a page the product never shows.
+       1440x900 with a scrollbar is the condition the census was taken under. */
+    const f = await load('../specimens/' + h + '.html', w, vh);
+    await sleep(1000);
+    const d = f.contentDocument;
+    all[h] = audit(d, f.contentWindow, w);
+  }
+  const n = k => Object.values(all).reduce((a, v) => a + (k === 'ovf' ? (v.ovf ? 1 : 0) : v[k].length), 0);
+  all._total = { width: w, height: vh || 900,
+                 ovf: n('ovf'), bleed: n('bleed'), clipped: n('clipped'),
+                 touching: n('touching'), tiny: n('tiny'), unsized: n('unsized'),
+                 drift: n('drift') };
+  document.getElementById('out').textContent = JSON.stringify(all, null, 1);
+  return all;
+};
+</script>
+</body></html>

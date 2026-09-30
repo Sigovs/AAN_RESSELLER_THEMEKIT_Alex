@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gen 11 — Component Catalogue · AAN</title>
-<meta name="description" content="The working component catalogue for the AAN Gen 11 design system.">
+<title>AAN Gen 11 — living design system</title>
+<meta name="description" content="The shipped Gen 11 UI, extracted from the ten live pages. Every specimen is the product's own DOM rendered by the product's own stylesheets.">
 
-<!-- The catalogue runs on the real system. Every specimen below is the shipped
-     CSS, not a copy of it — if the system changes, this page changes with it. -->
+<!-- The shell takes the product's foundation so the catalogue is written in
+     the language it documents. It does NOT style a single specimen: every
+     component below lives inside an iframe that loads the real page CSS. -->
 <link rel="stylesheet" href="dist/aan-gen11.css">
 
 <style>
@@ -15,429 +16,215 @@
   @font-face { font-family: "Plex Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("../../ds/fonts/plex-mono-400.woff2") format("woff2"); }
   @font-face { font-family: "Plex Mono"; font-style: normal; font-weight: 600; font-display: swap; src: url("../../ds/fonts/plex-mono-600.woff2") format("woff2"); }
 
-  /* ── the Gen 11 foundation, as the pages declare it ────────────────────── */
+  /* The foundation, declared exactly as the ten pages declare it. Values are
+     copied from pages/dealer/all-vehicles-gen11.css — see TOKENS.md for the
+     provenance of each one. */
   :root {
     --font: "Archivo", "Segoe UI", system-ui, sans-serif;
     --mono: "Plex Mono", ui-monospace, monospace;
-    --ground: #eef1f5; --ground-2: #e3e7ee; --sheet: #ffffff; --wash: #eef1f5; --well: #e4e9f0;
+    --ground: #eef1f5; --sheet: #ffffff; --wash: #eef1f5; --well: #e4e9f0;
     --ink: #0d1320; --ink-2: #353e4e; --ink-3: #576070; --ink-4: #697181;
-    --brand: #1f5fe0; --brand-hover: #1a50c4; --brand-ink: #1747b3;
-    --brand-soft: #e9f0fe; --brand-soft-2: #cddbfb;
-    --focal: #172234; --focal-2: #223049; --focal-line: #2b3850;
-    --focal-ink: #f3f6fb; --focal-ink-2: #bdc6d5; --focal-ink-3: #97a3b7;
+    --brand: #1f5fe0; --brand-ink: #1747b3; --brand-soft: #e9f0fe;
+    --focal: #172234; --focal-ink: #f3f6fb;
     --line: #d8dee7; --line-2: #e5e9ef; --line-3: #c5cbd5;
-    --signal: #945000; --signal-fill: #f2a12b; --signal-soft: #fff2dc; --signal-line: #efcd93;
-    --ok: #12704a; --ok-fill: #2fb46f; --ok-soft: #e0f4e8; --ok-line: #b9e2c9;
-    --danger: #bd3328; --danger-fill: #e35548; --danger-soft: #fde8e5; --danger-line: #f1bab3;
-    --t-blue-bg:#dfeafa; --t-blue-ink:#1a55a8; --t-amber-bg:#faeecb; --t-amber-ink:#8a5c00;
-    --t-green-bg:#d9f1e1; --t-green-ink:#156b38; --t-red-bg:#fadddd; --t-red-ink:#a82424;
-    --t-violet-bg:#e9e2fa; --t-violet-ink:#5b34b0; --t-slate-bg:#e5eaf0; --t-slate-ink:#48586c;
     --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:40px; --s8:48px; --s9:64px;
-    --gutter:16px; --inset:16px; --inset-ctl:12px; --sheet-inset:16px;
-    --ctl-dense:30px; --ctl:36px; --ctl-lg:44px; --ctl-h:40px;
-    --r-micro:4px; --r-inner:7px; --r-control:9px; --r-m:10px; --r-panel:12px; --r-card:14px; --r-pill:999px;
+    --inset:16px; --inset-ctl:12px; --gutter:16px;
+    --r-micro:4px; --r-inner:7px; --r-control:9px; --r-panel:12px; --r-card:14px; --r-pill:999px;
     --el-1: 0 1px 2px rgba(16,24,40,.08), 0 0 0 1px rgba(16,24,40,.06);
-    --el-3: 0 30px 64px -18px rgba(16,24,40,.34), 0 0 0 1px rgba(16,24,40,.06);
     --sh-soft: 0 28px 64px -34px rgba(34,58,118,.42), 0 2px 8px -3px rgba(34,58,118,.10), inset 0 1px 0 rgba(255,255,255,.95);
-    --sh-card: 0 22px 44px -22px rgba(15,27,61,.55), inset 0 1px 0 rgba(255,255,255,.14);
-    --sh-pill: 0 1px 2px rgba(34,58,118,.12), 0 6px 14px -8px rgba(34,58,118,.32), inset 0 1px 0 #fff;
-    --dur:160ms; --ease:cubic-bezier(.2,0,0,1);
-    --stick-bar:56px;
   }
+
   * { box-sizing: border-box; }
-  body { margin:0; padding:0 var(--gutter) 64px; background:var(--ground); color:var(--ink);
-         font:400 15px/1.5 var(--font); -webkit-font-smoothing:antialiased; }
-  h1,h2,h3,p { margin:0; }
-  .app { max-width:1408px; margin:0 auto; }
+  body { margin: 0; padding: 0 var(--gutter) var(--s9); background: var(--ground); color: var(--ink);
+         font: 400 15px/1.55 var(--font); -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, p { margin: 0; }
+  a { color: var(--brand-ink); }
 
-  /* platform bar — the same object every page opens with */
-  .top { position:sticky; top:0; z-index:20; display:flex; align-items:center; gap:10px;
-         height:56px; margin-top:var(--gutter); padding:0 16px;
-         background:var(--sheet); border-radius:var(--r-card); box-shadow:var(--el-1); }
-  .brand__mk { display:inline-flex; align-items:center; height:22px; padding:0 7px; border-radius:5px;
-               background:var(--brand); color:#fff; font:700 12px/1 var(--font); letter-spacing:.02em; }
-  .brand__t { font-size:15px; font-weight:650; letter-spacing:-.01em; }
-  .top__sp { flex:1; }
-  .top__meta { font:400 12px/1 var(--mono); color:var(--ink-4); }
+  .wrap { max-width: 1408px; margin: 0 auto; }
 
-  .head { display:flex; align-items:baseline; gap:12px; margin-top:12px; margin-bottom:24px; padding:0 2px; }
-  .head__t { font-size:22px; font-weight:650; letter-spacing:-.018em; }
-  .head__ctx { font-size:13.5px; color:var(--ink-3); }
+  /* ── masthead ───────────────────────────────────────────────────────── */
+  .mast { display: flex; align-items: center; gap: var(--s3); height: 56px;
+          margin-top: var(--s4); padding: 0 var(--inset);
+          background: var(--sheet); border-radius: var(--r-card); box-shadow: var(--el-1); }
+  .mast__mk { display: inline-block; padding: 2px 7px; border-radius: var(--r-micro);
+              background: var(--brand); color: #fff; font: 600 12.5px/1.15 var(--mono); letter-spacing: .02em; }
+  .mast__t { font-size: 15px; font-weight: 600; letter-spacing: .015em; }
+  .mast__sp { flex: 1; }
+  .mast__meta { font: 400 11px/1 var(--mono); color: var(--ink-4); }
 
-  .secs { counter-reset: chapter; border-radius:var(--r-card); background:var(--sheet);
-          box-shadow:var(--sh-soft); overflow:clip; }
-  .sec__b { padding:8px var(--sheet-inset) 0; }
+  .lede { padding: var(--s6) var(--inset) var(--s5); }
+  .lede h1 { font-size: 26px; font-weight: 650; letter-spacing: -.02em; }
+  .lede p { margin-top: var(--s3); max-width: 78ch; font-size: 14.5px; color: var(--ink-3); }
+  .lede code { font: 400 13px var(--mono); color: var(--ink-2); }
 
-  .spec { margin-top:20px; }
-  .spec__h { display:flex; align-items:baseline; gap:10px; margin-bottom:10px; }
-  .spec__t { font-size:15px; font-weight:650; letter-spacing:-.008em; }
-  .spec__n { font:400 12px/1 var(--mono); color:var(--ink-4); }
-  .spec__d { margin-bottom:12px; font-size:13px; line-height:1.5; color:var(--ink-3); max-width:76ch; }
-  .demo { display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2);
-          padding:16px; border-radius:var(--r-inner); background:var(--wash);
-          box-shadow:inset 0 0 0 1px var(--line-2); }
-  .demo--col { flex-direction:column; align-items:stretch; gap:12px; }
-  .demo--dark { background:var(--focal); box-shadow:none; color:var(--focal-ink); }
+  /* ── the claim table ────────────────────────────────────────────────── */
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+           gap: 1px; margin: 0 0 var(--s6); padding: 0;
+           background: var(--line-2); border-radius: var(--r-panel); overflow: hidden;
+           box-shadow: inset 0 0 0 1px var(--line-2); }
+  .fact { padding: var(--s4) var(--inset); background: var(--sheet); }
+  .fact b { display: block; font-size: 22px; font-weight: 650; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .fact span { display: block; margin-top: 3px; font-size: 12px; color: var(--ink-3); }
 
-  /* token swatches */
-  .sw { display:grid; grid-template-columns:repeat(auto-fill,minmax(168px,1fr)); gap:10px; }
-  .sw__i { border-radius:var(--r-inner); background:var(--sheet); box-shadow:inset 0 0 0 1px var(--line-2); overflow:hidden; }
-  .sw__c { height:46px; }
-  .sw__m { padding:8px 10px; }
-  .sw__n { font:600 12px/1.3 var(--mono); color:var(--ink-2); }
-  .sw__v { font:400 11.5px/1.4 var(--mono); color:var(--ink-4); }
+  /* ── contents ───────────────────────────────────────────────────────── */
+  .toc { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: var(--s6); padding: 0 var(--inset); }
+  .toc a { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 11px;
+           border-radius: var(--r-inner); background: var(--sheet); box-shadow: inset 0 0 0 1px var(--line);
+           font-size: 13px; font-weight: 500; color: var(--ink-2); text-decoration: none; }
+  .toc a:hover { background: var(--well); color: var(--ink); }
+  .toc a i { font-style: normal; font: 400 11px var(--mono); color: var(--ink-4); }
 
-  /* the good / bad pair */
-  .gb { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; }
-  .gb__c { border-radius:var(--r-inner); overflow:hidden; box-shadow:inset 0 0 0 1px var(--line-2); }
-  .gb__h { display:flex; align-items:center; gap:7px; padding:8px 12px;
-           font:700 11px/1 var(--font); letter-spacing:.08em; text-transform:uppercase; }
-  .gb--ok .gb__h { background:var(--ok-soft); color:var(--ok); }
-  .gb--no .gb__h { background:var(--danger-soft); color:var(--danger); }
-  .gb__b { padding:14px; background:var(--sheet); }
-  .gb__n { margin-top:8px; font-size:12.5px; line-height:1.45; color:var(--ink-3); }
+  /* ── a chapter is a page's worth of specimens ───────────────────────── */
+  .ch { margin-bottom: var(--s6); background: var(--sheet); border-radius: var(--r-card); box-shadow: var(--sh-soft); overflow: hidden; }
+  .ch__h { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--s3);
+           padding: var(--s5) var(--inset) var(--s3); }
+  .ch__n { font: 600 12px/1 var(--mono); color: var(--ink-4); }
+  .ch__t { font-size: 19px; font-weight: 650; letter-spacing: -.014em; }
+  .ch__r { font-size: 13.5px; color: var(--ink-3); }
+  .ch__src { width: 100%; margin-top: 2px; font: 400 11.5px/1.5 var(--mono); color: var(--ink-4); overflow-wrap: anywhere; }
+  .ch__f { display: block; width: 100%; border: 0; border-top: 1px solid var(--line-2); }
 
-  table.t { width:100%; border-collapse:collapse; font-size:13px; }
-  table.t th { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line);
-               font:700 11px/1 var(--font); letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3); }
-  table.t td { padding:8px 10px; border-bottom:1px solid var(--line-2); vertical-align:top; }
-  table.t td code, code.k { font:400 12px/1.4 var(--mono); color:var(--ink-2); }
+  /* ── the docs shelf ─────────────────────────────────────────────────── */
+  .docs { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--s3); padding: 0 var(--inset); }
+  .doc { display: block; padding: var(--s4); border-radius: var(--r-panel);
+         background: var(--sheet); box-shadow: inset 0 0 0 1px var(--line-2); text-decoration: none; }
+  .doc:hover { box-shadow: inset 0 0 0 1px var(--line-3); }
+  .doc b { display: block; font-size: 14px; font-weight: 650; color: var(--ink); }
+  .doc span { display: block; margin-top: 4px; font-size: 12.5px; line-height: 1.5; color: var(--ink-3); }
 
-  .foot { margin-top:28px; padding:16px 2px 0; border-top:1px solid var(--line);
-          font-size:13px; color:var(--ink-3); }
-  .foot a { color:var(--brand-ink); font-weight:600; }
-  :focus-visible { outline:2px solid var(--brand); outline-offset:2px; border-radius:4px; }
+  .foot { margin-top: var(--s6); padding: var(--s4) var(--inset) 0; border-top: 1px solid var(--line);
+          font-size: 13px; color: var(--ink-3); }
+  :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 4px; }
 </style>
 </head>
-<body>
-<div class="app">
 
-  <header class="top">
-    <span class="brand__mk">AAN</span>
-    <span class="brand__t">Gen 11 — component catalogue</span>
-    <span class="top__sp"></span>
-    <span class="top__meta" id="prov">generated from 4be2ce7</span>
+<body>
+<div class="wrap">
+
+  <header class="mast">
+    <span class="mast__mk">AAN</span>
+    <span class="mast__t">Gen 11 — living design system</span>
+    <span class="mast__sp"></span>
+    <span class="mast__meta" id="prov">extracted from the running product</span>
   </header>
 
-  <div class="head">
-    <h1 class="head__t">The system, as built</h1>
-    <span class="head__ctx">every specimen below runs on <code class="k">dist/aan-gen11.css</code> — the shipped stylesheet, not a copy</span>
+  <div class="lede">
+    <h1>The system, as shipped</h1>
+    <p>Every component below is the product's own DOM, pulled out of the ten live Gen 11 pages
+       and rendered by the product's own stylesheets. Nothing here is drawn for the catalogue.
+       If a specimen and the page disagree, the specimen is wrong and gets regenerated —
+       <code>_tools/gen-specimens.js</code> rebuilds them all from source.</p>
+    <p>Each chapter is one page's stylesheet stack, loaded in a frame so that ten stacks can
+       coexist without colliding. Under every specimen: the selector, the ancestor chain its
+       CSS is scoped to, the files that style it, and its measured geometry at 1440×900.</p>
   </div>
 
-  <div class="secs">
-
-    <!-- 01 ─────────────────────────────────────────────────────────────── -->
-    <section class="sec" id="s-colour">
-      <div class="sec__h"><h2>Colour</h2><span class="s">grounds, ink, brand, state</span></div>
-      <div class="sec__b">
-
-        <div class="spec">
-          <div class="spec__h"><span class="spec__t">Grounds &amp; surfaces</span></div>
-          <p class="spec__d">Nothing floats on white. The page is <code class="k">--ground</code>; a working surface is <code class="k">--sheet</code>. <code class="k">--wash</code> shares its value with <code class="k">--ground</code> but answers a different question — what a thing becomes when you point at it.</p>
-          <div class="sw" id="sw-ground"></div>
-        </div>
-
-        <div class="spec">
-          <div class="spec__h"><span class="spec__t">Ink</span></div>
-          <p class="spec__d">Four steps on light, three on the dark focal surface.</p>
-          <div class="sw" id="sw-ink"></div>
-        </div>
-
-        <div class="spec">
-          <div class="spec__h"><span class="spec__t">Brand</span></div>
-          <p class="spec__d"><strong>Blue means one of two things and nothing else: this is a link, or you are here.</strong> A numeral is not blue. An editable value is not blue.</p>
-          <div class="sw" id="sw-brand"></div>
-        </div>
-
-        <div class="spec">
-          <div class="spec__h"><span class="spec__t">State</span><span class="spec__n">ink · fill · soft · line</span></div>
-          <div class="sw" id="sw-state"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 02 ─────────────────────────────────────────────────────────────── -->
-    <section class="sec" id="s-type">
-      <div class="sec__h"><h2>Typography</h2><span class="s">ten measured roles</span></div>
-      <div class="sec__b">
-        <p class="spec__d">Measured across the ten shipped pages. The count is how many times the role was found, which is the evidence that it is a role and not a preference.</p>
-        <div class="demo demo--col">
-          <div style="font:650 22px/1.2 var(--font);letter-spacing:-.018em">Page title — 22 / 650</div>
-          <div style="font:650 17px/1.25 var(--font);letter-spacing:-.012em">Section title — 17 / 650 <span style="font:400 12px var(--mono);color:var(--ink-4)">×26</span></div>
-          <div style="font:650 15px/1.3 var(--font);letter-spacing:-.008em">Panel title — 15 / 650</div>
-          <div style="font:700 11px/1.2 var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)">Caps key — 11 / 700 <span style="font:400 11px var(--mono);text-transform:none;letter-spacing:0">×24 · table header ×51</span></div>
-          <div style="font:400 13px/1.5 var(--font)">Table cell — 13 / 400 <span style="font:400 12px var(--mono);color:var(--ink-4)">×5,821 — the most common type in the product</span></div>
-          <div style="font:500 14px/1.4 var(--font)">Control, quiet — 14 / 500 <span style="font:400 12px var(--mono);color:var(--ink-4)">×281</span></div>
-          <div style="font:600 14px/1.4 var(--font)">Control, emphasised — 14 / 600 <span style="font:400 12px var(--mono);color:var(--ink-4)">×205</span></div>
-          <div style="font:400 13px/1.5 var(--font);color:var(--ink-3)">Helper — 13 / 400, --ink-3 <span style="font:400 12px var(--mono);color:var(--ink-4)">×24, no variance</span></div>
-          <div style="font:400 12px/1.4 var(--mono)">Mono / tabular — 12 / 400 · 0P0300236 · ZFF97CMA0P0300236</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 03 ─────────────────────────────────────────────────────────────── -->
-    <section class="sec" id="s-space">
-      <div class="sec__h"><h2>Spacing &amp; tiers</h2><span class="s">the scale, the two insets, three control heights</span></div>
-      <div class="sec__b">
-        <div class="spec">
-          <div class="spec__h"><span class="spec__t">The scale</span><span class="spec__n">4 · 8 · 12 · 16 · 24 · 32 · 40 · 48 · 64</span></div>
-          <p class="spec__d">There is no 20, no 28, no 36 step. A value off this list is a defect unless it is in the exceptions register.</p>
-          <div class="demo" id="scale"></div>
-        </div>
-        <div class="spec">
-          <div class="spec__h"><span class="spec__t">Control tiers</span></div>
-          <p class="spec__d"><strong>Dense 30</strong> chips, row actions, compact buttons · <strong>Standard 36</strong> the default toolbar control · <strong>Field 40</strong> a form input · <strong>Large 44</strong> a form's own submit.</p>
-          <div class="demo">
-            <button class="btn btn--sheet" style="height:30px;padding:0 11px;border-radius:7px">30 dense</button>
-            <button class="btn btn--sheet" style="height:36px;padding:0 14px;border-radius:9px">36 standard</button>
-            <input class="fld" style="height:40px;padding:0 12px;border-radius:7px;border:0;box-shadow:inset 0 0 0 1px var(--line);background:var(--sheet);font:400 14px var(--font)" value="40 field">
-            <button class="btn btn--primary" style="height:44px;padding:0 20px;border-radius:9px;font-size:15px">44 primary</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 04 ─────────────────────────────────────────────────────────────── -->
-    <section class="sec" id="s-nav">
-      <div class="sec__h"><h2>View · filter · section</h2><span class="s">three different questions, three treatments</span></div>
-      <div class="sec__b">
-
-        <div class="spec">
-          <div class="spec__h"><span class="spec__t">View track</span><span class="spec__n">.ui-views / .ui-view</span></div>
-          <p class="spec__d">Answers <em>which view am I in</em>. <strong>No well under it</strong> — twelve lanes in a sunken track produced a 1250px grey bar, the heaviest object on a page whose subject is the list below. Only the current lane is an object.</p>
-          <div class="demo">
-            <div class="ui-views" role="group" aria-label="Views demo">
-              <button class="ui-view ui-view--on" type="button" aria-pressed="true">My Work <b>94</b></button>
-              <button class="ui-view" type="button" aria-pressed="false">My Following <b>4</b></button>
-              <span class="lanes__div"></span>
-              <button class="ui-view" type="button">All Open <b>802</b></button>
-              <button class="ui-view" type="button">Billing <b>12</b></button>
-            </div>
-          </div>
-        </div>
-
-        <div class="spec">
-          <div class="spec__h"><span class="spec__t">Filter set</span><span class="spec__n">.ui-filters / .ui-filter</span></div>
-          <p class="spec__d">Answers <em>which records are visible</em>. Chips on the ground with a caps key, so it never reads as a second view track.</p>
-          <div class="demo">
-            <div class="ui-filters">
-              <span class="caps flt__k">Roster</span>
-              <button class="tl ui-filter tl--on" type="button" aria-pressed="true">Active <b>317</b></button>
-              <button class="tl ui-filter" type="button">Pending <b>24</b></button>
-              <button class="tl ui-filter" type="button">Inactive <b>744</b></button>
-            </div>
-          </div>
-        </div>
-
-        <div class="spec">
-          <div class="spec__h"><span class="spec__t">Section nav</span><span class="spec__n">.ui-nav / .ui-nav__i</span></div>
-          <p class="spec__d">Answers <em>where in this record</em>. The rail carries its own 8px padding so the current item is an inset pill — <strong>never a full-bleed slab with a coloured stripe</strong>.</p>
-          <div class="demo" style="display:block;max-width:260px">
-            <nav class="rail ui-nav" aria-label="Sections demo" style="background:var(--sheet);border-radius:var(--r-panel);box-shadow:inset 0 0 0 1px var(--line-2)">
-              <button class="ui-nav__i ui-nav__i--on" type="button">Identity &amp; Status</button>
-              <button class="ui-nav__i" type="button">People</button>
-              <button class="ui-nav__i" type="button">Commercials <span class="ui-nav__n">10</span></button>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 05 ─────────────────────────────────────────────────────────────── -->
-    <section class="sec" id="s-buttons">
-      <div class="sec__h"><h2>Buttons</h2><span class="s">one primary per group, 8px apart, never touching</span></div>
-      <div class="sec__b">
-        <div class="demo">
-          <button class="btn btn--primary" type="button">Primary</button>
-          <button class="btn btn--sheet" type="button">Sheet</button>
-          <button class="btn btn--quiet" type="button">Quiet</button>
-          <button class="btn btn--sheet btn--on" type="button" aria-pressed="true">Pressed <b class="btn__n">5</b></button>
-          <button class="btn btn--sheet" type="button" disabled style="opacity:.55">Disabled</button>
-        </div>
-        <div class="spec">
-          <div class="spec__h"><span class="spec__t">On the dark surface</span></div>
-          <p class="spec__d">A primary on a dark bar keeps <strong>light</strong> ink, including when disabled. A generic light hover must never reach a dark surface — it once turned the one dark card on a page into a pale slab at 1.2:1.</p>
-          <div class="demo demo--dark">
-            <button class="btn btn--primary" type="button">Save</button>
-            <button class="btn" type="button" style="background:var(--focal-2);color:var(--focal-ink-2);height:36px;padding:0 14px;border-radius:9px;border:0;font:500 14px var(--font)">Discard</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 06 ─────────────────────────────────────────────────────────────── -->
-    <section class="sec" id="s-status">
-      <div class="sec__h"><h2>Status chips</h2><span class="s">the only legitimate pill</span></div>
-      <div class="sec__b">
-        <p class="spec__d">Pills are for status and true capsules. <strong>Not</strong> toolbar buttons, navigation, filters, titles or actions — those take 7px or 9px.</p>
-        <div class="demo" id="chips"></div>
-      </div>
-    </section>
-
-    <!-- 07 ─────────────────────────────────────────────────────────────── -->
-    <section class="sec" id="s-table">
-      <div class="sec__h"><h2>Table</h2><span class="s">one header voice, four densities</span></div>
-      <div class="sec__b">
-        <p class="spec__d">Header labels are <strong>centred</strong>, 11/700 caps. A sortable cell is a control that <em>inherits</em> the header's voice — otherwise a header row reads half caps, half sentence case. Row height is the density dial: 74 media · 64 operational · 56 register · 52 ledger.</p>
-        <div class="demo" style="display:block;padding:0;background:var(--sheet)">
-          <div class="ui-table">
-            <div class="hd ui-thead" style="display:grid;grid-template-columns:110px 1fr 90px 120px 90px;gap:8px">
-              <span>Stock</span><span>Model</span><span>Status</span><span>Health</span><span class="r">Price</span>
-            </div>
-            <div class="row" style="display:grid;grid-template-columns:110px 1fr 90px 120px 90px;gap:8px;align-items:center;height:64px;padding:0 16px;border-bottom:1px solid var(--line-2)">
-              <span style="font:600 13px var(--mono)">19495</span>
-              <span style="font-size:13px">Kenworth W900L</span>
-              <span><span class="bdg" style="--bdg-bg:var(--t-green-bg);--bdg-ink:var(--t-green-ink)">Available</span></span>
-              <span style="font-size:13px;color:var(--ok)">✓ OK</span>
-              <span class="r" style="font:600 13px var(--font);text-align:right;font-variant-numeric:tabular-nums">$100,800</span>
-            </div>
-            <div class="row" style="display:grid;grid-template-columns:110px 1fr 90px 120px 90px;gap:8px;align-items:center;height:64px;padding:0 16px;background:var(--brand-soft)">
-              <span style="font:600 13px var(--mono)">18421</span>
-              <span style="font-size:13px">Sundowner Sunlite Argo 40GN <em style="color:var(--ink-4);font-style:normal">— selected</em></span>
-              <span><span class="bdg" style="--bdg-bg:var(--t-green-bg);--bdg-ink:var(--t-green-ink)">Available</span></span>
-              <span><span class="tag" style="--tone:var(--signal);--tone-soft:var(--signal-soft);--tone-line:var(--signal-line)">No price</span></span>
-              <span class="r" style="text-align:right;color:var(--ink-4)">—</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 08 ─────────────────────────────────────────────────────────────── -->
-    <section class="sec" id="s-rules">
-      <div class="sec__h"><h2>Good / bad</h2><span class="s">each pair was actually built and actually undone</span></div>
-      <div class="sec__b">
-
-        <div class="spec">
-          <div class="spec__h"><span class="spec__t">Section separation</span></div>
-          <div class="gb">
-            <div class="gb__c gb--ok"><div class="gb__h">Good · rhythm</div><div class="gb__b" style="padding:0">
-              <div style="padding:14px 16px;background:var(--sheet);border-bottom:1px solid var(--line)"><span style="font:600 12px var(--mono);color:var(--ink-4)">01</span> <b style="font-size:15px">Overview</b></div>
-              <div style="padding:14px 16px;background:#f5f8fc;border-bottom:1px solid var(--line)"><span style="font:600 12px var(--mono);color:var(--ink-4)">02</span> <b style="font-size:15px">Contact</b></div>
-              <div style="padding:14px 16px;background:#fdf9f2"><span style="font:600 12px var(--mono);color:var(--ink-4)">03</span> <b style="font-size:15px">Activity</b> <span style="font-size:12px;color:var(--ink-3)">— the live chapter</span></div>
-            </div><p class="gb__n" style="padding:0 14px 14px">Alternating ground, a full-bleed rule, a counted head. No new card.</p></div>
-
-            <div class="gb__c gb--no"><div class="gb__h">Bad · slabs</div><div class="gb__b">
-              <div style="padding:14px;background:#fff;border-radius:10px;box-shadow:var(--el-1);margin-bottom:10px"><b style="font-size:15px">Overview</b></div>
-              <div style="padding:14px;background:#fff;border-radius:10px;box-shadow:var(--el-1);margin-bottom:10px"><b style="font-size:15px">Contact</b></div>
-              <div style="padding:14px;background:#fff;border-radius:10px;box-shadow:var(--el-1)"><b style="font-size:15px">Activity</b></div>
-            </div><p class="gb__n" style="padding:0 14px 14px">A section became a card because it needed separating. Three shadows, three radii, no hierarchy.</p></div>
-          </div>
-        </div>
-
-        <div class="spec">
-          <div class="spec__h"><span class="spec__t">The view track</span></div>
-          <div class="gb">
-            <div class="gb__c gb--ok"><div class="gb__h">Good · no well</div><div class="gb__b">
-              <div class="ui-views"><button class="ui-view ui-view--on">Available <b>359</b></button><button class="ui-view">Sold <b>13,212</b></button><button class="ui-view">Staging <b>16</b></button></div>
-              <p class="gb__n">Only the current lane is an object.</p>
-            </div></div>
-            <div class="gb__c gb--no"><div class="gb__h">Bad · track in a track</div><div class="gb__b">
-              <div style="display:inline-flex;gap:3px;padding:5px;border-radius:999px;background:var(--well);box-shadow:inset 0 0 0 1px var(--line)">
-                <span style="height:30px;padding:0 14px;display:inline-flex;align-items:center;border-radius:999px;background:#fff;box-shadow:var(--sh-pill);font:600 13.5px var(--font)">Available 359</span>
-                <span style="height:30px;padding:0 14px;display:inline-flex;align-items:center;border-radius:999px;font:500 13.5px var(--font);color:var(--ink-2)">Sold 13,212</span>
-                <span style="height:30px;padding:0 14px;display:inline-flex;align-items:center;border-radius:999px;font:500 13.5px var(--font);color:var(--ink-2)">Staging 16</span>
-              </div>
-              <p class="gb__n">A rounded container full of rounded containers — three deep for “which lane am I in”.</p>
-            </div></div>
-          </div>
-        </div>
-
-        <div class="spec">
-          <div class="spec__h"><span class="spec__t">Text in a control</span></div>
-          <div class="gb">
-            <div class="gb__c gb--ok"><div class="gb__h">Good · centred</div><div class="gb__b">
-              <span class="bdg" style="--bdg-bg:var(--t-violet-bg);--bdg-ink:var(--t-violet-ink)">Mktg Open</span>
-              <p class="gb__n">13.5px in a 26px pill, optically centred.</p>
-            </div></div>
-            <div class="gb__c gb--no"><div class="gb__h">Bad · glued &amp; tiny</div><div class="gb__b">
-              <span style="display:inline-block;padding:2px 8px 3px;border-radius:999px;background:var(--t-violet-bg);color:var(--t-violet-ink);font:600 12px var(--font);line-height:1">Mktg Open</span>
-              <p class="gb__n">12px in a 20px pill with asymmetric padding — the label rides the lower edge.</p>
-            </div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 09 ─────────────────────────────────────────────────────────────── -->
-    <section class="sec" id="s-exceptions">
-      <div class="sec__h"><h2>Exceptions register</h2><span class="s">documented, not silently normalised</span></div>
-      <div class="sec__b">
-        <p class="spec__d">Real inconsistencies in the current build. None were “fixed” during extraction — changing them is a separate, deliberate pass.</p>
-        <table class="t">
-          <thead><tr><th>#</th><th>Exception</th><th>Where</th><th>Status</th></tr></thead>
-          <tbody id="exc"></tbody>
-        </table>
-      </div>
-    </section>
-
+  <div class="facts" id="facts">
+    <div class="fact"><b>667</b><span>class tokens on visible boxes</span></div>
+    <div class="fact"><b>309</b><span>component blocks</span></div>
+    <div class="fact"><b>273</b><span>blocks needing a page stylesheet</span></div>
+    <div class="fact"><b>36</b><span>blocks the shared layer owns outright</span></div>
+    <div class="fact"><b>120</b><span>specimens, all with provenance</span></div>
+    <div class="fact"><b>0</b><span>specimens drawn for the catalogue</span></div>
   </div>
 
-  <footer class="foot">
-    Read next — <a href="TOKENS.md">TOKENS.md</a> · <a href="COMPONENTS.md">COMPONENTS.md</a> ·
-    <a href="PATTERNS.md">PATTERNS.md</a> · <a href="RULES.md">RULES.md</a> ·
-    <a href="ANTI-PATTERNS.md">ANTI-PATTERNS.md</a> · <a href="MIGRATION.md">MIGRATION.md</a>
-    <br><br>
-    The stylesheet this page runs on is generated from <code class="k">pages/_aan-family.css</code> +
-    <code class="k">pages/_aan-components.css</code>. If they disagree, the sources win —
-    regenerate with <code class="k">bash dist/build.sh</code>.
-  </footer>
+  <nav class="toc" id="toc" aria-label="Chapters"></nav>
+
+  <div id="chapters"></div>
+
+  <h2 class="ch__t" style="padding:0 var(--inset) var(--s3)">The written system</h2>
+  <div class="docs">
+    <a class="doc" href="SOURCE-MAP.md"><b>SOURCE-MAP.md</b><span>Which file styles what, measured across all ten pages. Generated.</span></a>
+    <a class="doc" href="INVENTORY.md"><b>INVENTORY.md</b><span>Every reusable element, its role, its geometry and where it is used.</span></a>
+    <a class="doc" href="TOKENS.md"><b>TOKENS.md</b><span>Colour, type, spacing, radius, shadow, focus, layers, sticky offsets.</span></a>
+    <a class="doc" href="RULES.md"><b>RULES.md</b><span>The contracts: spacing, separation, surfaces, states.</span></a>
+    <a class="doc" href="PATTERNS.md"><b>PATTERNS.md</b><span>How the pieces are put together on a real page.</span></a>
+    <a class="doc" href="PAGE-SPECIFIC.md"><b>PAGE-SPECIFIC.md</b><span>Patterns that belong to one page, and why they stay there.</span></a>
+    <a class="doc" href="ANTI-PATTERNS.md"><b>ANTI-PATTERNS.md</b><span>What Gen 11 refuses, and what it does instead.</span></a>
+    <a class="doc" href="MIGRATION.md"><b>MIGRATION.md</b><span>Taking an old backend page to Gen 11 without inventing anything.</span></a>
+  </div>
+
+  <p class="foot">Regenerate the specimens with <code>node design-system/gen11/_tools/gen-specimens.js</code>
+     after changing <code>_tools/spec.json</code>. Regenerate the bundle with
+     <code>bash design-system/gen11/dist/build.sh</code>.</p>
+
 </div>
 
 <script>
-(function () {
-  'use strict';
-  var $ = function (s) { return document.querySelector(s); };
+/* The chapters are declared here and rendered as frames. Each frame is one
+   page's stylesheet stack; the frame reports its height so the page reads as
+   one continuous document rather than ten scrollers. */
+var CHAPTERS = [
+  ['av',          'All Vehicles',          'the operational list — the densest surface in the product', 'all-vehicles-gen11.css'],
+  ['leads',       'All Leads',             'the lead list and the in-flow expansion',                   'all-vehicles-gen11.css + all-leads-gen11.css'],
+  ['lead',        'Single Lead',           'a record read top to bottom — continuous sections, no tabs', 'all-vehicles-gen11.css + single-lead-gen11.css'],
+  ['vehicle',     'Single Vehicle',        'the editor — a long form with a section rail and a commit bar', 'single-vehicle-gen11.css'],
+  ['queue',       'My Work Queue',         'the densest table in the product — seventeen columns of live work', 'my-work-queue-gen11.css'],
+  ['ticket',      'Single Ticket',         'a work record — summary, form, thread, crew',               'single-ticket-gen11.css'],
+  ['dealers',     'Manage Dealers',        'the roster — a wide reference table with an alphabet index', 'manage-dealers-gen11.css'],
+  ['dealer-edit', 'Dealer Edit',           'the dealer file — seven zones, a rail, utilities and a commit bar', 'dealer-edit-gen11.css'],
+  ['accounting',  'Accounting — View All', 'money — a table where every column is a number someone owes', 'accounting-view-all-gen11.css'],
+  ['login',       'Dealer Login',          'the front door — the only page with no platform bar',       'dealer-login-gen11.css']
+];
 
-  function swatches(target, items) {
-    $(target).innerHTML = items.map(function (t) {
-      var v = getComputedStyle(document.documentElement).getPropertyValue(t).trim();
-      return '<div class="sw__i"><div class="sw__c" style="background:' + v + '"></div>' +
-             '<div class="sw__m"><div class="sw__n">' + t + '</div><div class="sw__v">' + v + '</div></div></div>';
-    }).join('');
-  }
-  swatches('#sw-ground', ['--ground','--ground-2','--sheet','--wash','--well','--line','--line-2','--line-3']);
-  swatches('#sw-ink', ['--ink','--ink-2','--ink-3','--ink-4','--focal','--focal-2','--focal-ink','--focal-ink-3']);
-  swatches('#sw-brand', ['--brand','--brand-hover','--brand-ink','--brand-soft','--brand-soft-2']);
-  swatches('#sw-state', ['--signal','--signal-fill','--signal-soft','--ok','--ok-fill','--ok-soft','--danger','--danger-fill','--danger-soft']);
+var toc = document.getElementById('toc');
+var host = document.getElementById('chapters');
 
-  /* the spacing scale, drawn at true size */
-  $('#scale').innerHTML = [4,8,12,16,24,32,40,48,64].map(function (n, i) {
-    return '<div style="text-align:center">' +
-      '<div style="width:' + n + 'px;height:44px;background:var(--brand);border-radius:2px;margin:0 auto"></div>' +
-      '<div style="margin-top:6px;font:600 11px/1 var(--mono);color:var(--ink-3)">' + n + '</div>' +
-      '<div style="font:400 10px/1.4 var(--mono);color:var(--ink-4)">--s' + (i + 1) + '</div></div>';
-  }).join('');
+CHAPTERS.forEach(function (c, i) {
+  var n = String(i + 1).padStart(2, '0');
 
-  /* every chip tone that exists */
-  var TONES = ['blue','amber','green','red','violet','slate'];
-  $('#chips').innerHTML = TONES.map(function (t) {
-    return '<span class="bdg" style="--bdg-bg:var(--t-' + t + '-bg);--bdg-ink:var(--t-' + t + '-ink)">' + t + '</span>';
-  }).join('') +
-  '<span class="tag" style="--tone:var(--signal);--tone-soft:var(--signal-soft);--tone-line:var(--signal-line)">No price</span>' +
-  '<span class="tag" style="--tone:var(--danger);--tone-soft:var(--danger-soft);--tone-line:var(--danger-line)">Feed off</span>';
+  var a = document.createElement('a');
+  a.href = '#ch-' + c[0];
+  a.innerHTML = '<i>' + n + '</i>' + c[1];
+  toc.appendChild(a);
 
-  var EXC = [
-    ['E1','<code class="k">--anchor-gap</code> 12px instead of 10px','Single Ticket','unresolved'],
-    ['E2','<code class="k">.btn--primary</code> renders white, not brand','Accounting','mis-classed button'],
-    ['E3','<code class="k">.ck</code> radius 0','Single Ticket','drift'],
-    ['E4','<code class="k">.bdg</code> height 12px','Manage Dealers','below the readable floor'],
-    ['E5','<code class="k">.search</code> radius 14px — a surface radius on a control','All Vehicles','drift'],
-    ['E6','Section title at 19px and 15px','two pages','drift from the 17/650 role'],
-    ['E7','<code class="k">--r-s</code>/<code class="k">--r-inner</code> and <code class="k">--r-card</code>/<code class="k">--r-l</code> are aliases','shared layer','deprecate the -s / -l names'],
-    ['E8','<code class="k">--ctl-h</code> 40px is a fourth, unnamed tier','shared layer','role — should be <code class="k">--ctl-field</code>'],
-    ['E9','Health chips overflowed at ≤1400','All Vehicles','<b style="color:var(--ok)">resolved in 11.1</b>']
-  ];
-  $('#exc').innerHTML = EXC.map(function (r) {
-    return '<tr><td><code class="k">' + r[0] + '</code></td><td>' + r[1] + '</td><td>' + r[2] + '</td><td>' + r[3] + '</td></tr>';
-  }).join('');
+  var sec = document.createElement('section');
+  sec.className = 'ch';
+  sec.id = 'ch-' + c[0];
+  sec.innerHTML =
+    '<div class="ch__h">' +
+      '<span class="ch__n">' + n + '</span>' +
+      '<span class="ch__t">' + c[1] + '</span>' +
+      '<span class="ch__r">' + c[2] + '</span>' +
+      '<span class="ch__src">stack: ' + c[3] + ' + _aan-family.css + _aan-components.css</span>' +
+    '</div>' +
+    '<iframe class="ch__f" src="specimens/' + c[0] + '.html" title="' + c[1] + ' specimens" loading="lazy" height="600"></iframe>';
+  host.appendChild(sec);
+});
 
-  /* read the provenance straight out of the generated stylesheet */
-  fetch('dist/aan-gen11.css').then(function (r) { return r.text(); }).then(function (t) {
-    var m = t.match(/Short\s+:\s*(\S+)/);
-    if (m) $('#prov').textContent = 'generated from ' + m[1];
-  }).catch(function () {});
-})();
+/* Frames size themselves two ways. The message is the fast path; the poll is
+   the honest one, because the catalogue and the specimens are same-origin and
+   a frame that finished loading before its listener attached would otherwise
+   sit at the placeholder height forever. */
+function fitFrame(fr) {
+  try {
+    var d = fr.contentDocument;
+    if (!d || !d.body) return;
+    var h = Math.ceil(d.documentElement.getBoundingClientRect().height);
+    if (h > 40 && String(h) !== String(fr.height)) fr.height = h;
+  } catch (err) {}
+}
+function fitAll() { document.querySelectorAll('.ch__f').forEach(fitFrame); }
+
+window.addEventListener('message', function (e) {
+  if (!e.data || !e.data.aanSpecimen) return;
+  document.querySelectorAll('.ch__f').forEach(function (fr) {
+    if (fr.contentWindow === e.source) fr.height = e.data.height;
+  });
+});
+
+document.querySelectorAll('.ch__f').forEach(function (fr) {
+  fr.addEventListener('load', function () { fitFrame(fr); setTimeout(function(){fitFrame(fr);}, 500); });
+});
+window.addEventListener('scroll', fitAll, { passive: true });
+window.addEventListener('resize', fitAll);
+setInterval(fitAll, 1500);
+
+/* provenance straight out of the generated bundle */
+fetch('dist/aan-gen11.css').then(function (r) { return r.text(); }).then(function (t) {
+  var m = /Short\s+:\s+(\S+)/.exec(t);
+  if (m) document.getElementById('prov').textContent = 'bundle cut from ' + m[1];
+}).catch(function () {});
 </script>
 </body>
 </html>

@@ -1,0 +1,931 @@
+{
+  "av": {
+    "page": "dealer/all-vehicles-gen11.html",
+    "title": "All Vehicles",
+    "role": "the operational list — the densest surface in the product",
+    "css": [
+      "dealer/all-vehicles-gen11.css"
+    ],
+    "groups": [
+      {
+        "group": "Global chrome",
+        "items": [
+          {
+            "name": "Platform bar",
+            "role": "the object every page opens with",
+            "sel": ".top",
+            "note": "56px, 16px gutter, glass with one shadow. The AAN mark, the wordmark, the environment word, the destinations, then the utilities, then who you are."
+          },
+          {
+            "name": "Navigation item",
+            "role": "a destination",
+            "sel": ".nav__it",
+            "idx": 1,
+            "note": "Brand-blue label. The current section carries a soft brand surface; hover carries the well. Adjacent items never touch — see the separation contract in RULES.md."
+          },
+          {
+            "name": "Global search",
+            "role": "search anywhere",
+            "sel": ".gsearch",
+            "note": "The elastic member of the header. When eight destinations do not fit, the width comes out of here, never out of the gap between controls."
+          },
+          {
+            "name": "Utility button",
+            "role": "icon-only header action",
+            "sel": ".tbtn",
+            "idx": 2,
+            "note": "36px square, the same radius as the buttons beside it. Index 2 is Notifications; index 0 is the theme toggle, which every Gen 11 page ships with `hidden` and the title \"Dark theme is being re-solved\". A control that ships hidden on all ten pages is not shipped UI, so the catalogue shows one of the two that are."
+          },
+          {
+            "name": "Dealer identity",
+            "role": "which dealer you are acting for",
+            "sel": ".dealer"
+          },
+          {
+            "name": "Page head",
+            "role": "title, context, page actions",
+            "sel": ".head"
+          }
+        ]
+      },
+      {
+        "group": "Actions",
+        "items": [
+          {
+            "name": "Primary",
+            "role": "the one committing action in a group",
+            "sel": ".head .btn--primary",
+            "note": "Brand fill, restrained glow. One per group — never two."
+          },
+          {
+            "name": "Sheet",
+            "role": "a neutral action that carries a surface",
+            "sel": ".head .btn--sheet"
+          },
+          {
+            "name": "Quiet",
+            "role": "an action that sits on the ground",
+            "sel": ".head .btn--quiet"
+          },
+          {
+            "name": "Row action cluster",
+            "role": "per-record icon actions",
+            "sel": "#tb .row .acts",
+            "note": "The dense tier. Icon-only, 27px, inside the Actions column of a table row."
+          }
+        ]
+      },
+      {
+        "group": "Navigation and scope",
+        "items": [
+          {
+            "name": "Lane strip",
+            "role": "which slice of the list am I in",
+            "sel": ".lanes",
+            "note": "A joined segmented strip attached to the top of the workspace. One hairline around it, dividers between, the current lane on a brand rule."
+          },
+          {
+            "name": "Facet",
+            "role": "a filter with a current value",
+            "sel": ".sub .facet",
+            "idx": 0
+          },
+          {
+            "name": "View switch",
+            "role": "rows, gallery or photos",
+            "sel": ".seg"
+          },
+          {
+            "name": "Sub bar",
+            "role": "scope line plus the filter row",
+            "sel": ".sub"
+          }
+        ]
+      },
+      {
+        "group": "Command",
+        "items": [
+          {
+            "name": "Command band",
+            "role": "the sticky search and sort layer",
+            "sel": ".cmd"
+          },
+          {
+            "name": "Search field",
+            "role": "find a vehicle",
+            "sel": ".cmd .search"
+          }
+        ]
+      },
+      {
+        "group": "Table",
+        "items": [
+          {
+            "name": "Column header",
+            "role": "the sticky header row",
+            "sel": ".hd"
+          },
+          {
+            "name": "Row",
+            "role": "one vehicle",
+            "sel": "#tb .row",
+            "idx": 1
+          },
+          {
+            "name": "Stock cell",
+            "role": "the identifier a dealer searches on",
+            "sel": "#tb .row .stk",
+            "idx": 1
+          },
+          {
+            "name": "Price cell",
+            "role": "money, with its discount history",
+            "sel": "#tb .row .price",
+            "idx": 1
+          },
+          {
+            "name": "Status chip",
+            "role": "lot status",
+            "sel": "#tb .row .st",
+            "idx": 1
+          },
+          {
+            "name": "Health tags",
+            "role": "the exceptions on a vehicle",
+            "sel": "#tb .row .tags",
+            "idx": 0
+          },
+          {
+            "name": "Age",
+            "role": "days in stock, as a bar and a figure",
+            "sel": "#tb .row .age",
+            "idx": 1
+          },
+          {
+            "name": "Checkbox cell",
+            "role": "bulk selection",
+            "sel": "#tb .row .ck",
+            "idx": 1
+          },
+          {
+            "name": "Footer",
+            "role": "count and pagination",
+            "sel": ".foot"
+          }
+        ]
+      },
+      {
+        "group": "Surfaces",
+        "items": [
+          {
+            "name": "Bento",
+            "role": "the lot at a glance",
+            "sel": ".bento"
+          },
+          {
+            "name": "Dark focal panel",
+            "role": "the dominant summary object",
+            "sel": ".focal"
+          },
+          {
+            "name": "Attention queue",
+            "role": "the exceptions, ranked",
+            "sel": ".attn"
+          },
+          {
+            "name": "Workspace",
+            "role": "the sheet the list lives on",
+            "sel": ".field"
+          }
+        ]
+      }
+    ]
+  },
+  "lead": {
+    "page": "dealer/single-lead-gen11.html",
+    "title": "Single Lead",
+    "role": "a record read top to bottom — continuous sections, no tabs",
+    "css": [
+      "dealer/all-vehicles-gen11.css",
+      "dealer/single-lead-gen11.css"
+    ],
+    "groups": [
+      {
+        "group": "Record chrome",
+        "items": [
+          {
+            "name": "Record head",
+            "role": "who this lead is",
+            "sel": ".head"
+          },
+          {
+            "name": "Section tabs",
+            "role": "jump to a section — the page stays continuous",
+            "sel": ".secnav",
+            "note": "A segmented control, not a tab bar: it scrolls the page, it does not swap panels. Members sit 6px apart so four bordered boxes read as four choices."
+          },
+          {
+            "name": "Section bar",
+            "role": "the sticky bar the tabs live in",
+            "sel": ".cmd.cmd--sec"
+          }
+        ]
+      },
+      {
+        "group": "Record surfaces",
+        "items": [
+          {
+            "name": "Bento",
+            "role": "enquiry, activity and facts",
+            "sel": ".bento"
+          },
+          {
+            "name": "Vehicle card",
+            "role": "the vehicle this enquiry is about",
+            "sel": ".vcar"
+          },
+          {
+            "name": "Workflow dock",
+            "role": "state, assignment, follow-up, flags",
+            "sel": ".dock"
+          }
+        ]
+      },
+      {
+        "group": "Forms",
+        "items": [
+          {
+            "name": "Field",
+            "role": "label over control",
+            "sel": ".f",
+            "idx": 0
+          },
+          {
+            "name": "Field grid",
+            "role": "how fields sit next to each other",
+            "sel": ".grid",
+            "idx": 0
+          }
+        ]
+      },
+      {
+        "group": "Activity",
+        "items": [
+          {
+            "name": "Event",
+            "role": "one entry in the feed",
+            "sel": ".ev",
+            "idx": 0,
+            "note": "Meta line and body are 8px apart; entries are 16px apart. A 2:1 step is what lets the eye find where one note ends."
+          },
+          {
+            "name": "Event kind",
+            "role": "what sort of entry this is",
+            "sel": ".kind",
+            "idx": 0
+          }
+        ]
+      }
+    ]
+  },
+  "leads": {
+    "page": "dealer/all-leads-gen11.html",
+    "title": "All Leads",
+    "role": "the lead list and the in-flow expansion",
+    "css": [
+      "dealer/all-vehicles-gen11.css",
+      "dealer/all-leads-gen11.css"
+    ],
+    "open": "row",
+    "groups": [
+      {
+        "group": "Table",
+        "items": [
+          {
+            "name": "Column header",
+            "role": "sticky header",
+            "sel": ".hd"
+          },
+          {
+            "name": "Row",
+            "role": "one lead",
+            "sel": "#tb .row",
+            "idx": 1
+          },
+          {
+            "name": "Lead cell",
+            "role": "name, number, mail flag",
+            "sel": "#tb .row .ld",
+            "idx": 1
+          },
+          {
+            "name": "Contact cell",
+            "role": "email over phone",
+            "sel": "#tb .row .ct",
+            "idx": 1
+          },
+          {
+            "name": "Status",
+            "role": "where the lead is",
+            "sel": "#tb .row .st",
+            "idx": 1
+          }
+        ]
+      },
+      {
+        "group": "Expansion",
+        "items": [
+          {
+            "name": "Expanded lead",
+            "role": "the record opened in place, under its own row",
+            "sel": ".exp",
+            "note": "In flow, not a popover: the list stays visible and the selected row keeps its position under the sticky stack."
+          },
+          {
+            "name": "Record action row",
+            "role": "the five things you can do to a lead",
+            "sel": ".veh__acts",
+            "note": "One primary and four neutral siblings, 8px apart. Every rule that gives this row its layout is scoped to .exp."
+          },
+          {
+            "name": "Buyer message",
+            "role": "what the buyer actually wrote",
+            "sel": ".lsheet__msg"
+          }
+        ]
+      },
+      {
+        "group": "Scope",
+        "items": [
+          {
+            "name": "Lane strip",
+            "role": "mail, uncategorised, today, past due, search",
+            "sel": ".lanes"
+          },
+          {
+            "name": "Filter row",
+            "role": "rep, status, source, provider, type, created",
+            "sel": ".sub"
+          }
+        ]
+      }
+    ]
+  },
+  "vehicle": {
+    "page": "dealer/single-vehicle-gen11.html",
+    "title": "Single Vehicle",
+    "role": "the editor — a long form with a section rail and a commit bar",
+    "css": [
+      "dealer/single-vehicle-gen11.css"
+    ],
+    "groups": [
+      {
+        "group": "Editor chrome",
+        "items": [
+          {
+            "name": "Cockpit",
+            "role": "which vehicle, its price, and what you can do to it",
+            "sel": ".cockpit"
+          },
+          {
+            "name": "Provenance row",
+            "role": "added, modified, views, who holds the lock",
+            "sel": ".prov"
+          },
+          {
+            "name": "Section rail",
+            "role": "where am I in the record",
+            "sel": ".rail",
+            "note": "A flat panel attached to the same grid as the form, with the current section on a brand edge. Not a floating card with a capsule inside it."
+          },
+          {
+            "name": "Commit bar",
+            "role": "the only thing that saves",
+            "sel": ".savebar"
+          }
+        ]
+      },
+      {
+        "group": "Forms",
+        "items": [
+          {
+            "name": "Zone",
+            "role": "one section of the record",
+            "sel": ".zone",
+            "idx": 0
+          },
+          {
+            "name": "Field",
+            "role": "label over control",
+            "sel": ".f",
+            "idx": 0
+          },
+          {
+            "name": "Segmented control",
+            "role": "one of a small set of states",
+            "sel": ".seg",
+            "idx": 0
+          },
+          {
+            "name": "Switch row",
+            "role": "a boolean with its consequence spelled out",
+            "sel": ".swrow",
+            "idx": 0
+          },
+          {
+            "name": "Switch",
+            "role": "on or off",
+            "sel": ".sw",
+            "idx": 0
+          },
+          {
+            "name": "Money field",
+            "role": "a price, with its change history",
+            "sel": ".money",
+            "idx": 0
+          },
+          {
+            "name": "Feature row",
+            "role": "a long checklist, densely set",
+            "sel": ".featrow",
+            "idx": 0
+          }
+        ]
+      },
+      {
+        "group": "Media",
+        "items": [
+          {
+            "name": "Photo tile",
+            "role": "one photo in the set",
+            "sel": ".photo",
+            "idx": 0
+          },
+          {
+            "name": "Empty photo slot",
+            "role": "a slot with nothing in it yet",
+            "sel": ".photo--ph",
+            "idx": 0
+          }
+        ]
+      }
+    ]
+  },
+  "queue": {
+    "page": "staff/my-work-queue-gen11.html",
+    "title": "My Work Queue",
+    "role": "the densest table in the product — seventeen columns of live work",
+    "css": [
+      "staff/my-work-queue-gen11.css"
+    ],
+    "groups": [
+      {
+        "group": "Staff chrome",
+        "items": [
+          {
+            "name": "Platform bar",
+            "role": "the staff roster of destinations",
+            "sel": ".top"
+          },
+          {
+            "name": "Account",
+            "role": "who is working",
+            "sel": ".me"
+          },
+          {
+            "name": "Atlas",
+            "role": "the system wiki",
+            "sel": ".atlas"
+          },
+          {
+            "name": "Go-live ticker",
+            "role": "what ships next, on one line",
+            "sel": ".golive",
+            "note": "Was a two-row field of capsules taking 104px before the list started. A hairline-separated ticker says the same thing in 30px."
+          }
+        ]
+      },
+      {
+        "group": "Scope",
+        "items": [
+          {
+            "name": "Lane strip",
+            "role": "twelve lanes of work",
+            "sel": ".lanes"
+          },
+          {
+            "name": "Command row",
+            "role": "search, sort, filters, clear",
+            "sel": ".cmd"
+          }
+        ]
+      },
+      {
+        "group": "Dense table",
+        "items": [
+          {
+            "name": "Column header",
+            "role": "seventeen columns",
+            "sel": ".hd"
+          },
+          {
+            "name": "Row",
+            "role": "one ticket",
+            "sel": "#tb .row",
+            "idx": 1
+          },
+          {
+            "name": "Status badge",
+            "role": "the work state",
+            "sel": "#tb .row .bdg",
+            "idx": 0
+          },
+          {
+            "name": "Numeric cell",
+            "role": "hours and money, tabular",
+            "sel": "#tb .row .c-est",
+            "idx": 1
+          },
+          {
+            "name": "Modified cell",
+            "role": "who touched it and when",
+            "sel": "#tb .row .c-mod",
+            "idx": 1
+          },
+          {
+            "name": "Grip",
+            "role": "drag to reprioritise",
+            "sel": "#tb .row .grip",
+            "idx": 1
+          }
+        ]
+      }
+    ]
+  },
+  "ticket": {
+    "page": "staff/single-ticket-gen11.html",
+    "title": "Single Ticket",
+    "role": "a work record — summary, form, thread, crew",
+    "css": [
+      "staff/single-ticket-gen11.css"
+    ],
+    "groups": [
+      {
+        "group": "Record chrome",
+        "items": [
+          {
+            "name": "Record head",
+            "role": "ticket number, subject, state",
+            "sel": ".head"
+          },
+          {
+            "name": "Section tabs",
+            "role": "work order, history, changelog, attachments",
+            "sel": ".secnav"
+          }
+        ]
+      },
+      {
+        "group": "Surfaces",
+        "items": [
+          {
+            "name": "Dark summary",
+            "role": "time, estimate, crew, schedule, billable",
+            "sel": ".focal"
+          },
+          {
+            "name": "Metric",
+            "role": "one figure in the summary",
+            "sel": ".tile",
+            "idx": 0
+          },
+          {
+            "name": "Dealer rail",
+            "role": "where this ticket's dealer lives",
+            "sel": ".rail"
+          },
+          {
+            "name": "Crew dock",
+            "role": "who is assigned and what they have spent",
+            "sel": ".dock"
+          }
+        ]
+      },
+      {
+        "group": "Thread",
+        "items": [
+          {
+            "name": "Event",
+            "role": "one note, todo or change in the worklog",
+            "sel": ".ev",
+            "idx": 0
+          },
+          {
+            "name": "Crew row",
+            "role": "one assignment",
+            "sel": ".cc",
+            "idx": 0
+          }
+        ]
+      },
+      {
+        "group": "Forms",
+        "items": [
+          {
+            "name": "Field group",
+            "role": "classification, contact",
+            "sel": ".grp",
+            "idx": 0
+          },
+          {
+            "name": "Editable marker",
+            "role": "this section can be changed",
+            "sel": ".chip",
+            "idx": 0
+          }
+        ]
+      }
+    ]
+  },
+  "dealers": {
+    "page": "staff/manage-dealers-gen11.html",
+    "title": "Manage Dealers",
+    "role": "the roster — a wide reference table with an alphabet index",
+    "css": [
+      "staff/manage-dealers-gen11.css"
+    ],
+    "groups": [
+      {
+        "group": "Scope",
+        "items": [
+          {
+            "name": "Roster tally",
+            "role": "the counts you can filter by",
+            "sel": ".tally"
+          },
+          {
+            "name": "Lane strip",
+            "role": "which roster",
+            "sel": ".lanes"
+          },
+          {
+            "name": "Alphabet index",
+            "role": "jump to a letter",
+            "sel": ".az"
+          },
+          {
+            "name": "Search pair",
+            "role": "by name, or by phone digits",
+            "sel": ".cmd"
+          }
+        ]
+      },
+      {
+        "group": "Table",
+        "items": [
+          {
+            "name": "Column header",
+            "role": "sticky header",
+            "sel": ".hd"
+          },
+          {
+            "name": "Row",
+            "role": "one dealer",
+            "sel": "#tb .row",
+            "idx": 1
+          },
+          {
+            "name": "State mark",
+            "role": "active, intake, pending, inactive",
+            "sel": "#tb .row .mk",
+            "idx": 1
+          },
+          {
+            "name": "Package badge",
+            "role": "what they are subscribed to",
+            "sel": "#tb .row .bdg",
+            "idx": 0
+          },
+          {
+            "name": "Row actions",
+            "role": "edit, settings, site",
+            "sel": "#tb .row .c-act",
+            "idx": 1
+          }
+        ]
+      }
+    ]
+  },
+  "dealer-edit": {
+    "page": "staff/dealer-edit-gen11.html",
+    "title": "Dealer Edit",
+    "role": "the dealer file — seven zones, a rail, utilities and a commit bar",
+    "css": [
+      "staff/dealer-edit-gen11.css"
+    ],
+    "groups": [
+      {
+        "group": "Record chrome",
+        "items": [
+          {
+            "name": "Record head",
+            "role": "which dealer, and where else it lives",
+            "sel": ".head"
+          },
+          {
+            "name": "Zone rail",
+            "role": "the seven zones of the file",
+            "sel": ".rail"
+          },
+          {
+            "name": "Commit bar",
+            "role": "Save Dealer, over the workspace it commits",
+            "sel": ".savebar"
+          }
+        ]
+      },
+      {
+        "group": "Forms",
+        "items": [
+          {
+            "name": "Zone",
+            "role": "one zone of the record",
+            "sel": ".zone",
+            "idx": 0
+          },
+          {
+            "name": "Field",
+            "role": "label over control",
+            "sel": ".fw",
+            "idx": 0
+          },
+          {
+            "name": "Segmented control",
+            "role": "a small set of states",
+            "sel": ".seg",
+            "idx": 0
+          },
+          {
+            "name": "Option",
+            "role": "a checkbox with its consequence",
+            "sel": ".opt",
+            "idx": 0
+          }
+        ]
+      },
+      {
+        "group": "Utilities",
+        "items": [
+          {
+            "name": "Panel",
+            "role": "notes, options, locks",
+            "sel": ".panel",
+            "idx": 0
+          },
+          {
+            "name": "Danger panel",
+            "role": "the actions you cannot undo",
+            "sel": ".panel--danger"
+          }
+        ]
+      }
+    ]
+  },
+  "accounting": {
+    "page": "staff/accounting-view-all-gen11.html",
+    "title": "Accounting — View All",
+    "role": "money — a table where every column is a number someone owes",
+    "css": [
+      "staff/accounting-view-all-gen11.css"
+    ],
+    "groups": [
+      {
+        "group": "Summary",
+        "items": [
+          {
+            "name": "Metric strip",
+            "role": "billable, recurring, open, past due",
+            "sel": ".deck"
+          },
+          {
+            "name": "Metric tile",
+            "role": "one figure",
+            "sel": ".tile",
+            "idx": 1
+          },
+          {
+            "name": "Dark focal tile",
+            "role": "the figure the page is about",
+            "sel": ".tile",
+            "idx": 0
+          }
+        ]
+      },
+      {
+        "group": "Scope",
+        "items": [
+          {
+            "name": "Lane strip",
+            "role": "billable or all",
+            "sel": ".lanes"
+          },
+          {
+            "name": "Status strip",
+            "role": "active, pending, intake",
+            "sel": ".statuses"
+          },
+          {
+            "name": "Filter pair",
+            "role": "reseller and group",
+            "sel": ".cmd"
+          }
+        ]
+      },
+      {
+        "group": "Money table",
+        "items": [
+          {
+            "name": "Column header",
+            "role": "sticky header",
+            "sel": ".hd"
+          },
+          {
+            "name": "Row",
+            "role": "one dealer's billing",
+            "sel": "#tb .row",
+            "idx": 1
+          },
+          {
+            "name": "Payment cell",
+            "role": "amount, state dot and date",
+            "sel": "#tb .row .c-lp",
+            "idx": 1
+          },
+          {
+            "name": "Balance cell",
+            "role": "what is owed",
+            "sel": "#tb .row .c-bal",
+            "idx": 1
+          },
+          {
+            "name": "Row actions",
+            "role": "pay, history",
+            "sel": "#tb .row .c-act",
+            "idx": 1
+          }
+        ]
+      }
+    ]
+  },
+  "login": {
+    "page": "dealer/dealer-login-gen11.html",
+    "title": "Dealer Login",
+    "role": "the front door — the only page with no platform bar",
+    "css": [
+      "dealer/dealer-login-gen11.css"
+    ],
+    "groups": [
+      {
+        "group": "Front door",
+        "items": [
+          {
+            "name": "Brand panel",
+            "role": "who AAN is, and how to reach a person",
+            "sel": ".panel"
+          },
+          {
+            "name": "Mark",
+            "role": "the AAN mark at panel scale",
+            "sel": ".mark"
+          },
+          {
+            "name": "Sign-in form",
+            "role": "two fields and one action",
+            "sel": ".form__in"
+          },
+          {
+            "name": "Field",
+            "role": "label over control",
+            "sel": ".formrow",
+            "idx": 0
+          },
+          {
+            "name": "Password field",
+            "role": "with a reveal toggle inside it",
+            "sel": ".control--pw"
+          },
+          {
+            "name": "Primary action",
+            "role": "the one focal control on the page",
+            "sel": ".btn--primary"
+          },
+          {
+            "name": "Legal footer",
+            "role": "attached to the foot of the sheet",
+            "sel": ".legal"
+          }
+        ]
+      }
+    ]
+  }
+}

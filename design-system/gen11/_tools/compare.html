@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Proof — Single Lead action row, product vs catalogue</title>
+
+<!-- ══ THE PHASE-2 PROOF HARNESS ══════════════════════════════════════════
+     Renders one component twice — once inside the shipped page, once inside
+     the catalogue specimen host — cropped to the same window at the same
+     width, and prints every computed value side by side.
+
+     It is a tool, not a document: it proves the specimen architecture is
+     faithful before the rest of the catalogue is built on it. Open it after
+     any change to _specimen.css or gen-specimens.js.
+
+         design-system/gen11/_tools/compare.html?w=1440
+
+     Each frame is laid out at its full document height and pulled up by the
+     target's own offsetTop, so nothing is scrolled: a scrolled page moves its
+     sticky layers and would compare the component against a different
+     picture than the one the product shows.
+     ──────────────────────────────────────────────────────────────────── -->
+
+<style>
+  :root { --w: 1440px; }
+  html { background: #e7ebf1; }
+  body { margin: 0; font: 400 13px/1.5 "Archivo", system-ui, sans-serif; color: #0d1320; }
+  header { padding: 20px 24px 14px; }
+  h1 { margin: 0 0 6px; font-size: 17px; font-weight: 650; letter-spacing: -.01em; }
+  header p { margin: 0; max-width: 92ch; font-size: 12.5px; color: #576070; }
+  .lab {
+    display: flex; align-items: baseline; gap: 10px;
+    padding: 14px 24px 7px;
+    font: 700 11px/1 ui-monospace, monospace; letter-spacing: .1em; text-transform: uppercase; color: #697181;
+  }
+  .lab b { font: 700 11px/1 "Archivo", system-ui; letter-spacing: 0; text-transform: none; color: #0d1320; }
+  .lab i { font: 400 11px/1 ui-monospace, monospace; letter-spacing: 0; text-transform: none; color: #656e7d; }
+  .win {
+    position: relative; overflow: hidden;
+    width: var(--w); margin: 0 24px;
+    background: #fff; box-shadow: inset 0 0 0 1px #d8dee7;
+  }
+  .win iframe { position: absolute; left: 0; border: 0; width: var(--w); }
+  table { margin: 22px 24px 28px; border-collapse: collapse; font: 400 12px/1.45 ui-monospace, monospace; }
+  caption {
+    padding-bottom: 8px; text-align: left;
+    font: 700 11px/1 ui-monospace, monospace; letter-spacing: .1em; text-transform: uppercase; color: #697181;
+  }
+  th, td { padding: 4px 14px 4px 0; text-align: left; vertical-align: top; }
+  thead th { border-bottom: 1px solid #c5cbd5; font-weight: 700; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #697181; }
+  tbody th { font-weight: 400; color: #576070; }
+  tr.g td, tr.g th { border-top: 1px solid #e5e9ef; }
+  tbody th.k { font-weight: 700; color: #0d1320; padding-top: 10px; }
+  .ok  { color: #0e7b53; }
+  .bad { color: #c0392b; font-weight: 700; }
+  #verdict { margin: 0 24px 32px; padding: 12px 14px; border-radius: 8px; font: 500 13px/1.5 "Archivo", system-ui; }
+  #verdict.pass { background: #e4f4ec; color: #0b5c3f; box-shadow: inset 0 0 0 1px #b6dfca; }
+  #verdict.fail { background: #fdeceb; color: #8e2c21; box-shadow: inset 0 0 0 1px #f3c5c0; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Specimen fidelity — the Single Lead action row</h1>
+  <p>The same component twice at the same width: inside the shipped page, and inside the catalogue
+     specimen host. Same window, same crop, nothing scrolled. Every computed value is compared below;
+     any disagreement is a defect in the specimen host, never a tolerance to accept.</p>
+</header>
+
+<div class="lab">A · in the product <b>pages/dealer/all-leads-gen11.html</b> <i id="ai">…</i></div>
+<div class="win" id="winA"><iframe id="real" src="../../../pages/dealer/all-leads-gen11.html"></iframe></div>
+
+<div class="lab">B · in the catalogue <b>design-system/gen11/specimens/leads.html</b> <i id="bi">…</i></div>
+<div class="win" id="winB"><iframe id="spec" src="../specimens/leads.html"></iframe></div>
+
+<div id="verdict">measuring…</div>
+<table id="t"><caption>Computed values — product (A) vs catalogue (B)</caption>
+  <thead><tr><th>property</th><th>A · product</th><th>B · catalogue</th><th></th></tr></thead>
+  <tbody></tbody>
+</table>
+
+<script>
+const W = +(new URLSearchParams(location.search).get('w') || 1440);
+document.documentElement.style.setProperty('--w', W + 'px');
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const ready = f => new Promise(r => {
+  if (f.contentDocument && f.contentDocument.readyState === 'complete') r();
+  else f.addEventListener('load', r, { once: true });
+});
+
+/* PAD above the component and TALL the window height — the same for both
+   frames, so the crop itself can never flatter one of them. */
+const PAD = 26, TALL = 92;
+
+function frame(f, el) {
+  const d = f.contentDocument;
+  let top = 0, n = el;
+  while (n && n !== d.documentElement) { top += n.offsetTop; n = n.offsetParent; }
+  f.style.height = Math.max(d.documentElement.scrollHeight, top + 400) + 'px';
+  f.style.top = -(top - PAD) + 'px';
+  f.parentElement.style.height = TALL + 'px';
+}
+
+const PROPS = [
+  ['display', 'display'], ['gap', 'gap'], ['flex-wrap', 'flexWrap'], ['align-items', 'alignItems'],
+  ['font-size', 'fontSize'], ['font-family', 'fontFamily'],
+  ['width', '__w'], ['height', '__h'],
+  ['padding', 'padding'], ['border-radius', 'borderRadius'],
+  ['font-weight', 'fontWeight'], ['letter-spacing', 'letterSpacing'],
+  ['background-color', 'backgroundColor'], ['color', 'color'],
+  ['box-shadow', 'boxShadow'], ['border', 'border'],
+];
+
+function read(el) {
+  const c = getComputedStyle(el), b = el.getBoundingClientRect(), o = {};
+  for (const pair of PROPS) {
+    const p = pair[1];
+    o[p] = p === '__w' ? b.width.toFixed(1) + 'px'
+         : p === '__h' ? b.height.toFixed(1) + 'px'
+         : c[p];
+  }
+  o.fontFamily = o.fontFamily.split(',')[0].replace(/"/g, '');
+  return o;
+}
+
+/* The row as All Leads actually ships it: one primary and four neutrals.
+   No destructive action occurs here, so none is compared — a proof that
+   checks for something the product does not have is not a proof. */
+const TARGETS = [
+  ['the action row', '.veh__acts'],
+  ['primary action', '.veh__acts .btn--primary'],
+  ['first neutral action', '.veh__acts .btn--sheet'],
+  ['last neutral action', '.veh__acts .btn--sheet:last-child'],
+];
+
+(async () => {
+  const A = document.getElementById('real'), B = document.getElementById('spec');
+  await Promise.all([ready(A), ready(B)]);
+  await sleep(500);
+
+  /* A: open a lead the way a person does — click a row, let the expansion run */
+  const ad = A.contentDocument;
+  const row = [...ad.querySelectorAll('#tb .row')][1];
+  row.click();
+  await sleep(1400);
+
+  const aRoot = ad.querySelector('.exp.exp--open') || ad.querySelector('.exp');
+  const bRoot = B.contentDocument;
+  frame(A, aRoot.querySelector('.veh__acts'));
+  frame(B, bRoot.querySelector('.veh__acts'));
+  document.getElementById('ai').textContent = W + '×' + TALL + ' crop · lead expanded in flow';
+  document.getElementById('bi').textContent = W + '×' + TALL + ' crop · specimen host, same stack';
+
+  const tb = document.querySelector('#t tbody');
+  let diffs = 0, checks = 0;
+  for (const t of TARGETS) {
+    const label = t[0], sel = t[1];
+    const ae = aRoot.querySelector(sel), be = bRoot.querySelector(sel);
+    const kr = tb.insertRow();
+    kr.className = 'g';
+    kr.insertCell().outerHTML = '<th class="k" colspan="4">' + label + '  ' + sel + '</th>';
+    if (!ae || !be) {
+      const r = tb.insertRow();
+      r.insertCell().outerHTML = '<th>present</th>';
+      r.insertCell().textContent = ae ? 'yes' : 'MISSING';
+      r.insertCell().textContent = be ? 'yes' : 'MISSING';
+      r.insertCell().outerHTML = '<td class="bad">x</td>';
+      diffs++; continue;
+    }
+    const a = read(ae), b = read(be);
+    for (const pair of PROPS) {
+      const name = pair[0], p = pair[1];
+      const same = a[p] === b[p];
+      checks++; if (!same) diffs++;
+      const r = tb.insertRow();
+      r.insertCell().outerHTML = '<th>' + name + '</th>';
+      r.insertCell().textContent = a[p];
+      r.insertCell().textContent = b[p];
+      r.insertCell().outerHTML = '<td class="' + (same ? 'ok' : 'bad') + '">' + (same ? '=' : 'x') + '</td>';
+    }
+  }
+  /* separation, measured rather than declared: the real distance between
+     adjacent controls. The contract is 8px for standalone actions, and a
+     specimen that reported the same `gap` while laying out differently would
+     still be wrong. */
+  function seps(root) {
+    const k = [...root.querySelector('.veh__acts').children];
+    const out = [];
+    for (let i = 1; i < k.length; i++) {
+      out.push((k[i].getBoundingClientRect().left -
+                k[i - 1].getBoundingClientRect().right).toFixed(1) + 'px');
+    }
+    return out;
+  }
+  {
+    const kr = tb.insertRow();
+    kr.className = 'g';
+    kr.insertCell().outerHTML = '<th class="k" colspan="4">separation  measured between adjacent controls</th>';
+    const sa = seps(aRoot), sb = seps(bRoot);
+    for (let i = 0; i < Math.max(sa.length, sb.length); i++) {
+      const same = sa[i] === sb[i];
+      checks++; if (!same) diffs++;
+      const r = tb.insertRow();
+      r.insertCell().outerHTML = '<th>control ' + (i + 1) + ' → ' + (i + 2) + '</th>';
+      r.insertCell().textContent = sa[i] || '—';
+      r.insertCell().textContent = sb[i] || '—';
+      r.insertCell().outerHTML = '<td class="' + (same ? 'ok' : 'bad') + '">' + (same ? '=' : 'x') + '</td>';
+    }
+  }
+
+  const v = document.getElementById('verdict');
+  v.className = diffs ? 'fail' : 'pass';
+  v.textContent = diffs
+    ? diffs + ' of ' + checks + ' computed values disagree. The specimen host is not faithful — fix it before building on it.'
+    : 'IDENTICAL — ' + checks + ' computed values across ' + TARGETS.length +
+      ' elements plus measured separation, no disagreement. The catalogue renders the product, not a copy of it.';
+  document.title = (diffs ? 'FAIL' : 'PASS') + ' — specimen fidelity, ' + W;
+})();
+</script>
+</body></html>

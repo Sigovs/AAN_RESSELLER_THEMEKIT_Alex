@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en" data-theme="light" class="sp-doc">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Specimens — Dealer Edit</title>
+
+<!-- ══ GENERATED FILE ═════════════════════════════════════════════════════
+     design-system/gen11/_tools/gen-specimens.js writes this from fragments
+     pulled out of the running product. Do not hand-edit: the next run will
+     overwrite it. Change the specimen list in _tools/spec.json instead.
+
+     THE STYLESHEETS BELOW ARE THE PRODUCT'S OWN, IN THE PRODUCT'S OWN ORDER.
+     Copied from pages/staff/dealer-edit-gen11.html. Not a bundle, not an extract —
+     the same files the shipped page loads. A specimen therefore cannot drift
+     from the product: if the product changes, so does the specimen.
+     ─────────────────────────────────────────────────────────────────── -->
+<link rel="stylesheet" href="../../../pages/staff/dealer-edit-gen11.css?b=muo5f98w">
+<link rel="stylesheet" href="../../../pages/_aan-family.css?b=muo5f98w">
+<link rel="stylesheet" href="../../../pages/_aan-components.css?b=muo5f98w">
+<!-- catalogue chrome last; every rule in it is namespaced sp-* -->
+<link rel="stylesheet" href="_specimen.css?b=muo5f98w">
+<script src="_specimen.js?b=muo5f98w" defer></script>
+</head>
+
+<body class="sp-host" data-specimen-id="dealer-edit">
+
+<!-- THIS PAGE'S OWN ICON SPRITE, copied verbatim from pages/staff/dealer-edit-gen11.html.
+     Not a shared one: every Gen 11 page inlines a different set — All
+     Vehicles 34 symbols, Single Ticket 24, Dealer Edit 16 — and a
+     catalogue built on one page's sprite leaves the other pages' icons
+     pointing at symbols that do not exist. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.35-4.35"></path></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"></path></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></symbol>
+  <symbol id="i-unlock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 7.5-2"></path></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"></path><circle cx="12" cy="12" r="3"></circle></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></symbol>
+  <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"></ellipse><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"></path></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"></path></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"></path><path d="M12 9v4M12 17h.01"></path></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8"></path></symbol>
+  <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="4"></circle><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"></path></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></symbol>
+</svg>
+
+<!-- Each specimen carries the real ancestor chain it was found in. Gen 11
+     scopes a great deal of its CSS (`.exp .veh__acts`, `.row > .th`,
+     `.top .nav__b`), so a leaf lifted out of its context renders unstyled.
+     The chain is listed under CONTEXT in every provenance block below.
+     Ids repeat across specimens on this page; that is invalid HTML but CSS
+     id selectors still match, which is what a specimen host needs. -->
+
+<h2 class="sp-group">Record chrome</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Record head</span>
+    <span class="sp-role">which dealer, and where else it lives</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1396x96">
+<div id="app" class="app" data-sp-chain><header class="head" id="head"><a class="head__back" href="../../../pages/staff/manage-dealers-gen11.html" title="Back to Manage Dealers" aria-label="Back to Manage Dealers"><svg class="i" aria-hidden="true"><use href="#i-left"></use></svg></a><div class="head__id"><div class="head__row"><h1>Edit Dealer — Miller Motorcars</h1><span class="head__n">#186</span><span class="chip chip--green">Active</span><span class="chip chip--blue">Billing ✓</span><a class="dbchip" href="https://newbackendcert.aandemo.com/manage/dealers/186/setup#tab-dbsetup" title="Dealer database — Setup → DB Setup"><svg class="i" aria-hidden="true"><use href="#i-db"></use></svg>millermotorcars · Server 2</a></div><p class="head__audit"><span><b>Created</b> <i>12/09/2010</i></span><span><b>Modified</b> <i>03/06/2026</i></span></p></div><nav class="head__quick" aria-label="Dealer quick links"><a href="https://newbackendcert.aandemo.com/manage/dealers/186/setup">Setup</a><span class="sep" aria-hidden="true">·</span><a href="https://newbackendcert.aandemo.com/manage/packages">Packages</a><span class="sep" aria-hidden="true">·</span><a href="https://newbackendcert.aandemo.com/manage/dealers/186/cp" target="_blank" rel="noopener">Control Panel<svg class="i" aria-hidden="true"><use href="#i-ext"></use></svg></a><span class="sep" aria-hidden="true">·</span><a href="https://www.millermotorcars.com" target="_blank" rel="noopener">www.millermotorcars.com<svg class="i" aria-hidden="true"><use href="#i-ext"></use></svg></a></nav></header></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>header.head</dd>
+    <dt>Context</dt><dd>.app</dd>
+    <dt>Source</dt><dd>pages/staff/dealer-edit-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Dealer Edit</dd>
+    <dt>Measured</dt><dd>1396x96 · padding 12px 24px · gap 16px · radius 0px 0px 14px 14px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Zone rail</span>
+    <span class="sp-role">the seven zones of the file</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="184x342.4">
+<div id="app" class="app" data-sp-chain><div id="body" class="body" data-sp-chain><nav class="rail ui-nav" id="rail" aria-label="Dealer file sections"><button class="rail__b ui-nav__i rail__b--on ui-nav__i--on" type="button" data-zone="zIdent" aria-current="true"><span class="dot dot--green" aria-hidden="true"></span><span>Identity &amp; Status</span><span class="vh">— filled</span></button><button class="rail__b ui-nav__i" type="button" data-zone="zPeople" aria-current="false"><span class="dot dot--green" aria-hidden="true"></span><span>People</span><span class="vh">— filled</span></button><button class="rail__b ui-nav__i" type="button" data-zone="zAccess" aria-current="false"><span class="dot dot--green" aria-hidden="true"></span><span>Backend Access</span><span class="vh">— filled</span></button><button class="rail__b ui-nav__i" type="button" data-zone="zComm" aria-current="false"><span class="dot dot--grey" aria-hidden="true"></span><span>Commercials</span><span class="vh">— empty</span></button><button class="rail__b ui-nav__i" type="button" data-zone="zInteg" aria-current="false"><span class="dot dot--grey" aria-hidden="true"></span><span>Integrations</span><span class="vh">— empty</span></button><button class="rail__b ui-nav__i" type="button" data-zone="zWeb" aria-current="false"><span class="dot dot--amber" aria-hidden="true"></span><span>Web &amp; Domains</span><span class="vh">— partly filled</span></button><button class="rail__b ui-nav__i" type="button" data-zone="zEmail" aria-current="false"><span class="dot dot--grey" aria-hidden="true"></span><span>Email Routing</span><span class="vh">— empty</span></button><button class="rail__b ui-nav__i" type="button" data-zone="zInv" aria-current="false"><span class="dot dot--grey" aria-hidden="true"></span><span>Inventory &amp; DMS</span><span class="vh">— empty</span></button><div class="rail__sep"></div><span class="rail__hint">Jump: <kbd>/</kbd></span></nav></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>nav.rail.ui-nav</dd>
+    <dt>Context</dt><dd>.app › .body</dd>
+    <dt>Source</dt><dd>pages/staff/dealer-edit-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Dealer Edit</dd>
+    <dt>Measured</dt><dd>184x342 · padding 8px · gap 2px · radius 12px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Commit bar</span>
+    <span class="sp-role">Save Dealer, over the workspace it commits</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="1428x52">
+<div id="app" class="app" data-sp-chain><div class="savebar" id="savebar" role="status">
+    <span class="savebar__dirty" id="dirty" hidden=""><svg class="i"><use href="#i-alert"></use></svg> Unsaved changes</span>
+    <span class="savebar__sp"></span>
+    <button class="btn btn--quiet" type="button" id="discard" hidden="" title="Throw away unsaved edits and reload the stored record">Discard</button>
+    <button class="btn btn--sheet" type="button" id="temp" hidden="">Temporary Save</button>
+    <button class="btn btn--primary" type="button" id="save">Save Dealer</button>
+    <span class="savebar__kbd"><kbd>Ctrl</kbd>+<kbd>S</kbd></span>
+  </div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.savebar</dd>
+    <dt>Context</dt><dd>.app</dd>
+    <dt>Source</dt><dd>pages/staff/dealer-edit-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Dealer Edit</dd>
+    <dt>Measured</dt><dd>1428x52 · padding 10px 24px · gap 10px 8px · radius 0px</dd>
+  </dl>
+</section>
+
+<h2 class="sp-group">Forms</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Zone</span>
+    <span class="sp-role">one zone of the record</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="908x930.5">
+<div id="app" class="app" data-sp-chain><div id="body" class="body" data-sp-chain><div id="zones" class="zones" data-sp-chain><section class="zone" id="zIdent" aria-labelledby="zIdent-h"><header class="zone__hd"><h2 class="zone__t" id="zIdent-h">Identity &amp; Status</h2><span class="zone__s">company · location · reseller · status</span></header><div class="fg"><div class="fw"><label class="fl" for="f1">Account Status</label><select class="fld" id="f1" data-k="f.status"><option value="T">Client Intake</option><option value="P">Pending</option><option value="A" selected="">Active</option><option value="I">Inactive</option></select></div><div class="fw"><span class="fl" id="f2-l">Billing Status</span><span class="opt opt--bare"><input type="checkbox" class="ck" id="f2" data-k="flags.bill_stat" aria-labelledby="f2-l" checked=""></span><p class="fh">Admin only — bill_stat</p></div><div class="fw"><label class="fl fl--req" for="f3">Reseller</label><select class="fld" id="f3" data-k="f.reseller_id"><option value="">— choose —</option><option value="1">All Auto Network</option><option value="65">All Auto Network - A X A Boston</option><option value="79">All Auto Network - Acton Auto</option><option value="74">All Auto Network - Anthony Labalestra</option><option value="58">All Auto Network - Aston Martin Summit</option><option value="71">All Auto Network - Bentley Long Island</option><option value="68">All Auto Network - Bul Auto Sales</option><option value="72">All Auto Network - Cauley Ferrari</option><option value="54">All Auto Network - CFL</option><option value="78">All Auto Network - CMC</option><option value="46">All Auto Network - EAG</option><option value="67">All Auto Network - FC Kerbeck</option><option value="73">All Auto Network - Fields Auto Group</option><option value="39">All Auto Network - FMoA</option><option value="49">All Auto Network - Glenview Luxury Imports</option><option value="47">All Auto Network - Gravity</option><option value="64">All Auto Network - Group Seven Automotive</option><option value="60">All Auto Network - Lawrence Motorsport</option><option value="36">All Auto Network - LFSC</option><option value="51">All Auto Network - Long Island Sports Cars</option><option value="55">All Auto Network - Marshall Goldman</option><option value="62">All Auto Network - McLaren and Rimac Boston</option><option value="42" selected="">All Auto Network - Miller</option><option value="61">All Auto Network - Naples</option><option value="59">All Auto Network - NYC Motorcars</option><option value="69">All Auto Network - OGara Coach</option><option value="48">All Auto Network - Paul Miller</option><option value="66">All Auto Network - Platinum Cars</option><option value="57">All Auto Network - S &amp; E Auto Sales</option><option value="56">All Auto Network - Shift Digital</option><option value="53">All Auto Network - Summit</option><option value="77">All Auto Network - TLC</option><option value="76">All Auto Network - TLC LG</option><option value="75">All Auto Network - TLC WC</option><option value="70">All Auto Network - Towbin Motorcars</option><option value="52">All Auto Network - zDev</option><option value="80">All Auto Network - ZT AutoGroup</option><option value="38">Aronson Advertising</option><option value="40">Aronson Advertising - Ewald</option><option value="32">Arrowhead Advertising</option><option value="25">Auto Conversion</option><option value="34">BBA &amp; Beyond</option><option value="21">Blugroup KS</option><option value="13">BluSolutions GA</option><option value="2">BluSolutions Texas</option><option value="18">Cars By The Millions</option><option value="43">Chicago Consortium</option><option value="20">CMP Development</option><option value="31">Cypress Alliance</option><option value="41">Eikon Mobile</option><option value="44">Ella's Bubbles</option><option value="33">Ensure Productions</option><option value="7">esolutions</option><option value="14">GD2</option><option value="45">Guidance Development</option><option value="35">Infinity Publishing</option><option value="50">Lifecycle Digital Marketing</option><option value="22">Marni McClennan</option><option value="6">Matrix Nationwide Inc.</option><option value="26">Mogulweb.com</option><option value="27">Mojo Internet Marketing Company</option><option value="8">Omnibus Advertising</option><option value="9">Premier Solutionz</option><option value="29">Redbumper LLC</option><option value="30">Redline Edition</option><option value="37">Simply Dealer</option><option value="23">Source One Services</option><option value="28">Steinberg Marketing</option><option value="19">The BluSolutions Group, Inc.</option><option value="12">The Real BluSolutions, Inc. DBA - BluSolutions</option></select></div><div class="fw"><label class="fl" for="f4">OEM</label><select class="fld" id="f4" data-k="f.oem_id"><option value="0" selected="">— none —</option><option value="1">Shift Digital-Maserati</option></select></div><div class="fw"><label class="fl fl--req" for="f5">Company Name</label><input class="fld" id="f5" type="text" data-k="f.company_name" placeholder="" value="Miller Motorcars"></div><div class="fw"><label class="fl fl--req" for="f6">Domain</label><input class="fld" id="f6" type="text" data-k="f.web" placeholder="dealer-domain.com" value="www.millermotorcars.com"></div><div class="fw"><label class="fl fl--req" for="f7">Multi Dealer</label><span class="seg" role="radiogroup" aria-label="Multi Dealer"><label class="seg__o"><input type="radio" name="f.multi_dealer" value="Y" data-k="f.multi_dealer" id="f7"><span>Yes</span></label><label class="seg__o"><input type="radio" name="f.multi_dealer" value="N" data-k="f.multi_dealer" checked=""><span>No</span></label></span></div><div class="fw"><label class="fl fl--req" for="f8">Address</label><input class="fld" id="f8" type="text" data-k="f.address" placeholder="" value="342 West Putnam"></div><div class="fw"><label class="fl fl--req" for="f9">City</label><input class="fld" id="f9" type="text" data-k="f.city" placeholder="" value="Greenwich"></div><div class="fw"><label class="fl fl--req" for="f10">State</label><select class="fld" id="f10" data-k="f.state"><option value="">—</option><option value="AL">AL</option><option value="AK">AK</option><option value="AZ">AZ</option><option value="AR">AR</option><option value="CA">CA</option><option value="CO">CO</option><option value="CT" selected="">CT</option><option value="DE">DE</option><option value="DC">DC</option><option value="FL">FL</option><option value="GA">GA</option><option value="HI">HI</option><option value="ID">ID</option><option value="IL">IL</option><option value="IN">IN</option><option value="IA">IA</option><option value="KS">KS</option><option value="KY">KY</option><option value="LA">LA</option><option value="ME">ME</option><option value="MD">MD</option><option value="MA">MA</option><option value="MI">MI</option><option value="MN">MN</option><option value="MS">MS</option><option value="MO">MO</option><option value="MT">MT</option><option value="NE">NE</option><option value="NV">NV</option><option value="NH">NH</option><option value="NJ">NJ</option><option value="NM">NM</option><option value="NY">NY</option><option value="NC">NC</option><option value="ND">ND</option><option value="OH">OH</option><option value="OK">OK</option><option value="OR">OR</option><option value="PA">PA</option><option value="RI">RI</option><option value="SC">SC</option><option value="SD">SD</option><option value="TN">TN</option><option value="TX">TX</option><option value="UT">UT</option><option value="VT">VT</option><option value="VA">VA</option><option value="WA">WA</option><option value="WV">WV</option><option value="WI">WI</option><option value="WY">WY</option></select></div><div class="fw"><label class="fl fl--req" for="f11">ZIP</label><input class="fld" id="f11" type="text" data-k="f.zip" placeholder="" value="06803"></div><div class="fw"><label class="fl fl--req" for="f12">Phone</label><input class="fld" id="f12" type="text" data-k="f.phone" placeholder="" value="203.629.3890"></div><div class="fw"><label class="fl" for="f13">Fax</label><input class="fld" id="f13" type="text" data-k="f.fax" placeholder="" value=""></div><div class="fw"><label class="fl fl--req" for="f14">Start Date</label><input class="fld fld--num" id="f14" type="date" data-k="f.start_date" value="2010-12-09"></div><div class="fsec">Projects / My Garage</div><div class="fw"><label class="fl" for="f16">My Garage URL</label><input class="fld" id="f16" type="text" data-k="f.carfinder" placeholder="" value="my-garage/"></div><div class="fw"><label class="fl" for="f17">OpenProject URL</label><input class="fld" id="f17" type="text" data-k="f.openproject_url" placeholder="" value=""></div><div class="fw"><label class="fl" for="f18">Testing Notes URL</label><input class="fld" id="f18" type="text" data-k="f.project_testing_url" placeholder="" value=""></div><div class="fw fw--span"><div class="projact"><button class="btn btn--sheet btn--sm" type="button" data-confirm="Project does Not exist. Create it?">Create Redesign Project</button><button class="btn btn--sheet btn--sm" type="button" data-confirm="Testing Notes do not exist. Create them?">Create Unified Project Testing Notes</button><span class="projact__hint">Launches the OpenProject provisioning job; the URL fills in on success.</span></div></div></div></section></div></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>section.zone</dd>
+    <dt>Context</dt><dd>.app › .body › .zones</dd>
+    <dt>Source</dt><dd>pages/staff/dealer-edit-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Dealer Edit</dd>
+    <dt>Measured</dt><dd>908x931 · padding 0px 24px 32px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Field</span>
+    <span class="sp-role">label over control</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="418x63.85">
+<div id="app" class="app" data-sp-chain><div id="body" class="body" data-sp-chain><div id="zones" class="zones" data-sp-chain><section id="zIdent" class="zone" aria-labelledby="zIdent-h" data-sp-chain><div class="fg" data-sp-chain><div class="fw"><label class="fl" for="f1">Account Status</label><select class="fld" id="f1" data-k="f.status"><option value="T">Client Intake</option><option value="P">Pending</option><option value="A" selected="">Active</option><option value="I">Inactive</option></select></div></div></section></div></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>div.fw</dd>
+    <dt>Context</dt><dd>.app › .body › .zones › .zone › .fg</dd>
+    <dt>Source</dt><dd>pages/staff/dealer-edit-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Dealer Edit</dd>
+    <dt>Measured</dt><dd>418x64 · padding 0px · radius 0px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Segmented control</span>
+    <span class="sp-role">a small set of states</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="96.1x36">
+<div id="app" class="app" data-sp-chain><div id="body" class="body" data-sp-chain><div id="zones" class="zones" data-sp-chain><section id="zIdent" class="zone" aria-labelledby="zIdent-h" data-sp-chain><div class="fg" data-sp-chain><div class="fw" data-sp-chain><span class="seg" role="radiogroup" aria-label="Multi Dealer"><label class="seg__o"><input type="radio" name="f.multi_dealer" value="Y" data-k="f.multi_dealer" id="f7"><span>Yes</span></label><label class="seg__o"><input type="radio" name="f.multi_dealer" value="N" data-k="f.multi_dealer" checked=""><span>No</span></label></span></div></div></section></div></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>span.seg</dd>
+    <dt>Context</dt><dd>.app › .body › .zones › .zone › .fg › .fw</dd>
+    <dt>Source</dt><dd>pages/staff/dealer-edit-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Dealer Edit</dd>
+    <dt>Measured</dt><dd>96x36 · padding 3px · gap 3px 6px · radius 999px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Option</span>
+    <span class="sp-role">a checkbox with its consequence</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="19x40">
+<div id="app" class="app" data-sp-chain><div id="body" class="body" data-sp-chain><div id="zones" class="zones" data-sp-chain><section id="zIdent" class="zone" aria-labelledby="zIdent-h" data-sp-chain><div class="fg" data-sp-chain><div class="fw" data-sp-chain><span class="opt opt--bare"><input type="checkbox" class="ck" id="f2" data-k="flags.bill_stat" aria-labelledby="f2-l" checked=""></span></div></div></section></div></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>span.opt.opt--bare</dd>
+    <dt>Context</dt><dd>.app › .body › .zones › .zone › .fg › .fw</dd>
+    <dt>Source</dt><dd>pages/staff/dealer-edit-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Dealer Edit</dd>
+    <dt>Measured</dt><dd>19x40 · padding 0px 0px 0px 2px · gap 8px · radius 0px</dd>
+  </dl>
+</section>
+
+<h2 class="sp-group">Utilities</h2>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Panel</span>
+    <span class="sp-role">notes, options, locks</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="272x227.8">
+<div id="app" class="app" data-sp-chain><div id="body" class="body" data-sp-chain><aside id="side" class="side" aria-label="Notes, options and locks" data-sp-chain><section class="panel"><div class="panel__hd">Notes<span class="panel__n">1</span></div><div class="panel__bd"><div class="notes"><div class="note"><span class="note__who">06/24/22 2:06 pm — Karen Conrad</span><span class="note__txt">SEO Marketing Program</span></div></div><textarea class="fld fld--area" rows="3" data-k="note" placeholder="New note (appended on save)…" aria-label="New note"></textarea><button class="addb" type="button" data-act="add-note" style="margin-top:8px">Add Comment</button></div></section></aside></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>section.panel</dd>
+    <dt>Context</dt><dd>.app › .body › .side</dd>
+    <dt>Source</dt><dd>pages/staff/dealer-edit-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Dealer Edit</dd>
+    <dt>Measured</dt><dd>272x228 · padding 0px · radius 14px</dd>
+  </dl>
+</section>
+
+<section class="sp">
+  <div class="sp-head">
+    <span class="sp-name">Danger panel</span>
+    <span class="sp-role">the actions you cannot undo</span>
+  </div>
+  <div class="sp-stage sp-stage--bare" data-sp-box="272x132.95">
+<div id="app" class="app" data-sp-chain><div id="body" class="body" data-sp-chain><aside id="side" class="side" aria-label="Notes, options and locks" data-sp-chain><section class="panel panel--danger"><div class="panel__hd">Danger &amp; Locks</div><div class="panel__bd panel__bd--stack"><button class="btn btn--sm btn--lock" type="button" data-act="lock"><svg class="i" aria-hidden="true"><use href="#i-lock"></use></svg> Save + Lock account</button><p class="panel__hint">Locked accounts reject edits from non-admins (legacy <span class="mono">locked_by</span> parity)</p></div></section></aside></div></div>
+  </div>
+  <dl class="sp-prov">
+    <dt>Selector</dt><dd>section.panel.panel--danger</dd>
+    <dt>Context</dt><dd>.app › .body › .side</dd>
+    <dt>Source</dt><dd>pages/staff/dealer-edit-gen11.css · pages/_aan-family.css · pages/_aan-components.css</dd>
+    <dt>Used on</dt><dd class="sp-plain">Dealer Edit</dd>
+    <dt>Measured</dt><dd>272x133 · padding 0px · radius 14px</dd>
+  </dl>
+</section>
+
+</body>
+</html>
