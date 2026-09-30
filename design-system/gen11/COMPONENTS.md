@@ -363,10 +363,26 @@ four ragged edges; above, they produce two.
 | Property | Value |
 |---|---|
 | Surface | `--sheet`, r `--r-card` 14px, `--sh-soft`, min-width 268–272px |
+| **Max width** | `min(420px, calc(100vw - --s6))` — a menu must never size to `max-content` |
 | Open | `.pop.pop--open { display: block }` — **paired selector**, not order-dependent |
 | Alignment | `.pop--right` → right edge locked to the trigger |
 | Item | `.pop__it` — `flex`, `gap: 10px`, pad `6–7px 8px`, r8, hover `--wash` |
 | Layer | `--z-menu` 40 |
+
+### 8.0 Anchoring — `fitPop()`
+
+A `.pop` is **left-anchored to its trigger** by default. A facet sitting in the
+right half of a toolbar therefore runs past the workspace edge, and the
+workspace clips it: All Vehicles' Price filter opened 407px wide at x=1088 and
+lost 105px of its quick-range buttons at 1440.
+
+`fitPop(p)` flips a panel to **right-anchored when, and only when, it would
+overflow its workspace**. Measured after: every facet on All Vehicles and All
+Leads opens fully inside the field — Columns and Price flip, Make / Model / Year
+/ Sort stay left-anchored.
+
+The 420px cap above is the other half of the same fix. The clip was never the
+defect; it only made the missing cap visible.
 
 ### 8.1 Viewport-aware placement (the Columns panel)
 
@@ -414,6 +430,14 @@ sub-nav). Present on **7 pages**.
 
 **Variance:** All Vehicles uses `8px 10px` padding and a 10px gap against
 `6px 10px` / 8px elsewhere. Minor drift; take the 6/8 values.
+
+**`.mn__it` is exempt from the blanket centring rule — deliberately.** It is a
+full-width row in a column of choices, not an inline object, so it keeps
+**block-level** `display: flex; width: 100%` and takes only the vertical
+centring. When it was swept into the `inline-flex` list, every `.mn` laid its
+items out on one line — All Leads' bulk-assign menu put all fourteen dealers on
+a single 2426px row, 1662px past the workspace clip, and eleven of them became
+unreachable. See RULES §1.5.
 
 ---
 

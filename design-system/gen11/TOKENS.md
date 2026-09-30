@@ -9,7 +9,7 @@ difference is recorded as a **role** (deliberate, per-archetype) or as an
 **exception** (genuine inconsistency), and is never averaged away.
 
 - Source of truth: `pages/_aan-family.css`, `pages/_aan-components.css`
-- Extracted from: `28db54c`
+- Extracted from: `4be2ce7`
 - Tokens found: **193**. Identical on every page that declares them: **188**.
   Varying: **5** (`--mono`, `--dock`, `--row`, `--stick-total`, `--anchor-gap`).
 

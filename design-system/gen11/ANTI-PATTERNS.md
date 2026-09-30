@@ -60,10 +60,18 @@ No 1px/2px/3px gaps, no negative margins to fake grouping. 8px minimum.
 the hairline while two-line labels floated above it.
 **Instead:** centre it.
 
-### ❌ NO flattening a grid-centred control to flex
-**Evidence:** `.seg__b` is `inline-grid; place-items: center`. A blanket
+### ❌ NO sweeping a component into a blanket layout rule without checking what it is
+A rule that sets `display` on a list of classes changes the layout model of every
+one of them. Twice now that has broken a component that was already correct.
+**Evidence 1:** `.seg__b` is `inline-grid; place-items: center`. A blanket
 `inline-flex; align-items: center` rule kept the vertical centring and discarded
 the horizontal — every icon sat against the left edge of its slot.
+**Evidence 2:** `.mn__it` is a full-width row. The same rule made it
+`inline-flex`, so every menu laid out on one line — All Leads' bulk-assign menu
+became a single **2426px** row, **1662px** past the workspace clip, and eleven of
+its fourteen dealers were unreachable.
+**Instead:** a shared rule may set colour, type and spacing freely; it sets
+`display` only on components you have checked are the same kind of object.
 
 ---
 
@@ -149,6 +157,12 @@ A selected row rests at `stack + anchor-gap`, a named position.
 **Evidence:** the page reserved a hard-coded 84px against bars that measure 48px
 and 52px.
 **Instead:** measure the bar, publish `--savebar-h`, re-measure on resize.
+
+### ❌ NO menu that sizes to `max-content`
+**Evidence:** with no `max-width`, a menu grew to its longest label and the
+workspace clipped the overflow.
+**Instead:** `.pop { max-width: min(420px, calc(100vw - --s6)) }`, and flip the
+anchor side when the panel would overflow its workspace.
 
 ### ❌ NO popover that cannot be reached
 **Evidence:** at 1366×610 the panel ran past the bottom edge and Reset was

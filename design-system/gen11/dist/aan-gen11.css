@@ -3,8 +3,8 @@
  * GENERATED FILE. Do not edit by hand.
  *
  * Source of truth : pages/_aan-family.css + pages/_aan-components.css
- * Generated from  : 28db54cb6af409293cbf31324a9c8042b4ae310d
- * Short           : 28db54c
+ * Generated from  : 2e27dd182503f8fc41d8b61b1dc8e476f886bd23
+ * Short           : 2e27dd1
  * Generated on    : 2026-09-29
  *
  * Regenerate with : bash design-system/gen11/dist/build.sh
@@ -741,6 +741,22 @@
 .app > .head { margin-top: 12px; margin-bottom: 24px; }
 .app > .bento { margin-bottom: 24px; }
 
+/* ── 21 · a menu is a column of choices, not a line of them ──────────────
+   An absolutely-positioned popover sizes to max-content, and `.mn__it`'s
+   `width: 100%` cannot constrain that. Measured on All Leads in bulk-select:
+   the Assign menu's fourteen dealer names rendered the popover **2426px
+   wide** — 1662px past the workspace's `overflow: clip`, so the menu was
+   cut in half and most of the dealers were unreachable.
+
+   The cap is what was missing; the clip was only what made it visible. */
+.pop {
+  max-width: min(420px, calc(100vw - var(--s6)));
+}
+.mn__it {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
 
 /* ==================================================================
    PART 2 of 2 — pages/_aan-components.css
@@ -1137,11 +1153,23 @@ input, textarea, select { font-weight: 400; }
    edge of its slot. */
 .btn, .sel, .tl, .tag, .bdg, .badge, .chip, .pill, .lane,
 .ui-view, .ui-filter, .ui-nav__i, .ui-ctl, .facet__b, .kbd, kbd, .tbtn,
-.rlink, .mn__it, .gl, .nav__b {
+.rlink, .gl, .nav__b {
   display: inline-flex;
   align-items: center;
   line-height: 1;
 }
+/* `.mn__it` is deliberately NOT in that list. A menu item is a full-width row
+   in a column of choices, so it keeps the BLOCK-level flex it already had —
+   `inline-flex` put all fourteen dealers of All Leads’ bulk-assign menu on
+   one line, 2426px wide, and the workspace’s clip then cut off eleven of
+   them. It still gets the vertical centring this rule exists for. */
+.mn__it {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  line-height: 1.25;
+}
+
 /* vertical only: horizontal placement stays whatever each object already had,
    so a card's caps label does not slide to the middle of its card */
 .btn, .sel, .tbtn, .kbd, kbd { justify-content: center; }

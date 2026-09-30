@@ -57,10 +57,20 @@ Text inside a pill, chip, badge, button, lane, nav item or table-header cell is
 optically centred on its box. Never bottom-aligned, never baseline-aligned inside
 a control.
 
-The segmented control (`.seg__b`) is the exception in mechanism only: it centres
-with `display: inline-grid; place-items: center` and must **not** be flattened to
-`inline-flex` with `align-items` alone — that keeps the vertical centring and
-throws away the horizontal.
+**Two components are exempt from the blanket `inline-flex` treatment, and both
+exemptions are load-bearing:**
+
+- `.seg__b` centres with `display: inline-grid; place-items: center`. Flattening
+  it to `inline-flex` with `align-items` alone keeps the vertical centring and
+  throws away the horizontal — every icon ends up against the left edge of its
+  slot.
+- `.mn__it` is a **full-width row** in a column of choices. `inline-flex` laid
+  every menu out on one line; All Leads' bulk-assign menu became a single 2426px
+  row and the workspace clip made eleven of its fourteen items unreachable.
+
+**The general rule:** vertical centring is applied to *inline* objects. Before
+adding a class to that list, check whether the component is a row, a grid or a
+full-width control — if it is, give it its own rule instead.
 
 ---
 

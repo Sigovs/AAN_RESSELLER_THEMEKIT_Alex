@@ -14,7 +14,7 @@ in Gen 11 at some point and had to be undone.
 | | |
 |---|---|
 | Source of truth | `pages/_aan-family.css` · `pages/_aan-components.css` |
-| Extracted from | `28db54c` |
+| Extracted from | `4be2ce7` |
 | Method | each of the ten pages loaded at 1440×900 (and 1366 / 1280 / 1920 / 1366×610 for responsive checks); every value read back with `getComputedStyle` |
 | Pages changed by this work | **none** — `git diff` on `pages/` is empty |
 
