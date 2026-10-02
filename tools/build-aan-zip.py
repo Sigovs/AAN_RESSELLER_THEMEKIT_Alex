@@ -6,6 +6,8 @@
 
 What it does, and what it never does:
 
+  0. Refuses to build when the tree is dirty or behind origin, because both
+     produce a zip that looks right and is not. --force overrides.
   1. Exports the committed tree (git archive) into a temp folder. Uncommitted
      edits are NOT in the zip: commit what was approved first.
   2. Lays the AAN overlay over it, read straight from the `aan-review` branch
@@ -54,16 +56,87 @@ def export(ref, dest, repo, paths=()):
         t.extractall(dest, filter='data') if sys.version_info >= (3, 12) else t.extractall(dest)
 
 
+def check_tree(repo, ref, force):
+    """Stop before building a zip that does not hold what the builder thinks it does.
+
+    Two failures, both otherwise silent, both of which cost an hour because the
+    build, the upload and the page all succeed — they just show the wrong thing,
+    which reads as a caching problem and is not one:
+
+      · the zip is cut from the COMMITTED tree, so an uncommitted edit is simply
+        absent from it;
+      · a machine that has not pulled builds from a tree older than GitHub's, so
+        work done on the other machine looks as though it vanished.
+
+    The messages are in Russian and name the command to run, because they are
+    read by the person double-clicking the .command file, not by a developer.
+    """
+    stop = []
+
+    if ref == 'HEAD':
+        dirty = git('status', '--porcelain', '--untracked-files=no', cwd=repo).strip()
+        if dirty:
+            stop.append(
+                'СТОП: есть незакоммиченные правки (файлов: %d).\n'
+                '      В zip попадает только закоммиченное — этих правок в нём не будет.\n'
+                '      Сделай:  git add -A  &&  git commit -m "что сделал"  &&  git push\n\n'
+                '      Не вошло бы:\n%s'
+                % (len(dirty.splitlines()),
+                   '\n'.join('        ' + l for l in dirty.splitlines()[:12])))
+
+    branch = git('rev-parse', '--abbrev-ref', 'HEAD', cwd=repo).strip()
+    if branch == 'HEAD':
+        print('Внимание: detached HEAD, ветку с GitHub не с чем сравнить.\n')
+    else:
+        fetched = subprocess.run(['git', 'fetch', '-q', 'origin', branch],
+                                 cwd=repo, capture_output=True)
+        if fetched.returncode:
+            # Being offline must not block a build. Say so and carry on.
+            print('Внимание: не достучался до GitHub, не могу проверить отставание.\n'
+                  '          Собираю из того, что есть локально.\n')
+        else:
+            counts = subprocess.run(['git', 'rev-list', '--left-right', '--count', 'HEAD...FETCH_HEAD'],
+                                    cwd=repo, capture_output=True)
+            if counts.returncode == 0:
+                ahead, behind = (int(x) for x in counts.stdout.decode().split())
+                if behind:
+                    stop.append(
+                        'СТОП: на GitHub есть %d коммит(ов), которых тут нет.\n'
+                        '      Скорее всего это работа с другой машины — в zip она не попадёт.\n'
+                        '      Сделай:  git pull'
+                        % behind)
+                if ahead and not behind:
+                    # Not an error: you may build before pushing. But the other
+                    # machine will not have what this zip carries.
+                    print('Внимание: %d коммит(ов) ещё не на GitHub. Zip их включит,\n'
+                          '          но на другой машине их не будет, пока не сделаешь git push.\n' % ahead)
+
+    if stop:
+        msg = '\n\n'.join(stop)
+        if force:
+            print('─' * 70 + '\n' + msg + '\n\n--force: собираю всё равно.\n' + '─' * 70 + '\n')
+            return
+        sys.exit('\n' + '─' * 70 + '\n' + msg + '\n' + '─' * 70 +
+                 '\n\nZip не собран. Почини это и запусти снова'
+                 ' (или --force, если точно знаешь, что делаешь).')
+
+    print('Проверка: дерево чистое, с GitHub совпадает.\n')
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--ref', default='HEAD', help='commit to build the pages from (default: HEAD)')
     ap.add_argument('--out', help='zip path (default: next to the repo folder)')
+    ap.add_argument('--force', action='store_true',
+                    help='build even with uncommitted changes or a tree behind origin')
     a = ap.parse_args()
 
     repo = git('rev-parse', '--show-toplevel', cwd=os.getcwd()).strip()
     origin = git('remote', 'get-url', 'origin', cwd=repo).strip()
     if 'Sigovs/AAN_RESSELLER_THEMEKIT_Alex' not in origin:
         sys.exit('This is not the Sigovs repo (%s). Stopping.' % origin)
+
+    check_tree(repo, a.ref, a.force)
 
     subprocess.run(['git', 'fetch', '-q', 'origin', 'aan-review:refs/remotes/origin/aan-review'], cwd=repo, capture_output=True)
     overlay_ref = 'origin/aan-review'
@@ -72,9 +145,6 @@ def main():
     if subprocess.run(['git', 'rev-parse', '-q', '--verify', overlay_ref], cwd=repo, capture_output=True).returncode:
         sys.exit('No aan-review branch found, locally or on origin. Run: git fetch origin')
 
-    dirty = git('status', '--porcelain', '--untracked-files=no', cwd=repo).strip()
-    if dirty and a.ref == 'HEAD':
-        print('Note: you have uncommitted changes; they are NOT in this zip.\n')
 
     ref_name = git('rev-parse', '--short', a.ref, cwd=repo).strip()
     stamp = datetime.datetime.now().strftime('%Y%m%d%H%M')
