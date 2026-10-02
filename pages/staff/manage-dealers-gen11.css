@@ -982,7 +982,7 @@ select.fld { appearance: none; padding-right: 32px;
      ≥1520   + the account name          (+112 → 1424, has 1489)
      ≥1700   + the full search field     (+164 → 1588, has 1669)
      ≥1900   + the wordmark and the roomy nav  (→ ~1810, has 1869) */
-@media (min-width: 1520px) { .me__n { display: inline; } }
+@media (min-width: 1900px) { .me__n { display: inline; } }
 @media (min-width: 1700px) {
   .gsearch { width: 208px; padding: 0 var(--s2) 0 10px; justify-content: flex-start; }
   .gsearch input, .gsearch kbd { display: block; }

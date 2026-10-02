@@ -297,16 +297,16 @@
    selector stays the loud one. */
 .tally { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .tally__l, .tally .caps { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-4); margin-right: 6px; }
-.tl, .tally .tl {
+:where(button, span, a).tl, .tally :where(button, span, a).tl {
   height: var(--ctl-dense); padding: 0 10px;
   border-radius: 7px;
   background: var(--well); box-shadow: inset 0 0 0 1px var(--line-2);
   font-size: 13px; font-weight: 500; color: var(--ink-2); gap: 6px;
 }
-.tl b, .tally .tl b { font-size: 12.5px; font-weight: 600; color: var(--ink-3); font-variant-numeric: tabular-nums; }
-.tl:hover { background: var(--wash); color: var(--ink); }
-.tl--on, .tl[aria-pressed="true"] { background: var(--brand-soft); color: var(--brand-ink); box-shadow: inset 0 0 0 1px var(--brand-soft-2); }
-.tl--on b, .tl[aria-pressed="true"] b { color: var(--brand-ink); }
+:where(button, span, a).tl b, .tally :where(button, span, a).tl b { font-size: 12.5px; font-weight: 600; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+:where(button, span, a).tl:hover { background: var(--wash); color: var(--ink); }
+.tl--on, :where(button, span, a).tl[aria-pressed="true"] { background: var(--brand-soft); color: var(--brand-ink); box-shadow: inset 0 0 0 1px var(--brand-soft-2); }
+.tl--on b, :where(button, span, a).tl[aria-pressed="true"] b { color: var(--brand-ink); }
 
 /* ── ACTION BUTTON — pressed state ───────────────────────────────────────────
    A toggle in a toolbar (Crew, Filters, Columns) is an action, not a tab: it
@@ -391,7 +391,7 @@ input, textarea, select { font-weight: 400; }
    on both axes. Flattening them to `inline-flex` here kept the vertical
    centring and threw away the horizontal, so every icon sat against the left
    edge of its slot. */
-.btn, .sel, .tl, .tag, .bdg, .badge, .chip, .pill, .lane,
+.btn, .sel, :where(button, span, a).tl, .tag, .bdg, .badge, .chip, .pill, .lane,
 .ui-view, .ui-filter, .ui-nav__i, .ui-ctl, .facet__b, .kbd, kbd, .tbtn,
 .rlink, .gl, .nav__b {
   display: inline-flex;
@@ -413,7 +413,7 @@ input, textarea, select { font-weight: 400; }
 /* vertical only: horizontal placement stays whatever each object already had,
    so a card's caps label does not slide to the middle of its card */
 .btn, .sel, .tbtn, .kbd, kbd { justify-content: center; }
-.bdg, .badge, .tag, .chip, .pill, .tl, .ui-filter { justify-content: center; }
+.bdg, .badge, .tag, .chip, .pill, :where(button, span, a).tl, .ui-filter { justify-content: center; }
 /* a badge or counter inside another control must not re-introduce a baseline */
 .bdg, .badge, .tag, .chip, .pill { padding-top: 0; padding-bottom: 0; }
 

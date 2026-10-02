@@ -766,7 +766,7 @@ select.fld {
 }
 
 /* the bar's growth steps, matched to the roster's so the shell is one shell */
-@media (min-width: 1520px) { .me__n { display: inline; } }
+@media (min-width: 1900px) { .me__n { display: inline; } }
 @media (min-width: 1700px) {
   .gsearch { width: 208px; padding: 0 var(--s2) 0 10px; justify-content: flex-start; }
   .gsearch input, .gsearch kbd { display: block; }

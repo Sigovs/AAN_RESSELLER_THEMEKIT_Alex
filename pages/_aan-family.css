@@ -606,7 +606,16 @@
    rendered as "Accc". Tightened to fit rather than clipped. */
 .top .nav__b { padding: 0 6px; font-size: 13px; letter-spacing: -.005em; }
 .top .nav__b .i { width: 12px; height: 12px; }
-@media (min-width: 1600px) { .top .nav__b { padding: 0 10px; font-size: 14px; } }
+/* The relaxation waits until there is room for it. At 1600 the eight staff
+   destinations go back to 10px padding and 14px type, the nav grows about
+   130px, and the bar runs past its own inset on every staff page: measured
+   199px over at 1600 and 119px at 1680 on Single Ticket, with the PAGE
+   scrolling 167px and 87px. Manage Dealers does the same, 103px over at 1680.
+   It comes right again near 1800 as the viewport finally catches up, so that
+   is where the relaxation belongs. Between 1600 and 1800 the whole family
+   keeps the tightened nav it already uses everywhere below 1600 — one ladder,
+   and no width at which a destination is pushed out of the bar. */
+@media (min-width: 1800px) { .top .nav__b { padding: 0 10px; font-size: 14px; } }
 
 /* ── 11k · the go-live strip shows what fits and says how many there are ─────
    It used to scroll sideways, which put a scrollbar in the middle of the page

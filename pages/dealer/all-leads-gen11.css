@@ -257,14 +257,22 @@
 .value .kv > div { padding: var(--s3) 0; }
 .value .kv .l { text-align: right; }
 
-/* Flags — six queues, 2 x 3. No glow and no drive-in animation: this is an
-   operational queue, and a chromatic halo on a meter is decoration that reads
-   as a state the meter has not got. Removed for this page only — the rule it
-   overrides lives in the shared base. */
+/* Flags — six queues, 2 x 3. No glow: this is an operational queue, and a
+   chromatic halo on a meter is decoration that reads as a state the meter has
+   not got. That argument is about the halo and only the halo.
+
+   The drive-in stays. It was switched off here with the glow, in the same
+   declaration, because the rule it overrides sets all three together — not
+   because anything was wrong with it. A meter that fills from zero says the
+   bar is a quantity; it claims nothing about state. All Vehicles has it, this
+   page inherits that stylesheet, and the two now agree.
+
+   Removed for this page only — the rule it overrides lives in the shared
+   base, and it carries its own prefers-reduced-motion opt-out. */
 .attn .ar__m i,
 .attn .ar:hover .ar__m i,
 .attn .ar:focus-visible .ar__m i,
-.attn .ar--on .ar__m i { box-shadow: none; filter: none; animation: none; }
+.attn .ar--on .ar__m i { box-shadow: none; filter: none; }
 .attn__g { gap: var(--s2); }
 
 /* ============================================================================

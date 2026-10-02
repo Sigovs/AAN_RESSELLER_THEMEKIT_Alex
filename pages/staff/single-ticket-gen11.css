@@ -364,7 +364,19 @@ svg { display: block; }
   width: 30px; height: 30px; border-radius: var(--r-pill);
   background: var(--focal); color: #fff; font-size: 12px; font-weight: 700;
 }
-.me__n { font-size: 13px; font-weight: 600; white-space: nowrap; }
+/* The account name is the elastic member of the platform bar. Eight staff
+   destinations, the search, Atlas, notifications and the account chip do not
+   fit the bar with the name shown until about 1810: measured 18px over the
+   right inset at 1440, 5px at 1680, and still 1.4px at 1800 on Accounting,
+   which carries the widest nav of the five.
+
+   It returns at 1900, deliberately NOT at 1800 where the nav relaxes. Those
+   two together add about 220px to the bar at a single rung, which is the
+   kind of step that leaves a band of widths broken and no obvious culprit.
+   One rung, one change. The initials stay at every width, so the control
+   never loses its identity, only its label. */
+.me__n { display: none; font-size: 13px; font-weight: 600; white-space: nowrap; }
+@media (min-width: 1900px) { .me__n { display: inline; } }
 .me .i { width: 12px; height: 12px; opacity: .6; }
 
 /* ============================================================================
@@ -1111,7 +1123,6 @@ textarea.fld { height: auto; min-height: 64px; padding: var(--s2) var(--s3); res
   .gsearch { width: 44px; padding: 0; justify-content: center; }
   .gsearch input, .gsearch kbd { display: none; }
   .nav__b { padding: 0 var(--s2); font-size: 13px; }
-  .me__n { display: none; }
   .head h1 { font-size: 20px; }
   .secnav__note { display: none; }
   .secnav__b { padding: 0 var(--s3); }
