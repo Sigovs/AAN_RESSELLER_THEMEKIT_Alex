@@ -198,6 +198,24 @@
                 border-radius: 9px; background: var(--brand); color: #fff; font-size: 13.5px; font-weight: 650; }
   .a11-ds:hover .a11-ds__go { background: #1a50c4; }
 
+  /* the review tool, not the product: neutral surface so it ranks below the kit
+     card, and the one orange mark that the in-page layer also uses, so the two
+     read as the same instrument */
+  .a11-rv { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 18px; margin-top: 14px;
+            padding: 14px 20px; border-radius: 14px;
+            background: rgba(255,255,255,.035); box-shadow: inset 0 0 0 1px var(--line-on);
+            text-decoration: none; color: inherit; }
+  .a11-rv:hover { background: rgba(255,255,255,.055); box-shadow: inset 0 0 0 1px rgba(255,255,255,.17); }
+  .a11-rv__t { min-width: 0; flex: 1 1 380px; }
+  .a11-rv__t > b { display: flex; align-items: center; gap: 9px; font-size: 14.5px; letter-spacing: -.01em; }
+  .a11-rv__t > b i { width: 8px; height: 8px; border-radius: 50%; background: #ff7a45; flex: none; }
+  .a11-rv__t p b { font-weight: 650; color: var(--on-2); }
+  .a11-rv__t p { margin: 5px 0 0; font-size: 12.5px; line-height: 1.55; color: var(--on-3); max-width: 72ch; }
+  .a11-rv__go { flex: none; display: inline-flex; align-items: center; gap: 7px; height: 32px; padding: 0 13px;
+                border-radius: 8px; background: rgba(255,255,255,.07); color: var(--on);
+                box-shadow: inset 0 0 0 1px var(--line-on); font-size: 12.5px; font-weight: 650; }
+  .a11-rv:hover .a11-rv__go { background: #ff7a45; color: #26120a; box-shadow: none; }
+
   @media (max-width: 760px) {
     .a11-g { grid-template-columns: 1fr; }
     .sec-h p { text-align: left; }
@@ -343,13 +361,14 @@
 <div class="bar"><div class="wrap">
   <span class="logo"><i>AAN</i> All Vehicles · redesign</span>
   <nav>
-    <a href="#gen11">Gen 11 · final assembly</a>
+    <a href="#gen11">Gen 11 · final</a>
     <a href="design-system/gen11/index.html">Design system</a>
+    <a href="comments.html">Notes</a>
     <a href="#candidates">Candidates</a>
     <a href="#preview">Preview</a>
     <a href="#compare">Compare</a>
     <a href="#journey">Journey</a>
-    <a href="#questions">Open questions</a>
+    <a href="#questions">Questions</a>
     <a href="#principles">Principles</a>
     <a class="go" href="pages/dealer/all-vehicles-gen11.html">Open Gen 11 →</a>
   </nav>
@@ -493,6 +512,14 @@
       <p>The catalogue behind the ten pages &mdash; tokens, components, patterns and rules, every specimen rendered by the product&rsquo;s own stylesheets, plus the distributable bundle for a reseller build.</p>
     </span>
     <span class="a11-ds__go">Open the kit &rarr;</span>
+  </a>
+
+  <a class="a11-rv" href="comments.html">
+    <span class="a11-rv__t">
+      <b><i></i>View testing comments</b>
+      <p>Every note left on these ten pages, each carrying the element it points at. Leave one with the <b style="font-weight:650">Notes</b> button on any page; export as CSV or JSON.</p>
+    </span>
+    <span class="a11-rv__go">Open the sheet &rarr;</span>
   </a>
 
   <div class="sec-h" style="margin-top:44px">
