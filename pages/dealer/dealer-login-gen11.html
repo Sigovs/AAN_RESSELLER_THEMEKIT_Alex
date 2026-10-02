@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,14 +7,16 @@
 <meta name="description" content="AAN dealer login — Generation 11.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="dealer-login-gen11.css?v=20261002-fix">
-<link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
-<link rel="stylesheet" href="../_aan-components.css?v=20261002-fix">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Big+Shoulders+Display:wght@300;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="dealer-login-video.css?v=20261002w">
 </head>
 <body>
 
 <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <filter id="glass" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.0060 0.0165" numOctaves="2" seed="7" result="warp"/>
+    <feDisplacementMap in="SourceGraphic" in2="warp" scale="59" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
   <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>
   </symbol>
@@ -24,47 +26,48 @@
   </symbol>
 </svg>
 
-<main class="auth">
+<!-- ── the scene: four garage loops in turn, dimmed and grained ── -->
+<div class="scene" aria-hidden="true">
+  <video class="scene__v is-on" muted playsinline preload="auto" poster="video/login-garage-1.jpg" src="video/login-garage-1.mp4"></video>
+  <video class="scene__v" muted playsinline preload="metadata" poster="video/login-garage-2.jpg" src="video/login-garage-2.mp4"></video>
+  <video class="scene__v" muted playsinline preload="metadata" poster="video/login-garage-3.jpg" src="video/login-garage-3.mp4"></video>
+  <video class="scene__v" muted playsinline preload="metadata" poster="video/login-garage-4.jpg" src="video/login-garage-4.mp4"></video>
+  <div class="scene__dim"></div>
+  <div class="scene__grain"></div>
+</div>
 
-  <!-- ── who AAN is, and how to reach a human ── -->
-  <section class="panel" aria-label="About All Auto Network">
-    <div class="panel__brand">
-      <span class="mark">AAN</span>
-      <b>All Auto Network</b>
-    </div>
+<div class="auth">
 
-    <div class="panel__say">
-      <h2>Custom Automotive Websites</h2>
-      <p>AAN is here to support the largest and the smallest dealers with boutique customized
-         websites, support, and marketing strategy. No canned packages. We build solutions
-         tailored to your dealership's needs.</p>
-    </div>
-
+  <header class="top">
+    <div class="brand"><span class="mark">AAN</span><b>All Auto Network</b></div>
     <div class="support">
       <span class="caps">Technical Support</span>
-      <div class="support__rows">
-        <a href="mailto:support@allautonetwork.com">support@allautonetwork.com</a>
-        <a href="tel:+18477820300">(847) 782-0300</a>
-      </div>
+      <a href="mailto:support@allautonetwork.com">support@allautonetwork.com</a>
+      <a href="tel:+18477820300">(847) 782-0300</a>
     </div>
-  </section>
+  </header>
 
-  <!-- ── the form ── -->
-  <section class="form" aria-label="Sign in">
-    <div class="form__in">
+  <main class="stage">
+    <section class="say" aria-label="About All Auto Network">
+      <p class="caps say__k">Custom Automotive Websites</p>
+      <p class="say__h" role="heading" aria-level="2"><span>One <b>team.</b></span> <span>One <b>system.</b></span></p>
+      <p class="say__p">AAN is here to support the largest and the smallest dealers with boutique customized
+         websites, support, and marketing strategy. No canned packages. We build solutions
+         tailored to your dealership's needs.</p>
+    </section>
+
+    <section class="card" aria-label="Sign in">
       <h1>Login<span>to your account</span></h1>
 
       <form method="post" action="#" novalidate>
-        <div class="formrow">
+        <div class="row">
           <label for="email">User Name</label>
-          <div class="control">
-            <input id="email" name="email" type="text" autocomplete="username" spellcheck="false" required>
-          </div>
+          <input id="email" name="email" type="text" autocomplete="username" spellcheck="false" required>
         </div>
 
-        <div class="formrow">
+        <div class="row">
           <label for="password">Password</label>
-          <div class="control control--pw">
+          <div class="pw">
             <input id="password" name="password" type="password" autocomplete="current-password" required>
             <button class="eye" type="button" id="eye" aria-label="Show password" aria-pressed="false">
               <svg aria-hidden="true"><use href="#i-eye"/></svg>
@@ -72,24 +75,23 @@
           </div>
         </div>
 
-        <button class="btn btn--primary btn--lg" type="submit">Login</button>
+        <button class="go" type="submit">Login</button>
       </form>
 
-      <div class="form__foot">
-        <a href="#">Forgot Your Password?</a>
-      </div>
+      <a class="forgot" href="#">Forgot Your Password?</a>
+    </section>
+  </main>
 
-      <div class="legal">
-        <span>&copy; 2026 All Auto Network. All Rights Reserved.</span>
-        <a href="https://www.allautonetwork.com/">allautonetwork.com</a>
-        <a href="mailto:support@allautonetwork.com">support@allautonetwork.com</a>
-        <a href="tel:+18477820300">(847) 782-0300</a>
-      </div>
-    </div>
-  </section>
+  <footer class="legal">
+    <span>&copy; 2026 All Auto Network. All Rights Reserved.</span>
+    <a href="https://www.allautonetwork.com/">allautonetwork.com</a>
+    <a href="mailto:support@allautonetwork.com">support@allautonetwork.com</a>
+    <a href="tel:+18477820300">(847) 782-0300</a>
+  </footer>
 
-</main>
+</div>
 
 <script src="dealer-login-gen11.js?v=20260930234502"></script>
+<script src="dealer-login-video.js?v=20261002d"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-/* AAN · Dealer Login — video concept
+/* AAN · Dealer Login — Gen 11 video scene
    The garage loops play in order, 1 → 2 → 3 → 4 and round again. A short clip
    repeats until it has had about nine seconds on screen, then the next one
    crossfades in. While a field has focus the current loop just keeps

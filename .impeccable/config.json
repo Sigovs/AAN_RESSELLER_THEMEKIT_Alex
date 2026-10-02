@@ -90,6 +90,15 @@
           "pages/**/*-gen11.html"
         ],
         "createdAt": "2026-09-30T03:38:36.644Z"
+      },
+      {
+        "rule": "radial-halo",
+        "value": "*",
+        "files": [
+          "pages/dealer/dealer-login-video.html"
+        ],
+        "createdAt": "2026-10-02T08:40:17.823Z",
+        "reason": "user confirmed: the orange radial is the colour grade over the video that Alex tuned himself in the TUNE panel and pasted back as the defaults (2026-10-02)"
       }
     ]
   }

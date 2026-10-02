@@ -1,4 +1,4 @@
-/* AAN · Dealer Login — full-screen video concept
+/* AAN · Dealer Login — Gen 11, full-screen video
    The Gen 11 login's own parts, laid over a garage loop. The video is the
    mood, never the content: it is dimmed hard on the reading side, grained so
    its low source resolution reads as film rather than blur, and it never
@@ -44,7 +44,7 @@ a { color: inherit; }
 /* the dim: heavier on the reading side, a floor under the legal line,
    an overall veil, and a dirty split grade — slate blue in the shadows and
    the reading side, rust orange where the garage lights burn. Every knob is
-   a custom property so the tuning panel (dealer-login-tune.js) can drive it. */
+   a custom property, so the look is tuned here in one place. */
 :root {
   --veil: .27;
   --dim-l: .81;  --dim-r: .5;  --dim-top: .11;  --dim-bottom: .66;  --vignette: 1;
