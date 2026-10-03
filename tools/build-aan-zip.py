@@ -124,6 +124,13 @@ def check_tree(repo, ref, force):
 
 
 def main():
+    # the messages are in Russian; a Windows console defaults to cp1252 and
+    # would crash on the first one
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding='utf-8', errors='replace')
+        except (AttributeError, ValueError):
+            pass
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--ref', default='HEAD', help='commit to build the pages from (default: HEAD)')
     ap.add_argument('--out', help='zip path (default: next to the repo folder)')
