@@ -3441,3 +3441,405 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
    coordinates — the sheet clips its overflow and the command band is a
    containing block for fixed descendants, so neither ancestor can hold it */
 .pop.cols.pop--open { position: fixed; top: 0; left: 0; right: auto; bottom: auto; }
+
+/* ============================================================================
+   REVIEW 2026-10 · EDIT VEHICLE LEADS THE KEY FIGURES
+   Ivaylo: "Edit vehicle ... isn't immediately obvious it's the primary go into
+   the vehicle". It was one pill among six. Now it stands before the price /
+   age / photos block, at that block's full height and radius, so the panel
+   reads: the car, the way in, its figures. The block is on every vehicle, so
+   the button never moves between cars (the invoice row is not, which is why
+   the button does not sit there).
+   ========================================================================== */
+.exp .veh__lead { display: flex; flex-wrap: wrap; align-items: stretch; gap: var(--s3); }
+.exp .veh__lead .veh__kv { flex: 1 1 300px; max-width: 520px; min-width: 0; margin: 0; }
+.exp .veh__lead .btn--lead {
+  flex: none;
+  height: auto;
+  min-height: 56px;
+  padding: 0 var(--s5);
+  gap: var(--s2);
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.exp .veh__lead .btn--lead .i { width: 18px; height: 18px; }
+@media (max-width: 720px) {
+  .exp .veh__lead { flex-direction: column; }
+}
+
+/* ============================================================================
+   REVIEW 2026-10 · TABLE (team review notes 2–7)
+   ========================================================================== */
+
+/* 2 · zebra, as in the original datatable ("zebra, 15+ columns comfortable").
+   The stripe sits below hover (--well) and below the open row's own tint, so
+   neither cue is lost; the row rule steps back so the two don't compete. */
+.row--alt { background: color-mix(in srgb, var(--wash) 55%, var(--sheet)); }
+.row { border-bottom-color: color-mix(in srgb, var(--line-2) 65%, var(--sheet)); }
+.row:hover { background: var(--well); }
+
+/* 3 · the pager, above the table and below it, as in the original */
+.pgr { gap: var(--s3); }
+.pgr--top { border-top: 0; border-bottom: 1px solid var(--line-2); border-radius: 0; }
+.pgr__n { color: var(--ink-3); white-space: nowrap; }
+.pgr__n b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.pgr .pg button:disabled { opacity: .35; cursor: default; background: none; }
+.pgr__per { display: inline-flex; align-items: center; gap: var(--s2); color: var(--ink-3); white-space: nowrap; }
+.pgr__per .sel { height: 30px; padding: 0 28px 0 10px; border-radius: 8px; background-color: var(--sheet); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink); font: inherit; font-size: 13px; }
+
+/* 4 · photo preview on hover */
+.thpv {
+  position: fixed; left: 0; top: 0;
+  z-index: var(--z-menu);
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--well);
+  box-shadow: 0 0 0 1px rgba(16, 21, 31, .08), 0 18px 48px rgba(16, 21, 31, .28);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .12s var(--ease);
+}
+.thpv img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.thpv--on { opacity: 1; transition-duration: .16s; }
+@media (prefers-reduced-motion: reduce) { .thpv, .thpv--on { transition: none; } }
+
+/* 6 + 7 · Added: the date leads, the age sits under it in its band colour */
+.added { display: grid; justify-items: end; gap: 2px; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.added b { font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+.added span { font-size: 12px; font-weight: 500; color: var(--ink-3); }
+.added.age--fresh span { color: var(--ok); }
+.added.age--stale span { color: var(--danger); font-weight: 600; }
+.row.open .added b { color: #fff; }
+.row.open .added span { color: rgba(255, 255, 255, .8); }
+
+/* ============================================================================
+   REVIEW 2026-10 · ACTIVE QUICK FILTERS (team review note 9)
+   Ivaylo: "it's not immediately clear the filter is applied with this glow
+   effect". A chosen Age-mix row and a chosen Needs-attention tile now turn
+   solid brand blue, and the check takes the place of the percentage — the
+   one cell that already exists on every row and tile. Nothing is resized or
+   reflowed to make room (the age rows are 179px wide with the meter already
+   at 0, and reserving a slot cut the tile labels), so choosing one moves
+   nothing; only colour and which of the two the cell shows change. Clicking again still
+   clears it, as before. Clear all is a real button rather than grey text.
+   ========================================================================== */
+.agerow { position: relative; }
+.agerow::before,
+.attn .ar::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  margin-top: -6px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>") center / contain no-repeat;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>") center / contain no-repeat;
+  opacity: 0;
+  color: #fff;
+  transition: opacity var(--dur) var(--ease);
+  pointer-events: none;
+}
+.agerow::before { right: 12px; }
+.attn .ar { position: relative; }
+.attn .ar::after { right: 18px; }
+
+.agerow.on, .agerow.on:hover { background: var(--brand); box-shadow: none; }
+.agerow.on .agerow__l, .agerow.on b, .agerow.on em { color: #fff; }
+.agerow.on .agerow__m { background: rgba(255, 255, 255, .28); }
+.agerow.on .agerow__m i { background: #fff; }
+.agerow.on::before { opacity: 1; }
+.agerow.on em { visibility: hidden; }
+
+.attn .ar--on, .attn .ar--on:hover { background: var(--brand); border-color: var(--brand); }
+.attn .ar--on .ar__n, .attn .ar--on .ar__l, .attn .ar--on .ar__p { color: #fff; }
+.attn .ar--on .ar__m { background: rgba(255, 255, 255, .28); }
+.attn .ar--on .ar__m i { background: #fff; box-shadow: none; }
+.attn .ar--on::after { opacity: 1; }
+.attn .ar--on .ar__p { visibility: hidden; }
+
+.scope__clear {
+  display: inline-flex; align-items: center;
+  height: 28px; padding: 0 12px; border-radius: 8px;
+  background: var(--sheet);
+  box-shadow: inset 0 0 0 1px var(--line-3);
+  color: var(--ink); font-size: 13px; font-weight: 600;
+}
+.scope__clear:hover { background: var(--wash); color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .agerow::before, .attn .ar::after { transition: none; } }
+
+/* Clickable at rest, not only on hover (Alex, review of note 9): the age rows
+   read as plain text until the pointer found them. They now carry the same
+   resting surface as the Needs-attention tiles. (A "click a row to filter"
+   line under them was tried and dropped — it read as an afterthought.) */
+.agerows { gap: 4px; }
+.agerow { height: var(--ctl-dense); }   /* the system's compact control height, now that they are buttons */
+/* Inner padding, now that each row is a visible surface: 10px each side. The
+   row is 179px, and 6 + 84 + 32 + 34 + 3×8 + 6 = 186 had pushed the percentage
+   onto the right edge. Every track is cut to its measured text: label 79.4 ("91–365
+   days"), count 26.1 ("131"), percentage 29.2 ("36%"); the meter track was already resolving to 0px. */
+.agerow { grid-template-columns: 80px minmax(0, 1fr) 30px; column-gap: 6px; padding: 0 10px; }
+.agerow__m { display: none; }   /* no room at 179px: it only ever showed as a stray 0–4px dot */
+.agerow { background: rgba(255, 255, 255, .055); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07); }
+.agerow:hover { background: rgba(255, 255, 255, .10); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14); }
+
+/* ── one card-heading style across the top row (Alex, 2026-10-13) ─────────
+   Lot and Age mix used an 11px caps micro-label, Value and Needs attention a
+   16px title, and Age mix floated ~10px lower because its column centres its
+   content. All four now share the title + quiet meta pattern, and the Age mix
+   column starts at the top so the four headings sit on one line. */
+.focal__h .caps, .agemix__h .caps {
+  font-size: 16px; font-weight: 700; letter-spacing: -.01em; text-transform: none;
+  color: var(--focal-ink);
+}
+.focal__h .s, .agemix__h .s { font-size: 13px; color: var(--focal-ink-3); }
+.agemix__h .s:hover { color: var(--focal-ink); }
+.focal__h, .agemix__h { align-items: baseline; }
+.agemix { justify-content: flex-start; }
+
+/* ── one content band across the top row (Alex, 2026-10-13) ───────────────
+   The three cards ran three rhythms: Age mix ended 21px early, Value's rows
+   floated on space-evenly. All three now fill the same band as the Needs-
+   attention grid (same top, same bottom, same 16px card floor), Value's three
+   rows sit level with the three tile rows, and Age mix spreads its four rows
+   evenly across the same height. */
+.value, .agemix { padding-bottom: 16px; }
+.value__h, .agemix__h { margin-bottom: 8px; }
+.value .kv { display: grid; grid-template-rows: repeat(3, minmax(0, 1fr)); row-gap: 10px; align-content: stretch; padding: 3px 0 4px; }
+.value .kv > div { min-height: 0; }
+.agerows { flex: 1; justify-content: space-between; padding: 3px 0 4px; gap: 0; }
+
+/* ── Value: two figures, label over number (review note 10 + Alex) ────────
+   The original shows two figures here — asking value and average price. The
+   "146 · $100k+" row was ours and an arbitrary cut-off (Ivaylo), so it is
+   gone, as is the "asking, available" aside. Each figure now reads label
+   first, number under it; the two share the band, and the card narrows from
+   240 to 184px, the room going to Needs attention. */
+.bento { grid-template-columns: minmax(540px, 1.3fr) 184px minmax(0, 1.55fr); }
+.value .kv { grid-template-rows: repeat(2, minmax(0, 1fr)); }
+.value .kv > div { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 6px; }
+
+/* ── Sold lane: this year by month (review note 11) ───────────────────────
+   Twelve month columns at the foot of the Lot panel, the same band floor as
+   the cards beside it. Months not reached yet keep an empty track so the year
+   reads as a year; the partial month is lighter and says so on hover. The
+   whole strip opens the Sold Inventory Report. It fits the panel's existing
+   height: switching lanes must not move the page (a separate "Sold report"
+   line made the row 14px taller and was dropped). */
+.focal__main { display: flex; flex-direction: column; padding-bottom: 20px; }   /* chart foot level with the band floor (344) */
+.soldmo { display: grid; gap: 8px; margin-top: auto; padding-top: 12px; color: var(--focal-ink-3); text-decoration: none; }
+.soldmo[hidden] { display: none; }
+.soldmo__bars { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 6px; align-items: end; height: 72px; }
+.soldmo__c { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 6px; height: 100%; }
+.soldmo__c i { align-self: end; display: block; height: var(--h); min-height: 2px; border-radius: 3px 3px 1px 1px; background: rgba(255, 255, 255, .55); transition: background var(--dur) var(--ease); }
+.soldmo__c--part i { background: rgba(255, 255, 255, .22); }
+.soldmo__c--none i { height: 2px; background: rgba(255, 255, 255, .10); }
+.soldmo__c em { font-style: normal; font-size: 11px; font-weight: 600; text-align: center; color: var(--focal-ink-3); }
+.soldmo__link { display: inline-flex; align-items: center; gap: 4px; justify-self: start; font-size: 13px; color: var(--focal-ink-3); }
+.soldmo__link .i { width: 14px; height: 14px; }
+.soldmo:hover .soldmo__c i { background: rgba(255, 255, 255, .75); }
+.soldmo:hover .soldmo__c--part i { background: rgba(255, 255, 255, .3); }
+.soldmo:hover .soldmo__c--none i { background: rgba(255, 255, 255, .12); }
+.soldmo:hover .soldmo__link { color: var(--focal-ink); }
+.soldmo:focus-visible { outline: 2px solid var(--focal-on, #fff); outline-offset: 4px; border-radius: 6px; }
+.app.dock-open .soldmo { display: none; }
+@media (prefers-reduced-motion: reduce) { .soldmo__c i { transition: none; } }
+
+/* ── LANES IN THE LOT PANEL (Alex, 2026-10-13) ────────────────────────────
+   The lane track drives the Lot panel (the hero figure, and on Sold the
+   month chart), so it now lives at the foot of that panel instead of in a
+   toolbar row above the table. Same four lanes, same counts, same order as
+   the original; only the place changed. To keep the panel at its height the
+   hero figure steps down to 52px and the month chart to 52px. The table
+   starts one row higher. */
+.focal .focal__main .lanes {
+  display: inline-flex; flex-wrap: nowrap; gap: 2px; align-self: flex-start;
+  margin: 10px 0 0; padding: 2px; border: 0; border-radius: 8px;
+  background: rgba(255, 255, 255, .06); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08);
+}
+.focal .focal__main .soldmo[hidden] + .lanes { margin-top: auto; }
+/* small and wordless: the panel's own figure already states the active
+   lane's count, so the track carries names only (Alex). The counts stay in
+   the markup — the hero reads them from there. */
+.focal .focal__main .lanes > .lane {
+  display: inline-flex; align-items: center;
+  height: 24px; padding: 0 10px; border-radius: 6px;
+  background: none; box-shadow: none;
+  color: var(--focal-ink-3); font-size: 12.5px; font-weight: 500; white-space: nowrap; transform: none;
+}
+.focal .focal__main .lanes > .lane b { display: none; }
+.focal .focal__main .lanes > .lane:hover { background: rgba(255, 255, 255, .08); box-shadow: none; color: var(--focal-ink); }
+.focal .focal__main .lanes > .lane--on,
+.focal .focal__main .lanes > .lane--on:hover { background: var(--brand); box-shadow: none; color: #fff; font-weight: 600; }
+.focal .focal__main .lanes > .lane--zero { opacity: .6; }
+.focal .focal__main .lanes > .lane:focus-visible { outline: 2px solid var(--focal-on, #fff); outline-offset: 1px; }
+.app.dock-open .bento .focal__main .lanes { display: flex; }
+.focal .hero__n { font-size: 52px; }
+.soldmo { padding-top: 10px; }
+.soldmo__bars { height: 52px; }
+
+/* month columns, refined (Alex): each column is a light falling into the
+   panel — a bright 1px cap, brand blue that thins to nothing at the base —
+   instead of a flat grey slab. The partial month is the same column at half
+   strength; months not reached stay a hairline. */
+.soldmo__bars { gap: 7px; }
+.soldmo__c i {
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, rgba(150, 178, 235, .62) 0%, rgba(77, 134, 255, .38) 38%, rgba(77, 134, 255, .1) 82%, rgba(77, 134, 255, .02) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .32);
+}
+.soldmo__c--part i { opacity: .45; }
+.soldmo__c--none i { height: 1px; min-height: 1px; background: rgba(255, 255, 255, .14); box-shadow: none; border-radius: 0; }
+.soldmo:hover .soldmo__c i { background: linear-gradient(180deg, rgba(170, 195, 245, .8) 0%, rgba(90, 145, 255, .52) 38%, rgba(77, 134, 255, .15) 82%, rgba(77, 134, 255, .03) 100%); }
+.soldmo:hover .soldmo__c--none i { background: rgba(255, 255, 255, .18); }
+
+/* ── review note 15: mileage and photo count ──────────────────────────── */
+.mil { font-size: 14px; font-weight: 500; color: var(--ink-2); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mil--none { color: var(--ink-4); }
+.hd-demo {
+  display: inline-block; margin-left: 5px; padding: 1px 4px; border-radius: 4px;
+  background: var(--violet-soft, #efeaff); color: var(--violet, #6d4fd8);
+  font-style: normal; font-size: 9px; font-weight: 700; letter-spacing: .06em; vertical-align: 1px;
+}
+.thw { position: relative; display: block; line-height: 0; }
+.thw .th { display: block; }
+.thn {
+  position: absolute; right: 4px; bottom: 4px;
+  display: inline-flex; align-items: center; gap: 3px;
+  height: 16px; padding: 0 5px; border-radius: 5px;
+  background: rgba(10, 14, 22, .72); color: #fff;
+  font-size: 10.5px; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+.thn .i { width: 10px; height: 10px; }
+.row.open .mil { color: rgba(255, 255, 255, .88); }
+
+/* ── Columns: order as well as visibility (the original's ◀ ▶) ───────────── */
+.cols__it { display: flex; align-items: center; gap: 8px; padding: 4px 4px 4px 8px; }
+.cols__l { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; cursor: pointer; }
+.cols__l > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cols__it--lock .cols__l { cursor: default; }
+.cols__lk { display: inline-grid; place-items: center; width: 16px; height: 16px; color: var(--ink-4); }
+.cols__lk .i { width: 12px; height: 12px; }
+.cols__it > .cols__l { flex: 1 1 auto; }
+/* `.pop__it span:first-of-type { flex: 1 }` (the menu rule) grew the lock
+   glyph and the arrow pair; these rows size their own parts */
+.pop .cols__it > .cols__mv, .pop .cols__it > .cols__note { flex: 0 0 auto; }
+.pop .cols__it .cols__l > .cols__lk { flex: 0 0 16px; }
+.pop .cols__it .cols__l > span:last-child { flex: 1 1 auto; }
+.cols__mv { display: inline-flex; gap: 2px; flex: 0 0 auto; }
+.cols__mv button {
+  display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 6px;
+  color: var(--ink-3); font-size: 10px; line-height: 1;
+}
+.cols__mv button:hover:not(:disabled) { background: var(--wash); color: var(--ink); }
+.cols__mv button:disabled { opacity: .3; cursor: default; }
+.cols__mv button:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
+
+/* Model may take two lines (Alex): long names no longer cut at 1280/1440 */
+.md { white-space: normal; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; line-height: 1.25; overflow-wrap: anywhere; }
+
+/* ── COLUMNS PANEL IN THE FILTERS KEY (Alex, 2026-10-13) ──────────────────
+   Still a popover — a side dock would hide columns while you set them — but
+   dressed like the Filters dock: the same title, quiet count and close button
+   over a rule, sections inset the same way, and Reset in a ruled footer. */
+.pop.cols { padding: 0; min-width: 300px; overflow: hidden; }
+.pop.cols .cols__h {
+  display: flex; align-items: center; gap: 8px;
+  height: 52px; padding: 0 8px 0 16px;
+  border-bottom: 1px solid var(--line-2);
+}
+.pop.cols .cols__h .dock__t { margin: 0; font-size: 15px; font-weight: 650; letter-spacing: -.01em; color: var(--ink); }
+.pop.cols .cols__h .dock__c { flex: 1; font-size: 13px; }
+.pop.cols .cols__h .dock__x .i { width: 16px; height: 16px; }
+.pop.cols .cols__h .dock__x:hover { background: var(--wash); color: var(--ink); }
+.cols__sub { display: flex; align-items: baseline; gap: 6px; padding: 12px 16px 6px; font-size: 13px; }
+.cols__sub b { font-weight: 650; color: var(--ink); }
+.cols__sub span { color: var(--ink-3); }
+.pop.cols .cols__set { padding: 0 8px 8px; }
+.cols__f { display: grid; gap: 8px; padding: 10px 16px 12px; border-top: 1px solid var(--line-2); }
+.cols__f .cols__lock { margin: 0; padding: 0; }
+.cols__f .cols__reset { justify-self: start; width: auto; height: 32px; padding: 0 12px; font-size: 13.5px; font-weight: 600; color: var(--brand-ink); }
+
+/* ── LISTING, not HEALTH (review notes 16 + 19, and 1) ────────────────────
+   Flags are conditions of the listing, often intentional, so they are
+   stated in one neutral voice: no amber "warning", no red "error", no green
+   "OK" for an unflagged car. Each flag carries its own glyph (price tag,
+   camera, feed, eye, clock) instead of the same "!" — which was note 1. */
+.row .tags .tag--flag, .tag--flag {
+  --tone: var(--ink-2); --tone-soft: var(--wash); --tone-line: var(--line-2);
+  display: inline-flex; align-items: center; gap: 4px;
+  color: var(--ink-2); background: var(--wash); box-shadow: inset 0 0 0 1px var(--line-2);
+}
+.tag--flag .i { width: 11px; height: 11px; flex: none; color: var(--ink-3); }
+/* sentence case, not caps: these are statuses read in a row, not labels shouted (Alex) */
+.row .tags .tag--flag, .tag--flag { text-transform: none; letter-spacing: 0; font-size: 12px; font-weight: 600; }
+.noflag { color: var(--ink-4); font-size: 14px; }
+.row.open .tag--flag { color: #fff; background: rgba(255, 255, 255, .14); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22); }
+.row.open .tag--flag .i { color: rgba(255, 255, 255, .8); }
+.row.open .noflag { color: rgba(255, 255, 255, .6); }
+
+.lsum { font-size: 13px; font-weight: 500; color: var(--ink-2); }
+.lsum--none { color: var(--ink-3); }
+.lst { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 24px; }
+.lst__r { display: grid; grid-template-columns: 24px auto minmax(0, 1fr); align-items: center; gap: 8px; font-size: 14px; }
+.lst__r i { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--wash); color: var(--ink-3); }
+.lst__r i .i { width: 13px; height: 13px; }
+.lst__k { color: var(--ink-3); white-space: nowrap; }
+.lst__v { color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lst__r--set i { background: var(--well); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
+.lst__r--set .lst__v { color: var(--ink); font-weight: 600; }
+@media (max-width: 1100px) { .lst { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ── one alignment: every column left, Price included (Alex, 2026-10-13) ── */
+.mil { text-align: left; }
+.added { justify-items: start; }
+.row .acts, .acts { justify-self: start; justify-content: flex-start; }
+.hd > span.r:not(.c-price) { justify-content: flex-start; text-align: left; }
+
+.row .price, .price { text-align: left; align-items: flex-start; justify-items: start; justify-content: flex-start; }
+.price__v, .price__sub { justify-content: flex-start; text-align: left; }
+.hd > span.c-price { justify-content: flex-start; text-align: left; padding-left: 12px; }   /* level with the figures, which sit 12px in from the cell's rule */
+
+/* ── review note 18: the four first-read facts under the vehicle name ─────
+   A small spec plate, not a sentence: four cells, caps key over value, a
+   hairline between them, so the line reads as data at a glance. */
+.veh__facts { display: flex; flex-wrap: wrap; margin: 10px 0 12px; }   /* straight under the name (Alex), the stock / VIN line after it */
+.veh__facts span {
+  display: grid; gap: 3px; min-width: 0; max-width: 100%;
+  padding: 0 18px; border-left: 1px solid var(--line-2);
+  font-size: 14px; font-weight: 500; color: var(--ink); white-space: nowrap;
+}
+.veh__facts span:first-child { padding-left: 0; border-left: 0; }
+.veh__facts em { font-style: normal; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+
+/* ── key figures: price · invoice cost · age · photos (Alex) ──────────── */
+.exp .veh__lead .veh__kv.veh__kv--4 { flex: 1 1 420px; max-width: 640px; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.1fr) minmax(0, .9fr) minmax(0, .7fr); align-items: start; }
+.veh__kv--4 .v.none { color: var(--ink-4); }
+/* one height on every car (Alex): room for the discount / lease line is kept even when there is none, so the panel never changes size between vehicles */
+.exp .veh__lead .veh__kv.veh__kv--4 { min-height: 105px; align-content: center; }
+.kv__sub { margin-top: 4px; font-size: 12.5px; color: var(--ink-3); white-space: nowrap; }
+.kv__sub b { font-weight: 600; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.kv__sub b.ok { color: var(--ok); }
+
+/* ── On website switch (review note 20) ───────────────────────────────────
+   Same height as the action pills beside it. On: green track, quiet label.
+   Off: the one red thing on the sheet — red track, red label, a soft red
+   ring — because a car buyers cannot see is the state that must be noticed. */
+.sitesw {
+  display: inline-flex; align-items: center; gap: 10px;
+  height: 40px; padding: 0 14px 0 10px; border-radius: 10px;
+  background: var(--sheet); box-shadow: 0 1px 2px rgba(16, 24, 40, .06), inset 0 0 0 1px var(--line-2);
+  color: var(--ink); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: box-shadow var(--dur) var(--ease), color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+}
+.sitesw__t { position: relative; display: block; width: 34px; height: 20px; border-radius: 999px; background: var(--ok); transition: background-color var(--dur) var(--ease); }
+.sitesw__t i { position: absolute; top: 2px; left: 16px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0, 0, 0, .25); transition: left var(--dur) var(--ease); }
+.sitesw:hover { box-shadow: 0 1px 2px rgba(16, 24, 40, .08), inset 0 0 0 1px var(--line-3); }
+.sitesw:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.sitesw--off { color: var(--danger); background: var(--danger-soft); box-shadow: inset 0 0 0 1px var(--danger), 0 0 0 3px color-mix(in srgb, var(--danger) 18%, transparent); }
+.sitesw--off:hover { box-shadow: inset 0 0 0 1px var(--danger), 0 0 0 4px color-mix(in srgb, var(--danger) 22%, transparent); }
+.sitesw--off .sitesw__t { background: var(--danger); }
+.sitesw--off .sitesw__t i { left: 2px; }
+@media (prefers-reduced-motion: reduce) { .sitesw, .sitesw__t, .sitesw__t i { transition: none; } }

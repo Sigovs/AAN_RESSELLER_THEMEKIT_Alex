@@ -34,9 +34,19 @@
   var BASE = { Kia: 14500, Terex: 38500, SUNDOWNER: 52000, Porsche: 180000, Dodge: 92000, Ford: 58000 };
   var STATES = ['IL', 'WI', 'IN', 'MI', 'OH', 'MO', 'MN', 'IA', 'KY'];
   var NO_MILES = { Chaparral: 1, SUNDOWNER: 1, Terex: 1 };
+  /* Mileage (review note 15: "both mileage and photo count need to be here").
+     The original carries Mileage as a column. Our sample lot has no mileage,
+     so these are sample figures like the rest of the demo data (Alex chose not
+     to badge them) — except the Carrera GT's 953, which is its own listing
+     ("Only 953 Miles"). A trailer,
+     a jet boat and a compact track loader have no odometer: null shows "—". */
+  var MILES = { '001253 PS': 953, '0P0300236 PS': 1840, '1284NEBR MS': 2310, '18421': null, '18837C': 64820, '19495': 412600,
+    '19953': 8450, '1X289324 JJ': 12980, '20171': 286300, '20536': null, '20834E': 6120, '21577C': 71400, '21790': 58900,
+    '21814': 131700, '21834': null, '21848': 92300 };
+  V.forEach(function (v) { v.mi = MILES.hasOwnProperty(v.s) ? MILES[v.s] : null; });
 
   var S = {
-    sort: 'days', dir: 'desc', attn: {}, age: null, sel: {}, lane: 'Available', dock: null, cur: null, fq: '', allMakes: false,
+    sort: 'days', dir: 'asc', per: 100, page: 1, attn: {}, age: null, lane: 'Available', dock: null, cur: null, fq: '', allMakes: false,
     f: { make: {}, model: {}, year: {}, price: {}, mile: {}, loc: {}, type: {}, merch: {}, color: {}, opt: {} },
     /* Open state for both disclosure families: the vehicle sheet's four stacked
        regions, then the Filters dock's facet groups. */
@@ -69,19 +79,22 @@
      `dockOff` preserves the approved behaviour where opening Filters drops
      the three widest optional columns — existing layout, not a new rule. */
   var COLS = [
-    { id: 'select',  label: 'Select',    locked: true, system: true, track: { lg: 26, sm: 24, dock: 24, dockSm: 22 } },
+    /* review 2026-10: the row checkboxes and their bulk tray are gone (neither is
+       in the original); Status takes the leading column instead. It still steps
+       aside when Filters is open, as it always has. */
+    { id: 'status',  label: 'Status',    locked: true, sort: 'status', cls: 'c-status', dockOff: true, track: { lg: 96, sm: 88 } },
     { id: 'thumb',   label: 'Thumbnail', track: { lg: 92, sm: 76, dock: 68, dockSm: 60 } },
     { id: 'stock',   label: 'Stock',     locked: true, sort: 'stock', track: { lg: 104, sm: 92, dock: 100, dockSm: 88 }, grow: 1 },
     { id: 'year',    label: 'Year',      sort: 'year', track: { lg: 46, sm: 42, dock: 40, dockSm: 40 } },
     { id: 'make',    label: 'Make',      locked: true, sort: 'make', track: { lg: 104, sm: 92, dock: 86, dockSm: 84 } },
-    { id: 'model',   label: 'Model',     locked: true, track: { lg: 100, sm: 88, dock: 80, dockSm: 80 }, grow: 6 },
-    { id: 'trim',    label: 'Trim',      cls: 'c-trim', dockOff: true, track: { lg: 84, sm: 88 }, grow: 1 },
-    { id: 'colour',  label: 'Colour',    cls: 'c-ext', dockOff: true, track: { lg: 92, sm: 84 }, grow: 1 },
-    { id: 'price',   label: 'Price',     locked: true, sort: 'price', align: 'r', cls: 'c-price', track: { lg: 118, sm: 84, dock: 80, dockSm: 76 } },
-    { id: 'status',  label: 'Status',    cls: 'c-status', dockOff: true, track: { lg: 80, sm: 80 } },
-    { id: 'health',  label: 'Health',    sort: 'issues', cls: 'c-health', track: { lg: 218, sm: 194, dock: 120, dockSm: 116 } },
-    { id: 'age',     label: 'Age',       sort: 'days', align: 'r', track: { lg: 76, sm: 72, dock: 72, dockSm: 68 } },
-    { id: 'actions', label: 'Actions',   locked: true, align: 'r', track: { lg: 108, sm: 112, dock: 104, dockSm: 92 } }
+    { id: 'model',   label: 'Model',     locked: true, sort: 'model', track: { lg: 100, sm: 88, dock: 80, dockSm: 80 }, grow: 6 },
+    { id: 'trim',    label: 'Trim',      sort: 'trim', cls: 'c-trim', dockOff: true, track: { lg: 84, sm: 88 }, grow: 1 },
+    { id: 'colour',  label: 'Colour',    sort: 'colour', cls: 'c-ext', dockOff: true, track: { lg: 92, sm: 84 }, grow: 1 },
+    { id: 'miles',   label: 'Mileage',   sort: 'miles', cls: 'c-miles', dockOff: true, track: { lg: 96, sm: 80 } },
+    { id: 'price',   label: 'Price',     locked: true, sort: 'price', cls: 'c-price', track: { lg: 118, sm: 84, dock: 80, dockSm: 76 } },
+    { id: 'health',  label: 'Listing',    sort: 'issues', cls: 'c-health', track: { lg: 246, sm: 124, dock: 120, dockSm: 116 } },
+    { id: 'age',     label: 'Added',     sort: 'days', track: { lg: 104, sm: 96, dock: 96, dockSm: 92 } },
+    { id: 'actions', label: 'Actions',   locked: true, track: { lg: 108, sm: 112, dock: 104, dockSm: 92 } }
   ];
   var COLKEY = 'aan.gen11.allVehicles.columns';
 
@@ -112,11 +125,40 @@
     } catch (e) { /* private mode: the session still works, it just will not remember */ }
   }
 
+  /* Column order (the original's Columns picker moves a column left or right
+     with ◀ ▶). Every column can move except Actions, which stays at the end.
+     Stored as a list of ids; unknown ids are dropped and missing ones are
+     appended in their default place, so a stale blob can never lose a column. */
+  var ORDKEY = 'aan.gen11.allVehicles.order';
+  function orderDefault() { return COLS.filter(function (c) { return c.id !== 'actions'; }).map(function (c) { return c.id; }); }
+  function loadOrder() {
+    var d = orderDefault();
+    try {
+      var saved = JSON.parse(window.localStorage.getItem(ORDKEY) || 'null');
+      if (!Array.isArray(saved)) return d;
+      var o = saved.filter(function (id, i) { return d.indexOf(id) >= 0 && saved.indexOf(id) === i; });
+      d.forEach(function (id) { if (o.indexOf(id) < 0) o.push(id); });
+      return o;
+    } catch (e) { return d; }
+  }
+  function saveOrder() { try { window.localStorage.setItem(ORDKEY, JSON.stringify(S.order)); } catch (e) { /* private mode */ } }
+  function colById(id) { return COLS.filter(function (c) { return c.id === id; })[0]; }
+  function orderedCols() { return S.order.map(colById).concat([colById('actions')]); }
+  function moveCol(id, step) {
+    var i = S.order.indexOf(id), j = i + step;
+    if (i < 0 || j < 0 || j >= S.order.length) return false;
+    S.order[i] = S.order[j]; S.order[j] = id; saveOrder(); return true;
+  }
+
   function dockOpen() { return S.dock === 'filters'; }
   /* The tier is watched, not sampled. A first render can happen before the
      viewport has settled on its final width, and the template would then keep
      the tier it was born with; the media query tells us when to rebuild. */
   var COLMQ = window.matchMedia('(max-width: 1400px)');
+  /* Health shows one chip + "+N" up to 1600 now that Mileage shares the row
+     (review note 15); two chips only where the row has room for them. */
+  var CHIPMQ = window.matchMedia('(max-width: 1600px)');
+  function oneChip() { return dockOpen() || CHIPMQ.matches; }
   function colTier() {
     var narrow = COLMQ.matches;
     return dockOpen() ? (narrow ? 'dockSm' : 'dock') : (narrow ? 'sm' : 'lg');
@@ -124,7 +166,7 @@
   function colOn(c) { return c.locked || c.system || S.cols[c.id] !== false; }
   function visibleCols() {
     var dk = dockOpen();
-    return COLS.filter(function (c) { return (!dk || !c.dockOff) && colOn(c); });
+    return orderedCols().filter(function (c) { return (!dk || !c.dockOff) && colOn(c); });
   }
   function hiddenCount() {
     return COLS.filter(function (c) { return !c.locked && !c.system && S.cols[c.id] === false; }).length;
@@ -136,7 +178,7 @@
   function colTemplate() {
     var tier = colTier(), freed = hiddenCount() > 0;
     return visibleCols().map(function (c) {
-      var px = (c.track[tier] != null ? c.track[tier] : c.track.lg) + 'px';
+      var px = (c.id === 'health' && tier === 'lg' && CHIPMQ.matches ? c.track.sm : (c.track[tier] != null ? c.track[tier] : c.track.lg)) + 'px';
       if (!c.grow) return px;
       if (c.id === 'model') return 'minmax(' + px + ', ' + (freed ? c.grow : 1) + 'fr)';
       return freed ? 'minmax(' + px + ', ' + c.grow + 'fr)' : px;
@@ -149,7 +191,7 @@
       if (c.align === 'r') cls.push('r');
       if (c.sort) { cls.push('s'); if (c.sort === S.sort) cls.push('on'); }
       if (c.cls) cls.push(c.cls);
-      var label = (c.system || c.id === 'thumb') ? '' : esc(c.label);
+      var label = (c.system || c.id === 'thumb') ? '' : esc(c.label) + (c.demo ? '<i class="hd-demo" title="Demo figures — no mileage in the sample data">demo</i>' : '');
       var arrow = (c.sort && c.sort === S.sort) ? ' ' + ic(S.dir === 'asc' ? 'i-up' : 'i-dn') : '';
       return '<span' + (cls.length ? ' class="' + cls.join(' ') + '"' : '') +
         (c.sort ? ' data-sort="' + c.sort + '"' : '') + '>' + label + arrow + '</span>';
@@ -166,10 +208,11 @@
     /* the open panel is not rebuilt here — that would destroy the checkbox
        under the pointer and drop focus; only its counter moves */
     var n = $('#p-cols .cols__n');
-    if (n) n.textContent = visibleCols().filter(function (c) { return !c.system; }).length + ' of ' + (COLS.length - 1) + ' shown';
+    if (n) n.textContent = visibleCols().filter(function (c) { return !c.system; }).length + ' of ' + COLS.length + ' shown';
   }
 
-  if (COLMQ.addEventListener) COLMQ.addEventListener('change', function () { applyCols(); });
+  if (COLMQ.addEventListener) COLMQ.addEventListener('change', function () { applyCols(); if (typeof render === 'function') render(); });
+  if (CHIPMQ.addEventListener) CHIPMQ.addEventListener('change', function () { applyCols(); if (typeof render === 'function') render(); });
   else if (COLMQ.addListener) COLMQ.addListener(function () { applyCols(); });
   window.addEventListener('load', function () { applyCols(); });
 
@@ -225,32 +268,32 @@
 
   function colsPopHTML() {
     var dk = dockOpen();
-    var opt = COLS.filter(function (c) { return !c.locked && !c.system; });
-    var lock = COLS.filter(function (c) { return c.locked && !c.system; });
+    var list = S.order.map(colById);
     var shown = visibleCols().filter(function (c) { return !c.system; }).length;
-    return '<div class="cols__h"><span class="cols__t">Columns</span>' +
-        '<span class="cols__n">' + shown + ' of ' + (COLS.length - 1) + ' shown</span></div>' +
-      '<div class="caps mn__lab" id="cols-opt-lab">Optional</div>' +
+    return '<div class="cols__h"><h2 class="dock__t">Columns</h2>' +
+        '<span class="dock__c cols__n">' + shown + ' of ' + COLS.length + ' shown</span>' +
+        '<button class="dock__x" type="button" data-act="cols-close" aria-label="Close Columns">' + ic('i-x') + '</button></div>' +
+      '<div class="cols__sub" id="cols-opt-lab"><b>Show and order</b><span>left to right</span></div>' +
       '<div class="cols__set cols__set--scroll" role="group" aria-labelledby="cols-opt-lab">' +
-      opt.map(function (c) {
+      list.map(function (c, i) {
         var sus = dk && c.dockOff;
-        return '<label class="pop__it cols__it' + (sus ? ' cols__it--sus' : '') + '">' +
-          '<input class="ck" type="checkbox" data-col="' + c.id + '"' +
-          (S.cols[c.id] !== false ? ' checked' : '') + (sus ? ' disabled' : '') + '>' +
-          '<span>' + esc(c.label) + '</span>' +
+        var name = c.id === 'thumb' ? 'Photo' : c.label;
+        var sw = c.locked
+          ? '<span class="cols__lk" title="Always shown">' + ic('i-lock') + '</span>'
+          : '<input class="ck" type="checkbox" data-col="' + c.id + '"' + (S.cols[c.id] !== false ? ' checked' : '') + (sus ? ' disabled' : '') + ' aria-label="Show ' + esc(name) + '">';
+        return '<div class="pop__it cols__it' + (sus ? ' cols__it--sus' : '') + (c.locked ? ' cols__it--lock' : '') + '">' +
+          '<label class="cols__l">' + sw + '<span>' + esc(name) + '</span></label>' +
           (sus ? '<span class="cols__note" title="Not shown while the Filters panel is open">Filters</span>' : '') +
-          '</label>';
+          '<span class="cols__mv">' +
+            '<button type="button" data-mv="' + c.id + '|-1" aria-label="Move ' + esc(name) + ' left"' + (i === 0 ? ' disabled' : '') + '>◀</button>' +
+            '<button type="button" data-mv="' + c.id + '|1" aria-label="Move ' + esc(name) + ' right"' + (i === list.length - 1 ? ' disabled' : '') + '>▶</button>' +
+          '</span></div>';
       }).join('') + '</div>' +
-      '<div class="mn__sep"></div>' +
-      /* The locked columns are a statement, not five more rows: naming them on
-         one line keeps the panel short enough to sit inside the viewport and
-         stops the list reading as twelve switches, five of which fail. */
-      '<p class="cols__lock">' + ic('i-lock') + '<span><b>Always shown:</b> ' +
-        lock.map(function (c) { return esc(c.label); }).join(' · ') + '</span></p>' +
-      '<div class="mn__sep"></div>' +
-      '<button class="cols__reset" type="button" data-act="cols-reset">Reset to default</button>';
+      '<div class="cols__f"><p class="cols__lock">' + ic('i-lock') + '<span>Locked columns are always shown; Actions stays last.</span></p>' +
+      '<button class="btn btn--quiet cols__reset" type="button" data-act="cols-reset">Reset to default</button></div>';
   }
 
+  S.order = loadOrder();
   S.cols = loadCols();
 
   function band(d) { return d <= 30 ? 'fresh' : d <= 90 ? 'mid' : d <= 365 ? 'late' : 'stale'; }
@@ -289,14 +332,23 @@
       else if (s === 'stock') { x = a.s; y = b.s; }
       else if (s === 'year') { x = a.y; y = b.y; }
       else if (s === 'make') { x = a.mk.toLowerCase(); y = b.mk.toLowerCase(); }
+      else if (s === 'model') { x = a.md.toLowerCase(); y = b.md.toLowerCase(); }
+      else if (s === 'trim') { x = (a.tr || '').toLowerCase(); y = (b.tr || '').toLowerCase(); }
+      else if (s === 'colour') { x = (a.c || '').toLowerCase(); y = (b.c || '').toLowerCase(); }
+      else if (s === 'miles') { x = a.mi == null ? -1 : a.mi; y = b.mi == null ? -1 : b.mi; }
+      else if (s === 'status') { x = a.f.indexOf('Pending') >= 0 ? 1 : 0; y = b.f.indexOf('Pending') >= 0 ? 1 : 0; }
       else if (s === 'price') { x = a.p == null ? -1 : a.p; y = b.p == null ? -1 : b.p; }
-      else { x = a.d; y = b.d; }
+      else { x = -a.d; y = -b.d; }   // when added: more days in stock = an earlier date
       return (x > y ? 1 : x < y ? -1 : 0) * d;
     });
   }
 
   /* ── rows ─────────────────────────────────────────────────────────── */
-  function tag(t) { return '<span class="tag' + (TONE[t] ? ' tag--' + TONE[t] : '') + '">' + esc(t) + '</span>'; }
+  /* Listing flags (review notes 16 + 19): conditions of the listing, often the
+     dealer's own choice — stated, not judged. One neutral chip per flag with its
+     own glyph; nothing flagged reads as nothing, not as a green "OK". */
+  var FLAG_ICON = { 'No price': 'i-tag', 'No photos': 'i-cam-off', 'Feed off': 'i-rss', 'Hidden': 'i-eye-off', 'Pending': 'i-clock' };
+  function tag(t) { return '<span class="tag tag--flag">' + (FLAG_ICON[t] ? ic(FLAG_ICON[t]) : '') + esc(t) + '</span>'; }
   /* price cell — only the export's own price fields:
        Price, then Discount Price and Lease Price · Lease Term as the qualifiers under it */
   function priceCell(v) {
@@ -310,11 +362,11 @@
   /* The row builds every cell, then emits the ones the model says are visible
      — in the model's order, so header and row can never drift apart. */
   function rowCells(v) {
-    var b = band(v.d), max = dockOpen() ? 1 : 2, tags = v.f.slice(0, max), rest = v.f.length - tags.length;
+    var b = band(v.d), max = oneChip() ? 1 : 2, tags = v.f.slice(0, max), rest = v.f.length - tags.length;
     var name = v.y + ' ' + v.mk + ' ' + v.md;
     return {
-      select: '<input class="ck" type="checkbox" data-sel="' + v.id + '"' + (S.sel[v.id] ? ' checked' : '') + ' aria-label="Select ' + esc(name) + '">',
-      thumb: (v.t ? '<img class="th" alt="" src="img/' + esc(v.t) + '">' : '<span class="th th--none" title="No photos uploaded">' + ic('i-cam-off') + '</span>'),
+      thumb: (v.t ? '<span class="thw"><img class="th" alt="" src="img/' + esc(v.t) + '"><span class="thn" title="' + nf(v.ph || 0) + ' photos">' + ic('i-cam') + nf(v.ph || 0) + '</span></span>' : '<span class="th th--none" title="No photos uploaded">' + ic('i-cam-off') + '</span>'),
+      miles: v.mi == null ? '<div class="mil mil--none" title="No odometer">—</div>' : '<div class="mil" title="' + nf(v.mi) + ' miles">' + nf(v.mi) + '</div>',
       stock: '<div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop title="Open in the vehicle editor">' + esc(v.s) + '</a>' + (v.lock ? '<span class="lock" title="Being edited by another user">' + ic('i-lock') + '</span>' : '') + '</span><span class="stk__vin" title="VIN ' + esc(v.vin) + '">' + esc(v.vin) + '</span></div>',
       year: '<div class="yr">' + v.y + '</div>',
       make: '<div class="mk" title="' + esc(v.mk) + '">' + esc(v.mk) + '</div>',
@@ -322,15 +374,19 @@
       trim: '<div class="trim" title="' + esc(v.tr) + '">' + (v.tr ? esc(v.tr) : '<i>—</i>') + '</div>',
       colour: '<div class="ext" title="' + esc(v.c) + '"><span class="sw" style="--c:' + v.hx + '"></span><span>' + esc(v.c) + '</span></div>',
       price: priceCell(v),
-      status: '<div class="st"><span class="stat stat--' + (S.lane === 'Sold' ? 'sold' : S.lane === 'Staging' ? 'staging' : 'ok') + '">' + (S.lane === 'All' ? 'Available' : esc(S.lane)) + '</span></div>',
-      health: '<div class="tags">' + (v.f.length ? tags.map(tag).join('') + (rest > 0 ? '<span class="tag tag--more" title="' + esc(v.f.slice(tags.length).join(' · ')) + '">+' + rest + '</span>' : '') : '<span class="okmark" title="No attention flags">' + ic('i-check') + 'OK</span>') + '</div>',
-      age: '<div class="age age--' + b + '" title="' + nf(v.d) + ' days in stock"><i style="--w:' + Math.min(100, Math.round(v.d / 730 * 100)) + '%;--b:' + COL[b] + '"></i>' + lab(v.d) + '</div>',
+      status: '<div class="st"><span class="stat stat--' + (S.lane === 'Sold' ? 'sold' : 'ok') + '">' + (S.lane === 'All' ? 'Available' : esc(S.lane)) + '</span></div>',
+      health: '<div class="tags">' + (v.f.length ? tags.map(tag).join('') + (rest > 0 ? '<span class="tag tag--more" title="' + esc(v.f.slice(tags.length).join(' · ')) + '">+' + rest + '</span>' : '') : '<span class="noflag" title="No listing flags">—</span>') + '</div>',
+      age: '<div class="added age--' + b + '" title="Added ' + addedOn(v.d) + ' · ' + nf(v.d) + ' days in stock"><b>' + addedOn(v.d) + '</b><span>' + lab(v.d) + '</span></div>',
       actions: '<span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop>' + ic('i-edit') + '</button><button type="button" title="Photos" aria-label="Photos" data-stop>' + ic('i-cam') + '</button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop>' + ic('i-print') + '</button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop>' + ic('i-trash') + '</button></span>'
     };
   }
-  function row(v) {
+  /* Added: the demo lot's day count read back from the date of this snapshot,
+     so the dates stay fixed between visits. */
+  var ASOF = Date.UTC(2026, 9, 1), MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  function addedOn(d) { var t = new Date(ASOF - d * 864e5); return MON[t.getUTCMonth()] + ' ' + t.getUTCDate() + ', ' + t.getUTCFullYear(); }
+  function row(v, i) {
     var cells = rowCells(v), name = v.y + ' ' + v.mk + ' ' + v.md;
-    return '<div class="row' + (S.sel[v.id] ? ' sel' : '') + (S.cur === v.id ? ' open' : '') + '" data-id="' + v.id + '" tabindex="0" aria-label="' + esc(name) + '">' +
+    return '<div class="row' + (i % 2 ? ' row--alt' : '') + (S.cur === v.id ? ' open' : '') + '" data-id="' + v.id + '" tabindex="0" aria-label="' + esc(name) + '">' +
       visibleCols().map(function (c) { return cells[c.id]; }).join('') +
       '</div>';
   }
@@ -365,12 +421,13 @@
   function render() {
     var L = list(), F = filtered();
     applyCols();
-    $('#tb').innerHTML = L.length ? L.map(function (v) { return row(v) + (S.cur === v.id ? '<div class="exp" id="exp"><div><div class="exp__in">' + vehicleSheet(v) + '</div></div></div>' : ''); }).join('') + (S.cur ? '<div class="exp-space" id="exp-space"></div>' : '') : '<div class="empty">No vehicles match these filters.<button type="button" data-act="clear-all">Clear all</button></div>';
+    $('#tb').innerHTML = L.length ? L.map(function (v, i) { return row(v, i) + (S.cur === v.id ? '<div class="exp' + (S.still ? ' exp--open' : '') + '" id="exp"><div><div class="exp__in">' + vehicleSheet(v) + '</div></div></div>' : ''); }).join('') + (S.cur ? '<div class="exp-space" id="exp-space"></div>' : '') : '<div class="empty">No vehicles match these filters.<button type="button" data-act="clear-all">Clear all</button></div>';
     $('.field').classList.toggle('has-open', !!S.cur);
     // the sheet sits in the list; reading offsetWidth commits the inserted
     // element before the state class lands, so the entrance actually plays
-    var ex = $('#exp'); if (ex) { void ex.offsetWidth; ex.classList.add('exp--open'); }
-    $('#shown').textContent = (L.length ? '1–' + L.length : '0') + ' of ' + (F ? L.length : 359);
+    var ex = $('#exp'); if (ex && !S.still) { void ex.offsetWidth; ex.classList.add('exp--open'); }
+    S.still = false;
+    renderPager(F ? L.length : 359);
 
     var chips = [];
     Object.keys(S.attn).forEach(function (a) { if (S.attn[a]) chips.push({ cls: 'chip--attn', v: ATTN[a], off: function () { setAttn(a, false); } }); });
@@ -396,10 +453,31 @@
     $('#fcnt').hidden = !nf2; $('#fcnt').textContent = nf2;
     $$('#p-sort [data-sort]').forEach(function (b) { b.classList.toggle('mn__it--on', b.dataset.sort === S.sort); });
     $$('#p-sort [data-dir]').forEach(function (b) { b.classList.toggle('mn__it--on', b.dataset.dir === S.dir); });
-    $('#sort-v').textContent = ({ days: 'Age', price: 'Price', stock: 'Stock', year: 'Year', make: 'Make', issues: 'Attention' })[S.sort] + (S.dir === 'asc' ? ' ↑' : ' ↓');
-    var n = Object.keys(S.sel).filter(function (x) { return S.sel[x]; }).length;
-    $('#tray').classList.toggle('tray--on', n > 0); $('#tray-n').textContent = n;
+    $('#sort-v').textContent = ({ days: 'When added', price: 'Price', stock: 'Stock', year: 'Year', make: 'Make', model: 'Model', miles: 'Mileage', trim: 'Trim', colour: 'Colour', status: 'Status', issues: 'Listing flags' })[S.sort] + (S.dir === 'asc' ? ' ↑' : ' ↓');
     if (S.dock === 'filters') renderFilters();
+  }
+  /* Pagination: the original's pager, above the table and again below it
+     (review note: "I have it on bottom AND on top"). Showing a–b of N,
+     ‹ pages ›, and Rows 50 / 100 / 250 / 500 / 1000. The demo lot is one page
+     of sample cars, so changing page moves the counts, not the rows. */
+  var PER = [50, 100, 250, 500, 1000];
+  function renderPager(total) {
+    var pages = Math.max(1, Math.ceil(total / S.per));
+    if (S.page > pages) S.page = pages;
+    var a = total ? (S.page - 1) * S.per + 1 : 0, z = Math.min(total, S.page * S.per);
+    var nums = [], p;
+    for (p = 1; p <= pages; p++) if (p === 1 || p === pages || Math.abs(p - S.page) <= 1) nums.push(p);
+    var btns = '', last = 0;
+    nums.forEach(function (n) {
+      if (n - last > 1) btns += '<span>…</span>';
+      btns += '<button type="button" data-pg="' + n + '"' + (n === S.page ? ' class="on" aria-current="page"' : '') + '>' + n + '</button>';
+      last = n;
+    });
+    var html = '<span class="pgr__n">Showing <b>' + nf(a) + '–' + nf(z) + '</b> of <b>' + nf(total) + '</b></span><span class="sp"></span>' +
+      '<span class="pg"><button type="button" data-pg="prev" aria-label="Previous page"' + (S.page <= 1 ? ' disabled' : '') + '>‹</button>' + btns +
+      '<button type="button" data-pg="next" aria-label="Next page"' + (S.page >= pages ? ' disabled' : '') + '>›</button></span>' +
+      '<label class="pgr__per"><span>Rows</span><select class="sel sel--sm" data-per aria-label="Rows per page">' + PER.map(function (n) { return '<option' + (n === S.per ? ' selected' : '') + '>' + n + '</option>'; }).join('') + '</select></label>';
+    $$('.pgr').forEach(function (el) { el.innerHTML = html; el._pages = pages; });
   }
   function renderMakes() {
     $('#make-list').innerHTML = MAKES.map(function (m) { return '<label class="pop__it"><input class="ck" type="checkbox" data-f="make" data-k="' + esc(m[0]) + '"' + (S.f.make[m[0]] ? ' checked' : '') + '><span>' + esc(m[0]) + '</span><span class="c">' + m[1] + '</span></label>'; }).join('');
@@ -416,10 +494,34 @@
     var step = function (t) { var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3); el.textContent = nf(Math.round(from + (to - from) * e)); if (p < 1) el._raf = requestAnimationFrame(step); else el._raf = null; };
     el._raf = requestAnimationFrame(step);
   }
+  /* Sold, this year by month (review note 11, Ivaylo: "total sold lifetime
+     isn't that useful … a chart of sales over time"). The figures are the
+     original's own Sold Inventory Report for 2026 (d10), summed across makes;
+     September is partial because the export was cut on Sep 9. */
+  var SOLD = { year: 2026, ytd: 1701, months: [194, 198, 244, 177, 196, 184, 220, 248, 40], partial: 8, asof: 'Sep 9' };
+  var MONS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  function soldChart() {
+    var max = Math.max.apply(null, SOLD.months);
+    var bars = MONS.map(function (m, i) {
+      var n = SOLD.months[i], has = n != null;
+      var t = has ? m + ' ' + SOLD.year + ': ' + nf(n) + ' sold' + (i === SOLD.partial ? ' (to ' + SOLD.asof + ')' : '') : m + ': not yet';
+      return '<span class="soldmo__c' + (i === SOLD.partial ? ' soldmo__c--part' : '') + (has ? '' : ' soldmo__c--none') + '" title="' + t + '">' +
+        '<i style="--h:' + (has ? Math.max(4, Math.round(n / max * 100)) : 0) + '%"></i><em>' + m.charAt(0) + '</em></span>';
+    }).join('');
+    return '<span class="soldmo__bars">' + bars + '</span>';
+  }
   function setLane(l) {
     S.lane = l;
     $$('[data-lane]').forEach(function (b) { var on = b.dataset.lane === l; b.classList.toggle('lane--on', on); b.classList.toggle('ui-view--on', on); b.setAttribute('aria-pressed', on); });
-    countTo($('#scope-n'), $('[data-lane="' + l + '"] b').textContent); $('#scope-l').textContent = l === 'All' ? 'All on file' : l;
+    var sold = l === 'Sold', ch = $('#soldmo');
+    countTo($('#scope-n'), sold ? nf(SOLD.ytd) : $('[data-lane="' + l + '"] b').textContent);
+    $('#scope-l').textContent = sold ? 'Sold in ' + SOLD.year : l === 'All' ? 'All on file' : l;
+    $('.hero__of').textContent = sold ? $('[data-lane="Sold"] b').textContent + ' sold all time' : 'of 13,587 on file';
+    if (ch) {
+      if (sold && !ch.innerHTML) ch.innerHTML = soldChart();
+      ch.hidden = !sold; ch.title = 'Open the Sold Inventory Report';
+      ch.setAttribute('aria-label', 'Sold in ' + SOLD.year + ' by month: ' + MONS.slice(0, SOLD.months.length).map(function (m, i) { return m + ' ' + SOLD.months[i]; }).join(', ') + '. Open the Sold Inventory Report');
+    }
     render();
   }
   function tog(g, key, on) {
@@ -477,13 +579,27 @@
      away from what they were reading. Scroll anchoring absorbs the reflow. */
   function closeVehicle() { S.cur = null; render(); }
 
+  /* On website (review note 20, Ivaylo: "a toggle to quick hide from site …
+     glow red and say hidden on site"). A real switch, not a button that
+     renames itself: on = shown, off = red with "Hidden on site". It works in
+     the mock — flipping it updates the chip under the name, the Listing fact
+     and the row in the table, without closing the sheet. */
+  function siteSwitch(v) {
+    var hid = v.f.indexOf('Hidden') >= 0;
+    return '<button class="sitesw' + (hid ? ' sitesw--off' : '') + '" type="button" role="switch" aria-checked="' + !hid + '" data-site="' + v.id + '">' +
+      '<span class="sitesw__t" aria-hidden="true"><i></i></span><span class="sitesw__l">' + (hid ? 'Hidden on site' : 'On website') + '</span></button>';
+  }
   function vehicleSheet(v) {
     var has = function (t) { return v.f.indexOf(t) >= 0; };
     var ab = function (cls, icon, label) { return '<button class="btn ' + cls + '" type="button">' + ic(icon) + '<span>' + label + '</span></button>'; };
-    var acts = '<div class="veh__acts">' + ab('btn--primary', 'i-edit', 'Edit vehicle') +
+    /* Edit vehicle is the way into the full editor, so it leads the key figures
+       at their own height instead of sitting first in a row of six peers
+       (review note, Ivaylo 2026-10-07). The row below keeps the secondary actions. */
+    var lead = '<button class="btn btn--primary btn--lead" type="button">' + ic('i-edit') + '<span>Edit vehicle</span>' + ic('i-right') + '</button>';
+    var acts = '<div class="veh__acts">' +
       ab('btn--sheet', 'i-cam', 'Photos') + ab('btn--sheet', 'i-print', 'Window sticker') +
       ab('btn--sheet', 'i-file', 'Carfax') + ab('btn--sheet', 'i-rss', has('Feed off') ? 'Include in feeds' : 'Exclude feeds') +
-      ab('btn--sheet', 'i-eye', has('Hidden') ? 'Show on site' : 'Hide on site') + ab('btn--sheet btn--del', 'i-trash', 'Delete…') + '</div>';
+      siteSwitch(v) + ab('btn--sheet btn--del', 'i-trash', 'Delete…') + '</div>';
     var p = vehicleBody(v);
     /* The sheet is an object header and then a stack of regions, not two tall
        columns. The figures, price rows and actions belong beside the photo —
@@ -491,28 +607,29 @@
        column, which is where the 234px of white came from. The regions then
        take the whole sheet width instead of two thirds of it. */
     return '<div class="exp__l">' + p.img + '</div>' +
-      '<div class="exp__r"><div class="exp__top"><div><h3 class="veh__n"><em>' + v.y + '</em>' + esc(v.mk) + ' ' + esc(v.md) + '</h3>' + p.meta + p.tags + '</div><button class="exp__x" type="button" data-act="close-veh" aria-label="Close vehicle">' + ic('i-x') + '</button></div>' +
-        p.kv + (p.pricing || '') + acts + '</div>' +
+      '<div class="exp__r"><div class="exp__top"><div><h3 class="veh__n"><em>' + v.y + '</em>' + esc(v.mk) + ' ' + esc(v.md) + '</h3>' + p.facts + p.meta + p.tags + '</div><button class="exp__x" type="button" data-act="close-veh" aria-label="Close vehicle">' + ic('i-x') + '</button></div>' +
+        '<div class="veh__lead">' + lead + p.kv + '</div>' + (p.pricing || '') + acts + '</div>' +
       '<div class="exp__accs">' + p.accs + '</div>';
   }
 
   function vehicleBody(v) {
     var b = band(v.d), has = function (t) { return v.f.indexOf(t) >= 0; }, m = market(v);
-    var H = [
-      has('No price') ? ['bad', 'i-alert', 'No asking price'] : ['ok', 'i-check', 'Priced'],
-      has('No photos') ? ['bad', 'i-alert', 'No photos'] : ['ok', 'i-check', nf(v.ph || 0) + ' photos'],
-      has('Feed off') ? ['red', 'i-x', 'Excluded from feeds'] : ['ok', 'i-check', 'Feeding to partners'],
-      has('Hidden') ? ['bad', 'i-alert', 'Hidden on site'] : ['ok', 'i-check', 'Shown on site'],
-      ['ok', 'i-check', 'VIN decoded'],
-      has('Pending') ? ['vio', 'i-clock', 'Sale pending'] : ['ok', 'i-check', 'No pending sale']
+    /* Listing: the six facts of the listing, each with its own glyph, the set
+       ones in ink and the rest quiet. No "need work", no "passing" — a hidden
+       car or a feed exclusion is often the dealer's intent (Ivaylo, 16 + 19). */
+    var L6 = [
+      ['i-tag', 'Price', has('No price') ? 'not set' : fmt(v.p), has('No price')],
+      [v.ph ? 'i-cam' : 'i-cam-off', 'Photos', v.ph ? nf(v.ph) : 'none', !v.ph],
+      ['i-rss', 'Partner feeds', has('Feed off') ? 'excluded' : 'included', has('Feed off')],
+      [has('Hidden') ? 'i-eye-off' : 'i-eye', 'Website', has('Hidden') ? 'hidden' : 'shown', has('Hidden')],
+      ['i-file', 'VIN', 'decoded', false],
+      ['i-clock', 'Sale', has('Pending') ? 'pending' : 'none pending', has('Pending')]
     ];
-    var bad = H.filter(function (h) { return h[0] !== 'ok'; });
-    var good = H.filter(function (h) { return h[0] === 'ok'; });
-    var issues = bad.length;
-    var healthSum = issues ? '<span class="' + (has('Feed off') ? 'red' : 'bad') + '">' + issues + ' of 6 need work</span>' : '<span class="good">All clear</span>';
-    /* the checks that pass need naming, not six rows of green ticks */
-    var healthIn = '<div class="health">' + bad.map(function (h) { return '<div class="hl hl--' + h[0] + '"><i>' + ic(h[1]) + '</i>' + esc(h[2]) + '</div>'; }).join('') + '</div>' +
-      (good.length ? '<p class="health__ok">' + (issues ? '<b>Passing · </b>' : '') + good.map(function (h) { return esc(h[2]); }).join(' · ') + '</p>' : '');
+    var SHORT = { 'No price': 'No price', 'No photos': 'No photos', 'Feed off': 'Feeds off', 'Hidden': 'Hidden', 'Pending': 'Sale pending' };
+    var healthSum = v.f.length ? '<span class="lsum">' + v.f.map(function (x) { return esc(SHORT[x] || x); }).join(' · ') + '</span>' : '<span class="lsum lsum--none">No flags</span>';
+    var healthIn = '<div class="lst">' + L6.map(function (r) {
+      return '<div class="lst__r' + (r[3] ? ' lst__r--set' : '') + '"><i>' + ic(r[0]) + '</i><span class="lst__k">' + r[1] + '</span><span class="lst__v">' + esc(r[2]) + '</span></div>';
+    }).join('') + '</div>';
 
     /* market & pricing */
     var span = m.max - m.min, pos = function (x) { return Math.max(0, Math.min(100, (x - m.min) / span * 100)); }, mx = Math.max.apply(null, m.bins);
@@ -549,19 +666,37 @@
     T.push(['i-plus', 'Added to inventory', nf(v.d) + ' days ago']);
     var histIn = '<ul class="tl">' + T.map(function (t) { return '<li><span class="tl__i">' + ic(t[0]) + '</span><span>' + esc(t[1]) + '</span><span>' + t[2] + '</span></li>'; }).join('') + '</ul>';
 
-    var specIn = '<div class="spec2"><div><span>Trim</span><span title="' + esc(v.tr) + '">' + (esc(v.tr) || '—') + '</span></div><div><span>Exterior</span><span>' + esc(v.c) + '</span></div><div><span>Type</span><span>Used</span></div><div><span>Mileage</span><span>Not recorded</span></div><div><span>Location</span><span>Chicago Motor Cars</span></div><div><span>Stock #</span><span class="mono">' + esc(v.s) + '</span></div></div>';
+    /* the four facts a dealer reads first, lifted out of Specification so they
+       need no click (review note 18) — Trim · Mileage · Exterior · Type */
+    var factsIn = '<div class="veh__facts">' + [
+      ['Trim', v.tr || '—'], ['Mileage', v.mi == null ? '—' : nf(v.mi) + ' mi'], ['Exterior', v.c || '—'], ['Type', 'Used']
+    ].map(function (x) { return '<span><em>' + x[0] + '</em>' + esc(x[1]) + '</span>'; }).join('') + '</div>';
+    var specIn = '<div class="spec2"><div><span>Trim</span><span title="' + esc(v.tr) + '">' + (esc(v.tr) || '—') + '</span></div><div><span>Exterior</span><span>' + esc(v.c) + '</span></div><div><span>Type</span><span>Used</span></div><div><span>Mileage</span><span>' + (v.mi == null ? 'No odometer' : nf(v.mi) + ' mi') + '</span></div><div><span>Location</span><span>Chicago Motor Cars</span></div><div><span>Stock #</span><span class="mono">' + esc(v.s) + '</span></div></div>';
 
     return {
       img: '<div class="veh__img">' + (v.t ? '<img alt="' + esc(v.y + ' ' + v.mk + ' ' + v.md) + '" src="img/' + esc(v.t) + '"><span class="cnt">' + ic('i-cam') + nf(v.ph || 0) + ' photos</span>' : '<div class="none">' + ic('i-cam-off') + 'No photos uploaded<button class="btn btn--sm" type="button">' + ic('i-plus') + ' Upload photos</button></div>') + '</div>',
+      facts: factsIn,
       meta: '<div class="veh__m"><span class="idtag">' + esc(v.s) + '</span><span class="mono">VIN ' + esc(v.vin) + '</span><span class="veh__st">Available</span>' + (v.lock ? '<span class="lock" title="Being edited by another user">' + ic('i-lock') + '</span>' : '') + '</div>',
       tags: (v.f.length ? '<div class="veh__tags">' + v.f.map(tag).join('') + '</div>' : ''),
-      kv: '<div class="veh__kv"><div><div class="v' + (v.p == null ? ' warn' : '') + '">' + (v.p == null ? 'No price' : fmt(v.p)) + '</div><div class="l">price</div></div><div><div class="v" style="color:' + (b === 'stale' ? 'var(--danger)' : b === 'fresh' ? 'var(--ok)' : 'var(--ink)') + '">' + lab(v.d) + '</div><div class="l">' + nf(v.d) + ' days</div></div><div><div class="v">' + (v.ph || 0) + '</div><div class="l">photos</div></div></div>',
-      pricing: (v.disc || v.inv || v.lease) ? '<div class="veh__pr">' + (v.disc ? '<div><span>Discount Price</span><b class="ok">' + fmt(v.disc) + '</b></div>' : '') + (v.inv ? '<div><span>Invoice (Cost) Price</span><b>' + fmt(v.inv) + '</b></div>' : '') + (v.lease ? '<div><span>Lease Price</span><b>' + fmt(v.lease) + '/mo</b></div>' : '') + (v.lt ? '<div><span>Lease Term</span><b>' + v.lt + ' months</b></div>' : '') + '</div>' : '',
+      /* Price and Invoice cost side by side, then age and photos (Alex): the
+         separate full-width price strip is gone. Discount and lease ride under
+         the price, as in the table; cost is a cell on every car ("—" when the
+         field is empty) so the panel never changes shape between vehicles. */
+      kv: '<div class="veh__kv veh__kv--4">' +
+        '<div><div class="v' + (v.p == null ? ' warn' : '') + '">' + (v.p == null ? 'No price' : fmt(v.p)) + '</div><div class="l">price</div>' +
+          (v.disc && v.p != null && v.disc < v.p ? '<div class="kv__sub"><b class="ok">' + fmt(v.disc) + '</b> discount</div>' : '') +
+          (v.lease ? '<div class="kv__sub"><b>' + fmt(v.lease) + '/mo</b> lease' + (v.lt ? ' · ' + v.lt + ' mo' : '') + '</div>' : '') + '</div>' +
+        '<div><div class="v' + (v.inv ? '' : ' none') + '">' + (v.inv ? fmt(v.inv) : '—') + '</div><div class="l">invoice cost</div></div>' +
+        '<div><div class="v" style="color:' + (b === 'stale' ? 'var(--danger)' : b === 'fresh' ? 'var(--ok)' : 'var(--ink)') + '">' + lab(v.d) + '</div><div class="l">' + nf(v.d) + ' days</div></div>' +
+        '<div><div class="v">' + (v.ph || 0) + '</div><div class="l">photos</div></div></div>',
+      pricing: '',   // folded into the key figures above
       /* Four regions stacked down one column, each opening in place and pushing
          the ones below it. Independent — any number may be open at once, and
          health, which opens by default, can be closed like the rest. */
-      accs: acc('health', 'Merchandising health', healthSum, healthIn) +
-        acc('market', 'Market intelligence', mktSum, mktIn, ' <span class="demo">Demo</span>') +
+      accs: acc('health', 'Listing', healthSum, healthIn) +
+        /* Market intelligence removed from the mock (review note 17, Ivaylo: "remove
+           this from mockup. not to be added now"). market(), mktSum and mktIn
+           stay above, unused, so the block can come back in one line. */
         acc('spec', 'Specification', esc(v.tr || 'No trim recorded'), specIn) +
         acc('hist', 'History', 'Edited 3 days ago', histIn, ' <span class="demo">Demo</span>')
     };
@@ -701,8 +836,28 @@
       }
       return;
     }
+    if ((el = t.closest('[data-site]'))) {
+      var sv = byId(el.dataset.site), at = sv.f.indexOf('Hidden');
+      if (at >= 0) sv.f.splice(at, 1); else sv.f.push('Hidden');
+      S.still = true; render();
+      var again = $('[data-site="' + sv.id + '"]'); if (again) again.focus();
+      return;
+    }
+    if ((el = t.closest('[data-act="cols-close"]'))) { closePops(); var cb = $('#cols-btn'); if (cb) cb.focus(); return; }
+    if ((el = t.closest('[data-mv]'))) {
+      var mv = el.dataset.mv.split('|');
+      if (moveCol(mv[0], +mv[1])) {
+        render();
+        var pc = $('#p-cols'), sc = pc.querySelector('.cols__set--scroll'), top = sc ? sc.scrollTop : 0;
+        pc.innerHTML = colsPopHTML();
+        sc = pc.querySelector('.cols__set--scroll'); if (sc) sc.scrollTop = top;
+        var again = pc.querySelector('[data-mv="' + el.dataset.mv + '"]');
+        if (again && !again.disabled) again.focus(); else { var other = pc.querySelector('[data-mv="' + mv[0] + '|' + (-mv[1]) + '"]'); if (other) other.focus(); }
+      }
+      return;
+    }
     if ((el = t.closest('[data-act="cols-reset"]'))) {
-      S.cols = colDefaults(); saveCols(); render();
+      S.cols = colDefaults(); saveCols(); S.order = orderDefault(); saveOrder(); render();
       $('#p-cols').innerHTML = colsPopHTML();
       var rb = $('#p-cols .cols__reset'); if (rb) rb.focus();
       return;
@@ -722,11 +877,11 @@
     if ((el = t.closest('[data-chip]'))) { $('#scope')._chips[+el.dataset.chip].off(); render(); return; }
     if ((el = t.closest('[data-act="clear-all"]'))) { S.attn = {}; Object.keys(S.f).forEach(function (g) { S.f[g] = {}; }); $$('.ar--on').forEach(function (b) { b.classList.remove('ar--on'); b.setAttribute('aria-pressed', 'false'); }); renderMakes(); setAge(null); return; }
     if ((el = t.closest('[data-act="clear-makes"]'))) { S.f.make = {}; renderMakes(); render(); return; }
-    if ((el = t.closest('[data-act="clear-sel"]'))) { S.sel = {}; render(); return; }
+    if ((el = t.closest('[data-pg]'))) { var pg = el.dataset.pg, np = $('.pgr')._pages || 1; S.page = pg === 'prev' ? Math.max(1, S.page - 1) : pg === 'next' ? Math.min(np, S.page + 1) : +pg; render(); return; }
     if ((el = t.closest('.mn__it[data-sort]'))) { S.sort = el.dataset.sort; render(); closePops(); return; }
     if ((el = t.closest('.hd [data-sort]'))) { if (S.sort === el.dataset.sort) S.dir = S.dir === 'asc' ? 'desc' : 'asc'; else S.sort = el.dataset.sort; render(); return; }
     if ((el = t.closest('[data-dir]'))) { S.dir = el.dataset.dir; render(); closePops(); return; }
-    if ((el = t.closest('.row[data-id]')) && !t.closest('[data-stop]') && !t.closest('.ck')) { showVehicle(el.dataset.id); return; }
+    if ((el = t.closest('.row[data-id]')) && !t.closest('[data-stop]')) { showVehicle(el.dataset.id); return; }
     if (t.closest('a[href="#"]')) e.preventDefault();
   });
   document.addEventListener('change', function (e) {
@@ -734,7 +889,7 @@
     if (col) { S.cols[col.dataset.col] = col.checked; saveCols(); render(); return; }
     var t = e.target;
     if (t.matches('[data-f]')) { tog(t.dataset.f, t.dataset.k, t.checked); return; }
-    if (t.matches('[data-sel]')) { S.sel[t.dataset.sel] = t.checked; render(); }
+    if (t.matches('[data-per]')) { S.per = +t.value; S.page = 1; render(); }
   });
   document.addEventListener('input', function (e) {
     var t = e.target;
@@ -748,11 +903,40 @@
     if (e.key === '/' && !/input|select|textarea/i.test(a.tagName)) { e.preventDefault(); $('#q').focus(); }
   });
 
+  /* Photo preview on hover (review note, Ivaylo): rest on a thumbnail and a
+     larger shot of the car appears beside it; leave and it goes at once. The
+     short delay keeps it from flashing while the pointer travels down the
+     list. Pointer-only: touch has no hover, and the row still opens the car. */
+  (function () {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    var pv = document.createElement('div'), img = document.createElement('img'), timer = null, on = null;
+    pv.className = 'thpv'; pv.setAttribute('aria-hidden', 'true'); img.alt = ''; pv.appendChild(img); document.body.appendChild(pv);
+    function hide() { clearTimeout(timer); timer = null; on = null; pv.classList.remove('thpv--on'); }
+    function show(th) {
+      var r = th.getBoundingClientRect(), W = 280, H = Math.round(W * (th.naturalHeight / th.naturalWidth || .665)), gap = 12;
+      var x = r.right + gap, y = r.top + r.height / 2 - H / 2;
+      if (x + W > innerWidth - 8) x = r.left - gap - W;
+      y = Math.max(8, Math.min(innerHeight - H - 8, y));
+      img.src = th.src; pv.style.width = W + 'px'; pv.style.height = H + 'px';
+      pv.style.transform = 'translate(' + Math.round(x) + 'px,' + Math.round(y) + 'px)';
+      pv.classList.add('thpv--on');
+    }
+    $('#tb').addEventListener('mouseover', function (e) {
+      var th = e.target.closest && e.target.closest('img.th');
+      if (!th || th === on) return;
+      hide(); on = th; timer = setTimeout(function () { if (on === th) show(th); }, 300);
+    });
+    $('#tb').addEventListener('mouseout', function (e) {
+      if (on && e.target === on) hide();
+    });
+    window.addEventListener('scroll', hide, { passive: true });
+  })();
+
   for (var y = 2027; y >= 1929; y--) { $('#y1').insertAdjacentHTML('beforeend', '<option>' + y + '</option>'); $('#y2').insertAdjacentHTML('beforeend', '<option>' + y + '</option>'); }
   setTheme(document.documentElement.getAttribute('data-theme') || 'light', false);
   renderMakes(); render();
 
-  /* review states via hash: #vehicle=20171 · #filters · #dark · #open=comps,hist · #f=make:Porsche,price:none */
+  /* review states via hash: #vehicle=20171 · #filters · #dark · #open=comps,hist · #f=make:Porsche,price:none · #lane=Sold */
   (function fromHash() {
     var parts = location.hash.slice(1).split('&').filter(Boolean), P = {};
     parts.forEach(function (p) { var kv = p.split('='); P[kv[0]] = decodeURIComponent(kv[1] || ''); });
@@ -762,6 +946,8 @@
     if (P.close) P.close.split(',').forEach(function (x) { S.acc[x] = false; });
     if (P.f) P.f.split(',').forEach(function (x) { var q = x.split(':'); if (S.f[q[0]]) S.f[q[0]][q[1]] = true; });
     if (P.attn) setAttn(P.attn, true);
+    // after the hero's load-in count, which would otherwise count to the old lane's figure
+    if (P.lane && document.querySelector('[data-lane="' + P.lane + '"]')) setTimeout(function () { setLane(P.lane); }, 0);
     if (P.vehicle) { var v = V.filter(function (x) { return x.s === P.vehicle; })[0] || V[+P.vehicle]; if (v) showVehicle(v.id); }
     else if ('filters' in P) showFilters();
     else render();

@@ -8,7 +8,7 @@
    `dark` — the key is shared with the other Gen pages — cannot land this page in a
    half-dark state at load. Temporary; the dark-theme stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="all-vehicles-gen11.css?v=20261002-fix">
+<link rel="stylesheet" href="all-vehicles-gen11.css?v=20261013-site">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
 <link rel="stylesheet" href="../_aan-components.css?v=20261002-fix">
 </head>
@@ -28,6 +28,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></symbol>
   <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></symbol>
   <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M10.6 5.2A9.9 9.9 0 0 1 12 5c6.4 0 10 7 10 7a18 18 0 0 1-3.2 4.1"/><path d="M6.2 6.7A18 18 0 0 0 2 12s3.6 7 10 7a9.6 9.6 0 0 0 4-.86"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></symbol>
   <symbol id="i-eye" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></symbol>
   <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
   <symbol id="i-cols" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16"/></symbol>
@@ -154,6 +155,13 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <div class="focal__main">
         <div class="focal__h"><span class="caps">Lot</span><span class="s">6 rooftops · updated 5 min ago</span></div>
         <div class="hero"><div class="hero__n" id="scope-n">359</div><div class="hero__l"><b id="scope-l">Available</b><span class="hero__of">of 13,587 on file</span></div></div>
+        <a class="soldmo" id="soldmo" href="#" hidden></a>
+        <div class="lanes ui-views" role="group" aria-label="Lane">
+        <button class="lane lane--on ui-view ui-view--on" type="button" data-lane="Available" aria-pressed="true"><span>Available</span><b>359</b></button>
+        <button class="lane ui-view" type="button" data-lane="Sold" aria-pressed="false"><span>Sold</span><b>13,212</b></button>
+        <button class="lane lane--zero ui-view" type="button" data-lane="Pending" aria-pressed="false"><span>Pending</span><b>0</b></button>
+        <button class="lane lane--all ui-view" type="button" data-lane="All" aria-pressed="false"><span>All</span><b>13,587</b></button>
+        </div>
       </div>
       <div class="agemix">
         <div class="agemix__h"><span class="caps">Age mix</span><a class="s" href="#">Aging report</a></div>
@@ -162,12 +170,12 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
     </div>
 
     <div class="value">
-      <div class="value__h"><span class="caps">Value</span><span class="s">asking, available</span></div>
-      <div class="kv"><div><div class="v" title="$66,311,600">$66.3M</div><div class="l">asking value</div></div><div><div class="v" title="$293,414">$293K</div><div class="l">average price</div></div><div><div class="v" title="Price mix — no price 133 · under $10k 4 · $10–25k 8 · $25–50k 24 · $50–100k 44 · $100k+ 146">146</div><div class="l">$100k+</div></div></div>
+      <div class="value__h"><span class="caps">Value</span></div>
+      <div class="kv"><div><div class="l">Asking value</div><div class="v" title="$66,311,600">$66.3M</div></div><div><div class="l">Average price</div><div class="v" title="$293,414">$293K</div></div></div>
     </div>
 
     <section class="attn" aria-label="Needs attention">
-      <div class="attn__h"><h2><span class="full">Needs attention</span><span class="short">Attention</span></h2><span class="s">tap to filter the list</span></div>
+      <div class="attn__h"><h2><span class="full">Needs attention</span><span class="short">Attention</span></h2><span class="s">click to filter the list</span></div>
       <div class="attn__g">
       <button class="ar" type="button" data-attn="no_price"><span class="ar__n">133</span><span class="ar__b"><span class="ar__l"><span class="full">No price</span><span class="short">No price</span></span><span class="ar__m"><i style="--w:37%"></i></span></span><span class="ar__p">37%</span></button>
       <button class="ar" type="button" data-attn="no_photos"><span class="ar__n">95</span><span class="ar__b"><span class="ar__l"><span class="full">No photos</span><span class="short">No photos</span></span><span class="ar__m"><i style="--w:26%"></i></span></span><span class="ar__p">26%</span></button>
@@ -181,20 +189,10 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 
   <!-- FIELD — command + inventory -->
   <section class="field" aria-label="Inventory">
-    <div class="cmdtop ui-toolbar ui-toolbar--sub">
-      <div class="lanes ui-views" role="group" aria-label="Lane">
-          <button class="lane lane--on ui-view ui-view--on" type="button" data-lane="Available" aria-pressed="true"><span>Available</span><b>359</b></button>
-          <button class="lane ui-view" type="button" data-lane="Sold" aria-pressed="false"><span>Sold</span><b>13,212</b></button>
-          <button class="lane ui-view" type="button" data-lane="Staging" aria-pressed="false"><span>Staging</span><b>16</b></button>
-          <button class="lane lane--zero ui-view" type="button" data-lane="Pending" aria-pressed="false"><span>Pending</span><b>0</b></button>
-          <button class="lane lane--all ui-view" type="button" data-lane="All" aria-pressed="false"><span>All on file</span><b>13,587</b></button>
-        </div>
-    </div>
-
     <div class="cmd ui-toolbar">
       <label class="search"><svg class="i"><use href="#i-search"/></svg><input type="search" id="q" placeholder="Find a vehicle — stock, VIN, year, make, model, colour…" autocomplete="off"><kbd>/</kbd></label>
-      <div class="facet"><button class="facet__b" type="button" data-pop="p-sort"><span class="facet__k">Sort</span><span class="facet__v" id="sort-v">Age ↓</span><svg class="i"><use href="#i-chev"/></svg></button>
-        <div class="pop pop--right mn" id="p-sort"><div class="caps mn__lab">Sort by</div><button class="mn__it" type="button" data-sort="stock"><svg class="i"><use href="#i-check"/></svg>Stock</button><button class="mn__it" type="button" data-sort="year"><svg class="i"><use href="#i-check"/></svg>Year</button><button class="mn__it" type="button" data-sort="make"><svg class="i"><use href="#i-check"/></svg>Make</button><button class="mn__it" type="button" data-sort="price"><svg class="i"><use href="#i-check"/></svg>Price</button><button class="mn__it mn__it--on" type="button" data-sort="days"><svg class="i"><use href="#i-check"/></svg>Age</button><button class="mn__it" type="button" data-sort="issues"><svg class="i"><use href="#i-check"/></svg>Attention first</button><div class="mn__sep"></div><button class="mn__it" type="button" data-dir="asc"><svg class="i"><use href="#i-up"/></svg>Ascending</button><button class="mn__it mn__it--on" type="button" data-dir="desc"><svg class="i"><use href="#i-dn"/></svg>Descending</button></div></div>
+      <div class="facet"><button class="facet__b" type="button" data-pop="p-sort"><span class="facet__k">Sort</span><span class="facet__v" id="sort-v">When added ↑</span><svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="pop pop--right mn" id="p-sort"><div class="caps mn__lab">Sort by</div><button class="mn__it" type="button" data-sort="stock"><svg class="i"><use href="#i-check"/></svg>Stock</button><button class="mn__it" type="button" data-sort="year"><svg class="i"><use href="#i-check"/></svg>Year</button><button class="mn__it" type="button" data-sort="make"><svg class="i"><use href="#i-check"/></svg>Make</button><button class="mn__it" type="button" data-sort="price"><svg class="i"><use href="#i-check"/></svg>Price</button><button class="mn__it mn__it--on" type="button" When added</button><button class="mn__it" type="button" data-sort="issues"><svg class="i"><use href="#i-check"/></svg>Listing flags first</button><div class="mn__sep"></div><button class="mn__it" type="button" data-dir="asc"><svg class="i"><use href="#i-up"/></svg>Ascending</button><button class="mn__it mn__it--on" type="button" data-dir="desc"><svg class="i"><use href="#i-dn"/></svg>Descending</button></div></div>
       <span class="cmd__div"></span>
       <div class="seg" role="group" aria-label="View"><button class="seg__b seg__b--on" type="button" aria-label="Rows" aria-pressed="true"><svg class="i"><use href="#i-table"/></svg></button><button class="seg__b" type="button" aria-label="Gallery" aria-pressed="false"><svg class="i"><use href="#i-cards"/></svg></button><button class="seg__b" type="button" aria-label="Photos" aria-pressed="false"><svg class="i"><use href="#i-image"/></svg></button></div>
       <div class="facet c-cols"><button class="facet__b" type="button" data-pop="p-cols" id="cols-btn" aria-expanded="false" aria-controls="p-cols" aria-haspopup="true"><svg class="i"><use href="#i-cols"/></svg><span class="facet__v">Columns</span><svg class="i"><use href="#i-chev"/></svg></button>
@@ -216,14 +214,14 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <span class="sub__shown" id="sub-shown"></span>
     </div>
 
+    <div class="foot pgr pgr--top" id="pg-top" aria-label="Pages"></div>
+
     <div class="rows ui-table" id="rows">
       <div class="hd ui-thead" id="hd"><span></span><span></span><span class="s" data-sort="stock">Stock</span><span class="s" data-sort="year">Year</span><span class="s" data-sort="make">Make</span><span>Model</span><span class="c-trim">Trim</span><span class="c-ext">Colour</span><span class="r s on c-price" data-sort="price">Price</span><span class="c-status">Status</span><span class="s c-health" data-sort="issues">Health</span><span class="r s on" data-sort="days">Age <svg class="i"><use href="#i-dn"/></svg></span><span class="r">Actions</span></div>
       <div id="tb"></div>
     </div>
 
-    <div class="foot"><span id="shown">1–16 of 359</span><span class="sp"></span><span class="pg"><button type="button" aria-label="Previous page">‹</button><button type="button" class="on" aria-current="page">1</button><button type="button">2</button><button type="button">3</button><span>…</span><button type="button">23</button><button type="button" aria-label="Next page">›</button></span><span>16 per page</span></div>
-
-    <div class="tray" id="tray"><b><span id="tray-n">0</span> selected</b><button type="button">Inline edit</button><button type="button">Show / hide</button><button type="button">Feed on / off</button><button type="button">Stickers</button><button type="button">Export</button><button type="button" class="d">Delete…</button><button type="button" class="x" data-act="clear-sel" aria-label="Clear selection"><svg class="i"><use href="#i-x"/></svg></button></div>
+    <div class="foot pgr" id="pg-bot" aria-label="Pages"></div>
   </section>
 
   <!-- DOCK — contextual plane: vehicle or filters -->
@@ -235,6 +233,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 </div>
 
 <script src="all-vehicles-gen11.data.js?v=20260930234502"></script>
-<script src="all-vehicles-gen11.js?v=20260930234502"></script>
+<script src="all-vehicles-gen11.js?v=20261013-site"></script>
 </body>
 </html>
