@@ -677,7 +677,7 @@
       img: '<div class="veh__img">' + (v.t ? '<img alt="' + esc(v.y + ' ' + v.mk + ' ' + v.md) + '" src="img/' + esc(v.t) + '"><span class="cnt">' + ic('i-cam') + nf(v.ph || 0) + ' photos</span>' : '<div class="none">' + ic('i-cam-off') + 'No photos uploaded<button class="btn btn--sm" type="button">' + ic('i-plus') + ' Upload photos</button></div>') + '</div>',
       facts: factsIn,
       meta: '<div class="veh__m"><span class="idtag">' + esc(v.s) + '</span><span class="mono">VIN ' + esc(v.vin) + '</span><span class="veh__st">Available</span>' + (v.lock ? '<span class="lock" title="Being edited by another user">' + ic('i-lock') + '</span>' : '') + '</div>',
-      tags: (v.f.length ? '<div class="veh__tags">' + v.f.map(tag).join('') + '</div>' : ''),
+      tags: '<div class="veh__tags">' + v.f.map(tag).join('') + '</div>',   // always present: flipping On website must not move the sheet
       /* Price and Invoice cost side by side, then age and photos (Alex): the
          separate full-width price strip is gone. Discount and lease ride under
          the price, as in the table; cost is a cell on every car ("—" when the
@@ -839,7 +839,13 @@
     if ((el = t.closest('[data-site]'))) {
       var sv = byId(el.dataset.site), at = sv.f.indexOf('Hidden');
       if (at >= 0) sv.f.splice(at, 1); else sv.f.push('Hidden');
+      // keep the end-of-list spacer and the scroll exactly where they were:
+      // a re-render recreates the spacer at 0px, and near the end of the list
+      // the shorter page would pull the scroll up
+      var sp0 = $('#exp-space'), keepH = sp0 ? sp0.style.height : '', y0 = window.scrollY;
       S.still = true; render();
+      var sp1 = $('#exp-space'); if (sp1 && keepH) sp1.style.height = keepH;
+      window.scrollTo(0, y0);
       var again = $('[data-site="' + sv.id + '"]'); if (again) again.focus();
       return;
     }

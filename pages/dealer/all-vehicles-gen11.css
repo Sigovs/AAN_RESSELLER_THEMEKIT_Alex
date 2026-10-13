@@ -3843,3 +3843,10 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
 .sitesw--off .sitesw__t { background: var(--danger); }
 .sitesw--off .sitesw__t i { left: 2px; }
 @media (prefers-reduced-motion: reduce) { .sitesw, .sitesw__t, .sitesw__t i { transition: none; } }
+
+/* nothing moves when the switch flips (Alex): the chip row keeps its line
+   even when there are no flags, and the switch is as wide as its longer
+   label ("Hidden on site") in both states */
+.exp .veh__tags { min-height: 24px; }
+.sitesw { min-width: 156px; }
+
