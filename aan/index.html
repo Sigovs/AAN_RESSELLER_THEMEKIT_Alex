@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AAN Control Panel — Gen 11</title>
+<title>AAN Control Panel — Gen 11_2</title>
 <style>
   @font-face { font-family: "Archivo"; font-style: normal; font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; src: url("ds/fonts/archivo-latin-var.woff2") format("woff2"); }
   @font-face { font-family: "Plex Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("ds/fonts/plex-mono-400.woff2") format("woff2"); }
@@ -43,6 +43,12 @@
   .hero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px; align-items: center; }
   .hero h1 { margin: 14px 0 12px; font-size: 52px; line-height: 1.02; letter-spacing: -.03em; font-weight: 700; font-stretch: 92%; }
   .hero h1 em { font-style: normal; color: var(--brand-2); }
+  /* the build's name, large: Gen 11_2 = Gen 11 after the team's review round */
+  .g112 { display: flex; align-items: flex-end; gap: 18px; margin: 4px 0 18px; }
+  .g112 b { font-size: clamp(64px, 7vw, 112px); font-weight: 800; line-height: .82; letter-spacing: -.05em; color: var(--on); }
+  .g112 b i { font-style: normal; color: var(--brand-2); }
+  .g112 span { display: grid; gap: 4px; padding-bottom: 8px; font-size: 15px; color: var(--on-2); }
+  .g112 em { font-style: normal; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--brand-2); }
   .hero p { margin: 0 0 22px; font-size: 17px; color: var(--on-2); max-width: 46ch; }
   .facts { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 18px; }
   .facts div b { display: block; font-size: 26px; font-weight: 700; letter-spacing: -.02em; line-height: 1; }
@@ -359,18 +365,19 @@
 <body>
 
 <div class="bar"><div class="wrap">
-  <span class="logo"><i>AAN</i> Control Panel · Gen 11</span>
+  <span class="logo"><i>AAN</i> Control Panel · Gen 11_2</span>
   <nav>
-    <a href="#gen11">Gen 11 · final</a>
+    <a href="#gen11">Gen 11_2</a>
     <a href="comments.html">Notes</a>
-    <a class="go" href="pages/dealer/all-vehicles-gen11.html">Open Gen 11 →</a>
+    <a class="go" href="pages/dealer/all-vehicles-gen11.html">Open Gen 11_2 →</a>
   </nav>
 </div></div>
 
 <!-- ── HERO ── -->
 <div class="hero"><div class="wrap">
   <div>
-    <span class="caps">Dealer UI · AAN Employee UI · Gen 11 review build</span>
+    <span class="caps">Dealer UI · AAN Employee UI · review build</span>
+    <div class="g112" role="img" aria-label="Gen 11_2"><b>11<i>_</i>2</b><span><em>Gen 11 &middot; round 2</em>after the team&rsquo;s review</span></div>
     <h1>The control panel,<br>rebuilt as a <em>workspace</em>.</h1>
     <p>Ten pages, dealer and employee, on one component system. Every page carries a Notes button &mdash; point at what you mean and leave a note for the team.</p>
     <div class="facts">
