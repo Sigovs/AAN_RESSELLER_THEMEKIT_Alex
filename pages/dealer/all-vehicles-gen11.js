@@ -30,9 +30,12 @@
     opt: [['awd', 'All-wheel drive', 88], ['manual', 'Manual transmission', 64], ['open', 'Convertible / open top', 52], ['ccb', 'Carbon-ceramic brakes', 23], ['diesel', 'Diesel engine', 21]]
   };
   var COLORS = [['Black', '#1c1d21', 71], ['White', '#eeeeec', 64], ['Silver', '#b7bbc1', 46], ['Red', '#b3261e', 41], ['Grey', '#6b6f76', 38], ['Blue', '#2a5db8', 33], ['Green', '#2f6b47', 22], ['Yellow', '#e3b21b', 14], ['Orange', '#e8721c', 11], ['Other', 'conic-gradient(#e35548, #f2a12b, #2fb46f, #1f5fe0, #8f78ea, #e35548)', 19]];
-  var GL = { make: 'Make', model: 'Model', year: 'Year', price: 'Price', mile: 'Mileage', loc: 'Location', type: 'Type', merch: 'Merchandising', color: 'Colour', opt: 'Options' };
+  var GL = { make: 'Make', model: 'Model', year: 'Year', price: 'Price', mile: 'Mileage', loc: 'Location', type: 'Type', merch: 'Merchandising', color: 'Color', opt: 'Options' };
   var BASE = { Kia: 14500, Terex: 38500, SUNDOWNER: 52000, Porsche: 180000, Dodge: 92000, Ford: 58000 };
   var STATES = ['IL', 'WI', 'IN', 'MI', 'OH', 'MO', 'MN', 'IA', 'KY'];
+  /* where "open in the vehicle editor" goes (Matthew: the stock number promised
+     it and did nothing). The mock has one editor page, so every car opens it. */
+  var EDITOR = 'single-vehicle-gen11.html';
   var NO_MILES = { Chaparral: 1, SUNDOWNER: 1, Terex: 1 };
   /* Mileage (review note 15: "both mileage and photo count need to be here").
      The original carries Mileage as a column. Our sample lot has no mileage,
@@ -89,7 +92,7 @@
     { id: 'make',    label: 'Make',      locked: true, sort: 'make', track: { lg: 104, sm: 92, dock: 86, dockSm: 84 } },
     { id: 'model',   label: 'Model',     locked: true, sort: 'model', track: { lg: 100, sm: 88, dock: 80, dockSm: 80 }, grow: 6 },
     { id: 'trim',    label: 'Trim',      sort: 'trim', cls: 'c-trim', dockOff: true, track: { lg: 84, sm: 88 }, grow: 1 },
-    { id: 'colour',  label: 'Colour',    sort: 'colour', cls: 'c-ext', dockOff: true, track: { lg: 92, sm: 84 }, grow: 1 },
+    { id: 'colour',  label: 'Color',     sort: 'colour', cls: 'c-ext', dockOff: true, track: { lg: 92, sm: 84 }, grow: 1 },
     { id: 'miles',   label: 'Mileage',   sort: 'miles', cls: 'c-miles', dockOff: true, track: { lg: 96, sm: 80 } },
     { id: 'price',   label: 'Price',     locked: true, sort: 'price', cls: 'c-price', track: { lg: 118, sm: 84, dock: 80, dockSm: 76 } },
     { id: 'health',  label: 'Listing',    sort: 'issues', cls: 'c-health', track: { lg: 246, sm: 124, dock: 120, dockSm: 116 } },
@@ -314,8 +317,13 @@
   }
   function byId(id) { return V.filter(function (x) { return x.id === id; })[0]; }
 
+  /* the lane's own size, read from its button (Pending is 0, Sold 13,212 …);
+     the sample cars stand in for every non-empty lane, an empty lane is empty
+     (Matthew: "Pending has 0 vehicles … but displays all of the available ones") */
+  function laneTotal() { var b = $('[data-lane="' + S.lane + '"] b'); var n = b ? parseInt(b.textContent.replace(/[^0-9]/g, ''), 10) : 359; return isNaN(n) ? 359 : n; }
   function list() {
     var mk = sel('make'), yb = sel('year'), pb = sel('price');
+    if (laneTotal() === 0) return [];
     return V.filter(function (v) {
       for (var a in S.attn) if (S.attn[a]) {
         if (a === 'aging') { if (v.d <= 365) return false; }
@@ -367,7 +375,7 @@
     return {
       thumb: (v.t ? '<span class="thw"><img class="th" alt="" src="img/' + esc(v.t) + '"><span class="thn" title="' + nf(v.ph || 0) + ' photos">' + ic('i-cam') + nf(v.ph || 0) + '</span></span>' : '<span class="th th--none" title="No photos uploaded">' + ic('i-cam-off') + '</span>'),
       miles: v.mi == null ? '<div class="mil mil--none" title="No odometer">—</div>' : '<div class="mil" title="' + nf(v.mi) + ' miles">' + nf(v.mi) + '</div>',
-      stock: '<div class="stk"><span class="stk__l"><a class="stock" href="#" data-stop title="Open in the vehicle editor">' + esc(v.s) + '</a>' + (v.lock ? '<span class="lock" title="Being edited by another user">' + ic('i-lock') + '</span>' : '') + '</span><span class="stk__vin" title="VIN ' + esc(v.vin) + '">' + esc(v.vin) + '</span></div>',
+      stock: '<div class="stk"><span class="stk__l"><a class="stock" href="' + EDITOR + '" data-stop title="Open in the vehicle editor">' + esc(v.s) + '</a>' + (v.lock ? '<span class="lock" title="Being edited by another user">' + ic('i-lock') + '</span>' : '') + '</span><span class="stk__vin" title="VIN ' + esc(v.vin) + '">' + esc(v.vin) + '</span></div>',
       year: '<div class="yr">' + v.y + '</div>',
       make: '<div class="mk" title="' + esc(v.mk) + '">' + esc(v.mk) + '</div>',
       model: '<div class="md" title="' + esc(v.md) + '">' + esc(v.md) + '</div>',
@@ -377,7 +385,7 @@
       status: '<div class="st"><span class="stat stat--' + (S.lane === 'Sold' ? 'sold' : 'ok') + '">' + (S.lane === 'All' ? 'Available' : esc(S.lane)) + '</span></div>',
       health: '<div class="tags">' + (v.f.length ? tags.map(tag).join('') + (rest > 0 ? '<span class="tag tag--more" title="' + esc(v.f.slice(tags.length).join(' · ')) + '">+' + rest + '</span>' : '') : '<span class="noflag" title="No listing flags">—</span>') + '</div>',
       age: '<div class="added age--' + b + '" title="Added ' + addedOn(v.d) + ' · ' + nf(v.d) + ' days in stock"><b>' + addedOn(v.d) + '</b><span>' + lab(v.d) + '</span></div>',
-      actions: '<span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop>' + ic('i-edit') + '</button><button type="button" title="Photos" aria-label="Photos" data-stop>' + ic('i-cam') + '</button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop>' + ic('i-print') + '</button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop>' + ic('i-trash') + '</button></span>'
+      actions: '<span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop data-go="' + EDITOR + '">' + ic('i-edit') + '</button><button type="button" title="Photos" aria-label="Photos" data-stop>' + ic('i-cam') + '</button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop>' + ic('i-print') + '</button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop>' + ic('i-trash') + '</button></span>'
     };
   }
   /* Added: the demo lot's day count read back from the date of this snapshot,
@@ -421,13 +429,13 @@
   function render() {
     var L = list(), F = filtered();
     applyCols();
-    $('#tb').innerHTML = L.length ? L.map(function (v, i) { return row(v, i) + (S.cur === v.id ? '<div class="exp' + (S.still ? ' exp--open' : '') + '" id="exp"><div><div class="exp__in">' + vehicleSheet(v) + '</div></div></div>' : ''); }).join('') + (S.cur ? '<div class="exp-space" id="exp-space"></div>' : '') : '<div class="empty">No vehicles match these filters.<button type="button" data-act="clear-all">Clear all</button></div>';
+    $('#tb').innerHTML = L.length ? L.map(function (v, i) { return row(v, i) + (S.cur === v.id ? '<div class="exp' + (S.still ? ' exp--open' : '') + '" id="exp"><div><div class="exp__in">' + vehicleSheet(v) + '</div></div></div>' : ''); }).join('') + (S.cur ? '<div class="exp-space" id="exp-space"></div>' : '') : (laneTotal() === 0 ? '<div class="empty empty--lane"><b>No vehicles ' + esc(S.lane.toLowerCase()) + '</b><span>Vehicles marked Sale pending appear here.</span></div>' : '<div class="empty">No vehicles match these filters.<button type="button" data-act="clear-all">Clear all</button></div>');
     $('.field').classList.toggle('has-open', !!S.cur);
     // the sheet sits in the list; reading offsetWidth commits the inserted
     // element before the state class lands, so the entrance actually plays
     var ex = $('#exp'); if (ex && !S.still) { void ex.offsetWidth; ex.classList.add('exp--open'); }
     S.still = false;
-    renderPager(F ? L.length : 359);
+    renderPager(F || !laneTotal() ? L.length : laneTotal());
 
     var chips = [];
     Object.keys(S.attn).forEach(function (a) { if (S.attn[a]) chips.push({ cls: 'chip--attn', v: ATTN[a], off: function () { setAttn(a, false); } }); });
@@ -435,7 +443,7 @@
     Object.keys(S.f).forEach(function (g) {
       sel(g).forEach(function (key) { chips.push({ cls: '', v: (g === 'make' ? '' : GL[g] + ': ') + labelOf(g, key), off: function () { S.f[g][key] = false; if (g === 'make') renderMakes(); } }); });
     });
-    $('#scope').innerHTML = '<span class="scope__n">' + (S.lane === 'All' ? 'All vehicles' : esc(S.lane)) + '</span><span>·</span><span><b>' + nf(F ? L.length : 359) + '</b> vehicles</span>' +
+    $('#scope').innerHTML = '<span class="scope__n">' + (S.lane === 'All' ? 'All vehicles' : esc(S.lane)) + '</span><span>·</span><span><b>' + nf(F || !laneTotal() ? L.length : laneTotal()) + '</b> vehicles</span>' +
       (chips.length ? chips.map(function (c, i) { return '<span class="chip ' + c.cls + '">' + esc(c.v) + '<button class="chip__x" type="button" data-chip="' + i + '" aria-label="Remove ' + esc(c.v) + '">' + ic('i-x') + '</button></span>'; }).join('') + '<button class="scope__clear" type="button" data-act="clear-all">Clear all</button>' : '') +
       '';
     $('#sub-shown').textContent = (L.length ? '1–' + L.length : '0') + ' shown';
@@ -453,7 +461,7 @@
     $('#fcnt').hidden = !nf2; $('#fcnt').textContent = nf2;
     $$('#p-sort [data-sort]').forEach(function (b) { b.classList.toggle('mn__it--on', b.dataset.sort === S.sort); });
     $$('#p-sort [data-dir]').forEach(function (b) { b.classList.toggle('mn__it--on', b.dataset.dir === S.dir); });
-    $('#sort-v').textContent = ({ days: 'When added', price: 'Price', stock: 'Stock', year: 'Year', make: 'Make', model: 'Model', miles: 'Mileage', trim: 'Trim', colour: 'Colour', status: 'Status', issues: 'Listing flags' })[S.sort] + (S.dir === 'asc' ? ' ↑' : ' ↓');
+    $('#sort-v').textContent = ({ days: 'When added', price: 'Price', stock: 'Stock', year: 'Year', make: 'Make', model: 'Model', miles: 'Mileage', trim: 'Trim', colour: 'Color', status: 'Status', issues: 'Listing flags' })[S.sort] + (S.dir === 'asc' ? ' ↑' : ' ↓');
     if (S.dock === 'filters') renderFilters();
   }
   /* Pagination: the original's pager, above the table and again below it
@@ -595,7 +603,7 @@
     /* Edit vehicle is the way into the full editor, so it leads the key figures
        at their own height instead of sitting first in a row of six peers
        (review note, Ivaylo 2026-10-07). The row below keeps the secondary actions. */
-    var lead = '<button class="btn btn--primary btn--lead" type="button">' + ic('i-edit') + '<span>Edit vehicle</span>' + ic('i-right') + '</button>';
+    var lead = '<button class="btn btn--primary btn--lead" type="button" data-go="' + EDITOR + '">' + ic('i-edit') + '<span>Edit vehicle</span>' + ic('i-right') + '</button>';
     var acts = '<div class="veh__acts">' +
       ab('btn--sheet', 'i-cam', 'Photos') + ab('btn--sheet', 'i-print', 'Window sticker') +
       ab('btn--sheet', 'i-file', 'Carfax') + ab('btn--sheet', 'i-rss', has('Feed off') ? 'Include in feeds' : 'Exclude feeds') +
@@ -730,7 +738,7 @@
     var b = $('#dock-b'), st = b.scrollTop, L = list(), F = filtered();
     $('#dock-t').textContent = 'Filters'; $('#dock-c').textContent = nSel() ? nSel() + ' active' : ''; $('#dock-nav').hidden = true;
     var makes = S.allMakes ? MAKES : MAKES.slice(0, 8);
-    var h = '<label class="fsearch">' + ic('i-search') + '<input type="search" data-fq placeholder="Search filters — make, colour, location…" value="' + esc(S.fq) + '" aria-label="Search filters"></label>';
+    var h = '<label class="fsearch">' + ic('i-search') + '<input type="search" data-fq placeholder="Search filters — make, color, location…" value="' + esc(S.fq) + '" aria-label="Search filters"></label>';
     h += acc('f-make', 'Make', sum('make', MAKES.length + ' makes'),
       '<div class="fvs">' + makes.map(function (m) { return fv('make', m[0], esc(m[0]), m[1], 54, m[2] ? 'avg ' + k(m[2]) : 'no prices'); }).join('') + '</div>' +
       '<button class="linkbtn" type="button" data-act="all-makes">' + (S.allMakes ? 'Show top 8' : 'Show all ' + MAKES.length + ' makes') + '</button>');
@@ -742,10 +750,10 @@
     h += acc('f-loc', 'Location', sum('loc', '6 rooftops'), facetList('loc', G.loc));
     h += acc('f-type', 'Type', sum('type', 'New · Used'), facetList('type', G.type));
     h += acc('f-merch', 'Merchandising', sum('merch', 'Site · feeds · pending'), facetList('merch', G.merch));
-    h += acc('f-color', 'Exterior colour', sum('color', 'Any'), '<div class="sws">' + COLORS.map(function (c) { var on = !!S.f.color[c[0]]; return '<button type="button" class="swb' + (on ? ' swb--on' : '') + '" data-fk="color:' + c[0] + '" aria-pressed="' + on + '"><span class="sw" style="--c:' + c[1] + '"></span>' + c[0] + '<b>' + c[2] + '</b></button>'; }).join('') + '</div>');
+    h += acc('f-color', 'Exterior color', sum('color', 'Any'), '<div class="sws">' + COLORS.map(function (c) { var on = !!S.f.color[c[0]]; return '<button type="button" class="swb' + (on ? ' swb--on' : '') + '" data-fk="color:' + c[0] + '" aria-pressed="' + on + '"><span class="sw" style="--c:' + c[1] + '"></span>' + c[0] + '<b>' + c[2] + '</b></button>'; }).join('') + '</div>');
     h += acc('f-opt', 'Options', sum('opt', 'Decoded from VIN'), facetList('opt', G.opt), ' <span class="demo">Demo</span>');
     h += acc('f-audit', 'Audit', 'Missing items · custom field',
-      '<label class="f"><span>Missing items</span><select class="sel"><option value="">— any —</option><optgroup label="Photos"><option>Images</option><option>1 image or less</option></optgroup><optgroup label="Identity"><option>VIN decoding</option><option>Stock number</option><option>Make</option><option>Model</option><option>Trim</option><option>Year</option><option>VIN number</option><option>Vehicle type</option></optgroup><optgroup label="Specs"><option>Body</option><option>Transmission</option><option>Mileage</option><option>Exterior colour</option><option>Interior colour</option><option>Fuel</option><option>Location</option></optgroup><optgroup label="Pricing"><option>Price</option><option>Discounted price</option><option>Invoice price</option><option>Lease price</option><option>Lease term</option></optgroup><optgroup label="Copy"><option>Intro description</option><option>Caption</option><option>Main description</option><option>Bulleted text</option><option>Description 2</option><option>Buyers guide text</option></optgroup></select></label>' +
+      '<label class="f"><span>Missing items</span><select class="sel"><option value="">— any —</option><optgroup label="Photos"><option>Images</option><option>1 image or less</option></optgroup><optgroup label="Identity"><option>VIN decoding</option><option>Stock number</option><option>Make</option><option>Model</option><option>Trim</option><option>Year</option><option>VIN number</option><option>Vehicle type</option></optgroup><optgroup label="Specs"><option>Body</option><option>Transmission</option><option>Mileage</option><option>Exterior color</option><option>Interior color</option><option>Fuel</option><option>Location</option></optgroup><optgroup label="Pricing"><option>Price</option><option>Discounted price</option><option>Invoice price</option><option>Lease price</option><option>Lease term</option></optgroup><optgroup label="Copy"><option>Intro description</option><option>Caption</option><option>Main description</option><option>Bulleted text</option><option>Description 2</option><option>Buyers guide text</option></optgroup></select></label>' +
       '<div class="f"><span>Custom field</span><div class="pop__row"><select class="sel" aria-label="Custom field"><option value="">—</option><option>cfx_date</option><option>trucks_and_equipment</option><option>ove_feed_data</option><option>no_carfax</option><option>pending_sale_name</option><option>truck_trailer</option><option>images_timestamp</option><option>no_vin</option><option>carfax_timestamp</option></select><input class="fld" type="search" placeholder="value…" aria-label="Custom field value"></div></div>' +
       '<div class="f2"><label class="f"><span>Stock #</span><input class="fld" type="search" placeholder="Exact stock"></label><label class="f"><span>VIN</span><input class="fld" type="search" placeholder="Full or partial"></label></div>');
     var focusFq = document.activeElement && document.activeElement.matches && document.activeElement.matches('[data-fq]');
@@ -825,6 +833,10 @@
   }
   document.addEventListener('click', function (e) {
     var t = e.target, el;
+    /* hover-only top menus, as on the old site (Matthew, note 8): with a mouse a
+       click does not pin a menu open, so two can never overlap. Touch has no
+       hover and keeps the tap-to-open; keyboard uses :focus-within. */
+    if ((el = t.closest('[data-menu]')) && window.matchMedia('(hover: hover) and (pointer: fine)').matches) { closeMenus(); return; }
     if ((el = t.closest('[data-menu]'))) { var it = el.closest('.nav__it'), open = !it.classList.contains('nav__it--open'); closeMenus(it); it.classList.toggle('nav__it--open', open); el.setAttribute('aria-expanded', open); return; }
     if (!t.closest('.nav__it')) closeMenus();
     if ((el = t.closest('[data-pop]'))) {
@@ -836,6 +848,7 @@
       }
       return;
     }
+    if ((el = t.closest('[data-go]'))) { location.href = el.dataset.go; return; }
     if ((el = t.closest('[data-site]'))) {
       var sv = byId(el.dataset.site), at = sv.f.indexOf('Hidden');
       if (at >= 0) sv.f.splice(at, 1); else sv.f.push('Hidden');

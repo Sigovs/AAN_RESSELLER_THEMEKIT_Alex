@@ -570,6 +570,10 @@
   document.addEventListener('click', function (e) {
     var t = e.target, el;
 
+    /* hover-only top menus, as on the old site (Matthew, note 8): with a mouse a
+       click does not pin a menu open, so two can never overlap. Touch has no
+       hover and keeps the tap-to-open; keyboard uses :focus-within. */
+    if ((el = t.closest('[data-menu]')) && window.matchMedia('(hover: hover) and (pointer: fine)').matches) { closeMenus(); return; }
     if ((el = t.closest('[data-menu]'))) {
       var it = el.closest('.nav__it'), open = !it.classList.contains('nav__it--open');
       closeMenus(it); closePops();

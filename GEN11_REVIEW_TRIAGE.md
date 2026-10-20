@@ -25,3 +25,17 @@ Numbering = the order in comments.html (open notes, oldest first). Notes 1–20 
 | 18 | Ivaylo | this area can fit a lot more … hiding even more details inside Specification as an accordion makes it a drop-down extra step | → ✅ **done locally** (minimal, nothing new) · one line under the vehicle name lifts the four first-read facts out of Specification: **Trim · Mileage · Exterior · Type**. Specification's Mileage now shows the same figure instead of "Not recorded". The vague "fit a lot more" part is left for Ivaylo to specify |
 | — | Alex | vehicle sheet header | → ✅ **done locally** · a spec plate straight under the name (TRIM · MILEAGE · EXTERIOR · TYPE, caps key over value, hairline dividers), then stock / VIN, then the flag chips. The key-figures panel is now **price · invoice cost · age · photos**: cost sits beside price on every car ("—" when empty); discount and lease ride under the price; the separate full-width price strip is gone |
 | 20 | Ivaylo | Show on site — a toggle to quick-hide; needs a visual indicator that glows red and says hidden on site | → ✅ **done locally** · the Show / Hide button is now an **On website** switch (role=switch). On: green track. Off: red track, red label **"Hidden on site"**, soft red ring — the one red element on the sheet. It works in the mock: flipping it updates the chip under the name, the Listing fact and the table row without closing or moving the sheet. (Single Vehicle notes 29–31 ask for the same — reuse it there) |
+
+## Round 2 — Matthew's All Vehicles notes (numbered as in the page's Notes panel, oldest first)
+
+| # | Note | Decision |
+|---|---|---|
+| M1 | "Health" here but "Attention" in the sort | ✅ already fixed in 11_2 (Listing everywhere) |
+| M2 | pager button "2" not working | ✅ works in 11_2 (demo data — counts move, rows don't); not a priority |
+| M3 | British spelling "Colour" | ✅ done locally · Color everywhere visible (column, Columns, sort, search placeholders, Exterior color filter) |
+| M4 | Gallery / Photos not functional | ⏳ **kept open — to build later** as in the original: Gallery = card grid (photo / "no photos yet", title link, trim, stock #, age, price, status, flag chips); Photos = the table's photographer preset (large photo column, Stock · VIN · Type · Year · Make · Model · Trim · Ext Color · Photos · Status · Days) |
+| M5 | Pending shows 0 but lists all the available cars as "Pending" | ✅ done locally · an empty lane is empty: "No vehicles pending / Vehicles marked Sale pending appear here", 0 in the scope line and the pager; the empty state keeps ~5 rows of height. Also: counts now come from the lane (Sold reads 13,212, not 359) |
+| M6 | ticking the checkbox shifts the row | ✅ already fixed in 11_2 (no row checkboxes) |
+| M7 | stock number says "open in the vehicle editor" but does nothing | ✅ done locally · stock number, the row pencil and "Edit vehicle →" open Single Vehicle (the mock has one editor page) |
+| M8 | top menus overlap after click + hover; differs from the old site | ✅ done locally (All Vehicles + Single Vehicle) · hover-only, as on the old site: with a mouse a click no longer pins a menu; touch keeps tap-to-open; keyboard opens via :focus-visible only |
+
