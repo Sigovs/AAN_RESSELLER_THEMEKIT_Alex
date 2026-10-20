@@ -163,10 +163,16 @@
     $('#cock-stock').textContent = v.stockno;
     $('#cock-vin').textContent = v.vin;
 
+    /* Status, large in the header (Ivaylo, SV note 9: "SO SO CRITICAL … in the
+       subheading of the page"): a coloured chip with a dot, in sentence case,
+       that follows the Status control at once; "Hidden on site" joins it in
+       red while Do Not Display is on. Used / New is quiet text beside it. */
     var st = $('#cock-status');
-    st.textContent = v.status.toUpperCase();
-    st.className = 'pill ' + (v.status === 'Available' ? 'pill--ok' : v.status === 'Pending' ? 'pill--violet' : v.status === 'Sold' ? 'pill--bad' : '');
-    $('#cock-type').textContent = v.vtype.toUpperCase();
+    $('b', st).textContent = v.status;
+    st.className = 'stchip stchip--' + String(v.status).toLowerCase();
+    $('#cock-type').textContent = v.vtype;
+    $('#cock-hidden').hidden = !v.vis.no_display;
+    $('#scard-status').dataset.st = String(v.status).toLowerCase();
 
     var p = Number(v.price) || 0;
     var price = $('#cock-price');
@@ -233,10 +239,16 @@
     });
   }
 
+  /* An ON switch is stated by its whole cell, not just its track (Ivaylo,
+     SV note 8: "a more significant ACTIVE signifier"): normal ones tint blue
+     and say "On"; the two that take the car off the market tint red and say
+     what that means. The cell keeps its size in both states. */
+  var VIS_ON = { no_display: 'Hidden on site', nofeedout: 'Not sent to feeds' };
   function renderVis() {
     $('#vis').innerHTML = D.vis.map(function (s) {
-      return '<div class="swrow' + (s.tone === 'danger' ? ' swrow--danger' : '') + '">' +
-        '<span class="swrow__x"><b>' + esc(s.label) + '</b><span>' + esc(s.help) + '</span></span>' +
+      var on = !!S.v.vis[s.id];
+      return '<div class="swrow' + (s.tone === 'danger' ? ' swrow--danger' : '') + (on ? ' swrow--on' : '') + '">' +
+        '<span class="swrow__x"><b title="' + esc(s.label) + '">' + esc(s.label) + '</b><span>' + esc(s.help) + '</span><i class="swrow__on">' + esc(VIS_ON[s.id] || 'On') + '</i></span>' +
         '<label class="sw' + (s.tone === 'danger' ? ' sw--danger' : '') + '">' +
         '<input type="checkbox" id="core-' + s.id + '" name="core-' + s.id + '" data-vis="' + s.id + '" aria-label="' + esc(s.label) + '"' +
         (S.v.vis[s.id] ? ' checked' : '') + '><span class="sw__t"></span></label>' +
@@ -244,37 +256,151 @@
     }).join('');
   }
 
+  /* Photo row (Ivaylo, SV note 10 · Alex): the uploaded photos, then one
+     card right after the last of them — "Add photos" on the left, the rest
+     of the set ("+63 · Studio →") on the right. In the mock it works as an
+     imitation: "Add photos" puts a neutral "New" tile into the row (no
+     invented car photos), the card steps one place right and "+N" drops by
+     one; once the row is full the total grows instead. Each photo has a
+     remove (×). The kit holds one real image per car.
+     DRAG TO REORDER is a mock addition (Alex) — the original does reorder
+     only in the Photo Studio. Drop a tile on #1 and it becomes the main
+     photo; ←/→ on a focused tile does the same by keyboard. To take it out:
+     drop `draggable`/`tabindex` in tileOf() and the two drag listeners. */
+  var ROW_MAX = 8;
+  S.rowBy = {};
+  S.newSeq = 0;
+  function photoRow() {
+    if (!S.rowBy[S.ix]) S.rowBy[S.ix] = S.v.thumb && S.v.photos > 0 ? [{ real: true }] : [];
+    return S.rowBy[S.ix];
+  }
+  function tileOf(it, i) {
+    var v = S.v;
+    var x = '<button class="photo__x" type="button" data-photox="' + i + '" aria-label="Remove photo ' + i + '" title="Remove photo">' + ic('i-x') + '</button>';
+    var star = i === 1 ? '<span class="photo__star" title="Main photo">' + ic('i-star') + '</span>' : '';
+    var attrs = ' draggable="true" tabindex="0" data-pi="' + i + '" aria-label="Photo ' + i + (i === 1 ? ', main photo' : '') + ' — drag or use arrow keys to move"';
+    return it.real
+      ? '<figure class="photo"' + attrs + '><img src="' + esc(v.thumb) + '" alt="" draggable="false">' +
+          '<span class="photo__ix">' + i + '</span>' + star + x + '</figure>'
+      : '<figure class="photo photo--new"' + attrs + ' title="Added in this demo — a sample tile, not a real photo">' + ic('i-image') +
+          '<span class="photo__ix">' + i + '</span>' + star + '<span class="photo__tag">New</span>' + x + '</figure>';
+  }
   function renderPhotos() {
-    var v = S.v, n = v.photos, tiles = [], i;
-    var shown = Math.min(n, 8);
-    for (i = 1; i <= shown; i++) {
-      if (i === 1 && v.thumb) {
-        tiles.push('<figure class="photo"><img src="' + esc(v.thumb) + '" alt="Photo 1 of the ' + esc(v.title) + '">' +
-          '<span class="photo__ix">1</span><span class="photo__star" title="Main photo">' + ic('i-star') + '</span></figure>');
-      } else {
-        tiles.push('<figure class="photo photo--ph" title="Image file not in this kit">' + ic('i-image') +
-          '<span class="photo__ix">' + i + '</span>' +
-          (i === 1 ? '<span class="photo__star" title="Main photo">' + ic('i-star') + '</span>' : '') + '</figure>');
-      }
-    }
-    if (n > shown) tiles.push('<div class="photo photo--more">+' + nf(n - shown) + '</div>');
-    tiles.push('<button class="photo photo--add" type="button" data-act="studio">' + ic('i-plus') + 'Add photos</button>');
+    var v = S.v, n = v.photos, row = photoRow();
+    var tiles = row.map(function (it, k) { return tileOf(it, k + 1); });
+    var rest = Math.max(0, n - row.length);
+    tiles.push('<div class="photo photo--studio">' +
+      '<button class="studio__add" type="button" data-act="addphoto">' +
+        '<span class="studio__k">' + ic('i-plus') + '</span><b>Add photos</b></button>' +
+      '<button class="studio__more" type="button" data-act="studio" title="Open the Photo Studio">' +
+        (rest ? '<b>+' + nf(rest) + '</b>' : '<b>' + ic('i-cam') + '</b>') +
+        '<span>Studio ' + ic('i-arrow') + '</span></button>' +
+      '</div>');
     $('#photos').innerHTML = tiles.join('');
 
     $('#s-photos').innerHTML = n
       ? '<b>' + nf(n) + '</b> on disk · #1 is the main photo'
       : '<span class="warn">No photos on disk</span>';
 
-    var placeholders = shown - (v.thumb ? 1 : 0);
     var note = $('#photos-note');
-    if (placeholders > 0) {
-      note.hidden = false;
-      note.innerHTML = 'Hatched tiles are placeholders: ' + placeholders + ' of the ' + nf(n) +
-        ' image files are not part of this kit. The count is the export’s.';
+    note.hidden = false;
+    note.innerHTML = '<span class="chip-src">Mock addition</span> <b>Drag to reorder</b> (#1 = main) is added here and is not in the original — easy to remove. ' +
+      'Demo: <b>Add photos</b> adds a sample tile; real uploads, watermarks and feed selection are in the Photo Studio.';
+  }
+  function photosChanged(focusSel) {
+    renderPhotos(); renderRail(); renderCockpit();
+    var el = focusSel && $(focusSel); if (el) el.focus();
+  }
+  function removePhoto(i) {
+    var row = photoRow();
+    row.splice(i - 1, 1);
+    S.v.photos = Math.max(0, S.v.photos - 1);
+    photosChanged(row.length ? '[data-photox="' + Math.min(i, row.length) + '"]' : '[data-act="addphoto"]');
+  }
+  function addPhoto() {
+    var row = photoRow();
+    if (row.length < ROW_MAX) {
+      row.push({ id: ++S.newSeq });
+      if (S.v.photos < row.length) S.v.photos = row.length;
     } else {
-      note.hidden = true;
-      note.innerHTML = '';
+      S.v.photos += 1;
     }
+    photosChanged('[data-act="addphoto"]');
+  }
+  function movePhoto(from, to) {
+    var row = photoRow();
+    if (from === to || from < 1 || to < 1 || from > row.length || to > row.length) return;
+    row.splice(to - 1, 0, row.splice(from - 1, 1)[0]);
+    photosChanged('[data-pi="' + to + '"]');
+  }
+  /* drag (mouse) and ←/→ (keyboard) reorder */
+  (function () {
+    var host = document.getElementById('photos'), from = 0;
+    host.addEventListener('dragstart', function (e) {
+      var t = e.target.closest && e.target.closest('[data-pi]');
+      if (!t) return;
+      from = +t.dataset.pi;
+      t.classList.add('photo--dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      try { e.dataTransfer.setData('text/plain', String(from)); } catch (err) { /* old browsers */ }
+    });
+    host.addEventListener('dragover', function (e) {
+      var t = e.target.closest && e.target.closest('[data-pi]');
+      if (!t || !from) return;
+      e.preventDefault();
+      $$('.photo--over', host).forEach(function (o) { if (o !== t) o.classList.remove('photo--over'); });
+      t.classList.add('photo--over');
+    });
+    host.addEventListener('dragleave', function (e) {
+      var t = e.target.closest && e.target.closest('[data-pi]');
+      if (t && !t.contains(e.relatedTarget)) t.classList.remove('photo--over');
+    });
+    host.addEventListener('drop', function (e) {
+      var t = e.target.closest && e.target.closest('[data-pi]');
+      if (!t || !from) return;
+      e.preventDefault();
+      var to = +t.dataset.pi; var f = from; from = 0;
+      movePhoto(f, to);
+    });
+    host.addEventListener('dragend', function () {
+      from = 0;
+      $$('.photo--dragging, .photo--over', host).forEach(function (o) { o.classList.remove('photo--dragging', 'photo--over'); });
+    });
+    host.addEventListener('keydown', function (e) {
+      var t = e.target.matches && e.target.matches('[data-pi]') ? e.target : null;
+      if (!t || (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')) return;
+      e.preventDefault();
+      var i = +t.dataset.pi;
+      movePhoto(i, e.key === 'ArrowLeft' ? i - 1 : i + 1);
+    });
+  })();
+
+  /* Window Sticker (SV note 18, mock addition): a small preview sheet built
+     from the record, Print / Open PDF, and a factory-sticker upload slot */
+  S.stkBy = {};
+  function renderSticker() {
+    var v = S.v;
+    /* one line per equipment category, written out ("Antenna type: diversity") */
+    var seen = {}, feats = v.std.filter(function (r) {
+      if (r[2] || !r[1] || seen[r[0]]) return false;
+      seen[r[0]] = 1; return true;
+    }).slice(0, 6);
+    var featTxt = function (val) { var p = String(val).split(' : '); return (p.length > 1 ? p.slice(1) : p).join(': '); };
+    var row = function (k, val) { return val ? '<div class="ws__kv"><span>' + k + '</span><b>' + esc(val) + '</b></div>' : ''; };
+    $('#wstk-sheet').innerHTML =
+      '<div class="ws__h">WINDOW STICKER</div>' +
+      '<div class="ws__t">' + esc(v.title) + '</div>' +
+      '<div class="ws__vin">VIN ' + esc(v.vin) + ' · Stock ' + esc(v.stockno) + '</div>' +
+      '<div class="ws__grid">' + row('Engine', v.engine) + row('Transmission', v.trans) + row('Drivetrain', v.drivetrain) +
+        row('Exterior', v.ext_color) + row('Mileage', v.mileage ? nf(v.mileage) : '') + '</div>' +
+      ((v.mpg_cty || v.mpg_hwy) ? '<div class="ws__mpg"><div><b>' + esc(v.mpg_cty || '—') + '</b><span>City MPG</span></div><div><b>' + esc(v.mpg_hwy || '—') + '</b><span>Hwy MPG</span></div></div>' : '') +
+      (feats.length ? '<ul class="ws__list">' + feats.map(function (r) { return '<li>' + esc(featTxt(r[1])) + '</li>'; }).join('') + '</ul>' : '') +
+      '<div class="ws__price"><span>Price</span><b>' + (Number(v.price) ? '$' + nf(v.price) : 'Call for price') + '</b></div>';
+    var f = S.stkBy[S.ix];
+    $('#wstk-up').innerHTML = f
+      ? '<span class="wstk__file">' + ic('i-file') + '<b>' + esc(f) + '</b></span>' +
+        '<button class="btn btn--sheet btn--sm" type="button" data-act="sticker-rm">' + ic('i-x') + 'Remove</button>'
+      : '<label class="btn btn--sheet"><input type="file" accept="application/pdf" id="wstk-file" class="sr">' + ic('i-plus') + 'Upload factory sticker (PDF)</label>';
   }
 
   function renderDescTabs() {
@@ -287,60 +413,152 @@
     }).join('');
   }
 
+  /* Rich tabs (Main Text 1 / 3) edit in TinyMCE 6 — a WYSIWYG editor like
+     the backend's (Ivaylo, SV note 6; Scott: dealers should not have to write
+     HTML), but one clean row of larger buttons instead of CKEditor 4's sixty;
+     the rarer tools wait behind "…". Source stays one click away, labelled.
+     The toolbar sticks under the page header while a long text scrolls.
+     Without the CDN the plain HTML field shows. */
+  var ED = null;
+  function dropEditor() {
+    if (ED) { try { ED.remove(); } catch (e) { /* already gone */ } ED = null; }
+  }
+  function mountEditor(id, key) {
+    if (!window.tinymce) return false;
+    tinymce.init({
+      target: document.getElementById(id),
+      height: 560,
+      menubar: false,
+      branding: false,
+      promotion: false,
+      elementpath: false,
+      plugins: 'lists link image table code searchreplace charmap fullscreen',
+      toolbar: 'undo redo | blocks fontsize | bold italic underline | forecolor | alignleft aligncenter alignright | bullist numlist | link image table | removeformat | sourcebtn | strikethrough backcolor alignjustify outdent indent searchreplace charmap fullscreen',
+      toolbar_mode: 'sliding',
+      toolbar_sticky: true,
+      toolbar_sticky_offset: stickTotal(),
+      font_size_formats: '10px 12px 14px 16px 18px 20px 22px 28px',
+      content_style: 'body { font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.45; margin: 18px 22px; color: #111; }',
+      setup: function (ed) {
+        ED = ed;
+        ed.ui.registry.addButton('sourcebtn', {
+          text: 'Source', icon: 'sourcecode', tooltip: 'Edit the HTML source',
+          onAction: function () { ed.execCommand('mceCodeEditor'); }
+        });
+        ed.on('input change undo redo SetContent', function (e) {
+          if (e.type === 'setcontent' && e.initial) return;
+          S.v.desc[key] = ed.getContent(); renderDirty();
+        });
+      }
+    });
+    return true;
+  }
   function renderDescPane() {
+    dropEditor();
     var t = D.descTabs.filter(function (x) { return x.id === S.tab; })[0];
     var id = 'desc-' + t.id;
     var html =
       '<div class="f" data-f="desc.' + t.id + '">' +
-      '<label class="f__l" for="' + id + '">' + esc(t.label) + '</label>' +
+      '<label class="' + (t.rich && window.tinymce ? 'sr' : 'f__l') + '" for="' + id + '">' + esc(t.label) + '</label>' +
       '<textarea class="ta' + (t.rich ? ' ta--tall' : '') + '" id="' + id + '" data-desc="' + t.id + '" rows="' +
       (t.rich ? 14 : 8) + '" spellcheck="' + (t.rich ? 'false' : 'true') + '"></textarea>' +
-      (t.rich ? '<span class="f__help">Stored HTML — the same source the rich-text editor writes.</span>' : '') +
+      (t.rich && !window.tinymce ? '<span class="f__help">The text editor could not load — this is the stored HTML.</span>' : '') +
       (t.id === 'buyers_guide_text'
         ? '<div class="desc__foot"><span class="f__help">This text prints on the buyers guide. It is autosaved when you click a print link in the Prints menu.</span>' +
           '<button class="btn btn--sheet btn--sm" type="button" data-act="save-bg">Save Buyers Guide Text</button></div>'
         : '') +
       '</div>';
     $('#desc-pane').innerHTML = html;
+    $('#desc-pane').classList.toggle('desc-pane--rich', !!(t.rich && window.tinymce));
+    /* a small provenance tag at the right end of the tab row, over the
+       toolbar's end: the editor is our proposal — the backend runs CKEditor 4 */
+    if (t.rich && window.tinymce) {
+      $('#desc-tabs').insertAdjacentHTML('beforeend',
+        '<span class="chip-src ed-tag" title="Proposed editor — the backend runs CKEditor 4 today" aria-label="Proposed editor: TinyMCE"><span class="ed-tag__k">Proposed: </span>TinyMCE</span>');
+    }
     $('#' + id).value = S.v.desc[t.id];
+    if (t.rich) mountEditor(id, t.id);
     $('#desc').classList.toggle('desc--dock', S.ai);
     $('#aidock').hidden = !S.ai;
     $('#ai-btn').innerHTML = ic('i-spark') + (S.ai ? 'Close AI Writer' : 'AI Writer');
     $('#ai-cta').hidden = S.ai;
   }
 
+  /* Features & Equipment, compacted (Ivaylo, SV note 5: "super ugly and
+     space wasting, maybe X2 columns"). Inside a Standard category the
+     category is the group heading, so each row keeps only its Value, laid
+     out two to a line. Rows without a category yet (just added) keep both
+     fields so one can be typed. Additional options and Optional equipment
+     — usually empty — sit side by side on one line. Same rows, same data. */
+  S.featOpen = {};
+  function catName(c) {
+    var t = String(c).replace(/_/g, ' ').trim();
+    return t ? t.charAt(0).toUpperCase() + t.slice(1).toLowerCase() : 'New rows · set a category';
+  }
   function renderFeatures() {
     var v = S.v;
     var custom = v.std.filter(function (r) { return r[2] === 'option'; });
     var optional = v.std.filter(function (r) { return r[2] === 'optional'; });
     var standard = v.std.filter(function (r) { return !r[2]; });
 
-    function rows(list, kind) {
+    function x(gi) {
+      return '<button class="rowx" type="button" data-featx="' + gi + '" aria-label="Remove this feature row" title="Remove">' + ic('i-x') + '</button>';
+    }
+    function cat(gi, r) {
+      return '<input class="in in--sm" type="text" id="feat-' + gi + '-cat" name="feat-' + gi + '-cat" placeholder="Category" value="' + esc(r[0]) + '" data-feat="' + gi + '" data-col="0" aria-label="Category of feature row ' + (gi + 1) + '">';
+    }
+    function val(gi, r) {
+      return '<input class="in in--sm" type="text" id="feat-' + gi + '-val" name="feat-' + gi + '-val" placeholder="Value" value="' + esc(r[1]) + '" data-feat="' + gi + '" data-col="1" aria-label="' + esc(r[0] ? catName(r[0]) + ': value' : 'Value') + ' of feature row ' + (gi + 1) + '">';
+    }
+    /* a row with both fields: options, optional equipment, uncategorised */
+    function fullrows(list) {
       if (!list.length) return '<p class="featnone">None on this vehicle.</p>';
-      var out = [], last = null;
-      list.forEach(function (r) {
+      return list.map(function (r) {
         var gi = v.std.indexOf(r);
-        if (kind === 'standard' && r[0] !== last) {
-          last = r[0];
-          var n = list.filter(function (x) { return x[0] === last; }).length;
-          out.push('<div class="featcat">' + esc(last) + ' · ' + n + '</div>');
-        }
-        out.push('<div class="featrow">' +
-          '<input class="in in--sm" type="text" id="feat-' + gi + '-cat" name="feat-' + gi + '-cat" placeholder="Category" value="' + esc(r[0]) + '" data-feat="' + gi + '" data-col="0" aria-label="Category of feature row ' + (gi + 1) + '">' +
-          '<input class="in in--sm" type="text" id="feat-' + gi + '-val" name="feat-' + gi + '-val" placeholder="Value" value="' + esc(r[1]) + '" data-feat="' + gi + '" data-col="1" aria-label="Value of feature row ' + (gi + 1) + '">' +
-          '<button class="rowx" type="button" data-featx="' + gi + '" aria-label="Remove this feature row" title="Remove">' + ic('i-x') + '</button>' +
-          '</div>');
+        return '<div class="featrow">' + cat(gi, r) + val(gi, r) + x(gi) + '</div>';
+      }).join('');
+    }
+    function standardRows() {
+      if (!standard.length) return '<p class="featnone">None on this vehicle.</p>';
+      var groups = [], by = {};
+      standard.forEach(function (r) {
+        var k = r[0] || '';
+        if (!by[k]) { by[k] = []; groups.push(k); }
+        by[k].push(r);
       });
-      return out.join('');
+      /* folded by default (Scott, SV note 20): one row of category chips with
+         counts + "Show all"; a chip opens just that category, laid out in the
+         same 3-up value grid as before. Rows still without a category (just
+         added) are always open. */
+      var open = S.featOpen, all = groups.every(function (k) { return !k || open[k]; });
+      var chips = '<div class="fchips" role="group" aria-label="Standard equipment categories">' +
+        groups.filter(function (k) { return k; }).map(function (k) {
+          var on = !!open[k];
+          return '<button class="fchip' + (on ? ' fchip--on' : '') + '" type="button" data-featcat="' + esc(k) + '" aria-expanded="' + on + '">' +
+            esc(catName(k)) + '<span>' + by[k].length + '</span>' + ic('i-chev') + '</button>';
+        }).join('') +
+        '<button class="fchip fchip--all" type="button" data-featall="' + (all ? '0' : '1') + '">' + (all ? 'Hide all' : 'Show all') + '</button></div>';
+      return chips + groups.map(function (k) {
+        var list = by[k];
+        if (k && !open[k]) return '';
+        return '<div class="featcat"><b>' + esc(catName(k)) + '</b><span>' + list.length + '</span></div>' +
+          (k ? '<div class="featvals">' + list.map(function (r) {
+            var gi = v.std.indexOf(r);
+            return '<div class="featval">' + val(gi, r) + x(gi) + '</div>';
+          }).join('') + '</div>' : fullrows(list));
+      }).join('');
+    }
+    function head(label, n, kind, add) {
+      return '<div class="featgrp__h"><span class="featgrp__t">' + label + ' <span>' + n + '</span></span>' +
+        '<button class="btn btn--sheet btn--sm" type="button" data-featadd="' + kind + '">' + ic('i-plus') + add + '</button></div>';
     }
 
     $('#feat').innerHTML =
-      '<div class="featgrp"><div class="featgrp__h"><span class="caps">Additional options (custom) · ' + custom.length + '</span>' +
-      '<button class="btn btn--sheet btn--sm" type="button" data-featadd="option">' + ic('i-plus') + 'Add option</button></div>' + rows(custom, 'option') + '</div>' +
-      '<div class="featgrp"><div class="featgrp__h"><span class="caps">Optional equipment · ' + optional.length + '</span>' +
-      '<button class="btn btn--sheet btn--sm" type="button" data-featadd="optional">' + ic('i-plus') + 'Add optional</button></div>' + rows(optional, 'optional') + '</div>' +
-      '<div class="featgrp"><div class="featgrp__h"><span class="caps">Standard equipment · ' + standard.length + '</span>' +
-      '<button class="btn btn--sheet btn--sm" type="button" data-featadd="standard">' + ic('i-plus') + 'Add standard</button></div>' + rows(standard, 'standard') + '</div>';
+      '<div class="featpair">' +
+        '<div class="featgrp">' + head('Additional options', custom.length, 'option', 'Add option') + fullrows(custom) + '</div>' +
+        '<div class="featgrp">' + head('Optional equipment', optional.length, 'optional', 'Add optional') + fullrows(optional) + '</div>' +
+      '</div>' +
+      '<div class="featgrp featgrp--std">' + head('Standard equipment', standard.length, 'standard', 'Add standard') + standardRows() + '</div>';
   }
 
   function renderFeeds() {
@@ -351,8 +569,9 @@
       return '<div class="feedrow' + (on ? '' : ' feedrow--off') + '">' +
         '<label class="sw sw--ok"><input type="checkbox" id="feed-' + i + '" name="feed-' + i + '" data-feed="' + i + '"' + (on ? ' checked' : '') +
         ' aria-label="Send this vehicle to ' + esc(f[0]) + '"><span class="sw__t"></span></label>' +
-        '<span class="feedrow__n" title="' + esc(f[0]) + '">' + esc(f[0]) + '</span>' +
-        '<span class="feedrow__t">' + esc(f[1]) + '</span></div>';
+        /* the feed's system code (n_1844…) is for support, not the dealer:
+           it lives in the name's tooltip only (Scott, SV note 17) */
+        '<span class="feedrow__n" title="' + esc(f[0]) + ' · ' + esc(f[1]) + '">' + esc(f[0]) + '</span></div>';
     }).join('');
     $('#feeds').innerHTML = html || '<p class="featnone">No feed matches that filter.</p>';
     var on = feedsOn(), total = S.v.feeds.length, off = total - on;
@@ -360,26 +579,39 @@
       (off ? '<span class="warn">' + off + ' excluded</span>' : '0 excluded');
   }
 
+  /* Custom Fields: the text fields share the form grid; the switches get
+     their own band of equal rows below, so inputs and toggles never
+     interleave (a mixed grid read as a jumble — Alex, SV note 2). */
+  var CUSTOM_HINT = {
+    ove_feed_data: 'Data for the OVE.com (Manheim) dealer-to-dealer wholesale feed'
+  };
   function renderCustom() {
-    $('#custom').innerHTML = D.custom.map(function (c) {
-      if (c.type === 'switch') {
-        return '<div class="swrow" style="box-shadow:none;align-self:end">' +
-          '<span class="swrow__x"><b>' + esc(c.label) + '<span class="f__raw">' + esc(c.raw) + '</span></b></span>' +
-          '<label class="sw"><input type="checkbox" id="custom-' + c.id + '" name="custom-' + c.id + '" data-custom="' + c.id + '" aria-label="' + esc(c.label) + '"' +
-          (S.v.custom[c.id] ? ' checked' : '') + '><span class="sw__t"></span></label></div>';
-      }
-      return '<div class="f" data-f="custom.' + c.id + '">' +
-        '<label class="f__l" for="custom-' + c.id + '">' + esc(c.label) + '<span class="f__raw">' + esc(c.raw) + '</span></label>' +
-        '<input class="in" id="custom-' + c.id + '" name="custom-' + c.id + '" type="text" autocomplete="off" data-custom="' + c.id + '" value="' + esc(S.v.custom[c.id]) + '">' +
-        '</div>';
-    }).join('');
+    var fields = D.custom.filter(function (c) { return c.type !== 'switch'; });
+    var sws = D.custom.filter(function (c) { return c.type === 'switch'; });
+    $('#custom').innerHTML =
+      '<div class="grid">' + fields.map(function (c) {
+        return '<div class="f" data-f="custom.' + c.id + '">' +
+          /* the raw column name lives in the label's tooltip only (Scott, SV note 21);
+             a field that needs a word of explanation gets it there too (SV note 22) */
+          '<label class="f__l' + (CUSTOM_HINT[c.id] ? ' f__l--hint' : '') + '" for="custom-' + c.id + '" title="' + esc(c.label) + ' · ' + esc(c.raw) +
+            (CUSTOM_HINT[c.id] ? ' — ' + esc(CUSTOM_HINT[c.id]) : '') + '">' + esc(c.label) +
+            (CUSTOM_HINT[c.id] ? '<i class="f__q" aria-hidden="true">?</i>' : '') + '</label>' +
+          '<input class="in" id="custom-' + c.id + '" name="custom-' + c.id + '" type="text" autocomplete="off" data-custom="' + c.id + '" value="' + esc(S.v.custom[c.id]) + '">' +
+          '</div>';
+      }).join('') + '</div>' +
+      (sws.length ? '<div class="cfsw">' + sws.map(function (c) {
+        return '<label class="cfsw__i" for="custom-' + c.id + '" title="' + esc(c.label) + ' · ' + esc(c.raw) + '">' +
+          '<span class="cfsw__x"><b>' + esc(c.label) + '</b></span>' +
+          '<span class="sw"><input type="checkbox" id="custom-' + c.id + '" name="custom-' + c.id + '" data-custom="' + c.id + '"' +
+          (S.v.custom[c.id] ? ' checked' : '') + '><span class="sw__t"></span></span></label>';
+      }).join('') + '</div>' : '');
   }
 
   function renderCarfax() {
     var v = S.v;
     $('#carfax').innerHTML = v.carfax
       ? '<a class="pill pill--ok" href="' + esc(v.carfax) + '" target="_blank" rel="noopener" style="height:26px;padding:0 10px;font-size:12px;letter-spacing:.04em">Free CARFAX Report ' + ic('i-ext') + '</a>'
-      : '<span class="ro">No CARFAX report on this vehicle’s cfx columns</span>';
+      : '<span class="ro">No CARFAX report on this vehicle</span>';
   }
 
   function renderPrints() {
@@ -449,6 +681,36 @@
       : '<div class="pop__empty">Nothing changed yet.</div>';
   }
 
+  /* Factory colors from the VIN decode (Ivaylo, SV note 1: "the exterior color
+     often has a vin decoded color picker … the CORRECT color like Storm Grey or
+     Aztec Gold, not just a free field"). The original's Colors zone promises
+     exactly this — "factory swatches from the decode — click to fill" — but the
+     export's decode returned none, so these palettes are DEMO: real factory
+     paint names for the model, standing in until the decoder feeds them.
+     A click fills Exterior Color and sets Basic Exterior Color, as a normal
+     edit (it lands in the dirty ledger). [name, swatch, basic colour] */
+  var FACTORY = {
+    '0P0300236 PS': [['Verde Zeltweg', '#2f4a36', 'Green'], ['Rosso Corsa', '#c41e1e', 'Red'], ['Rosso Fuoco', '#9e1a17', 'Red-Metallic'],
+      ['Giallo Modena', '#f2c200', 'Yellow'], ['Blu Pozzi', '#1f3557', 'Blue-Metallic'], ['Nero Daytona', '#121214', 'Black'],
+      ['Grigio Silverstone', '#71767b', 'Gray'], ['Bianco Avus', '#efefea', 'White']],
+    '22928': [['GT Silver Metallic', '#b9bab6', 'Silver'], ['Guards Red', '#c8102e', 'Red'], ['Carrara White Metallic', '#ecebe6', 'White'],
+      ['Black', '#0d0d0f', 'Black'], ['Agate Grey Metallic', '#5f6264', 'Gray']]
+  };
+  function factoryOf(v) { return FACTORY[v.stockno] || []; }
+  function renderSwatches() {
+    var list = factoryOf(S.v), cur = (S.v.ext_color || '').trim().toLowerCase();
+    var hit = list.filter(function (c) { return c[0].toLowerCase() === cur; })[0];
+    $('#ext-dot').style.background = hit ? hit[1] : 'transparent';
+    $('#ext-dot').classList.toggle('inw__dot--none', !hit);
+    $('#fsw').innerHTML = '<div class="fsw__h"><b>Factory colors</b><span>from the VIN decode</span><span class="chip-src">Demo</span></div>' +
+      (list.length
+        ? '<div class="fsw__l" role="group" aria-label="Factory exterior colors">' + list.map(function (c) {
+            var on = c[0].toLowerCase() === cur;
+            return '<button class="fsw__c' + (on ? ' fsw__c--on' : '') + '" type="button" data-swatch="' + esc(c[0]) + '" aria-pressed="' + on + '">' +
+              '<i style="background:' + c[1] + '"></i><span>' + esc(c[0]) + '</span>' + (on ? ic('i-check') : '') + '</button>';
+          }).join('') + '</div>'
+        : '<p class="fsw__none">No factory colors from the decode for this vehicle — type the color above.</p>');
+  }
   function renderAll() {
     renderCockpit();
     renderRail();
@@ -458,10 +720,12 @@
     renderDescTabs();
     renderDescPane();
     renderFeatures();
+    renderSticker();
     renderFeeds();
     renderCustom();
     renderCarfax();
     renderValues();
+    renderSwatches();
     renderDirty();
     spy();
   }
@@ -480,7 +744,7 @@
     window.scrollTo({ top: y, behavior: reducedMotion() ? 'auto' : 'smooth' });
   }
 
-  var ZONES = ['zStatus', 'zPricing', 'zPhotos', 'zSpecs', 'zColors', 'zDesc', 'zFeat', 'zFeeds', 'zCustom', 'zMore', 'zUtil'];
+  var ZONES = ['zStatus', 'zPricing', 'zCustom', 'zPhotos', 'zSpecs', 'zColors', 'zDesc', 'zFeat', 'zSticker', 'zFeeds', 'zMore', 'zUtil'];
   function spy() {
     var line = stickTotal() + cssPx('--anchor-gap', 10) + 1, cur = ZONES[0], i, el;
     for (i = 0; i < ZONES.length; i++) {
@@ -555,7 +819,19 @@
     }
   }
 
+  /* edit lock (SV note 19): shown only while someone else holds it */
+  S.locked = false;
+  function renderLock() {
+    $('#lock').hidden = !S.locked;
+    $('#lock-mine').hidden = S.locked;
+    $$('[data-act="save"]').forEach(function (b) {
+      b.setAttribute('aria-disabled', String(S.locked));
+      b.classList.toggle('is-locked', S.locked);
+      b.title = S.locked ? 'Mike R. is editing this car — saving is blocked' : '';
+    });
+  }
   function doSave() {
+    if (S.locked) { say('Mike R. is editing this car — saving is blocked until they close it.'); return; }
     var n = changes().length;
     if (!n) return;
     /* "Switching to Sold auto-clears Pending Sale on save (existing rule)" */
@@ -568,6 +844,17 @@
 
   /* ── events ──────────────────────────────────────────────────────────── */
   document.addEventListener('click', function (e) {
+    var sw = e.target.closest && e.target.closest('[data-swatch]');
+    if (sw) {
+      var pick = factoryOf(S.v).filter(function (c) { return c[0] === sw.dataset.swatch; })[0];
+      if (pick) {
+        S.v.ext_color = pick[0];
+        if (D.opt.basicExt.indexOf(pick[2]) >= 0) S.v.basic_ext_color = pick[2];
+        renderValues(); renderSwatches(); renderDirty();
+        var again = $('[data-swatch="' + pick[0] + '"]'); if (again) again.focus();
+      }
+      return;
+    }
     var t = e.target, el;
 
     /* hover-only top menus, as on the old site (Matthew, note 8): with a mouse a
@@ -640,9 +927,15 @@
     }
     if ((el = t.closest('[data-act="save-feeds"]'))) { say('Prototype — feed control is not written.'); return; }
     if ((el = t.closest('[data-act="save-bg"]'))) { say('Prototype — buyers guide text is not written.'); return; }
+    if ((el = t.closest('[data-act="addphoto"]'))) { addPhoto(); return; }
+    if ((el = t.closest('[data-featcat]'))) { var fk = el.dataset.featcat; S.featOpen[fk] = !S.featOpen[fk]; renderFeatures(); var fb = $('[data-featcat="' + fk + '"]'); if (fb) fb.focus(); return; }
+    if ((el = t.closest('[data-featall]'))) { var on = el.dataset.featall === '1'; S.v.std.forEach(function (r) { if (!r[2] && r[0]) S.featOpen[r[0]] = on; }); renderFeatures(); var fa = $('[data-featall]'); if (fa) fa.focus(); return; }
+    if ((el = t.closest('[data-act="sticker-pdf"]'))) { say('The sticker PDF opens from the backend — not part of this kit.'); return; }
+    if ((el = t.closest('[data-act="sticker-rm"]'))) { delete S.stkBy[S.ix]; renderSticker(); return; }
+    if ((el = t.closest('[data-photox]'))) { removePhoto(+el.dataset.photox); return; }
     if ((el = t.closest('[data-act="studio"]'))) { e.preventDefault(); say('Photo Studio is a separate page — not part of this kit.'); return; }
     if ((el = t.closest('[data-act="changelog"]'))) { say('The change log is a separate page — not part of this kit.'); return; }
-    if ((el = t.closest('[data-act="pricehist"]'))) { say('Price history comes from changeslog — not connected here.'); return; }
+    if ((el = t.closest('[data-act="pricehist"]'))) { say('Price history is not connected in this preview.'); return; }
 
     if ((el = t.closest('[data-act="decode"]'))) {
       var note = $('#decode-note');
@@ -692,6 +985,7 @@
         if (k === 'price') renderRail();
         if (k === 'vin') { $('#vinbar-v').textContent = el.value; renderCockpit(); }
         if (k === 'stockno') renderCockpit();
+        if (k === 'ext_color') renderSwatches();
         renderDirty();
         return;
       }
@@ -708,8 +1002,15 @@
 
   document.addEventListener('change', function (e) {
     var el = e.target;
+    if (el.id === 'demo-lock') { S.locked = el.checked; renderLock(); return; }
+    if (el.id === 'wstk-file') {
+      if (el.files && el.files[0]) { S.stkBy[S.ix] = el.files[0].name; renderSticker(); }
+      return;
+    }
     if (el.dataset.vis) {
       S.v.vis[el.dataset.vis] = el.checked;
+      el.closest('.swrow').classList.toggle('swrow--on', el.checked);
+      if (el.dataset.vis === 'no_display') renderCockpit();
       renderDirty();
       return;
     }

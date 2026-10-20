@@ -278,10 +278,11 @@
        textareas. */
     descTabs: [
       { id: 'intro_text',        label: 'Intro Text' },
-      { id: 'main_text_1',       label: 'Main Text 1', rich: true },
-      { id: 'main_text_2',       label: 'Main Text 2' },
-      { id: 'main_text_3',       label: 'Main Text 3', rich: true },
-      { id: 'caption',           label: 'Caption' },
+      /* labels = the names dealers know from the old system (Scott, SV notes 11–15) */
+      { id: 'main_text_1',       label: 'Main Description', rich: true },
+      { id: 'main_text_2',       label: 'Search Listing Caption' },
+      { id: 'main_text_3',       label: 'Bulleted Text', rich: true },
+      { id: 'caption',           label: 'Description 2' },
       { id: 'buyers_guide_text', label: 'Buyers Guide Text' }
     ]
   };

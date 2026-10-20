@@ -158,8 +158,10 @@
 
   /* ── page geometry ─────────────────────────────────────────────────── */
   --rail: 224px;
-  --fcols: repeat(3, minmax(0, 1fr));
-  --ctl-h: 40px;        /* one height for every editable control            */
+  /* field grid fills the width (SV notes 7 + 8: cert packs Specs 10 to a
+     row; a fixed 3-col grid read as "a lazy 3 col infodump") */
+  --fcols: repeat(auto-fill, minmax(168px, 1fr));
+  --ctl-h: 36px;        /* one height for every editable control            */
   --btn-h: 44px;        /* sheet actions                                    */
   --btn-h-sm: 36px;     /* actions that live inside a band or a zone header */
   --zone-hd: 52px;      /* region header · DESIGN.md §9                     */
@@ -828,7 +830,8 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
      editable  → white surface, one hairline, a focus ring
      read-only → no surface, no hairline, mono, never focusable as a field
    ========================================================================== */
-.grid { display: grid; grid-template-columns: var(--fcols); gap: var(--s5) var(--s4); }
+.grid { display: grid; grid-template-columns: var(--fcols); grid-auto-flow: row dense; gap: var(--s4) var(--s3); }
+.f--w2 { grid-column: span 2; }
 .grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .grid--1 { grid-template-columns: minmax(0, 1fr); }
 
@@ -842,7 +845,13 @@ kbd { font: 12px var(--mono); color: var(--ink-3); border: 1px solid var(--line)
   letter-spacing: .07em;
   text-transform: uppercase;
   color: var(--ink-3);
+  position: relative;
+  white-space: nowrap; /* a label never wraps — a 2-line label drops its field
+                          below the row (Alex) */
 }
+/* the unsaved-change dot hangs in the gutter left of the label, so it takes
+   no width and never pushes the label onto a second line */
+.f__l > .f__dot { position: absolute; left: -11px; top: .3em; }
 /* a field changed in this session, not yet saved */
 .f__dot {
   width: 6px;
@@ -1026,12 +1035,39 @@ button.prov:hover { text-decoration: underline; }
 /* ── Status & Visibility ──────────────────────────────────────────────── */
 .statusrow { display: flex; flex-wrap: wrap; gap: var(--s5); margin-bottom: var(--s4); }
 .statusrow .f { min-width: 0; }
-.vis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s6); }
+.vis { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); column-gap: var(--s3); }
+/* Status switches (SV note 8): every cell is a padded box; ON tints the
+   whole cell and shows its state beside the name — blue + "On" for the
+   normal levers (cert's blue track), red + "Hidden on site" / "Not sent to
+   feeds" for the two that take the car off the market. Same box in both
+   states, so nothing moves. */
+.vis { row-gap: var(--s2); }
+.vis .swrow, .vis .swrow + .swrow {
+  flex-direction: row-reverse; gap: 10px;
+  padding: 10px 12px; border-radius: var(--r-inner);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+/* the state line is always there (hidden while OFF), so turning a switch on
+   never changes the cell's height or wraps its name */
+.vis .swrow__on { display: block; visibility: hidden; margin-top: 6px; font-style: normal; font-size: 13px; font-weight: 600; }
+/* the name stays on one line (switch sits left of it) */
+.vis .swrow__x b { display: block; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vis .swrow.swrow--on { background: var(--brand-soft); box-shadow: inset 0 0 0 1px var(--brand); }
+.vis .swrow--on .swrow__on { visibility: visible; color: var(--brand-ink); }
+.vis .swrow--on .sw input:checked + .sw__t { background: var(--brand); box-shadow: inset 0 0 0 1px var(--brand); }
+.vis .swrow.swrow--danger.swrow--on { background: var(--danger-soft); box-shadow: inset 0 0 0 1px var(--danger); }
+.vis .swrow--danger.swrow--on .swrow__on { color: var(--danger); }
+.vis .swrow--danger.swrow--on .sw input:checked + .sw__t { background: var(--danger); box-shadow: inset 0 0 0 1px var(--danger); }
+/* the chosen Status is filled, as on cert: Available green, the rest graphite */
+.seg[data-seg="status"] .seg__b--on { background: var(--ink); color: #fff; box-shadow: none; }
+.seg[data-seg="status"] .seg__b--on[data-v="Available"] { background: var(--ok); }
 
 /* ── Photos ───────────────────────────────────────────────────────────── */
 .photos {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  /* ten tiles (8 photos · +N · Add) always fill one row — Add never wraps alone */
+  grid-template-columns: repeat(10, minmax(0, 1fr));
   gap: var(--s2);
   margin-bottom: var(--s3);
 }
@@ -1206,20 +1242,19 @@ button.prov:hover { text-decoration: underline; }
 .aidock details p { margin-top: 6px; }
 .aidock__zero { font-size: 13px; line-height: 1.5; color: var(--ink-3); }
 
-/* ── Features & Equipment ─────────────────────────────────────────────── */
-.featgrp + .featgrp { margin-top: var(--s5); }
-.featgrp__h { display: flex; align-items: center; gap: var(--s3); margin-bottom: var(--s2); }
-.featgrp__h .caps { flex: 1; }
-.featcat {
-  margin: var(--s4) 0 6px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .07em;
-  text-transform: uppercase;
-  color: var(--ink-4);
-}
-.featcat:first-of-type { margin-top: var(--s2); }
-.featrow { display: grid; grid-template-columns: 200px minmax(0, 1fr) var(--btn-h-sm); gap: var(--s2); margin-bottom: 6px; }
+/* ── Features & Equipment (compacted, SV note 5) ──────────────────────── */
+.featpair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s4) var(--s6); }
+.featgrp--std { margin-top: var(--s5); padding-top: var(--s4); box-shadow: inset 0 1px 0 var(--line-2); }
+.featgrp__h { display: flex; align-items: center; gap: var(--s3); min-height: var(--btn-h-sm); margin-bottom: var(--s2); }
+.featgrp__t { flex: 1; min-width: 0; font-size: 14px; font-weight: 600; color: var(--ink); }
+.featgrp__t span { margin-left: 4px; font-weight: 500; color: var(--ink-4); font-variant-numeric: tabular-nums; }
+.featcat { display: flex; align-items: baseline; gap: 8px; margin: var(--s4) 0 8px; font-size: 13px; }
+.featcat b { font-weight: 600; color: var(--ink-2); }
+.featcat span { color: var(--ink-4); font-variant-numeric: tabular-nums; }
+.featgrp__h + .featcat { margin-top: var(--s2); }
+.featvals { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 6px var(--s4); }
+.featval { display: grid; grid-template-columns: minmax(0, 1fr) var(--btn-h-sm); gap: var(--s2); }
+.featrow { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr) var(--btn-h-sm); gap: var(--s2); margin-bottom: 6px; }
 .featnone { font-size: 13px; color: var(--ink-4); }
 
 .rowx {
@@ -1239,7 +1274,9 @@ button.prov:hover { text-decoration: underline; }
 .feedtools .f__help { flex: 1 1 260px; }
 .feeds { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s6); }
 .feedrow { display: flex; align-items: center; gap: var(--s3); padding: 7px 0; min-width: 0; }
-.feedrow + .feedrow, .feeds > .feedrow:nth-child(n+3) { box-shadow: inset 0 1px 0 var(--line-2); }
+/* two columns: rules start from the second row — the right column's first
+   row gets none (Alex: no line over EBay Motors) */
+.feeds > .feedrow:nth-child(n+3) { box-shadow: inset 0 1px 0 var(--line-2); }
 .feedrow__n { flex: 1; min-width: 0; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .feedrow__t { font: 400 12px/1 var(--mono); color: var(--ink-4); flex: 0 0 auto; }
 .feedrow--off .feedrow__n { color: var(--ink-4); }
@@ -1349,13 +1386,11 @@ button.prov:hover { text-decoration: underline; }
 @media (max-width: 1400px) {
   :root {
     --rail: 200px;
-    --fcols: repeat(3, minmax(0, 1fr));
   }
   .gsearch { width: 168px; }
   .brand__t { display: none; }
   .dealer__n { max-width: 128px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .desc--dock { grid-template-columns: minmax(0, 1fr) 288px; }
-  .featrow { grid-template-columns: 170px minmax(0, 1fr) var(--btn-h-sm); }
 }
 
 /* Below the supported floor the page must still not push sideways. The
@@ -1364,12 +1399,10 @@ button.prov:hover { text-decoration: underline; }
    records on All Leads and Single Lead at 1366. It is shed here before it can
    widen the document. */
 @media (max-width: 1280px) {
-  :root { --fcols: repeat(2, minmax(0, 1fr)); }
   .gsearch { display: none; }
   .feeds { grid-template-columns: minmax(0, 1fr); }
   .feedrow + .feedrow { box-shadow: inset 0 1px 0 var(--line-2); }
   .desc--dock { grid-template-columns: minmax(0, 1fr); }
-  .vis { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (max-width: 1160px) {
@@ -1435,3 +1468,297 @@ button.prov:hover { text-decoration: underline; }
 
 /* keyboard reaches the hover-only top menus (note 8) */
 .nav__it:has(:focus-visible) > .menu { display: flex; }   /* keyboard focus only: a mouse click must not pin a menu */
+
+/* ── factory colors from the VIN decode (SV note 1) ───────────────────── */
+.inw { position: relative; display: block; }
+.inw .in { padding-left: 34px; }
+.inw__dot { position: absolute; left: 11px; top: 50%; width: 14px; height: 14px; margin-top: -7px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(16, 21, 31, .18); pointer-events: none; }
+.inw__dot--none { background: repeating-linear-gradient(45deg, var(--line-2) 0 2px, transparent 2px 4px) !important; }
+.fsw { margin-top: var(--s5); padding-top: var(--s4); border-top: 1px solid var(--line-2); }
+.fsw__h { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 13px; }
+.fsw__h b { font-weight: 650; color: var(--ink); }
+.fsw__h > span:not(.chip-src) { color: var(--ink-3); }
+.fsw__l { display: flex; flex-wrap: wrap; gap: 8px; }
+.fsw__c {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 34px; padding: 0 12px 0 8px; border-radius: 999px;
+  background: var(--sheet); box-shadow: inset 0 0 0 1px var(--line);
+  color: var(--ink-2); font: inherit; font-size: 13px; font-weight: 500; cursor: pointer;
+}
+.fsw__c i { width: 18px; height: 18px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(16, 21, 31, .18); flex: none; }
+.fsw__c .i { width: 14px; height: 14px; color: var(--brand); }
+.fsw__c:hover { box-shadow: inset 0 0 0 1px var(--line-3); color: var(--ink); }
+.fsw__c--on { box-shadow: inset 0 0 0 2px var(--brand); color: var(--ink); font-weight: 600; }
+.fsw__c:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.fsw__none { margin: 0; font-size: 13px; color: var(--ink-3); }
+
+/* ── Custom Fields, lifted under Pricing (SV note 2) ──────────────────────
+   the dealer's own CRM columns sit in a framed wash panel, so the block
+   reads as "theirs" at a glance; text fields in the grid, switches in one even band. */
+/* framed in the page's panel language (--r-panel, hairline --line), inset
+   from the sheet edges; the frame replaces the zone rules above and below */
+.zone.zone--custom {
+  margin: var(--s3) var(--sheet-inset) var(--s4);
+  border-radius: var(--r-panel);
+  background: var(--wash);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.zone--custom + .zone { box-shadow: none; }
+.cfsw { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); column-gap: var(--s4); margin-top: var(--s5); }
+/* custom text fields: wider cells, and the raw column name drops under the
+   label instead of beside it, so long names never collide (dense grid) */
+#custom > .grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+#custom .f__l { flex-wrap: wrap; row-gap: 3px; }
+#custom .f__l .f__raw { flex-basis: 100%; margin-left: 0; }
+.cfsw__i {
+  display: flex; align-items: center; gap: var(--s3);
+  min-height: 44px; padding: 8px 0;
+  box-shadow: inset 0 1px 0 var(--line-2);
+  cursor: pointer;
+}
+.cfsw__x { flex: 1; min-width: 0; display: grid; gap: 4px; }
+.cfsw__x b { font-size: 14px; font-weight: 600; color: var(--ink); }
+.cfsw__x .f__raw { margin-left: 0; }
+
+@media (max-width: 1160px) {
+  .featpair { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ── description editor: TinyMCE 6, tuned to the page (SV note 6).
+   The field tabs and the editor are ONE object: underline tabs (as on
+   newbackendcert) sit on the editor's top edge. Toolbar: one white row,
+   larger 36px buttons, hairline group dividers. ─────────────────────── */
+#desc-tabs.tabs {
+  display: flex; width: 100%; gap: var(--s5);
+  padding: 0 var(--s4); margin-bottom: 0;
+  border-radius: var(--r-control) var(--r-control) 0 0;
+  background: var(--sheet);
+  box-shadow: inset 0 0 0 1px var(--line);
+  overflow: hidden; /* the base .tabs sets overflow-x only, which turned the
+                       y-axis into a scroller with arrows (Alex) */
+}
+#desc-tabs .tab { height: 46px; padding: 0 2px; border-radius: 0; background: none; box-shadow: none; }
+#desc-tabs .tab--on { background: none; color: var(--brand-ink); box-shadow: inset 0 -2px 0 var(--brand); }
+#desc-pane > .f { padding: var(--s4); border-radius: 0 0 var(--r-control) var(--r-control); box-shadow: inset 0 0 0 1px var(--line); margin-top: -1px; }
+#desc-pane.desc-pane--rich > .f { padding: 0; box-shadow: none; }
+#desc-pane .tox-tinymce { margin-top: -1px; border: 1px solid var(--line); border-radius: 0 0 var(--r-control) var(--r-control); }
+#desc-pane .tox .tox-editor-header { box-shadow: none; border-bottom: 1px solid var(--line-2); padding: 0; }
+#desc-pane .tox .tox-toolbar, #desc-pane .tox .tox-toolbar__primary, #desc-pane .tox .tox-toolbar__overflow { background: var(--sheet); }
+#desc-pane .tox .tox-toolbar__primary { padding: 6px 8px; }
+#desc-pane .tox .tox-toolbar__group { padding: 0 3px; }
+#desc-pane .tox .tox-toolbar__group:not(:last-of-type) { border-right: 1px solid var(--line-2); }
+#desc-pane .tox .tox-tbtn { height: 36px; min-width: 36px; margin: 2px 1px; border-radius: 8px; color: var(--ink-2); }
+#desc-pane .tox .tox-tbtn svg { fill: var(--ink-2); }
+#desc-pane .tox .tox-tbtn:hover { background: var(--wash); }
+#desc-pane .tox .tox-tbtn--enabled, #desc-pane .tox .tox-tbtn--enabled:hover { background: var(--brand-soft); }
+#desc-pane .tox .tox-tbtn--enabled svg { fill: var(--brand-ink); }
+#desc-pane .tox .tox-tbtn__select-label { font-size: 14px; color: var(--ink); }
+#desc-pane .tox .tox-tbtn--select { padding: 0 8px 0 10px; }
+#desc-pane .tox .tox-tbtn--bespoke .tox-tbtn__select-label { width: 5.4em; }
+#desc-pane .tox .tox-statusbar { border-top: 1px solid var(--line-2); }
+/* "Proposed: TinyMCE" — right end of the tab row, over the toolbar's end */
+#desc-tabs .ed-tag { margin-left: auto; flex: none; }
+@media (max-width: 1160px) {
+  #desc-tabs.tabs { gap: var(--s4); }
+  #desc-tabs .ed-tag__k { display: none; }
+  /* the old-system tab names are long: on narrow screens the tab row scrolls
+     sideways (y never scrolls) instead of clipping the last tab */
+  #desc-tabs.tabs { overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; }
+  #desc-tabs .tab { flex: none; }
+}
+
+@media (max-width: 1160px) {
+  .photos { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+/* Colors: wider cells, so each label and its "Saving copies this into …"
+   help line stay on one line (four fields still fit one row at 1440) */
+#zColors .grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+
+/* ── Status chip in the header (SV note 9) ─────────────────────────────── */
+.stchip {
+  display: inline-flex; align-items: center; gap: 8px; flex: none;
+  height: 30px; padding: 0 12px 0 11px; border-radius: var(--r-pill);
+  font-size: 14px; font-weight: 600; white-space: nowrap;
+}
+.stchip > i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex: none; }
+/* sized to its longest state ("Available"), so switching status moves nothing */
+#cock-status { min-width: 112px; }
+.stchip--available { color: var(--ok); background: var(--ok-soft); box-shadow: inset 0 0 0 1px rgba(18, 112, 74, .28); }
+.stchip--sold { color: #fff; background: var(--ink); }
+.stchip--pending { color: var(--signal); background: var(--signal-soft); box-shadow: inset 0 0 0 1px var(--signal-line); }
+.stchip--staging { color: var(--ink-2); background: var(--wash); box-shadow: inset 0 0 0 1px var(--line); }
+.stchip--hidden { color: var(--danger); background: var(--danger-soft); box-shadow: inset 0 0 0 1px rgba(189, 51, 40, .3); }
+.stchip[hidden] { display: none; }
+.cock__type { font-size: 13px; font-weight: 600; color: var(--ink-3); white-space: nowrap; }
+
+/* ── Photo row: the Add / Studio card right after the last photo (SV 10) ── */
+.photo--new { background: var(--well); }
+.photo--new > .i { width: 18px; height: 18px; opacity: .5; }
+.photo__tag {
+  position: absolute; bottom: 5px; right: 5px; height: 18px; padding: 0 6px;
+  border-radius: var(--r-micro); font-size: 11px; font-weight: 600; line-height: 18px;
+  color: var(--brand-ink); background: var(--brand-soft);
+}
+/* remove (×) on every photo — top right, shown on hover or keyboard focus,
+   always on touch; the main-photo star moves to the top left */
+.photo .photo__star { left: 5px; right: auto; }
+.photo__x {
+  position: absolute; top: 5px; right: 5px; z-index: 1;
+  display: grid; place-items: center; width: 24px; height: 24px;
+  border-radius: 50%; background: rgba(16, 21, 31, .72); color: #fff; cursor: pointer;
+  opacity: 0; transition: opacity var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.photo__x .i { width: 14px; height: 14px; }
+.photo:hover .photo__x, .photo__x:focus-visible { opacity: 1; }
+.photo__x:hover { background: var(--danger); }
+@media (hover: none) { .photo__x { opacity: 1; } }
+/* drag to reorder (mock addition) */
+.photo[draggable="true"] { cursor: grab; }
+.photo[draggable="true"]:active { cursor: grabbing; }
+.photo[data-pi]:focus-visible { outline: var(--focus-w) solid var(--focus-color); outline-offset: 2px; }
+.photo--dragging { opacity: .4; }
+.photo--over { box-shadow: inset 0 0 0 2px var(--brand), 0 0 0 3px var(--brand-soft); }
+#photos-note .chip-src { vertical-align: 1px; margin-right: 4px; }
+.photo--studio {
+  grid-column: span 2;
+  aspect-ratio: auto;
+  display: flex; align-items: stretch; padding: 0;
+  background: var(--brand-soft);
+  box-shadow: inset 0 0 0 1px var(--brand);
+  color: var(--brand-ink);
+}
+.studio__add, .studio__more { cursor: pointer; color: inherit; transition: background var(--dur) var(--ease); }
+.studio__add:hover, .studio__more:hover { background: rgba(31, 95, 224, .08); }
+.studio__add:focus-visible, .studio__more:focus-visible { outline: var(--focus-w) solid var(--focus-color); outline-offset: -3px; }
+.studio__add { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; padding: 0 12px; }
+.studio__add b { font-size: 14px; font-weight: 650; white-space: nowrap; }
+.studio__k {
+  display: grid; place-items: center; flex: none;
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--brand); color: #fff;
+}
+.studio__k .i { width: 18px; height: 18px; }
+.studio__more {
+  flex: none; display: grid; place-content: center; justify-items: center; gap: 2px;
+  padding: 0 12px; box-shadow: inset 1px 0 0 rgba(31, 95, 224, .3);
+}
+.studio__more b { font-size: 18px; font-weight: 650; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.studio__more b .i { width: 20px; height: 20px; }
+.studio__more span { display: inline-flex; align-items: center; gap: 3px; font-size: 12px; font-weight: 600; }
+.studio__more span .i { width: 12px; height: 12px; }
+
+/* ── Status · Type · Certified as three large cards (SV note 9, Alex) ──────
+   one row: Status wider (four choices); each card a label over a full-width
+   segmented control with 36px choices. The Status card takes its status's
+   tint, so the state reads at a glance from across the page. */
+.statusrow { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr); gap: var(--s3); flex-wrap: nowrap; }
+.scard {
+  gap: 10px; padding: 14px 16px; border-radius: var(--r-inner);
+  background: var(--sheet); box-shadow: inset 0 0 0 1px var(--line);
+  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.scard .seg { display: flex; width: 100%; height: 46px; padding: 5px; border-radius: var(--r-control); }
+.scard .seg__b { flex: 1; height: 36px; padding: 0 10px; font-size: 14px; border-radius: var(--r-inner); }
+.scard--status[data-st="available"] { background: var(--ok-soft); box-shadow: inset 0 0 0 1px rgba(18, 112, 74, .35); }
+.scard--status[data-st="pending"] { background: var(--signal-soft); box-shadow: inset 0 0 0 1px var(--signal-line); }
+.scard--status[data-st="sold"], .scard--status[data-st="staging"] { background: var(--wash); }
+.scard--status .seg { background: rgba(255, 255, 255, .7); }
+@media (max-width: 1160px) {
+  .statusrow { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .scard--status { grid-column: 1 / -1; }
+}
+
+/* narrow header: the status chip slims down and the stock / VIN line never
+   wraps, so the title keeps its room */
+@media (max-width: 1160px) {
+  .stchip { height: 26px; padding: 0 10px 0 9px; font-size: 13px; gap: 6px; }
+  #cock-status { min-width: 96px; }
+  .cock__l2, .cock__l2 > span { white-space: nowrap; }
+  .cock__thumb { display: none; }
+}
+
+/* ── Window Sticker (SV note 18, mock addition) ───────────────────────── */
+.wstk { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: var(--s5); align-items: start; }
+.wstk__sheet {
+  padding: 14px 16px; border-radius: 6px; background: #fff;
+  box-shadow: 0 1px 2px rgba(16, 21, 31, .08), 0 6px 18px rgba(16, 21, 31, .08), inset 0 0 0 1px var(--line);
+  font-size: 10px; line-height: 1.35; color: #1b1f27;
+}
+.ws__h { font-size: 9px; font-weight: 700; letter-spacing: .14em; color: var(--ink-3); padding-bottom: 6px; border-bottom: 2px solid #1b1f27; }
+.ws__t { margin-top: 8px; font-size: 13px; font-weight: 700; line-height: 1.2; }
+.ws__vin { margin-top: 3px; font: 400 9px/1.3 var(--mono); color: var(--ink-3); }
+.ws__grid { margin-top: 8px; display: grid; gap: 2px; }
+.ws__kv { display: flex; justify-content: space-between; gap: 8px; }
+.ws__kv span { color: var(--ink-3); }
+.ws__kv b { font-weight: 600; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ws__mpg { margin-top: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; text-align: center; }
+.ws__mpg > div { padding: 5px 0; border: 1px solid var(--line); border-radius: 4px; }
+.ws__mpg b { display: block; font-size: 15px; }
+.ws__mpg span { font-size: 8.5px; color: var(--ink-3); }
+.ws__list { margin: 8px 0 0; padding: 0; list-style: none; color: var(--ink-2); }
+.ws__list li::before { content: "• "; color: var(--ink-3); }
+.ws__list li { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ws__price { margin-top: 8px; padding-top: 6px; border-top: 2px solid #1b1f27; display: flex; justify-content: space-between; align-items: baseline; }
+.ws__price b { font-size: 14px; }
+.wstk__side { display: grid; gap: var(--s4); }
+.wstk__row { display: grid; gap: 4px; padding: var(--s4); border-radius: var(--r-inner); box-shadow: inset 0 0 0 1px var(--line-2); }
+.wstk__row > b { font-size: 14px; font-weight: 600; color: var(--ink); }
+.wstk__row > span { font-size: 13px; color: var(--ink-3); }
+.wstk__acts { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); margin-top: 8px; }
+.wstk__acts label.btn { cursor: pointer; }
+.wstk__file { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-2); }
+.wstk__file .i { width: 16px; height: 16px; }
+@media (max-width: 1160px) { .wstk { grid-template-columns: 220px minmax(0, 1fr); } }
+
+/* ── edit lock, only when someone else holds it (SV note 19) ──────────── */
+.lock--other { color: var(--signal); background: var(--signal-soft); box-shadow: inset 0 0 0 1px var(--signal-line); }
+.lock[hidden] { display: none; }
+.lock--mine { position: relative; color: var(--ink-3); background: var(--wash); box-shadow: inset 0 0 0 1px var(--line); cursor: help; }
+.lock__q {
+  display: grid; place-items: center; width: 16px; height: 16px; margin-left: 2px;
+  border-radius: 50%; font-style: normal; font-size: 11px; font-weight: 700;
+  color: var(--sheet); background: var(--ink-4);
+}
+.lock__tip {
+  position: absolute; left: 0; top: calc(100% + 8px); z-index: 20; width: 300px;
+  padding: 10px 12px; border-radius: var(--r-inner);
+  font-size: 13px; font-weight: 400; line-height: 1.45; white-space: normal;
+  color: #fff; background: var(--ink); box-shadow: 0 8px 24px rgba(16, 21, 31, .18);
+  opacity: 0; visibility: hidden; transition: opacity var(--dur) var(--ease);
+}
+.lock--mine:hover .lock__tip, .lock--mine:focus-visible .lock__tip { opacity: 1; visibility: visible; }
+.lock--mine:focus-visible { outline: var(--focus-w) solid var(--focus-color); outline-offset: 2px; }
+[data-act="save"].is-locked { opacity: .45; cursor: not-allowed; }
+
+/* ── Standard equipment folded to category chips (SV note 20) ─────────── */
+.fchips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: var(--s2); }
+.fchip {
+  display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 10px 0 12px;
+  border-radius: var(--r-pill); font-size: 13px; font-weight: 600; color: var(--ink-2);
+  background: var(--sheet); box-shadow: inset 0 0 0 1px var(--line); cursor: pointer;
+}
+.fchip span { font-weight: 500; color: var(--ink-4); font-variant-numeric: tabular-nums; }
+.fchip .i { width: 14px; height: 14px; color: var(--ink-4); transition: transform var(--dur) var(--ease); }
+.fchip:hover { box-shadow: inset 0 0 0 1px var(--line-3); color: var(--ink); }
+.fchip--on { color: var(--brand-ink); background: var(--brand-soft); box-shadow: inset 0 0 0 1px var(--brand); }
+.fchip--on .i { transform: rotate(180deg); color: var(--brand-ink); }
+.fchip--all { padding: 0 12px; color: var(--brand-ink); }
+.fchip:focus-visible { outline: var(--focus-w) solid var(--focus-color); outline-offset: 2px; }
+
+/* Custom Fields, compact (Alex): the five text fields share one row and the
+   switches run as one inline line — switch, name, next — with no rules */
+#custom .cfsw { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: var(--s4); }
+#custom .cfsw__i { min-height: 32px; padding: 0; box-shadow: none; gap: 8px; }
+#custom .cfsw__i .sw { order: -1; }
+#custom .cfsw__x { flex: none; }
+#custom .cfsw__x b { font-size: 13.5px; white-space: nowrap; }
+.zone--custom .zone__b { padding-bottom: var(--s4); }
+
+/* a custom field with an explanation in its tooltip (SV note 22) */
+.f__l--hint { cursor: help; }
+.f__q {
+  display: inline-grid; place-items: center; width: 15px; height: 15px; margin-left: 2px;
+  border-radius: 50%; font-style: normal; font-size: 10px; font-weight: 700; letter-spacing: 0;
+  color: var(--sheet); background: var(--ink-4);
+}
