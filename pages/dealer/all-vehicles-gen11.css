@@ -3859,3 +3859,35 @@ a { color: var(--brand); text-decoration: none; color: var(--brand-ink); }
 
 /* keyboard reaches the hover-only top menus (note 8) */
 .nav__it:has(:focus-visible) > .menu { display: flex; }   /* keyboard focus only: a mouse click must not pin a menu */
+
+/* ── optional columns + the Columns panel's "Add a column" (AV note 36) ── */
+.nd { color: var(--ink-4); }
+.num-c { font-variant-numeric: tabular-nums; }
+.mono-c { font: 400 12.5px/1.2 var(--mono); color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.clip-c { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.yn { font-size: 13px; color: var(--ink-3); }
+.yn--ok { color: var(--ok); }
+.yn--bad { color: var(--danger); font-weight: 600; }
+.yn--warn { color: var(--signal); font-weight: 600; }
+.cols__sub--add { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+.cols__q { flex: 1; min-width: 0; height: 30px; }
+.cols__grp { margin: 10px 0 2px; padding: 0 8px; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-4); }
+.cols__nd { margin-left: auto; padding-left: 8px; flex: none; font-size: 10.5px; color: var(--ink-4); white-space: nowrap; }
+.cols__it .cols__l { min-width: 0; }
+.cols__it .cols__l > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cols__it--full { opacity: .5; }
+.cols__room { display: flex; align-items: center; gap: 6px; margin: 6px 8px 0; font-size: 12.5px; color: var(--signal); }
+.cols__room .i { width: 14px; height: 14px; }
+.cols__room[hidden], .cols__it[hidden], .cols__grp[hidden] { display: none; }
+
+/* Columns panel in two panes (Alex): Shown on the left, Add a column on the
+   right — each scrolls on its own, never sideways */
+.pop.cols { width: 600px; max-width: calc(100vw - 16px); overflow: hidden; }
+.cols__body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: 0; height: min(520px, 64vh); }
+.cols__pane { display: flex; flex-direction: column; min-height: 0; min-width: 0; }
+.cols__pane--add { border-left: 1px solid var(--line-2); background: var(--wash); }
+.cols__list { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; padding: 0 8px 8px; }
+.cols__qw { padding: 0 12px 6px; }
+.cols__qw .cols__q { width: 100%; height: 32px; }
+.cols__pane--add .cols__it:hover { background: var(--sheet); }
+.cols__note.cols__note--room { color: var(--signal); font-size: 11.5px; font-weight: 600; letter-spacing: 0; text-transform: none; white-space: nowrap; }

@@ -49,7 +49,7 @@
   V.forEach(function (v) { v.mi = MILES.hasOwnProperty(v.s) ? MILES[v.s] : null; });
 
   var S = {
-    sort: 'days', dir: 'asc', per: 100, page: 1, attn: {}, age: null, lane: 'Available', dock: null, cur: null, fq: '', allMakes: false,
+    sort: 'days', dir: 'asc', per: 100, page: 1, attn: {}, age: null, lane: 'Available', dock: null, cur: null, fq: '', allMakes: false, q: '',
     f: { make: {}, model: {}, year: {}, price: {}, mile: {}, loc: {}, type: {}, merch: {}, color: {}, opt: {} },
     /* Open state for both disclosure families: the vehicle sheet's four stacked
        regions, then the Filters dock's facet groups. */
@@ -85,23 +85,63 @@
     /* review 2026-10: the row checkboxes and their bulk tray are gone (neither is
        in the original); Status takes the leading column instead. It still steps
        aside when Filters is open, as it always has. */
-    { id: 'status',  label: 'Status',    locked: true, sort: 'status', cls: 'c-status', dockOff: true, track: { lg: 96, sm: 88 } },
-    { id: 'thumb',   label: 'Thumbnail', track: { lg: 92, sm: 76, dock: 68, dockSm: 60 } },
-    { id: 'stock',   label: 'Stock',     locked: true, sort: 'stock', track: { lg: 104, sm: 92, dock: 100, dockSm: 88 }, grow: 1 },
-    { id: 'year',    label: 'Year',      sort: 'year', track: { lg: 46, sm: 42, dock: 40, dockSm: 40 } },
-    { id: 'make',    label: 'Make',      locked: true, sort: 'make', track: { lg: 104, sm: 92, dock: 86, dockSm: 84 } },
-    { id: 'model',   label: 'Model',     locked: true, sort: 'model', track: { lg: 100, sm: 88, dock: 80, dockSm: 80 }, grow: 6 },
-    { id: 'trim',    label: 'Trim',      sort: 'trim', cls: 'c-trim', dockOff: true, track: { lg: 84, sm: 88 }, grow: 1 },
-    { id: 'colour',  label: 'Color',     sort: 'colour', cls: 'c-ext', dockOff: true, track: { lg: 92, sm: 84 }, grow: 1 },
-    { id: 'miles',   label: 'Mileage',   sort: 'miles', cls: 'c-miles', dockOff: true, track: { lg: 96, sm: 80 } },
-    { id: 'price',   label: 'Price',     locked: true, sort: 'price', cls: 'c-price', track: { lg: 118, sm: 84, dock: 80, dockSm: 76 } },
-    { id: 'health',  label: 'Listing',    sort: 'issues', cls: 'c-health', track: { lg: 246, sm: 124, dock: 120, dockSm: 116 } },
-    { id: 'age',     label: 'Added',     sort: 'days', track: { lg: 104, sm: 96, dock: 96, dockSm: 92 } },
+    { id: 'status',  label: 'Status',    grp: 'Listing & feeds', locked: true, sort: 'status', cls: 'c-status', dockOff: true, track: { lg: 96, sm: 88 } },
+    { id: 'thumb',   label: 'Thumbnail', grp: 'Listing & feeds', track: { lg: 92, sm: 76, dock: 68, dockSm: 60 } },
+    { id: 'stock',   label: 'Stock',     grp: 'Vehicle', locked: true, sort: 'stock', track: { lg: 104, sm: 92, dock: 100, dockSm: 88 }, grow: 1 },
+    { id: 'year',    label: 'Year',      grp: 'Vehicle', sort: 'year', track: { lg: 46, sm: 42, dock: 40, dockSm: 40 } },
+    { id: 'make',    label: 'Make',      grp: 'Vehicle', locked: true, sort: 'make', track: { lg: 104, sm: 92, dock: 86, dockSm: 84 } },
+    { id: 'model',   label: 'Model',     grp: 'Vehicle', locked: true, sort: 'model', track: { lg: 100, sm: 88, dock: 80, dockSm: 80 }, grow: 6 },
+    { id: 'trim',    label: 'Trim',      grp: 'Vehicle', sort: 'trim', cls: 'c-trim', dockOff: true, track: { lg: 84, sm: 88 }, grow: 1 },
+    { id: 'colour',  label: 'Color',     grp: 'Vehicle', sort: 'colour', cls: 'c-ext', dockOff: true, track: { lg: 92, sm: 84 }, grow: 1 },
+    { id: 'miles',   label: 'Mileage',   grp: 'Vehicle', sort: 'miles', cls: 'c-miles', dockOff: true, track: { lg: 96, sm: 80 } },
+    { id: 'price',   label: 'Price',     grp: 'Pricing', locked: true, sort: 'price', cls: 'c-price', track: { lg: 118, sm: 84, dock: 80, dockSm: 76 } },
+    { id: 'health',  label: 'Listing',    grp: 'Listing & feeds', sort: 'issues', cls: 'c-health', track: { lg: 246, sm: 124, dock: 120, dockSm: 116 } },
+    { id: 'age',     label: 'Added',     grp: 'Dates', sort: 'days', track: { lg: 104, sm: 96, dock: 96, dockSm: 92 } },
+    /* ── optional columns (Bill, AV note 36: "all possible columns") ──────
+       Off by default; the dealer adds them in Columns, as far as the table has
+       room (no sideways scroll — the panel says when it is full). Columns the
+       sample lot has no data for say so in the panel and show "—": nothing is
+       invented. Hidden while Filters is open. */
+    { id: 'vin',    label: 'VIN',                    grp: 'Vehicle', off: true, dockOff: true, track: { lg: 160, sm: 150 }, cell: function (v) { return '<div class="mono-c" title="' + esc(v.vin) + '">' + esc(v.vin) + '</div>'; } },
+    { id: 'vtype',  label: 'Type',                   grp: 'Vehicle', off: true, dockOff: true, nodata: true, track: { lg: 72, sm: 68 } },
+    { id: 'body',   label: 'Body',                   grp: 'Vehicle', off: true, dockOff: true, nodata: true, track: { lg: 96, sm: 88 } },
+    { id: 'engine', label: 'Engine',                 grp: 'Vehicle', off: true, dockOff: true, nodata: true, track: { lg: 120, sm: 110 } },
+    { id: 'trans',  label: 'Transmission',           grp: 'Vehicle', off: true, dockOff: true, nodata: true, track: { lg: 120, sm: 110 } },
+    { id: 'intc',   label: 'Interior Color',         grp: 'Vehicle', off: true, dockOff: true, nodata: true, track: { lg: 112, sm: 104 } },
+    { id: 'mpgc',   label: 'MPG City',               grp: 'Vehicle', off: true, dockOff: true, nodata: true, track: { lg: 80, sm: 76 } },
+    { id: 'mpgh',   label: 'MPG Hwy',                grp: 'Vehicle', off: true, dockOff: true, nodata: true, track: { lg: 80, sm: 76 } },
+    { id: 'cert',   label: 'Certified',              grp: 'Vehicle', off: true, dockOff: true, nodata: true, track: { lg: 84, sm: 80 } },
+    { id: 'loc',    label: 'Location',               grp: 'Vehicle', off: true, dockOff: true, nodata: true, track: { lg: 120, sm: 110 } },
+    { id: 'disc',   label: 'Discount Price',         grp: 'Pricing', off: true, dockOff: true, track: { lg: 112, sm: 104 }, cell: function (v) { return money(v.disc); } },
+    { id: 'inv',    label: 'Invoice Price',          grp: 'Pricing', off: true, dockOff: true, track: { lg: 108, sm: 100 }, cell: function (v) { return money(v.inv); } },
+    { id: 'lease',  label: 'Lease Price',            grp: 'Pricing', off: true, dockOff: true, track: { lg: 100, sm: 96 }, cell: function (v) { return money(v.lease); } },
+    { id: 'lterm',  label: 'Lease Term',             grp: 'Pricing', off: true, dockOff: true, track: { lg: 92, sm: 88 }, cell: function (v) { return v.lt ? '<div>' + v.lt + ' mo</div>' : NOD; } },
+    { id: 'nph',    label: '# Photos',               grp: 'Listing & feeds', off: true, dockOff: true, track: { lg: 80, sm: 76 }, cell: function (v) { return '<div class="num-c">' + nf(v.ph || 0) + '</div>'; } },
+    { id: 'hide',   label: 'Do Not Display On Site', grp: 'Listing & feeds', off: true, dockOff: true, track: { lg: 120, sm: 112 }, cell: function (v) { return v.f.indexOf('Hidden') >= 0 ? '<div class="yn yn--bad">Hidden</div>' : '<div class="yn">No</div>'; } },
+    { id: 'feed',   label: 'Outgoing Feed Status',   grp: 'Listing & feeds', off: true, dockOff: true, track: { lg: 120, sm: 112 }, cell: function (v) { return v.f.indexOf('Feed off') >= 0 ? '<div class="yn">Off</div>' : '<div class="yn yn--ok">On</div>'; } },
+    { id: 'pend',   label: 'Sale Pending',           grp: 'Listing & feeds', off: true, dockOff: true, track: { lg: 96, sm: 92 }, cell: function (v) { return v.f.indexOf('Pending') >= 0 ? '<div class="yn yn--warn">Pending</div>' : NOD; } },
+    { id: 'specials', label: 'Specials',             grp: 'Listing & feeds', off: true, dockOff: true, nodata: true, track: { lg: 84, sm: 80 } },
+    { id: 'video',  label: 'Video',                  grp: 'Listing & feeds', off: true, dockOff: true, nodata: true, track: { lg: 72, sm: 68 } },
+    { id: 'carfax', label: 'Carfax',                 grp: 'Listing & feeds', off: true, dockOff: true, nodata: true, track: { lg: 76, sm: 72 } },
+    { id: 'days',   label: 'Days In Stock',          grp: 'Dates', off: true, dockOff: true, sort: 'days', track: { lg: 100, sm: 96 }, cell: function (v) { return '<div class="num-c">' + nf(v.d) + '</div>'; } },
+    { id: 'mod',    label: 'When Modified',          grp: 'Dates', off: true, dockOff: true, nodata: true, track: { lg: 108, sm: 104 } },
+    { id: 'mm',     label: 'Make-Model',             grp: 'Combined', off: true, dockOff: true, track: { lg: 170, sm: 150 }, cell: function (v) { return clip(v.mk + ' ' + v.md); } },
+    { id: 'mmt',    label: 'Make-Model-Trim',        grp: 'Combined', off: true, dockOff: true, track: { lg: 210, sm: 180 }, cell: function (v) { return clip(v.mk + ' ' + v.md + (v.tr ? ' ' + v.tr : '')); } },
+    { id: 'ymmt',   label: 'Year-Make-Model-Trim',   grp: 'Combined', off: true, dockOff: true, track: { lg: 230, sm: 200 }, cell: function (v) { return clip(v.y + ' ' + v.mk + ' ' + v.md + (v.tr ? ' ' + v.tr : '')); } },
+    { id: 'cf_cfx_date',       label: 'Carfax Report Date',            grp: 'Custom fields', off: true, dockOff: true, nodata: true, track: { lg: 120, sm: 112 } },
+    { id: 'cf_pending_name',   label: 'Pending Sale Name',             grp: 'Custom fields', off: true, dockOff: true, nodata: true, track: { lg: 120, sm: 112 } },
+    { id: 'cf_tt_category',    label: 'Truck / Trailer Category',      grp: 'Custom fields', off: true, dockOff: true, nodata: true, track: { lg: 130, sm: 120 } },
+    { id: 'cf_ove',            label: 'OVE Feed Data',                 grp: 'Custom fields', off: true, dockOff: true, nodata: true, track: { lg: 112, sm: 104 } },
+    { id: 'cf_no_carfax',      label: 'Do Not Report VIN To Carfax',   grp: 'Custom fields', off: true, dockOff: true, nodata: true, track: { lg: 130, sm: 120 } },
+    { id: 'cf_no_vin',         label: 'Do Not Display VIN On Website', grp: 'Custom fields', off: true, dockOff: true, nodata: true, track: { lg: 130, sm: 120 } },
     { id: 'actions', label: 'Actions',   locked: true, track: { lg: 108, sm: 112, dock: 104, dockSm: 92 } }
   ];
   var COLKEY = 'aan.gen11.allVehicles.columns';
 
-  function colDefaults() { var o = {}; COLS.forEach(function (c) { o[c.id] = true; }); return o; }
+  function colDefaults() { var o = {}; COLS.forEach(function (c) { o[c.id] = !c.off; }); return o; }
+  var NOD = '<div class="nd" title="Not in the sample data">—</div>';
+  function money(n) { return n ? '<div class="num-c">$' + nf(n) + '</div>' : NOD; }
+  function clip(t) { return '<div class="clip-c" title="' + esc(t) + '">' + esc(t) + '</div>'; }
 
   /* Anything in storage is treated as a suggestion: unknown ids are ignored,
      non-boolean values are ignored, locked columns are forced back on, and a
@@ -149,8 +189,37 @@
   function orderedCols() { return S.order.map(colById).concat([colById('actions')]); }
   function moveCol(id, step) {
     var i = S.order.indexOf(id), j = i + step;
+    while (j >= 0 && j < S.order.length && !colOn(colById(S.order[j]))) j += step;
     if (i < 0 || j < 0 || j >= S.order.length) return false;
     S.order[i] = S.order[j]; S.order[j] = id; saveOrder(); return true;
+  }
+  /* Room (Alex): a column can be added only while the table still fits its
+     width — no sideways scroll. Measured from the minimum track widths of what
+     is shown against the table's own width. */
+  function trackPx(c) {
+    var t = colTier();
+    if (c.id === 'health' && t === 'lg' && CHIPMQ.matches) return c.track.sm;   /* as colTemplate() */
+    return c.track[t] != null ? c.track[t] : (c.track.sm || c.track.lg);
+  }
+  function tableRoom() {
+    var tb = $('#tb') || $('.field'); if (!tb) return 9999;
+    var vis = visibleCols(), used = vis.reduce(function (a, c) { return a + trackPx(c); }, 0) + 8 * (vis.length - 1) + 32;
+    return tb.clientWidth - used;
+  }
+  function fits(c) { return trackPx(c) + 8 <= tableRoom(); }
+  function updateRoom() {
+    var p = $('#p-cols'); if (!p) return;
+    var full = true;
+    $$('input[data-col]', p).forEach(function (ck) {
+      if (ck.checked) return;
+      var c = colById(ck.dataset.col), ok = fits(c);
+      if (ok) full = false;
+      ck.disabled = !ok || (dockOpen() && c.dockOff);
+      ck.closest('.cols__it').classList.toggle('cols__it--full', !ok);
+      ck.closest('.cols__it').title = ok ? '' : 'Table is full — turn a column off first';
+    });
+    var n = $('.cols__room', p);
+    if (n) n.hidden = !full;
   }
 
   function dockOpen() { return S.dock === 'filters'; }
@@ -169,10 +238,23 @@
   function colOn(c) { return c.locked || c.system || S.cols[c.id] !== false; }
   function visibleCols() {
     var dk = dockOpen();
-    return orderedCols().filter(function (c) { return (!dk || !c.dockOff) && colOn(c); });
+    return fitCols(orderedCols().filter(function (c) { return (!dk || !c.dockOff) && colOn(c); }));
+  }
+  /* The safety net under the room limit: columns saved on a wide screen may
+     not fit a narrower one. Added (non-default) columns then step out from
+     the right until the row fits — never a default one, never sideways
+     scroll. The choice is kept; the panel marks them "No room". */
+  function fitCols(list) {
+    var tb = $('#tb'); if (!tb || !tb.clientWidth) return list;
+    var avail = tb.clientWidth - 32, px = function (c) { return trackPx(c) + 8; };
+    var tot = list.reduce(function (a, c) { return a + px(c); }, -8);
+    for (var i = list.length - 1; i >= 0 && tot > avail; i--) {
+      if (list[i].off) { tot -= px(list[i]); list.splice(i, 1); }
+    }
+    return list;
   }
   function hiddenCount() {
-    return COLS.filter(function (c) { return !c.locked && !c.system && S.cols[c.id] === false; }).length;
+    return COLS.filter(function (c) { return !c.locked && !c.system && !c.off && S.cols[c.id] === false; }).length;
   }
   /* The template is the visible columns and nothing else — no zero-width
      tracks. With every column on, Model alone takes the slack, which is the
@@ -239,7 +321,7 @@
     var GAP = 8, EDGE = 8;
     var topBar = $('.top');
     var TOPLIMIT = (topBar ? topBar.getBoundingClientRect().bottom : 68) + 8;
-    var list = p.querySelector('.cols__set--scroll');
+    var list = p.querySelector('.cols__body');
 
     if (list) { list.style.maxHeight = ''; list.style.overflowY = ''; }
     p.style.maxHeight = '';
@@ -269,29 +351,62 @@
   window.addEventListener('resize', placeColsPop);
   window.addEventListener('scroll', placeColsPop, { passive: true });
 
+  function keepPaneScroll(p) {
+    var t = {};
+    $$('.cols__list', p).forEach(function (l) { t[l.dataset.pane] = l.scrollTop; });
+    return function () { $$('.cols__list', p).forEach(function (l) { if (t[l.dataset.pane]) l.scrollTop = t[l.dataset.pane]; }); };
+  }
+  function filterColsPanel(q) {
+    q = String(q || '').toLowerCase().trim();
+    var p = $('#p-cols'); if (!p) return;
+    var add = p.querySelector('[aria-label="Columns you can add"]'); if (!add) return;
+    $$('.cols__it', add).forEach(function (it) { it.hidden = !!q && it.dataset.colname.indexOf(q) < 0; });
+    $$('.cols__grp', add).forEach(function (g) {
+      var n = g.nextElementSibling, any = false;
+      while (n && !n.classList.contains('cols__grp')) { if (!n.hidden) any = true; n = n.nextElementSibling; }
+      g.hidden = !any;
+    });
+  }
+  var COL_GROUPS = ['Vehicle', 'Pricing', 'Listing & feeds', 'Dates', 'Combined', 'Custom fields'];
   function colsPopHTML() {
     var dk = dockOpen();
-    var list = S.order.map(colById);
+    var shownList = S.order.map(colById).filter(colOn);
     var shown = visibleCols().filter(function (c) { return !c.system; }).length;
+    var nameOf = function (c) { return c.id === 'thumb' ? 'Photo' : c.label; };
+    var item = function (c, i, n) {
+      var sus = dk && c.dockOff, name = nameOf(c);
+      var sw = c.locked
+        ? '<span class="cols__lk" title="Always shown">' + ic('i-lock') + '</span>'
+        : '<input class="ck" type="checkbox" data-col="' + c.id + '"' + (colOn(c) ? ' checked' : '') + (sus ? ' disabled' : '') + ' aria-label="Show ' + esc(name) + '">';
+      return '<div class="pop__it cols__it' + (sus ? ' cols__it--sus' : '') + (c.locked ? ' cols__it--lock' : '') + '" data-colname="' + esc(name.toLowerCase()) + '">' +
+        '<label class="cols__l">' + sw + '<span>' + esc(name) + '</span></label>' +
+        (sus ? '<span class="cols__note" title="Not shown while the Filters panel is open">Filters</span>' : '') +
+        (!sus && i != null && c.off && visibleCols().indexOf(c) < 0 ? '<span class="cols__note cols__note--room" title="No room at this screen width — turn another column off to bring it back">No room</span>' : '') +
+        (c.nodata ? '<span class="cols__nd" title="The sample lot has no data for this column — it shows “—”">no sample data</span>' : '') +
+        (i != null ? '<span class="cols__mv">' +
+          '<button type="button" data-mv="' + c.id + '|-1" aria-label="Move ' + esc(name) + ' left"' + (i === 0 ? ' disabled' : '') + '>◀</button>' +
+          '<button type="button" data-mv="' + c.id + '|1" aria-label="Move ' + esc(name) + ' right"' + (i === n - 1 ? ' disabled' : '') + '>▶</button>' +
+        '</span>' : '') + '</div>';
+    };
+    var adds = COL_GROUPS.map(function (g) {
+      var cs = S.order.map(colById).filter(function (c) { return c.grp === g && !colOn(c); });
+      return cs.length ? '<div class="cols__grp">' + esc(g) + '</div>' + cs.map(function (c) { return item(c); }).join('') : '';
+    }).join('');
     return '<div class="cols__h"><h2 class="dock__t">Columns</h2>' +
         '<span class="dock__c cols__n">' + shown + ' of ' + COLS.length + ' shown</span>' +
         '<button class="dock__x" type="button" data-act="cols-close" aria-label="Close Columns">' + ic('i-x') + '</button></div>' +
-      '<div class="cols__sub" id="cols-opt-lab"><b>Show and order</b><span>left to right</span></div>' +
-      '<div class="cols__set cols__set--scroll" role="group" aria-labelledby="cols-opt-lab">' +
-      list.map(function (c, i) {
-        var sus = dk && c.dockOff;
-        var name = c.id === 'thumb' ? 'Photo' : c.label;
-        var sw = c.locked
-          ? '<span class="cols__lk" title="Always shown">' + ic('i-lock') + '</span>'
-          : '<input class="ck" type="checkbox" data-col="' + c.id + '"' + (S.cols[c.id] !== false ? ' checked' : '') + (sus ? ' disabled' : '') + ' aria-label="Show ' + esc(name) + '">';
-        return '<div class="pop__it cols__it' + (sus ? ' cols__it--sus' : '') + (c.locked ? ' cols__it--lock' : '') + '">' +
-          '<label class="cols__l">' + sw + '<span>' + esc(name) + '</span></label>' +
-          (sus ? '<span class="cols__note" title="Not shown while the Filters panel is open">Filters</span>' : '') +
-          '<span class="cols__mv">' +
-            '<button type="button" data-mv="' + c.id + '|-1" aria-label="Move ' + esc(name) + ' left"' + (i === 0 ? ' disabled' : '') + '>◀</button>' +
-            '<button type="button" data-mv="' + c.id + '|1" aria-label="Move ' + esc(name) + ' right"' + (i === list.length - 1 ? ' disabled' : '') + '>▶</button>' +
-          '</span></div>';
-      }).join('') + '</div>' +
+      '<div class="cols__body">' +
+        '<div class="cols__pane">' +
+          '<div class="cols__sub" id="cols-opt-lab"><b>Shown</b><span>left to right</span></div>' +
+          '<div class="cols__list" data-pane="shown" role="group" aria-labelledby="cols-opt-lab">' + shownList.map(function (c, i) { return item(c, i, shownList.length); }).join('') + '</div>' +
+        '</div>' +
+        '<div class="cols__pane cols__pane--add">' +
+          '<div class="cols__sub"><b>Add a column</b></div>' +
+          '<div class="cols__qw"><input class="fld cols__q" type="search" placeholder="Find a column…" aria-label="Find a column" data-colq></div>' +
+          '<p class="cols__room" hidden>' + ic('i-alert') + 'Table is full — turn a column off to add another.</p>' +
+          '<div class="cols__list" data-pane="add" role="group" aria-label="Columns you can add">' + adds + '</div>' +
+        '</div>' +
+      '</div>' +
       '<div class="cols__f"><p class="cols__lock">' + ic('i-lock') + '<span>Locked columns are always shown; Actions stays last.</span></p>' +
       '<button class="btn btn--quiet cols__reset" type="button" data-act="cols-reset">Reset to default</button></div>';
   }
@@ -308,7 +423,7 @@
   function sel(g) { return Object.keys(S.f[g]).filter(function (x) { return S.f[g][x]; }); }
   function nSel(groups) { return (groups || Object.keys(S.f)).reduce(function (n, g) { return n + sel(g).length; }, 0); }
   function attnOn() { return Object.keys(S.attn).some(function (x) { return S.attn[x]; }); }
-  function filtered() { return nSel() > 0 || !!S.age || attnOn(); }
+  function filtered() { return nSel() > 0 || !!S.age || attnOn() || !!S.q.trim(); }
   function labelOf(g, key) {
     if (g === 'make') return key;
     if (g === 'color') return key;
@@ -324,7 +439,14 @@
   function list() {
     var mk = sel('make'), yb = sel('year'), pb = sel('price');
     if (laneTotal() === 0) return [];
+    /* "Find a vehicle" (Karen, AV note 35): every word must match somewhere in
+       stock, VIN, year, make, model, trim or color — "2019 porsche" narrows */
+    var words = S.q.toLowerCase().split(/\s+/).filter(Boolean);
     return V.filter(function (v) {
+      if (words.length) {
+        var hay = [v.s, v.vin, v.y, v.mk, v.md, v.tr, v.c].join(' ').toLowerCase();
+        for (var w = 0; w < words.length; w++) if (hay.indexOf(words[w]) < 0) return false;
+      }
       for (var a in S.attn) if (S.attn[a]) {
         if (a === 'aging') { if (v.d <= 365) return false; }
         else if (v.f.indexOf(ATTN[a]) < 0) return false;
@@ -395,7 +517,7 @@
   function row(v, i) {
     var cells = rowCells(v), name = v.y + ' ' + v.mk + ' ' + v.md;
     return '<div class="row' + (i % 2 ? ' row--alt' : '') + (S.cur === v.id ? ' open' : '') + '" data-id="' + v.id + '" tabindex="0" aria-label="' + esc(name) + '">' +
-      visibleCols().map(function (c) { return cells[c.id]; }).join('') +
+      visibleCols().map(function (c) { return cells[c.id] != null ? cells[c.id] : c.cell ? c.cell(v) : NOD; }).join('') +
       '</div>';
   }
 
@@ -439,6 +561,7 @@
 
     var chips = [];
     Object.keys(S.attn).forEach(function (a) { if (S.attn[a]) chips.push({ cls: 'chip--attn', v: ATTN[a], off: function () { setAttn(a, false); } }); });
+    if (S.q.trim()) chips.push({ cls: '', v: '“' + S.q.trim() + '”', off: function () { S.q = ''; $('#q').value = ''; } });
     if (S.age) chips.push({ cls: 'chip--attn', v: 'Age ' + AGE[S.age], off: function () { setAge(null); } });
     Object.keys(S.f).forEach(function (g) {
       sel(g).forEach(function (key) { chips.push({ cls: '', v: (g === 'make' ? '' : GL[g] + ': ') + labelOf(g, key), off: function () { S.f[g][key] = false; if (g === 'make') renderMakes(); } }); });
@@ -826,6 +949,7 @@
     p.classList.add('pop--open');
     if (b) b.setAttribute('aria-expanded', 'true');
     placeColsPop();
+    updateRoom();
     /* Focus stays on the trigger. The panel is the trigger's next sibling, so
        Tab walks straight into it — the seven toggles, then Reset — and Escape
        hands focus back. Pulling focus in would fight the browser's own
@@ -867,9 +991,10 @@
       var mv = el.dataset.mv.split('|');
       if (moveCol(mv[0], +mv[1])) {
         render();
-        var pc = $('#p-cols'), sc = pc.querySelector('.cols__set--scroll'), top = sc ? sc.scrollTop : 0;
+        var pc = $('#p-cols'), tops = keepPaneScroll(pc);
         pc.innerHTML = colsPopHTML();
-        sc = pc.querySelector('.cols__set--scroll'); if (sc) sc.scrollTop = top;
+        tops(); placeColsPop();
+        updateRoom();
         var again = pc.querySelector('[data-mv="' + el.dataset.mv + '"]');
         if (again && !again.disabled) again.focus(); else { var other = pc.querySelector('[data-mv="' + mv[0] + '|' + (-mv[1]) + '"]'); if (other) other.focus(); }
       }
@@ -878,6 +1003,7 @@
     if ((el = t.closest('[data-act="cols-reset"]'))) {
       S.cols = colDefaults(); saveCols(); S.order = orderDefault(); saveOrder(); render();
       $('#p-cols').innerHTML = colsPopHTML();
+      updateRoom();
       var rb = $('#p-cols .cols__reset'); if (rb) rb.focus();
       return;
     }
@@ -894,7 +1020,7 @@
     if ((el = t.closest('.ar[data-attn]'))) { setAttn(el.dataset.attn, !S.attn[el.dataset.attn]); return; }
     if ((el = t.closest('[data-age]'))) { setAge(S.age === el.dataset.age ? null : el.dataset.age); return; }
     if ((el = t.closest('[data-chip]'))) { $('#scope')._chips[+el.dataset.chip].off(); render(); return; }
-    if ((el = t.closest('[data-act="clear-all"]'))) { S.attn = {}; Object.keys(S.f).forEach(function (g) { S.f[g] = {}; }); $$('.ar--on').forEach(function (b) { b.classList.remove('ar--on'); b.setAttribute('aria-pressed', 'false'); }); renderMakes(); setAge(null); return; }
+    if ((el = t.closest('[data-act="clear-all"]'))) { S.q = ''; $('#q').value = ''; S.attn = {}; Object.keys(S.f).forEach(function (g) { S.f[g] = {}; }); $$('.ar--on').forEach(function (b) { b.classList.remove('ar--on'); b.setAttribute('aria-pressed', 'false'); }); renderMakes(); setAge(null); return; }
     if ((el = t.closest('[data-act="clear-makes"]'))) { S.f.make = {}; renderMakes(); render(); return; }
     if ((el = t.closest('[data-pg]'))) { var pg = el.dataset.pg, np = $('.pgr')._pages || 1; S.page = pg === 'prev' ? Math.max(1, S.page - 1) : pg === 'next' ? Math.min(np, S.page + 1) : +pg; render(); return; }
     if ((el = t.closest('.mn__it[data-sort]'))) { S.sort = el.dataset.sort; render(); closePops(); return; }
@@ -905,7 +1031,22 @@
   });
   document.addEventListener('change', function (e) {
     var col = e.target.closest ? e.target.closest('input[data-col]') : null;
-    if (col) { S.cols[col.dataset.col] = col.checked; saveCols(); render(); return; }
+    if (col) {
+      var cid = col.dataset.col;
+      S.cols[cid] = col.checked; saveCols(); render();
+      /* the column moves between "Shown" and "Add a column": rebuild the panel,
+         keep its scroll and the search, and put focus back on the same box */
+      var pc = $('#p-cols');
+      if (pc && pc.classList.contains('pop--open')) {
+        var tops = keepPaneScroll(pc), qv = (pc.querySelector('[data-colq]') || {}).value || '';
+        pc.innerHTML = colsPopHTML();
+        tops();
+        var qi = pc.querySelector('[data-colq]'); if (qi && qv) { qi.value = qv; filterColsPanel(qv); }
+        updateRoom(); placeColsPop();
+        var back = pc.querySelector('input[data-col="' + cid + '"]'); if (back) back.focus();
+      }
+      return;
+    }
     var t = e.target;
     if (t.matches('[data-f]')) { tog(t.dataset.f, t.dataset.k, t.checked); return; }
     if (t.matches('[data-per]')) { S.per = +t.value; S.page = 1; render(); }
@@ -914,6 +1055,8 @@
     var t = e.target;
     if (t.matches('[data-filter]')) { var q = t.value.toLowerCase(); $$('#make-list .pop__it').forEach(function (it) { it.style.display = it.textContent.toLowerCase().indexOf(q) >= 0 ? '' : 'none'; }); }
     if (t.matches('[data-fq]')) { S.fq = t.value; applyFq(); }
+    if (t.id === 'q') { S.q = t.value; S.page = 1; render(); }
+    if (t.matches('[data-colq]')) filterColsPanel(t.value);
   });
   document.addEventListener('keydown', function (e) {
     var a = document.activeElement;
