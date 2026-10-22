@@ -95,3 +95,10 @@ Numbering = the order in comments.html (open notes, oldest first). Notes 1–20 
 | SL5 | email from → to: "hover to see the full name breakdown" | ✅ done locally · the cell's tooltip reads "From … to …" with both full names |
 | SL6 | clicking Workflow "unnecessarily shifts the Lead Facts section" | ✅ done locally · cause: All Vehicles' dock-open compaction leaks in through the shared stylesheet and restyled Lead facts' header; Single Lead now pins the bento's resting values — measured 0px shift open / closed / open |
 | SV-Bill (personal ask, 2026-10-22) | Standard equipment: "not these text fields with × — make them checkboxes" | ✅ done locally · each decoded item is a checkbox with its text ("Exterior Features · Active grille shutters"), **all checked by default** (the car has it); unchecking strikes it through, the category reads "34 of 35", and it counts as an unsaved change; checking again restores it. No text fields, no ×. Rows still without a category (just added) and Additional / Optional equipment stay text fields |
+
+## Dealer Login (2026-10-22)
+
+| # | Note | Decision |
+|---|---|---|
+| DL2 (Karen) | the current login page has "YOUR ACCOUNT · Having Trouble Logging In? Call 847-782-0300 for help or send us a message" | ✅ done, resolved · carried over under "Forgot Your Password?" in the sign-in card, over a hairline: "Having Trouble Logging In?" + "Call 847-782-0300 for help or send us a message" (phone and mail links) |
+| DL3 (Karen) | the current login page has Privacy Policy and Sitemap in this section | ✅ done, resolved · both added to the footer line; their real URLs still to be filled in (href="#") |

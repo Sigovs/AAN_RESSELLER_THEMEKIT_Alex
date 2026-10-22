@@ -217,6 +217,13 @@ a { color: inherit; }
 .legal a { text-decoration: none; }
 .legal a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 
+/* "Having Trouble Logging In?" — carried over from the current login page
+   (Karen, DL note 2): under Forgot, over a hairline, in the card's own voice */
+.trouble { display: grid; gap: 3px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--ink-3); }
+.trouble b { font-weight: 600; color: var(--ink); }
+.trouble a { color: var(--ink-2); text-underline-offset: 3px; white-space: nowrap; }
+.trouble a:hover { color: var(--ink); }
+
 a:focus-visible { outline: 2px solid var(--brand-2); outline-offset: 3px; border-radius: 3px; }
 
 /* ── narrow ────────────────────────────────────────────────────────────── */
