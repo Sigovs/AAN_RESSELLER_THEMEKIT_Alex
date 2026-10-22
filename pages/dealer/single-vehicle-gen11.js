@@ -136,7 +136,7 @@
     for (i = 0; i < v.feeds.length; i++) {
       if (v.feeds[i] !== b.feeds[i]) { out.push({ k: 'feeds', label: 'Feeds (rows changed)', group: true }); break; }
     }
-    if (JSON.stringify(v.std) !== JSON.stringify(b.std)) out.push({ k: 'features', label: 'Features (rows changed)', group: true });
+    if (JSON.stringify(v.std) !== JSON.stringify(b.std) || JSON.stringify(v.stdOff || {}) !== JSON.stringify(b.stdOff || {})) out.push({ k: 'features', label: 'Features (rows changed)', group: true });
     return out;
   }
 
@@ -523,10 +523,16 @@
       return chips + groups.map(function (k) {
         var list = by[k];
         if (k && !open[k]) return '';
-        return '<div class="featcat"><b>' + esc(catName(k)) + '</b><span>' + list.length + '</span></div>' +
-          (k ? '<div class="featvals">' + list.map(function (r) {
-            var gi = v.std.indexOf(r);
-            return '<div class="featval">' + val(gi, r) + x(gi) + '</div>';
+        /* Standard equipment as checkboxes (Bill): every decoded item is
+           checked by default — the car has it; unchecking says it does not.
+           No text fields, no ×. Rows still without a category stay fields. */
+        var off = v.stdOff || {};
+        var on = list.filter(function (r) { return !off[v.std.indexOf(r)]; }).length;
+        return '<div class="featcat"><b>' + esc(catName(k)) + '</b><span>' + (k && on !== list.length ? on + ' of ' + list.length : list.length) + '</span></div>' +
+          (k ? '<div class="featvals featvals--ck">' + list.map(function (r) {
+            var gi = v.std.indexOf(r), txt = String(r[1]).split(' : ').join(' · '), isOn = !off[gi];
+            return '<label class="featck' + (isOn ? '' : ' featck--off') + '" title="' + esc(txt) + '">' +
+              '<input class="ck" type="checkbox" data-featck="' + gi + '"' + (isOn ? ' checked' : '') + '><span>' + esc(txt) + '</span></label>';
           }).join('') + '</div>' : fullrows(list));
       }).join('');
     }
@@ -953,7 +959,14 @@
     if ((el = t.closest('[data-act="ai-close"]'))) { S.ai = false; renderDescPane(); return; }
 
     if ((el = t.closest('[data-featx]'))) {
-      S.v.std.splice(+el.dataset.featx, 1);
+      var gx = +el.dataset.featx;
+      S.v.std.splice(gx, 1);
+      /* keep the unchecked marks on their own rows after the splice */
+      if (S.v.stdOff) {
+        var moved = {};
+        Object.keys(S.v.stdOff).forEach(function (k) { k = +k; if (k !== gx) moved[k > gx ? k - 1 : k] = 1; });
+        S.v.stdOff = moved;
+      }
       renderFeatures(); renderRail(); renderDirty();
       return;
     }
@@ -1060,6 +1073,13 @@
 
   document.addEventListener('change', function (e) {
     var el = e.target;
+    if (el.dataset && el.dataset.featck != null) {
+      var gi = +el.dataset.featck, offm = S.v.stdOff || (S.v.stdOff = {});
+      if (el.checked) delete offm[gi]; else offm[gi] = 1;
+      renderFeatures(); renderDirty();
+      var again = $('[data-featck="' + gi + '"]'); if (again) again.focus();
+      return;
+    }
     if (el.id === 'demo-lock') { S.locked = el.checked; renderLock(); return; }
     if (el.id === 'cfx-file') { if (el.files && el.files[0]) { S.cfxFile[S.ix] = el.files[0].name; renderCarfax(); } return; }
     if (el.id === 'wstk-file') {

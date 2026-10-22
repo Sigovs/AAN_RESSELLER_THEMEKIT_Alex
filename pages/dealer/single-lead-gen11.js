@@ -260,7 +260,13 @@
   function renderForms() {
     var car = carOf(L);
     var parts = (L.car || '').split(' ');
-    var set = function (form, name, v) { var el = form.querySelector('[name="' + name + '"]'); if (el) el.value = v == null ? '' : v; };
+    var set = function (form, name, v) {
+      var el = form.querySelector('[name="' + name + '"]'); if (!el) return;
+      v = v == null ? '' : String(v);
+      /* State is a list now (SL note 2): a value it does not hold reads "Other" */
+      if (el.tagName === 'SELECT' && v && ![].some.call(el.options, function (o) { return o.value === v; })) v = 'Other';
+      el.value = v;
+    };
 
     var vf = $('#f-vehicle');
     set(vf, 'stock', L.stock); set(vf, 'type', car ? 'Used' : '');
@@ -298,7 +304,7 @@
       + '<div class="grp__h"><span class="grp__t">The vehicle being traded</span>'
       + '<span class="grp__ed">' + ic('i-edit') + ' editable</span></div>'
       + '<div class="kind"><span class="caps">Kind</span>'
-      + '<label><input class="ck" type="radio" name="trade-kind"' + (L.type !== 'consignment' ? ' checked' : '') + '> Tradein</label>'
+      + '<label><input class="ck" type="radio" name="trade-kind"' + (L.type !== 'consignment' ? ' checked' : '') + '> Trade-in</label>'
       + '<label><input class="ck" type="radio" name="trade-kind"' + (L.type === 'consignment' ? ' checked' : '') + '> Consignment</label></div>'
       + '<div class="grid grid--5">'
       + fields.map(function (f) { var n = 'trade-' + f[0].toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -311,7 +317,7 @@
 
   function renderActivity() {
     var kindOf = function (a) { return /Email/.test(a) ? 'mail' : /Comment|Note/.test(a) ? 'note' : /Status|Assigned/.test(a) ? 'status' : 'created'; };
-    var iconOf = { mail: 'i-rss', note: 'i-edit', status: 'i-tag', created: 'i-plus' };
+    var iconOf = { mail: 'i-mail', note: 'i-edit', status: 'i-tag', created: 'i-plus' };
     var body = function (a) {
       var m = a.n.match(/<subject>([^<]*)<\/subject>/);
       if (m) return '<span class="ev__n">Subject: <b>' + esc(m[1]) + '</b> <code>'
@@ -381,7 +387,7 @@
         return '<div class="em' + (unread ? ' em--unread' : '') + '" data-em="' + i + '" role="button" tabindex="0" aria-expanded="false">'
           + '<span class="em__dir em__dir--' + e.dir.toLowerCase() + '">' + e.dir + '</span>'
           + '<span class="em__s" title="' + esc(e.s) + '">' + esc(e.s) + '<span class="em__p">' + esc(snip(e, i)) + '</span></span>'
-          + '<span class="em__w">' + (e.dir === 'IN'
+          + '<span class="em__w" title="' + esc(e.dir === 'IN' ? 'From ' + L.name + ' to ' + who : 'From ' + who + ' to ' + L.name) + '">' + (e.dir === 'IN'
             ? '<b>' + esc(L.name) + '</b> <em>→</em> ' + esc(who)
             : '<b>' + esc(who) + '</b> <em>→</em> ' + esc(L.name)) + '</span>'
           + '<span class="em__d">' + esc(e.d) + '</span>'
@@ -680,7 +686,16 @@
   });
 
   /* dirty tracking on the one form that records a decision */
-  document.addEventListener('input', function (e) { if (e.target.closest('#f-wf')) checkDirty(); });
+  document.addEventListener('input', function (e) {
+    /* phones take digits and the usual + ( ) - . space — letters are dropped
+       as you type (SL note 3) */
+    var t = e.target;
+    if (t.matches && t.matches('[data-phone]')) {
+      var clean = t.value.replace(/[^\d+()\-.\s]/g, '');
+      if (clean !== t.value) { var p = t.selectionStart - (t.value.length - clean.length); t.value = clean; try { t.setSelectionRange(p, p); } catch (err) {} }
+    }
+    if (t.closest('#f-wf')) checkDirty();
+  });
   document.addEventListener('change', function (e) { if (e.target.closest('#f-wf')) checkDirty(); });
 
   /* ══ BOOT ══════════════════════════════════════════════════════════════ */

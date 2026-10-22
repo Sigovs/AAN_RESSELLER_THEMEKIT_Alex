@@ -1821,3 +1821,15 @@ button.prov:hover { text-decoration: underline; }
 .vid__none span { font-size: 13px; }
 .vid__f { display: grid; gap: var(--s4); }
 @media (max-width: 1160px) { .vid { grid-template-columns: 220px minmax(0, 1fr); } }
+
+/* Standard equipment as checkboxes (Bill): checked by default = the car has it */
+.featvals--ck { gap: 2px var(--s4); }
+.featck {
+  display: flex; align-items: flex-start; gap: 10px; min-width: 0;
+  padding: 7px 8px; border-radius: var(--r-inner); cursor: pointer;
+  font-size: 14px; line-height: 1.35; color: var(--ink);
+}
+.featck:hover { background: var(--wash); }
+.featck .ck { flex: none; width: 16px; height: 16px; margin: 1px 0 0; accent-color: var(--brand); cursor: pointer; }
+.featck > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.featck--off > span { color: var(--ink-4); text-decoration: line-through; text-decoration-color: var(--line-3); }

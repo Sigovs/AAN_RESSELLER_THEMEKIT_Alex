@@ -83,3 +83,15 @@ Numbering = the order in comments.html (open notes, oldest first). Notes 1–20 
 | AV37 (Karen) | "In the old system, HEALTH is named MISSING ITEMS" | ⏸ **kept open for the next pass** (Alex). Options on file: a) rename to "Missing items"; b) keep "Listing" with "Formerly Missing items" in its tooltip; c) ask Ivaylo (his note 16 argued against the "missing / health" meaning) |
 | AV38 (Karen) | clicking the stock number doesn't open the vehicle editor | ✅ already done (M7) — the AAN build is still Oct 1; resolve once 11_2 is uploaded |
 | AV39 (Karen) | drag-and-drop to arrange the columns | ⏸ **kept open for the next pass** (Alex). Order still changes with ◀ ▶ in the Columns panel. Options on file: a) drag the table headers + the Shown list; b) drag only inside the Columns panel (low risk); dragging the headers would compete with click-to-sort, the sticky header and the vehicle sheet |
+
+## Single Lead — Matthew's notes (2026-10-15)
+
+| # | Note | Decision |
+|---|---|---|
+| SL1 | "better as a mail icon than a wifi icon" (Write email) | ✅ done locally · a mail glyph on Write email, on the header's Email button and on mail entries in Activity (all three used the feed glyph) |
+| SL2 | State "should be a drop down … right now you can put in whatever" | ✅ done locally · a list of the 50 states + DC, "—" and "Other / outside US"; a value it does not hold reads Other |
+| SL3 | phone "should only allow numbers not letters" | ✅ done locally · Day and Evening Phone keep digits and + ( ) - . space; letters drop as you type (cursor kept) |
+| SL4 | "Trade-in" vs "Tradein" | ✅ done locally · the radio reads Trade-in |
+| SL5 | email from → to: "hover to see the full name breakdown" | ✅ done locally · the cell's tooltip reads "From … to …" with both full names |
+| SL6 | clicking Workflow "unnecessarily shifts the Lead Facts section" | ✅ done locally · cause: All Vehicles' dock-open compaction leaks in through the shared stylesheet and restyled Lead facts' header; Single Lead now pins the bento's resting values — measured 0px shift open / closed / open |
+| SV-Bill (personal ask, 2026-10-22) | Standard equipment: "not these text fields with × — make them checkboxes" | ✅ done locally · each decoded item is a checkbox with its text ("Exterior Features · Active grille shutters"), **all checked by default** (the car has it); unchecking strikes it through, the category reads "34 of 35", and it counts as an unsaved change; checking again restores it. No text fields, no ×. Rows still without a category (just added) and Additional / Optional equipment stay text fields |

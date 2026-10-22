@@ -976,3 +976,11 @@
 [hidden] { display: none !important; }
 
 /* Platform bar aligned to the family's new 56px. */
+
+/* SL note 6: the Workflow dock must not restyle the bento above. All Vehicles'
+   dock-open compaction (its Filters dock) leaks in through the shared sheet and
+   nudged Lead facts by 4px; on this page the bento keeps its resting values. */
+.app.dock-open .bento .attn.slot--facts { padding: var(--s4); }
+.app.dock-open .bento .attn__h { padding: 0 0 var(--s3); }
+.app.dock-open .bento .attn__h h2 { font-size: 15px; font-weight: 600; letter-spacing: -.005em; text-transform: none; color: var(--focal-ink); }
+.app.dock-open .bento .attn__h .s { display: block; }
