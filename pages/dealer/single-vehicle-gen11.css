@@ -1524,10 +1524,10 @@ button.prov:hover { text-decoration: underline; }
   .featpair { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* ── description editor: TinyMCE 6, tuned to the page (SV note 6).
-   The field tabs and the editor are ONE object: underline tabs (as on
-   newbackendcert) sit on the editor's top edge. Toolbar: one white row,
-   larger 36px buttons, hairline group dividers. ─────────────────────── */
+/* ── description editor: CKEditor 4, flat moono-lisa skin tuned to the page
+   (SV note 6 · Ivaylo: keep our old text tools). The field tabs and the
+   editor are ONE object: underline tabs (as on newbackendcert) sit on the
+   editor's top edge; the toolbar is white with hairline separators. ───── */
 #desc-tabs.tabs {
   display: flex; width: 100%; gap: var(--s5);
   padding: 0 var(--s4); margin-bottom: 0;
@@ -1541,26 +1541,30 @@ button.prov:hover { text-decoration: underline; }
 #desc-tabs .tab--on { background: none; color: var(--brand-ink); box-shadow: inset 0 -2px 0 var(--brand); }
 #desc-pane > .f { padding: var(--s4); border-radius: 0 0 var(--r-control) var(--r-control); box-shadow: inset 0 0 0 1px var(--line); margin-top: -1px; }
 #desc-pane.desc-pane--rich > .f { padding: 0; box-shadow: none; }
-#desc-pane .tox-tinymce { margin-top: -1px; border: 1px solid var(--line); border-radius: 0 0 var(--r-control) var(--r-control); }
-#desc-pane .tox .tox-editor-header { box-shadow: none; border-bottom: 1px solid var(--line-2); padding: 0; }
-#desc-pane .tox .tox-toolbar, #desc-pane .tox .tox-toolbar__primary, #desc-pane .tox .tox-toolbar__overflow { background: var(--sheet); }
-#desc-pane .tox .tox-toolbar__primary { padding: 6px 8px; }
-#desc-pane .tox .tox-toolbar__group { padding: 0 3px; }
-#desc-pane .tox .tox-toolbar__group:not(:last-of-type) { border-right: 1px solid var(--line-2); }
-#desc-pane .tox .tox-tbtn { height: 36px; min-width: 36px; margin: 2px 1px; border-radius: 8px; color: var(--ink-2); }
-#desc-pane .tox .tox-tbtn svg { fill: var(--ink-2); }
-#desc-pane .tox .tox-tbtn:hover { background: var(--wash); }
-#desc-pane .tox .tox-tbtn--enabled, #desc-pane .tox .tox-tbtn--enabled:hover { background: var(--brand-soft); }
-#desc-pane .tox .tox-tbtn--enabled svg { fill: var(--brand-ink); }
-#desc-pane .tox .tox-tbtn__select-label { font-size: 14px; color: var(--ink); }
-#desc-pane .tox .tox-tbtn--select { padding: 0 8px 0 10px; }
-#desc-pane .tox .tox-tbtn--bespoke .tox-tbtn__select-label { width: 5.4em; }
-#desc-pane .tox .tox-statusbar { border-top: 1px solid var(--line-2); }
-/* "Proposed: TinyMCE" — right end of the tab row, over the toolbar's end */
-#desc-tabs .ed-tag { margin-left: auto; flex: none; }
+#desc-pane .cke_chrome { border: 0; border-radius: 0 0 var(--r-control) var(--r-control); overflow: hidden; box-shadow: inset 0 0 0 1px var(--line); padding: 0 1px 1px; margin-top: -1px; }
+#desc-pane .cke_inner { border-radius: 0 0 calc(var(--r-control) - 1px) calc(var(--r-control) - 1px); overflow: hidden; background: var(--sheet); }
+#desc-pane .cke_top { background: var(--sheet); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line-2); padding: 8px 12px 4px; }
+#desc-pane .cke_bottom { background: var(--sheet); border-top: 1px solid var(--line-2); }
+#desc-pane .cke_toolgroup a.cke_button:hover, #desc-pane .cke_combo_button:hover { background: var(--wash); }
+#desc-pane .cke_combo_button { background: var(--sheet); border-radius: 6px; box-shadow: inset 0 0 0 1px var(--line-2); }
+#desc-pane .cke_toolbar_separator { background-color: var(--line-2); }
+/* a larger, airier toolbar (Alex): icons ~20% bigger (the skin swaps in its
+   hi-dpi sprite on retina, so they stay sharp), taller buttons, more room
+   between buttons and between groups, taller combos */
+#desc-pane .cke_top { padding: 10px 14px 6px; }
+#desc-pane .cke_toolbar { margin: 0 8px 8px 0; }
+#desc-pane .cke_toolgroup a.cke_button { padding: 6px 6px; margin-right: 1px; border-radius: 6px; }
+#desc-pane .cke_button_icon { transform: scale(1.2); }
+#desc-pane .cke_button__source_label { font-size: 13px; padding-left: 4px; }
+#desc-pane .cke_toolbar_separator { height: 18px; margin: 5px 6px 0; }
+#desc-pane .cke_combo { margin-right: 6px; }
+#desc-pane .cke_combo_button { height: 32px; margin: 0; }
+#desc-pane .cke_combo_text { line-height: 32px; font-size: 13px; padding-left: 10px; width: 78px; }
+#desc-pane .cke_combo_open { margin-top: 0; height: 32px; display: inline-flex; align-items: center; }
+#desc-pane .cke_combo_arrow { margin: 0 !important; }
+#desc-pane .cke_combo:after { display: none; }
 @media (max-width: 1160px) {
   #desc-tabs.tabs { gap: var(--s4); }
-  #desc-tabs .ed-tag__k { display: none; }
   /* the old-system tab names are long: on narrow screens the tab row scrolls
      sideways (y never scrolls) instead of clipping the last tab */
   #desc-tabs.tabs { overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; }
@@ -1762,3 +1766,58 @@ button.prov:hover { text-decoration: underline; }
   border-radius: 50%; font-style: normal; font-size: 10px; font-weight: 700; letter-spacing: 0;
   color: var(--sheet); background: var(--ink-4);
 }
+
+/* ── CARFAX section (SV note 23) ─────────────────────────────────────── */
+.cfx { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: var(--s3); }
+.cfx__card { display: grid; gap: var(--s3); align-content: start; padding: var(--s4); border-radius: var(--r-inner); box-shadow: inset 0 0 0 1px var(--line); background: var(--sheet); }
+.cfx__state { display: flex; align-items: center; gap: 12px; }
+.cfx__state > span:last-child { display: grid; gap: 2px; }
+.cfx__state b { font-size: 15px; font-weight: 650; color: var(--ink); }
+.cfx__state a { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; }
+.cfx__state a .i { width: 13px; height: 13px; }
+.cfx__state > span:last-child > span { font-size: 13px; color: var(--ink-3); }
+.cfx__dot { display: grid; place-items: center; flex: none; width: 40px; height: 40px; border-radius: 50%; color: var(--ink-3); background: var(--wash); box-shadow: inset 0 0 0 1px var(--line); }
+.cfx__dot .i { width: 20px; height: 20px; }
+.cfx__dot--ok { color: #fff; background: var(--ok); box-shadow: none; }
+.cfx__up { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); }
+.cfx__up label.btn { cursor: pointer; }
+.cfx__sw { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
+.cfx__sw > span:last-child { display: grid; gap: 3px; }
+.cfx__sw b { font-size: 14px; font-weight: 600; color: var(--ink); }
+.cfx__sw > span:last-child > span { font-size: 13px; color: var(--ink-3); }
+.cfx__dates { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s3); }
+@media (max-width: 1160px) { .cfx { grid-template-columns: minmax(0, 1fr); } }
+
+/* Preview while the car is hidden from the site (SV note 25) */
+.btn--hidden-site { color: var(--danger); box-shadow: inset 0 0 0 1px rgba(189, 51, 40, .35); }
+
+/* the "?" carries a rule wherever it sits — labels, group titles (SV 29–34) */
+.f__q { cursor: help; vertical-align: 1px; }
+.f__q:focus-visible { outline: var(--focus-w) solid var(--focus-color); outline-offset: 2px; }
+.featgrp__t .f__q { margin-left: 6px; }
+/* with its subtitle gone, Descriptions keeps the AI chip + button on the right */
+#zDesc .zone__t { margin-right: auto; }
+
+/* ── Video section (Karen) ───────────────────────────────────────────── */
+.vid { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: var(--s5); align-items: start; }
+.vid__prev {
+  position: relative; display: block; aspect-ratio: 16 / 9; border-radius: var(--r-inner); overflow: hidden;
+  background: #000; box-shadow: inset 0 0 0 1px var(--line);
+}
+.vid__prev img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.vid__play {
+  position: absolute; left: 50%; top: 50%; width: 60px; height: 42px; margin: -21px 0 0 -30px;
+  display: grid; place-items: center; border-radius: 12px; background: #e62117; color: #fff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .35);
+  transition: background var(--dur) var(--ease);
+}
+.vid__play .i { width: 26px; height: 26px; }
+.vid__prev:hover .vid__play { background: #c4170f; }
+.vid__prev:focus-visible { outline: var(--focus-w) solid var(--focus-color); outline-offset: 2px; }
+.vid__prev--none { background: var(--wash); cursor: default; }
+.vid__none { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 4px; color: var(--ink-3); text-align: center; }
+.vid__none .i { width: 26px; height: 26px; opacity: .6; }
+.vid__none b { font-size: 14px; font-weight: 600; color: var(--ink-2); }
+.vid__none span { font-size: 13px; }
+.vid__f { display: grid; gap: var(--s4); }
+@media (max-width: 1160px) { .vid { grid-template-columns: 220px minmax(0, 1fr); } }

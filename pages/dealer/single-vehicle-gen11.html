@@ -8,7 +8,7 @@
    `aan-theme` key is shared with the other Gen pages, so a stored `dark` must not
    land this page in a half-dark state at load. Temporary; the dark stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="single-vehicle-gen11.css?v=20261020-ove">
+<link rel="stylesheet" href="single-vehicle-gen11.css?v=20261022-ck4big2">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
 <link rel="stylesheet" href="../_aan-components.css?v=20261002-fix">
 </head>
@@ -39,6 +39,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"/></symbol>
   <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></symbol>
   <symbol id="i-save" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor" stroke="none"/></symbol>
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
 </svg>
 
@@ -152,6 +153,9 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         <button class="btn btn--sheet btn--sm btn--icon" type="button" data-act="prev" aria-label="Previous vehicle in your current list" title="Previous vehicle in your current list"><svg class="i"><use href="#i-left"/></svg></button>
         <button class="btn btn--sheet btn--sm btn--icon" type="button" data-act="next" aria-label="Next vehicle in your current list" title="Next vehicle in your current list"><svg class="i"><use href="#i-right"/></svg></button>
       </span>
+      <!-- Preview on the dealer's site (Scott, SV note 25). One label in every
+           state so the header never shifts; hidden cars tint it red. -->
+      <button class="btn btn--sheet btn--sm" type="button" data-act="preview" id="cock-preview" title="Open this car on the dealer's site"><svg class="i"><use href="#i-ext"/></svg>Preview</button>
       <button class="btn btn--sheet btn--sm" type="button" data-jump="zPhotos"><svg class="i"><use href="#i-cam"/></svg>Photos<span class="badge" id="cock-ph">0</span></button>
       <span class="pop-wrap">
         <button class="btn btn--sheet btn--sm" type="button" data-pop="p-prints" aria-haspopup="true" aria-expanded="false"><svg class="i"><use href="#i-print"/></svg>Prints<svg class="i"><use href="#i-chev"/></svg></button>
@@ -184,6 +188,8 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <button class="rail__i ui-nav__i" type="button" data-jump="zPricing"><span>Pricing</span><span class="badge" id="b-pricing"></span></button>
       <button class="rail__i ui-nav__i" type="button" data-jump="zCustom"><span>Custom Fields</span><span class="badge" id="b-custom">10</span></button>
       <button class="rail__i ui-nav__i" type="button" data-jump="zPhotos"><span>Photos</span><span class="badge" id="b-photos"></span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zVideo"><span>Video</span><span class="badge" id="b-video"></span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zCarfax"><span>CARFAX</span><span class="badge" id="b-carfax"></span></button>
       <button class="rail__i ui-nav__i" type="button" data-jump="zSpecs"><span>Specs &amp; VIN</span></button>
       <button class="rail__i ui-nav__i" type="button" data-jump="zColors"><span>Colors</span></button>
       <button class="rail__i ui-nav__i" type="button" data-jump="zDesc"><span>Descriptions</span><span class="badge" id="b-desc"></span></button>
@@ -201,12 +207,11 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <section class="zone" id="zStatus" aria-labelledby="t-status">
         <div class="zone__h">
           <h2 class="zone__t" id="t-status">Status &amp; Visibility</h2>
-          <span class="zone__s">the levers that decide where this car appears</span>
         </div>
         <div class="zone__b">
           <div class="statusrow">
             <div class="f scard scard--status" id="scard-status" data-st="available">
-              <span class="f__l" id="l-sold">Status (sold)</span>
+              <span class="f__l" id="l-sold">Status (sold)<i class="f__q" tabindex="0" title="Switching to Sold clears Pending Sale when you save. Moving a car back to Available? Turn on Renew listing on save in Utilities to show it as a new arrival." aria-label="Switching to Sold clears Pending Sale when you save. Moving a car back to Available? Turn on Renew listing on save in Utilities to show it as a new arrival.">?</i></span>
               <div class="seg" role="group" aria-labelledby="l-sold" data-seg="status">
                 <button class="seg__b" type="button" data-v="Available" aria-pressed="false">Available</button>
                 <button class="seg__b" type="button" data-v="Sold" aria-pressed="false">Sold</button>
@@ -229,7 +234,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
               </div>
             </div>
           </div>
-          <p class="f__help">Switching to <b>Sold</b> clears Pending Sale when you save. Moving a car back to Available? Turn on <b>Renew listing on save</b> in Utilities to show it as a new arrival.</p>
           <div class="vis" id="vis" style="margin-top:var(--s4)"></div>
         </div>
       </section>
@@ -238,7 +242,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <section class="zone" id="zPricing" aria-labelledby="t-pricing">
         <div class="zone__h">
           <h2 class="zone__t" id="t-pricing">Pricing</h2>
-          <span class="zone__s">every price change is kept in the history</span>
         </div>
         <div class="zone__b">
           <div class="grid">
@@ -295,11 +298,40 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         </div>
       </section>
 
+      <!-- 3a · VIDEO — its own section under Photos (Karen: "it gets lost in the
+           specs section"): YouTube URL from Specs, Video URL from More Details,
+           and a preview frame built from the YouTube link -->
+      <section class="zone" id="zVideo" aria-labelledby="t-video">
+        <div class="zone__h">
+          <h2 class="zone__t" id="t-video">Video</h2>
+        </div>
+        <div class="zone__b">
+          <div class="vid">
+            <a class="vid__prev" id="vid-prev" target="_blank" rel="noopener"></a>
+            <div class="vid__f">
+              <div class="f" data-f="YouTube_url"><label class="f__l" for="core-YouTube_url">YouTube URL</label><input class="in" id="core-YouTube_url" type="url" autocomplete="off" spellcheck="false" placeholder="https://www.youtube.com/watch?v=…"></div>
+              <div class="f" data-f="video_url"><label class="f__l" for="core-video_url">Other video link</label><input class="in" id="core-video_url" type="url" autocomplete="off" spellcheck="false" placeholder="Vimeo, walk-around video, …"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3b · CARFAX — one visible place for the report (Scott, SV note 23:
+           "the Carfax section & upload need to be very visible and easy").
+           Gathers what was scattered: the read-only link from Utilities and
+           three CRM columns from Custom Fields. Upload is a mock addition. -->
+      <section class="zone" id="zCarfax" aria-labelledby="t-carfax">
+        <div class="zone__h">
+          <h2 class="zone__t" id="t-carfax">CARFAX</h2>
+          <span class="zone__s" id="s-carfax"></span>
+        </div>
+        <div class="zone__b"><div class="cfx" id="cfx"></div></div>
+      </section>
+
       <!-- 4 · SPECS & VIN -->
       <section class="zone" id="zSpecs" aria-labelledby="t-specs">
         <div class="zone__h">
           <h2 class="zone__t" id="t-specs">Specs &amp; VIN</h2>
-          <span class="zone__s">decode fills the form — you review, then Save</span>
         </div>
         <div class="zone__b">
           <div class="vinbar">
@@ -330,7 +362,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
             <div class="f" data-f="curb_weight"><label class="f__l" for="core-curb_weight">Curb Weight</label><input class="in" id="core-curb_weight" type="text" inputmode="numeric" autocomplete="off"></div>
             <div class="f" data-f="doors"><label class="f__l" for="core-doors">Doors</label><input class="in" id="core-doors" type="text" inputmode="numeric" autocomplete="off"></div>
             <div class="f" data-f="vehicle_type"><label class="f__l" for="core-vehicle_type">Vehicle Type</label><input class="in" id="core-vehicle_type" type="text" autocomplete="off"></div>
-            <div class="f f--w2" data-f="YouTube_url"><label class="f__l" for="core-YouTube_url">YouTube URL</label><input class="in" id="core-YouTube_url" type="url" autocomplete="off" spellcheck="false"></div>
           </div>
         </div>
       </section>
@@ -339,21 +370,18 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <section class="zone" id="zColors" aria-labelledby="t-colors">
         <div class="zone__h">
           <h2 class="zone__t" id="t-colors">Colors</h2>
-          <span class="zone__s">factory swatches from the decode — click to fill</span>
         </div>
         <div class="zone__b">
           <div class="grid">
             <div class="f" data-f="ext_color"><label class="f__l" for="core-ext_color">Exterior Color</label><span class="inw"><i class="inw__dot" id="ext-dot" aria-hidden="true"></i><input class="in" id="core-ext_color" type="text" autocomplete="off"></span></div>
             <div class="f" data-f="basic_ext_color">
-              <label class="f__l" for="core-basic_ext_color">Basic Exterior Color</label>
+              <label class="f__l" for="core-basic_ext_color">Basic Exterior Color<i class="f__q" tabindex="0" title="Saving copies this into Exterior Color" aria-label="Saving copies this into Exterior Color">?</i></label>
               <select class="sel" id="core-basic_ext_color" data-opt="basicExt"></select>
-              <span class="f__help">Saving copies this into Exterior Color</span>
             </div>
             <div class="f" data-f="int_color"><label class="f__l" for="core-int_color">Interior Color</label><input class="in" id="core-int_color" type="text" autocomplete="off"></div>
             <div class="f" data-f="basic_int_color">
-              <label class="f__l" for="core-basic_int_color">Basic Interior Color</label>
+              <label class="f__l" for="core-basic_int_color">Basic Interior Color<i class="f__q" tabindex="0" title="Saving copies this into Interior Color" aria-label="Saving copies this into Interior Color">?</i></label>
               <select class="sel" id="core-basic_int_color" data-opt="basicInt"></select>
-              <span class="f__help">Saving copies this into Interior Color</span>
             </div>
           </div>
           <div class="fsw" id="fsw" aria-label="Factory colors from the VIN decode"></div>
@@ -364,7 +392,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <section class="zone" id="zDesc" aria-labelledby="t-desc">
         <div class="zone__h">
           <h2 class="zone__t" id="t-desc">Descriptions</h2>
-          <span class="zone__s">Main Description is what sells — it gets the room</span>
           <span class="chip-src">AI writer · not connected</span>
           <button class="btn btn--sheet btn--sm" type="button" data-act="ai" id="ai-btn"><svg class="i"><use href="#i-spark"/></svg>AI Writer</button>
         </div>
@@ -413,7 +440,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <section class="zone" id="zFeat" aria-labelledby="t-feat">
         <div class="zone__h">
           <h2 class="zone__t" id="t-feat">Features &amp; Equipment</h2>
-          <span class="zone__s">the VIN decode refreshes Standard equipment</span>
         </div>
         <div class="zone__b" id="feat"></div>
       </section>
@@ -472,18 +498,16 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <section class="zone" id="zMore" aria-labelledby="t-more">
         <div class="zone__h">
           <h2 class="zone__t" id="t-more">More Details</h2>
-          <span class="zone__s">standard columns used less often — not custom fields</span>
         </div>
         <div class="zone__b">
           <div class="grid">
-            <div class="f" data-f="bookvalue"><label class="f__l" for="core-bookvalue">Bookvalue</label><div class="money"><input class="in" id="core-bookvalue" type="text" inputmode="numeric" autocomplete="off"></div></div>
+            <div class="f" data-f="bookvalue"><label class="f__l" for="core-bookvalue">Book Value</label><div class="money"><input class="in" id="core-bookvalue" type="text" inputmode="numeric" autocomplete="off"></div></div>
             <div class="f" data-f="discount"><label class="f__l" for="core-discount">Discount</label><input class="in" id="core-discount" type="text" inputmode="numeric" autocomplete="off"></div>
             <div class="f" data-f="original_price"><label class="f__l" for="core-original_price">Original Price</label><div class="money"><input class="in" id="core-original_price" type="text" inputmode="numeric" autocomplete="off"></div></div>
             <div class="f" data-f="location"><label class="f__l" for="core-location">Location</label><select class="sel" id="core-location" data-opt="location"></select></div>
-            <div class="f" data-f="modelnumber"><label class="f__l" for="core-modelnumber">Modelnumber</label><input class="in" id="core-modelnumber" type="text" autocomplete="off"></div>
-            <div class="f" data-f="bodyCode"><label class="f__l" for="core-bodyCode">BodyCode</label><input class="in" id="core-bodyCode" type="text" autocomplete="off"></div>
+            <div class="f" data-f="modelnumber"><label class="f__l" for="core-modelnumber">Model Number</label><input class="in" id="core-modelnumber" type="text" autocomplete="off"></div>
+            <div class="f" data-f="bodyCode"><label class="f__l" for="core-bodyCode">Body Code</label><input class="in" id="core-bodyCode" type="text" autocomplete="off"></div>
             <div class="f f--w2" data-f="add_options"><label class="f__l" for="core-add_options">Add Options</label><input class="in" id="core-add_options" type="text" autocomplete="off"></div>
-            <div class="f f--w2" data-f="video_url"><label class="f__l" for="core-video_url">Video Url</label><input class="in" id="core-video_url" type="url" autocomplete="off" spellcheck="false"></div>
             <div class="swrow" style="align-self:end;box-shadow:none">
               <span class="swrow__x"><b>Zero Down</b></span>
               <label class="sw"><input type="checkbox" id="core-zero_down" data-sw="zero_down" aria-label="Zero Down"><span class="sw__t"></span></label>
@@ -513,11 +537,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
             </div>
             <span class="f__help"><b>Changed from the original:</b> "You hold the edit lock" stays, but quiet (grey) and with a "?" that explains it. When a colleague has this car open the amber notice replaces it and Save is blocked. This switch exists only to preview that state.</span>
           </div>
-          <div class="refbox">
-            <span class="caps">Carfax</span>
-            <div id="carfax"></div>
-            <span class="f__help">From the vehicle's CARFAX record. Read-only.</span>
-          </div>
         </div>
       </section>
 
@@ -532,7 +551,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   <!-- ══ SAVE BAR ══ -->
   <div class="savebar" id="savebar">
     <span class="savebar__n" id="save-n"><b>0</b> unsaved change(s)</span>
-    <span class="savebar__hint">only the fields you changed are saved · Ctrl+S</span>
     <span class="savebar__say" id="save-say" hidden></span>
     <span class="savebar__div"></span>
     <span class="pop-wrap">
@@ -540,7 +558,8 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <div class="pop pop--up" id="p-changes" aria-label="Changed fields"></div>
     </span>
     <button class="savebar__b savebar__b--discard" type="button" data-act="discard" id="discard-btn" disabled><svg class="i"><use href="#i-undo"/></svg>Discard</button>
-    <button class="savebar__b savebar__b--save" type="button" data-act="save" id="save-btn" disabled><svg class="i"><use href="#i-save"/></svg>Save Vehicle</button>
+    <button class="savebar__b" type="button" data-act="preview" title="Open this car on the dealer’s site"><svg class="i"><use href="#i-ext"/></svg>Preview</button>
+    <button class="savebar__b savebar__b--save" type="button" data-act="save" id="save-btn" title="Save (Ctrl+S)" disabled><svg class="i"><use href="#i-save"/></svg>Save Vehicle</button>
   </div>
 </div>
 
@@ -552,11 +571,11 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   </div>
 </noscript>
 
-<!-- the description editor: TinyMCE 6 (MIT). newbackendcert runs CKEditor 4,
-     which is end-of-life; TinyMCE keeps the dealers' legacy HTML intact with a
-     cleaner, larger one-row toolbar (Ivaylo SV note 6 · Alex) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.5/tinymce.min.js" referrerpolicy="origin"></script>
-<script src="single-vehicle-gen11.data.js?v=20261020-tabnames"></script>
-<script src="single-vehicle-gen11.js?v=20261020-ove"></script>
+<!-- the description editor: CKEditor 4, full preset — the same editor and
+     buttons as newbackendcert / the old backend (Ivaylo, 2026-10-22: keep our
+     old text tools). Flat moono-lisa skin, tuned to the page tokens. -->
+<script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
+<script src="single-vehicle-gen11.data.js?v=20261022-labels"></script>
+<script src="single-vehicle-gen11.js?v=20261022-ck4b"></script>
 </body>
 </html>

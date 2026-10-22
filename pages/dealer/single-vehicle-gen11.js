@@ -73,9 +73,9 @@
     ['YouTube_url', 'YouTube URL'],
     ['ext_color', 'Exterior Color'], ['basic_ext_color', 'Basic Exterior Color'],
     ['int_color', 'Interior Color'], ['basic_int_color', 'Basic Interior Color'],
-    ['bookvalue', 'Bookvalue'], ['discount', 'Discount'], ['original_price', 'Original Price'],
-    ['location', 'Location'], ['modelnumber', 'Modelnumber'], ['bodyCode', 'BodyCode'],
-    ['add_options', 'Add Options'], ['video_url', 'Video Url']
+    ['bookvalue', 'Book Value'], ['discount', 'Discount'], ['original_price', 'Original Price'],
+    ['location', 'Location'], ['modelnumber', 'Model Number'], ['bodyCode', 'Body Code'],
+    ['add_options', 'Add Options'], ['video_url', 'Video URL']
   ];
   var CORE_LABEL = {};
   CORE.forEach(function (c) { CORE_LABEL[c[0]] = c[1]; });
@@ -121,6 +121,7 @@
         out.push({ k: 'core.' + k, label: k === 'vtype' ? 'Type' : k === 'status' ? 'Status (sold)' : 'Certified', from: b[k], to: v[k] });
       }
     });
+    if ((v.carfax || null) !== (b.carfax || null)) out.push({ k: 'core.carfax', label: 'CARFAX report link', from: b.carfax || '', to: v.carfax || '' });
     Object.keys(v.vis).forEach(function (k) {
       if (v.vis[k] !== b.vis[k]) out.push({ k: 'core.' + k, label: VIS_LABEL[k], from: b.vis[k], to: v.vis[k] });
     });
@@ -172,6 +173,13 @@
     st.className = 'stchip stchip--' + String(v.status).toLowerCase();
     $('#cock-type').textContent = v.vtype;
     $('#cock-hidden').hidden = !v.vis.no_display;
+    /* both Preview buttons — header and save bar (SV note 25) */
+    $$('[data-act="preview"]').forEach(function (pv) {
+      pv.classList.toggle('btn--hidden-site', !!v.vis.no_display);
+      pv.title = v.vis.no_display
+        ? 'Preview — this car is hidden from the public site; only you can see this preview'
+        : 'Open this car on the dealer’s site';
+    });
     $('#scard-status').dataset.st = String(v.status).toLowerCase();
 
     var p = Number(v.price) || 0;
@@ -413,43 +421,23 @@
     }).join('');
   }
 
-  /* Rich tabs (Main Text 1 / 3) edit in TinyMCE 6 — a WYSIWYG editor like
-     the backend's (Ivaylo, SV note 6; Scott: dealers should not have to write
-     HTML), but one clean row of larger buttons instead of CKEditor 4's sixty;
-     the rarer tools wait behind "…". Source stays one click away, labelled.
-     The toolbar sticks under the page header while a long text scrolls.
-     Without the CDN the plain HTML field shows. */
-  var ED = null;
+  /* Rich tabs (Main Text 1 / 3) edit in CKEditor 4, full preset — the same
+     editor and buttons dealers know from the backend (Ivaylo, SV note 6, and
+     2026-10-22: "keep our old text tools"). TinyMCE was tried as a proposal
+     and set aside. Without the CDN the plain HTML field shows. */
+  var CK = null;
   function dropEditor() {
-    if (ED) { try { ED.remove(); } catch (e) { /* already gone */ } ED = null; }
+    if (CK) { try { CK.destroy(true); } catch (e) { /* already gone */ } CK = null; }
   }
   function mountEditor(id, key) {
-    if (!window.tinymce) return false;
-    tinymce.init({
-      target: document.getElementById(id),
-      height: 560,
-      menubar: false,
-      branding: false,
-      promotion: false,
-      elementpath: false,
-      plugins: 'lists link image table code searchreplace charmap fullscreen',
-      toolbar: 'undo redo | blocks fontsize | bold italic underline | forecolor | alignleft aligncenter alignright | bullist numlist | link image table | removeformat | sourcebtn | strikethrough backcolor alignjustify outdent indent searchreplace charmap fullscreen',
-      toolbar_mode: 'sliding',
-      toolbar_sticky: true,
-      toolbar_sticky_offset: stickTotal(),
-      font_size_formats: '10px 12px 14px 16px 18px 20px 22px 28px',
-      content_style: 'body { font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.45; margin: 18px 22px; color: #111; }',
-      setup: function (ed) {
-        ED = ed;
-        ed.ui.registry.addButton('sourcebtn', {
-          text: 'Source', icon: 'sourcecode', tooltip: 'Edit the HTML source',
-          onAction: function () { ed.execCommand('mceCodeEditor'); }
-        });
-        ed.on('input change undo redo SetContent', function (e) {
-          if (e.type === 'setcontent' && e.initial) return;
-          S.v.desc[key] = ed.getContent(); renderDirty();
-        });
-      }
+    if (!window.CKEDITOR) return false;
+    CKEDITOR.config.versionCheck = false;
+    CK = CKEDITOR.replace(id, { height: 520, removeButtons: 'About', language: 'en' });
+    CK.on('change', function () { S.v.desc[key] = CK.getData(); renderDirty(); });
+    CK.on('mode', function () {
+      if (CK.mode !== 'source') return;
+      var ta = CK.editable && CK.editable();
+      if (ta) ta.on('input', function () { S.v.desc[key] = CK.getData(); renderDirty(); });
     });
     return true;
   }
@@ -459,23 +447,17 @@
     var id = 'desc-' + t.id;
     var html =
       '<div class="f" data-f="desc.' + t.id + '">' +
-      '<label class="' + (t.rich && window.tinymce ? 'sr' : 'f__l') + '" for="' + id + '">' + esc(t.label) + '</label>' +
+      '<label class="' + (t.rich && window.CKEDITOR ? 'sr' : 'f__l') + '" for="' + id + '">' + esc(t.label) + '</label>' +
       '<textarea class="ta' + (t.rich ? ' ta--tall' : '') + '" id="' + id + '" data-desc="' + t.id + '" rows="' +
       (t.rich ? 14 : 8) + '" spellcheck="' + (t.rich ? 'false' : 'true') + '"></textarea>' +
-      (t.rich && !window.tinymce ? '<span class="f__help">The text editor could not load — this is the stored HTML.</span>' : '') +
+      (t.rich && !window.CKEDITOR ? '<span class="f__help">The text editor could not load — this is the stored HTML.</span>' : '') +
       (t.id === 'buyers_guide_text'
         ? '<div class="desc__foot"><span class="f__help">This text prints on the buyers guide. It is autosaved when you click a print link in the Prints menu.</span>' +
           '<button class="btn btn--sheet btn--sm" type="button" data-act="save-bg">Save Buyers Guide Text</button></div>'
         : '') +
       '</div>';
     $('#desc-pane').innerHTML = html;
-    $('#desc-pane').classList.toggle('desc-pane--rich', !!(t.rich && window.tinymce));
-    /* a small provenance tag at the right end of the tab row, over the
-       toolbar's end: the editor is our proposal — the backend runs CKEditor 4 */
-    if (t.rich && window.tinymce) {
-      $('#desc-tabs').insertAdjacentHTML('beforeend',
-        '<span class="chip-src ed-tag" title="Proposed editor — the backend runs CKEditor 4 today" aria-label="Proposed editor: TinyMCE"><span class="ed-tag__k">Proposed: </span>TinyMCE</span>');
-    }
+    $('#desc-pane').classList.toggle('desc-pane--rich', !!(t.rich && window.CKEDITOR));
     $('#' + id).value = S.v.desc[t.id];
     if (t.rich) mountEditor(id, t.id);
     $('#desc').classList.toggle('desc--dock', S.ai);
@@ -549,7 +531,9 @@
       }).join('');
     }
     function head(label, n, kind, add) {
-      return '<div class="featgrp__h"><span class="featgrp__t">' + label + ' <span>' + n + '</span></span>' +
+      /* Standard equipment carries its rule in a "?" (SV note 29) */
+      var q = kind === 'standard' ? '<i class="f__q" tabindex="0" title="A VIN decode refreshes Standard equipment" aria-label="A VIN decode refreshes Standard equipment">?</i>' : '';
+      return '<div class="featgrp__h"><span class="featgrp__t">' + label + ' <span>' + n + '</span>' + q + '</span>' +
         '<button class="btn btn--sheet btn--sm" type="button" data-featadd="' + kind + '">' + ic('i-plus') + add + '</button></div>';
     }
 
@@ -585,9 +569,11 @@
   var CUSTOM_HINT = {
     ove_feed_data: 'Data for the OVE.com (Manheim) dealer-to-dealer wholesale feed'
   };
+  /* the three CARFAX columns live in the CARFAX section, not here */
+  var CFX_IDS = { cfx_date: 1, carfax_timestamp: 1, no_carfax: 1 };
   function renderCustom() {
-    var fields = D.custom.filter(function (c) { return c.type !== 'switch'; });
-    var sws = D.custom.filter(function (c) { return c.type === 'switch'; });
+    var fields = D.custom.filter(function (c) { return c.type !== 'switch' && !CFX_IDS[c.id]; });
+    var sws = D.custom.filter(function (c) { return c.type === 'switch' && !CFX_IDS[c.id]; });
     $('#custom').innerHTML =
       '<div class="grid">' + fields.map(function (c) {
         return '<div class="f" data-f="custom.' + c.id + '">' +
@@ -607,11 +593,73 @@
       }).join('') + '</div>' : '');
   }
 
+  /* Video (Karen): a preview frame from the YouTube link — the video's own
+     thumbnail with a play mark, opening the video in a new tab — or an
+     empty frame asking for a link. */
+  function ytId(u) {
+    var m = String(u || '').match(/(?:youtube\.com\/(?:embed\/|watch\?(?:.*&)?v=|shorts\/)|youtu\.be\/)([\w-]{11})/);
+    return m ? m[1] : '';
+  }
+  function renderVideo() {
+    var id = ytId(S.v.YouTube_url), a = $('#vid-prev'), has = !!(id || S.v.video_url);
+    if (id) {
+      a.href = 'https://www.youtube.com/watch?v=' + id;
+      a.className = 'vid__prev';
+      a.innerHTML = '<img src="https://img.youtube.com/vi/' + id + '/mqdefault.jpg" alt="YouTube video preview">' +
+        '<span class="vid__play">' + ic('i-play') + '</span>';
+      a.title = 'Open the video on YouTube';
+    } else {
+      a.removeAttribute('href');
+      a.className = 'vid__prev vid__prev--none';
+      a.innerHTML = '<span class="vid__none">' + ic('i-play') + '<b>No video yet</b><span>Paste a YouTube link</span></span>';
+      a.title = '';
+    }
+    var b = $('#b-video');
+    b.textContent = has ? 'yes' : 'none';
+    b.className = 'badge' + (has ? ' badge--ok' : '');
+  }
+
+  /* CARFAX (SV note 23): status first, then the two ways in — paste the
+     report link (a real field, tracked as an unsaved change) or upload the
+     PDF (mock: a real file picker that shows the name) — and, beside it,
+     the reporting columns that used to sit in Custom Fields. */
+  S.cfxFile = {};
+  function cfxField(id, label) {
+    return '<div class="f" data-f="custom.' + id + '"><label class="f__l" for="custom-' + id + '">' + label + '</label>' +
+      '<input class="in" id="custom-' + id + '" name="custom-' + id + '" type="text" autocomplete="off" data-custom="' + id + '" value="' + esc(S.v.custom[id]) + '"></div>';
+  }
+  function renderCarfaxStatus() {
+    var v = S.v, file = S.cfxFile[S.ix], has = !!(v.carfax || file);
+    $('#s-carfax').textContent = has ? 'vehicle history report attached' : 'no report on this vehicle yet';
+    var b = $('#b-carfax');
+    b.textContent = has ? 'yes' : 'none';
+    b.className = 'badge' + (has ? ' badge--ok' : ' badge--warn');
+    $('#cfx-state').innerHTML = has
+      ? '<span class="cfx__dot cfx__dot--ok">' + ic('i-check') + '</span><span><b>Report attached</b>' +
+          (v.carfax ? '<a href="' + esc(v.carfax) + '" target="_blank" rel="noopener">Open report ' + ic('i-ext') + '</a>' : '<span>' + esc(file) + '</span>') + '</span>'
+      : '<span class="cfx__dot">' + ic('i-file') + '</span><span><b>No CARFAX report</b><span>Paste the report link or upload the PDF</span></span>';
+  }
   function renderCarfax() {
-    var v = S.v;
-    $('#carfax').innerHTML = v.carfax
-      ? '<a class="pill pill--ok" href="' + esc(v.carfax) + '" target="_blank" rel="noopener" style="height:26px;padding:0 10px;font-size:12px;letter-spacing:.04em">Free CARFAX Report ' + ic('i-ext') + '</a>'
-      : '<span class="ro">No CARFAX report on this vehicle</span>';
+    var v = S.v, file = S.cfxFile[S.ix];
+    $('#cfx').innerHTML =
+      '<div class="cfx__card">' +
+        '<div class="cfx__state" id="cfx-state"></div>' +
+        '<div class="f"><label class="f__l" for="cfx-link">Report link</label>' +
+          '<input class="in" id="cfx-link" type="url" inputmode="url" spellcheck="false" autocomplete="off" placeholder="https://www.carfax.com/vehiclehistory/…" value="' + esc(v.carfax || '') + '"></div>' +
+        '<div class="cfx__up">' +
+          (file
+            ? '<span class="wstk__file">' + ic('i-file') + '<b>' + esc(file) + '</b></span><button class="btn btn--sheet btn--sm" type="button" data-act="cfx-rm">' + ic('i-x') + 'Remove</button>'
+            : '<label class="btn btn--sheet"><input type="file" accept="application/pdf" id="cfx-file" class="sr">' + ic('i-plus') + 'Upload CARFAX report (PDF)</label>') +
+          '<span class="chip-src">Mock addition</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="cfx__card">' +
+        '<label class="cfx__sw" for="custom-no_carfax">' +
+          '<span class="sw"><input type="checkbox" id="custom-no_carfax" name="custom-no_carfax" data-custom="no_carfax"' + (v.custom.no_carfax ? ' checked' : '') + '><span class="sw__t"></span></span>' +
+          '<span><b>Do Not Report VIN To Carfax</b><span>Keeps this VIN out of the CARFAX dealer feed</span></span></label>' +
+        '<div class="cfx__dates">' + cfxField('cfx_date', 'Report date') + cfxField('carfax_timestamp', 'Last checked') + '</div>' +
+      '</div>';
+    renderCarfaxStatus();
   }
 
   function renderPrints() {
@@ -723,6 +771,7 @@
     renderSticker();
     renderFeeds();
     renderCustom();
+    renderVideo();
     renderCarfax();
     renderValues();
     renderSwatches();
@@ -744,7 +793,7 @@
     window.scrollTo({ top: y, behavior: reducedMotion() ? 'auto' : 'smooth' });
   }
 
-  var ZONES = ['zStatus', 'zPricing', 'zCustom', 'zPhotos', 'zSpecs', 'zColors', 'zDesc', 'zFeat', 'zSticker', 'zFeeds', 'zMore', 'zUtil'];
+  var ZONES = ['zStatus', 'zPricing', 'zCustom', 'zPhotos', 'zVideo', 'zCarfax', 'zSpecs', 'zColors', 'zDesc', 'zFeat', 'zSticker', 'zFeeds', 'zMore', 'zUtil'];
   function spy() {
     var line = stickTotal() + cssPx('--anchor-gap', 10) + 1, cur = ZONES[0], i, el;
     for (i = 0; i < ZONES.length; i++) {
@@ -827,7 +876,7 @@
     $$('[data-act="save"]').forEach(function (b) {
       b.setAttribute('aria-disabled', String(S.locked));
       b.classList.toggle('is-locked', S.locked);
-      b.title = S.locked ? 'Mike R. is editing this car — saving is blocked' : '';
+      b.title = S.locked ? 'Mike R. is editing this car — saving is blocked' : 'Save (Ctrl+S)';
     });
   }
   function doSave() {
@@ -928,6 +977,13 @@
     if ((el = t.closest('[data-act="save-feeds"]'))) { say('Prototype — feed control is not written.'); return; }
     if ((el = t.closest('[data-act="save-bg"]'))) { say('Prototype — buyers guide text is not written.'); return; }
     if ((el = t.closest('[data-act="addphoto"]'))) { addPhoto(); return; }
+    if ((el = t.closest('[data-act="preview"]'))) {
+      say('Preview opens this car on the dealer’s site in a new tab' +
+        (changes().length ? ' — it shows the last saved version, not your unsaved changes.' : '.') +
+        (S.v.vis.no_display ? ' The car is hidden from the public.' : '') + ' (Not part of this kit.)');
+      return;
+    }
+    if ((el = t.closest('[data-act="cfx-rm"]'))) { delete S.cfxFile[S.ix]; renderCarfax(); return; }
     if ((el = t.closest('[data-featcat]'))) { var fk = el.dataset.featcat; S.featOpen[fk] = !S.featOpen[fk]; renderFeatures(); var fb = $('[data-featcat="' + fk + '"]'); if (fb) fb.focus(); return; }
     if ((el = t.closest('[data-featall]'))) { var on = el.dataset.featall === '1'; S.v.std.forEach(function (r) { if (!r[2] && r[0]) S.featOpen[r[0]] = on; }); renderFeatures(); var fa = $('[data-featall]'); if (fa) fa.focus(); return; }
     if ((el = t.closest('[data-act="sticker-pdf"]'))) { say('The sticker PDF opens from the backend — not part of this kit.'); return; }
@@ -986,10 +1042,12 @@
         if (k === 'vin') { $('#vinbar-v').textContent = el.value; renderCockpit(); }
         if (k === 'stockno') renderCockpit();
         if (k === 'ext_color') renderSwatches();
+        if (k === 'YouTube_url' || k === 'video_url') renderVideo();
         renderDirty();
         return;
       }
     }
+    if (el.id === 'cfx-link') { S.v.carfax = el.value.trim() || null; renderCarfaxStatus(); renderDirty(); return; }
     if (el.dataset.custom) { S.v.custom[el.dataset.custom] = el.value; renderDirty(); return; }
     if (el.dataset.desc) {
       S.v.desc[el.dataset.desc] = el.value;
@@ -1003,6 +1061,7 @@
   document.addEventListener('change', function (e) {
     var el = e.target;
     if (el.id === 'demo-lock') { S.locked = el.checked; renderLock(); return; }
+    if (el.id === 'cfx-file') { if (el.files && el.files[0]) { S.cfxFile[S.ix] = el.files[0].name; renderCarfax(); } return; }
     if (el.id === 'wstk-file') {
       if (el.files && el.files[0]) { S.stkBy[S.ix] = el.files[0].name; renderSticker(); }
       return;
