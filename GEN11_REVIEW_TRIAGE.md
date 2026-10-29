@@ -145,3 +145,16 @@ Numbering = the order in comments.html (open notes, oldest first). Notes 1–20 
 | # | Note | Decision |
 |---|---|---|
 | 40 (Karen, 10-23) | "This section should be called Window Sticker" (on the Prints button) | ✅ done · **Prints → Window Stickers** (plural: the menu holds the Window Sticker and the eight FTC Buyers Guides, which also hang in the car's window); the menu, its label and the two hints that named "Prints" follow. Resolved the same day |
+
+## Round 4 — Dealer Login, Karen (worked 2026-10-29)
+
+| # | Note | Decision |
+|---|---|---|
+| 4 (Karen, 10-16) | "the Tech Support email and phone information should be more prominent" | ✅ done · the header reads **Technical Support · ✉ Message support · ☎ (847) 782-0300** on one line, as tags on the video's glass (the Single Lead contact tag, DESIGN.md §19); the address shows on hover. The contacts had been on the page three times — header, card, footer — so they now live once: tags in the header, one quiet line in the card ("Call (847) 782-0300 or message support."), the footer keeps © · allautonetwork.com · Privacy Policy · Sitemap. Forgot Your Password? and the help line sit at the card's right edge. Resolved the same day |
+
+### More open questions for the team (2026-10-29, for beta round 2)
+
+| # | Question | Where it stands |
+|---|---|---|
+| Q4 | **Dealer Login: carry over the old header links Home · Portfolio · Services · About · Contact?** (Matthew, DL #1) | Not added. Our view: the login is the door to the working system, not the AAN site; five links would compete with the login and the support tags, and we have no real URLs. Suggested reply: "The new login keeps the header to support only — tell us if the team wants the site links back." |
+| Q5 | **Dealer Login: the real Privacy Policy and Sitemap URLs** (Karen, DL #3) | Both links are in the footer and point to `#` until we have the addresses |
