@@ -79,7 +79,7 @@
   var S = {
     q: '', lane: 'search', sort: 'created', dir: 'desc',
     status: 'Any', rep: 'Any', source: 'Any', provider: 'Any', type: 'Any',
-    created: 'any', flag: null, page: 1, sel: {}, cur: null,
+    created: 'any', flag: null, page: 1, per: 50, sel: {}, cur: null,
     thirdParty: false, archived: false,
     /* The five regions of the lead workspace. Vehicle of interest opens by
        default and can also be closed; any number may be open at once (§9). */
@@ -91,8 +91,10 @@
     ['newmail',    'New mail',   'unread reply from the buyer',  'signal', function (l) { return l.newMail; }],
     ['unassigned', 'Unassigned', 'no sales rep yet',             'slate',  function (l) { return l.unassigned; }],
     ['novehicle',  'No vehicle', 'no vehicle of interest',       'slate',  function (l) { return !l.hasCar; }],
-    ['today',      'Today',      'came in today',                'violet', function (l) { return l.isToday; }],
-    ['tradein',    'Trade-in',   'trade-in or consignment lead', 'signal', function (l) { return /tradein|consignment/.test(l.type); }]
+    /* Karen: consignment is its own flag (it is its own lead type in the
+       original); it takes Today's place — Today repeats the Today tab below */
+    ['tradein',    'Trade-in',   'trade-in lead',                'signal', function (l) { return l.type === 'tradein'; }],
+    ['consign',    'Consignment', 'consignment lead',            'violet', function (l) { return l.type === 'consignment'; }]
   ];
 
   var LANE_NAME = { search: 'All leads', uncat: 'Uncategorized', newmail: 'New Mail', today: 'Today', pastdue: 'Past Due' };
@@ -363,9 +365,14 @@
   /* ── render ─────────────────────────────────────────────────────────── */
   function render() {
     var L = list();
+    /* one page of rows is drawn. Unfiltered, the 70 sample leads stand for
+       page one of the full board, so every page shows them; once a lane or a
+       filter narrows the list, the list is real and is paged for real. */
+    var whole = S.lane === 'search' && !S.q.trim() && !S.flag && S.status === 'Any' && S.rep === 'Any' && S.source === 'Any' && S.provider === 'Any' && S.type === 'Any' && S.created === 'any';
+    var P = whole ? L.slice(0, S.per) : L.slice((S.page - 1) * S.per, S.page * S.per);
 
-    $('#tb').innerHTML = L.length
-      ? L.map(function (l) {
+    $('#tb').innerHTML = P.length
+      ? P.map(function (l) {
           return row(l) + (S.cur === l.id ? '<div class="exp" id="exp"><div><div class="exp__in">' + sheet(l) + '</div></div></div>' : '');
         }).join('') + (S.cur ? '<div class="exp-space" id="exp-space"></div>' : '')
       : '<div class="empty">No leads match these filters.<button type="button" data-act="clear-all">Clear all</button></div>';
@@ -389,18 +396,24 @@
     $('#scope').innerHTML = '<span class="scope__n">' + LANE_NAME[S.lane] + '</span><span>·</span><span><b>' + nf(totalN) + '</b> leads</span>' +
       (chips.length
         ? chips.map(function (c, i) { return '<span class="chip ' + (c.cls || '') + '">' + esc(c.v) + '<button class="chip__x" type="button" data-chip="' + i + '" aria-label="Remove ' + esc(c.v) + '">' + ic('i-x') + '</button></span>'; }).join('') +
-          '<button class="scope__clear" type="button" data-act="clear-all">Clear all</button>'
+          '<button class="scope__clear" type="button" data-act="clear-all">' + ic('i-broom') + 'Clear all</button>'
         : '');
     $('#scope')._chips = chips;
     $('#sub-shown').textContent = S.sort === 'created' && S.dir === 'desc' ? 'newest first' : '';
     $('#head-ctx').textContent = nf(totalN) + ' leads · newest first · Dealer #' + T.dealerId;
 
-    /* footer and pagination — 70 per page */
-    var pages = S.lane === 'search' && !chips.length ? T.pages : Math.max(1, Math.ceil(L.length / T.perPage));
-    var from = L.length ? (S.page - 1) * T.perPage + 1 : 0;
-    var to = Math.min(from + L.length - 1, S.page * T.perPage);
-    $('#shown').textContent = 'Showing ' + nf(from) + '–' + nf(to) + ' of ' + nf(totalN);
-    $('#pg').innerHTML = pager(S.page, pages);
+    /* pagination above and below the table (Ivaylo), with Rows per page as on
+       All Vehicles and in the original — the counts follow what is shown
+       (Matthew: "70 despite the 21 entries") */
+    var pages = Math.max(1, Math.ceil(totalN / S.per));
+    if (S.page > pages) S.page = pages;
+    var from = totalN ? (S.page - 1) * S.per + 1 : 0;
+    var to = Math.min(totalN, S.page * S.per);
+    var pgr = '<span class="pgr__n">Showing <b>' + nf(from) + '–' + nf(to) + '</b> of <b>' + nf(totalN) + '</b></span><span class="sp"></span>' +
+      '<span class="pg">' + pager(S.page, pages) + '</span>' +
+      '<label class="pgr__per"><span>Rows</span><select class="sel sel--sm" data-per aria-label="Rows per page">' +
+      [50, 100, 250, 500, 1000].map(function (n) { return '<option' + (n === S.per ? ' selected' : '') + '>' + n + '</option>'; }).join('') + '</select></label>';
+    $$('.pgr').forEach(function (el) { el.innerHTML = pgr; });
 
     /* facet values and engaged states */
     $('#status-v').textContent = S.status === 'Any' ? 'any' : S.status;
@@ -585,6 +598,7 @@
   document.addEventListener('change', function (e) {
     var t = e.target;
     if (t.matches('[data-sel]')) { if (t.checked) S.sel[t.dataset.sel] = true; else delete S.sel[t.dataset.sel]; render(); }
+    if (t.matches('[data-per]')) { S.per = +t.value; S.page = 1; render(); }
   });
 
   $('#q').addEventListener('input', function (e) { S.q = e.target.value; S.page = 1; render(); });
