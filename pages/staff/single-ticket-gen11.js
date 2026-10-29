@@ -269,6 +269,9 @@
        "Project"), so the selected value is added to the list rather than the
        select silently falling back to its first option. */
     var types = D.workType.slice();
+    /* Karen, Single Ticket note 8: "Site Shutdown" is a work type too. Which
+       department it belongs to is a team question, so it carries no prefix */
+    if (types.indexOf('Site Shutdown') < 0) types.push('Site Shutdown');
     if (f.dep && types.indexOf(f.dep) < 0) types.push(f.dep);
     $('#w-type').innerHTML = opts(types, f.dep);
     $('#w-priority').innerHTML = opts(D.priority, f.priority);

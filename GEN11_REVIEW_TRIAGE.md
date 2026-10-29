@@ -160,6 +160,7 @@ Numbering = the order in comments.html (open notes, oldest first). Notes 1–20 
 | Q5 | **Dealer Login: the real Privacy Policy and Sitemap URLs** (Karen, DL #3) | Both links are in the footer and point to `#` until we have the addresses |
 | Q6 | **My Work Queue: which Feed Management items can really go?** (Karen, MWQ #2: "Craigslist and below") | Not hidden. The list includes Auction123 Feeds, in use per ticket #48572 (Sept). Hiding a menu item does not stop a feed, but staff lose the way in. Ask Karen to confirm item by item |
 | Q7 | **My Work Queue: Open Projects — does the whole AAN Projects menu go?** (Karen, MWQ #4) | Ivaylo said "remove". Our menu has no "Open Projects" item; it most likely means OpenProject, which the whole AAN Projects menu (Home · My Project Work List · View All Projects · All Projects Overview · Client Content Calendar) leads to. Nothing removed until he confirms the whole menu |
+| Q8 | **Single Ticket: which department does "Site Shutdown" belong to?** (Karen, ST #8) | Added to Work Type as "Site Shutdown", no prefix. The list's other types carry their department ("Marketing - SEO"); tell us if it should read e.g. "Support - Site Shutdown" |
 
 ## Round 4 — My Work Queue (staff), worked 2026-10-29 (newest first)
 
@@ -174,3 +175,9 @@ Numbering = the order in comments.html (open notes, oldest first). Notes 1–20 
 | 1 (Ivaylo, 10-21) | "dealer link should link internally to the view all dealer page, then scrolling to that dealer and highlighting it" | ✅ done, resolved 10-29 with a reply note (a) · the dealer's name opens Manage Dealers at `#dealer=<name>`: the row comes up under the sticky stack (measured 10px below it) in brand-soft with a brand edge, marked until the next click; a mode that does not hold the dealer switches to one that does; a dealer missing from the demo roster (7 of 78) fills the Company name search instead. The dealer's own website stays on the ↗ beside the name |
 
 **Reply notes (Alex, 2026-10-29):** when a note is resolved, a short reply goes on the same element in the notes tool — "↳ Re #3 (Karen): Removed …" — author alex, status resolved. Replies are ours, not the team's, and are left out of the counts on the status page.
+
+## Round 4 — Single Ticket (staff), worked 2026-10-29 (newest first)
+
+| # | Note | Decision |
+|---|---|---|
+| 8 (Karen, 10-26) | "Under the work type dropdown, we need to add … Site Shutdown" | ✅ done, resolved 10-29 with a reply note (a) · "Site Shutdown" is the last Work Type option, no department prefix; the prefix is team question Q8 |
