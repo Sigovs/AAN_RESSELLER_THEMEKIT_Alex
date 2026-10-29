@@ -555,5 +555,26 @@
   renderResellerMenu();
   render();
 
+  /* Arriving from My Work Queue (Ivaylo, MWQ note 1): #dealer=<name> brings
+     that dealer's row up under the sticky stack and marks it until the next
+     click. A name the roster does not hold fills the company-name search. */
+  (function landOnDealer() {
+    var m = /(?:^|[#&])dealer=([^&]+)/.exec(location.hash); if (!m) return;
+    var name = decodeURIComponent(m[1]), key = name.toLowerCase().trim();
+    var hit = D.rows.filter(function (r) { return r.name.toLowerCase().trim() === key; })[0];
+    var inMode = function (k) { return (modeRows(k) || []).some(function (r) { return r === hit; }); };
+    if (hit && !inMode(S.mode)) {
+      var mk = D.modes.filter(function (x) { return inMode(x.k); })[0];
+      if (mk) { S.mode = mk.k; render(); }
+    }
+    var row = hit && document.querySelector('#tb .row[data-id="' + hit.id + '"]');
+    if (!row) { S.q = name; $('#q').value = name; render(); return; }
+    row.classList.add('row--target');
+    requestAnimationFrame(function () {
+      window.scrollTo({ top: Math.max(0, Math.round(row.getBoundingClientRect().top + window.scrollY - stackH() - 10)), behavior: 'auto' });
+    });
+    document.addEventListener('click', function off() { row.classList.remove('row--target'); document.removeEventListener('click', off, true); }, true);
+  })();
+
   window.MD11 = { S: S, render: render };
 })();

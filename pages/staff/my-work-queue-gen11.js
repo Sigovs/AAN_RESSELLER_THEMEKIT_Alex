@@ -398,11 +398,15 @@
       '</div>';
   }
 
+  /* the name goes inside, to View All Dealers scrolled to this dealer and
+     marked (Ivaylo, MWQ note 1); the dealer's own site stays one click away
+     on the ↗ beside it */
   function cDealer(r) {
     var d = r.dealer;
-    if (!d.url) return '<span class="c c-dlr" role="cell" title="' + esc(d.name) + '"><span>' + hl(d.name) + '</span></span>';
-    return '<span class="c c-dlr" role="cell"><a class="dlr" href="' + esc(d.url) + '" target="_blank" rel="noopener" ' +
-      'title="' + esc(d.name + ' — opens in a new tab') + '"><span>' + hl(d.name) + '</span>' + ic('i-ext') + '</a></span>';
+    return '<span class="c c-dlr" role="cell"><a class="dlr" href="manage-dealers-gen11.html#dealer=' + encodeURIComponent(d.name) + '" ' +
+      'title="' + esc(d.name + ' — show in View All Dealers') + '"><span>' + hl(d.name) + '</span></a>' +
+      (d.url ? '<a class="dlr__site" href="' + esc(d.url) + '" target="_blank" rel="noopener" title="' + esc('Open ' + d.name + '’s website') + '" aria-label="' + esc('Open ' + d.name + '’s website') + '">' + ic('i-ext') + '</a>' : '') +
+      '</span>';
   }
   function cSubject(r, url) {
     return '<span class="c c-sub" role="cell"><a href="' + url + '" title="' + esc(r.subject) + '">' + hl(r.subject) + '</a></span>';

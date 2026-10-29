@@ -1080,3 +1080,6 @@ html.no-js .field, html.no-js .tally { display: none; }
    own 36-40px control default, and a 52px header around 13px caps text.
    Heights already derive from these tokens, so --stick-total and the
    selected-row anchor follow without a hardcoded offset. */
+
+/* the dealer arrived at from My Work Queue: marked until the next click */
+.row.row--target, .row.row--target:hover { background: var(--brand-soft); box-shadow: inset 3px 0 0 var(--brand), inset 0 -1px 0 var(--line-2); }
