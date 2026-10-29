@@ -131,7 +131,7 @@
           return '<a class="gl" href="#" title="' + esc(g.host + ' — go live ' + g.date) + '">' +
             '<b>' + esc(g.host.replace(/^www\./, '')) + '</b><i>' + esc(g.date) + '</i></a>';
         }).join('') +
-        '<a class="gl gl--all" href="#">All Go Lives</a>' +
+        /* "All Go Lives" dropped (Alex, 10-29): the open list already holds every site. Restore: '<a class="gl gl--all" href="#">All Go Lives</a>' + */
       '</div></div></div>';
   }
 
