@@ -84,6 +84,10 @@
   .what { min-width: 0; }
   .what q { quotes: "\201C" "\201D"; color: var(--ink); }
   .what p { margin-top: 3px; font-size: 14px; }
+  .what p.go { margin-top: 6px; font-size: 13px; }
+  .go { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+  .go a { font-weight: 600; text-decoration: none; }
+  .go a:hover { text-decoration: underline; }
   .meta { display: grid; gap: 8px; font-size: 14px; }
   .meta code { font: 13px var(--f-num); background: var(--todo-soft); padding: 1px 6px; border-radius: 4px; word-break: break-all; }
   a { color: var(--brand); }
@@ -143,6 +147,27 @@
     </div>
   </section>
 
+  <section class="card" aria-labelledby="h-ask">
+    <h2 id="h-ask"><span class="pill p-ask">8</span> Needs a decision from the team</h2>
+    <p>"See the note" opens the note where it was left, on the AAN preview. "Open the page" shows the page as it is now.</p>
+    <ul class="list">
+      <li><span class="where"><b>All Vehicles #39</b>Karen</span><div class="what"><q>Can we make the columns drag-and-drop so dealers can arrange them?</q><p>Column order now changes with ◀ ▶ in the Columns panel, and the order is saved. The build you reviewed had no way to reorder at all. Is that enough, or do you still want drag-and-drop?</p><p class="go"><a href="https://www.allautonetwork.com/previews/aan_reseller_2026/pages/dealer/all-vehicles-gen11.html#aan-note=mvichjgz5c5x1" target="_blank" rel="noopener">See the note</a><a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/dealer/all-vehicles-gen11.html" target="_blank" rel="noopener">Open the page</a></p></div></li>
+      <li><span class="where"><b>Dealer Login #1</b>Matthew</span><div class="what"><q>The current login page has "Home Portfolio Services About Contact" links.</q><p>Not added yet. Our view: the login is the door to the working system, not the AAN site, and five links would compete with the login and the support buttons. Does the team want them back?</p><p class="go"><a href="https://www.allautonetwork.com/previews/aan_reseller_2026/pages/dealer/dealer-login-gen11.html#aan-note=mva0g7xa16k3w" target="_blank" rel="noopener">See the note</a><a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/dealer/dealer-login-gen11.html" target="_blank" rel="noopener">Open the page</a></p></div></li>
+      <li><span class="where"><b>My Work Queue #4</b>Karen</span><div class="what"><q>Does anyone use Open Projects?</q><p>If nobody does, we hide it.</p><p class="go"><a href="https://www.allautonetwork.com/previews/aan_reseller_2026/pages/staff/my-work-queue-gen11.html#aan-note=mvldglvh3djdt" target="_blank" rel="noopener">See the note</a><a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/staff/my-work-queue-gen11.html" target="_blank" rel="noopener">Open the page</a></p></div></li>
+      <li><span class="where"><b>My Work Queue #6</b>Karen</span><div class="what"><q>Can we add My To-dos, for billing to-do notes I make for myself?</q><p>A new feature, not in the current system. Add it to the redesign now, or keep it for later?</p><p class="go"><a href="https://www.allautonetwork.com/previews/aan_reseller_2026/pages/staff/my-work-queue-gen11.html#aan-note=mvlh2xpm6p7hx" target="_blank" rel="noopener">See the note</a><a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/staff/my-work-queue-gen11.html" target="_blank" rel="noopener">Open the page</a></p></div></li>
+      <li><span class="where"><b>Dealer Edit #2</b>Karen</span><div class="what"><q>Can we add a "Clone Dealer" button for dealers with multiple rooftops?</q><p>A new feature, not in the current system. Add it to the redesign now, or keep it for later?</p><p class="go"><a href="https://www.allautonetwork.com/previews/aan_reseller_2026/pages/staff/dealer-edit-gen11.html#aan-note=mvsjllnscdjk8" target="_blank" rel="noopener">See the note</a><a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/staff/dealer-edit-gen11.html" target="_blank" rel="noopener">Open the page</a></p></div></li>
+      <li><span class="where"><b>Dealer Edit #3</b>Karen</span><div class="what"><q>This has never worked and is not linked to the actual dealer login.</q><p>Remove it, fix it, or use it to store the site's admin login when a dealer is onboarded?</p><p class="go"><a href="https://www.allautonetwork.com/previews/aan_reseller_2026/pages/staff/dealer-edit-gen11.html#aan-note=mvsjrauizwny7" target="_blank" rel="noopener">See the note</a><a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/staff/dealer-edit-gen11.html" target="_blank" rel="noopener">Open the page</a></p></div></li>
+      <li><span class="where"><b>Dealer Edit #4</b>Karen</span><div class="what"><q>This section needs to reflect the current information in the dropdowns.</q><p>We need the current dropdown values. Tony?</p><p class="go"><a href="https://www.allautonetwork.com/previews/aan_reseller_2026/pages/staff/dealer-edit-gen11.html#aan-note=mvsjx9i1sze86" target="_blank" rel="noopener">See the note</a><a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/staff/dealer-edit-gen11.html" target="_blank" rel="noopener">Open the page</a></p></div></li>
+      <li><span class="where"><b>Manage Dealers #1</b>Karen</span><div class="what"><q>Create Package is not used, but real AAN packages and products in dropdowns would be very useful.</q><p>We need the real package and product names to build it.</p><p class="go"><a href="https://www.allautonetwork.com/previews/aan_reseller_2026/pages/staff/manage-dealers-gen11.html#aan-note=mvpooywuskfay" target="_blank" rel="noopener">See the note</a><a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/staff/manage-dealers-gen11.html" target="_blank" rel="noopener">Open the page</a></p></div></li>
+    </ul>
+    <h3>Three more questions from our side</h3>
+    <ul class="list">
+      <li><span class="where"><b>All Vehicles</b>Photos view</span><div class="what"><p>The third view (a large photo per row, with Stock, VIN, Type, Year, Make, Model, Trim, Color, Status, Days) is built and hidden. Gallery and the "No photos" filter cover most of it. Does anyone use it? It comes back with one line.</p><p class="go"><a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/dealer/all-vehicles-gen11.html" target="_blank" rel="noopener">Open the page</a></p></div></li>
+      <li><span class="where"><b>All Vehicles</b>Craigslist posting</span><div class="what"><p>Keep it in the Marketing menu, or hide it too? Tickets show Biscayne used the AAN Craigslist tool this summer (#48078, #48543). We have no usage numbers yet.</p><p class="go"><a href="https://www.allautonetwork.com/previews/aan_reseller_2026/pages/dealer/all-vehicles-gen11.html#aan-note=mvl5n1ifcvgu4" target="_blank" rel="noopener">See Karen's note</a><a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/dealer/all-vehicles-gen11.html" target="_blank" rel="noopener">Open the page</a></p></div></li>
+      <li><span class="where"><b>Dealer Login</b>Privacy Policy, Sitemap</span><div class="what"><p>Both links are in the footer as Karen asked, but they point nowhere yet. What are the real addresses?</p><p class="go"><a href="https://www.allautonetwork.com/previews/aan_reseller_2026/pages/dealer/dealer-login-gen11.html#aan-note=mvbfvs4fseo8g" target="_blank" rel="noopener">See Karen's note</a><a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/dealer/dealer-login-gen11.html" target="_blank" rel="noopener">Open the page</a></p></div></li>
+    </ul>
+  </section>
+
   <section class="card" aria-labelledby="h-sl">
     <h2 id="h-sl"><span class="pill p-ok">5</span> Closed today · Single Lead, Single Vehicle, Dealer Login</h2>
     <ul class="list">
@@ -170,25 +195,7 @@
     </ul>
   </section>
 
-  <section class="card" aria-labelledby="h-ask">
-    <h2 id="h-ask"><span class="pill p-ask">8</span> Needs a decision from the team</h2>
-    <ul class="list">
-      <li><span class="where"><b>All Vehicles #39</b>Karen</span><div class="what"><q>Can we make the columns drag-and-drop so dealers can arrange them?</q><p>Column order now changes with ◀ ▶ in the Columns panel, and the order is saved. The build you reviewed had no way to reorder at all. Is that enough, or do you still want drag-and-drop?</p></div></li>
-      <li><span class="where"><b>Dealer Login #1</b>Matthew</span><div class="what"><q>The current login page has "Home Portfolio Services About Contact" links.</q><p>Not added yet. Our view: the login is the door to the working system, not the AAN site, and five links would compete with the login and the support buttons. Does the team want them back?</p></div></li>
-      <li><span class="where"><b>My Work Queue #4</b>Karen</span><div class="what"><q>Does anyone use Open Projects?</q><p>If nobody does, we hide it.</p></div></li>
-      <li><span class="where"><b>My Work Queue #6</b>Karen</span><div class="what"><q>Can we add My To-dos, for billing to-do notes I make for myself?</q><p>A new feature, not in the current system. Add it to the redesign now, or keep it for later?</p></div></li>
-      <li><span class="where"><b>Dealer Edit #2</b>Karen</span><div class="what"><q>Can we add a "Clone Dealer" button for dealers with multiple rooftops?</q><p>A new feature, not in the current system. Add it to the redesign now, or keep it for later?</p></div></li>
-      <li><span class="where"><b>Dealer Edit #3</b>Karen</span><div class="what"><q>This has never worked and is not linked to the actual dealer login.</q><p>Remove it, fix it, or use it to store the site's admin login when a dealer is onboarded?</p></div></li>
-      <li><span class="where"><b>Dealer Edit #4</b>Karen</span><div class="what"><q>This section needs to reflect the current information in the dropdowns.</q><p>We need the current dropdown values. Tony?</p></div></li>
-      <li><span class="where"><b>Manage Dealers #1</b>Karen</span><div class="what"><q>Create Package is not used, but real AAN packages and products in dropdowns would be very useful.</q><p>We need the real package and product names to build it.</p></div></li>
-    </ul>
-    <h3>Three more questions from our side</h3>
-    <ul class="list">
-      <li><span class="where"><b>All Vehicles</b>Photos view</span><div class="what"><p>The third view (a large photo per row, with Stock, VIN, Type, Year, Make, Model, Trim, Color, Status, Days) is built and hidden. Gallery and the "No photos" filter cover most of it. Does anyone use it? It comes back with one line.</p></div></li>
-      <li><span class="where"><b>All Vehicles</b>Craigslist posting</span><div class="what"><p>Keep it in the Marketing menu, or hide it too? Tickets show Biscayne used the AAN Craigslist tool this summer (#48078, #48543). We have no usage numbers yet.</p></div></li>
-      <li><span class="where"><b>Dealer Login</b>Privacy Policy, Sitemap</span><div class="what"><p>Both links are in the footer as Karen asked, but they point nowhere yet. What are the real addresses?</p></div></li>
-    </ul>
-  </section>
+
 
   <section class="card" aria-labelledby="h-todo">
     <h2 id="h-todo"><span class="pill p-todo">13</span> Still to build</h2>
@@ -217,7 +224,7 @@
   <section class="card meta" aria-labelledby="h-where">
     <h2 id="h-where">Where to look</h2>
     <p><b>Preview of the fixes</b> (view only, no notes tool): <a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/" target="_blank" rel="noopener">sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex</a>. It updates a minute or two after each push.</p>
-    <p>Pages: <a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/dealer/all-vehicles-gen11.html" target="_blank" rel="noopener">All Vehicles</a> · <a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/dealer/single-vehicle-gen11.html" target="_blank" rel="noopener">Single Vehicle</a> · <a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/dealer/all-leads-gen11.html" target="_blank" rel="noopener">All Leads</a> · <a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/dealer/single-lead-gen11.html" target="_blank" rel="noopener">Single Lead</a> · <a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/dealer/dealer-login-gen11.html" target="_blank" rel="noopener">Dealer Login</a></p>
+    <p>Pages: <a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/dealer/all-vehicles-gen11.html" target="_blank" rel="noopener">All Vehicles</a><a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/dealer/single-vehicle-gen11.html" target="_blank" rel="noopener">Single Vehicle</a><a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/dealer/all-leads-gen11.html" target="_blank" rel="noopener">All Leads</a><a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/dealer/single-lead-gen11.html" target="_blank" rel="noopener">Single Lead</a><a href="https://sigovs.github.io/AAN_RESSELLER_THEMEKIT_Alex/pages/dealer/dealer-login-gen11.html" target="_blank" rel="noopener">Dealer Login</a></p>
     <p>Keep leaving notes on the AAN preview link until the 11_2 upload.</p>
     <p>Code: <a href="https://github.com/Sigovs/AAN_RESSELLER_THEMEKIT_Alex" target="_blank" rel="noopener">github.com/Sigovs/AAN_RESSELLER_THEMEKIT_Alex</a>, branch <code>main</code>.</p>
     <p>Per-note log, what was asked and what was done: <a href="https://github.com/Sigovs/AAN_RESSELLER_THEMEKIT_Alex/blob/main/GEN11_REVIEW_TRIAGE.md" target="_blank" rel="noopener">GEN11_REVIEW_TRIAGE.md</a>.</p>
