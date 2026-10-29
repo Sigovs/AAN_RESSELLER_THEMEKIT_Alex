@@ -55,9 +55,9 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         <div class="menu">
           <div class="menu__col"><div class="caps menu__t">Inventory</div>
             <a class="menu__l menu__l--on" href="all-vehicles-gen11.html"><b>Inventory Manager</b><span>Every vehicle, by lane</span></a>
-            <a class="menu__l" href="#"><b>Auto Locator</b><span>Find a vehicle for a buyer</span></a>
-            <a class="menu__l" href="#"><b>Sort order</b><span>How vehicles list on your site</span></a>
             <a class="menu__l" href="#"><b>New submissions</b><span>Vehicles waiting for review</span></a>
+            <a class="menu__l" href="#"><b>Sort order</b><span>How vehicles list on your site</span></a>
+            <a class="menu__l" href="#"><b>Auto Locator</b><span>Find a vehicle for a buyer</span></a>
           </div>
           <div class="menu__col"><div class="caps menu__t">Reports</div>
             <a class="menu__l" href="#"><b>Inventory aging</b><span>Days in stock, per vehicle</span></a>
@@ -84,7 +84,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         <div class="menu"><div class="menu__col"><div class="caps menu__t">Marketing applications</div>
           <a class="menu__l" href="#"><b>Newsletter tools</b><span>Compose and send</span></a>
           <a class="menu__l" href="#"><b>Craigslist posting</b><span>Post vehicles to Craigslist</span></a>
-          <a class="menu__l" href="#"><b>Posting tools &amp; eBay</b><span>Other marketplaces</span></a>
+          <!-- Posting tools &amp; eBay — hidden per Karen's review note (2026-10-23): "not sure we still need it". Restore: <a class="menu__l" href="#"><b>Posting tools &amp; eBay</b><span>Other marketplaces</span></a> -->
         </div></div>
       </div>
       <div class="nav__it">
@@ -94,16 +94,16 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
           <a class="menu__l" href="#"><b>Billing info</b><span>Invoices and balance</span></a>
         </div></div>
       </div>
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Support<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Support</div>
+          <a class="menu__l" href="#"><b>View tickets</b><span>Your requests to AAN</span></a>
+          <a class="menu__l" href="#"><b>Create ticket</b><span>Ask AAN for help</span></a>
+        </div></div>
+      </div>
     </nav>
     <span class="top__sp"></span>
     <label class="gsearch"><svg class="i"><use href="#i-search"/></svg><input type="search" id="gsearch" name="gsearch" placeholder="Search anywhere" aria-label="Search anywhere" autocomplete="off"><kbd>⌘K</kbd></label>
-    <div class="nav__it">
-      <button class="tbtn" type="button" data-menu aria-haspopup="true" aria-expanded="false" aria-label="Support"><svg class="i"><use href="#i-buoy"/></svg></button>
-      <div class="menu menu--r"><div class="menu__col"><div class="caps menu__t">Support</div>
-        <a class="menu__l" href="#"><b>View tickets</b><span>Your requests to AAN</span></a>
-        <a class="menu__l" href="#"><b>Create ticket</b><span>Ask AAN for help</span></a>
-      </div></div>
-    </div>
     <button class="tbtn" type="button" aria-label="Notifications"><svg class="i"><use href="#i-bell"/></svg><span class="tbtn__dot"></span></button>
     <span class="top__div"></span>
     <div class="nav__it">
@@ -576,6 +576,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
      old text tools). Flat moono-lisa skin, tuned to the page tokens. -->
 <script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
 <script src="single-vehicle-gen11.data.js?v=20261022-labels"></script>
-<script src="single-vehicle-gen11.js?v=20261022-featck"></script>
+<script src="single-vehicle-gen11.js?v=20261029-photos"></script>
 </body>
 </html>

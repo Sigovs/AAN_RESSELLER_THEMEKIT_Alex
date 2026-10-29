@@ -799,6 +799,15 @@
     window.scrollTo({ top: y, behavior: reducedMotion() ? 'auto' : 'smooth' });
   }
 
+  /* All Vehicles · Photos view links here as #photos: arrive on the Photos
+     section, placed as the rail places it, without a scroll ride from the top */
+  if (location.hash === '#photos') window.addEventListener('load', function () {
+    requestAnimationFrame(function () {
+      var el = document.getElementById('zPhotos'); if (!el) return;
+      window.scrollTo({ top: Math.max(0, Math.round(el.getBoundingClientRect().top + window.scrollY - stickTotal() - cssPx('--anchor-gap', 10))), behavior: 'auto' });
+    });
+  });
+
   var ZONES = ['zStatus', 'zPricing', 'zCustom', 'zPhotos', 'zVideo', 'zCarfax', 'zSpecs', 'zColors', 'zDesc', 'zFeat', 'zSticker', 'zFeeds', 'zMore', 'zUtil'];
   function spy() {
     var line = stickTotal() + cssPx('--anchor-gap', 10) + 1, cur = ZONES[0], i, el;

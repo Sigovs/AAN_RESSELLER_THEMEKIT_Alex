@@ -54,7 +54,8 @@
     /* Open state for both disclosure families: the vehicle sheet's four stacked
        regions, then the Filters dock's facet groups. */
     acc: { health: true, market: false, spec: false, hist: false, 'f-make': true, 'f-price': true, 'f-year': false, 'f-model': false, 'f-mile': false, 'f-loc': false, 'f-type': false, 'f-merch': false, 'f-color': false, 'f-opt': false, 'f-audit': false },
-    cols: null
+    cols: null,
+    view: (function () { try { var v = window.localStorage.getItem('aan.gen11.allVehicles.view'); return v === 'gallery' || (v === 'photos' && document.querySelector('[data-view="photos"]')) ? v : 'rows'; } catch (e) { return 'rows'; } })()
   };
 
   /* ══ COLUMNS ═══════════════════════════════════════════════════════════
@@ -95,7 +96,7 @@
     { id: 'colour',  label: 'Color',     grp: 'Vehicle', sort: 'colour', cls: 'c-ext', dockOff: true, track: { lg: 92, sm: 84 }, grow: 1 },
     { id: 'miles',   label: 'Mileage',   grp: 'Vehicle', sort: 'miles', cls: 'c-miles', dockOff: true, track: { lg: 96, sm: 80 } },
     { id: 'price',   label: 'Price',     grp: 'Pricing', locked: true, sort: 'price', cls: 'c-price', track: { lg: 118, sm: 84, dock: 80, dockSm: 76 } },
-    { id: 'health',  label: 'Listing',    grp: 'Listing & feeds', sort: 'issues', cls: 'c-health', track: { lg: 246, sm: 124, dock: 120, dockSm: 116 } },
+    { id: 'health',  label: 'Listing',    grp: 'Listing & feeds', sort: 'issues', cls: 'c-health', tip: 'Formerly “Missing items”', track: { lg: 246, sm: 124, dock: 120, dockSm: 116 } },
     { id: 'age',     label: 'Added',     grp: 'Dates', sort: 'days', track: { lg: 104, sm: 96, dock: 96, dockSm: 92 } },
     /* ── optional columns (Bill, AV note 36: "all possible columns") ──────
        Off by default; the dealer adds them in Columns, as far as the table has
@@ -236,8 +237,15 @@
     return dockOpen() ? (narrow ? 'dockSm' : 'dock') : (narrow ? 'sm' : 'lg');
   }
   function colOn(c) { return c.locked || c.system || S.cols[c.id] !== false; }
+  /* Photos view: the original's photographer preset — its own columns in its
+     own order, with a large photo. The dealer's Rows columns are left alone. */
+  var PHOTO_COLS = ['stock', 'vin', 'vtype', 'year', 'make', 'model', 'trim', 'colour', 'thumb', 'status', 'days', 'actions'];
+  var PHOTO_TRACK = { thumb: 128 };
+  /* the slack is shared by the descriptive columns, not handed to Model alone */
+  var PHOTO_GROW = { make: 1, model: 2, trim: 1.5, colour: 1 };
   function visibleCols() {
     var dk = dockOpen();
+    if (S.view === 'photos') return fitCols(PHOTO_COLS.map(colById).filter(function (c) { return !dk || !c.dockOff || c.id === 'thumb'; }));
     return fitCols(orderedCols().filter(function (c) { return (!dk || !c.dockOff) && colOn(c); }));
   }
   /* The safety net under the room limit: columns saved on a wide screen may
@@ -261,8 +269,10 @@
      approved layout exactly. Once something is hidden, Stock / Trim / Colour
      share the freed width with it, weighted so Model still leads. */
   function colTemplate() {
-    var tier = colTier(), freed = hiddenCount() > 0;
+    var tier = colTier(), freed = S.view === 'photos' || hiddenCount() > 0;
     return visibleCols().map(function (c) {
+      if (S.view === 'photos' && PHOTO_TRACK[c.id]) return PHOTO_TRACK[c.id] + 'px';
+      if (S.view === 'photos') { var pp = (c.track[tier] != null ? c.track[tier] : c.track.lg) + 'px'; return PHOTO_GROW[c.id] ? 'minmax(' + pp + ', ' + PHOTO_GROW[c.id] + 'fr)' : pp; }
       var px = (c.id === 'health' && tier === 'lg' && CHIPMQ.matches ? c.track.sm : (c.track[tier] != null ? c.track[tier] : c.track.lg)) + 'px';
       if (!c.grow) return px;
       if (c.id === 'model') return 'minmax(' + px + ', ' + (freed ? c.grow : 1) + 'fr)';
@@ -276,10 +286,10 @@
       if (c.align === 'r') cls.push('r');
       if (c.sort) { cls.push('s'); if (c.sort === S.sort) cls.push('on'); }
       if (c.cls) cls.push(c.cls);
-      var label = (c.system || c.id === 'thumb') ? '' : esc(c.label) + (c.demo ? '<i class="hd-demo" title="Demo figures — no mileage in the sample data">demo</i>' : '');
+      var label = c.system || (c.id === 'thumb' && S.view !== 'photos') ? '' : c.id === 'thumb' ? 'Photos' : c.id === 'days' && S.view === 'photos' ? 'Days' : esc(c.label) + (c.demo ? '<i class="hd-demo" title="Demo figures — no mileage in the sample data">demo</i>' : '');
       var arrow = (c.sort && c.sort === S.sort) ? ' ' + ic(S.dir === 'asc' ? 'i-up' : 'i-dn') : '';
       return '<span' + (cls.length ? ' class="' + cls.join(' ') + '"' : '') +
-        (c.sort ? ' data-sort="' + c.sort + '"' : '') + '>' + label + arrow + '</span>';
+        (c.sort ? ' data-sort="' + c.sort + '"' : '') + (c.tip ? ' title="' + esc(c.tip) + '"' : '') + '>' + label + arrow + '</span>';
     }).join('');
   }
 
@@ -520,6 +530,46 @@
       visibleCols().map(function (c) { return cells[c.id] != null ? cells[c.id] : c.cell ? c.cell(v) : NOD; }).join('') +
       '</div>';
   }
+  /* Gallery (Matthew, note 7 · Alex, note 6): the original's card grid — photo
+     or "no photos yet", title, trim, stock # with age, price, status and the
+     listing flags, built from the row's own parts. The mechanics are the row's
+     (Alex): a click opens the same preview sheet in the grid, under the card's
+     row; only the stock number goes to the editor. */
+  function card(v) {
+    var name = v.y + ' ' + v.mk + ' ' + v.md, b = band(v.d);
+    /* the photo slot already says "No photos yet" — the flag would repeat it */
+    var fl = v.t ? v.f : v.f.filter(function (x) { return x !== 'No photos'; });
+    var tags = fl.slice(0, 1), rest = fl.length - tags.length;
+    return '<article class="gcard' + (S.cur === v.id ? ' gcard--open' : '') + '" data-id="' + v.id + '" tabindex="0" aria-label="' + esc(name) + '">' +
+      '<div class="gcard__ph">' +
+        (v.t ? '<img alt="" loading="lazy" src="img/' + esc(v.t) + '"><span class="thn" title="' + nf(v.ph || 0) + ' photos">' + ic('i-cam') + nf(v.ph || 0) + '</span>'
+             : '<span class="gcard__none">' + ic('i-cam-off') + 'No photos yet</span>') +
+      '</div>' +
+      '<div class="gcard__b">' +
+        '<div class="gcard__t" title="' + esc(name) + '">' + esc(name) + '</div>' +
+        '<div class="gcard__tr" title="' + esc(v.tr) + '">' + (v.tr ? esc(v.tr) : '') + '</div>' +
+        '<div class="gcard__m"><a class="stock" href="' + EDITOR + '" data-stop title="Open in the vehicle editor">' + esc(v.s) + '</a>' +
+          '<span class="gcard__age age--' + b + '" title="Added ' + addedOn(v.d) + ' · ' + nf(v.d) + ' days in stock">' + lab(v.d) + '</span>' +
+          '<span class="gcard__p">' + (v.p == null ? '<span class="price--none" aria-label="No price">—</span>' : '<em>$</em>' + nf(v.p)) + '</span></div>' +
+        '<div class="gcard__f"><span class="stat stat--' + (S.lane === 'Sold' ? 'sold' : 'ok') + '">' + (S.lane === 'All' ? 'Available' : esc(S.lane)) + '</span>' +
+          tags.map(tag).join('') + (rest > 0 ? '<span class="tag tag--more" title="' + esc(fl.slice(tags.length).join(' · ')) + '">+' + rest + '</span>' : '') +
+        '</div>' +
+      '</div></article>';
+  }
+
+  /* The sheet spans the grid under the open card's row; the row's end depends
+     on how many cards fit, so it is placed after the grid lays out, and again
+     whenever the width changes. */
+  function placeGalSheet() {
+    var g = $('.gal'), ex = $('#exp'); if (!g || !ex) return;
+    var cards = $$('.gcard', g), at = -1;
+    cards.forEach(function (c, i) { if (c.dataset.id === S.cur) at = i; });
+    if (at < 0) return;
+    var n = getComputedStyle(g).gridTemplateColumns.split(' ').length || 1;
+    var end = Math.min(cards.length - 1, Math.floor(at / n) * n + n - 1);
+    if (cards[end].nextElementSibling !== ex) cards[end].after(ex);
+  }
+  window.addEventListener('resize', function () { if (S.view === 'gallery' && S.cur) placeGalSheet(); });
 
   /* CSS publishes the sticky geometry; JS reads it rather than keeping a second
      copy. Custom properties are substituted but not evaluated, so --stick-total
@@ -529,7 +579,8 @@
      its fallback happened to equal the right number. */
   var CSSV = getComputedStyle(document.documentElement);
   function cssPx(n, f) { var v = parseFloat(CSSV.getPropertyValue(n)); return isNaN(v) ? f : v; }
-  function stickTotal() { return cssPx('--stick-bar', 68) + cssPx('--stick-cmd', 72) + cssPx('--stick-hd', 52); }
+  /* Gallery has no column header in the stack, so a card rests right under the band */
+  function stickTotal() { return cssPx('--stick-bar', 68) + cssPx('--stick-cmd', 72) + (S.view === 'gallery' ? 0 : cssPx('--stick-hd', 52)); }
   function reducedMotion() { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
 
   /* The anchor. The selected row comes to rest at a named position under the
@@ -537,7 +588,9 @@
      `- 56 - 58 - 48 - 10` in the source. Near the end of the list there is not
      enough page left to scroll, so #exp-space lends the document the shortfall. */
   function anchorRow(id) {
-    var r = $('.row[data-id="' + id + '"]'); if (!r) return;
+    /* Gallery: the sheet itself comes up under the band (Alex) — in Rows the
+       open row and its sheet are one object, in the grid the sheet is the object */
+    var r = S.view === 'gallery' ? $('#exp') : $('.row[data-id="' + id + '"]'); if (!r) return;
     var y = Math.max(0, Math.round(r.getBoundingClientRect().top + window.scrollY - stickTotal() - cssPx('--anchor-gap', 10)));
     var sp = $('#exp-space');
     if (sp) {
@@ -551,7 +604,14 @@
   function render() {
     var L = list(), F = filtered();
     applyCols();
-    $('#tb').innerHTML = L.length ? L.map(function (v, i) { return row(v, i) + (S.cur === v.id ? '<div class="exp' + (S.still ? ' exp--open' : '') + '" id="exp"><div><div class="exp__in">' + vehicleSheet(v) + '</div></div></div>' : ''); }).join('') + (S.cur ? '<div class="exp-space" id="exp-space"></div>' : '') : (laneTotal() === 0 ? '<div class="empty empty--lane"><b>No vehicles ' + esc(S.lane.toLowerCase()) + '</b><span>Vehicles marked Sale pending appear here.</span></div>' : '<div class="empty">No vehicles match these filters.<button type="button" data-act="clear-all">Clear all</button></div>');
+    var gal = S.view === 'gallery';
+    $('.field').classList.toggle('field--gallery', gal);
+    $('.field').classList.toggle('field--photos', S.view === 'photos');
+    $$('[data-view]').forEach(function (b) { var on = b.dataset.view === S.view; b.classList.toggle('seg__b--on', on); b.setAttribute('aria-pressed', on); });
+    var sheet = function (v) { return '<div class="exp' + (S.still ? ' exp--open' : '') + '" id="exp"><div><div class="exp__in">' + vehicleSheet(v) + '</div></div></div>'; };
+    var openV = S.cur && L.filter(function (v) { return v.id === S.cur; })[0];
+    $('#tb').innerHTML = gal && L.length ? '<div class="gal">' + L.map(card).join('') + (openV ? sheet(openV) : '') + '</div>' + (S.cur ? '<div class="exp-space" id="exp-space"></div>' : '') : L.length ? L.map(function (v, i) { return row(v, i) + (S.cur === v.id ? '<div class="exp' + (S.still ? ' exp--open' : '') + '" id="exp"><div><div class="exp__in">' + vehicleSheet(v) + '</div></div></div>' : ''); }).join('') + (S.cur ? '<div class="exp-space" id="exp-space"></div>' : '') : (laneTotal() === 0 ? '<div class="empty empty--lane"><b>No vehicles ' + esc(S.lane.toLowerCase()) + '</b><span>Vehicles marked Sale pending appear here.</span></div>' : '<div class="empty">No vehicles match these filters.<button type="button" data-act="clear-all">Clear all</button></div>');
+    if (gal) placeGalSheet();
     $('.field').classList.toggle('has-open', !!S.cur);
     // the sheet sits in the list; reading offsetWidth commits the inserted
     // element before the state class lands, so the entrance actually plays
@@ -972,6 +1032,14 @@
       }
       return;
     }
+    if ((el = t.closest('[data-view]'))) {
+      if (el.dataset.view === 'rows' || el.dataset.view === 'gallery' || el.dataset.view === 'photos') {
+        S.view = el.dataset.view; S.cur = null;
+        try { window.localStorage.setItem('aan.gen11.allVehicles.view', S.view); } catch (x) { /* private mode */ }
+        render();
+      }
+      return;
+    }
     if ((el = t.closest('[data-go]'))) { location.href = el.dataset.go; return; }
     if ((el = t.closest('[data-site]'))) {
       var sv = byId(el.dataset.site), at = sv.f.indexOf('Hidden');
@@ -1026,7 +1094,7 @@
     if ((el = t.closest('.mn__it[data-sort]'))) { S.sort = el.dataset.sort; render(); closePops(); return; }
     if ((el = t.closest('.hd [data-sort]'))) { if (S.sort === el.dataset.sort) S.dir = S.dir === 'asc' ? 'desc' : 'asc'; else S.sort = el.dataset.sort; render(); return; }
     if ((el = t.closest('[data-dir]'))) { S.dir = el.dataset.dir; render(); closePops(); return; }
-    if ((el = t.closest('.row[data-id]')) && !t.closest('[data-stop]')) { showVehicle(el.dataset.id); return; }
+    if ((el = t.closest('.row[data-id], .gcard[data-id]')) && !t.closest('[data-stop]')) { if (S.view === 'photos') location.href = EDITOR + '#photos'; else showVehicle(el.dataset.id); return; }
     if (t.closest('a[href="#"]')) e.preventDefault();
   });
   document.addEventListener('change', function (e) {
@@ -1061,7 +1129,7 @@
   document.addEventListener('keydown', function (e) {
     var a = document.activeElement;
     if (e.key === 'Escape') { if ($('.nav__it--open') || $('.pop--open')) { closeMenus(); closePops(); } else if (S.cur) closeVehicle(); else if (S.dock) closeDock(); return; }
-    if (e.key === 'Enter' && a && a.matches && a.matches('.row[data-id]')) { showVehicle(a.dataset.id); return; }
+    if (e.key === 'Enter' && a && a.matches && a.matches('.row[data-id], .gcard[data-id]')) { if (S.view === 'photos') location.href = EDITOR + '#photos'; else showVehicle(a.dataset.id); return; }
     if (e.key === '/' && !/input|select|textarea/i.test(a.tagName)) { e.preventDefault(); $('#q').focus(); }
   });
 

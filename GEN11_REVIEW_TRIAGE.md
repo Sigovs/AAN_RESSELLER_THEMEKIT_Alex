@@ -102,3 +102,22 @@ Numbering = the order in comments.html (open notes, oldest first). Notes 1–20 
 |---|---|---|
 | DL2 (Karen) | the current login page has "YOUR ACCOUNT · Having Trouble Logging In? Call 847-782-0300 for help or send us a message" | ✅ done, resolved · carried over under "Forgot Your Password?" in the sign-in card, over a hairline: "Having Trouble Logging In?" + "Call 847-782-0300 for help or send us a message" (phone and mail links) |
 | DL3 (Karen) | the current login page has Privacy Policy and Sitemap in this section | ✅ done, resolved · both added to the footer line; their real URLs still to be filled in (href="#") |
+
+## Round 4 — All Vehicles, Karen / Matthew / Alex (worked 2026-10-29, in the order of comments.html, newest first)
+
+| # | Note | Decision |
+|---|---|---|
+| 1 (Karen, 10-23) | Support should sit next to Dealer Tools in the main navigation, with its dropdown | ✅ done locally · Support is a main-nav item after Dealer tools (View tickets / Create ticket); the life-buoy icon on the right is gone. All four dealer pages (the header is shared) |
+| 2 (Karen, 10-23) | "not sure we still need the Posting Tools and eBay section — can be hidden" | ✅ done locally · "Posting tools & eBay" removed from Marketing, left in the HTML as a comment with the restore line. Craigslist posting stays (see open question Q2) |
+| 3 (Karen, 10-23) | Inventory menu order: Inventory Manager, New Submissions, Sort Order, Auto Locator | ✅ done locally · that order, all four dealer pages |
+| 4 (Karen, 10-21) = AV39 | drag-and-drop so dealers can arrange the columns | ✅ covered by ◀ ▶ in the Columns panel (built 10-13; the server build she reviewed is 10-02 and had no ordering at all). A drag build was started without a decision and reverted. See Q3 |
+| 5 (Karen, 10-21) = AV37 | "In the old system HEALTH is named MISSING ITEMS" | ✅ done locally (b) · the column stays **Listing** (Ivaylo's note 16); its header tooltip reads "Formerly “Missing items”" |
+| 6 (Alex, 10-20) + 7 (Matthew, 10-13) = M4 | Gallery / Photos "not yet functional" · "layout is coming soon" | ✅ **Gallery** done locally · the original's card grid (photo or "No photos yet", title, trim, stock # + age, price, status + one flag and "+N"); same mechanics as Rows: a click opens the same preview sheet under the card's row and brings the sheet up under the band; only the stock # / Edit vehicle go to the editor. ⏸ **Photos** built (photographer preset, row click → Single Vehicle #photos) and then **hidden** by Alex — see Q1 |
+
+## Open questions for the team (2026-10-29)
+
+| # | Question | Where it stands |
+|---|---|---|
+| Q1 | **Is the Photos view used by anyone?** (third view button: big photo + Stock · VIN · Type · … · Days) | Built and hidden. It overlaps Gallery (big photos) and the Needs attention "No photos" filter. Ask Ivaylo / Karen / photographers; restore = one line in all-vehicles-gen11.html |
+| Q2 | **Craigslist posting — keep or hide?** (Karen asked to hide Posting Tools + eBay; her My Work Queue note says Craigslist feeds are no longer used) | Kept for now. AAN-bot (10-29) found ticket evidence that **Biscayne** used the AAN Craigslist tool this summer (#48078, #48543); eBay activity went through feeds / Auction123, not the menu (#48572); nothing on Posting Tools. No usage numbers: the bot has the reseller schema only and asked Ivaylo for read-only DB + log access |
+| Q3 | **Are ◀ ▶ enough for column order, or does Karen still want drag-and-drop?** | Ask Karen after the 11_2 upload — she reviewed a build without any column ordering. Suggested reply: "Column order is now in the Columns panel — ◀ ▶ moves each column, the order is saved. Tell us if you still want drag-and-drop on top." |

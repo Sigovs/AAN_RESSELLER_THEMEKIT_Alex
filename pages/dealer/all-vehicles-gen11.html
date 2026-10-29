@@ -8,7 +8,7 @@
    `dark` — the key is shared with the other Gen pages — cannot land this page in a
    half-dark state at load. Temporary; the dark-theme stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="all-vehicles-gen11.css?v=20261022-cols5">
+<link rel="stylesheet" href="all-vehicles-gen11.css?v=20261029-ph">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
 <link rel="stylesheet" href="../_aan-components.css?v=20261002-fix">
 </head>
@@ -64,9 +64,9 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         <div class="menu">
           <div class="menu__col"><div class="caps menu__t">Inventory</div>
             <a class="menu__l menu__l--on" href="#" aria-current="page"><b>Inventory Manager</b><span>Every vehicle, by lane</span></a>
-            <a class="menu__l" href="#"><b>Auto Locator</b><span>Find a vehicle for a buyer</span></a>
-            <a class="menu__l" href="#"><b>Sort order</b><span>How vehicles list on your site</span></a>
             <a class="menu__l" href="#"><b>New submissions</b><span>Vehicles waiting for review</span></a>
+            <a class="menu__l" href="#"><b>Sort order</b><span>How vehicles list on your site</span></a>
+            <a class="menu__l" href="#"><b>Auto Locator</b><span>Find a vehicle for a buyer</span></a>
           </div>
           <div class="menu__col"><div class="caps menu__t">Reports</div>
             <a class="menu__l" href="#"><b>Inventory aging</b><span>Days in stock, per vehicle</span></a>
@@ -93,7 +93,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         <div class="menu"><div class="menu__col"><div class="caps menu__t">Marketing applications</div>
           <a class="menu__l" href="#"><b>Newsletter tools</b><span>Compose and send</span></a>
           <a class="menu__l" href="#"><b>Craigslist posting</b><span>Post vehicles to Craigslist</span></a>
-          <a class="menu__l" href="#"><b>Posting tools &amp; eBay</b><span>Other marketplaces</span></a>
+          <!-- Posting tools &amp; eBay — hidden per Karen's review note (2026-10-23): "not sure we still need it". Restore: <a class="menu__l" href="#"><b>Posting tools &amp; eBay</b><span>Other marketplaces</span></a> -->
         </div></div>
       </div>
       <div class="nav__it">
@@ -103,17 +103,17 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
           <a class="menu__l" href="#"><b>Billing info</b><span>Invoices and balance</span></a>
         </div></div>
       </div>
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Support<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Support</div>
+          <a class="menu__l" href="#"><b>View tickets</b><span>Your requests to AAN</span></a>
+          <a class="menu__l" href="#"><b>Create ticket</b><span>Ask AAN for help</span></a>
+        </div></div>
+      </div>
     </nav>
     <span class="top__sp"></span>
     <label class="gsearch"><svg class="i"><use href="#i-search"/></svg><input type="search" placeholder="Search anywhere" aria-label="Search anywhere"><kbd>⌘K</kbd></label>
     <button class="tbtn" type="button" data-act="theme" aria-label="Switch to dark theme" hidden title="Dark theme is being re-solved"><svg class="i t-moon"><use href="#i-moon"/></svg><svg class="i t-sun"><use href="#i-sun"/></svg></button>
-    <div class="nav__it nav__it--r">
-      <button class="tbtn" type="button" data-menu aria-haspopup="true" aria-expanded="false" aria-label="Support"><svg class="i"><use href="#i-buoy"/></svg></button>
-      <div class="menu menu--r"><div class="menu__col"><div class="caps menu__t">Support</div>
-        <a class="menu__l" href="#"><b>View tickets</b><span>Your requests to AAN</span></a>
-        <a class="menu__l" href="#"><b>Create ticket</b><span>Ask AAN for help</span></a>
-      </div></div>
-    </div>
     <button class="tbtn" type="button" aria-label="Notifications"><svg class="i"><use href="#i-bell"/></svg><span class="tbtn__dot"></span></button>
     <span class="top__div"></span>
     <div class="nav__it nav__it--r">
@@ -194,7 +194,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <div class="facet"><button class="facet__b" type="button" data-pop="p-sort"><span class="facet__k">Sort</span><span class="facet__v" id="sort-v">When added ↑</span><svg class="i"><use href="#i-chev"/></svg></button>
         <div class="pop pop--right mn" id="p-sort"><div class="caps mn__lab">Sort by</div><button class="mn__it" type="button" data-sort="stock"><svg class="i"><use href="#i-check"/></svg>Stock</button><button class="mn__it" type="button" data-sort="year"><svg class="i"><use href="#i-check"/></svg>Year</button><button class="mn__it" type="button" data-sort="make"><svg class="i"><use href="#i-check"/></svg>Make</button><button class="mn__it" type="button" data-sort="price"><svg class="i"><use href="#i-check"/></svg>Price</button><button class="mn__it mn__it--on" type="button" When added</button><button class="mn__it" type="button" data-sort="issues"><svg class="i"><use href="#i-check"/></svg>Listing flags first</button><div class="mn__sep"></div><button class="mn__it" type="button" data-dir="asc"><svg class="i"><use href="#i-up"/></svg>Ascending</button><button class="mn__it mn__it--on" type="button" data-dir="desc"><svg class="i"><use href="#i-dn"/></svg>Descending</button></div></div>
       <span class="cmd__div"></span>
-      <div class="seg" role="group" aria-label="View"><button class="seg__b seg__b--on" type="button" aria-label="Rows" aria-pressed="true"><svg class="i"><use href="#i-table"/></svg></button><button class="seg__b" type="button" aria-label="Gallery" aria-pressed="false"><svg class="i"><use href="#i-cards"/></svg></button><button class="seg__b" type="button" aria-label="Photos" aria-pressed="false"><svg class="i"><use href="#i-image"/></svg></button></div>
+      <div class="seg" role="group" aria-label="View"><button class="seg__b seg__b--on" type="button" data-view="rows" aria-label="Rows" aria-pressed="true"><svg class="i"><use href="#i-table"/></svg></button><button class="seg__b" type="button" data-view="gallery" aria-label="Gallery" aria-pressed="false"><svg class="i"><use href="#i-cards"/></svg></button><!-- Photos view — hidden by Alex (2026-10-29) until the team says it is used; it overlaps Gallery and the No photos filter. The view is built: restore this button. <button class="seg__b" type="button" data-view="photos" aria-label="Photos" aria-pressed="false"><svg class="i"><use href="#i-image"/></svg></button> --></div>
       <div class="facet c-cols"><button class="facet__b" type="button" data-pop="p-cols" id="cols-btn" aria-expanded="false" aria-controls="p-cols" aria-haspopup="true"><svg class="i"><use href="#i-cols"/></svg><span class="facet__v">Columns</span><svg class="i"><use href="#i-chev"/></svg></button>
         <div class="pop pop--right cols" id="p-cols" role="group" aria-label="Columns"></div></div>
     </div>
@@ -217,7 +217,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
     <div class="foot pgr pgr--top" id="pg-top" aria-label="Pages"></div>
 
     <div class="rows ui-table" id="rows">
-      <div class="hd ui-thead" id="hd"><span></span><span></span><span class="s" data-sort="stock">Stock</span><span class="s" data-sort="year">Year</span><span class="s" data-sort="make">Make</span><span>Model</span><span class="c-trim">Trim</span><span class="c-ext">Color</span><span class="r s on c-price" data-sort="price">Price</span><span class="c-status">Status</span><span class="s c-health" data-sort="issues">Health</span><span class="r s on" data-sort="days">Age <svg class="i"><use href="#i-dn"/></svg></span><span class="r">Actions</span></div>
+      <div class="hd ui-thead" id="hd"><span></span><span></span><span class="s" data-sort="stock">Stock</span><span class="s" data-sort="year">Year</span><span class="s" data-sort="make">Make</span><span>Model</span><span class="c-trim">Trim</span><span class="c-ext">Color</span><span class="r s on c-price" data-sort="price">Price</span><span class="c-status">Status</span><span class="s c-health" data-sort="issues" title="Formerly “Missing items”">Listing</span><span class="r s on" data-sort="days">Age <svg class="i"><use href="#i-dn"/></svg></span><span class="r">Actions</span></div>
       <div id="tb"></div>
     </div>
 
@@ -233,6 +233,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 </div>
 
 <script src="all-vehicles-gen11.data.js?v=20260930234502"></script>
-<script src="all-vehicles-gen11.js?v=20261022-cols4"></script>
+<script src="all-vehicles-gen11.js?v=20261029-ph2"></script>
 </body>
 </html>
