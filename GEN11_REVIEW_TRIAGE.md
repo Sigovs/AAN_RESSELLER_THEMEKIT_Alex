@@ -139,3 +139,9 @@ Numbering = the order in comments.html (open notes, oldest first). Notes 1–20 
 | 8 (Karen, 10-23) | "Can the new lead list be alphabetized?" (on the Status select) | ✅ done locally (b) · Unassigned · New Lead first, a divider, the rest A–Z — in the Workflow Status select (28) and in All Leads' Status filter (14) |
 | 7 (Karen, 10-23) | "Shouldn't the first and last name be a required field?" | ✅ done locally · First / Last Name carry the * and are checked on Save ("Enter the last name.", the empty field marked and focused); the note reads "First and Last Name, and Email or Day Phone are required." |
 | — (Alex) | the board has to match the other pages; fonts recognisable | ✅ done locally · card titles 16/700 sentence case (Vehicle of interest was 11px caps, Lead facts 15px), Activity figures 24px, Lead facts at the board's 24px inset with its rows spread over the height, the vehicle photo at 3:2, contact as two tags (email, phone) with copy; the source line that repeated Lead facts is gone. Recorded as DESIGN.md §18 Typography, §19 Board, §20 Disclosure |
+
+## Round 4 — Single Vehicle, Karen (worked 2026-10-29)
+
+| # | Note | Decision |
+|---|---|---|
+| 40 (Karen, 10-23) | "This section should be called Window Sticker" (on the Prints button) | ✅ done · **Prints → Window Stickers** (plural: the menu holds the Window Sticker and the eight FTC Buyers Guides, which also hang in the car's window); the menu, its label and the two hints that named "Prints" follow. Resolved the same day |

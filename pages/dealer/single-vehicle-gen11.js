@@ -452,7 +452,7 @@
       (t.rich ? 14 : 8) + '" spellcheck="' + (t.rich ? 'false' : 'true') + '"></textarea>' +
       (t.rich && !window.CKEDITOR ? '<span class="f__help">The text editor could not load — this is the stored HTML.</span>' : '') +
       (t.id === 'buyers_guide_text'
-        ? '<div class="desc__foot"><span class="f__help">This text prints on the buyers guide. It is autosaved when you click a print link in the Prints menu.</span>' +
+        ? '<div class="desc__foot"><span class="f__help">This text prints on the buyers guide. It is autosaved when you click a print link in the Window Stickers menu.</span>' +
           '<button class="btn btn--sheet btn--sm" type="button" data-act="save-bg">Save Buyers Guide Text</button></div>'
         : '') +
       '</div>';
