@@ -565,7 +565,7 @@ Its state changes visibly when open (the chevron turns, a label or a fill change
 | pattern | where | at rest → open |
 |---|---|---|
 | sheet accordion row (`.acc`) | inside an expanded row's sheet — All Vehicles' vehicle sheet, All Leads' lead sheet | title + summary + chevron → chevron turns, summary hides |
-| bar with a framed chevron (`.vacc`) | a form folded under a record on a detail page — Single Lead "Vehicle fields" (Alex, 2026-10-29) | grey bar, white chevron button → bar and fields framed as one block, the button turns brand |
+| bar with a framed chevron (`.vacc`, `.glacc`) | a form or a reference list folded in place — Single Lead "Vehicle fields", My Work Queue "Go Live List" (Alex, 2026-10-29). **The default accordion when it must read as openable** | grey bar, white chevron button → bar and fields framed as one block, the button turns brand |
 | Show / Hide button | a whole section collapsed by default — Single Ticket "Changelog" | "⌄ Show" → "⌃ Hide" |
 | chip with chevron | a folded group of choices — Single Vehicle "Standard equipment" | chip → brand-soft fill, brand line, chevron turns |
 
