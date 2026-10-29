@@ -165,10 +165,14 @@
   }
 
   /* ══ PLATFORM NAV ══════════════════════════════════════════════════════ */
+  /* hidden from the menus, kept in the data so they come back with one line:
+     Add New OEM / View OEM Accounts (Karen, MWQ note 3: "we don't use them anymore") */
+  var NAV_HIDDEN = ['Add New OEM', 'View OEM Accounts'];
+  function navShown(l) { return NAV_HIDDEN.indexOf(l) < 0; }
   function renderNav() {
     $('#nav').innerHTML = D.nav.map(function (g, gi) {
       var on = g.label === 'Work';
-      var items = g.items.map(function (it) {
+      var items = g.items.filter(function (it) { return navShown(it.label); }).map(function (it) {
         var cls = 'mn__it' + (it.kind === 'sub' ? ' mn__it--sub' : '');
         var href = '#';
         if (it.kind && it.kind !== 'ext' && it.kind !== 'sub') href = it.kind;

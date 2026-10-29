@@ -94,6 +94,10 @@
   function set() { return COLS[view().cols]; }
 
   /* ── platform nav ────────────────────────────────────────────────────── */
+  /* hidden from the menus, kept in the data so they come back with one line:
+     Add New OEM / View OEM Accounts (Karen, MWQ note 3: "we don't use them anymore") */
+  var NAV_HIDDEN = ['Add New OEM', 'View OEM Accounts'];
+  function navShown(l) { return NAV_HIDDEN.indexOf(l) < 0; }
   function renderNav() {
     $('#nav').innerHTML = D.nav.map(function (g, i) {
       var id = 'p-nav-' + i;
@@ -101,7 +105,7 @@
         '<button class="nav__b" type="button" data-pop="' + id + '" aria-haspopup="true" aria-expanded="false">' +
           esc(g.g) + ic('i-chev') + '</button>' +
         '<div class="pop" id="' + id + '"><div class="caps pop__lab">' + esc(g.g) + '</div>' +
-          g.i.map(function (l) {
+          g.i.filter(navShown).map(function (l) {
             return '<a class="mn__it" href="#">' + esc(l) + '</a>';
           }).join('') +
         '</div></div>';

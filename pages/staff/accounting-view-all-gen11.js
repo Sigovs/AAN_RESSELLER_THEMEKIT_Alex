@@ -81,10 +81,14 @@
   function renderNav() {
     $('#nav').innerHTML = D.nav ? navHtml(D.nav) : '';
   }
+  /* hidden from the menus, kept in the data so they come back with one line:
+     Add New OEM / View OEM Accounts (Karen, MWQ note 3: "we don't use them anymore") */
+  var NAV_HIDDEN = ['Add New OEM', 'View OEM Accounts'];
+  function navShown(l) { return NAV_HIDDEN.indexOf(l) < 0; }
   function navHtml(groups) {
     return groups.map(function (g, gi) {
       var on = g.label === 'Accounting';
-      var items = g.items.map(function (it) {
+      var items = g.items.filter(function (it) { return navShown(it.label); }).map(function (it) {
         var cls = 'mn__it' + (it.kind === 'sub' ? ' mn__it--sub' : '')
           + (it.kind === 'accounting-view-all-gen11.html' ? ' mn__it--on' : '');
         var href = (it.kind && it.kind !== 'ext' && it.kind !== 'sub') ? it.kind : '#';
