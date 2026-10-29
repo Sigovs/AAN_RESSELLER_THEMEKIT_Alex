@@ -290,7 +290,7 @@
   box-shadow: inset 0 -1px 0 var(--focal-line);
 }
 .value .kv > div:last-child { box-shadow: none; }
-.value .kv .v { font-size: 22px; }
+.value .kv .v { font-size: 24px; } /* the board figure, as All Vehicles' Value and All Leads' Assigned */
 .value .kv .l { margin: 0; text-align: right; }
 
 /* ── lead facts: the Demo chip and the source line sit in the header, BEFORE
@@ -299,7 +299,7 @@
       record index. That assessment is what licenses the chip. ─────────────── */
 .attn.slot--facts { padding: var(--s4) var(--s4) var(--s4); }
 .attn__h { align-items: center; gap: var(--s2); padding: 0 0 var(--s3); }
-.attn__h h2 { font-size: 15px; font-weight: 600; letter-spacing: -.005em; color: var(--focal-ink); }
+.attn__h h2 { font-size: 16px; font-weight: 700; letter-spacing: -.01em; color: var(--focal-ink); } /* the board card title (Lot, Flags, Lead board) */
 .attn__h .s { margin-left: auto; text-align: right; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--focal-ink-3); }
 .attn .demo { flex: none; background: rgba(195, 182, 255, .16); color: #d3caff; box-shadow: inset 0 0 0 1px rgba(150, 129, 240, .5); }
 /* Eight facts as eight filled tiles made this the busiest object on the page and
@@ -984,3 +984,86 @@
 .app.dock-open .bento .attn__h { padding: 0 0 var(--s3); }
 .app.dock-open .bento .attn__h h2 { font-size: 15px; font-weight: 600; letter-spacing: -.005em; text-transform: none; color: var(--focal-ink); }
 .app.dock-open .bento .attn__h .s { display: block; }
+
+/* ══ compaction (Ivaylo, SL note 9: "contact, address and vehicle of interest
+   MUST be compacted bigtime") — the original's density in this page's language:
+   the vehicle fields behind Edit fields, contact + address as one 4-column
+   block of dense controls, tighter section rhythm. ══ */
+.sec { padding: var(--s3) 0 var(--s5); }
+.sec__h { min-height: 44px; }
+.form--dense .grp { padding-top: var(--s2); }
+.form--dense .grp__h { margin-bottom: var(--s3); }
+.form--dense .grid { gap: var(--s3) var(--s4); }
+.form--dense .grid + .grid { margin-top: var(--s3); }
+.form--dense .f { gap: 3px; }
+.form--dense .f > span { font-size: 12.5px; white-space: nowrap; }
+.form--dense .fld, .form--dense .sel { height: 30px; border-radius: 8px; font-size: 13.5px; padding-inline: 10px; }
+.form--dense .f--big .fld { font-size: 14px; }
+.form--dense .f textarea.fld { min-height: 0; height: auto; padding: 6px 10px; }
+.form--dense .search--sm { height: 36px; margin-bottom: var(--s3); }
+.form--dense .search--sm .btn { height: 28px; }
+.form--dense .form__f { margin-top: var(--s4); padding-top: var(--s3); }
+.form--dense .form__f .btn { height: 36px; }
+.rec { padding-bottom: var(--s4); }
+.rec__acts { margin-top: var(--s3); }
+/* the Vehicle fields row under the strip (Alex, variant A): it has to read as
+   something that opens — a bar with a framed chevron button; open, the bar and
+   its fields are one framed block and the button turns brand */
+.vacc { border-top: 0; margin-top: var(--s1); border-radius: var(--r-inner); transition: box-shadow var(--dur) var(--ease); }
+.vacc .acc__h {
+  min-height: 44px; padding: 0 6px 0 14px; border-radius: var(--r-inner);
+  background: var(--wash); box-shadow: inset 0 0 0 1px var(--line-2);
+  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.vacc .acc__h:hover { background: var(--well); box-shadow: inset 0 0 0 1px var(--line-3); }
+.vacc .acc__h:hover .acc__t { color: var(--ink); }
+.vacc .acc__t { font-size: 14px; }
+.vacc .acc__h > .i {
+  width: 28px; height: 28px; padding: 7px; border-radius: 8px;
+  background: var(--sheet); box-shadow: inset 0 0 0 1px var(--line-3); color: var(--ink-2);
+}
+.vacc.acc--open { box-shadow: inset 0 0 0 1px var(--line-3); }
+.vacc.acc--open > h3 > .acc__h { background: var(--sheet); box-shadow: inset 1px 0 0 var(--line-3), inset -1px 0 0 var(--line-3), inset 0 1px 0 var(--line-3), inset 0 -1px 0 var(--line-2); border-radius: var(--r-inner) var(--r-inner) 0 0; }
+.vacc.acc--open > h3 > .acc__h > .i { background: var(--brand); color: #fff; box-shadow: none; }
+.vacc .acc__in { padding: var(--s3) 14px var(--s3); }
+.vacc .form--dense .grp { padding-top: 0; }
+@media (prefers-reduced-motion: reduce) { .vacc, .vacc .acc__h { transition: none; } }
+
+/* Vehicle of interest in the top board: the photo at the project's 3:2
+   (table 92×60, Photos 120×80, the strip 208×130) across the column — not an
+   88px band cropped from it (Alex) */
+.vcar__img { height: auto; aspect-ratio: 3 / 2; }
+.vcar__img .st { left: 6px; bottom: 6px; height: 18px; padding: 0 6px; font-size: 11px; letter-spacing: 0; text-transform: none; }
+
+/* board type, one system with All Vehicles and All Leads (Alex, 2026-10-29):
+   "Vehicle of interest" is a card title like "Activity" and "Lead facts",
+   not an 11px caps label */
+.vcar__cap { font-size: 16px; font-weight: 700; letter-spacing: -.01em; text-transform: none; color: var(--focal-ink); margin-bottom: var(--s2); }
+/* All Vehicles' dock-open compaction (.app.dock-open .bento .attn__h h2, 15px)
+   reaches this page while Workflow is open; the card title stays the board title */
+.app .bento .slot--facts .attn__h h2 { font-size: 16px; font-weight: 700; letter-spacing: -.01em; }
+
+/* Lead facts gets the board's air (Alex): the card's inset matches its
+   neighbours (24px sides — the dock-open rule from All Vehicles had cut it to
+   12px), and the four rows share the card's height as Activity's three do,
+   instead of packing at the top over a 70px hole */
+.app .bento .attn.slot--facts { display: flex; flex-direction: column; padding: 20px 24px 18px; }
+.slot--facts .attn__g { flex: 1; grid-auto-rows: 1fr; align-content: stretch; }
+.slot--facts .fact { gap: 3px; }
+
+/* contact tags in the enquiry card: the dark board tile's fill and line
+   (Needs attention, Flags), a glyph, the value, its copy button */
+.ident__tags { display: flex; flex-wrap: wrap; gap: var(--s2); min-width: 0; }
+.ctag {
+  display: inline-flex; align-items: center; gap: 8px; min-width: 0; max-width: 100%;
+  height: 32px; padding: 0 4px 0 10px; border-radius: 8px;
+  background: rgba(255, 255, 255, .055); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07);
+  color: var(--focal-ink); font-size: 13.5px;
+}
+.ctag > .i { width: 14px; height: 14px; flex: none; color: var(--focal-ink-3); }
+.ctag b { min-width: 0; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ctag--mono b { font-family: var(--mono); font-size: 12.5px; }
+.ctag--none { padding-right: 10px; color: var(--focal-ink-3); }
+.ctag button { display: inline-grid; place-items: center; flex: none; width: 24px; height: 24px; border-radius: 6px; color: var(--focal-ink-3); }
+.ctag button:hover { background: var(--focal-2); color: var(--focal-ink); }
+.ctag button .i { width: 13px; height: 13px; }

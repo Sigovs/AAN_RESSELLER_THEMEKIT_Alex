@@ -458,3 +458,120 @@ frozen rail with a background is what Phase 1 had to undo.
   why in a comment** — `.exp .exp__accs .acc__h` is (0,3,0) and silently outranks `.exp .acc__h`
 - `overflow: hidden` only where clipping is actually intended (the photo crop), never to hide a
   layout bug
+
+---
+
+## 18 · Typography — one face, fixed roles
+
+Added 2026-10-29 (Alex: "fonts must be recognisable on every page"). Measured on All Vehicles
+and All Leads at 1440, which are the reference; every new page uses these roles, and a page
+that needs another size records why next to it.
+
+**Two faces, and the second one has a narrow job.**
+
+```
+--font   Archivo     all text
+--mono   Plex Mono   ONLY codes and numbers a person copies or matches by eye:
+                     stock #, VIN, phone, IP, lead-type codes (quick-quote), raw logs
+```
+
+Names, email addresses, street addresses, money and dates are text, in `--font`. Money and
+counts take `font-variant-numeric: tabular-nums`.
+
+| role | spec | where |
+|---|---|---|
+| page title | 28px / 600, −0.022em | `h1` — "Vehicle Inventory", "Leads", a person's name |
+| section title | 18px / 600, −0.012em | the sections of a detail sheet — Overview, Contact & address |
+| board card title | **16px / 700, −0.01em, sentence case** | Lot · Age mix · Value · Lead board · Flags · Activity · Lead facts |
+| board meta | 13px / 400, muted | the right side of a card header — "this lead", "click to filter the list" |
+| board hero figure | 52px / 600, −0.025em | the one big number of a board (Lot 359, Lead board 1,340) |
+| board figure | 24px / 700, −0.015em | Value, Assigned, Activity counts |
+| tile figure | 26px / 700 | the clickable tiles — Needs attention, Flags |
+| board label | 14px / 400, muted | the words under or beside a figure |
+| body · table cell | 14px / 400; the row's identifier 600 | list rows, sheet text |
+| field label | 13px / 600, muted, sentence case, `nowrap` | form labels (12.5px in a `.form--dense` block) |
+| button | 14px / 500 | every button of the default tier |
+| facet · filter | 13.5px / 600 | Sort, Make, Columns, Status … |
+| status chip | 13px / 600, sentence case | Available · New Lead · Sold |
+| flag tag | 12px / 600, sentence case, with its glyph | No price · Feed off |
+| caps key | 11px / 700, +0.07em, CAPS | **only** table headers and spec-plate keys (TRIM, SOURCE, STOCK #) |
+| mono id | 12.5–13px, `--mono` | stock, VIN, phone, IP |
+
+Rules:
+
+- **Caps is for keys, never for names.** A card title, a status chip, a flag and a button are
+  sentence case. "VEHICLE OF INTEREST" in 11px caps read as a caption, not as the title of its
+  card — that was the Single Lead board on 2026-10-29.
+- **One role, one look, on every page.** Do not re-size a role for one page. When a shared rule
+  from another page leaks in (All Vehicles' dock-open compaction shrank Single Lead's "Lead facts"
+  to 15px), pin the role back with a scoped rule and say so in a comment (§17).
+- **Weight carries the hierarchy, not new sizes.** Between two neighbouring levels there is one
+  step of size or weight, not both plus a colour.
+
+**Not aligned yet** (measured 2026-10-29, to fix page by page, one note at a time):
+
+| page | role | now | should be |
+|---|---|---|---|
+| Single Lead | page title | 26px | 28px |
+| Single Lead / Single Vehicle | section title | 19px / 17px·650 | 18px / 600 |
+| Single Vehicle | page title | 18px (sticky cockpit) | decide: 28px, or record the cockpit as its own role |
+| Single Vehicle | field label | 12px / 700 CAPS | 13px / 600 sentence case — or record why the editor differs |
+| All Vehicles / Single Lead | mono id | 13px / 700 · 12.5px / 400 | one weight |
+
+---
+
+## 19 · Board — the dark row of cards at the top of a page
+
+Every dealer page opens with one: All Vehicles (Lot · Age mix · Value · Needs attention),
+All Leads (Lead board · By status · Assigned · Flags), Single Lead (The buyer's message ·
+Vehicle of interest · Activity · Lead facts). Same parts, same rules.
+
+**The card**
+
+- `--focal` surface, `--r-l` radius, one row; the row is **298px** tall at 1366–1440 and the
+  cards share it
+- inset **24px** at the sides, ~20px at the top — the card title starts at the same 24px in
+  every card of the row
+- header: **title left** (board card title, §18), **meta right** (board meta) or a `Demo` chip
+
+**What a card can hold** — one of these, not a mix:
+
+| content | how |
+|---|---|
+| hero | one hero figure + one board label (Lot, Lead board) |
+| rows | figure + label per row, a hairline between, the rows **spread over the card's height** (Value, Assigned, Activity) |
+| tiles | 2 × 3 clickable tiles: tile figure, label, meter, % — at rest a surface and a line, chosen = brand fill and the check replaces the % (Needs attention, Flags) |
+| facts | caps key over value, two columns, hairlines, rows **spread over the height** (Lead facts) |
+| object | a photo at **3:2** across the column, its name, its id, one route out (Vehicle of interest) |
+| message | the quote, then contact **tags** at the foot |
+
+**Air:** content never packs at the top of a card over an empty bottom. If a card has fewer rows
+than its neighbours, the rows share the height (`flex: 1; grid-auto-rows: 1fr`).
+
+**Contact and id tags** (Single Lead, 2026-10-29): 32px, 8px radius, the dark tile's fill
+`rgba(255,255,255,.055)` and line `rgba(255,255,255,.07)`, a 14px glyph, the value, a copy button.
+Email in `--font`, phone in `--mono`.
+
+**Do not repeat a fact on the board.** One fact, one place: Single Lead's "Ad Source · quick-quote
+· via … · created …" line repeated Lead facts beside it word for word and was removed.
+
+---
+
+## 20 · Disclosure — four patterns, chosen by place
+
+Anything that opens must look openable at rest: a surface or a frame, and a chevron you can see.
+Its state changes visibly when open (the chevron turns, a label or a fill changes).
+
+| pattern | where | at rest → open |
+|---|---|---|
+| sheet accordion row (`.acc`) | inside an expanded row's sheet — All Vehicles' vehicle sheet, All Leads' lead sheet | title + summary + chevron → chevron turns, summary hides |
+| bar with a framed chevron (`.vacc`) | a form folded under a record on a detail page — Single Lead "Vehicle fields" (Alex, 2026-10-29) | grey bar, white chevron button → bar and fields framed as one block, the button turns brand |
+| Show / Hide button | a whole section collapsed by default — Single Ticket "Changelog" | "⌄ Show" → "⌃ Hide" |
+| chip with chevron | a folded group of choices — Single Vehicle "Standard equipment" | chip → brand-soft fill, brand line, chevron turns |
+
+Default: closed, when what is inside repeats or details something already visible; open on its
+own when it is the only way to act (Single Lead opens "Vehicle fields" when the lead has no
+vehicle). A save never folds it under the user.
+
+**Red** stays for the one state that must be noticed — Hidden on site — and, by Alex's decision of
+2026-10-29, for **Clear all** (All Vehicles, All Leads), which Karen and Ivaylo both asked for.

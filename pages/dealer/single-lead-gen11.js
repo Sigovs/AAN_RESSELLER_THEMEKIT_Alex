@@ -141,21 +141,17 @@
 
     $('#quote').textContent = L.msg;
 
-    var copy = function (v, label) {
-      return '<span class="mono"><b>' + esc(v) + '</b></span>'
-        + '<button type="button" data-copy="' + esc(v) + '" title="Copy ' + label + '" aria-label="Copy ' + label + '">' + ic('i-copy') + '</button>';
+    /* who to reach, as two tags with their own copy (Alex, 2026-10-29). The
+       source / type / provider / created line that used to follow repeated
+       Lead facts beside it word for word, and is gone. The email reads in the
+       text face, as in the All Leads table; the phone keeps the mono face of
+       codes and numbers. */
+    var tag = function (v, label, icon, mono) {
+      return '<span class="ctag' + (mono ? ' ctag--mono' : '') + '">' + ic(icon) + '<b title="' + esc(v) + '">' + esc(v) + '</b>'
+        + '<button type="button" data-copy="' + esc(v) + '" title="Copy ' + label + '" aria-label="Copy ' + label + '">' + ic('i-copy') + '</button></span>';
     };
-    $('#ident').innerHTML =
-      '<div class="ident__row">' + copy(L.email, 'email address')
-      + '<span class="sep">·</span>'
-      + (L.phone ? copy(L.phone, 'phone number') : '<span>no phone</span>') + '</div>'
-      /* the provider used to sit in the panel header as "via X", where at 1280
-         it and the caps label both wrapped inside a 333px column. It belongs on
-         this line anyway: source, type, route and time are one statement. */
-      + '<div class="ident__row"><span><b>' + esc(L.src) + '</b></span><span class="sep">·</span>'
-      + '<span class="mono">' + esc(L.type) + '</span><span class="sep">·</span>'
-      + '<span>via <b>' + esc(L.provider) + '</b></span><span class="sep">·</span>'
-      + '<span>created <b>' + fdt(L.created) + '</b></span></div>';
+    $('#ident').innerHTML = '<div class="ident__tags">' + tag(L.email, 'email address', 'i-mail')
+      + (L.phone ? tag(L.phone, 'phone number', 'i-phone', true) : '<span class="ctag ctag--none">' + ic('i-phone') + 'no phone</span>') + '</div>';
 
     /* the "show full message" control appears only when the clamp actually
        clipped something — measured after layout, not guessed from length */
@@ -241,7 +237,7 @@
     rec.innerHTML =
       (photoOf(L, car) ? '<div class="rec__img"><img src="img/' + esc(photoOf(L, car)) + '" alt=""></div>' : '<div class="rec__none">' + ic('i-cam-off') + '</div>')
       + '<div class="rec__b">'
-      + '<span class="rec__cap">' + ic('i-lock') + ' Inventory record · read here, edit below</span>'
+      + '<span class="rec__cap">' + ic('i-lock') + ' Inventory record</span>'
       + '<div class="rec__n">' + esc(L.car)
       + '<span class="st' + (car && car.sold ? ' st--sold' : '') + '">' + (car && car.sold ? 'Sold' : 'Available') + '</span></div>'
       + '<div class="rec__g">'
@@ -257,7 +253,22 @@
       + '</div></div>';
   }
 
+  /* Vehicle fields row: closed by default — the strip already reads the
+     vehicle; open on its own when the lead has no vehicle, since the search
+     inside is then the only way to attach one. Set once per lead, so a save
+     or a re-render never folds it under the user. */
+  var vfFor = null;
+  function setVf(open) {
+    var sec = $('.vacc'); if (!sec) return;
+    sec.classList.toggle('acc--open', open);
+    $('.acc__h', sec).setAttribute('aria-expanded', open);
+    var p = $('.acc__p', sec); if (open) p.removeAttribute('inert'); else p.setAttribute('inert', '');
+    sizeExtender(); setTimeout(sizeExtender, 320);
+  }
+
   function renderForms() {
+    $('#vfields-s').textContent = L.car ? [L.stock ? 'Stock ' + L.stock : null, L.car].filter(Boolean).join(' · ') : 'no vehicle';
+    if (vfFor !== L.id) { vfFor = L.id; setVf(!L.car); }
     var car = carOf(L);
     var parts = (L.car || '').split(' ');
     var set = function (form, name, v) {
@@ -591,12 +602,14 @@
 
     if (t.closest('[data-act="goto-note"]')) { goTo($('#s-activity')); $('#note-in').focus({ preventScroll: true }); return; }
     if (t.closest('[data-act="goto-email"]') || t.closest('[data-act="write-email"]')) { goTo($('#s-emails')); return; }
+    if (t.closest('[data-act="vfields"]')) { setVf(!$('.vacc').classList.contains('acc--open')); return; }
     if (t.closest('[data-act="find-veh"]')) {
+      setVf(true);
       goTo($('#s-overview'));
       var s = $('#f-vehicle .search--sm input'); if (s) s.focus({ preventScroll: true });
       return;
     }
-    if (t.closest('[data-act="remove-veh"]')) { L.car = null; L.stock = null; seedDependent(); return; }
+    if (t.closest('[data-act="remove-veh"]')) { L.car = null; L.stock = null; seedDependent(); setVf(true); return; }
     if (t.closest('[data-act="add-trade"]')) { L.type = 'tradein'; renderTrade(); renderFacts(); sizeExtender(); return; }
 
     if (t.closest('[data-act="wf-discard"]')) { renderWorkflow(); return; }
@@ -649,7 +662,16 @@
     /* Email OR Day Phone is required — the page's own rule, enforced */
     if (f.id === 'f-contact') {
       var em = f.querySelector('[name="email"]'), dp = f.querySelector('[name="day"]');
-      em.classList.remove('fld--bad'); dp.classList.remove('fld--bad');
+      var fi = f.querySelector('[name="first"]'), la = f.querySelector('[name="last"]');
+      [em, dp, fi, la].forEach(function (x) { x.classList.remove('fld--bad'); });
+      /* First and Last Name are required too (Karen, SL note 7) */
+      var miss = [fi, la].filter(function (x) { return !x.value.trim(); });
+      if (miss.length) {
+        miss.forEach(function (x) { x.classList.add('fld--bad'); });
+        if (msg) { msg.textContent = miss.length === 2 ? 'Enter the first and last name.' : miss[0] === fi ? 'Enter the first name.' : 'Enter the last name.'; msg.classList.add('form__msg--bad'); }
+        miss[0].focus();
+        return;
+      }
       if (!em.value.trim() && !dp.value.trim()) {
         em.classList.add('fld--bad'); dp.classList.add('fld--bad');
         if (msg) { msg.textContent = 'Enter an email address or a day phone.'; msg.classList.add('form__msg--bad'); }

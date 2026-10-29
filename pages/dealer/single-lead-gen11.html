@@ -8,7 +8,7 @@
    cannot land this one in a half-dark state. Only an explicit `light` is honoured. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
 <link rel="stylesheet" href="all-vehicles-gen11.css?v=20261029-broom">
-<link rel="stylesheet" href="single-lead-gen11.css?v=20261022-sl">
+<link rel="stylesheet" href="single-lead-gen11.css?v=20261029-ctag">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
 <link rel="stylesheet" href="../_aan-components.css?v=20261002-fix">
 </head>
@@ -48,6 +48,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
   <symbol id="i-ext" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></symbol>
   <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></symbol>
   <symbol id="i-rss" viewBox="0 0 24 24"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></symbol>
   <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
   <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></symbol>
@@ -226,17 +227,20 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
            record above (read here — text, not boxes) and the editable copy of
            it below, which is what Save writes. -->
       <section class="sec" id="s-overview" aria-labelledby="t-overview">
-        <div class="sec__h"><h2 id="t-overview">Overview</h2><span class="s">the vehicle this enquiry is about</span></div>
+        <div class="sec__h"><h2 id="t-overview">Overview</h2></div>
         <div class="sec__b">
 
           <div class="rec" id="vrec"></div>
 
-          <form class="form" id="f-vehicle" autocomplete="off" novalidate>
+          <!-- the vehicle fields fold under one row, as Vehicle of interest folds in
+               All Leads' lead sheet (Ivaylo: compact; Alex: same pattern as the other pages) -->
+          <section class="acc vacc" data-acc="vfields">
+            <h3><button class="acc__h" type="button" data-act="vfields" aria-expanded="false" aria-controls="acc-vfields"><span class="acc__t">Vehicle fields</span><span class="acc__s" id="vfields-s"></span><svg class="i"><use href="#i-chev"/></svg></button></h3>
+            <div class="acc__p" id="acc-vfields" inert><div><div class="acc__in">
+          <form class="form form--dense" id="f-vehicle" autocomplete="off" novalidate>
             <div class="grp">
               <div class="grp__h">
-                <span class="grp__t">Vehicle of Interest / Purchased</span>
                 <span class="grp__ed"><svg class="i"><use href="#i-edit"/></svg> editable</span>
-                <span class="grp__s">the record behind the strip above — edit here if the feed got it wrong</span>
               </div>
               <label class="search search--sm"><svg class="i"><use href="#i-search"/></svg><input type="search" id="q-inventory" name="q-inventory" autocomplete="off" placeholder="Keyword (stock / vin / make / model)" aria-label="Search Inventory"><button class="btn btn--sheet btn--sm" type="button">Search Inventory</button></label>
               <div class="grid grid--5">
@@ -252,52 +256,43 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
                 <label class="f"><span>Ext Color</span><input class="fld" type="text" name="ext" autocomplete="off"></label>
               </div>
             </div>
-            <div class="form__f"><span class="form__note">Saves the vehicle record on this lead</span><span class="form__msg" role="status" aria-live="polite"></span><button class="btn btn--primary" type="submit">Save vehicle</button></div>
+            <div class="form__f"><span class="form__note"></span><span class="form__msg" role="status" aria-live="polite"></span><button class="btn btn--primary" type="submit">Save vehicle</button></div>
           </form>
+            </div></div></div>
+          </section>
         </div>
       </section>
 
       <!-- ── CONTACT ──────────────────────────────────────────────────────── -->
       <section class="sec" id="s-contact" aria-labelledby="t-contact">
-        <div class="sec__h"><h2 id="t-contact">Contact &amp; address</h2><span class="s">who to reach, and how</span></div>
+        <div class="sec__h"><h2 id="t-contact">Contact &amp; address</h2></div>
         <div class="sec__b">
-          <form class="form" id="f-contact" autocomplete="off" novalidate>
+          <form class="form form--dense" id="f-contact" autocomplete="off" novalidate>
             <div class="grp grp--req">
               <div class="grp__h">
-                <span class="grp__t">Who</span>
                 <span class="grp__ed"><svg class="i"><use href="#i-edit"/></svg> editable</span>
-                <span class="grp__s" id="req-note">Email <b>or</b> Day Phone is required.</span>
+                <span class="grp__s" id="req-note">First and Last Name, and Email <b>or</b> Day Phone are required.</span>
               </div>
-              <div class="grid grid--3">
-                <label class="f f--big"><span>First Name</span><input class="fld" type="text" name="first" autocomplete="off"></label>
+              <div class="grid grid--4">
+                <label class="f f--big"><span>First Name <b aria-hidden="true">*</b></span><input class="fld" type="text" name="first" autocomplete="off" aria-required="true" aria-describedby="req-note"></label>
                 <label class="f"><span>Middle Name</span><input class="fld" type="text" name="middle" autocomplete="off"></label>
-                <label class="f f--big"><span>Last Name</span><input class="fld" type="text" name="last" autocomplete="off"></label>
-              </div>
-              <div class="grid grid--3">
+                <label class="f f--big"><span>Last Name <b aria-hidden="true">*</b></span><input class="fld" type="text" name="last" autocomplete="off" aria-required="true" aria-describedby="req-note"></label>
                 <label class="f f--big"><span>Email Address <b aria-hidden="true">*</b></span><input class="fld" type="email" name="email" autocomplete="off" aria-describedby="req-note"></label>
                 <label class="f f--big"><span>Day Phone <b aria-hidden="true">*</b></span><input class="fld" type="tel" name="day" inputmode="tel" autocomplete="off" aria-describedby="req-note" data-phone></label>
                 <label class="f"><span>Evening Phone</span><input class="fld" type="tel" name="eve" inputmode="tel" autocomplete="off" data-phone></label>
-              </div>
-            </div>
-            <div class="grp">
-              <div class="grp__h"><span class="grp__t">Reach &amp; address</span><span class="grp__ed"><svg class="i"><use href="#i-edit"/></svg> editable</span></div>
-              <div class="grid grid--4">
                 <label class="f"><span>Best Time To Call</span><input class="fld" type="text" name="best" autocomplete="off"></label>
-                <label class="f f--wide"><span>Street Address</span><input class="fld" type="text" name="street" autocomplete="off"></label>
+                <label class="f"><span>Street Address</span><input class="fld" type="text" name="street" autocomplete="off"></label>
                 <label class="f"><span>City</span><input class="fld" type="text" name="city" autocomplete="off"></label>
                 <label class="f"><span>State</span><select class="fld sel" name="state"><option value="">—</option><option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option><option>CO</option><option>CT</option><option>DE</option><option>DC</option><option>FL</option><option>GA</option><option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option><option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option><option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option><option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option><option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option><option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option><option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option><option value="Other">Other / outside US</option></select></label>
                 <label class="f"><span>Zip</span><input class="fld" type="text" name="zip" inputmode="numeric" autocomplete="off"></label>
                 <label class="f"><span>Country</span><input class="fld" type="text" name="country" autocomplete="off"></label>
               </div>
-            </div>
-            <div class="grp">
-              <div class="grp__h"><span class="grp__t">Message &amp; comments</span><span class="grp__s">the buyer's words, then yours</span></div>
               <div class="grid grid--2">
-                <label class="f f--wide"><span>Message <i>as received</i></span><textarea class="fld" rows="4" name="message" autocomplete="off"></textarea></label>
-                <label class="f f--wide"><span>Comments <i>internal</i></span><textarea class="fld" rows="4" name="comments" autocomplete="off"></textarea></label>
+                <label class="f"><span>Message <i>as received</i></span><textarea class="fld" rows="3" name="message" autocomplete="off"></textarea></label>
+                <label class="f"><span>Comments <i>internal</i></span><textarea class="fld" rows="3" name="comments" autocomplete="off"></textarea></label>
               </div>
             </div>
-            <div class="form__f"><span class="form__note">Saves contact, address, message and comments</span><span class="form__msg" role="status" aria-live="polite"></span><button class="btn btn--primary" type="submit">Save contact</button></div>
+            <div class="form__f"><span class="form__note"></span><span class="form__msg" role="status" aria-live="polite"></span><button class="btn btn--primary" type="submit">Save contact</button></div>
           </form>
         </div>
       </section>
@@ -348,7 +343,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
     <div class="dock__b">
       <form class="wf" id="f-wf" autocomplete="off" novalidate>
         <div class="wf__state"><span class="caps">Current state</span><span class="stat" id="wf-chip">New Lead</span></div>
-        <label class="f"><span>Status</span><select class="sel" id="wf-status"><option>Unassigned</option><option>New Lead</option><option>Active Prospect</option><option>Long Term Lead</option><option>Pending</option><option>Hot</option><option>Trade Appraisal</option><option>Just Looking</option><option>Sale Pending</option><option>Bought Here</option><option>Service</option><option>Storage</option><option>Galleria</option><option>Looking For</option><option>Bought Elsewhere</option><option>Purchased Car</option><option>No Longer in Market</option><option>Spam</option><option>No Response</option><option>Credit Approved</option><option>Credit Declined</option><option>Duplicate Lead</option><option>Car is Sold</option><option>Car Unavailable</option><option>Unrealistic / Lowball Offer</option><option>Archived Phone Lead</option><option>Lease Ended</option><option>Wrong Number</option></select></label>
+        <label class="f"><span>Status</span><select class="sel" id="wf-status"><option>Unassigned</option><option>New Lead</option><hr><option>Active Prospect</option><option>Archived Phone Lead</option><option>Bought Elsewhere</option><option>Bought Here</option><option>Car is Sold</option><option>Car Unavailable</option><option>Credit Approved</option><option>Credit Declined</option><option>Duplicate Lead</option><option>Galleria</option><option>Hot</option><option>Just Looking</option><option>Lease Ended</option><option>Long Term Lead</option><option>Looking For</option><option>No Longer in Market</option><option>No Response</option><option>Pending</option><option>Purchased Car</option><option>Sale Pending</option><option>Service</option><option>Spam</option><option>Storage</option><option>Trade Appraisal</option><option>Unrealistic / Lowball Offer</option><option>Wrong Number</option></select></label>
         <label class="f"><span>Assigned to</span><select class="sel" id="wf-rep"><option>Select Rep</option></select></label>
         <label class="f"><span>Follow-up date</span><input class="fld" type="datetime-local" id="wf-follow" autocomplete="off"></label>
         <fieldset class="wf__flags">
@@ -386,6 +381,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 
 <script src="all-vehicles-gen11.data.js?v=20260930234502"></script>
 <script src="all-leads-gen10.data.js?v=20260930234502"></script>
-<script src="single-lead-gen11.js?v=20261022-sl"></script>
+<script src="single-lead-gen11.js?v=20261029-ctag"></script>
 </body>
 </html>
