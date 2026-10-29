@@ -112,14 +112,27 @@
     }).join('');
   }
 
+  /* Go Live List as an accordion (Karen, MWQ note 5: "makes the control panel
+     look very busy"). Closed it is one quiet bar — the count and the first
+     site on it; open it lists every site with its date. The look is Single
+     Lead's "Vehicle fields" bar (Alex's pick, DESIGN.md §20): a grey bar and a
+     framed chevron button, so it reads as something that opens. */
+  var GL_OPEN = false;
   function renderGoLive() {
-    $('#golive').innerHTML = '<span class="caps golive__l">Go Live List<b class="golive__n">' + D.goLive.length + '</b></span>' +
-      D.goLive.map(function (g) {
-        return '<a class="gl" href="#" title="' + esc(g.host + ' — go live ' + g.date) + '">' +
-          '<b>' + esc(g.host.replace(/^www\./, '')) + '</b><i>' + esc(g.date) + '</i></a>';
-      }).join('') +
-      '<a class="gl gl--all" href="#">All Go Lives</a>';
-    fitGoLive();
+    var strip = $('#golive'), first = D.goLive[0];
+    strip.className = 'golive golive--acc glacc' + (GL_OPEN ? ' glacc--open' : '');
+    strip.innerHTML =
+      '<button class="glacc__h" type="button" data-act="golive" aria-expanded="' + GL_OPEN + '" aria-controls="glacc-p">' +
+        '<span class="glacc__t">Go Live List<b class="golive__n">' + D.goLive.length + '</b></span>' +
+        '<span class="glacc__s">' + (first ? esc(first.host.replace(/^www\./, '')) + ' · ' + esc(first.date) + (D.goLive.length > 1 ? ' · +' + (D.goLive.length - 1) + ' more' : '') : 'none') + '</span>' +
+        ic('i-chev') + '</button>' +
+      '<div class="glacc__p" id="glacc-p"' + (GL_OPEN ? '' : ' inert') + '><div><div class="glacc__in">' +
+        D.goLive.map(function (g) {
+          return '<a class="gl" href="#" title="' + esc(g.host + ' — go live ' + g.date) + '">' +
+            '<b>' + esc(g.host.replace(/^www\./, '')) + '</b><i>' + esc(g.date) + '</i></a>';
+        }).join('') +
+        '<a class="gl gl--all" href="#">All Go Lives</a>' +
+      '</div></div></div>';
   }
 
   /* The strip never scrolls sideways. It shows the dealers that fit on the
@@ -135,7 +148,7 @@
      withholding one cost a dealer that missed the line by four pixels. */
   var GOLIVE_TAIL = 0;
   function fitGoLive() {
-    var strip = $('#golive'); if (!strip) return;
+    var strip = $('#golive'); if (!strip || strip.classList.contains('golive--acc')) return;
     var cs = getComputedStyle(strip);
     var room = strip.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - GOLIVE_TAIL;
     var all = strip.querySelector('.gl--all');
@@ -177,6 +190,11 @@
     }
   }
   window.addEventListener('resize', fitGoLive);
+  document.addEventListener('click', function (e) {
+    var gl = e.target.closest && e.target.closest('[data-act="golive"]'); if (!gl) return;
+    GL_OPEN = !GL_OPEN; renderGoLive();
+    var h = $('#golive .glacc__h'); if (h) h.focus();
+  });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitGoLive);
 
   function renderQueues() {
