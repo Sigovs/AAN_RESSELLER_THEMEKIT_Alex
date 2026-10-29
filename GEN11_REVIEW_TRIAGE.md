@@ -158,8 +158,9 @@ Numbering = the order in comments.html (open notes, oldest first). Notes 1–20 
 |---|---|---|
 | Q4 | **Dealer Login: carry over the old header links Home · Portfolio · Services · About · Contact?** (Matthew, DL #1) | Not added. Our view: the login is the door to the working system, not the AAN site; five links would compete with the login and the support tags, and we have no real URLs. Suggested reply: "The new login keeps the header to support only — tell us if the team wants the site links back." |
 | Q5 | **Dealer Login: the real Privacy Policy and Sitemap URLs** (Karen, DL #3) | Both links are in the footer and point to `#` until we have the addresses |
+| Q6 | **My Work Queue: which Feed Management items can really go?** (Karen, MWQ #2: "Craigslist and below") | Not hidden. The list includes Auction123 Feeds, in use per ticket #48572 (Sept). Hiding a menu item does not stop a feed, but staff lose the way in. Ask Karen to confirm item by item |
 
-## Round 4 — My Work Queue (staff), started 2026-10-29
+## Round 4 — My Work Queue (staff), worked 2026-10-29 (newest first)
 
 | # | Note | Decision |
 |---|---|---|
@@ -168,10 +169,7 @@ Numbering = the order in comments.html (open notes, oldest first). Notes 1–20 
 | 5 (Karen, 10-23) | "the Go Live list makes the control panel look very busy … move it somewhere else?" | ⏸ open · options on file: a) a "Go Live · 9 ⌄" button in the page header with the list as its menu (Claude's pick), b) fold it in place (Show/Hide, DESIGN.md §20), c) move it under the table |
 | 4 (Karen, 10-23) | "Does anyone use Open Projects?" | ⏸ open · Ivaylo (asked by Alex): "remove". Our menu has no "Open Projects" item — it most likely means **OpenProject**, which the whole **AAN Projects** menu leads to; waiting for Ivaylo to confirm that the whole menu goes |
 | 3 (Karen, 10-23) | "Add new OEM and View OEM accounts should be removed. We don't use them anymore." | ✅ done, resolved 10-29 with a reply note · hidden from User Management on all five staff pages (My Work Queue, Single Ticket, Dealer Edit, Manage Dealers, Accounting) at render time; the data keeps them, so they come back by deleting one line (`NAV_HIDDEN`) |
-
-**Reply notes (Alex, 2026-10-29):** when a note is resolved, a short reply goes on the same element in the notes tool — "↳ Re #3 (Karen): Removed …" — author alex, status resolved. Replies are ours, not the team's, and are left out of the counts on the status page.
 | 2 (Karen, 10-23) | "In the Feed Management dropdown, all of the feeds starting with Craigslist and below can be hidden" | ✅ resolved 10-29 with a reply note, **nothing changed** (Alex) · the 18 items from Craigslist stats down stay; **Auction123 Feeds** is among them and ticket #48572 shows it in use in September (American Dream Machines' eBay listings). Moved to the team questions as Q6 |
-
 | 1 (Ivaylo, 10-21) | "dealer link should link internally to the view all dealer page, then scrolling to that dealer and highlighting it" | ✅ done, resolved 10-29 with a reply note (a) · the dealer's name opens Manage Dealers at `#dealer=<name>`: the row comes up under the sticky stack (measured 10px below it) in brand-soft with a brand edge, marked until the next click; a mode that does not hold the dealer switches to one that does; a dealer missing from the demo roster (7 of 78) fills the Company name search instead. The dealer's own website stays on the ↗ beside the name |
 
-| Q6 | **My Work Queue: which Feed Management items can really go?** (Karen, MWQ #2: "Craigslist and below") | Not hidden. The list includes Auction123 Feeds, in use per ticket #48572 (Sept). Hiding a menu item does not stop a feed, but staff lose the way in. Ask Karen to confirm item by item |
+**Reply notes (Alex, 2026-10-29):** when a note is resolved, a short reply goes on the same element in the notes tool — "↳ Re #3 (Karen): Removed …" — author alex, status resolved. Replies are ours, not the team's, and are left out of the counts on the status page.
