@@ -407,9 +407,12 @@
     return '<span class="c c-wt" role="cell"' + (r.work ? ' title="' + esc(r.work) + '"' : '') + '>' +
       (r.work ? '<span>' + hl(r.work) + '</span>' : '') + '</span>';
   }
+  /* waiting on the client: the gear itself carries the state (Ivaylo, MWQ
+     note 7 — "a hard status indicator"), in the Waiting tag's own signal ink */
   function cAct(r, url) {
-    return '<span class="c c-act" role="cell"><a class="gear" href="' + url + '" title="Open ticket ' + esc(r.ticket) + '" ' +
-      'aria-label="Open ticket ' + esc(r.ticket) + '">' + ic('i-cog') + '</a></span>';
+    var wait = r.done && r.done.note;
+    return '<span class="c c-act" role="cell"><a class="gear' + (wait ? ' gear--wait' : '') + '" href="' + url + '" title="Open ticket ' + esc(r.ticket) + (wait ? ' · ' + esc(r.done.note) : '') + '" ' +
+      'aria-label="Open ticket ' + esc(r.ticket) + (wait ? ', ' + esc(r.done.note) : '') + '">' + ic('i-cog') + '</a></span>';
   }
 
   /* ── list ────────────────────────────────────────────────────────────── */

@@ -158,3 +158,10 @@ Numbering = the order in comments.html (open notes, oldest first). Notes 1–20 
 |---|---|---|
 | Q4 | **Dealer Login: carry over the old header links Home · Portfolio · Services · About · Contact?** (Matthew, DL #1) | Not added. Our view: the login is the door to the working system, not the AAN site; five links would compete with the login and the support tags, and we have no real URLs. Suggested reply: "The new login keeps the header to support only — tell us if the team wants the site links back." |
 | Q5 | **Dealer Login: the real Privacy Policy and Sitemap URLs** (Karen, DL #3) | Both links are in the footer and point to `#` until we have the addresses |
+
+## Round 4 — My Work Queue (staff), started 2026-10-29
+
+| # | Note | Decision |
+|---|---|---|
+| 7 (Ivaylo, 10-24) | "waiting on client should colorize the gear wheel on the right as a hard status indicator" | ✅ done locally, not resolved yet · a ticket waiting on the client or a third party gets an amber gear (signal-soft fill, signal ink — the Waiting tag's own colour), its tooltip "Open ticket … · Waiting on Client or Third party"; 15 amber gears = 15 Waiting tags. The Waiting tag by the completion date stays (its tooltip carries the reason) |
+| 6 (Karen, 10-23) | "Somewhere in this section can we add My To-dos?" | ⏸ open — a new feature, not in the current system; for beta round 2 |
