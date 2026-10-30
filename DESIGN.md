@@ -203,6 +203,7 @@ This is the part that most easily collapses into "everything is blue". It must n
 | primary action | solid `--brand` fill | `Edit vehicle` |
 | current view / lane / section tab | **brand fill, white label, the same weight as its neighbours**; its count in white at 82% | every `.ui-views` row: All Vehicles' Lot lanes, All Leads' tabs, My Work Queue lanes, Manage Dealers' saved filters, Accounting lanes, the section tabs of Single Lead and Single Ticket, Ticket History lanes |
 | binary toggle | white thumb on a sunken track | `.seg`: Yes / No, Rows / Gallery |
+| lanes of a typed feed (exception) | each lane a soft pill in the tone of its entries; chosen = that tone filled, white label | Single Ticket's Ticket History: All neutral (ink), Messages brand, Internal notes signal, ToDos ok, Waiting on client violet — the tones the entries' icons carry. Alex 10-29. The label is always printed, so the tone is a hint, never the only sign |
 | current nav section | tinted, no fill | top navigation |
 | **open for inspection** | dark `--focal` surface, on-dark ink | the selected row |
 | **bulk selected** | `--brand-soft` tint | checkbox rows |
