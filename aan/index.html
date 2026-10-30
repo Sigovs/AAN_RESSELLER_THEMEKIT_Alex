@@ -360,6 +360,28 @@
     .sec-h { flex-wrap: wrap; } .sec-h p { margin-left: 0; text-align: left; }
   }
   @media (prefers-reduced-motion: reduce) { .stage img, .btn, .g, .shots a { transition: none; } }
+  /* ── questions for the team (read from review-status.html) ── */
+  .qa { margin-top: 30px; padding: 22px 24px 8px; border-radius: 16px; background: rgba(255,255,255,.035); box-shadow: inset 0 0 0 1px rgba(255,255,255,.10); }
+  .qa__h { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 12px; margin-bottom: 10px; }
+  .qa__h b { font-size: 17px; letter-spacing: -.01em; }
+  .qa__h--nf { margin-top: 22px; }
+  .qa__n { display: inline-grid; place-items: center; min-width: 26px; height: 22px; padding: 0 8px; border-radius: 99px; background: rgba(242,161,43,.16); color: var(--amber); font: 600 12px var(--mono); }
+  .qa__h--nf .qa__n { background: rgba(255,255,255,.08); color: var(--on-2); }
+  .qa__s { font-size: 13px; color: var(--on-3); }
+  .qa__all { margin-left: auto; font-size: 13.5px; font-weight: 600; color: var(--brand-2); text-decoration: none; }
+  .qa__all:hover { text-decoration: underline; }
+  .qa__l { list-style: none; margin: 0; padding: 0; }
+  .qa__i { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 4px 20px; padding: 14px 0; border-top: 1px solid var(--line-on); }
+  .qa__w { font-size: 13px; color: var(--on-3); }
+  .qa__w b { display: block; font-size: 14px; color: var(--on); }
+  .qa__t q { display: block; color: var(--on); font-size: 14.5px; line-height: 1.5; quotes: "\201C" "\201D"; }
+  .qa__t p { margin: 4px 0 0; font-size: 13.5px; line-height: 1.55; color: var(--on-2); max-width: 86ch; }
+  .qa__t p b { color: var(--on); font-weight: 650; }
+  .qa__t .go { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 6px; font-size: 13px; }
+  .qa__t .go a { color: var(--brand-2); font-weight: 600; text-decoration: none; }
+  .qa__t .go a:hover { text-decoration: underline; }
+  .qa__empty { padding: 14px 0; font-size: 13.5px; color: var(--on-3); border-top: 1px solid var(--line-on); }
+  @media (max-width: 760px) { .qa__i { grid-template-columns: minmax(0, 1fr); } .qa__all { margin-left: 0; } }
 </style>
 </head>
 <body>
@@ -368,6 +390,7 @@
   <span class="logo"><i>AAN</i> Control Panel · Gen 11_2</span>
   <nav>
     <a href="#gen11">Gen 11_2</a>
+    <a href="#questions">Questions</a>
     <a href="comments.html">Notes</a>
     <a class="go" href="pages/dealer/all-vehicles-gen11.html">Open Gen 11_2 →</a>
   </nav>
@@ -393,9 +416,9 @@
   </div>
   <div class="stage">
     <div class="glow"></div>
-    <img class="s3" src="dash/thumbs/my-work-queue.jpg" alt="">
-    <img class="s2" src="dash/thumbs/single-vehicle.jpg" alt="">
-    <img class="s1" src="dash/thumbs/all-vehicles.jpg" alt="All Vehicles · Gen 11">
+    <img class="s3" src="dash/thumbs/my-work-queue.jpg?v=20261030" alt="">
+    <img class="s2" src="dash/thumbs/single-vehicle.jpg?v=20261030" alt="">
+    <img class="s1" src="dash/thumbs/all-vehicles.jpg?v=20261030" alt="All Vehicles · Gen 11">
   </div>
 </div></div>
 
@@ -426,35 +449,35 @@
     <div class="a11-grp__h"><b>Dealer UI</b><span>what the dealership works in every day</span><span class="a11-grp__n">5 pages</span></div>
     <div class="a11-g">
       <a class="a11-c" href="pages/dealer/all-vehicles-gen11.html">
-        <img class="a11-c__s" src="dash/thumbs/all-vehicles.jpg" alt="All Vehicles — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <img class="a11-c__s" src="dash/thumbs/all-vehicles.jpg?v=20261030" alt="All Vehicles — Gen 11, 1440×900" loading="lazy" width="760" height="475">
         <span class="a11-c__b">
           <span class="a11-c__r"><span class="a11-c__t"><b>All Vehicles</b><small>Dealer &middot; Inventory Manager</small></span><span class="a11-c__go">Open page &rarr;</span></span>
           <p>The reference implementation: a vehicle opens inside the list at a named anchor, and the columns are the dealer&rsquo;s to choose.</p>
         </span>
       </a>
       <a class="a11-c" href="pages/dealer/all-leads-gen11.html">
-        <img class="a11-c__s" src="dash/thumbs/all-leads.jpg" alt="All Leads — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <img class="a11-c__s" src="dash/thumbs/all-leads.jpg?v=20261030" alt="All Leads — Gen 11, 1440×900" loading="lazy" width="760" height="475">
         <span class="a11-c__b">
           <span class="a11-c__r"><span class="a11-c__t"><b>All Leads</b><small>Dealer &middot; Lead Desk</small></span><span class="a11-c__go">Open page &rarr;</span></span>
           <p>The lead desk on the same table grammar &mdash; lanes, facets, and a lead that opens in flow at the same anchor as a vehicle.</p>
         </span>
       </a>
       <a class="a11-c" href="pages/dealer/single-lead-gen11.html">
-        <img class="a11-c__s" src="dash/thumbs/single-lead.jpg" alt="Single Lead — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <img class="a11-c__s" src="dash/thumbs/single-lead.jpg?v=20261030" alt="Single Lead — Gen 11, 1440×900" loading="lazy" width="760" height="475">
         <span class="a11-c__b">
           <span class="a11-c__r"><span class="a11-c__t"><b>Single Lead</b><small>Dealer &middot; Lead dossier</small></span><span class="a11-c__go">Open page &rarr;</span></span>
           <p>Five continuous sections as real anchors &mdash; Overview, Contact, Trade-in, Activity, Emails. Never tabs.</p>
         </span>
       </a>
       <a class="a11-c" href="pages/dealer/single-vehicle-gen11.html">
-        <img class="a11-c__s" src="dash/thumbs/single-vehicle.jpg" alt="Single Vehicle — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <img class="a11-c__s" src="dash/thumbs/single-vehicle.jpg?v=20261030" alt="Single Vehicle — Gen 11, 1440×900" loading="lazy" width="760" height="475">
         <span class="a11-c__b">
           <span class="a11-c__r"><span class="a11-c__t"><b>Single Vehicle</b><small>Dealer &middot; Vehicle editor</small></span><span class="a11-c__go">Open page &rarr;</span></span>
           <p>The production editor&rsquo;s own twelve zones on Gen&nbsp;11 surfaces, with the commit bar over the form it commits.</p>
         </span>
       </a>
       <a class="a11-c" href="pages/dealer/dealer-login-gen11.html">
-        <img class="a11-c__s" src="dash/thumbs/dealer-login.jpg?v=20261002-video" alt="Dealer Login — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <img class="a11-c__s" src="dash/thumbs/dealer-login.jpg?v=20261030" alt="Dealer Login — Gen 11, 1440×900" loading="lazy" width="760" height="475">
         <span class="a11-c__b">
           <span class="a11-c__r"><span class="a11-c__t"><b>Dealer Login</b><small>Dealer &middot; Front door</small></span><span class="a11-c__go">Open page &rarr;</span></span>
           <p>The only page without a platform bar: the garage on full-screen video, dimmed and grained, &ldquo;One team. One system.&rdquo; re-typing itself, and the form on a pane of glass.</p>
@@ -467,41 +490,57 @@
     <div class="a11-grp__h"><b>AAN Employee UI</b><span>the internal side &mdash; queue, tickets, roster, billing</span><span class="a11-grp__n">5 pages</span></div>
     <div class="a11-g">
       <a class="a11-c" href="pages/staff/my-work-queue-gen11.html">
-        <img class="a11-c__s" src="dash/thumbs/my-work-queue.jpg" alt="My Work Queue — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <img class="a11-c__s" src="dash/thumbs/my-work-queue.jpg?v=20261030" alt="My Work Queue — Gen 11, 1440×900" loading="lazy" width="760" height="475">
         <span class="a11-c__b">
           <span class="a11-c__r"><span class="a11-c__t"><b>My Work Queue</b><small>AAN employee &middot; Operations</small></span><span class="a11-c__go">Open page &rarr;</span></span>
           <p>Seventeen columns of live work kept dense. Nothing dropped, nothing frozen &mdash; the list scrolls, the page does not.</p>
         </span>
       </a>
       <a class="a11-c" href="pages/staff/single-ticket-gen11.html">
-        <img class="a11-c__s" src="dash/thumbs/single-ticket.jpg" alt="Single Ticket — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <img class="a11-c__s" src="dash/thumbs/single-ticket.jpg?v=20261030" alt="Single Ticket — Gen 11, 1440×900" loading="lazy" width="760" height="475">
         <span class="a11-c__b">
           <span class="a11-c__r"><span class="a11-c__t"><b>Single Ticket</b><small>AAN employee &middot; Work object</small></span><span class="a11-c__go">Open page &rarr;</span></span>
           <p>Thread, crew, todos and changelog, with the conversation carried by a real threaded composer.</p>
         </span>
       </a>
       <a class="a11-c" href="pages/staff/manage-dealers-gen11.html">
-        <img class="a11-c__s" src="dash/thumbs/manage-dealers.jpg" alt="Manage Dealers — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <img class="a11-c__s" src="dash/thumbs/manage-dealers.jpg?v=20261030" alt="Manage Dealers — Gen 11, 1440×900" loading="lazy" width="760" height="475">
         <span class="a11-c__b">
           <span class="a11-c__r"><span class="a11-c__t"><b>Manage Dealers</b><small>AAN employee &middot; Roster</small></span><span class="a11-c__go">Open page &rarr;</span></span>
           <p>The 365-row roster at full density on the shared table treatment, grouped by one divider rather than a slab.</p>
         </span>
       </a>
       <a class="a11-c" href="pages/staff/dealer-edit-gen11.html">
-        <img class="a11-c__s" src="dash/thumbs/dealer-edit.jpg" alt="Dealer Edit — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <img class="a11-c__s" src="dash/thumbs/dealer-edit.jpg?v=20261030" alt="Dealer Edit — Gen 11, 1440×900" loading="lazy" width="760" height="475">
         <span class="a11-c__b">
           <span class="a11-c__r"><span class="a11-c__t"><b>Dealer Edit</b><small>AAN employee &middot; Dealer file</small></span><span class="a11-c__go">Open page &rarr;</span></span>
           <p>105 fields across seven zones, separated by chapter rhythm and hairlines instead of being wrapped in cards.</p>
         </span>
       </a>
       <a class="a11-c" href="pages/staff/accounting-view-all-gen11.html">
-        <img class="a11-c__s" src="dash/thumbs/accounting-view-all.jpg" alt="Accounting — View All — Gen 11, 1440×900" loading="lazy" width="760" height="475">
+        <img class="a11-c__s" src="dash/thumbs/accounting-view-all.jpg?v=20261030" alt="Accounting — View All — Gen 11, 1440×900" loading="lazy" width="760" height="475">
         <span class="a11-c__b">
           <span class="a11-c__r"><span class="a11-c__t"><b>Accounting &mdash; View All</b><small>AAN employee &middot; Billing</small></span><span class="a11-c__go">Open page &rarr;</span></span>
           <p>Money, so the figures are tabular and the totals are unmistakable, with Past Due carrying its own honest note.</p>
         </span>
       </a>
     </div>
+  </div>
+
+  <!-- Questions for the team, under the pages (Alex 10-30). Read live from
+       review-status.html, which ships in the same build, so the dashboard never
+       holds a second, older copy of the list. Links to a note open it here, on
+       this build, with the notes tool. -->
+  <div class="qa" id="questions">
+    <div class="qa__h">
+      <b>Questions for the team</b><span class="qa__n" id="qa-n"></span>
+      <span class="qa__s">After the review round: 124 of 124 notes resolved. These wait for a decision.</span>
+      <a class="qa__all" href="review-status.html">Full status page &rarr;</a>
+    </div>
+    <ol class="qa__l" id="qa-list"><li class="qa__empty">Loading the questions&hellip;</li></ol>
+    <div class="qa__h qa__h--nf"><b>New features, after go-live</b><span class="qa__n" id="nf-n"></span>
+      <span class="qa__s">Agreed with Ivaylo: no new features in this redesign. Each comes back after go-live.</span></div>
+    <ol class="qa__l" id="nf-list"></ol>
   </div>
 
   <a class="a11-rv" href="comments.html">
@@ -644,6 +683,39 @@
   robo.addEventListener('mouseleave', function () { spin = true; light(false); });
   robo.addEventListener('click', function () { show(); play('Wave'); });
   setTimeout(function tick() { if (!robo.matches(':hover') && !near) show(); setTimeout(tick, 18000 + Math.random() * 14000); }, 8000);
+})();
+</script>
+<script>
+/* Questions for the team: lift the two lists out of review-status.html (same
+   build, same folder) so the dashboard always shows the current ones. Links that
+   point at the AAN preview or at GitHub Pages are made local, so a note opens
+   here, on this build, with the notes tool. */
+(function () {
+  var AAN = /^https?:\/\/www\.allautonetwork\.com\/previews\/aan_reseller_2026\//, GH = /^https?:\/\/sigovs\.github\.io\/AAN_RESSELLER_THEMEKIT_Alex\//i;
+  function lift(doc, sel, list, count) {
+    var host = document.getElementById(list), n = document.getElementById(count);
+    var sec = doc.querySelector(sel); if (!sec) { host.innerHTML = ''; return; }
+    var items = sec.querySelectorAll('.list > li'); n.textContent = items.length;
+    host.innerHTML = '';
+    [].forEach.call(items, function (li) {
+      var row = document.createElement('li'); row.className = 'qa__i';
+      var w = li.querySelector('.where'), t = li.querySelector('.what');
+      row.innerHTML = '<span class="qa__w">' + (w ? w.innerHTML : '') + '</span><div class="qa__t">' + (t ? t.innerHTML : '') + '</div>';
+      [].forEach.call(row.querySelectorAll('a[href]'), function (a) {
+        var h = a.getAttribute('href').replace(AAN, '').replace(GH, '');
+        a.setAttribute('href', h);
+        if (!/^https?:/.test(h)) { a.removeAttribute('target'); a.removeAttribute('rel'); }
+      });
+      host.appendChild(row);
+    });
+  }
+  fetch('review-status.html', { cache: 'no-store' }).then(function (r) { return r.text(); }).then(function (html) {
+    var doc = new DOMParser().parseFromString(html, 'text/html');
+    lift(doc, 'section[aria-labelledby="h-ask"]', 'qa-list', 'qa-n');
+    lift(doc, 'section[aria-labelledby="h-nf"]', 'nf-list', 'nf-n');
+  }).catch(function () {
+    document.getElementById('qa-list').innerHTML = '<li class="qa__empty">The list did not load here &mdash; open the <a href="review-status.html">full status page</a>.</li>';
+  });
 })();
 </script>
 </body>
