@@ -10,7 +10,7 @@
    `aan-theme` key is shared with the Gen 10 pages, so a stored `dark` must not land this
    page in a half-dark state at load. Temporary; the dark-theme stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="single-ticket-gen11.css?v=20261029-atts">
+<link rel="stylesheet" href="single-ticket-gen11.css?v=20261029-files2">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
 <link rel="stylesheet" href="../_aan-components.css?v=20261029-selected">
 </head>
@@ -202,59 +202,78 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <section class="sec" id="s-thread" aria-labelledby="t-thread">
         <div class="sec__h"><h2 id="t-thread">Ticket History</h2><span class="s" id="thread-s"></span></div>
         <div class="sec__b">
-          <div class="lanes ui-views" id="thread-lanes" role="group" aria-label="Which entries are in view"></div>
-
-          <div class="composers" id="composers">
-            <form class="composer" id="c-message" data-lane="message" novalidate>
-              <span class="composer__who" aria-hidden="true">IG</span>
-              <div class="composer__b">
-                <label class="composer__lab" for="in-message">Reply to the client</label>
-                <textarea class="fld" id="in-message" name="in-message" rows="2" placeholder="Reply to the client…"></textarea>
-                <div class="drop"><svg class="i"><use href="#i-clip"/></svg><b>Drop files here or click to browse</b><span>Up to 20 MB per file</span><input type="file" id="in-files" name="in-files" multiple aria-label="Attach files"></div>
-                <div class="composer__f"><span class="hint">Client-visible — this is emailed to the addresses on the ticket</span><button class="btn btn--primary btn--sm" type="submit">Post Message</button></div>
-              </div>
-            </form>
-
-            <form class="composer" id="c-note" data-lane="note" novalidate>
-              <span class="composer__who" aria-hidden="true">IG</span>
-              <div class="composer__b">
-                <label class="composer__lab" for="in-note">Internal note</label>
-                <textarea class="fld" id="in-note" name="in-note" rows="2" placeholder="Internal note (never visible to the dealer)…"></textarea>
-                <div class="composer__f">
-                  <label class="flag"><input class="ck" type="checkbox" id="in-flag" name="in-flag"><span>Flag Note for</span></label>
-                  <select class="sel sel--sm" id="in-flag-who" name="in-flag-who" aria-label="Flag note for"></select>
-                  <span class="composer__sp"></span>
-                  <button class="btn btn--primary btn--sm" type="submit">Post Note</button>
+          <!-- Ivaylo, ST note 4: "we NEED to retain the sectioning off by comment type ...
+               the ticket history with its color coded sections really needs to come
+               back". Four sections in the original order, all always shown, each
+               with its own composer and its tone. The pills above only jump to a
+               section (Alex: keep them as auxiliary nav) - they hide nothing. -->
+          <nav class="lanes ui-views" id="thread-lanes" aria-label="Jump to a section of the history"></nav>
+          <div class="tsecs" id="thread">
+            <section class="tsec tsec--message" id="ts-message" aria-labelledby="th-message">
+              <header class="tsec__h"><h3 id="th-message">Messages</h3><span class="tsec__s">client-visible</span><b class="tsec__n" id="tn-message">0</b></header>
+              <form class="composer" id="c-message" data-lane="message" novalidate>
+                <span class="composer__who" aria-hidden="true">IG</span>
+                <div class="composer__b">
+                  <label class="composer__lab" for="in-message">Reply to the client</label>
+                  <textarea class="fld" id="in-message" name="in-message" rows="2" placeholder="Reply to the client…"></textarea>
+                  <div class="drop"><svg class="i"><use href="#i-clip"/></svg><b>Drop files here or click to browse</b><span>Up to 20 MB per file</span><input type="file" id="in-files" name="in-files" multiple aria-label="Attach files"></div>
+                  <div class="composer__f"><span class="hint">Client-visible — this is emailed to the addresses on the ticket</span><button class="btn btn--primary btn--sm" type="submit">Post Message</button></div>
                 </div>
-              </div>
-            </form>
-
-            <form class="composer" id="c-woc" data-lane="woc" novalidate>
-              <span class="composer__who" aria-hidden="true">IG</span>
-              <div class="composer__b">
-                <label class="composer__lab" for="in-woc">Waiting on Client</label>
-                <textarea class="fld" id="in-woc" name="in-woc" rows="2" placeholder="Why is this ticket waiting on the client?"></textarea>
-                <div class="composer__f"><span class="hint">Records why the clock is not running on AAN</span><button class="btn btn--primary btn--sm" type="submit">Post WOC Note</button></div>
-              </div>
-            </form>
-
-            <form class="composer" id="c-todo" data-lane="todo" novalidate>
-              <span class="composer__who" aria-hidden="true">IG</span>
-              <div class="composer__b">
-                <label class="composer__lab" for="in-todo">New ToDo</label>
-                <textarea class="fld" id="in-todo" name="in-todo" rows="2" placeholder="New ToDo…"></textarea>
-                <div class="composer__f">
-                  <span class="hint">For</span>
-                  <select class="sel sel--sm" id="in-todo-who" name="in-todo-who" aria-label="ToDo assignee"></select>
-                  <span class="composer__sp"></span>
-                  <button class="btn btn--primary btn--sm" type="submit">Add ToDo</button>
+              </form>
+              <ol class="feed" id="tf-message"></ol>
+              <p class="tsec__empty" id="te-message" hidden>No messages with the client yet</p>
+            </section>
+            <section class="tsec tsec--note" id="ts-note" aria-labelledby="th-note">
+              <header class="tsec__h"><h3 id="th-note">Internal notes</h3><span class="tsec__s">the crew only</span><b class="tsec__n" id="tn-note">0</b></header>
+              <form class="composer" id="c-note" data-lane="note" novalidate>
+                <span class="composer__who" aria-hidden="true">IG</span>
+                <div class="composer__b">
+                  <label class="composer__lab" for="in-note">Internal note</label>
+                  <textarea class="fld" id="in-note" name="in-note" rows="2" placeholder="Internal note (never visible to the dealer)…"></textarea>
+                  <div class="drop"><svg class="i"><use href="#i-clip"/></svg><b>Drop files here or click to browse</b><span>Up to 20 MB per file</span><input type="file" id="in-note-files" name="in-note-files" multiple aria-label="Attach files to the note"></div>
+                  <div class="composer__f">
+                    <label class="flag"><input class="ck" type="checkbox" id="in-flag" name="in-flag"><span>Flag Note for</span></label>
+                    <select class="sel sel--sm" id="in-flag-who" name="in-flag-who" aria-label="Flag note for"></select>
+                    <span class="composer__sp"></span>
+                    <button class="btn btn--primary btn--sm" type="submit">Post Note</button>
+                  </div>
                 </div>
-              </div>
-            </form>
+              </form>
+              <ol class="feed" id="tf-note"></ol>
+              <p class="tsec__empty" id="te-note" hidden>No internal notes yet</p>
+            </section>
+            <section class="tsec tsec--woc" id="ts-woc" aria-labelledby="th-woc">
+              <header class="tsec__h"><h3 id="th-woc">Waiting on client</h3><span class="tsec__s">why the clock is not running</span><b class="tsec__n" id="tn-woc">0</b></header>
+              <form class="composer" id="c-woc" data-lane="woc" novalidate>
+                <span class="composer__who" aria-hidden="true">IG</span>
+                <div class="composer__b">
+                  <label class="composer__lab" for="in-woc">Waiting on Client</label>
+                  <textarea class="fld" id="in-woc" name="in-woc" rows="2" placeholder="Why is this ticket waiting on the client?"></textarea>
+                  <div class="composer__f"><span class="hint">Records why the clock is not running on AAN</span><button class="btn btn--primary btn--sm" type="submit">Post WOC Note</button></div>
+                </div>
+              </form>
+              <ol class="feed" id="tf-woc"></ol>
+              <p class="tsec__empty" id="te-woc" hidden>Nothing is waiting on the client</p>
+            </section>
+            <section class="tsec tsec--todo" id="ts-todo" aria-labelledby="th-todo">
+              <header class="tsec__h"><h3 id="th-todo">ToDos</h3><b class="tsec__n" id="tn-todo">0</b></header>
+              <form class="composer" id="c-todo" data-lane="todo" novalidate>
+                <span class="composer__who" aria-hidden="true">IG</span>
+                <div class="composer__b">
+                  <label class="composer__lab" for="in-todo">New ToDo</label>
+                  <textarea class="fld" id="in-todo" name="in-todo" rows="2" placeholder="New ToDo…"></textarea>
+                  <div class="composer__f">
+                    <span class="hint">For</span>
+                    <select class="sel sel--sm" id="in-todo-who" name="in-todo-who" aria-label="ToDo assignee"></select>
+                    <span class="composer__sp"></span>
+                    <button class="btn btn--primary btn--sm" type="submit">Add ToDo</button>
+                  </div>
+                </div>
+              </form>
+              <ol class="feed" id="tf-todo"></ol>
+              <p class="tsec__empty" id="te-todo" hidden>No ToDos yet</p>
+            </section>
           </div>
-
-          <ol class="feed" id="thread"></ol>
-          <p class="empty" id="thread-empty" hidden><b>Nothing in this lane yet</b><span>The composer above is where the first entry goes.</span></p>
         </div>
       </section>
 
@@ -328,6 +347,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 </div>
 
 <script src="single-ticket-gen11.data.js?v=20260930234502"></script>
-<script src="single-ticket-gen11.js?v=20261029-atts2"></script>
+<script src="single-ticket-gen11.js?v=20261029-files2"></script>
 </body>
 </html>

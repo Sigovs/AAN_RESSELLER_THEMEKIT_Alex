@@ -1599,3 +1599,28 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 .att--go:hover .att__f { color: var(--brand-ink); }
 .att--go:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 #s-thread .ev.ev--target { background: var(--brand-soft); box-shadow: inset 0 0 0 1px var(--brand-soft-2), inset 3px 0 0 var(--brand); }
+/* == Ticket History in four sections (Ivaylo ST #4, Alex: A) - the original
+   Messages / Internal notes / Waiting on client / ToDos, always all shown. Each
+   section carries its tone (the entries icon tone, the lane pill tone) as a
+   3px rail on its left and a soft header; its own composer sits under the
+   header, its entries under that, newest first. == */
+.tsecs { display: grid; gap: var(--s5); margin-top: var(--s4); }
+.tsec { position: relative; padding-left: var(--s4); box-shadow: inset 3px 0 0 var(--tone); scroll-margin-top: calc(var(--stick-bar) + var(--stick-sec) + var(--anchor-gap)); }
+.tsec__h { display: flex; align-items: baseline; gap: var(--s2); min-height: 36px; padding: var(--s2) var(--s3); margin-bottom: var(--s3); border-radius: 8px; background: var(--tone-soft); }
+.tsec__h h3 { margin: 0; font-size: 14px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--tone-ink); }
+.tsec__s { font-size: 13px; color: var(--ink-3); }
+.tsec__n { margin-left: auto; font-size: 13px; font-weight: 600; color: var(--tone-ink); font-variant-numeric: tabular-nums; }
+.tsec .composer { display: grid; margin-bottom: var(--s3); }
+.tsec__empty { margin: 0; padding: var(--s2) 0 var(--s1); font-size: 13px; color: var(--ink-3); }
+.tsec .feed { margin: 0; padding: 0; list-style: none; }
+.tsec--message { --tone: var(--brand); --tone-soft: var(--brand-soft); --tone-ink: var(--brand-ink); }
+.tsec--note { --tone: var(--signal-fill); --tone-soft: var(--signal-soft); --tone-ink: var(--signal); }
+.tsec--woc { --tone: var(--violet); --tone-soft: var(--violet-soft); --tone-ink: var(--violet); }
+.tsec--todo { --tone: var(--ok-fill); --tone-soft: var(--ok-soft); --tone-ink: var(--ok); }
+/* files picked in a drop are named in it before posting */
+.drop { flex-wrap: wrap; }
+.drop--has { box-shadow: inset 0 0 0 1px var(--brand-soft-2); }
+.drop__picked { flex-basis: 100%; font-family: var(--mono); font-size: 12px; color: var(--ink-2); overflow-wrap: anywhere; }
+.rbox .drop { margin: 0; }
+/* every composer's post action stands at the right end of its row (§11) */
+.composer__f > .btn--primary { margin-left: auto; }

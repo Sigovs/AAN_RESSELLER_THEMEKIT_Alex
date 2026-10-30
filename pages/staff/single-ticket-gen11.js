@@ -371,14 +371,11 @@
     return thread.filter(function (e) { return e.kind === k; }).length;
   }
   function renderLanes() {
+    /* jump links, not filters (Ivaylo ST #4): every section is always shown */
     $('#thread-lanes').innerHTML = LANES.map(function (l) {
-      return '<button class="lane ui-view' + (l.k === lane ? ' lane--on ui-view--on' : '') + '" type="button" data-lane="' + l.k
-        + '" aria-pressed="' + (l.k === lane) + '">' + esc(l.label) + '<b>' + laneCount(l.k) + '</b></button>';
+      return '<button class="lane ui-view" type="button" data-jump-sec="' + (l.k === 'all' ? 's-thread' : 'ts-' + l.k) + '" data-lane="' + l.k + '">'
+        + esc(l.label) + '<b>' + laneCount(l.k) + '</b></button>';
     }).join('');
-    $$('.composer').forEach(function (c) {
-      var on = lane === 'all' ? c.dataset.lane === 'note' : c.dataset.lane === lane;
-      c.classList.toggle('composer--on', on);
-    });
   }
   /* A thread you can answer. Alex asked for this: a note is a post, and a post
      can be replied to, so the history reads as a conversation instead of a
@@ -406,6 +403,7 @@
     var client = e.kind === 'message';
     return '<li class="rbox' + (client ? ' rbox--client' : '') + '"><form class="rbox__f" data-reply-to="' + esc(e.id) + '" data-reply-kind="' + (client ? 'message' : 'note') + '">'
       + '<textarea class="rbox__t" name="body" rows="3" placeholder="Reply to ' + esc(e.who || 'this entry') + '…" aria-label="Reply"></textarea>'
+      + '<div class="drop">' + ic('i-clip') + '<b>Drop files here or click to browse</b><span>Up to 20 MB per file</span><input type="file" multiple aria-label="Attach files to the reply"></div>'
       + '<div class="rbox__r"><span class="rbox__who">' + (client
           ? 'Client-visible — this is emailed to the addresses on the ticket'
           : 'Internal note · visible to the crew, not the dealer') + '</span>'
@@ -457,16 +455,24 @@
   }
 
   function renderThread() {
-    var rows = thread.filter(function (e) { return lane === 'all' || e.kind === lane; });
+    var rows = thread;
     var tree = treeRows(rows);
+    /* a reply lives in the section of what it answers: the root's kind */
+    var by = {}; rows.forEach(function (e) { by[e.id] = e; });
+    var rootKind = function (e) { var g = 0; while (e.replyTo && by[e.replyTo] && g++ < 50) e = by[e.replyTo]; return e.kind; };
     var msgs = laneCount('message'), notes = laneCount('note'), todos = laneCount('todo');
     $('#thread-s').textContent = msgs + ' client-visible · ' + notes + ' internal · ' + todos + ' ToDos';
-    $('#thread').innerHTML = tree.map(function (r) {
+    var html = { message: [], note: [], woc: [], todo: [] };
+    tree.forEach(function (r) { (html[rootKind(r.e)] || html.note).push(r); });
+    Object.keys(html).forEach(function (sk) {
+    $('#tf-' + sk).innerHTML = html[sk].map(function (r) {
       var e = r.e, w = splitWhen(e.when);
       var long = e.body && e.body.length > 420;
       var atts = e.atts && e.atts.length
         ? '<div class="evatt">Attachments: ' + e.atts.map(function (a) {
-            return '<span class="evatt__f">' + ic('i-file') + esc(a) + ' <em>(file missing)</em></span>';
+            /* only the export's files are missing; one posted here is not */
+            var fresh = (e.attsNew || []).indexOf(a) >= 0;
+            return '<span class="evatt__f">' + ic('i-file') + esc(a) + (fresh ? '' : ' <em>(file missing)</em>') + '</span>';
           }).join('') + '</div>'
         : '';
       return '<li class="ev ev--' + e.kind + (r.d ? ' ev--reply' : '') + '" data-ev="' + esc(e.id) + '"'
@@ -492,7 +498,9 @@
         + '</li>'
         + (replyOpen === e.id ? replyBox(e) : '');
     }).join('');
-    $('#thread-empty').hidden = rows.length > 0;
+    $('#tn-' + sk).textContent = html[sk].length;
+    $('#te-' + sk).hidden = html[sk].length > 0;
+    });
   }
 
   /* ══ CHANGELOG — the same timeline, on field changes ═══════════════════ */
@@ -541,7 +549,7 @@
       ? T.atts.map(function (a) {
           /* a file that sits in an entry opens that entry in the history */
           return '<div class="att' + (a.ev ? ' att--go' : '') + '"' + (a.ev ? ' role="button" tabindex="0" data-jump-ev="' + esc(a.ev) + '" title="Show the entry it was posted with"' : '') + '>' + ic('i-file')
-            + '<span class="att__f">' + esc(a.file) + '<span class="att__gone">file missing</span></span>'
+            + '<span class="att__f">' + esc(a.file) + (a.fresh ? '' : '<span class="att__gone">file missing</span>') + '</span>'
             + '<span class="att__m">' + esc(a.by) + '</span></div>';
         }).join('')
       : '<p class="empty"><b>No attachments on this ticket</b><span>Files posted with a message or a note appear here.</span></p>';
@@ -656,7 +664,7 @@
   function jumpToEntry(id) {
     var hit = null; thread.forEach(function (x) { if (x.id === id) hit = x; });
     if (!hit) return;
-    if (lane !== 'all' && lane !== hit.kind) { lane = 'all'; renderLanes(); renderThread(); }
+
     var li = document.querySelector('#thread [data-ev="' + id + '"]'); if (!li) return;
     $$('#thread .ev--target').forEach(function (x) { x.classList.remove('ev--target'); });
     li.classList.add('ev--target');
@@ -746,16 +754,38 @@
     if (!text) { el.classList.add('fld--bad'); el.focus(); return; }
     el.classList.remove('fld--bad');
     var when = stamp(new Date());
-    thread.unshift({
+    var entry = {
       id: kind + '-new-' + Date.now(), kind: kind, who: D.me.name,
       when: when, body: text, atts: [], k: key(when), open: false
-    });
+    };
+    thread.unshift(entry);
+    var form = el.closest('form');
+    recordFiles(entry, pickedFiles(form)); clearDrop(form);
     el.value = '';
-    if (lane !== 'all' && lane !== kind) lane = kind;
+
     renderLanes(); renderThread(); renderSecnav(); sizeExtender();
   }
 
-  function postReply(parentId, text, kind) {
+  /* Files (Alex 10-29: in notes and replies too). The drop shows what was
+     picked; posting puts the names into the entry and the Attachments list —
+     the mock has no upload, so each one reads "file missing" like the export. */
+  function pickedFiles(form) {
+    var inp = form && form.querySelector('.drop input[type="file"]');
+    return inp && inp.files ? [].map.call(inp.files, function (f) { return f.name; }) : [];
+  }
+  function recordFiles(entry, names) {
+    if (!names.length) return;
+    entry.atts = (entry.atts || []).concat(names); entry.attsNew = (entry.attsNew || []).concat(names);
+    names.forEach(function (n) { T.atts.unshift({ by: entry.who + ' · ' + entry.when, file: n, ev: entry.id, fresh: true }); });
+    renderAtts();
+  }
+  function clearDrop(form) {
+    var d = form && form.querySelector('.drop'); if (!d) return;
+    var inp = d.querySelector('input[type="file"]'); if (inp) inp.value = '';
+    d.classList.remove('drop--has'); var p = d.querySelector('.drop__picked'); if (p) p.remove();
+  }
+
+  function postReply(parentId, text, kind, files) {
     text = (text || '').trim();
     if (!text) return false;
     var when = stamp(new Date());
@@ -765,6 +795,7 @@
       id: 'note-reply-' + Date.now() + '-' + (++replySeq), kind: kind === 'message' ? 'message' : 'note', who: D.me.name,
       when: when, body: text, atts: [], k: key(when), seq: replySeq, open: false, replyTo: parentId
     };
+    recordFiles(entry, files || []);
     /* directly under what it answers, not at the top of the list */
     if (at >= 0) thread.splice(at + 1, 0, entry); else thread.unshift(entry);
     replyOpen = null;
@@ -821,8 +852,7 @@
 
     if ((el = t.closest('[data-act="clog"]'))) { setClog(el.getAttribute('aria-expanded') !== 'true'); return; }
 
-    if ((el = t.closest('[data-lane]'))) { lane = el.dataset.lane; renderLanes(); renderThread(); sizeExtender(); return; }
-    if (t.closest('[data-act="lane-woc"]')) { lane = 'woc'; renderLanes(); renderThread(); $('#in-woc').focus({ preventScroll: true }); return; }
+    if ((el = t.closest('#thread-lanes [data-jump-sec]'))) { goTo($('#' + el.dataset.jumpSec)); return; }
 
     if ((el = t.closest('[data-jump-ev]'))) { jumpToEntry(el.dataset.jumpEv); return; }
     if ((el = t.closest('[data-more]'))) {
@@ -919,8 +949,21 @@
     if (!f) return;
     e.preventDefault();
     var ta = f.querySelector('.rbox__t');
-    if (!postReply(f.dataset.replyTo, ta.value, f.dataset.replyKind)) { ta.classList.add('fld--bad'); ta.focus(); }
+    if (!postReply(f.dataset.replyTo, ta.value, f.dataset.replyKind, pickedFiles(f))) { ta.classList.add('fld--bad'); ta.focus(); }
   }, true);
+
+  /* a drop says what was picked, so a file is never posted unseen */
+  document.addEventListener('change', function (e) {
+    var inp = e.target; if (!inp.matches || !inp.matches('.drop input[type="file"]')) return;
+    var d = inp.closest('.drop'), names = [].map.call(inp.files || [], function (f) { return f.name; });
+    var p = d.querySelector('.drop__picked'); if (p) p.remove();
+    d.classList.toggle('drop--has', names.length > 0);
+    if (names.length) {
+      p = document.createElement('span'); p.className = 'drop__picked';
+      p.textContent = names.length + (names.length === 1 ? ' file: ' : ' files: ') + names.join(', ');
+      d.appendChild(p);
+    }
+  });
 
   /* an attachment row that opens its entry answers Enter and Space too */
   $('#atts').addEventListener('keydown', function (e) {
