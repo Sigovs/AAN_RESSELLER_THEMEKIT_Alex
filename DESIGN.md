@@ -204,6 +204,7 @@ This is the part that most easily collapses into "everything is blue". It must n
 | current view / lane / section tab | **brand fill, white label, the same weight as its neighbours**; its count in white at 82% | every `.ui-views` row: All Vehicles' Lot lanes, All Leads' tabs, My Work Queue lanes, Manage Dealers' saved filters, Accounting lanes, the section tabs of Single Lead and Single Ticket, Ticket History lanes |
 | binary toggle | white thumb on a sunken track | `.seg`: Yes / No, Rows / Gallery |
 | lanes of a typed feed (exception) | each lane a soft pill in the tone of its entries; chosen = that tone filled, white label | Single Ticket's Ticket History: All neutral (ink), Messages brand, Internal notes signal, ToDos ok, Waiting on client violet — the tones the entries' icons carry. Alex 10-29. The label is always printed, so the tone is a hint, never the only sign |
+| switchable state | a state chip that is also a button: outline chip with its glyph at rest (hover: wash + darker ring), the state's tone when on; one label in both states, 0px shift | Single Ticket's "Waiting on client" chip among the state chips — the same flag as the form checkbox, either moves both |
 | current nav section | tinted, no fill | top navigation |
 | **open for inspection** | dark `--focal` surface, on-dark ink | the selected row |
 | **bulk selected** | `--brand-soft` tint | checkbox rows |
@@ -367,6 +368,7 @@ the surface. Icon-only buttons take the square of their tier.
 - one height per class of control within a page — 40px for sheet actions
 - buttons are sized by their label; do not stretch to fill a wide band
 - `var(--s2)` 8px between neighbours
+- a form's result ("Saved", or what is missing) stands **beside the button that produced it**, 16px to its left, and the button does not move when it appears (Single Ticket, Single Lead)
 - a **segmented control** is one object: a sunken track, `--r-pill`, 5px padding, 2px internal
   gap, and a white thumb for the active segment. Anything that is not segmented gets real
   separation
@@ -528,6 +530,7 @@ Rules:
 | Single Vehicle | page title | 18px (sticky cockpit) | decide: 28px, or record the cockpit as its own role |
 | Single Vehicle | field label | 12px / 700 CAPS | 13px / 600 sentence case — or record why the editor differs |
 | All Vehicles / Single Lead | mono id | 13px / 700 · 12.5px / 400 | one weight |
+| Single Lead | record head | on the page ground, one row | decide: the record head card of §21 (as Single Ticket and Dealer Edit), or record why the lead head stays one row |
 
 ---
 
@@ -586,3 +589,37 @@ vehicle). A save never folds it under the user.
 
 **Red** stays for the one state that must be noticed — Hidden on site — and, by Alex's decision of
 2026-10-29, for **Clear all** (All Vehicles, All Leads), which Karen and Ivaylo both asked for.
+
+---
+
+## 21 · Record head — the card at the top of a record page
+
+Added 2026-10-29 (Single Ticket, Ivaylo ST #6 and Alex). A page about one record opens with its
+head as one sheet card (`--sheet`, `--r-card`, `--sh-soft`, padding 12 / 24 / 24), above the board.
+
+| row | holds |
+|---|---|
+| 1 | the way back as the quiet small button ("‹ Back to queue") at the left; the record actions at the right — Prev / Next, Print, the primary save |
+| 2 | the record's title, page-title role (28 / 600) |
+| 3 | its state chips, a switchable state chip if it has one (§6), its id as an outline pill with its label ("Ticket number: 1047015", the number mono), then its dates in 13px muted; the dates wrap to their own line without a leading dot |
+
+Facts are not repeated: the dates live here and not on the board; the dealer has its own board card.
+Dealer Edit already opens with a head card; Single Lead does not yet (§18, not aligned).
+
+---
+
+## 22 · Feed entries — actions, replies, removal
+
+Added 2026-10-29 on Single Ticket's Ticket History; the rules for any feed of posts.
+
+**Actions row** — under the entry's text, spanning the text and the date columns:
+
+- **Reply** first, an outline pill in brand ink (it is the entry's main action, not a fill — a fill is a whole form's primary)
+- **Edit** quiet beside it (a mock addition on Single Ticket: the original has none)
+- **Remove** in danger text at the far right, its word lined up with the date above it; it asks before removing and the removal is logged where production logs it ("Note deleted" in the changelog, with the removed text)
+
+**Reply is what the entry is.** Under a client's message, Reply answers the client — client-visible, "emailed to the addresses on the ticket", Post Message. Under an internal note or a ToDo it is an internal note. A reply that leaves the building says so in brand ink.
+
+**Replies are a tree, card to card.** A branch leaves the answered card from its bottom edge, 20px in, runs down the gap and turns (10px radius) into each reply's left edge at the height of its avatar; it ends at the last reply. Nothing is drawn inside a card. A reply to a reply is one level in (40px), capped at four levels. Replies follow in the order they were written; top-level entries keep the feed's order.
+
+**Lanes of a typed feed** may carry their entries' tones (§6 exception).
