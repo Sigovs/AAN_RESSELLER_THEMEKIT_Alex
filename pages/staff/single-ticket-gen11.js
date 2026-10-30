@@ -222,7 +222,7 @@
      the board's Billable line follows it. */
   function setWait(on, quiet) {
     T.form.waiting = on;
-    var b = $('#h-wait'); b.setAttribute('aria-pressed', String(on)); b.classList.toggle('wbtn--on', on);
+    var b = $('#h-wait'); b.setAttribute('aria-pressed', String(on)); b.classList.toggle('wchip--on', on);
     b.title = on ? 'Waiting on the client or a third party — click to clear' : 'Mark this ticket as waiting on the client or a third party';
     var cb = $('#w-wait'); if (cb) cb.checked = on;
     if (!quiet) renderPulse();
