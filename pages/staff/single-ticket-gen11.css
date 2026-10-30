@@ -1452,16 +1452,15 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 .feed--clog .prev { align-self: flex-start; justify-self: start; width: fit-content; max-width: 100%; }
 .feed--clog .prev--none { padding: 0; box-shadow: none; background: none; font-size: 13px; color: var(--ink-3); }
 /* the save action stays at the right end of its form, as Save contact on Single
-   Lead; the status message takes the free space on the left */
+   Lead */
 .wo .form__f { justify-content: flex-end; padding-left: 0; padding-right: 0; }
-.wo .form__msg { margin-right: auto; }
+/* the result of a save ("Saved") stands next to the button that did it */
+.wo .form__msg { margin: 0; }
 .wo .form__f > .btn { margin: 0; }
 /* ≤1366: the title needs the room (at 1280 it was cut to "SEO and Buy Ca…"). The three chips repeat Work Status,
    Priority and Work Type, which the Work Order block now shows on the first
    screen, so they step aside instead of the title being cut to "#1047…" */
-@media (max-width: 1366px) {
-  .head .chips { display: none; }
-}
+
 /* the first cell of a row starts on the card title's 24px edge (an older
    dock-open rule gave it 12px, so "TIME SPENT" stood right of "This ticket") */
 /* 16px each side of a cell divider at every width (the dock-open rule above
@@ -1479,3 +1478,23 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 .head > h1 { min-width: 0; flex: 0 1 auto; margin: 0 var(--s2) 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .head > .head__ctx { flex: none; margin-left: var(--s1); font-family: var(--mono); font-size: 13px; color: var(--ink-3); white-space: nowrap; }
 .head > .head__ctx::before { content: "·"; margin-right: var(--s2); font-family: var(--font); color: var(--ink-4); }
+/* ══ head card (Alex, ST note 6) — the sheet surface of the Work Order
+   panel: Back to queue + the record actions, the ticket title (28/600), then
+   its chips, id and dates. Overrides the one-row head above. ══ */
+.head.head--card {
+  display: flex; flex-direction: column; align-items: stretch; gap: 0;
+  min-height: 0; margin: var(--s2) 0 var(--gutter);
+  padding: var(--s3) var(--s5) var(--s5);
+  border-radius: var(--r-card); background: var(--sheet); box-shadow: var(--sh-soft);
+}
+.head__top { display: flex; align-items: center; gap: var(--s2); min-width: 0; }
+/* the quiet button sits on white here, so its hover is the wash, not white */
+.head--card .btn--quiet:hover { background: var(--wash); }
+.head--card .head__top > .btn--quiet:first-child { margin-left: calc(-1 * var(--s3)); }
+.head--card > h1 { margin: var(--s3) 0 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.head__sub { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s2) var(--s2); margin-top: var(--s3); min-width: 0; }
+.head__sub > .head__ctx { font-family: var(--mono); font-size: 13px; color: var(--ink-3); white-space: nowrap; }
+.head__sub > .head__ctx::before { content: "·"; margin-right: var(--s2); font-family: var(--font); color: var(--ink-4); }
+/* no leading dot on the dates: when they wrap to their own line at 1024 a dot
+   would start the line alone */
+.head__sub > .head__meta { margin: 0; padding: 0; font-size: 13px; color: var(--ink-3); white-space: normal; overflow: visible; }

@@ -10,7 +10,7 @@
    `aan-theme` key is shared with the Gen 10 pages, so a stored `dark` must not land this
    page in a half-dark state at load. Temporary; the dark-theme stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="single-ticket-gen11.css?v=20261029-head2">
+<link rel="stylesheet" href="single-ticket-gen11.css?v=20261029-hcard3">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
 <link rel="stylesheet" href="../_aan-components.css?v=20261029-selected">
 </head>
@@ -92,22 +92,26 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
        the work order's primary action and it lives in both places the export
        puts it (masthead and save bar), wired to the same handler. Everything
        else here is a route. -->
-  <div class="head">
-    <a class="btn btn--quiet" href="my-work-queue-gen11.html"><svg class="i"><use href="#i-left"/></svg> Back to queue</a>
-    <span class="head__div"></span>
-    <!-- the head of every record page, as Single Lead: the title, its state,
-         its id (Ivaylo, ST note 6). The opened / modified line is a fact of
-         the ticket and sits on the "This ticket" card; the dealer is its own card. -->
+  <!-- Head card (Alex, ST note 6): the way back, then the ticket's title,
+       then its state, id and dates — one object at the top of the page,
+       on the same sheet surface as the Work Order. -->
+  <div class="head head--card">
+    <div class="head__top">
+      <a class="btn btn--quiet btn--sm" href="my-work-queue-gen11.html"><svg class="i"><use href="#i-left"/></svg> Back to queue</a>
+      <span class="head__sp"></span>
+      <span class="walk" role="group" aria-label="Record navigation">
+        <button class="btn btn--quiet btn--sm" type="button" data-act="prev"><svg class="i"><use href="#i-left"/></svg> Prev</button>
+        <button class="btn btn--quiet btn--sm" type="button" data-act="next">Next <svg class="i"><use href="#i-right"/></svg></button>
+      </span>
+      <button class="btn btn--sheet btn--sm" type="button" data-act="print"><svg class="i"><use href="#i-print"/></svg> Print</button>
+      <button class="btn btn--primary btn--sm" type="button" data-act="save"><svg class="i"><use href="#i-check"/></svg> Save Ticket</button>
+    </div>
     <h1 id="h-title">Ticket</h1>
-    <div class="chips" id="h-chips"></div>
-    <span class="head__ctx" id="h-id"></span>
-    <span class="head__sp"></span>
-    <span class="walk" role="group" aria-label="Record navigation">
-      <button class="btn btn--quiet btn--sm" type="button" data-act="prev"><svg class="i"><use href="#i-left"/></svg> Prev</button>
-      <button class="btn btn--quiet btn--sm" type="button" data-act="next">Next <svg class="i"><use href="#i-right"/></svg></button>
-    </span>
-    <button class="btn btn--sheet btn--sm" type="button" data-act="print"><svg class="i"><use href="#i-print"/></svg> Print</button>
-    <button class="btn btn--primary btn--sm" type="button" data-act="save"><svg class="i"><use href="#i-check"/></svg> Save Ticket</button>
+    <div class="head__sub">
+      <div class="chips" id="h-chips"></div>
+      <span class="head__ctx" id="h-id"></span>
+      <span class="head__meta" id="h-meta"></span>
+    </div>
   </div>
 
   <!-- ══ BENTO — two slots, placed by NAMED AREA ═══════════════════════════
@@ -322,6 +326,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 </div>
 
 <script src="single-ticket-gen11.data.js?v=20260930234502"></script>
-<script src="single-ticket-gen11.js?v=20261029-head"></script>
+<script src="single-ticket-gen11.js?v=20261029-hcard"></script>
 </body>
 </html>

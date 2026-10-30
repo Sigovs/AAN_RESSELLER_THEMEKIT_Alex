@@ -202,6 +202,10 @@
     $('#h-title').textContent = T.subject;
     $('#h-title').title = T.subject;
     $('#h-id').textContent = '#' + T.tid;
+    /* opened · last modified · last activity — the dealer (first part) is not
+       repeated: it is its own card below */
+    $('#h-meta').textContent = String(T.meta || '').replace(/\s+/g, ' ').split('·').slice(1)
+      .map(function (x) { return x.trim(); }).filter(Boolean).join(' · ');
     $('#h-chips').innerHTML = T.chips.map(function (c) {
       var t = toneOf(c);
       var isType = /--worktype/.test(c.cls);
@@ -218,12 +222,7 @@
      the yes/no goes into its label. The ticket's dealer is not repeated here,
      it is the next card. */
   function renderPulse() {
-    /* opened · last modified · last activity — the dealer (first part) is not
-       repeated: it is the next card */
-    var meta = String(T.meta || '').replace(/\s+/g, ' ').split('·').slice(1)
-      .map(function (x) { return x.trim(); }).filter(Boolean).join(' · ');
-    $('#pulse-s').textContent = meta || ('ticket #' + T.tid);
-    $('#pulse-s').title = meta;
+    $('#pulse-s').textContent = '';   /* the dates are in the head card now */
     $('#pulse').innerHTML = T.pulse.map(function (t) {
       var none = t.v === '—' || t.v === '— → —';
       var v = t.v, lab = [t.s].filter(Boolean);
