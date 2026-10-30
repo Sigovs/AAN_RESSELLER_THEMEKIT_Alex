@@ -350,7 +350,21 @@
      can be replied to, so the history reads as a conversation instead of a
      transcript. The reply is an internal note that remembers what it answers —
      no new record type, no new field on the ticket. */
-  var replyOpen = null;
+  var replyOpen = null, editOpen = null;
+  /* Edit (Alex 10-29, a new action — the original has none): the entry's text
+     opens in place, with Cancel and Save. */
+  function editBox(e) {
+    return '<form class="rbox__f rbox__f--edit" data-edit-of="' + esc(e.id) + '">'
+      + '<textarea class="rbox__t" name="body" rows="3" aria-label="Edit entry">' + esc(e.body || '') + '</textarea>'
+      + '<div class="rbox__r"><span class="rbox__who">Editing ' + esc((KINDW[e.kind] || 'entry').toLowerCase()) + '</span>'
+      + '<button class="btn btn--quiet btn--sm" type="button" data-edit-cancel>Cancel</button>'
+      + '<button class="btn btn--primary btn--sm" type="submit">Save</button></div>'
+      + '</form>';
+  }
+  /* Remove is the original's: "Remove message" and "Remove note" (ToDos have
+     none). Production logs a removal in the changelog as "Note deleted" with the
+     text it removed, so this does too. */
+  var RM = { message: 'Remove message', note: 'Remove note' };
   function replyBox(e) {
     return '<li class="rbox"><form class="rbox__f" data-reply-to="' + esc(e.id) + '">'
       + '<textarea class="rbox__t" name="body" rows="3" placeholder="Reply to ' + esc(e.who || 'this entry') + '…" aria-label="Reply"></textarea>'
@@ -377,11 +391,15 @@
         + '<div class="ev__b">'
         + '<div class="ev__t"><span class="kind">' + esc(KINDW[e.kind]) + '</span><span class="who">' + esc(e.who || '—') + '</span>'
         + (w.by ? '<span class="by">by ' + esc(w.by) + '</span>' : '') + '</div>'
-        + (e.body ? '<span class="ev__n' + (long && !e.open ? ' ev__n--clamp' : '') + '">' + esc(e.body) + '</span>' : '')
-        + (long ? '<button class="ev__more" type="button" data-more="' + esc(e.id) + '">' + (e.open ? 'Show less' : 'Show all') + '</button>' : '')
+        + (editOpen === e.id ? editBox(e)
+          : (e.body ? '<span class="ev__n' + (long && !e.open ? ' ev__n--clamp' : '') + '">' + esc(e.body) + '</span>' : '')
+            + (long ? '<button class="ev__more" type="button" data-more="' + esc(e.id) + '">' + (e.open ? 'Show less' : 'Show all') + '</button>' : ''))
         + atts
-        + '<div class="ev__acts"><button class="ev__reply" type="button" data-reply="' + esc(e.id) + '">'
-        + ic('i-hist') + 'Reply</button></div>'
+        + (editOpen === e.id ? '' : '<div class="ev__acts"><button class="ev__reply ev__reply--main" type="button" data-reply="' + esc(e.id) + '">'
+          + ic('i-hist') + 'Reply</button>'
+          + '<button class="ev__reply" type="button" data-edit="' + esc(e.id) + '">' + ic('i-note') + 'Edit</button>'
+          + (RM[e.kind] ? '<button class="ev__rm" type="button" data-rm="' + esc(e.id) + '">' + RM[e.kind] + '</button>' : '')
+          + '</div>')
         + '</div>'
         + '<div class="ev__d">' + esc(w.d) + '<small>' + esc(w.t) + '</small></div>'
         + '</li>'
@@ -661,6 +679,24 @@
       return;
     }
     if (t.closest('[data-reply-cancel]')) { replyOpen = null; renderThread(); sizeExtender(); return; }
+    if ((el = t.closest('[data-edit]'))) {
+      editOpen = el.dataset.edit; replyOpen = null; renderThread(); sizeExtender();
+      var eb = $('.rbox__f--edit .rbox__t'); if (eb) { eb.focus(); eb.setSelectionRange(eb.value.length, eb.value.length); }
+      return;
+    }
+    if (t.closest('[data-edit-cancel]')) { editOpen = null; renderThread(); sizeExtender(); return; }
+    if ((el = t.closest('[data-rm]'))) {
+      var rid = el.dataset.rm, gone = null;
+      thread.forEach(function (x) { if (x.id === rid) gone = x; });
+      if (!gone || !window.confirm((RM[gone.kind] || 'Remove') + '?')) return;
+      thread = thread.filter(function (x) { return x.id !== rid; });
+      thread.forEach(function (x) { if (x.replyTo === rid) x.replyTo = null; });
+      var d = new Date(), p = function (n) { return (n < 10 ? '0' : '') + n; };
+      T.clog.unshift({ when: d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds()),
+        who: D.me.name, field: 'Note deleted', key: 'note_deleted', prev: gone.body || '', assignee: '—' });
+      renderLanes(); renderThread(); renderSecnav(); renderClog(); sizeExtender();
+      return;
+    }
 
     if ((el = t.closest('[data-pop]'))) {
       var pop = $('#' + el.dataset.pop);
@@ -765,6 +801,15 @@
 
   /* the four composers, each with the post action production gives it */
   document.addEventListener('submit', function (e) {
+    var ef = e.target.closest ? e.target.closest('form[data-edit-of]') : null;
+    if (ef) {
+      e.preventDefault();
+      var et = ef.querySelector('.rbox__t'), val = et.value.trim();
+      if (!val) { et.classList.add('fld--bad'); et.focus(); return; }
+      thread.forEach(function (x) { if (x.id === ef.dataset.editOf) x.body = val; });
+      editOpen = null; renderThread(); sizeExtender();
+      return;
+    }
     var f = e.target.closest ? e.target.closest('form[data-reply-to]') : null;
     if (!f) return;
     e.preventDefault();
