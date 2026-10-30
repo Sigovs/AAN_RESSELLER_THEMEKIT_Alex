@@ -1546,3 +1546,10 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 /* the elbow: down the branch, then across to the reply card's left edge at the
    height of its avatar (30px) — it stops at the edge */
 .tr .tr__e { top: -8px; height: 38px; border-left-width: 1px; border-bottom-width: 1px; border-bottom-left-radius: 10px; }
+/* Waiting on client switch — an outline pill at rest; on, the waiting tone
+   (signal) that My Work Queue's gear uses for the same state. One label in
+   both states, so nothing moves when it flips. */
+.head--card .btn.wbtn { background: none; color: var(--ink-2); box-shadow: inset 0 0 0 1px var(--line-3); }
+.head--card .btn.wbtn:hover { background: var(--wash); color: var(--ink); }
+.head--card .btn.wbtn--on, .head--card .btn.wbtn--on:hover { background: var(--signal-soft); color: var(--signal); box-shadow: inset 0 0 0 1px var(--signal-line); }
+.head--card .head__div { height: 20px; margin: 0 var(--s1); }

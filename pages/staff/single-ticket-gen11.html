@@ -10,7 +10,7 @@
    `aan-theme` key is shared with the Gen 10 pages, so a stored `dark` must not land this
    page in a half-dark state at load. Temporary; the dark-theme stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="single-ticket-gen11.css?v=20261029-tree3">
+<link rel="stylesheet" href="single-ticket-gen11.css?v=20261029-wait2">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
 <link rel="stylesheet" href="../_aan-components.css?v=20261029-selected">
 </head>
@@ -99,6 +99,10 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
     <div class="head__top">
       <a class="btn btn--quiet btn--sm" href="my-work-queue-gen11.html"><svg class="i"><use href="#i-left"/></svg> Back to queue</a>
       <span class="head__sp"></span>
+      <!-- the ticket's "Waiting on Client or Third party" flag as one visible switch
+           (Alex 10-29); the Schedule & Billing checkbox is the same flag -->
+      <button class="btn btn--sm wbtn" type="button" id="h-wait" data-act="wait" aria-pressed="false"><svg class="i"><use href="#i-clock"/></svg> Waiting on client</button>
+      <span class="head__div"></span>
       <span class="walk" role="group" aria-label="Record navigation">
         <button class="btn btn--quiet btn--sm" type="button" data-act="prev"><svg class="i"><use href="#i-left"/></svg> Prev</button>
         <button class="btn btn--quiet btn--sm" type="button" data-act="next">Next <svg class="i"><use href="#i-right"/></svg></button>
@@ -326,6 +330,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 </div>
 
 <script src="single-ticket-gen11.data.js?v=20260930234502"></script>
-<script src="single-ticket-gen11.js?v=20261029-tree3"></script>
+<script src="single-ticket-gen11.js?v=20261029-wait"></script>
 </body>
 </html>

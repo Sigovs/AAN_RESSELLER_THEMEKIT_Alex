@@ -199,6 +199,7 @@
   /* ══ HEAD ══════════════════════════════════════════════════════════════ */
   function renderHead() {
     document.title = 'Ticket ' + T.tid + ' · ' + T.subject + ' — AAN (Gen 11)';
+    setWait(!!T.form.waiting, true);
     $('#h-title').textContent = T.subject;
     $('#h-title').title = T.subject;
     /* the number says what it is (Alex 10-29) */
@@ -216,6 +217,17 @@
     }).join('');
   }
 
+  /* Waiting on client: one switch in the head, the same flag as the Schedule &
+     Billing checkbox. It takes effect at once — a mark, not a form edit — and
+     the board's Billable line follows it. */
+  function setWait(on, quiet) {
+    T.form.waiting = on;
+    var b = $('#h-wait'); b.setAttribute('aria-pressed', String(on)); b.classList.toggle('wbtn--on', on);
+    b.title = on ? 'Waiting on the client or a third party — click to clear' : 'Mark this ticket as waiting on the client or a third party';
+    var cb = $('#w-wait'); if (cb) cb.checked = on;
+    if (!quiet) renderPulse();
+  }
+
   /* ══ BENTO ═════════════════════════════════════════════════════════════ */
   /* The board (DESIGN.md §19): card title 16/700 sentence case, meta right;
      each cell is a caps key, a board figure (24/700) and one board label
@@ -227,6 +239,8 @@
     $('#pulse').innerHTML = T.pulse.map(function (t) {
       var none = t.v === '—' || t.v === '— → —';
       var v = t.v, lab = [t.s].filter(Boolean);
+      /* the billable cell says whether the ticket waits on the client */
+      lab = lab.map(function (x) { return x.replace(/(not )?waiting on client/, T.form.waiting ? 'waiting on client' : 'not waiting on client'); });
       var m = /^(Yes|No)\s+(\$[\d,]+\.\d{2})$/.exec(v);
       if (m) { v = m[2]; lab.unshift(m[1] === 'Yes' ? 'billable' : 'not billable'); }
       v = esc(v).replace(/(\$[\d,]+\.\d{2})/, '<span class="cash">$1</span>');
@@ -759,6 +773,7 @@
     if (t.closest('[data-act="prev"]')) { go(idx - 1); return; }
     if (t.closest('[data-act="next"]')) { go(idx + 1); return; }
     if (t.closest('[data-act="print"]')) { window.print(); return; }
+    if (t.closest('[data-act="wait"]')) { setWait(!T.form.waiting); return; }
     if (t.closest('[data-act="dock"]')) { toggleDock(); return; }
     if (t.closest('[data-act="close"]')) { toggleDock(false); return; }
 
@@ -864,6 +879,9 @@
     if (!postReply(f.dataset.replyTo, ta.value)) { ta.classList.add('fld--bad'); ta.focus(); }
   }, true);
 
+  /* the checkbox and the head switch are one flag: either one moves both */
+  $('#w-wait').addEventListener('change', function () { setWait(this.checked); });
+
   $('#c-message').addEventListener('submit', function (e) { e.preventDefault(); post('message', 'in-message'); });
   $('#c-note').addEventListener('submit', function (e) { e.preventDefault(); post('note', 'in-note'); });
   $('#c-woc').addEventListener('submit', function (e) { e.preventDefault(); post('woc', 'in-woc'); });
@@ -891,6 +909,7 @@
     f.begin = $('#w-begin').value;
     f.completion = $('#w-completion').value;
     f.waiting = $('#w-wait').checked;
+    renderPulse();
     f.billableAmt = $('#w-billable').checked ? ($('#w-amount').value || '0.00') : null;
     f.emails = $$('#w-emails .fld').map(function (x) { return x.value.trim(); }).filter(Boolean);
     T.subject = f.subject;
