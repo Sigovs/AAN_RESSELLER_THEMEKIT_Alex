@@ -1592,3 +1592,10 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 #thread-lanes > .lane[data-lane="woc"]:hover { background: var(--violet-soft); color: var(--violet); box-shadow: inset 0 0 0 1px var(--violet); filter: brightness(.97); }
 #thread-lanes > .lane[data-lane="woc"].lane--on, #thread-lanes > .lane[data-lane="woc"].lane--on:hover { background: var(--violet); color: #fff; box-shadow: none; filter: none; }
 #thread-lanes > .lane[data-lane="woc"].lane--on b { color: #fff; opacity: .85; }
+/* Ivaylo ST #5: a file sits in its entry; the Attachments list is the overview
+   and each row that has an entry opens it, marked until the next click */
+.att--go { cursor: pointer; border-radius: var(--r-micro); transition: background var(--dur) var(--ease); }
+.att--go:hover { background: var(--wash); }
+.att--go:hover .att__f { color: var(--brand-ink); }
+.att--go:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+#s-thread .ev.ev--target { background: var(--brand-soft); box-shadow: inset 0 0 0 1px var(--brand-soft-2), inset 3px 0 0 var(--brand); }

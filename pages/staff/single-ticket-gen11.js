@@ -156,6 +156,26 @@
     push('todo', T.todos);
     push('woc', T.woc);
     thread.sort(function (a, b) { return b.k - a.k; });
+    /* Ivaylo, ST note 5: "the attachment itself still must be in the
+       corresponding comment". The export lists files apart from the entries
+       ("Bill Simons · 04/20/2026 10:20 AM"); the same author and minute name the
+       entry, so each file goes back into it. A file with no entry stays in the
+       Attachments list only. */
+    T.atts.forEach(function (a) {
+      a.ev = null;
+      var m = String(a.by || '').match(/^(.+?)\s+·\s+(.+)$/); if (!m) return;
+      var who = m[1].trim().toLowerCase(), at = m[2].trim();
+      thread.forEach(function (e) {
+        if (a.ev) return;
+        /* a ToDo names who it is for; the file was posted by the one who set it
+           ("by Ivaylo Guenkov · …"), so either name counts */
+        var bm = String(e.when || '').match(/^by\s+(.+?)\s+·\s+(.+)$/);
+        var when = bm ? bm[2] : String(e.when || ''), by = bm ? bm[1].toLowerCase() : '';
+        if ((String(e.who || '').toLowerCase() === who || by === who) && when === at) {
+          e.atts = (e.atts || []).concat(a.file); a.ev = e.id;
+        }
+      });
+    });
     lane = 'all';
   }
   function cleanCrew() {
@@ -519,7 +539,8 @@
       : 'no attachments on this ticket';
     $('#atts').innerHTML = T.atts.length
       ? T.atts.map(function (a) {
-          return '<div class="att">' + ic('i-file')
+          /* a file that sits in an entry opens that entry in the history */
+          return '<div class="att' + (a.ev ? ' att--go' : '') + '"' + (a.ev ? ' role="button" tabindex="0" data-jump-ev="' + esc(a.ev) + '" title="Show the entry it was posted with"' : '') + '>' + ic('i-file')
             + '<span class="att__f">' + esc(a.file) + '<span class="att__gone">file missing</span></span>'
             + '<span class="att__m">' + esc(a.by) + '</span></div>';
         }).join('')
@@ -629,6 +650,21 @@
   /* ══ THE SECTION ANCHOR (DESIGN.md §8) ═════════════════════════════════ */
   function anchorOf(sec) {
     return Math.max(0, Math.round(sec.getBoundingClientRect().top + window.scrollY - stack() - anchorGap()));
+  }
+  /* bring an entry into view under the sticky stack and mark it until the
+     next click (the same treatment as a dealer row arriving from My Work Queue) */
+  function jumpToEntry(id) {
+    var hit = null; thread.forEach(function (x) { if (x.id === id) hit = x; });
+    if (!hit) return;
+    if (lane !== 'all' && lane !== hit.kind) { lane = 'all'; renderLanes(); renderThread(); }
+    var li = document.querySelector('#thread [data-ev="' + id + '"]'); if (!li) return;
+    $$('#thread .ev--target').forEach(function (x) { x.classList.remove('ev--target'); });
+    li.classList.add('ev--target');
+    sizeExtender();
+    window.scrollTo({ top: anchorOf(li), behavior: reduced() ? 'auto' : 'smooth' });
+    setTimeout(function () {
+      document.addEventListener('click', function off() { li.classList.remove('ev--target'); document.removeEventListener('click', off, true); }, true);
+    }, 0);
   }
   function goTo(sec) {
     if (!sec) return;
@@ -788,6 +824,7 @@
     if ((el = t.closest('[data-lane]'))) { lane = el.dataset.lane; renderLanes(); renderThread(); sizeExtender(); return; }
     if (t.closest('[data-act="lane-woc"]')) { lane = 'woc'; renderLanes(); renderThread(); $('#in-woc').focus({ preventScroll: true }); return; }
 
+    if ((el = t.closest('[data-jump-ev]'))) { jumpToEntry(el.dataset.jumpEv); return; }
     if ((el = t.closest('[data-more]'))) {
       var id = el.dataset.more;
       thread.forEach(function (x) { if (x.id === id) x.open = !x.open; });
@@ -884,6 +921,12 @@
     var ta = f.querySelector('.rbox__t');
     if (!postReply(f.dataset.replyTo, ta.value, f.dataset.replyKind)) { ta.classList.add('fld--bad'); ta.focus(); }
   }, true);
+
+  /* an attachment row that opens its entry answers Enter and Space too */
+  $('#atts').addEventListener('keydown', function (e) {
+    var r = e.target.closest && e.target.closest('[data-jump-ev]');
+    if (r && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); jumpToEntry(r.dataset.jumpEv); }
+  });
 
   /* the checkbox and the head switch are one flag: either one moves both */
   $('#w-wait').addEventListener('change', function () { setWait(this.checked); });
