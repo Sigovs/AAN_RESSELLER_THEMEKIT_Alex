@@ -1456,12 +1456,11 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 .wo .form__f { justify-content: flex-end; padding-left: 0; padding-right: 0; }
 .wo .form__msg { margin-right: auto; }
 .wo .form__f > .btn { margin: 0; }
-/* ≤1280: the title needs the room. The three chips repeat Work Status,
+/* ≤1366: the title needs the room (at 1280 it was cut to "SEO and Buy Ca…"). The three chips repeat Work Status,
    Priority and Work Type, which the Work Order block now shows on the first
    screen, so they step aside instead of the title being cut to "#1047…" */
-@media (max-width: 1280px) {
+@media (max-width: 1366px) {
   .head .chips { display: none; }
-  .head__id { flex: 1 1 auto; }
 }
 /* the first cell of a row starts on the card title's 24px edge (an older
    dock-open rule gave it 12px, so "TIME SPENT" stood right of "This ticket") */
@@ -1475,3 +1474,8 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
   .bento .pulse { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: var(--s4); }
   .bento .pulse > .tile:nth-child(4) { padding-left: 0; box-shadow: none; }
 }
+/* the head as Single Lead's: title 28/600 (set above), the state chips, the
+   id as "· #1047015" in mono (Single Lead's #16994) */
+.head > h1 { min-width: 0; flex: 0 1 auto; margin: 0 var(--s2) 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.head > .head__ctx { flex: none; margin-left: var(--s1); font-family: var(--mono); font-size: 13px; color: var(--ink-3); white-space: nowrap; }
+.head > .head__ctx::before { content: "·"; margin-right: var(--s2); font-family: var(--font); color: var(--ink-4); }

@@ -199,8 +199,9 @@
   /* ══ HEAD ══════════════════════════════════════════════════════════════ */
   function renderHead() {
     document.title = 'Ticket ' + T.tid + ' · ' + T.subject + ' — AAN (Gen 11)';
-    $('#h-title').innerHTML = '<span class="tid">#' + esc(T.tid) + '</span>' + esc(T.subject);
-    $('#h-meta').innerHTML = T.meta.replace(/^([^·]+)/, function (m) { return '<b>' + esc(m.trim()) + '</b> '; });
+    $('#h-title').textContent = T.subject;
+    $('#h-title').title = T.subject;
+    $('#h-id').textContent = '#' + T.tid;
     $('#h-chips').innerHTML = T.chips.map(function (c) {
       var t = toneOf(c);
       var isType = /--worktype/.test(c.cls);
@@ -217,7 +218,12 @@
      the yes/no goes into its label. The ticket's dealer is not repeated here,
      it is the next card. */
   function renderPulse() {
-    $('#pulse-s').textContent = 'ticket #' + T.tid;
+    /* opened · last modified · last activity — the dealer (first part) is not
+       repeated: it is the next card */
+    var meta = String(T.meta || '').replace(/\s+/g, ' ').split('·').slice(1)
+      .map(function (x) { return x.trim(); }).filter(Boolean).join(' · ');
+    $('#pulse-s').textContent = meta || ('ticket #' + T.tid);
+    $('#pulse-s').title = meta;
     $('#pulse').innerHTML = T.pulse.map(function (t) {
       var none = t.v === '—' || t.v === '— → —';
       var v = t.v, lab = [t.s].filter(Boolean);
