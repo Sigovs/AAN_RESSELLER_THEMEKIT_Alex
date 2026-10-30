@@ -141,7 +141,9 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         </div>
       </div>
 
-      <div class="facet">
+      <!-- Reseller Group filter hidden (Karen, Manage Dealers note 2: "I think we can get rid of the
+           reseller group but keep reseller."); kept in the page so the script still finds it -->
+      <div class="facet" hidden>
         <button class="facet__b" type="button" data-pop="p-rgid" aria-haspopup="true" aria-expanded="false">
           <span class="facet__k">Reseller Group</span>
           <span class="facet__v" id="rgid-v">Any</span>
@@ -232,6 +234,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 </dialog>
 
 <script src="manage-dealers-gen11.data.js?v=20260930234502"></script>
-<script src="manage-dealers-gen11.js?v=20261029-noproj"></script>
+<script src="manage-dealers-gen11.js?v=20261029-norgrp"></script>
 </body>
 </html>

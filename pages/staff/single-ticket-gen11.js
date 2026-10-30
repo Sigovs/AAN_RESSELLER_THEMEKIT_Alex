@@ -167,7 +167,8 @@
   /* ══ PLATFORM NAV ══════════════════════════════════════════════════════ */
   /* hidden from the menus, kept in the data so they come back with one line:
      Add New OEM / View OEM Accounts (Karen, MWQ note 3: "we don't use them anymore") */
-  var NAV_HIDDEN = ['Add New OEM', 'View OEM Accounts'];
+  /* and the two Reseller Group items (Karen, Manage Dealers note 2: "I think we can get rid of the reseller group but keep reseller") */
+  var NAV_HIDDEN = ['Add New OEM', 'View OEM Accounts', 'Add New Reseller Group', 'View Reseller Groups'];
   /* the whole AAN Projects menu goes (Karen MWQ note 4, Ivaylo 10-29: "there won't be this") */
   var NAV_HIDDEN_GROUPS = ['AAN Projects'];
   function navShown(l) { return NAV_HIDDEN.indexOf(l) < 0; }
