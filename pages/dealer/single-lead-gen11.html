@@ -8,7 +8,7 @@
    cannot land this one in a half-dark state. Only an explicit `light` is honoured. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
 <link rel="stylesheet" href="all-vehicles-gen11.css?v=20261029-broom">
-<link rel="stylesheet" href="single-lead-gen11.css?v=20261029-ctag">
+<link rel="stylesheet" href="single-lead-gen11.css?v=20261030-ds3">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
 <link rel="stylesheet" href="../_aan-components.css?v=20261029-selected">
 </head>
@@ -151,16 +151,21 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   <!-- HEAD — record identity and record navigation only. It owns no mutation:
        the two quiet buttons are routes to the section that owns the action, so
        no action ever appears twice as an owner. -->
-  <div class="head">
-    <a class="btn btn--quiet" href="all-leads-gen10.html"><svg class="i"><use href="#i-left"/></svg> Back to board</a>
-    <span class="head__div"></span>
+  <!-- Record head card (DESIGN.md §21, as Single Ticket): the way back and the
+       record actions, the lead's name, then its state and number. -->
+  <div class="head head--card">
+    <div class="head__top">
+      <a class="btn btn--quiet btn--sm" href="all-leads-gen10.html"><svg class="i"><use href="#i-left"/></svg> Back to board</a>
+      <span class="head__sp"></span>
+      <span class="walk" role="group" aria-label="Record navigation"><button class="btn btn--quiet btn--sm" type="button" data-act="prev"><svg class="i"><use href="#i-left"/></svg> Prev</button><button class="btn btn--quiet btn--sm" type="button" data-act="next">Next <svg class="i"><use href="#i-right"/></svg></button></span>
+      <button class="btn btn--sheet btn--sm" type="button" data-act="goto-note"><svg class="i"><use href="#i-edit"/></svg> Note</button>
+      <button class="btn btn--sheet btn--sm" type="button" data-act="goto-email"><svg class="i"><use href="#i-mail"/></svg> Email</button>
+    </div>
     <h1 id="h-name">Lead</h1>
-    <span class="stat" id="h-status">New Lead</span>
-    <span class="head__ctx" id="h-id">#16994</span>
-    <span class="head__sp"></span>
-    <span class="walk" role="group" aria-label="Record navigation"><button class="btn btn--quiet btn--sm" type="button" data-act="prev"><svg class="i"><use href="#i-left"/></svg> Prev</button><button class="btn btn--quiet btn--sm" type="button" data-act="next">Next <svg class="i"><use href="#i-right"/></svg></button></span>
-    <button class="btn btn--sheet btn--sm" type="button" data-act="goto-note"><svg class="i"><use href="#i-edit"/></svg> Note</button>
-    <button class="btn btn--sheet btn--sm" type="button" data-act="goto-email"><svg class="i"><use href="#i-mail"/></svg> Email</button>
+    <div class="head__sub">
+      <span class="stat" id="h-status">New Lead</span>
+      <span class="chip--id" id="h-id"></span>
+    </div>
   </div>
 
   <!-- BENTO — three slots named for their ROLE, not their grid position (audit
@@ -377,6 +382,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 
 <script src="all-vehicles-gen11.data.js?v=20260930234502"></script>
 <script src="all-leads-gen10.data.js?v=20260930234502"></script>
-<script src="single-lead-gen11.js?v=20261029-ctag"></script>
+<script src="single-lead-gen11.js?v=20261030-ds"></script>
 </body>
 </html>

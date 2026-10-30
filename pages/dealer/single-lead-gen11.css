@@ -1067,3 +1067,35 @@
 .ctag button { display: inline-grid; place-items: center; flex: none; width: 24px; height: 24px; border-radius: 6px; color: var(--focal-ink-3); }
 .ctag button:hover { background: var(--focal-2); color: var(--focal-ink); }
 .ctag button .i { width: 13px; height: 13px; }
+/* == DS alignment with Single Ticket (Alex 10-30) ===========================
+   §21 record head card: one sheet card - the way back + record actions, the
+   name (page title), then the state chip and the number as an outline pill. */
+.head.head--card { display: flex; flex-direction: column; align-items: stretch; gap: 0; min-height: 0; margin: var(--s2) 0 var(--gutter); padding: var(--s3) var(--s5) var(--s5); border-radius: var(--r-card); background: var(--sheet); box-shadow: var(--sh-soft); }
+.head--card .head__top { display: flex; align-items: center; gap: var(--s2); min-width: 0; }
+.head--card .head__top > .btn--quiet:first-child { margin-left: calc(-1 * var(--s3)); }
+.head--card .btn--quiet:hover { background: var(--wash); }
+.head--card .head__sp { flex: 1 1 auto; }
+.head--card > h1 { margin: var(--s3) 0 0; min-width: 0; font-size: 28px; font-weight: 600; letter-spacing: -.022em; line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.head--card .head__sub { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s3); min-width: 0; }
+.head--card .head__sub .stat { margin-left: 0; }
+.chip--id { display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 10px; border-radius: var(--r-pill); box-shadow: inset 0 0 0 1px var(--line-3); font-size: 12.5px; font-weight: 500; color: var(--ink-3); white-space: nowrap; }
+.chip--id b { font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+/* §18 / §22: the kind of an entry is a tag in sentence case, not a caps key */
+.ev__t .kind { font-size: 12px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--ink-3); }
+/* §22 the post box: the place to write is one tinted card in the note tone,
+   the field white inside; the entries below stay white */
+#f-note.composer { padding: var(--s3) var(--s4) var(--s4); border-radius: 12px; background: var(--signal-soft); box-shadow: inset 0 0 0 1px var(--signal-line); }
+#f-note .composer__lab { font-size: 14px; font-weight: 600; color: var(--signal); }
+#f-note .fld { background-color: var(--sheet); }
+#f-note .composer__who { background: var(--sheet); }
+/* a shared rule holds the one-row head at 36px; the card is as tall as its rows */
+.app > .head.head--card { height: auto; max-height: none; }
+.head--card > * { flex-shrink: 0; }
+/* the page has its own .kind (the lead-type switch, with a bottom margin) - inside
+   an entry title it is only the tag */
+.ev__t .kind { display: inline; margin: 0; }
+/* the shared .composer__lab is a caps key; the post box label is a name */
+#f-note .composer__lab { text-transform: none; letter-spacing: 0; line-height: 1.3; }
+/* the page grid holds the head row at --headh (68px, one row); the record head
+   card has three rows, so its row takes its content height */
+.app { --headh: auto; }

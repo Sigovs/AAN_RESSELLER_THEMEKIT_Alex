@@ -131,7 +131,8 @@
     $('#h-name').textContent = L.name;
     $('#h-status').className = 'stat stat--' + st;
     $('#h-status').textContent = L.status;
-    $('#h-id').textContent = '#' + L.id;
+    /* the number says what it is (DESIGN.md §21) */
+    $('#h-id').innerHTML = '<span class="head__k">Lead number:</span> <b>' + esc(String(L.id)) + '</b>';
     $('[data-act="prev"]').disabled = idx === 0;
     $('[data-act="next"]').disabled = idx >= LEADS.length - 1;
   }
@@ -339,12 +340,12 @@
     var rows = acts.map(function (a) {
       var k = kindOf(a.a);
       return '<li class="ev ev--' + k + '"><span class="ev__i">' + ic(iconOf[k]) + '</span>'
-        + '<div class="ev__b"><div class="ev__t">' + esc(a.a) + '<span class="kind">' + k + '</span></div>'
+        + '<div class="ev__b"><div class="ev__t">' + esc(a.a) + '<span class="kind">' + k.charAt(0).toUpperCase() + k.slice(1) + '</span></div>'
         + body(a) + '<div class="ev__m">by <b>' + esc(a.r) + '</b></div></div>'
         + '<div class="ev__d">' + esc(a.d.slice(0, 10)) + '<small>' + esc(a.d.slice(11)) + '</small></div></li>';
     });
     rows.push('<li class="ev ev--created"><span class="ev__i">' + ic('i-plus') + '</span>'
-      + '<div class="ev__b"><div class="ev__t">Lead created<span class="kind">created</span></div>'
+      + '<div class="ev__b"><div class="ev__t">Lead created<span class="kind">Created</span></div>'
       + '<span class="ev__n">' + esc(L.src) + ' · ' + esc(L.type) + ' · via ' + esc(L.provider) + '</span>'
       + '<div class="ev__m">by <b>' + esc(L.provider) + '</b></div></div>'
       + '<div class="ev__d">' + fd(L.created) + '<small>' + fdt(L.created).slice(11) + '</small></div></li>');

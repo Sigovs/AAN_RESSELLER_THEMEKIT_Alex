@@ -530,7 +530,6 @@ Rules:
 | Single Vehicle | page title | 18px (sticky cockpit) | decide: 28px, or record the cockpit as its own role |
 | Single Vehicle | field label | 12px / 700 CAPS | 13px / 600 sentence case — or record why the editor differs |
 | All Vehicles / Single Lead | mono id | 13px / 700 · 12.5px / 400 | one weight |
-| Single Lead | record head | on the page ground, one row | decide: the record head card of §21 (as Single Ticket and Dealer Edit), or record why the lead head stays one row |
 
 ---
 
@@ -604,7 +603,7 @@ head as one sheet card (`--sheet`, `--r-card`, `--sh-soft`, padding 12 / 24 / 24
 | 3 | its state chips, a switchable state chip if it has one (§6), its id as an outline pill with its label ("Ticket number: 1047015", the number mono), then its dates in 13px muted; the dates wrap to their own line without a leading dot |
 
 Facts are not repeated: the dates live here and not on the board; the dealer has its own board card.
-Dealer Edit already opens with a head card; Single Lead does not yet (§18, not aligned).
+Single Ticket, Single Lead (2026-10-30: Back to board · Prev / Next · Note · Email; the name; the status chip and "Lead number: 16994") and Dealer Edit open with a head card. On the dealer shell the page grid holds the head row at `--headh` (68px, one row): a page with the card sets `--headh: auto`.
 
 ---
 
@@ -627,5 +626,7 @@ Added 2026-10-29 on Single Ticket's Ticket History; the rules for any feed of po
 **The post box** of a section is one tinted card in its tone — the section header and its composer together, the fields white inside; the entries below stay white cards, so the place to write is never mistaken for an entry.
 
 **A state is a mark, not a section** (Single Ticket, Alex 10-29): "Waiting on client" is a box beside the post action of a client message, the same flag as the head's switchable chip.
+
+Single Lead's Activity follows the same rules: the entry kind is a sentence-case tag ("Note", "Mail", "Created"), and "Add a note" is a post box in the note tone. Watch two shared names there: the page's own `.kind` (the lead-type switch, with a bottom margin) and the shared caps `.composer__lab` — both are overridden inside the feed.
 
 **Files** go with any post: the drop names what was picked before posting, and a posted file sits in its entry and in the page file list.
