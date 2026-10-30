@@ -190,6 +190,7 @@ Rule: **no new features in this redesign.** Each is possible and comes back in t
 | # | Note | Status |
 |---|---|---|
 | 6 (Karen, 10-29) | "In my opinion, the notes section should be moved under Inventory and DMS section horizontally" | ✅ done, resolved with a reply note (A) · Notes is the last zone "09 Notes" (`notesZone()`), full width: history left, new note + Add Comment right; rail entry "Notes", scroll-spy includes it; the side card is gone (Options, Danger & Locks stay). The original has Notes as the top side card, not sticky, so nothing is lost. 390/768 overflow (1050px, staff top nav) is pre-existing |
+| 5 (Karen, 10-29) | "Yes, to confirm, this is the field we use to set up CRM email addresses for the 3rd party sites whose leads parse into our CRM tool" | ✅ resolved with a reply note, **nothing changed** (Alex) · AAN LMS Mailbox stays as it is: one local-part @allautonetwork.net per dealer, as in the original; extra dealer mailboxes live in Email Routing (+ Add mailbox) |
 
 ## Round 4 — My Work Queue (staff), worked 2026-10-29 (newest first)
 
