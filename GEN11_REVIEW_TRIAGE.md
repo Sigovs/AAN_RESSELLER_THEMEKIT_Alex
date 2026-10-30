@@ -162,6 +162,7 @@ Numbering = the order in comments.html (open notes, oldest first). Notes 1–20 
 | Q7 | ~~My Work Queue: Open Projects — does the whole AAN Projects menu go?~~ | ✅ **answered 10-29 (Ivaylo via Alex): yes, OpenProject goes.** The whole AAN Projects menu is hidden on all five staff pages (`NAV_HIDDEN_GROUPS`, data kept); the Work menu's "Open … Project Work" ticket queues stay |
 | Q8 | ~~Single Ticket: which department does "Site Shutdown" belong to?~~ (Karen, ST #8) | ✅ **moot 10-29**: Site Shutdown is a new feature (meeting with Ivaylo), taken back out of Work Type; see New features below |
 | Q9 | **Single Ticket: move "Assigned To" under Work Status?** (Karen, ST #3) | Renamed only (Alex 10-30: "needs thought"). All of it in the Work Order makes it much taller (status, Spent / Est., dates per person); the alternative is a one-line summary there with the panel kept for editing |
+| Q10 | **Single Ticket: where are the Work Order fields edited?** (Alex 10-30) | The Work Order (Classification, Contact, Schedule & Billing) is hidden for now, kept in the page with `hidden` and out of the navigator. State still shows in the head chips and the board; Waiting on client still switches. Decide: back as a block, folded behind an Edit link, or elsewhere |
 
 ## New features, after go-live (meeting with Ivaylo, 2026-10-29)
 

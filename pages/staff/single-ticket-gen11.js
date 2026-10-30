@@ -300,7 +300,7 @@
      the history's own sections stand in it directly, each with a dot of its
      tone; "History" and "All" were the same thing twice. */
   var SECS = [
-    { id: 's-work', label: 'Work order', n: null },
+    /* { id: 's-work', label: 'Work order', n: null },  - hidden for now (Alex 10-30) */
     { id: 'ts-message', label: 'Messages', tone: 'message', n: function () { return laneCount('message'); } },
     { id: 'ts-note', label: 'Internal notes', tone: 'note', n: function () { return laneCount('note'); } },
     { id: 'ts-todo', label: 'ToDos', tone: 'todo', n: function () { return laneCount('todo'); } },
@@ -709,9 +709,8 @@
      that offset. A rect top against the anchor line needs no origin at all. */
   function syncNav() {
     var line = stack() + anchorGap() + 1, cur = null;
-    $$('.sec, .tsec').forEach(function (s) { if (s.getBoundingClientRect().top <= line) cur = s.id; });
-    if (!cur) cur = ($$('.sec')[0] || {}).id;
-    if (cur === 's-thread') cur = 'ts-message';   /* the history's header belongs to its first section */
+    $$('.sec, .tsec').forEach(function (s) { if (!s.hidden && s.getBoundingClientRect().top <= line) cur = s.id; });
+    if (!cur || cur === 's-work' || cur === 's-thread') cur = 'ts-message';   /* the history's header belongs to its first section */   /* the history's header belongs to its first section */
     $$('.secnav__b').forEach(function (b) {
       var on = b.dataset.sec === cur;
       b.classList.toggle('secnav__b--on', on);
@@ -1031,7 +1030,7 @@
   $$('[data-act="save"]').forEach(function (b) {
     if (b.type === 'submit') return;
     b.addEventListener('click', function () {
-      goTo($('#s-work'));
+      if (!$('#s-work').hidden) goTo($('#s-work'));
       $('#f-work').dispatchEvent(new Event('submit', { cancelable: true }));
     });
   });

@@ -1664,3 +1664,5 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 .ui-views > .secnav__b--on.secnav__b--tone::before { background: #fff; }
 /* with the lanes gone the sections start right under the history title */
 #s-thread .tsecs { margin-top: var(--s2); }
+/* the Work Order is hidden for now (Alex 10-30); .sec sets a display, so say it */
+#s-work[hidden] { display: none; }
