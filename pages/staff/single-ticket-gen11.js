@@ -395,13 +395,15 @@
           : (e.body ? '<span class="ev__n' + (long && !e.open ? ' ev__n--clamp' : '') + '">' + esc(e.body) + '</span>' : '')
             + (long ? '<button class="ev__more" type="button" data-more="' + esc(e.id) + '">' + (e.open ? 'Show less' : 'Show all') + '</button>' : ''))
         + atts
+        + '</div>'
+        + '<div class="ev__d">' + esc(w.d) + '<small>' + esc(w.t) + '</small></div>'
+        /* the actions span the text and the date columns, so Remove ends on the
+           card's right edge, under the date (Alex 10-29) */
         + (editOpen === e.id ? '' : '<div class="ev__acts"><button class="ev__reply ev__reply--main" type="button" data-reply="' + esc(e.id) + '">'
           + ic('i-hist') + 'Reply</button>'
           + '<button class="ev__reply" type="button" data-edit="' + esc(e.id) + '">' + ic('i-note') + 'Edit</button>'
           + (RM[e.kind] ? '<button class="ev__rm" type="button" data-rm="' + esc(e.id) + '">' + RM[e.kind] + '</button>' : '')
           + '</div>')
-        + '</div>'
-        + '<div class="ev__d">' + esc(w.d) + '<small>' + esc(w.t) + '</small></div>'
         + '</li>'
         + (replyOpen === e.id ? replyBox(e) : '');
     }).join('');
