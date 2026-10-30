@@ -621,7 +621,7 @@ Added 2026-10-29 on Single Ticket's Ticket History; the rules for any feed of po
 
 **Replies are a tree, card to card.** A branch leaves the answered card from its bottom edge, 20px in, runs down the gap and turns (10px radius) into each reply's left edge at the height of its avatar; it ends at the last reply. Nothing is drawn inside a card. A reply to a reply is one level in (40px), capped at four levels. Replies follow in the order they were written; top-level entries keep the feed's order.
 
-**A typed feed is sectioned, not filtered** (Ivaylo ST #4: "95% of the time we need to see all of it"). Each type is its own section, all always shown, in a fixed order, each with its composer under a tinted header (tone, count) and a 3px tone rail on its left. Replies live in the section of what they answer. The lane pills above only jump to a section; they carry the sections' tones (§6 exception) and hide nothing.
+**A typed feed is sectioned, not filtered** (Ivaylo ST #4: "95% of the time we need to see all of it"). Each type is its own section, all always shown, in a fixed order, each with its composer under a tinted header (tone, count) and a 3px tone rail on its left. Replies live in the section of what they answer. The sections stand directly in the page's section navigator, each with a dot of its tone (Single Ticket, Alex 10-30: one navigator, not a second row of pills); nothing filters.
 
 **The post box** of a section is one tinted card in its tone — the section header and its composer together, the fields white inside; the entries below stay white cards, so the place to write is never mistaken for an entry.
 

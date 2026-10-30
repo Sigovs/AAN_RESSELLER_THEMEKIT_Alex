@@ -10,7 +10,7 @@
    `aan-theme` key is shared with the Gen 10 pages, so a stored `dark` must not land this
    page in a half-dark state at load. Temporary; the dark-theme stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="single-ticket-gen11.css?v=20261029-clog">
+<link rel="stylesheet" href="single-ticket-gen11.css?v=20261030-nav2">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
 <link rel="stylesheet" href="../_aan-components.css?v=20261029-selected">
 </head>
@@ -138,7 +138,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
     <div class="cmd cmd--sec ui-toolbar" id="band">
       <nav class="secnav ui-views" id="secnav" aria-label="Sections on this page"></nav>
       <span class="cmd__sp"></span>
-      <span class="secnav__note">one page · four sections</span>
       <button class="btn btn--sheet btn--sm ui-ctl" type="button" data-act="dock" aria-expanded="true" aria-controls="dock">
         <svg class="i"><use href="#i-users"/></svg> Assigned To <b class="btn__n" id="crew-cnt">0</b>
       </button>
@@ -207,7 +206,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
                back". Four sections in the original order, all always shown, each
                with its own composer and its tone. The pills above only jump to a
                section (Alex: keep them as auxiliary nav) - they hide nothing. -->
-          <nav class="lanes ui-views" id="thread-lanes" aria-label="Jump to a section of the history"></nav>
           <div class="tsecs" id="thread">
             <section class="tsec tsec--message" id="ts-message" aria-labelledby="th-message">
               <header class="tsec__h"><h3 id="th-message">Messages</h3><span class="tsec__s">client-visible</span><b class="tsec__n" id="tn-message">0</b></header>
@@ -335,6 +333,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 </div>
 
 <script src="single-ticket-gen11.data.js?v=20260930234502"></script>
-<script src="single-ticket-gen11.js?v=20261030-assigned"></script>
+<script src="single-ticket-gen11.js?v=20261030-nav2"></script>
 </body>
 </html>

@@ -1656,3 +1656,11 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 .rbox__r > .flag--wait { margin-left: auto; }
 /* a state tag is sentence case, not caps (DESIGN.md §18): "File missing" */
 .att__gone { text-transform: none; letter-spacing: 0; font-size: 12px; font-weight: 600; }
+/* the history sections in the navigator carry a dot of their tone */
+.ui-views > .secnav__b--tone::before { content: ""; width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--dot); }
+.secnav__b[data-tone="message"] { --dot: var(--brand); }
+.secnav__b[data-tone="note"] { --dot: var(--signal-fill); }
+.secnav__b[data-tone="todo"] { --dot: var(--ok-fill); }
+.ui-views > .secnav__b--on.secnav__b--tone::before { background: #fff; }
+/* with the lanes gone the sections start right under the history title */
+#s-thread .tsecs { margin-top: var(--s2); }

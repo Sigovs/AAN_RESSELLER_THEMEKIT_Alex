@@ -296,16 +296,22 @@
   }
 
   /* ══ SECTION NAVIGATOR ═════════════════════════════════════════════════ */
+  /* One navigator (Alex 10-30: "make one of these two, drop what is extra"):
+     the history's own sections stand in it directly, each with a dot of its
+     tone; "History" and "All" were the same thing twice. */
   var SECS = [
     { id: 's-work', label: 'Work order', n: null },
-    { id: 's-thread', label: 'History', n: function () { return thread.length; } },
+    { id: 'ts-message', label: 'Messages', tone: 'message', n: function () { return laneCount('message'); } },
+    { id: 'ts-note', label: 'Internal notes', tone: 'note', n: function () { return laneCount('note'); } },
+    { id: 'ts-todo', label: 'ToDos', tone: 'todo', n: function () { return laneCount('todo'); } },
     { id: 's-atts', label: 'Attachments', n: function () { return T.atts.length; } },
     { id: 's-clog', label: 'Changelog', n: function () { return T.clog.length; } }
   ];
   function renderSecnav() {
     $('#secnav').innerHTML = SECS.map(function (s, n) {
       var c = s.n ? s.n() : null;
-      return '<a class="secnav__b' + (n === 0 ? ' secnav__b--on' : '') + '" href="#' + s.id + '" data-sec="' + s.id + '">'
+      return '<a class="secnav__b' + (n === 0 ? ' secnav__b--on' : '') + (s.tone ? ' secnav__b--tone' : '') + '" href="#' + s.id + '" data-sec="' + s.id + '"'
+        + (s.tone ? ' data-tone="' + s.tone + '"' : '') + '>'
         + esc(s.label) + (c === null ? '' : '<b>' + c + '</b>') + '</a>';
     }).join('');
   }
@@ -374,7 +380,8 @@
   }
   function renderLanes() {
     /* jump links, not filters (Ivaylo ST #4): every section is always shown */
-    $('#thread-lanes').innerHTML = LANES.map(function (l) {
+    var host = $('#thread-lanes'); if (!host) { renderSecnav(); return; }   /* the lanes now live in the navigator */
+    host.innerHTML = LANES.map(function (l) {
       return '<button class="lane ui-view" type="button" data-jump-sec="' + (l.k === 'all' ? 's-thread' : 'ts-' + l.k) + '" data-lane="' + l.k + '">'
         + esc(l.label) + '<b>' + laneCount(l.k) + '</b></button>';
     }).join('');
@@ -464,7 +471,8 @@
     var by = {}; rows.forEach(function (e) { by[e.id] = e; });
     var rootKind = function (e) { var g = 0; while (e.replyTo && by[e.replyTo] && g++ < 50) e = by[e.replyTo]; return e.kind; };
     var msgs = laneCount('message'), notes = laneCount('note'), todos = laneCount('todo');
-    $('#thread-s').textContent = msgs + ' client-visible · ' + notes + ' internal · ' + todos + ' ToDos';
+    /* the counts are in the navigator and on each section header; not a third time here */
+    $('#thread-s').textContent = '';
     /* Waiting on client is not a section (Alex 10-29): it is a mark you set when
        you write to the client. Earlier WOC notes keep their violet mark and sit
        with the internal notes. */
@@ -701,8 +709,9 @@
      that offset. A rect top against the anchor line needs no origin at all. */
   function syncNav() {
     var line = stack() + anchorGap() + 1, cur = null;
-    $$('.sec').forEach(function (s) { if (s.getBoundingClientRect().top <= line) cur = s.id; });
+    $$('.sec, .tsec').forEach(function (s) { if (s.getBoundingClientRect().top <= line) cur = s.id; });
     if (!cur) cur = ($$('.sec')[0] || {}).id;
+    if (cur === 's-thread') cur = 'ts-message';   /* the history's header belongs to its first section */
     $$('.secnav__b').forEach(function (b) {
       var on = b.dataset.sec === cur;
       b.classList.toggle('secnav__b--on', on);
