@@ -1099,3 +1099,5 @@
 /* the page grid holds the head row at --headh (68px, one row); the record head
    card has three rows, so its row takes its content height */
 .app { --headh: auto; }
+/* == DESIGN.md §18 type roles, pinned (Alex 10-30: "why do we make a DS if nothing changed by it?!"). Last in the file, so each role reads the same on every page. == */
+.app .sec__h h2 { font-size: 18px; font-weight: 600; letter-spacing: -.012em; }

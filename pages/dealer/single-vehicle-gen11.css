@@ -1833,3 +1833,12 @@ button.prov:hover { text-decoration: underline; }
 .featck .ck { flex: none; width: 16px; height: 16px; margin: 1px 0 0; accent-color: var(--brand); cursor: pointer; }
 .featck > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .featck--off > span { color: var(--ink-4); text-decoration: line-through; text-decoration-color: var(--line-3); }
+/* == DESIGN.md §18 type roles, pinned (Alex 10-30: "why do we make a DS if nothing changed by it?!"). Last in the file, so each role reads the same on every page. == */
+.app .head h1 { font-size: 28px; font-weight: 600; letter-spacing: -.022em; line-height: 1.15; }
+.app .sec__h h2 { font-size: 18px; font-weight: 600; letter-spacing: -.012em; }
+.app .f > span, .app .fl, .app label.f > span { font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; }
+.app .zone__t { font-size: 18px; font-weight: 600; letter-spacing: -.012em; }
+/* the record title in the sticky cockpit is the page title role too */
+.app .cock__t { font-size: 28px; font-weight: 600; letter-spacing: -.022em; line-height: 1.15; }
+/* field labels are sentence case 13 / 600 (DESIGN.md §18) - the editor read as caps */
+.app .f__l { font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--ink-2); }

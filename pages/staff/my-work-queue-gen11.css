@@ -1330,3 +1330,23 @@ html.no-js .cmdtop, html.no-js .cmd, html.no-js .sub, html.no-js .hd, html.no-js
 .glacc__in .gl:hover b { color: var(--brand-ink); text-decoration: underline; }
 .glacc__h:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .glacc, .glacc__h, .glacc__h > .i, .glacc__p { transition: none; } }
+/* page title, DESIGN.md §18: 28 / 600 on every page (Alex 10-30: check everywhere) */
+.head h1 { font-size: 28px; font-weight: 600; letter-spacing: -.022em; line-height: 1.15; }
+/* == DESIGN.md §18 type roles, pinned (Alex 10-30: "why do we make a DS if nothing changed by it?!"). Last in the file, so each role reads the same on every page. == */
+.app .row .c, .app #tb .c { font-size: 14px; }
+/* == The details All Leads and All Vehicles were given (Alex 10-30: "all the small details - tags,
+   text, everything we polished on All Leads and All Vehicles"), DESIGN.md §18. == */
+/* the head as All Leads: the title, then its context in one quiet line; no caps
+   section eyebrow - the platform bar already names the section */
+.app .head .head__ctx { display: none; }
+.app .head__id { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 var(--s3); }
+.app .head__ttl { display: contents; }
+.app .head__meta { margin: 0; font-size: 14px; color: var(--ink-3); }
+.app .head__meta::before { content: "\00b7"; margin-right: var(--s3); color: var(--ink-4); }
+/* dates and money are text with even figures, not mono (only ids, codes and phones are mono) */
+.app .c-mod i, .app .c-beg .ed, .app .c-done .ed, .app .c-beg .d, .app .c-done .d, .app .c-amt { font-family: var(--font); font-size: 13px; font-variant-numeric: tabular-nums; }
+/* status as the status chip of All Leads: 24px, 7px radius, 13 / 600 */
+.app .bdg { height: 24px; padding: 0 8px; border-radius: 7px; font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; }
+/* the dealer name reads from its first letter, left-aligned (it was centred and cut on the left) */
+.app .row .c-dlr { flex-direction: row; align-items: center; justify-content: flex-start; text-align: left; overflow: hidden; }
+.app .c-dlr .dlr { min-width: 0; max-width: 100%; justify-content: flex-start; }

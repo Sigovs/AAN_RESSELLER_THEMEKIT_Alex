@@ -521,10 +521,9 @@ Rules:
 - **Weight carries the hierarchy, not new sizes.** Between two neighbouring levels there is one
   step of size or weight, not both plus a colour.
 
-**Not aligned yet** (measured 2026-10-29, to fix page by page, one note at a time):
+**Aligned on every page, 2026-10-30** (Alex: "why do we make a DS if nothing changed by it?!"). Measured on all ten pages at 1440: page title 28/600, section title 18/600, board card title 16/700, board figure 24/700, field label 13/600 sentence case (12.5 in a dense form), button 14/500, facet 13.5/600, status chip 13/600, table head 11/700 caps, table cell 14. Each page pins the roles in a block at the end of its stylesheet. On the staff pages the details of All Leads / All Vehicles were carried over too: the head reads "title · context" in one line (no caps section eyebrow), statuses are the 24px status chip, tags are sentence case 12/600 and never clipped, dates and money are text with tabular figures (mono only for ids, codes, phones), and the Accounting deck is a §19 board of tiles. Single Vehicle's sticky cockpit title is the page-title role too.
 
-| page | role | now | should be |
-|---|---|---|---|
+---|---|---|---|
 | Single Lead | page title | 26px | 28px |
 | Single Lead / Single Vehicle | section title | 19px / 17px·650 | 18px / 600 |
 | Single Vehicle | page title | 18px (sticky cockpit) | decide: 28px, or record the cockpit as its own role |

@@ -934,3 +934,9 @@ html.no-js .body, html.no-js .savebar { display: none; }
 
 /* ── the record head stops competing with the page title ────────────────- */
 .head__quick a { font-weight: 500; }
+/* page title, DESIGN.md §18: 28 / 600 on every page (Alex 10-30: check everywhere) */
+.head h1 { font-size: 28px; font-weight: 600; letter-spacing: -.022em; line-height: 1.15; }
+/* == DESIGN.md §18 type roles, pinned (Alex 10-30: "why do we make a DS if nothing changed by it?!"). Last in the file, so each role reads the same on every page. == */
+.app .zone__t { font-size: 18px; font-weight: 600; letter-spacing: -.012em; }
+.app .chip, .app .stat { font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; }
+.app .hd .th, .app th { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }

@@ -201,7 +201,10 @@
         ic('i-alert') + '</span>');
     }
     r.feat.slice(0, 2).forEach(function (f) {
-      out.push('<span class="ft" title="' + esc(f.title) + '">' + esc(f.t) + '</span>');
+      /* a tag reads in sentence case (DESIGN.md §18): "Craigslist", "Carfax"; a two-
+         or three-letter code stays as it is ("CL", "LS") */
+      var lab = f.t.length > 3 ? f.t.charAt(0) + f.t.slice(1).toLowerCase() : f.t;
+      out.push('<span class="ft" title="' + esc(f.title) + '">' + esc(lab) + '</span>');
     });
     if (r.feat.length > 2) {
       out.push('<span class="ft ft--more">+' + (r.feat.length - 2) + '</span>');
@@ -222,7 +225,7 @@
            (tag ? '<span class="vt">' + esc(tag) + '</span>' : '');
   }
 
-  var ST_CLASS = { 'Inactive': 'c-st--inactive' };
+  var ST_CLASS = { 'Inactive': 'c-st--inactive', 'Client Intake': 'c-st--pend', 'Pending': 'c-st--pend' };
 
   function rowHTML(r, letterBreak) {
     var tone = MARK_TONE[r.stTone] || 'quiet';

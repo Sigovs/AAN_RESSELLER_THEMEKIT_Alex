@@ -116,8 +116,14 @@
   }
 
   /* ══ DECK ═══════════════════════════════════════════════════════════════ */
+  /* The board (DESIGN.md §19, Alex 10-30: "the cards are not in our DS"): one
+     dark card with its title, holding the four figures as tiles — a filter tile
+     at rest is the dark tile's surface and line, chosen it is the brand fill
+     (as All Vehicles' Needs attention); a figure that is not a filter is the same
+     tile without a hover. Board figure 24/700, board label 14px. */
   function renderDeck() {
-    $('#deck').innerHTML = D.deck.map(function (t) {
+    $('#deck').innerHTML = '<div class="deck__h"><h2 class="deck__t">Billing</h2><span class="deck__m">click a figure to filter the list</span></div>'
+      + '<div class="deck__g">' + D.deck.map(function (t) {
       var on = t.filter && S.tile === t.filter;
       var lanesOn = t.filter === 'billable' && S.lane === 'billable' && !S.tile;
       var isBtn = !!t.filter;
@@ -129,15 +135,15 @@
         + '<span class="tile__v">' + esc(t.v) + '</span>'
         + '<span class="tile__s">' + esc(t.s) + '</span>'
         + (isBtn
-            ? '<span class="tile__f">' + ic('i-dn') + ((on || lanesOn) ? 'showing' : 'filter') + '</span>'
+            ? '<span class="tile__f">' + ((on || lanesOn) ? ic('i-check') + 'Showing' : ic('i-dn') + 'Filter') + '</span>'
             : (t.k === 'Past due'
-                ? '<span class="tile__note">not resolvable to rows in this snapshot</span>'
+                ? '<span class="tile__note">Not resolvable to rows in this snapshot</span>'
                 : ''));
       return isBtn
         ? '<button class="' + cls + '" type="button" data-tile="' + esc(t.filter) + '" aria-pressed="' + !!(on || lanesOn) + '"'
           + (t.title ? ' title="' + esc(t.title) + '"' : '') + '>' + inner + '</button>'
         : '<div class="' + cls + '"' + (t.title ? ' title="' + esc(t.title) + '"' : '') + '>' + inner + '</div>';
-    }).join('');
+    }).join('') + '</div>';
   }
 
   /* ══ COMMAND ════════════════════════════════════════════════════════════ */

@@ -482,3 +482,5 @@
    (Alex, after Karen's "Search first"): the default view reads as chosen */
 .cmdtop .lanes > .lane--on, .cmdtop .lanes > .lane--on:hover { background: var(--brand); color: #fff; box-shadow: none; font-weight: 500; } /* same weight as the others: the fill marks it, and the row never shifts */
 .cmdtop .lanes > .lane--on b { color: rgba(255, 255, 255, .82); }
+/* == DESIGN.md §18 type roles, pinned (Alex 10-30: "why do we make a DS if nothing changed by it?!"). Last in the file, so each role reads the same on every page. == */
+.app .row .c, .app #tb .c { font-size: 14px; }
