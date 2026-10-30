@@ -118,9 +118,9 @@ Numbering = the order in comments.html (open notes, oldest first). Notes 1–20 
 
 | # | Question | Where it stands |
 |---|---|---|
-| Q1 | **Is the Photos view used by anyone?** (third view button: big photo + Stock · VIN · Type · … · Days) | Built and hidden. It overlaps Gallery (big photos) and the Needs attention "No photos" filter. Ask Ivaylo / Karen / photographers; restore = one line in all-vehicles-gen11.html |
-| Q2 | **Craigslist posting — keep or hide?** (Karen asked to hide Posting Tools + eBay; her My Work Queue note says Craigslist feeds are no longer used) | Kept for now. AAN-bot (10-29) found ticket evidence that **Biscayne** used the AAN Craigslist tool this summer (#48078, #48543); eBay activity went through feeds / Auction123, not the menu (#48572); nothing on Posting Tools. No usage numbers: the bot has the reseller schema only and asked Ivaylo for read-only DB + log access |
-| Q3 | **Are ◀ ▶ enough for column order, or does Karen still want drag-and-drop?** | Ask Karen after the 11_2 upload — she reviewed a build without any column ordering. Suggested reply: "Column order is now in the Columns panel — ◀ ▶ moves each column, the order is saved. Tell us if you still want drag-and-drop on top." |
+| Q1 | ~~Is the Photos view used by anyone?~~ | ✅ **decided 10-29**: two views, Rows and Gallery, as in the current system; Photos view stays hidden |
+| Q2 | **Craigslist: do we need it at all?** (Karen AV #41: "I'm not sure we still need the Posting Tools and eBay section. This can be hidden.") | Still open (Alex, 10-29). The dealer Marketing menu with Craigslist posting is removed (meeting 10-29); open whether AAN needs Craigslist at all, for dealers and in Feed Management. Tickets: Biscayne used the tool this summer (#48078, #48543). Ivaylo: ask Chris and Bill. AAN-bot cannot answer, it sees no usage or billing data |
+| Q3 | ~~Are ◀ ▶ enough for column order, or drag-and-drop?~~ | ✅ **answered 10-29 (Ivaylo): no drag-and-drop**, too easy to break; ◀ ▶ stay. Reply note on AV #39 |
 
 ## Round 4 — All Leads, Karen / Matthew (worked 2026-10-29, newest first)
 
