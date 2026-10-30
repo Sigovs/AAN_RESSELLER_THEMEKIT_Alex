@@ -1869,3 +1869,5 @@ button.prov:hover { text-decoration: underline; }
 .cockpit--card .cock__type { font-size: 13px; }
 /* the page title at Archivo 92% width, as All Vehicles and All Leads */
 .cockpit--card .cock__t { font-stretch: 92%; }
+/* rail badges in sentence case, as every tag (DESIGN.md §18) */
+.app .rail .badge { text-transform: none; letter-spacing: 0; font-weight: 600; }

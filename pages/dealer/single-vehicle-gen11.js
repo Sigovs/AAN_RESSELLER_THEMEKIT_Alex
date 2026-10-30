@@ -150,8 +150,9 @@
   function moneyK(n) {
     var x = Number(n) || 0;
     if (!x) return '$0';
-    if (x >= 100000) return '$' + Math.round(x / 1000) + 'k';
-    return '$' + (x / 1000).toFixed(1) + 'k';
+    if (x >= 1000000) return '$' + (x / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+    if (x >= 100000) return '$' + Math.round(x / 1000) + 'K';
+    return '$' + (x / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
   }
   function ageTone(d) { return d <= 30 ? 'fresh' : d <= 90 ? 'mid' : d <= 365 ? 'late' : 'stale'; }
   function ageLabel(d) { return d > 365 ? (d / 365).toFixed(1) + 'y' : d + 'd'; }
@@ -202,8 +203,8 @@
   function renderRail() {
     var v = S.v;
     var st = $('#b-status');
-    var abbr = { Available: 'AVAIL', Sold: 'SOLD', Pending: 'PEND', Staging: 'STAGE' };
-    st.textContent = abbr[v.status];
+    /* the status word itself, sentence case (DESIGN.md §18: no caps chips) */
+    st.textContent = v.status;
     st.className = 'badge' + (v.status === 'Available' ? ' badge--ok' : '');
 
     var pr = $('#b-pricing');

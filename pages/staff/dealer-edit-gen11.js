@@ -375,7 +375,7 @@
       out += '<section class="panel panel--danger"><div class="panel__hd">Danger &amp; Locks</div>' +
         '<div class="panel__bd panel__bd--stack">' +
         '<button class="btn btn--sm btn--lock" type="button" data-act="lock">' + ic('i-lock') + ' Save + Lock account</button>' +
-        '<p class="panel__hint">Locked accounts reject edits from non-admins (legacy <span class="mono">locked_by</span> parity)</p>' +
+        '<p class="panel__hint">Locked accounts reject edits from non-admins</p>' +
         '</div></section>';
     }
 

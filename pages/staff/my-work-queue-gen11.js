@@ -521,7 +521,7 @@
 
     $('#field').setAttribute('data-cols', v.cols);
     $('#page-t').textContent = v.title;
-    $('#page-meta').textContent = v.meta + ' · ' + D.user;
+    $('#page-meta').textContent = String(v.meta).split(/\s+\/\s+/).join(' · ') + ' · ' + D.user;
     document.title = v.title + ' · Work Queue — AAN (Gen 11)';
 
     var rowsEl = $('#rows');

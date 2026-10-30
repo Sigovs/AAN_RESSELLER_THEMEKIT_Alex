@@ -167,7 +167,7 @@ window.DE = {
      "k": "flags.bill_stat",
      "l": "Billing Status",
      "t": "check",
-     "help": "Admin only — bill_stat",
+     "help": "Admin only",
      "only": [
       "186",
       "1144"
@@ -1487,7 +1487,7 @@ window.DE = {
       "Lead format"
      ],
      "add": "+ Add mailbox",
-     "xref": "HTML = formatted email · XML = machine payload for CRM ingestion · unset is allowed. Runtime routing keys (e.g. <span class=\"mono\">cf_email</span>) live in Setup → Remote Settings."
+     "xref": "HTML = formatted email · XML = machine payload for CRM ingestion · unset is allowed."
     }
    ]
   },

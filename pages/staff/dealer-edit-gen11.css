@@ -969,3 +969,5 @@ html.no-js .body, html.no-js .savebar { display: none; }
 .chip--id { display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 10px; border-radius: var(--r-pill); box-shadow: inset 0 0 0 1px var(--line-3); font-size: 12.5px; font-weight: 500; color: var(--ink-3); white-space: nowrap; }
 .chip--id b { font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
 .app .head__quick { padding-top: 0; }
+/* zone titles stand alone - the explanatory subtitle ("company · location · reseller · status") goes */
+.app .zone__s { display: none; }
