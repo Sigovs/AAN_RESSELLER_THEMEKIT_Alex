@@ -268,12 +268,16 @@
       '</div>';
   }
 
-  /* hidden from the form, kept in the data so it comes back with one line:
+  /* hidden from the form, kept in the data so they come back with one line:
      OEM (Karen, Dealer Edit note 1: "We dont use this field anymore"; Ivaylo 10-29:
-     "we don't even manage it, we don't even care about that anymore") */
-  var FIELD_HIDDEN = ['f.oem_id'];
+     "we don't even manage it, we don't even care about that anymore");
+     the whole Projects / My Garage group (Alex 10-29: OpenProject goes, so its
+     URL, Testing Notes and the two provisioning buttons go, My Garage with them) */
+  var FIELD_HIDDEN = ['f.oem_id', 'f.carfinder', 'f.openproject_url', 'f.project_testing_url'];
+  var SEC_HIDDEN = ['Projects / My Garage'];
   function fieldHTML(f, n) {
-    if (f.sec) return '<div class="fsec">' + esc(f.sec) + '</div>';
+    if (f.sec) return SEC_HIDDEN.indexOf(f.sec) >= 0 ? '' : '<div class="fsec">' + esc(f.sec) + '</div>';
+    if (f.t === 'projact') return '';
     if (f.only && f.only.indexOf(KEY) < 0) return '';
     if (FIELD_HIDDEN.indexOf(f.k) >= 0) return '';
     var id = 'f' + n;
