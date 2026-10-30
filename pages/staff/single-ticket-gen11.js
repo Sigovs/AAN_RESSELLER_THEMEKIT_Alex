@@ -202,9 +202,6 @@
     $('#h-title').textContent = T.subject;
     $('#h-title').title = T.subject;
     $('#h-id').textContent = '#' + T.tid;
-    var dm = String(T.dealerMeta || '').split(' · ');
-    $('#h-dealer').textContent = T.dealer;
-    $('#h-did').textContent = (dm[0] || '').replace(/^dealer\s*/i, '');
     $('#h-chips').innerHTML = T.chips.map(function (c) {
       var t = toneOf(c);
       var isType = /--worktype/.test(c.cls);
@@ -250,7 +247,7 @@
     var meta = String(T.dealerMeta || '').split(' · ');
     var id = (meta[0] || '').replace(/^dealer\s*/i, ''), phone = meta[1] || '';
     $('#rail').innerHTML = '<div class="focal__h"><h2 class="board__t">Dealer</h2><span class="s">' + esc(id) + '</span></div>'
-      /* the name is the page head now, so the card does not repeat it */
+      + '<div class="dcard__who">' + esc(T.dealer) + '</div>'
       + '<div class="dcard__ls">'
       + (phone ? '<span class="ctag ctag--mono">' + ic('i-phone') + '<b>' + esc(phone) + '</b></span>' : '')
       + T.links.map(function (l) {
