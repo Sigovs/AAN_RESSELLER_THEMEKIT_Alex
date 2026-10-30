@@ -160,7 +160,21 @@ Numbering = the order in comments.html (open notes, oldest first). Notes 1–20 
 | Q5 | **Dealer Login: the real Privacy Policy and Sitemap URLs** (Karen, DL #3) | Both links are in the footer and point to `#` until we have the addresses |
 | Q6 | **My Work Queue: which Feed Management items can really go?** (Karen, MWQ #2: "Craigslist and below") | Not hidden. The list includes Auction123 Feeds, in use per ticket #48572 (Sept). Hiding a menu item does not stop a feed, but staff lose the way in. Ask Karen to confirm item by item |
 | Q7 | ~~My Work Queue: Open Projects — does the whole AAN Projects menu go?~~ | ✅ **answered 10-29 (Ivaylo via Alex): yes, OpenProject goes.** The whole AAN Projects menu is hidden on all five staff pages (`NAV_HIDDEN_GROUPS`, data kept); the Work menu's "Open … Project Work" ticket queues stay |
-| Q8 | **Single Ticket: which department does "Site Shutdown" belong to?** (Karen, ST #8) | Added to Work Type as "Site Shutdown", no prefix. The list's other types carry their department ("Marketing - SEO"); tell us if it should read e.g. "Support - Site Shutdown" |
+| Q8 | ~~Single Ticket: which department does "Site Shutdown" belong to?~~ (Karen, ST #8) | ✅ **moot 10-29**: Site Shutdown is a new feature (meeting with Ivaylo), taken back out of Work Type; see New features below |
+
+## New features, after go-live (meeting with Ivaylo, 2026-10-29)
+
+Rule: **no new features in this redesign.** Each is possible and comes back in the next round, after go-live; Tony approves then. Every note is resolved with a "↳ Re" reply that says so. Listed on review-status.html under "New features, after go-live".
+
+| Page · note | Asked | Status |
+|---|---|---|
+| My Work Queue #6 (Karen) | My To-dos, with a Billing category to filter by | resolved 10-29, reply posted |
+| Dealer Edit #2 (Karen) | Clone Dealer button for multi-rooftop dealers | resolved 10-29, reply posted |
+| Dealer Edit #3 (Karen) | Dealer login section never worked: make it work, or store the site admin login at onboarding | resolved 10-29, reply posted; the section stays as it is |
+| Manage Dealers #1 (Karen) | Real AAN packages and products in the dropdowns | resolved 10-29, reply posted; **Create Package stays as it is** (Ivaylo: Bill may use it, already in the new backend; later it should run from accounting) |
+| Single Ticket #8 (Karen) | Site Shutdown work type, and a way to shut a site down | resolved 10-29, reply posted; removed from Work Type again. Ivaylo: not a priority |
+| Accounting #1 (Karen) | Past Due column + 2-months-past-due flag, also in Reports; between Balance and Monthly | resolved 10-29, reply posted |
+| Accounting #2 (Karen) | Notes column + new-note flag, also in Reports; after Actions | resolved 10-29, reply posted |
 
 ## Round 4 — My Work Queue (staff), worked 2026-10-29 (newest first)
 
@@ -180,4 +194,4 @@ Numbering = the order in comments.html (open notes, oldest first). Notes 1–20 
 
 | # | Note | Decision |
 |---|---|---|
-| 8 (Karen, 10-26) | "Under the work type dropdown, we need to add … Site Shutdown" | ✅ done, resolved 10-29 with a reply note (a) · "Site Shutdown" is the last Work Type option, no department prefix; the prefix is team question Q8 |
+| 8 (Karen, 10-26) | "Under the work type dropdown, we need to add … Site Shutdown" | ↩ **reverted 10-29** after the meeting with Ivaylo: a new feature, so it is out of the Work Type list again (`single-ticket-gen11.js`, v=20261029-noshut) and on the New features list; reply note posted |
