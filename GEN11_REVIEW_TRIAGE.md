@@ -185,6 +185,12 @@ Rule: **no new features in this redesign.** Each is possible and comes back in t
 | Dealer Edit #4 checked (Ivaylo thought the pin had moved) | Dealer Edit #4 (Karen, 10-28): "This section needs to be updated to reflect the current information in the dropdowns. Tony might like some input on what the changes may be, but currently we don't really use it" | ✅ checked 10-29: the pin is on Commercials (zComm), where it was left. Section unchanged (Alex: A); the question to Tony on the status page lists the four dropdowns and their values. New values are data, not a new feature |
 | Dealer Edit: the whole Projects / My Garage group removed (Alex, 10-29, after "OpenProject goes") | none; our follow-up. The group matches the original export (s12 Dealer file) 1:1: My Garage URL, OpenProject URL, Testing Notes URL, "Create Redesign Project" / "Create Unified Project Testing Notes" (OpenProject provisioning job) | ✅ hidden at render time (`SEC_HIDDEN`, `FIELD_HIDDEN`, projact skipped; v=20261029-noproj2), data kept. Dealer Setup in the original has the same OpenProject block; there is no Gen 11 Dealer Setup page |
 
+## Round 4 — Dealer Edit (staff), worked 2026-10-29 (newest first)
+
+| # | Note | Status |
+|---|---|---|
+| 6 (Karen, 10-29) | "In my opinion, the notes section should be moved under Inventory and DMS section horizontally" | ✅ done, resolved with a reply note (A) · Notes is the last zone "09 Notes" (`notesZone()`), full width: history left, new note + Add Comment right; rail entry "Notes", scroll-spy includes it; the side card is gone (Options, Danger & Locks stay). The original has Notes as the top side card, not sticky, so nothing is lost. 390/768 overflow (1050px, staff top nav) is pre-existing |
+
 ## Round 4 — My Work Queue (staff), worked 2026-10-29 (newest first)
 
 | # | Note | Decision |

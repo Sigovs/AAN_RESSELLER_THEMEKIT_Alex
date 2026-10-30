@@ -639,6 +639,9 @@ select.fld {
 
 /* the note history is read-only: no box, no ring, no hover */
 .notes { display: flex; flex-direction: column; gap: var(--s3); max-height: 190px; overflow: auto; margin-bottom: var(--s3); }
+/* in the form (Notes zone) the history has the width, so it gets more height too */
+.notes--zone { max-height: 320px; margin-bottom: 0; padding-top: 2px; }
+.notes--zone .note__txt { font-size: 14px; }
 .note { display: flex; flex-direction: column; gap: 2px; }
 .note__who { font: 500 11px var(--mono); color: var(--ink-4); }
 .note__txt { font-size: 13px; color: var(--ink-2); }

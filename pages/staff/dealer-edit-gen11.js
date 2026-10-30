@@ -122,6 +122,12 @@
         '<span>' + esc(z.t) + '</span>' +
         '<span class="vh">— ' + DOT_WORD[dot] + '</span></button>';
     }).join('') +
+    (function () {
+      var dot = R.notes && R.notes.length ? 'green' : 'grey';
+      return '<button class="rail__b ui-nav__i" type="button" data-zone="zNotes">' +
+        '<span class="dot dot--' + dot + '" aria-hidden="true"></span><span>Notes</span>' +
+        '<span class="vh">— ' + DOT_WORD[dot] + '</span></button>';
+    })() +
     '<div class="rail__sep"></div>' +
     '<span class="rail__hint">Jump: <kbd>/</kbd></span>';
   }
@@ -313,7 +319,31 @@
         '<span class="zone__s">' + esc(z.s) + '</span></header>' +
         '<div class="fg">' + z.fields.map(function (f) { return fieldHTML(f, ++n); }).join('') + '</div>' +
       '</section>';
-    }).join('');
+    }).join('') + notesZone();
+  }
+
+  /* Notes — the last section of the form, full width (Karen, Dealer Edit note 6:
+     "the notes section should be moved under Inventory and DMS section
+     horizontally"). History on the left, the new note on the right; the same
+     parts as the side card it replaces. */
+  function notesZone() {
+    var notes = R.notes;
+    var hist = notes && notes.length
+      ? '<div class="notes notes--zone">' + notes.map(function (x) {
+          return '<div class="note"><span class="note__who">' + esc(x.who) + '</span>' +
+            '<span class="note__txt">' + esc(x.txt) + '</span></div>';
+        }).join('') + '</div>'
+      : '<p class="panel__empty">No notes yet — the first note saved here starts this dealer&rsquo;s history.</p>';
+    return '<section class="zone" id="zNotes" aria-labelledby="zNotes-h">' +
+      '<header class="zone__hd"><h2 class="zone__t" id="zNotes-h">Notes</h2>' +
+      '<span class="zone__s">' + (notes && notes.length ? notes.length + (notes.length === 1 ? ' note' : ' notes') + ' · ' : '') + 'history · new note</span></header>' +
+      '<div class="fg">' +
+        '<div class="fw"><span class="fl">History</span>' + hist + '</div>' +
+        '<div class="fw"><label class="fl" for="f-note">New note</label>' +
+          '<textarea class="fld fld--area" id="f-note" rows="4" data-k="note" placeholder="New note (appended on save)…"></textarea>' +
+          (notes ? '<button class="addb" type="button" data-act="add-note" style="margin-top:8px">Add Comment</button>' : '') +
+        '</div>' +
+      '</div></section>';
   }
 
   /* ══ SIDE ═════════════════════════════════════════════════════════════════ */
@@ -322,21 +352,7 @@
     if (!R) { $('#side').innerHTML = ''; return; }
     var out = '';
 
-    /* Notes — read-only history, then one place to add to it */
-    var notes = R.notes;
-    out += '<section class="panel"><div class="panel__hd">Notes' +
-      (notes ? '<span class="panel__n">' + notes.length + '</span>' : '') + '</div><div class="panel__bd">';
-    if (notes && notes.length) {
-      out += '<div class="notes">' + notes.map(function (x) {
-        return '<div class="note"><span class="note__who">' + esc(x.who) + '</span>' +
-          '<span class="note__txt">' + esc(x.txt) + '</span></div>';
-      }).join('') + '</div>';
-    } else if (notes) {
-      out += '<p class="panel__empty">No notes yet — the first note saved here starts this dealer&rsquo;s history.</p>';
-    }
-    out += '<textarea class="fld fld--area" rows="3" data-k="note" placeholder="New note (appended on save)…" aria-label="New note"></textarea>';
-    if (notes) out += '<button class="addb" type="button" data-act="add-note" style="margin-top:8px">Add Comment</button>';
-    out += '</div></section>';
+    /* Notes moved into the form, after Inventory & DMS (notesZone) */
 
     /* Options — five flags, each with the sentence that says what it does */
     if (R.flags) {
@@ -595,9 +611,9 @@
     if (!R) return;
     var limit = stackH() + 12;
     var cur = D.zones[0].id;
-    D.zones.forEach(function (z) {
-      var el = document.getElementById(z.id);
-      if (el && el.getBoundingClientRect().top <= limit) cur = z.id;
+    D.zones.map(function (z) { return z.id; }).concat('zNotes').forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top <= limit) cur = id;
     });
     mark(cur);
   }
