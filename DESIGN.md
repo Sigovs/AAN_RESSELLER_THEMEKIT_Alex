@@ -7,7 +7,7 @@ decoration. Nothing in this document asks for an effect. Every value was read ou
 pages at 1440×900 (computed style), not proposed in advance; where a number looks arbitrary, the
 note says what it is load-bearing for.
 
-Part I (§0–§35) says what each thing looks like; Part II (§36–§40) says how to build a page from it:
+Part I (§0–§35) says what each thing looks like; Part II (§36–§41) says how to build a page from it:
 the page types, copy-paste markup with states, which pattern for which need, and the hand-in check.
 Section numbers are stable — code comments cite them (`DESIGN.md §18`). New topics get new numbers;
 an old number is never reused for something else.
@@ -48,7 +48,9 @@ pinned back in the shared block, never in the other page.
 
 **Check.** `node tools/ds-check/ds-check.mjs` (a) lists every page-CSS selector that restyles a shared
 component or role — the backlog of this section — and (b) measures each role on all ten pages against
-its origin page and prints the differences, overflow and console errors. Run it after every change.
+its origin page and prints the differences, overflow and console errors; `--widths` adds (c), overflow,
+touch targets and the sticky stack per width. `node tools/ds-check/features.mjs` is the feature
+inventory (§41). Run them after every change.
 
 **Cache.** Plesk caches CSS/JS for a year: every stylesheet that changes gets a new `?v=` key in every
 HTML file that loads it.
@@ -363,11 +365,14 @@ sized to its longest state, a result line that is always there).
 
 ---
 
-## 15 · Responsive — desktop only
+## 15 · Responsive — desktop and tablet
 
-Verified at 1280×720 · 1366×768 · 1440×900 · 1920×1080, plus a 1366×610 height stress. 1366 is the
-binding width; one breakpoint, `@media (max-width: 1400px)`. Zero horizontal overflow in every state.
-Do not compact to fit; let the flexible column absorb the difference.
+**Desktop, 1280 and up.** Verified at 1280×720 · 1366×768 · 1440×900 · 1920×1080, plus a 1366×610
+height stress. 1366 is the binding desktop width; the desktop breakpoints sit at 1280 and above. Zero
+horizontal overflow in every state. Do not compact to fit; let the flexible column absorb the difference.
+
+**Tablet, 768–1279.** §41. **Mobile, below 768:** not designed; nothing may be built for it without a
+decision.
 
 **Dealer Login** is its own world (full-bleed video, 46px fields, 44px / 900 caps headline): it shares
 the fonts, the mark and the brand colour, not the platform bar.
@@ -1176,11 +1181,76 @@ A letter with no rows: `disabled`.
 - [ ] Nothing moves on any state change (hover, select, open, save, error).
 - [ ] Table columns left-aligned; a pager at the top and bottom of a paged list.
 - [ ] Empty, loading, error and long-content states shown in the browser.
-- [ ] No horizontal overflow at 1280, 1366, 1440 and 1920; no console errors.
+- [ ] No horizontal overflow at 1280, 1366, 1440 and 1920, nor at 768, 834, 1024 and 1180 (§41); no console errors.
+- [ ] `node tools/ds-check/features.mjs` (after `--save` at 1440 for a new page): every item reachable at every tablet width.
+- [ ] Touch: nothing only on hover; every control 36px or an invisible 36px hit area (§41).
 - [ ] `?v=` bumped on every changed stylesheet in every HTML that loads it.
 - [ ] **`node tools/ds-check/ds-check.mjs` run; no new rule in part (a) for your page and no deviation in
       part (b) that is not in the Appendix.**
 
+
+---
+
+## 41 · Breakpoints — desktop and tablet
+
+Origin: All Vehicles (the list, the board, the dock); every other page inherits the same rules. The
+shared rules live once in `_aan-components.css` (the `TABLET` block) and `_aan-tablet.js`; a page
+stylesheet only adds what is its own layout (Dealer Edit's side panels, Single Vehicle's lock tip).
+
+| range | what it is |
+|---|---|
+| **1280 and up** | desktop. Nothing in the tablet block applies; the desktop build is pixel-identical with and without it |
+| **1180–1279** | tablet, landscape: the staff platform bar on two rows, lists scroll in their own container, docks still beside the content |
+| **1024–1179** | the dealer bar still on one row; boards reflow; docks become overlays |
+| **768–1023** | the dealer bar on two rows too |
+| below 768 | not designed |
+
+**Nothing is dropped.** What does not fit wraps, reflows, scrolls inside its own container or moves
+behind a visible, labelled control (a menu, the dock toggle). No `display: none` to make room, no
+column removed, no smaller type: the §18 roles are the same at every width; controls may grow, text
+does not shrink. `node tools/ds-check/features.mjs` proves it: it inventories every nav item, button,
+link, field, tab, facet, column head, section, rail entry, board tile and dock trigger at 1440 and
+fails if any of them is missing, clipped or hidden without a visible trigger at a tablet width.
+
+**Platform bar.** Where the destinations do not fit in one row (staff below 1280, dealer below 1024)
+the bar takes two rows, `--stick-bar: 100px`: the mark, the global search (with its field, never a
+bare glyph), the utilities and the identity on the first; every nav group on the second, in the same
+order. Menus open under their item as on desktop; on a touch screen a tap opens and closes them.
+
+**Page head.** One row while it fits; the actions wrap to a second row under the title (`--headh:
+auto`). Record head cards wrap their action row the same way; the title stays one line.
+
+**Boards** (below 1180): the first card across the row, the others two by two
+(`minmax(0, 1fr) minmax(0, 1.8fr)`); a card left alone on its row spans the row. Board type does not
+shrink; the tiles get the width instead.
+
+**Lists — the table-scroll rule.** A list never makes the page scroll sideways. Below 1280 the rows
+(`#tb`) scroll horizontally inside the field; every row and the column head take the table's own
+width (`--tw`, measured from the grid, so they line up); the column head stays sticky on the page and
+follows the rows sideways (`--sx`); the record's name / id column (`.stk`, `.ld`, `.c-tkt`, `.c-name`)
+stays in view, sticky at the left, with a 1px `--line-2` edge. The zebra (§10) runs the full table
+width, the sticky column included. An open row sheet (`.exp`) and the empty state stay in view at
+the left. The band under the command band wraps: the scope line on its own row, the filters under
+it; the A–Z jump wraps.
+
+**Dock rule.** At 1180 and up the dock stands beside the content. Below 1180 it is an overlay at the
+right: fixed under the platform bar, a gutter from the edges, `min(440px, 100vw − 32px)` wide, `--el-3`,
+over the page; its own toggle and its close button work as on desktop. A page that opens its dock on
+load (Single Lead's Workflow, Single Ticket's Assigned To) starts with it closed at overlay widths.
+Side panels that do not fit (Dealer Edit's Options, Danger & Locks) go under the form.
+
+**Touch** (`hover: none` / `pointer: coarse`, in the tablet range). Nothing waits for a hover: row
+actions, filter-by-value buttons, the site link and the photo remove button are shown; a "?" mark
+and the edit-lock tip open on tap. Every control is at least 36px tall — buttons, nav items, tabs,
+facets, menu items and fields grow to 36px; small things (links in cells, glyph buttons, switches,
+checkboxes) keep their drawn size and get an invisible 36 × 36 hit area (`::before`).
+
+**Sticky stack.** Bar + command band + column head is 204px at most (20% of 768×1024, 27% of
+1024×768); a sticky stack never takes more than a third of a tablet screen.
+
+**Checked at** 768×1024 · 820×1180 · 834×1112 · 1024×768 · 1024×1366 · 1112×834 · 1180×820 · 1279×800,
+portrait and landscape, with `node tools/ds-check/ds-check.mjs --widths` (overflow, targets, stack)
+and `features.mjs`.
 
 ---
 
@@ -1217,3 +1287,13 @@ it here. `tools/ds-check` prints the measured state of each.
     `.zone__hd` (Dealer Edit) for `.zone__h`, field `.fw` + `.fl` (Dealer Edit) for `.f` + `.f__l`, record
     head `.head--card` for `.cockpit--card`. New pages use the origin names in §38; merging the aliases
     is the backlog `tools/ds-check` lists.
+17. **Staff lists at 1280–1340 (desktop):** on My Work Queue the list is clipped at the right (64px of
+    columns at 1280, no scroll) and the column head sits below the first row (the page's own 1340 rule
+    makes `.rows` a scroll container). The tablet table rule (§41) fixes both; extending it up to
+    1340 changes the desktop build at those widths.
+18. **Native checkboxes on touch:** Accounting's row checkboxes (14px, the browser's box) cannot take the
+    invisible hit area; with §25's `.ck` they would (see 3).
+19. **Photo preview on a touch screen:** All Vehicles' hover preview of a thumbnail is mouse-only; on a
+    tablet the larger photo is one tap away in the row's sheet. A tap-and-hold preview is possible.
+20. **Sticky column head on tablet** follows the rows sideways by a transform driven from the rows'
+    scroll (`_aan-tablet.js`); without JavaScript the head stays put while the rows scroll.

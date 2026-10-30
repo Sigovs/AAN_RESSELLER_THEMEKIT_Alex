@@ -1866,3 +1866,8 @@ button.prov:hover { text-decoration: underline; }
 .cockpit--card .cock__type { font-size: 13px; }
 /* rail badges in sentence case, as every tag (DESIGN.md §18) */
 .app .rail .badge { text-transform: none; letter-spacing: 0; font-weight: 600; }
+
+/* == tablet (DESIGN.md §41): the edit-lock tip opens towards the page, not past its right edge == */
+@media (max-width: 1279.98px) {
+  .lock__tip { left: auto; right: 0; }
+}

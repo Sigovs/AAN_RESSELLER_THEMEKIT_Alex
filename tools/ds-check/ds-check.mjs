@@ -3,6 +3,9 @@
 //
 //   node tools/ds-check/ds-check.mjs            static scan + browser measurement
 //   node tools/ds-check/ds-check.mjs --static   static scan only (no browser)
+//   node tools/ds-check/ds-check.mjs --widths   + (c) overflow, touch targets (touch emulated below 1280) and the sticky stack at
+//                                               1440,1024,768 (or --widths 1280,1180x820,834x1112)
+//   node tools/ds-check/ds-check.mjs --widths --only   (c) alone
 //
 // (a) STATIC  lists every selector in a page stylesheet that restyles a shared component
 //             (the components _aan-components.css owns). Each one is either page layout that
@@ -203,7 +206,64 @@ async function measure() {
   return diffs;
 }
 
+// ── (c) widths: page overflow, touch targets under 36px, sticky stack share (DESIGN.md §41) ──
+const WIDTH_PROBE = `(async () => {
+  const iw = innerWidth, ih = innerHeight, sw = document.documentElement.scrollWidth;
+  let small = 0;
+  if (iw < 1280) document.querySelectorAll('button, a[href], input:not([type=hidden]):not([type=file]), select, textarea, [role=button], label.sw').forEach(e => {
+    const r = e.getBoundingClientRect(); if (r.width < 1 || r.height < 1 || e.closest('svg, .cke, [inert]')) return;
+    const c = getComputedStyle(e); if (c.visibility === 'hidden' || c.opacity === '0') return;
+    let h = r.height; for (const ps of ['::before', '::after']) { const p = getComputedStyle(e, ps);
+      if (p.content !== 'none' && p.position === 'absolute') { const t = parseFloat(p.top) || 0, b = parseFloat(p.bottom) || 0; if (t < 0 || b < 0) h = Math.max(h, r.height - t - b); } }
+    const lab = e.closest('label'); if (lab) { const lr = lab.getBoundingClientRect(); let lh = lr.height; const lp = getComputedStyle(lab, '::before');
+      if (lp.content !== 'none' && lp.position === 'absolute') lh = Math.max(lh, lr.height - (parseFloat(lp.top) || 0) - (parseFloat(lp.bottom) || 0)); h = Math.max(h, lh); }
+    if (h < 35.5) small++; });
+  window.scrollTo(0, Math.min(1800, Math.max(0, document.documentElement.scrollHeight - ih - 10))); await new Promise(r => setTimeout(r, 300));
+  let top = 0, bot = 0;
+  document.querySelectorAll('body *').forEach(e => { const c = getComputedStyle(e); if (c.position !== 'sticky' && c.position !== 'fixed') return;
+    if (e.closest('#tb, .dock') || e.matches('.rail, .ui-nav, .side, .thpv')) return; // side columns and the dock overlay are not bands
+    const r = e.getBoundingClientRect(); if (r.width < 40 || r.height < 1 || r.height > ih * .9 || c.visibility === 'hidden' || c.opacity === '0' || r.bottom <= 0 || r.top >= ih) return;
+    if (r.top < ih / 2) top = Math.max(top, r.bottom); else bot = Math.max(bot, ih - r.top); });
+  // zebra: on a list, every second row is tinted across the table's whole width (also when the rows scroll
+  // in their own container), and a sticky name / id cell carries its row's tint
+  let zebra = '';
+  const tb = document.querySelector('.rows.ui-table > #tb'); const rs = tb ? [...tb.querySelectorAll(':scope > .row')] : [];
+  if (rs.length > 3) { window.scrollTo(0, 0); await new Promise(r => setTimeout(r, 100));
+    const bg = e => getComputedStyle(e).backgroundColor; const r1 = rs[1], r0 = rs[0];
+    const id = r1.querySelector(':scope > :is(.stk, .ld, .c-tkt, .c-name)');
+    const full = r1.getBoundingClientRect().width + 1 >= tb.scrollWidth - (parseFloat(getComputedStyle(tb).paddingLeft) || 0) - (parseFloat(getComputedStyle(tb).paddingRight) || 0);
+    zebra = bg(r1) !== bg(r0) && full && (!id || bg(id) === bg(r1) || getComputedStyle(id).position !== 'sticky') ? 'z' : 'Z!'; }
+  return JSON.stringify({ iw, ih, over: Math.max(0, sw - iw), small, stack: Math.round((top + bot) / ih * 100), zebra });
+})()`;
+
+async function widths(list) {
+  const { serve: srvF, browser: brF } = await import('./lib.mjs');
+  const srv = await srvF(); const port = srv.address().port; const br = await brF();
+  console.log('\n(c) WIDTHS — horizontal page overflow · controls under 36px (below 1280) · sticky share of the screen\n');
+  const head = ['page'.padEnd(16), ...list.map(([w, h]) => (w + 'x' + h).padEnd(22))].join('');
+  console.log('  ' + head); let bad = 0;
+  for (const [name, p] of PAGES) {
+    const cells = [];
+    for (const [w, h] of list) {
+      await br.open(`http://127.0.0.1:${port}/${p}.html`, w, h, 2200, w < 1280); // a tablet is a touch screen
+      const m = JSON.parse(await br.evaluate(WIDTH_PROBE));
+      const err = br.errors.length ? ' err' : '';
+      if (m.over || br.errors.length || m.stack > 34 || m.zebra === 'Z!') bad++;
+      cells.push(`${m.over ? 'OVER ' + m.over : 'ok'}${w < 1280 ? ' ·' + m.small + ' small' : ''} ·${m.stack}%${m.zebra ? ' ·' + m.zebra : ''}${err}`.padEnd(22));
+    }
+    console.log('  ' + name.padEnd(16) + cells.join(''));
+  }
+  br.close(); srv.close();
+  console.log(`\n  ${bad ? bad + ' cell(s) with overflow, a console error, a sticky stack over a third or a broken zebra' : 'no overflow, no console error, every sticky stack under a third of the screen, zebra intact'}`);
+}
+
 const staticOnly = process.argv.includes('--static');
-staticScan();
-if (!staticOnly) await measure();
+const wArg = process.argv.findIndex(a => a === '--widths' || a.startsWith('--widths='));
+const only = process.argv.includes('--only');
+if (!only) { staticScan(); if (!staticOnly) await measure(); }
+if (wArg >= 0) {
+  const raw = process.argv[wArg].includes('=') ? process.argv[wArg].split('=')[1] : (process.argv[wArg + 1] && !process.argv[wArg + 1].startsWith('--') ? process.argv[wArg + 1] : '1440,1024,768');
+  const list = raw.split(',').map(x => { const [w, h] = x.split('x').map(Number); return [w, h || (w >= 1280 ? 900 : w < 900 ? 1024 : 768)]; });
+  await widths(list);
+}
 process.exit(0);

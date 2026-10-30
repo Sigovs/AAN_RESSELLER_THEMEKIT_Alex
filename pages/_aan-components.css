@@ -583,3 +583,114 @@ select.sel, select.ui-ctl, .rows select, .cmd select, .zone select, .form select
 }
 /* the same zebra on a data table inside a page (a ledger, a log table): mark the table .zebra */
 .app table.zebra > tbody > tr:nth-child(even):not(:hover) > td { background: color-mix(in srgb, var(--wash) 55%, var(--sheet)); }
+
+/* == TABLET, 768–1279px (DESIGN.md §41) ======================================================
+   Everything below sits inside max-width queries: at 1280px and up nothing here applies, so the
+   desktop build is unchanged. Origin of every pattern: All Vehicles. Nothing is dropped at a
+   narrower width — what does not fit wraps, reflows, scrolls in its own container or moves
+   behind a visible, labelled control. Type roles do not shrink. */
+@media (max-width: 1279.98px) {
+  /* the platform bar on two rows where the destinations do not fit (staff below 1280): the mark,
+     the search and the utilities on the first, every nav group on the second */
+  :root:has(.app > .top .me) { --stick-bar: 100px; --bar-track: 120px; }
+  .app > .top:has(.me) { height: var(--stick-bar); flex-wrap: wrap; align-content: center; row-gap: 14px; }
+  .app > .top:has(.me) > .nav { order: 9; flex: 1 0 100%; min-width: 0; margin: 0; }
+  .app > .top:has(.me) > .nav, .app > .top:has(.me) .nav__it { height: 40px; }
+  /* the global search keeps its field (the 1300px rule had made it a glyph with no input) */
+  .app > .top .gsearch { display: flex; width: 200px; padding: 0 var(--s2) 0 10px; justify-content: flex-start; }
+  .app > .top .gsearch input { display: block; min-width: 0; }
+
+  /* page head: the title and its actions wrap to a second line instead of running off the page */
+  .app { --headh: auto; }
+  .app > .head:not(.head--card) { flex-wrap: wrap; height: auto; min-height: 0; row-gap: var(--s2); }
+  .app > .head .head__actions { flex-wrap: wrap; }
+  /* the band under the command band: the scope line on its own row, the filters wrap under it */
+  .app .field .sub.ui-toolbar { flex-wrap: wrap; height: auto; row-gap: var(--s2); }
+  .app .field .sub.ui-toolbar > .scope { flex: 1 0 100%; }
+  .app .field .sub.ui-toolbar > .qf { flex: 1 1 0; min-width: 0; flex-wrap: wrap; margin-left: 0; }
+  .app .az { flex: 1 1 0; min-width: 0; flex-wrap: wrap; height: auto; }
+
+  /* touch targets: every control is at least 36px tall below 1280; glyph-only controls 36 x 36.
+     Sizes grow, type roles do not change */
+  .app :is(.btn, .nav__b, .facet__b, .ui-view, .secnav__b, .mn__it, .menu__l, .gsearch, .dealer, .me, .rail__i, .rail__b, .ui-nav__i) { min-height: 36px; }
+  .app :is(.tbtn, .dock__x, .btn--icon, .pg button, .dock__nav button) { min-width: 36px; min-height: 36px; }
+  .app :is(.az__b, .az button) { min-height: 36px; }
+  .app :is(.av, .avt) { position: relative; }
+  .app :is(.av, .avt)::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; }
+
+  /* record head cards: the action row wraps; the title keeps its role and one line */
+  .app .head--card .head__top, .app .cockpit--card .cock__top { flex-wrap: wrap; row-gap: var(--s2); }
+
+  /* wide lists scroll inside their own container (#tb), never the page. The column head stays
+     sticky on the page and follows the rows sideways (--sx); --tw is the table's own width, the
+     same for the head and every row (_aan-tablet.js) */
+  .app .rows.ui-table { overflow: visible; }
+  .app .rows.ui-table > #tb { position: relative; overflow-x: auto; overscroll-behavior-x: contain; }
+  .app .rows.ui-table > #tb > .row, .app .rows.ui-table > .hd { width: var(--tw, auto); }
+  .app .rows.ui-table > .hd { transform: translateX(calc(var(--sx, 0) * -1px)); }
+  .app .rows.ui-table > #tb > :is(.exp, .empty, .gal) { position: sticky; left: 0; }
+  :where(.app .rows.ui-table > #tb > .row) { background-color: var(--sheet); }
+  /* the record's name / id column stays in view while the others scroll under it */
+  .app .rows.ui-table > #tb > .row > :is(.stk, .ld, .c-tkt, .c-name) {
+    position: sticky; left: 0; z-index: 2; background: inherit; box-shadow: 1px 0 0 var(--line-2);
+  }
+  .app .rows.ui-table > .hd > :is([data-sort="stock"], .c-lead, .c-tkt, .c-name) {
+    position: relative; z-index: 2; background: inherit; box-shadow: 1px 0 0 var(--line-2);
+    translate: max(0px, calc(var(--sx, 0) * 1px - var(--idx, 0px))) 0;
+  }
+}
+/* the dealer bar has room for one row down to 1024 */
+@media (max-width: 1023.98px) {
+  :root:has(.app > .top .dealer) { --stick-bar: 100px; --bar-track: 120px; }
+  .app > .top:has(.dealer) { height: var(--stick-bar); flex-wrap: wrap; align-content: center; row-gap: 14px; }
+  .app > .top:has(.dealer) > .nav { order: 9; flex: 1 0 100%; min-width: 0; margin: 0; }
+  .app > .top:has(.dealer) > .nav, .app > .top:has(.dealer) .nav__it { height: 40px; }
+}
+/* boards reflow: the first card across the row, the others two by two */
+@media (max-width: 1179.98px) {
+  .app .bento { grid-template-columns: minmax(0, 1fr) minmax(0, 1.8fr); grid-template-areas: none; }
+  .app .bento > * { grid-area: auto; }
+  .app .bento > :first-child, .app .bento > :last-child:nth-child(even) { grid-column: 1 / -1; }
+
+  /* a dock that does not fit beside the content becomes an overlay at the right; its toggle and its
+     close button stay what they are (_aan-tablet.js starts it closed if a page opens it on load) */
+  .app.dock-open { grid-template-columns: minmax(0, 1fr); }
+  .app > .dock {
+    position: fixed; z-index: var(--z-menu);
+    top: calc(var(--stick-bar) + var(--s5)); right: var(--gutter); bottom: var(--gutter);
+    width: min(440px, calc(100vw - 2 * var(--gutter))); max-height: none; height: auto; align-self: stretch;
+    box-shadow: var(--el-3);
+  }
+}
+/* touch screens in the tablet range: nothing waits for a hover. A control a pointer reveals on hover
+   is shown; a "?" mark and the edit-lock tip open on tap (the native title never shows on touch) */
+@media (hover: none) and (max-width: 1279.98px) {
+  .app .row .acts { display: inline-flex; }
+  .app :is(.photo__x, .row .frf, .row .dlr__site, .row .dlr .i) { opacity: 1; }
+  .app .lock--mine:focus .lock__tip { opacity: 1; visibility: visible; }
+  .app .f__q { position: relative; }
+  .app .f__q:focus::after {
+    content: attr(aria-label); position: absolute; left: -8px; top: calc(100% + 8px); z-index: var(--z-menu);
+    width: max-content; max-width: min(280px, 60vw); padding: 10px 12px; border-radius: var(--r-inner);
+    background: var(--ink); color: #fff; font: 400 13px/1.45 var(--font); letter-spacing: 0; text-align: left;
+    white-space: normal; box-shadow: 0 8px 24px rgba(16, 21, 31, .18);
+  }
+}
+/* touch targets for the small things (links in cells, glyph buttons, switches, checkboxes): the drawn
+   size stays, an invisible ::before makes the hit area at least 36 x 36 (only on classes whose
+   ::before is free); fields grow to 36px */
+@media (pointer: coarse) and (max-width: 1279.98px) {
+  .app :is(.fld, .in, .sel, select:not([class]), .agerow, .head .nav__it > button, .cc__disc) { min-height: 36px; }
+  .app :is(a[href]:not([class]), a.stock, a.tkt, a.dlr, a.dlr__site, a.gear, a.ra, a.c--1, a.s, a.gl, a.atlas, a.brand,
+    a.ctag, a.dbchip, .copy, .del, .ed, .ev__more, .ev__reply, .ev__rm, .frf, .grip, .linkbtn, .pkgl, .prov, button.s,
+    .seal__b, .addb, button.sw, .tl, .fchip, .fsw__c, .seg__b, .chip.wchip, .savebar__b, label.sw, label.seg__o, input.ck,
+    input.ring, .ctag button, #tb > .row > button, .acts button) { position: relative; }
+  .app :is(a[href]:not([class]), a.stock, a.tkt, a.dlr, a.dlr__site, a.gear, a.ra, a.c--1, a.s, a.gl, a.atlas, a.brand,
+    a.ctag, a.dbchip, .copy, .del, .ed, .ev__more, .ev__reply, .ev__rm, .frf, .grip, .linkbtn, .pkgl, .prov, button.s,
+    .seal__b, .addb, button.sw, .tl, .fchip, .fsw__c, .seg__b, .chip.wchip, .savebar__b, label.sw, label.seg__o, input.ck,
+    input.ring, .ctag button, #tb > .row > button, .acts button, .photo__x, .f__q, .lock--mine)::before {
+    content: ""; position: absolute; z-index: 1;
+    top: min(0px, calc((100% - 36px) / 2)); bottom: min(0px, calc((100% - 36px) / 2));
+    left: min(0px, calc((100% - 36px) / 2)); right: min(0px, calc((100% - 36px) / 2));
+  }
+}

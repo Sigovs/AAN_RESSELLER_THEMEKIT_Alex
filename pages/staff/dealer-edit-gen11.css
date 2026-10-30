@@ -970,3 +970,11 @@ html.no-js .body, html.no-js .savebar { display: none; }
 .app .pop:not(.top .pop) { box-shadow: var(--sh-soft); }
 /* the checkbox of All Vehicles: 16px, 5px radius */
 .app .ck { width: 16px; height: 16px; border-radius: 5px; }
+
+/* == tablet (DESIGN.md §41): the side panels go under the form, as this page's own 1180 rule meant
+   (the later three-column .body above outranked it); the rail stays beside the zones == */
+@media (max-width: 1179.98px) {
+  .body { grid-template-columns: 188px minmax(0, 1fr); }
+  .side { position: static; grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; }
+  .panel { flex: 1 1 280px; }
+}
