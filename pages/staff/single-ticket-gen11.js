@@ -220,8 +220,10 @@
   function renderHead() {
     document.title = 'Ticket ' + T.tid + ' · ' + T.subject + ' — AAN (Gen 11)';
     setWait(!!T.form.waiting, true);
-    $('#h-title').textContent = T.subject;
-    $('#h-title').title = T.subject;
+    /* "Dealer : Subject", as the original's header (Alex 10-30) */
+    $('#h-title').textContent = T.dealer + ' : ' + T.subject;
+    $('#h-title').title = T.dealer + ' : ' + T.subject;
+    renderHeadLinks();
     /* the number says what it is (Alex 10-29) */
     $('#h-id').innerHTML = '<span class="head__k">Ticket number:</span> <b>' + esc(T.tid) + '</b>';
     /* opened · last modified · last activity — the dealer (first part) is not
@@ -247,6 +249,34 @@
     var cb = $('#w-wait'); if (cb) cb.checked = on;
     $$('[data-wait-flag]').forEach(function (x) { x.checked = on; });
     if (!quiet) renderPulse();
+  }
+
+  /* the dealer's routes and the way into the Work Order fields */
+  function renderHeadLinks() {
+    var meta = String(T.dealerMeta || '').split(' · ');
+    var did = (meta[0] || '').replace(/^dealer\s*/i, ''), phone = meta[1] || '';
+    $('#h-links').innerHTML = '<span class="hl__k">dealer ' + esc(did) + '</span>'
+      + (phone ? '<span class="hl__ph">' + esc(phone) + '</span>' : '')
+      + T.links.map(function (l) {
+          var label = l.label.replace(/\s*\(Potential Dev Link\)\s*$/i, '');
+          return '<a class="hl__a" href="' + esc(l.href) + '"' + (/^https?:/.test(l.href) ? ' rel="noreferrer" target="_blank"' : '') + ' title="' + esc(l.label) + '">'
+            + esc(label) + (l.dev ? ' <span class="hl__dev">Potential dev link</span>' : ic('i-ext')) + '</a>';
+        }).join('');
+      /* The Work Order is hidden for now, with no way in (Alex 10-30: "hide it for
+         now — comment it out"). The Edit links that opened it, kept for when it
+         comes back:
+      + '<span class="hl__sep" aria-hidden="true"></span>'
+      + '<span class="hl__k">Edit</span>'
+      + '<button class="hl__e" type="button" data-wo="class">Classification</button>'
+      + '<button class="hl__e" type="button" data-wo="contact">Contact</button>'
+      + '<button class="hl__e" type="button" data-wo="sched">Schedule &amp; Billing</button>'; */
+  }
+  /* open the folded Work Order at the part asked for */
+  function openWork(part) {
+    var sec = $('#s-work'); sec.hidden = false;
+    var col = $$('#s-work .wo__c')[{ class: 0, contact: 1, sched: 2 }[part] || 0];
+    sizeExtender(); goTo(sec);
+    var f = col && col.querySelector('select, input, textarea'); if (f) setTimeout(function () { f.focus({ preventScroll: true }); }, 0);
   }
 
   /* ══ BENTO ═════════════════════════════════════════════════════════════ */
@@ -300,7 +330,7 @@
      the history's own sections stand in it directly, each with a dot of its
      tone; "History" and "All" were the same thing twice. */
   var SECS = [
-    { id: 's-work', label: 'Work order', n: null },
+    /* { id: 's-work', label: 'Work order', n: null },  — folded away (Alex 10-30) */
     { id: 'ts-message', label: 'Messages', tone: 'message', n: function () { return laneCount('message'); } },
     { id: 'ts-note', label: 'Internal notes', tone: 'note', n: function () { return laneCount('note'); } },
     { id: 'ts-todo', label: 'ToDos', tone: 'todo', n: function () { return laneCount('todo'); } },
@@ -709,9 +739,8 @@
      that offset. A rect top against the anchor line needs no origin at all. */
   function syncNav() {
     var line = stack() + anchorGap() + 1, cur = null;
-    $$('.sec, .tsec').forEach(function (s) { if (s.getBoundingClientRect().top <= line) cur = s.id; });
-    if (!cur) cur = ($$('.sec')[0] || {}).id;
-    if (cur === 's-thread') cur = 'ts-message';   /* the history's header belongs to its first section */
+    $$('.sec, .tsec').forEach(function (s) { if (!s.hidden && s.getBoundingClientRect().top <= line) cur = s.id; });
+    if (!cur || cur === 's-work' || cur === 's-thread') cur = 'ts-message';   /* the history's header belongs to its first section */   /* the history's header belongs to its first section */
     $$('.secnav__b').forEach(function (b) {
       var on = b.dataset.sec === cur;
       b.classList.toggle('secnav__b--on', on);
@@ -864,6 +893,8 @@
     if (t.closest('[data-act="next"]')) { go(idx + 1); return; }
     if (t.closest('[data-act="print"]')) { window.print(); return; }
     if (t.closest('[data-act="wait"]')) { setWait(!T.form.waiting); return; }
+    if ((el = t.closest('[data-wo]'))) { openWork(el.dataset.wo); return; }
+    if (t.closest('[data-act="wo-close"]')) { $('#s-work').hidden = true; sizeExtender(); return; }
     if (t.closest('[data-act="dock"]')) { toggleDock(); return; }
     if (t.closest('[data-act="close"]')) { toggleDock(false); return; }
 
@@ -1031,7 +1062,7 @@
   $$('[data-act="save"]').forEach(function (b) {
     if (b.type === 'submit') return;
     b.addEventListener('click', function () {
-      goTo($('#s-work'));
+      if (!$('#s-work').hidden) goTo($('#s-work'));
       $('#f-work').dispatchEvent(new Event('submit', { cancelable: true }));
     });
   });
