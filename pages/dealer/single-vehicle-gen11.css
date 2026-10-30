@@ -1842,3 +1842,28 @@ button.prov:hover { text-decoration: underline; }
 .app .cock__t { font-size: 28px; font-weight: 600; letter-spacing: -.022em; line-height: 1.15; }
 /* field labels are sentence case 13 / 600 (DESIGN.md §18) - the editor read as caps */
 .app .f__l { font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--ink-2); }
+/* == Record head card (DESIGN.md §21) - three rows with air, as Single Ticket and
+   Single Lead; not sticky, so nothing in the sticky stack counts it == */
+:root { --stick-cockpit: 0px; }
+.cockpit.cockpit--card, .cockpit.cockpit--card.cockpit--stuck { position: static; display: flex; flex-direction: column; align-items: stretch; gap: 0; height: auto; margin: var(--s2) 0 var(--gutter); padding: var(--s3) var(--s5) var(--s5); border-radius: var(--r-card); background: var(--sheet); box-shadow: var(--sh-soft); -webkit-backdrop-filter: none; backdrop-filter: none; }
+.cock__top { display: flex; align-items: center; gap: var(--s2); min-width: 0; }
+.cock__top > .cock__back { margin-left: calc(-1 * var(--s3)); }
+.cock__sp { flex: 1 1 auto; }
+.cock__main { display: flex; align-items: center; gap: var(--s4); margin-top: var(--s3); min-width: 0; }
+.cockpit--card .cock__thumb { width: 72px; height: 48px; border-radius: 8px; flex: none; }
+.cockpit--card .cock__t { margin: 0; min-width: 0; flex: 1 1 auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* the price is the record's key figure: board-figure role (24 / 700) at the right of the title */
+.cockpit--card .cock__price { margin-left: auto; flex: none; font-size: 24px; font-weight: 700; letter-spacing: -.015em; }
+.cock__sub { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s2) var(--s3); margin-top: var(--s3); min-width: 0; font-size: 13px; color: var(--ink-3); }
+/* ids as outline pills with their label, as "Ticket number" and "Lead number" */
+.idp { display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 4px 0 10px; border-radius: var(--r-pill); box-shadow: inset 0 0 0 1px var(--line-3); white-space: nowrap; }
+.idp__k { font-size: 12.5px; font-weight: 500; color: var(--ink-3); }
+.idp b, .idp .vin { font: 600 12.5px/1 var(--mono); color: var(--ink-2); }
+.idp .copy { width: 20px; height: 20px; }
+.cock__dates b { font-family: var(--font); font-weight: 600; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.cock__dates .age { margin: 0 2px 0 6px; }
+.vitals { display: none; }
+/* the state chip at the status-chip role (13 / 600), as the other heads */
+.cockpit--card .stchip { height: 26px; padding: 0 10px; font-size: 13px; font-weight: 600; }
+.cockpit--card .stchip b { font-weight: 600; }
+.cockpit--card .cock__type { font-size: 13px; }

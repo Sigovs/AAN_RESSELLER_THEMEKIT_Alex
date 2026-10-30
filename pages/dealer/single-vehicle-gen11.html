@@ -8,7 +8,7 @@
    `aan-theme` key is shared with the other Gen pages, so a stored `dark` must not
    land this page in a half-dark state at load. Temporary; the dark stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="single-vehicle-gen11.css?v=20261030-roles3">
+<link rel="stylesheet" href="single-vehicle-gen11.css?v=20261030-head2">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
 <link rel="stylesheet" href="../_aan-components.css?v=20261029-selected">
 </head>
@@ -126,25 +126,15 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   <!-- ══ COCKPIT — the object identity module. Everything in it is read-only
        except the actions; the editable copies of stock, VIN and price live in
        their own zones below. ══ -->
-  <div class="cockpit" id="cockpit">
-    <a class="cock__back" href="all-vehicles-gen11.html" title="Back to the inventory list"><svg class="i"><use href="#i-back"/></svg>Inventory</a>
-    <span class="cock__thumb" id="cock-thumb"></span>
-    <div class="cock__id">
-      <div class="cock__l1">
-        <h1 class="cock__t" id="cock-title">Vehicle</h1>
-        <span class="stchip stchip--available" id="cock-status" title="Status"><i aria-hidden="true"></i><b>Available</b></span>
-        <span class="cock__type" id="cock-type">Used</span>
-        <span class="stchip stchip--hidden" id="cock-hidden" hidden>Hidden on site</span>
-      </div>
-      <div class="cock__l2">
-        <span>Stock <b id="cock-stock"></b></span>
-        <button class="copy" type="button" data-copy="stock" aria-label="Copy stock number" title="Copy stock number"><svg class="i"><use href="#i-copy"/></svg></button>
-        <span class="vin" id="cock-vin"></span>
-        <button class="copy" type="button" data-copy="vin" aria-label="Copy VIN" title="Copy VIN"><svg class="i"><use href="#i-copy"/></svg></button>
-      </div>
-    </div>
-    <div class="cock__acts">
-      <span class="cock__price" id="cock-price"></span>
+  <!-- ══ RECORD HEAD (DESIGN.md §21, Alex 10-30: "too heavy next to our other pages,
+       it needs air") — the card Single Ticket and Single Lead open with: the way
+       back and the record actions, the car's name with its photo and price, then
+       its state, ids and dates. It no longer sticks: the save bar at the foot
+       of the page carries Save while you scroll. ══ -->
+  <div class="cockpit cockpit--card" id="cockpit">
+    <div class="cock__top">
+      <a class="cock__back" href="all-vehicles-gen11.html" title="Back to the inventory list"><svg class="i"><use href="#i-back"/></svg>Inventory</a>
+      <span class="cock__sp"></span>
       <span class="cock__nav">
         <button class="btn btn--sheet btn--sm btn--icon" type="button" data-act="prev" aria-label="Previous vehicle in your current list" title="Previous vehicle in your current list"><svg class="i"><use href="#i-left"/></svg></button>
         <button class="btn btn--sheet btn--sm btn--icon" type="button" data-act="next" aria-label="Next vehicle in your current list" title="Next vehicle in your current list"><svg class="i"><use href="#i-right"/></svg></button>
@@ -159,20 +149,23 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       </span>
       <button class="btn btn--primary btn--sm" type="button" data-act="save"><svg class="i"><use href="#i-save"/></svg>Save<span class="btn__n" id="cock-dirty">0</span></button>
     </div>
-  </div>
-
-  <!-- ══ VITALS — read-only operational facts, on the ground, no surface ══ -->
-  <div class="vitals">
-    <span class="vitals__f">Added <b id="v-added"></b><span class="age" id="v-age"></span></span>
-    <span class="vitals__f">Modified <b id="v-modified"></b></span>
-    <span class="vitals__f">Views <b id="v-views"></b></span>
-    <!-- the edit lock, as on cert but quiet (Scott, SV note 19 · Alex: option b):
-         grey while you hold it, with a "?" that explains it; amber + Save
-         blocked while someone else holds it -->
-    <span class="lock lock--mine" id="lock-mine" tabindex="0" aria-describedby="lock-tip"><svg class="i"><use href="#i-lock"/></svg>You hold the edit lock<i class="lock__q" aria-hidden="true">?</i><span class="lock__tip" id="lock-tip" role="tooltip">While you have this car open, colleagues can view it but not save — so nobody overwrites your changes. It is released when you leave the page.</span></span>
+    <div class="cock__main">
+      <span class="cock__thumb" id="cock-thumb"></span>
+      <h1 class="cock__t" id="cock-title">Vehicle</h1>
+      <span class="cock__price" id="cock-price"></span>
+    </div>
+    <div class="cock__sub">
+      <span class="stchip stchip--available" id="cock-status" title="Status"><i aria-hidden="true"></i><b>Available</b></span>
+      <span class="cock__type" id="cock-type">Used</span>
+      <span class="stchip stchip--hidden" id="cock-hidden" hidden>Hidden on site</span>
+      <span class="idp"><span class="idp__k">Stock:</span> <b id="cock-stock"></b><button class="copy" type="button" data-copy="stock" aria-label="Copy stock number" title="Copy stock number"><svg class="i"><use href="#i-copy"/></svg></button></span>
+      <span class="idp"><span class="idp__k">VIN:</span> <span class="vin" id="cock-vin"></span><button class="copy" type="button" data-copy="vin" aria-label="Copy VIN" title="Copy VIN"><svg class="i"><use href="#i-copy"/></svg></button></span>
+      <span class="cock__dates">Added <b id="v-added"></b><span class="age" id="v-age"></span> · Modified <b id="v-modified"></b> · Views <b id="v-views"></b></span>
+      <span class="lock lock--mine" id="lock-mine" tabindex="0" aria-describedby="lock-tip"><svg class="i"><use href="#i-lock"/></svg>You hold the edit lock<i class="lock__q" aria-hidden="true">?</i><span class="lock__tip" id="lock-tip" role="tooltip">While you have this car open, colleagues can view it but not save — so nobody overwrites your changes. It is released when you leave the page.</span></span>
     <span class="lock lock--other" id="lock" hidden><svg class="i"><use href="#i-lock"/></svg>Mike R. is editing this car — you can view, not save</span>
-    <span class="vitals__sp"></span>
-    <button class="linkbtn" type="button" data-act="changelog">Change log<svg class="i"><use href="#i-ext"/></svg></button>
+      <span class="cock__sp"></span>
+      <button class="linkbtn" type="button" data-act="changelog">Change log<svg class="i"><use href="#i-ext"/></svg></button>
+    </div>
   </div>
 
   <div class="body">
@@ -572,6 +565,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
      old text tools). Flat moono-lisa skin, tuned to the page tokens. -->
 <script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
 <script src="single-vehicle-gen11.data.js?v=20261022-labels"></script>
-<script src="single-vehicle-gen11.js?v=20261029-wstk"></script>
+<script src="single-vehicle-gen11.js?v=20261030-head"></script>
 </body>
 </html>
