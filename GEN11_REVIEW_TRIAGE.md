@@ -181,6 +181,7 @@ Rule: **no new features in this redesign.** Each is possible and comes back in t
 | Decision | Note | Done |
 |---|---|---|
 | Marketing menu removed from the dealer nav (Ivaylo: "we remove marketing … Right now. Nothing") | All Vehicles #41 (Karen, 10-23): "I'm not sure we still need the Posting Tools and eBay section. This can be hidden." | ✅ the whole Marketing item (Newsletter tools, Craigslist posting; Posting tools & eBay was hidden already) is an HTML comment on All Vehicles, Single Vehicle, All Leads, Single Lead; reply note posted. Newsletter: untested, mails go out from the AAN server (spam-flag risk). Marketing returns later as Ivaylo's analytics hub |
+| OEM field removed from Dealer Edit (Ivaylo: "we don't even manage it, we don't even care about that anymore") | Dealer Edit #1 (Karen, 10-28): "We dont use this field anymore" | ✅ `f.oem_id` hidden at render time (`FIELD_HIDDEN` in dealer-edit-gen11.js, v=20261029-nooem), data kept; Reseller and Company Name close up; resolved with a reply note |
 
 ## Round 4 — My Work Queue (staff), worked 2026-10-29 (newest first)
 

@@ -268,9 +268,14 @@
       '</div>';
   }
 
+  /* hidden from the form, kept in the data so it comes back with one line:
+     OEM (Karen, Dealer Edit note 1: "We dont use this field anymore"; Ivaylo 10-29:
+     "we don't even manage it, we don't even care about that anymore") */
+  var FIELD_HIDDEN = ['f.oem_id'];
   function fieldHTML(f, n) {
     if (f.sec) return '<div class="fsec">' + esc(f.sec) + '</div>';
     if (f.only && f.only.indexOf(KEY) < 0) return '';
+    if (FIELD_HIDDEN.indexOf(f.k) >= 0) return '';
     var id = 'f' + n;
     var span = f.span || f.t === 'routing' || f.t === 'projact' ? ' fw--span' : '';
     /* a lone checkbox carries its own label, so the group heading would repeat it */
