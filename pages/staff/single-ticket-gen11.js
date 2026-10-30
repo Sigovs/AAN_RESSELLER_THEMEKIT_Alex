@@ -266,7 +266,8 @@
       if (m) { v = m[2]; lab.unshift(m[1] === 'Yes' ? 'billable' : 'not billable'); }
       v = esc(v).replace(/(\$[\d,]+\.\d{2})/, '<span class="cash">$1</span>');
       return '<div class="tile">'
-        + '<div class="tile__k">' + esc(t.k) + '</div>'
+        /* Karen ST #3: the team calls the crew "Assigned To" */
+        + '<div class="tile__k">' + esc(t.k === 'Crew' ? 'Assigned to' : t.k) + '</div>'
         /* the figure's own unit sits beside it, as in the original: "12h 35m = 12.58", "4 / 5 complete" */
         + '<div class="tile__v' + (none ? ' tile__v--none' : '') + '"><span class="tile__n">' + v + '</span>'
         + (t.small ? '<small>' + esc(t.small) + '</small>' : '') + '</div>'

@@ -138,9 +138,9 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
     <div class="cmd cmd--sec ui-toolbar" id="band">
       <nav class="secnav ui-views" id="secnav" aria-label="Sections on this page"></nav>
       <span class="cmd__sp"></span>
-      <span class="secnav__note">one page · five sections</span>
+      <span class="secnav__note">one page · four sections</span>
       <button class="btn btn--sheet btn--sm ui-ctl" type="button" data-act="dock" aria-expanded="true" aria-controls="dock">
-        <svg class="i"><use href="#i-users"/></svg> Crew <b class="btn__n" id="crew-cnt">0</b>
+        <svg class="i"><use href="#i-users"/></svg> Assigned To <b class="btn__n" id="crew-cnt">0</b>
       </button>
     </div>
 
@@ -293,9 +293,9 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   <!-- ══ DOCK — the crew rail ══════════════════════════════════════════════
        The one place on this page where an assignment is created, completed or
        timed, so it is the one place with a resting / dirty state pair. -->
-  <aside class="dock" id="dock" aria-label="Crew">
+  <aside class="dock" id="dock" aria-label="Assigned To">
     <div class="dock__h">
-      <h2 class="dock__t">Crew</h2>
+      <h2 class="dock__t">Assigned To</h2>
       <span class="dock__c" id="dock-c"></span>
       <button class="dock__x" type="button" data-act="close" aria-label="Close crew"><svg class="i"><use href="#i-x"/></svg></button>
     </div>
@@ -323,7 +323,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
     <div class="dock__f" id="crew-foot">
       <span class="dock__note" id="crew-note">No unsaved changes</span>
       <button class="btn btn--quiet btn--sm" type="button" data-act="crew-discard" disabled>Discard</button>
-      <button class="btn btn--sheet btn--sm" type="button" data-act="crew-save" disabled>Save crew</button>
+      <button class="btn btn--sheet btn--sm" type="button" data-act="crew-save" disabled>Save</button>
     </div>
   </aside>
 
@@ -335,6 +335,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 </div>
 
 <script src="single-ticket-gen11.data.js?v=20260930234502"></script>
-<script src="single-ticket-gen11.js?v=20261029-clog"></script>
+<script src="single-ticket-gen11.js?v=20261030-assigned"></script>
 </body>
 </html>
