@@ -321,7 +321,7 @@
       + '<div class="lgw">'
       + '<div class="lgh"><span class="caps">Ledger</span><span class="s">'
       + led.length + ' invoices · showing ' + view.length + '</span></div>'
-      + '<table class="lg"><thead><tr>'
+      + '<table class="lg zebra"><thead><tr>'
       + '<th>Invoice</th><th>Created</th><th>Sent</th><th class="num">Total</th><th class="num">Paid</th>'
       + '<th>Date Paid</th><th>Reference</th><th class="num">Balance</th><th>Type</th>'
       + '</tr></thead>'

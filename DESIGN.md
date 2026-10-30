@@ -292,6 +292,7 @@ Origin: All Vehicles.
 - **Head key:** 11px / 700, +0.08em, CAPS, ink-3 — the only caps in a table.
 - **Cell:** 14px / 400 ink; the row's identifier 600. Money and counts `tabular-nums`, in `--font`.
 - **Row divider:** `inset 0 -1px 0 color-mix(in srgb, var(--line-2) 65%, var(--sheet))` on every list.
+- **Zebra on every monotonous block.** A block of many rows of the same shape (a list, a ledger, a log table) shades every second row with `color-mix(in srgb, var(--wash) 55%, var(--sheet))`, as All Vehicles. It is automatic on a list (`#tb > .row`; an open sheet between two rows does not break the count). Mark a table with `.zebra` (`<table class="lg zebra">`). Hover, the open row, a selected row and drag / jump targets keep their own tint. Not on feeds and timelines (entries are read one by one, not across), forms, menus, or a block of a few rows.
 - **Row link** (the stock number): Plex Mono 13px / 700 brand-ink, no underline.
 - Columns are left-aligned (numbers included) unless a column is a pure figure column with its own head.
 
@@ -1162,6 +1163,7 @@ A letter with no rows: `disabled`.
 | no data | empty state sentence + one action | a blank area |
 | provenance unknown / mock | Demo or Mock addition tag | nothing |
 | a long alphabetical list | A–Z jump + pager | infinite scroll |
+| many rows of the same shape | zebra (§10): every second row in the wash | a divider alone; stripes on a feed or a form |
 
 ## 40 · Before you hand in a page
 

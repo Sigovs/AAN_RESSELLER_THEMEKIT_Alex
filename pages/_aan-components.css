@@ -92,7 +92,7 @@
 /* a group divider is a hairline, not an empty 24px item pretending to be one */
 .ui-views > .lanes__div, .ui-views > .ui-views__div {
   display: block; flex: 0 0 1px; width: 1px; min-width: 1px;
-  height: 18px; margin: 0 5px; padding: 0;
+  height: 18px; margin: 0 5px; padding: 0; align-self: center; /* a page's align-self: stretch with a fixed height pins it to the top */
   background: var(--line-3); border-radius: 0;
 }
 
@@ -575,3 +575,11 @@ select.sel, select.ui-ctl, .rows select, .cmd select, .zone select, .form select
 .app .chip--id b { font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
 /* the staff identity mark is the 28px avatar of All Vehicles (it was 26) */
 .app .top .me__mk { width: 28px; height: 28px; }
+/* zebra on every long list, as All Vehicles (DESIGN.md §10): every second row takes the wash.
+   "of .row" counts rows only, so an open sheet between two rows does not break the rhythm.
+   Hover, the open row, a selected row and the drag / jump targets keep their own tint. */
+.app #tb > .row:nth-child(even of .row):not(.row--alt):not(:hover):not(.open):not(.sel):not(.row--target):not(.row--over) {
+  background: color-mix(in srgb, var(--wash) 55%, var(--sheet));
+}
+/* the same zebra on a data table inside a page (a ledger, a log table): mark the table .zebra */
+.app table.zebra > tbody > tr:nth-child(even):not(:hover) > td { background: color-mix(in srgb, var(--wash) 55%, var(--sheet)); }
