@@ -379,12 +379,18 @@
      none). Production logs a removal in the changelog as "Note deleted" with the
      text it removed, so this does too. */
   var RM = { message: 'Remove message', note: 'Remove note' };
+  /* Reply under a client's message answers the CLIENT (Alex 10-29, A): it is a
+     message, emailed like Post Message, and it threads under what it answers.
+     Under an internal note or a ToDo, Reply stays an internal note. */
   function replyBox(e) {
-    return '<li class="rbox"><form class="rbox__f" data-reply-to="' + esc(e.id) + '">'
+    var client = e.kind === 'message';
+    return '<li class="rbox' + (client ? ' rbox--client' : '') + '"><form class="rbox__f" data-reply-to="' + esc(e.id) + '" data-reply-kind="' + (client ? 'message' : 'note') + '">'
       + '<textarea class="rbox__t" name="body" rows="3" placeholder="Reply to ' + esc(e.who || 'this entry') + '…" aria-label="Reply"></textarea>'
-      + '<div class="rbox__r"><span class="rbox__who">Internal note · visible to the crew, not the dealer</span>'
+      + '<div class="rbox__r"><span class="rbox__who">' + (client
+          ? 'Client-visible — this is emailed to the addresses on the ticket'
+          : 'Internal note · visible to the crew, not the dealer') + '</span>'
       + '<button class="btn btn--quiet btn--sm" type="button" data-reply-cancel>Cancel</button>'
-      + '<button class="btn btn--primary btn--sm" type="submit">Post reply</button></div>'
+      + '<button class="btn btn--primary btn--sm" type="submit">' + (client ? 'Post Message' : 'Post reply') + '</button></div>'
       + '</form></li>';
   }
 
@@ -713,14 +719,14 @@
     renderLanes(); renderThread(); renderSecnav(); sizeExtender();
   }
 
-  function postReply(parentId, text) {
+  function postReply(parentId, text, kind) {
     text = (text || '').trim();
     if (!text) return false;
     var when = stamp(new Date());
     var at = -1;
     thread.forEach(function (x, i) { if (x.id === parentId) at = i; });
     var entry = {
-      id: 'note-reply-' + Date.now() + '-' + (++replySeq), kind: 'note', who: D.me.name,
+      id: 'note-reply-' + Date.now() + '-' + (++replySeq), kind: kind === 'message' ? 'message' : 'note', who: D.me.name,
       when: when, body: text, atts: [], k: key(when), seq: replySeq, open: false, replyTo: parentId
     };
     /* directly under what it answers, not at the top of the list */
@@ -876,7 +882,7 @@
     if (!f) return;
     e.preventDefault();
     var ta = f.querySelector('.rbox__t');
-    if (!postReply(f.dataset.replyTo, ta.value)) { ta.classList.add('fld--bad'); ta.focus(); }
+    if (!postReply(f.dataset.replyTo, ta.value, f.dataset.replyKind)) { ta.classList.add('fld--bad'); ta.focus(); }
   }, true);
 
   /* the checkbox and the head switch are one flag: either one moves both */

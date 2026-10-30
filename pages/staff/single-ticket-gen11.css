@@ -1554,3 +1554,7 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 .chip.wchip:hover { background: var(--wash); color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink-4); }
 .chip.wchip--on, .chip.wchip--on:hover { background: var(--st-wait-bg); color: var(--st-wait-ink); box-shadow: inset 0 0 0 1px var(--st-wait-line); }
 .chip.wchip:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+/* a reply to the client says so in the message tone, so it is never mistaken
+   for an internal note */
+.rbox--client .rbox__f { box-shadow: inset 0 0 0 1px var(--brand-soft-2, var(--line)); }
+.rbox--client .rbox__who { color: var(--brand-ink); font-weight: 600; }
