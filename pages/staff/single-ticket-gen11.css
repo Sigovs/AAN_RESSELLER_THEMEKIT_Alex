@@ -1648,3 +1648,11 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 .tsec .composer .fld, .tsec .composer .sel { background-color: var(--sheet); }  /* -color only: the select keeps its chevron image */
 .tsec .composer .drop { background-color: var(--sheet); }
 .tsec .composer__who { background: var(--sheet); }
+/* Waiting on client is a mark set when writing to the client: a box beside
+   Post Message, in the waiting tone when ticked (the same flag as the head chip) */
+.flag--wait { margin-left: auto; min-height: 30px; padding: 0 10px; border-radius: var(--r-pill); font-size: 13.5px; font-weight: 600; color: var(--ink-2); }
+.flag--wait:has(input:checked) { background: var(--st-wait-bg); color: var(--st-wait-ink); box-shadow: inset 0 0 0 1px var(--st-wait-line); }
+.composer__f > .flag--wait + .btn--primary, .rbox__r > .flag--wait ~ .btn { margin-left: 0; }
+.rbox__r > .flag--wait { margin-left: auto; }
+/* a state tag is sentence case, not caps (DESIGN.md §18): "File missing" */
+.att__gone { text-transform: none; letter-spacing: 0; font-size: 12px; font-weight: 600; }

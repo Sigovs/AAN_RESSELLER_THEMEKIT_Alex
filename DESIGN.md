@@ -624,4 +624,8 @@ Added 2026-10-29 on Single Ticket's Ticket History; the rules for any feed of po
 
 **A typed feed is sectioned, not filtered** (Ivaylo ST #4: "95% of the time we need to see all of it"). Each type is its own section, all always shown, in a fixed order, each with its composer under a tinted header (tone, count) and a 3px tone rail on its left. Replies live in the section of what they answer. The lane pills above only jump to a section; they carry the sections' tones (§6 exception) and hide nothing.
 
+**The post box** of a section is one tinted card in its tone — the section header and its composer together, the fields white inside; the entries below stay white cards, so the place to write is never mistaken for an entry.
+
+**A state is a mark, not a section** (Single Ticket, Alex 10-29): "Waiting on client" is a box beside the post action of a client message, the same flag as the head's switchable chip.
+
 **Files** go with any post: the drop names what was picked before posting, and a posted file sits in its entry and in the page file list.

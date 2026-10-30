@@ -245,6 +245,7 @@
     var b = $('#h-wait'); b.setAttribute('aria-pressed', String(on)); b.classList.toggle('wchip--on', on);
     b.title = on ? 'Waiting on the client or a third party — click to clear' : 'Mark this ticket as waiting on the client or a third party';
     var cb = $('#w-wait'); if (cb) cb.checked = on;
+    $$('[data-wait-flag]').forEach(function (x) { x.checked = on; });
     if (!quiet) renderPulse();
   }
 
@@ -297,8 +298,8 @@
   var SECS = [
     { id: 's-work', label: 'Work order', n: null },
     { id: 's-thread', label: 'History', n: function () { return thread.length; } },
-    { id: 's-clog', label: 'Changelog', n: function () { return T.clog.length; } },
-    { id: 's-atts', label: 'Attachments', n: function () { return T.atts.length; } }
+    { id: 's-atts', label: 'Attachments', n: function () { return T.atts.length; } },
+    { id: 's-clog', label: 'Changelog', n: function () { return T.clog.length; } }
   ];
   function renderSecnav() {
     $('#secnav').innerHTML = SECS.map(function (s, n) {
@@ -360,15 +361,15 @@
     { k: 'all', label: 'All' },
     { k: 'message', label: 'Messages' },
     { k: 'note', label: 'Internal notes' },
-    { k: 'todo', label: 'ToDos' },
-    { k: 'woc', label: 'Waiting on client' }
+    { k: 'todo', label: 'ToDos' }
   ];
   var KINDW = { message: 'Message', note: 'Internal note', todo: 'ToDo', woc: 'Waiting on client' };
   var KINDI = { message: 'i-mail', note: 'i-note', todo: 'i-todo', woc: 'i-clock' };
 
   function laneCount(k) {
     if (k === 'all') return thread.length;
-    return thread.filter(function (e) { return e.kind === k; }).length;
+    /* earlier waiting-on-client notes sit with the internal notes */
+    return thread.filter(function (e) { return e.kind === k || (k === 'note' && e.kind === 'woc'); }).length;
   }
   function renderLanes() {
     /* jump links, not filters (Ivaylo ST #4): every section is always shown */
@@ -407,6 +408,7 @@
       + '<div class="rbox__r"><span class="rbox__who">' + (client
           ? 'Client-visible — this is emailed to the addresses on the ticket'
           : 'Internal note · visible to the crew, not the dealer') + '</span>'
+      + (client ? '<label class="flag flag--wait"><input class="ck" type="checkbox" data-wait-flag' + (T.form.waiting ? ' checked' : '') + '><span>Waiting on client</span></label>' : '')
       + '<button class="btn btn--quiet btn--sm" type="button" data-reply-cancel>Cancel</button>'
       + '<button class="btn btn--primary btn--sm" type="submit">' + (client ? 'Post Message' : 'Post reply') + '</button></div>'
       + '</form></li>';
@@ -462,7 +464,10 @@
     var rootKind = function (e) { var g = 0; while (e.replyTo && by[e.replyTo] && g++ < 50) e = by[e.replyTo]; return e.kind; };
     var msgs = laneCount('message'), notes = laneCount('note'), todos = laneCount('todo');
     $('#thread-s').textContent = msgs + ' client-visible · ' + notes + ' internal · ' + todos + ' ToDos';
-    var html = { message: [], note: [], woc: [], todo: [] };
+    /* Waiting on client is not a section (Alex 10-29): it is a mark you set when
+       you write to the client. Earlier WOC notes keep their violet mark and sit
+       with the internal notes. */
+    var html = { message: [], note: [], todo: [] };
     tree.forEach(function (r) { (html[rootKind(r.e)] || html.note).push(r); });
     Object.keys(html).forEach(function (sk) {
     $('#tf-' + sk).innerHTML = html[sk].map(function (r) {
@@ -530,7 +535,7 @@
     }).join('');
     $('#clog-empty').hidden = T.clog.length > 0;
     /* production ships the changelog collapsed unless it was left open */
-    setClog(!!T.clogOpen);
+    setClog(false);   /* folded by default (Alex 10-29) */
   }
   function setClog(on) {
     var b = $('[data-act="clog"]');
@@ -761,6 +766,8 @@
     thread.unshift(entry);
     var form = el.closest('form');
     recordFiles(entry, pickedFiles(form)); clearDrop(form);
+    /* "write to the client, tick Waiting on client, post — both are saved" */
+    var wf = form && form.querySelector('[data-wait-flag]'); if (wf) setWait(wf.checked);
     el.value = '';
 
     renderLanes(); renderThread(); renderSecnav(); sizeExtender();
@@ -949,7 +956,9 @@
     if (!f) return;
     e.preventDefault();
     var ta = f.querySelector('.rbox__t');
-    if (!postReply(f.dataset.replyTo, ta.value, f.dataset.replyKind, pickedFiles(f))) { ta.classList.add('fld--bad'); ta.focus(); }
+    var wf = f.querySelector('[data-wait-flag]'), wv = wf ? wf.checked : null;
+    if (!postReply(f.dataset.replyTo, ta.value, f.dataset.replyKind, pickedFiles(f))) { ta.classList.add('fld--bad'); ta.focus(); return; }
+    if (wv !== null) setWait(wv);
   }, true);
 
   /* a drop says what was picked, so a file is never posted unseen */
@@ -976,7 +985,6 @@
 
   $('#c-message').addEventListener('submit', function (e) { e.preventDefault(); post('message', 'in-message'); });
   $('#c-note').addEventListener('submit', function (e) { e.preventDefault(); post('note', 'in-note'); });
-  $('#c-woc').addEventListener('submit', function (e) { e.preventDefault(); post('woc', 'in-woc'); });
   $('#c-todo').addEventListener('submit', function (e) { e.preventDefault(); post('todo', 'in-todo'); });
 
   /* the work order: required fields are stated in colour AND in words */

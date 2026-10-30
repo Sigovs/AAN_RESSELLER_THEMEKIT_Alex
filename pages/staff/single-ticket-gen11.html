@@ -10,7 +10,7 @@
    `aan-theme` key is shared with the Gen 10 pages, so a stored `dark` must not land this
    page in a half-dark state at load. Temporary; the dark-theme stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="single-ticket-gen11.css?v=20261029-tsec4">
+<link rel="stylesheet" href="single-ticket-gen11.css?v=20261029-clog">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
 <link rel="stylesheet" href="../_aan-components.css?v=20261029-selected">
 </head>
@@ -217,7 +217,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
                   <label class="composer__lab" for="in-message">Reply to the client</label>
                   <textarea class="fld" id="in-message" name="in-message" rows="2" placeholder="Reply to the client…"></textarea>
                   <div class="drop"><svg class="i"><use href="#i-clip"/></svg><b>Drop files here or click to browse</b><span>Up to 20 MB per file</span><input type="file" id="in-files" name="in-files" multiple aria-label="Attach files"></div>
-                  <div class="composer__f"><span class="hint">Client-visible — this is emailed to the addresses on the ticket</span><button class="btn btn--primary btn--sm" type="submit">Post Message</button></div>
+                  <div class="composer__f"><span class="hint">Client-visible — this is emailed to the addresses on the ticket</span><label class="flag flag--wait"><input class="ck" type="checkbox" data-wait-flag><span>Waiting on client</span></label><button class="btn btn--primary btn--sm" type="submit">Post Message</button></div>
                 </div>
               </form>
               <ol class="feed" id="tf-message"></ol>
@@ -242,19 +242,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
               <ol class="feed" id="tf-note"></ol>
               <p class="tsec__empty" id="te-note" hidden>No internal notes yet</p>
             </section>
-            <section class="tsec tsec--woc" id="ts-woc" aria-labelledby="th-woc">
-              <header class="tsec__h"><h3 id="th-woc">Waiting on client</h3><span class="tsec__s">why the clock is not running</span><b class="tsec__n" id="tn-woc">0</b></header>
-              <form class="composer" id="c-woc" data-lane="woc" novalidate>
-                <span class="composer__who" aria-hidden="true">IG</span>
-                <div class="composer__b">
-                  <label class="composer__lab" for="in-woc">Waiting on Client</label>
-                  <textarea class="fld" id="in-woc" name="in-woc" rows="2" placeholder="Why is this ticket waiting on the client?"></textarea>
-                  <div class="composer__f"><span class="hint">Records why the clock is not running on AAN</span><button class="btn btn--primary btn--sm" type="submit">Post WOC Note</button></div>
-                </div>
-              </form>
-              <ol class="feed" id="tf-woc"></ol>
-              <p class="tsec__empty" id="te-woc" hidden>Nothing is waiting on the client</p>
-            </section>
             <section class="tsec tsec--todo" id="ts-todo" aria-labelledby="th-todo">
               <header class="tsec__h"><h3 id="th-todo">ToDos</h3><b class="tsec__n" id="tn-todo">0</b></header>
               <form class="composer" id="c-todo" data-lane="todo" novalidate>
@@ -277,7 +264,16 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         </div>
       </section>
 
-      <!-- ── 3 · CHANGELOG — the same timeline, on field changes ──────────── -->
+
+      <!-- ── 4 · ATTACHMENTS ─────────────────────────────────────────────── -->
+      <section class="sec" id="s-atts" aria-labelledby="t-atts">
+        <div class="sec__h"><h2 id="t-atts">Attachments</h2><span class="s" id="atts-s"></span></div>
+        <div class="sec__b">
+          <div class="atts" id="atts"></div>
+        </div>
+      </section>
+
+      <!-- ── 4 · CHANGELOG — under Attachments, folded by default (Alex 10-29); was 3 · — the same timeline, on field changes ──────────── -->
       <section class="sec" id="s-clog" aria-labelledby="t-clog">
         <div class="sec__h">
           <h2 id="t-clog">Changelog</h2>
@@ -289,14 +285,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
             <ol class="feed feed--clog" id="clog-feed"></ol>
             <p class="empty" id="clog-empty" hidden><b>No changelog entries</b><span>No field on this ticket has been changed yet.</span></p>
           </div>
-        </div>
-      </section>
-
-      <!-- ── 4 · ATTACHMENTS ─────────────────────────────────────────────── -->
-      <section class="sec" id="s-atts" aria-labelledby="t-atts">
-        <div class="sec__h"><h2 id="t-atts">Attachments</h2><span class="s" id="atts-s"></span></div>
-        <div class="sec__b">
-          <div class="atts" id="atts"></div>
         </div>
       </section>
     </div>
@@ -347,6 +335,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 </div>
 
 <script src="single-ticket-gen11.data.js?v=20260930234502"></script>
-<script src="single-ticket-gen11.js?v=20261029-files2"></script>
+<script src="single-ticket-gen11.js?v=20261029-clog"></script>
 </body>
 </html>
