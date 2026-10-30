@@ -79,14 +79,10 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
           <a class="menu__l" href="#"><b>Site Content Manager</b><span>Pages, banners and copy</span></a>
         </div></div>
       </div>
-      <div class="nav__it">
-        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Marketing<svg class="i"><use href="#i-chev"/></svg></button>
-        <div class="menu"><div class="menu__col"><div class="caps menu__t">Marketing applications</div>
-          <a class="menu__l" href="#"><b>Newsletter tools</b><span>Compose and send</span></a>
-          <a class="menu__l" href="#"><b>Craigslist posting</b><span>Post vehicles to Craigslist</span></a>
-          <!-- Posting tools &amp; eBay — hidden per Karen's review note (2026-10-23): "not sure we still need it". Restore: <a class="menu__l" href="#"><b>Posting tools &amp; eBay</b><span>Other marketplaces</span></a> -->
-        </div></div>
-      </div>
+      <!-- Marketing menu (Newsletter tools, Craigslist posting; Posting tools & eBay was already hidden)
+           removed: meeting with Ivaylo, 2026-10-29. Newsletter is untested and mails go out from
+           the AAN server (spam-flag risk); Marketing comes back later as an analytics hub.
+           Restore: git show c2a8808:pages/dealer/single-vehicle-gen11.html -->
       <div class="nav__it">
         <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Dealer tools<svg class="i"><use href="#i-chev"/></svg></button>
         <div class="menu"><div class="menu__col"><div class="caps menu__t">Dealer tools</div>
