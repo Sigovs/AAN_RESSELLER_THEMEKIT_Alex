@@ -602,7 +602,7 @@ head as one sheet card (`--sheet`, `--r-card`, `--sh-soft`, padding 12 / 24 / 24
 | 2 | the record's title, page-title role (28 / 600) |
 | 3 | its state chips, a switchable state chip if it has one (§6), its id as an outline pill with its label ("Ticket number: 1047015", the number mono), then its dates in 13px muted; the dates wrap to their own line without a leading dot |
 
-Facts are not repeated: the dates live here and not on the board. On Single Ticket (2026-10-30) the title is "Dealer : Subject", as the original, and a fourth row carries the dealer's routes (dealer #, phone, site, settings, control panel, dev link) — so the dealer board card is retired and the board runs full width.
+Facts are not repeated: the dates live here and not on the board; the dealer has its own board card.
 Single Ticket, Single Lead (2026-10-30: Back to board · Prev / Next · Note · Email; the name; the status chip and "Lead number: 16994") and Dealer Edit open with a head card. On the dealer shell the page grid holds the head row at `--headh` (68px, one row): a page with the card sets `--headh: auto`.
 
 ---
@@ -620,8 +620,6 @@ Added 2026-10-29 on Single Ticket's Ticket History; the rules for any feed of po
 **Reply is what the entry is.** Under a client's message, Reply answers the client — client-visible, "emailed to the addresses on the ticket", Post Message. Under an internal note or a ToDo it is an internal note. A reply that leaves the building says so in brand ink.
 
 **Replies are a tree, card to card.** A branch leaves the answered card from its bottom edge, 20px in, runs down the gap and turns (10px radius) into each reply's left edge at the height of its avatar; it ends at the last reply. Nothing is drawn inside a card. A reply to a reply is one level in (40px), capped at four levels. Replies follow in the order they were written; top-level entries keep the feed's order.
-
-**Feed sections are page sections** when the feed is the page (Single Ticket): each is numbered like any section (01 Messages, 02 Internal notes, 03 ToDos), with no wrapper title above them.
 
 **A typed feed is sectioned, not filtered** (Ivaylo ST #4: "95% of the time we need to see all of it"). Each type is its own section, all always shown, in a fixed order, each with its composer under a tinted header (tone, count) and a 3px tone rail on its left. Replies live in the section of what they answer. The sections stand directly in the page's section navigator, each with a dot of its tone (Single Ticket, Alex 10-30: one navigator, not a second row of pills); nothing filters.
 

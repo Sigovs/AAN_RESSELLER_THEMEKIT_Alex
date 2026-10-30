@@ -10,7 +10,7 @@
    `aan-theme` key is shared with the Gen 10 pages, so a stored `dark` must not land this
    page in a half-dark state at load. Temporary; the dark-theme stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="single-ticket-gen11.css?v=20261030-woff">
+<link rel="stylesheet" href="single-ticket-gen11.css?v=20261030-nav2">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
 <link rel="stylesheet" href="../_aan-components.css?v=20261029-selected">
 </head>
@@ -115,9 +115,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <span class="chip chip--type chip--id" id="h-id"></span>
       <span class="head__meta" id="h-meta"></span>
     </div>
-    <!-- the dealer's routes, as the original header has them, then the way into
-         the Work Order fields (Alex 10-30: the Work Order is folded away) -->
-    <div class="head__links" id="h-links"></div>
   </div>
 
   <!-- ══ BENTO — two slots, placed by NAMED AREA ═══════════════════════════
@@ -130,8 +127,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <div class="focal__h"><h2 class="board__t">This ticket</h2><span class="s" id="pulse-s"></span></div>
       <div class="pulse" id="pulse"></div>
     </div>
-    <!-- dealer card retired (Alex 10-30): its name, phone and links are in the head -->
-    <nav class="focal dcard slot--dealer" id="rail" aria-label="Dealer quick links" hidden></nav>
+    <nav class="focal dcard slot--dealer" id="rail" aria-label="Dealer quick links"></nav>
   </section>
 
   <!-- ══ FIELD — the one floating surface ══════════════════════════════════ -->
@@ -142,20 +138,16 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
     <div class="cmd cmd--sec ui-toolbar" id="band">
       <nav class="secnav ui-views" id="secnav" aria-label="Sections on this page"></nav>
       <span class="cmd__sp"></span>
-      <button class="btn btn--sheet btn--sm ui-ctl" type="button" data-act="dock" aria-expanded="true" aria-controls="dock" title="Assigned To" aria-label="Assigned To">
-        <svg class="i"><use href="#i-users"/></svg> <span class="btn__l">Assigned To</span> <b class="btn__n" id="crew-cnt">0</b>
+      <button class="btn btn--sheet btn--sm ui-ctl" type="button" data-act="dock" aria-expanded="true" aria-controls="dock">
+        <svg class="i"><use href="#i-users"/></svg> Assigned To <b class="btn__n" id="crew-cnt">0</b>
       </button>
     </div>
 
     <div class="secs">
 
       <!-- ── 1 · WORK ORDER ──────────────────────────────────────────────── -->
-      <!-- Folded away, not removed (Alex 10-30: "we are changing this section for now —
-           comment it out, don't kill it"). The script still owns these fields, so the
-           section stays in the page, hidden; the head's Edit links open it. To bring
-           it back for good, drop the hidden attribute and its entry in SECS. -->
-      <section class="sec" id="s-work" aria-labelledby="t-work" hidden>
-        <div class="sec__h"><h2 id="t-work">Work Order</h2><button class="btn btn--quiet btn--sm" type="button" data-act="wo-close">Close</button></div>
+      <section class="sec" id="s-work" aria-labelledby="t-work">
+        <div class="sec__h"><h2 id="t-work">Work Order</h2></div>
         <div class="sec__b">
           <!-- Ivaylo, ST note 7: "this all just... blends together … i would drastically
                reduct the size of this". The original's three columns side by side, in
@@ -341,6 +333,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 </div>
 
 <script src="single-ticket-gen11.data.js?v=20260930234502"></script>
-<script src="single-ticket-gen11.js?v=20261030-woff"></script>
+<script src="single-ticket-gen11.js?v=20261030-nav2"></script>
 </body>
 </html>
