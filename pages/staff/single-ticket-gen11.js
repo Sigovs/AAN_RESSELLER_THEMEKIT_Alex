@@ -206,31 +206,44 @@
   }
 
   /* ══ BENTO ═════════════════════════════════════════════════════════════ */
+  /* The board (DESIGN.md §19): card title 16/700 sentence case, meta right;
+     each cell is a caps key, a board figure (24/700) and one board label
+     (14px, muted). Billable shows the amount as the figure ("$15,996.00"),
+     the yes/no goes into its label. The ticket's dealer is not repeated here,
+     it is the next card. */
   function renderPulse() {
-    $('#pulse-s').textContent = T.dealer + ' · ticket #' + T.tid;
+    $('#pulse-s').textContent = 'ticket #' + T.tid;
     $('#pulse').innerHTML = T.pulse.map(function (t) {
       var none = t.v === '—' || t.v === '— → —';
-      var v = esc(t.v);
-      /* money keeps its own ink on the focal surface: "Yes $15,996.00" */
-      v = v.replace(/(\$[\d,]+\.\d{2})/, '<span class="cash">$1</span>');
+      var v = t.v, lab = [t.s].filter(Boolean);
+      var m = /^(Yes|No)\s+(\$[\d,]+\.\d{2})$/.exec(v);
+      if (m) { v = m[2]; lab.unshift(m[1] === 'Yes' ? 'billable' : 'not billable'); }
+      v = esc(v).replace(/(\$[\d,]+\.\d{2})/, '<span class="cash">$1</span>');
       return '<div class="tile">'
         + '<div class="tile__k">' + esc(t.k) + '</div>'
-        + '<div class="tile__v' + (t.range ? ' tile__v--range' : '') + (none ? ' tile__v--none' : '') + '">'
-        + v + (t.small ? '<small>' + esc(t.small) + '</small>' : '') + '</div>'
-        + '<div class="tile__s">' + esc(t.s) + '</div>'
+        /* the figure's own unit sits beside it, as in the original: "12h 35m = 12.58", "4 / 5 complete" */
+        + '<div class="tile__v' + (none ? ' tile__v--none' : '') + '"><span class="tile__n">' + v + '</span>'
+        + (t.small ? '<small>' + esc(t.small) + '</small>' : '') + '</div>'
+        + '<div class="tile__s">' + esc(lab.join(' · ')) + '</div>'
         + '</div>';
     }).join('');
   }
 
+  /* The dealer card, on the board's dark surface like every card of the row:
+     title + dealer id, the name, then the phone and the routes out as the
+     board's contact tags (Single Lead, DESIGN.md §19). */
   function renderRail() {
-    $('#rail').innerHTML = '<div class="rail__k">Dealer</div>'
-      + '<div class="rail__who"><b>' + esc(T.dealer) + '</b><span>' + esc(T.dealerMeta) + '</span></div>'
-      + '<div class="rail__ls">' + T.links.map(function (l) {
+    var meta = String(T.dealerMeta || '').split(' · ');
+    var id = (meta[0] || '').replace(/^dealer\s*/i, ''), phone = meta[1] || '';
+    $('#rail').innerHTML = '<div class="focal__h"><h2 class="board__t">Dealer</h2><span class="s">' + esc(id) + '</span></div>'
+      + '<div class="dcard__who">' + esc(T.dealer) + '</div>'
+      + '<div class="dcard__ls">'
+      + (phone ? '<span class="ctag ctag--mono">' + ic('i-phone') + '<b>' + esc(phone) + '</b></span>' : '')
+      + T.links.map(function (l) {
         var label = l.label.replace(/\s*\(Potential Dev Link\)\s*$/i, '');
-        return '<a class="rlink' + (l.dev ? ' rlink--dev' : '') + '" href="' + esc(l.href) + '"'
-          + (/^https?:/.test(l.href) ? ' rel="noreferrer"' : '') + '>'
-          + '<span class="rlink__l">' + esc(label) + '</span>'
-          + (l.dev ? '' : ic('i-ext'))
+        return '<a class="ctag ctag--link' + (l.dev ? ' ctag--dev' : '') + '" href="' + esc(l.href) + '"'
+          + (/^https?:/.test(l.href) ? ' rel="noreferrer" target="_blank"' : '') + ' title="' + esc(l.label) + '">'
+          + '<b>' + esc(label) + '</b>' + (l.dev ? '<span class="ctag__k">Potential</span>' : ic('i-ext'))
           + '</a>';
       }).join('') + '</div>';
   }

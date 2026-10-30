@@ -1164,7 +1164,7 @@ textarea.fld { height: auto; min-height: 64px; padding: var(--s2) var(--s3); res
   .top, .pop, .walk, .head .btn, .cmd--sec, .composers, .lanes, .dock, .ev__x, .rowx, .rowadd { display: none !important; }
   body { background: #fff; }
   .app { display: block; padding: 0; }
-  .field, .focal, .rail { border-radius: 0; box-shadow: none; }
+  .field, .focal, .rail, .dcard { border-radius: 0; box-shadow: none; }
   .focal { background: none; color: var(--ink); }
   .tile__k, .tile__s, .tile__v small { color: #555; }
   .tile__v { color: #000; }
@@ -1358,11 +1358,15 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
    labels, 12px between fields. A hairline divides the columns, the same
    line-2 that divided the stacked groups before. Overrides the stacked .grp
    rhythm above, so it sits after it. ══ */
-.wo__cols { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1.05fr) minmax(0, 1.3fr); }
+.wo__cols { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr) minmax(0, 1.25fr); }
 .wo .grp, .wo .grp:first-child { padding: var(--s3) 0 0; }
 .wo .grp + .grp { margin-top: 0; padding-left: var(--s5); box-shadow: inset 1px 0 0 var(--line-2); }
-.wo .wo__c { padding-right: var(--s5); min-width: 0; }
-.wo .wo__c:last-child { padding-right: 0; }
+/* the air either side of a divider: written on the columns themselves so the
+   .wo .grp:first-child reset above (0,3,0) cannot zero it — it did, and the
+   Classification fields touched the line */
+.wo .wo__cols > .wo__c { min-width: 0; padding-right: var(--s5); }
+.wo .wo__cols > .wo__c + .wo__c { padding-left: var(--s5); }
+.wo .wo__cols > .wo__c:last-child { padding-right: 0; }
 .wo .grp__h { margin-bottom: var(--s3); min-height: 20px; }
 .wo .grp__s { flex-basis: 100%; }
 .form--dense .grid { gap: var(--s3); }
@@ -1380,7 +1384,48 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
    Classification takes the first row, Contact | Schedule share the second */
 @media (max-width: 1400px) {
   .app.dock-open .wo__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .app.dock-open .wo .wo__c--class { grid-column: 1 / -1; padding: var(--s3) 0 var(--s4); box-shadow: inset 0 -1px 0 var(--line-2); }
+  .app.dock-open .wo .wo__cols > .wo__c--class { grid-column: 1 / -1; padding: var(--s3) 0 var(--s4); box-shadow: inset 0 -1px 0 var(--line-2); }
   .app.dock-open .wo .wo__c--class .grid--2 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .app.dock-open .wo .wo__c--class + .grp { padding-left: 0; box-shadow: none; }
+  .app.dock-open .wo .wo__cols > .wo__c--class + .wo__c { padding-left: 0; box-shadow: none; }
+  .app.dock-open .wo .wo__cols > .wo__c--class + .wo__c + .wo__c { padding-left: var(--s5); }
 }
+
+/* ══ Board (DESIGN.md §19, Alex 10-29: "header cards!") — the same row of dark
+   cards All Vehicles, All Leads and Single Lead open with. Overrides the
+   earlier bento rules above, so it sits last. ══ */
+.bento { grid-template-columns: minmax(0, 1.72fr) minmax(360px, 1fr); }
+.bento > .focal { padding: 20px 24px; border-radius: var(--r-card); }
+.board__t { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -.01em; color: var(--focal-ink); }
+.focal__h { align-items: baseline; margin-bottom: var(--s4); }
+.focal__h .s { font-size: 13px; color: var(--focal-ink-3); }
+/* five cells: the money and the date range get the room their figures need */
+/* cell widths follow the figures they hold (measured at 1440: "12h 35m = 12.58" 155px,
+   "03/31 → 04/01" 160, "$15,996.00" 150), so every figure keeps 16px+ to its divider */
+.pulse { flex: 1; grid-template-columns: minmax(0, 1.12fr) minmax(0, .8fr) minmax(0, .95fr) minmax(0, 1.22fr) minmax(0, 1.15fr); }
+/* the cells keep their dividers full height; the keys share one line, so the
+   five read as a row (centring each cell put the keys at five heights) */
+.tile { display: flex; flex-direction: column; justify-content: flex-start; padding: var(--s3) var(--s4) 0; }
+.tile__v { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 6px; margin-top: var(--s3); font-size: 24px; font-weight: 700; letter-spacing: -.015em; line-height: 1.1; white-space: normal; overflow: visible; }
+.tile__n { white-space: nowrap; }
+.tile__v small { display: inline; margin: 0; font-size: 14px; font-weight: 400; letter-spacing: 0; color: var(--focal-ink-2); }
+.tile__v--none { font-weight: 400; }
+.tile__s { margin-top: var(--s2); font-size: 14px; line-height: 1.35; color: var(--focal-ink-3); }
+/* the dealer card — its own class: the shared _aan-family.css loads after this
+   file and owns .rail (the white section rail of Dealer Edit), which painted
+   this card white under light text */
+.dcard { background: var(--focal); box-shadow: var(--sh-card); color: var(--focal-ink); }
+.dcard__who { font-size: 16px; font-weight: 700; letter-spacing: -.01em; line-height: 1.3; color: var(--focal-ink); }
+.dcard__ls { display: flex; flex-wrap: wrap; align-content: flex-start; gap: var(--s2); margin-top: var(--s4); }
+.ctag {
+  display: inline-flex; align-items: center; gap: 8px; min-width: 0; max-width: 100%;
+  height: 32px; padding: 0 10px; border-radius: 8px;
+  background: rgba(255, 255, 255, .055); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07);
+  color: var(--focal-ink); font-size: 13.5px; text-decoration: none;
+}
+.ctag > .i { width: 14px; height: 14px; flex: none; color: var(--focal-ink-3); }
+.ctag b { min-width: 0; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ctag--mono b { font-family: var(--mono); font-size: 12.5px; }
+.ctag--link { transition: background var(--dur) var(--ease); }
+.ctag--link:hover { background: var(--focal-2); text-decoration: none; }
+.ctag--link > .i { width: 12px; height: 12px; }
+.ctag__k { flex: none; font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--focal-ink-3); }
