@@ -1136,9 +1136,10 @@
   /* Photo preview on hover (review note, Ivaylo): rest on a thumbnail and a
      larger shot of the car appears beside it; leave and it goes at once. The
      short delay keeps it from flashing while the pointer travels down the
-     list. Pointer-only: touch has no hover, and the row still opens the car. */
+     list. Mouse only, decided per event: a media query on the PRIMARY pointer
+     switched it off for good on touch-screen laptops, where the mouse is still
+     there (Alex 10-30: "zoom does not work on the photo"). */
   (function () {
-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
     var pv = document.createElement('div'), img = document.createElement('img'), timer = null, on = null;
     pv.className = 'thpv'; pv.setAttribute('aria-hidden', 'true'); img.alt = ''; pv.appendChild(img); document.body.appendChild(pv);
     function hide() { clearTimeout(timer); timer = null; on = null; pv.classList.remove('thpv--on'); }
@@ -1151,12 +1152,13 @@
       pv.style.transform = 'translate(' + Math.round(x) + 'px,' + Math.round(y) + 'px)';
       pv.classList.add('thpv--on');
     }
-    $('#tb').addEventListener('mouseover', function (e) {
+    $('#tb').addEventListener('pointerover', function (e) {
+      if (e.pointerType && e.pointerType !== 'mouse' && e.pointerType !== 'pen') return;
       var th = e.target.closest && e.target.closest('img.th');
       if (!th || th === on) return;
       hide(); on = th; timer = setTimeout(function () { if (on === th) show(th); }, 300);
     });
-    $('#tb').addEventListener('mouseout', function (e) {
+    $('#tb').addEventListener('pointerout', function (e) {
       if (on && e.target === on) hide();
     });
     window.addEventListener('scroll', hide, { passive: true });
