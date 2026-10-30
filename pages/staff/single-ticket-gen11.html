@@ -10,7 +10,7 @@
    `aan-theme` key is shared with the Gen 10 pages, so a stored `dark` must not land this
    page in a half-dark state at load. Temporary; the dark-theme stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="single-ticket-gen11.css?v=20261002-fix">
+<link rel="stylesheet" href="single-ticket-gen11.css?v=20261029-wo3c">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
 <link rel="stylesheet" href="../_aan-components.css?v=20261002-fix">
 </head>
@@ -141,32 +141,38 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <section class="sec" id="s-work" aria-labelledby="t-work">
         <div class="sec__h"><h2 id="t-work">Work Order</h2><span class="s">what this ticket is, who asked, and when it is due</span></div>
         <div class="sec__b">
-          <form class="form" id="f-work" novalidate>
-            <div class="grp">
-              <div class="grp__h"><span class="grp__t">Classification</span><span class="grp__ed"><svg class="i"><use href="#i-note"/></svg> editable</span><span class="grp__s">what this ticket is</span></div>
-              <div class="grid grid--3">
-                <label class="f"><span>Dealership <b aria-hidden="true">*</b></span><select class="sel" id="w-dealer" name="dealer"></select></label>
-                <label class="f f--wide"><span>Subject <b aria-hidden="true">*</b></span><input class="fld" type="text" id="w-subject" name="subject"></label>
-                <label class="f"><span>Work Status</span><select class="sel" id="w-status" name="status"></select></label>
-                <label class="f"><span>Work Type</span><select class="sel" id="w-type" name="type"></select></label>
-                <label class="f"><span>Priority</span><select class="sel" id="w-priority" name="priority"></select></label>
+          <!-- Ivaylo, ST note 7: "this all just... blends together … i would drastically
+               reduct the size of this". The original's three columns side by side, in
+               this system's dense form (Single Lead's .form--dense: 30px controls,
+               12.5px labels). Each column keeps its title and the editable key. -->
+          <form class="form form--dense wo" id="f-work" novalidate>
+            <div class="wo__cols">
+              <div class="grp wo__c wo__c--class">
+                <div class="grp__h"><span class="grp__t">Classification</span><span class="grp__ed"><svg class="i"><use href="#i-note"/></svg> editable</span></div>
+                <div class="grid grid--2">
+                  <label class="f f--wide"><span>Dealership <b aria-hidden="true">*</b></span><select class="sel" id="w-dealer" name="dealer"></select></label>
+                  <label class="f f--wide"><span>Subject <b aria-hidden="true">*</b></span><input class="fld" type="text" id="w-subject" name="subject"></label>
+                  <label class="f"><span>Work Status</span><select class="sel" id="w-status" name="status"></select></label>
+                  <label class="f"><span>Work Type</span><select class="sel" id="w-type" name="type"></select></label>
+                  <label class="f"><span>Priority</span><select class="sel" id="w-priority" name="priority"></select></label>
+                </div>
               </div>
-            </div>
-            <div class="grp">
-              <div class="grp__h"><span class="grp__t">Contact</span><span class="grp__ed"><svg class="i"><use href="#i-note"/></svg> editable</span><span class="grp__s" id="w-hint">who asked</span></div>
-              <div class="grid grid--3">
-                <label class="f"><span>Your Name</span><input class="fld" type="text" id="w-name" name="cname"></label>
-                <label class="f"><span>Phone</span><input class="fld" type="tel" id="w-phone" name="phone"></label>
-                <div class="f"><span>Emails</span><div class="emails" id="w-emails"></div></div>
+              <div class="grp wo__c">
+                <div class="grp__h"><span class="grp__t">Contact</span><span class="grp__ed"><svg class="i"><use href="#i-note"/></svg> editable</span><span class="grp__s" id="w-hint">who asked</span></div>
+                <div class="grid">
+                  <label class="f"><span>Your Name</span><input class="fld" type="text" id="w-name" name="cname"></label>
+                  <label class="f"><span>Phone</span><input class="fld" type="tel" id="w-phone" name="phone"></label>
+                  <div class="f"><span>Emails</span><div class="emails" id="w-emails"></div></div>
+                </div>
               </div>
-            </div>
-            <div class="grp">
-              <div class="grp__h"><span class="grp__t">Schedule &amp; Billing</span><span class="grp__ed"><svg class="i"><use href="#i-note"/></svg> editable</span><span class="grp__s">drives the queue and Go Live</span></div>
-              <div class="grid grid--4">
-                <label class="f"><span>Begin Date</span><input class="fld" type="date" id="w-begin" name="begin"></label>
-                <label class="f"><span>Completion Date</span><input class="fld" type="date" id="w-completion" name="completion"></label>
-                <div class="f"><span>Waiting on Client</span><label class="flag"><input class="ck" type="checkbox" id="w-wait" name="wait"><span>Waiting on Client or Third party</span></label></div>
-                <div class="f"><span>Billable</span><div class="money"><label class="flag"><input class="ck" type="checkbox" id="w-billable" name="billable"><span class="vh">Billable</span></label><input class="fld mono" type="text" id="w-amount" name="amount" inputmode="decimal" placeholder="0.00" aria-label="Billable amount"></div></div>
+              <div class="grp wo__c">
+                <div class="grp__h"><span class="grp__t">Schedule &amp; Billing</span><span class="grp__ed"><svg class="i"><use href="#i-note"/></svg> editable</span></div>
+                <div class="grid grid--2">
+                  <label class="f"><span>Begin Date</span><input class="fld" type="date" id="w-begin" name="begin"></label>
+                  <label class="f"><span>Completion Date</span><input class="fld" type="date" id="w-completion" name="completion"></label>
+                  <div class="f f--wide"><span>Waiting on Client</span><label class="flag"><input class="ck" type="checkbox" id="w-wait" name="wait"><span>Waiting on Client or Third party</span></label></div>
+                  <div class="f f--wide"><span>Billable</span><div class="money"><label class="flag"><input class="ck" type="checkbox" id="w-billable" name="billable"><span class="vh">Billable</span></label><input class="fld mono" type="text" id="w-amount" name="amount" inputmode="decimal" placeholder="0.00" aria-label="Billable amount"></div></div>
+                </div>
               </div>
             </div>
             <div class="form__f">

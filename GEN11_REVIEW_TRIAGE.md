@@ -216,4 +216,5 @@ Rule: **no new features in this redesign.** Each is possible and comes back in t
 
 | # | Note | Decision |
 |---|---|---|
+| 7 (Ivaylo, 10-24) | "this all just... blends together … i would drastically reduct the size of this" | ✅ done, resolved with a reply note (A) · Work Order in three columns as the original (`.wo__cols`, 1.65 / 1.05 / 1.3), Single Lead's dense controls (30px, 12.5px labels); Dealership and Subject full width so nothing is cut; 585 → 359px at 1440, 350 at 1920; with the dock open under 1400px Classification takes row one (516px at 1024). 1024 overflow (1089px, staff top nav) is pre-existing |
 | 8 (Karen, 10-26) | "Under the work type dropdown, we need to add … Site Shutdown" | ↩ **reverted 10-29** after the meeting with Ivaylo: a new feature, so it is out of the Work Type list again (`single-ticket-gen11.js`, v=20261029-noshut) and on the New features list; reply note posted |

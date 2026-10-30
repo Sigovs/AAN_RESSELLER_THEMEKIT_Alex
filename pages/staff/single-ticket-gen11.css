@@ -1351,3 +1351,36 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 .rbox__t:focus { outline: 2px solid var(--brand); outline-offset: 1px; }
 .rbox__r { display: flex; align-items: center; gap: 8px; }
 .rbox__who { flex: 1; min-width: 0; font-size: 12.5px; color: var(--ink-3); }
+
+/* ══ Work Order in three columns (Ivaylo, ST note 7: "drastically reduct the
+   size of this") — the original's Classification | Contact | Schedule &
+   Billing side by side, in Single Lead's dense form: 30px controls, 12.5px
+   labels, 12px between fields. A hairline divides the columns, the same
+   line-2 that divided the stacked groups before. Overrides the stacked .grp
+   rhythm above, so it sits after it. ══ */
+.wo__cols { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1.05fr) minmax(0, 1.3fr); }
+.wo .grp, .wo .grp:first-child { padding: var(--s3) 0 0; }
+.wo .grp + .grp { margin-top: 0; padding-left: var(--s5); box-shadow: inset 1px 0 0 var(--line-2); }
+.wo .wo__c { padding-right: var(--s5); min-width: 0; }
+.wo .wo__c:last-child { padding-right: 0; }
+.wo .grp__h { margin-bottom: var(--s3); min-height: 20px; }
+.wo .grp__s { flex-basis: 100%; }
+.form--dense .grid { gap: var(--s3); }
+.form--dense .f { gap: 3px; }
+.form--dense .f > span { font-size: 12.5px; white-space: nowrap; }
+.form--dense .fld, .form--dense .sel { height: 30px; border-radius: 8px; font-size: 13.5px; padding-inline: 10px; }
+.form--dense .flag { min-height: 30px; font-size: 13.5px; }
+.form--dense .emails__r .rowx { width: 24px; height: 24px; }
+.wo .form__f { margin-top: var(--s4); padding-top: var(--s3); }
+/* with the Crew dock open the field is ~370px narrower: the three columns
+   stay, the dense controls hold, and only the stacked-form rule that drops
+   grids to two columns is kept away from them */
+.app.dock-open .wo .grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* below 1400 with the Crew dock open the field is too narrow for three:
+   Classification takes the first row, Contact | Schedule share the second */
+@media (max-width: 1400px) {
+  .app.dock-open .wo__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .app.dock-open .wo .wo__c--class { grid-column: 1 / -1; padding: var(--s3) 0 var(--s4); box-shadow: inset 0 -1px 0 var(--line-2); }
+  .app.dock-open .wo .wo__c--class .grid--2 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .app.dock-open .wo .wo__c--class + .grp { padding-left: 0; box-shadow: none; }
+}
