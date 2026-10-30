@@ -201,12 +201,21 @@ This is the part that most easily collapses into "everything is blue". It must n
 | state | how it is shown | |
 |---|---|---|
 | primary action | solid `--brand` fill | `Edit vehicle` |
-| current view / lane | **white thumb on a sunken track** | segmented controls, lane rail |
+| current view / lane / section tab | **brand fill, white label, the same weight as its neighbours**; its count in white at 82% | every `.ui-views` row: All Vehicles' Lot lanes, All Leads' tabs, My Work Queue lanes, Manage Dealers' saved filters, Accounting lanes, the section tabs of Single Lead and Single Ticket, Ticket History lanes |
+| binary toggle | white thumb on a sunken track | `.seg`: Yes / No, Rows / Gallery |
 | current nav section | tinted, no fill | top navigation |
 | **open for inspection** | dark `--focal` surface, on-dark ink | the selected row |
 | **bulk selected** | `--brand-soft` tint | checkbox rows |
 
-Only one of the five is a blue fill.
+Two of them are blue fills, and they never sit together as one shape: the primary action is a
+solitary pill button; the chosen view is one item inside a row of labels.
+
+**Changed 2026-10-29 (Alex).** The chosen view used to be a white thumb with a hairline — on the
+section tabs and the lanes it did not read as selected. All Vehicles' Lot lanes and All Leads'
+tabs had already moved to the brand fill; it is now the one rule in `_aan-components.css`
+(`.ui-views > .ui-view--on`), so a page does not restate it. The weight does not change on
+selection (500 both), so choosing a tab moves nothing. A binary toggle keeps the white thumb:
+it is a switch between two states, not a choice of what to look at.
 
 "Open for inspection" and "bulk selected" must never look alike — they are different questions
 ("which one am I reading" vs "which ones will this action hit") and they co-occur.
@@ -490,6 +499,7 @@ counts take `font-variant-numeric: tabular-nums`.
 | board label | 14px / 400, muted | the words under or beside a figure |
 | body · table cell | 14px / 400; the row's identifier 600 | list rows, sheet text |
 | field label | 13px / 600, muted, sentence case, `nowrap` | form labels (12.5px in a `.form--dense` block) |
+| group title | 14px / 600, ink, sentence case | a named group inside a section — Classification, Contact, Schedule & Billing (Single Ticket) |
 | button | 14px / 500 | every button of the default tier |
 | facet · filter | 13.5px / 600 | Sort, Make, Columns, Status … |
 | status chip | 13px / 600, sentence case | Available · New Lead · Sold |

@@ -63,22 +63,30 @@
   transition: background var(--dur, 160ms) var(--ease, ease), color var(--dur, 160ms) var(--ease, ease);
 }
 .ui-views > *:hover { background: var(--well); color: var(--ink); box-shadow: none; }
+/* The chosen item is filled brand, white label, the SAME weight as the rest
+   (DESIGN.md §6, Alex 10-29: the white thumb with a hairline did not read as
+   selected). It is the treatment All Vehicles' Lot lanes and All Leads' tabs
+   were given first; every view row — lanes, saved filters, section tabs —
+   uses it now. Binary toggles (.seg: Yes/No, Rows/Gallery) keep the white
+   thumb on a sunken track. */
 .ui-views > .ui-view--on,
 .ui-views > .lane--on,
 .ui-views > .secnav__b--on,
 .ui-views > [aria-pressed="true"],
-.ui-views > .ui-view--on:hover {
-  background: var(--sheet); color: var(--ink); font-weight: 650;
+.ui-views > .ui-view--on:hover,
+.ui-views > .lane--on:hover,
+.ui-views > .secnav__b--on:hover {
+  background: var(--brand); color: #fff; font-weight: 500;
   border: 0; border-bottom: 0;
-  box-shadow: 0 1px 2px rgba(16, 24, 40, .08), inset 0 0 0 1px var(--line-3);
+  box-shadow: none;
 }
 /* counts share one treatment on every page */
 .ui-views > * b, .ui-views > * .n, .ui-views > * .cnt {
   font-size: 12.5px; font-weight: 600; color: var(--ink-3);
   font-variant-numeric: tabular-nums; background: none; padding: 0; border-radius: 0;
 }
-.ui-views > .ui-view--on b, .ui-views > .lane--on b,
-.ui-views > [aria-pressed="true"] b { color: var(--brand-ink); }
+.ui-views > .ui-view--on b, .ui-views > .lane--on b, .ui-views > .secnav__b--on b,
+.ui-views > [aria-pressed="true"] b { color: rgba(255, 255, 255, .82); background: none; }
 /* legacy decorations — underlines, dividers, carets — are not this component */
 .ui-views > *::after, .ui-views > *::before { content: none; }
 /* a group divider is a hairline, not an empty 24px item pretending to be one */

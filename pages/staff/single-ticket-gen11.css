@@ -1123,7 +1123,6 @@ textarea.fld { height: auto; min-height: 64px; padding: var(--s2) var(--s3); res
   .gsearch { width: 44px; padding: 0; justify-content: center; }
   .gsearch input, .gsearch kbd { display: none; }
   .nav__b { padding: 0 var(--s2); font-size: 13px; }
-  .head h1 { font-size: 20px; }
   .secnav__note { display: none; }
   .secnav__b { padding: 0 var(--s3); }
 
@@ -1385,7 +1384,13 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 @media (max-width: 1400px) {
   .app.dock-open .wo__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .app.dock-open .wo .wo__cols > .wo__c--class { grid-column: 1 / -1; padding: var(--s3) 0 var(--s4); box-shadow: inset 0 -1px 0 var(--line-2); }
-  .app.dock-open .wo .wo__c--class .grid--2 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  /* one row of six tracks: Dealership | Subject, then Status (the longest
+     value, "Marketing Project Open") | Type | Priority */
+  .app.dock-open .wo .wo__c--class .grid--2 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .app.dock-open .wo .wo__c--class .grid--2 > .f { grid-column: span 2; }
+  .app.dock-open .wo .wo__c--class .grid--2 > .f--wide { grid-column: span 3; }
+  .app.dock-open .wo .wo__c--class .grid--2 > .f:nth-child(3) { grid-column: span 3; }
+  .app.dock-open .wo .wo__c--class .grid--2 > .f:nth-child(5) { grid-column: span 1; }
   .app.dock-open .wo .wo__cols > .wo__c--class + .wo__c { padding-left: 0; box-shadow: none; }
   .app.dock-open .wo .wo__cols > .wo__c--class + .wo__c + .wo__c { padding-left: var(--s5); }
 }
@@ -1429,3 +1434,44 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 .ctag--link:hover { background: var(--focal-2); text-decoration: none; }
 .ctag--link > .i { width: 12px; height: 12px; }
 .ctag__k { flex: none; font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--focal-ink-3); }
+
+/* ══ DS alignment (Alex 10-29: "must be inside our design system") — the roles
+   of DESIGN.md §18, as on All Vehicles, All Leads and Single Lead. Last in the
+   file, so it wins over the older staff rules above. ══ */
+/* 4 · page title: 28px / 600, as every page; the ticket id is a mono id */
+.head h1 { font-size: 28px; font-weight: 600; letter-spacing: -.022em; line-height: 1.15; }
+.head h1 .tid { font-size: 13px; font-weight: 500; letter-spacing: 0; vertical-align: 3px; }
+/* 5 · a group inside a section is a step below the section title (18/600):
+   body size, identifier weight */
+.grp__t, .wo .grp__t { font-size: 14px; font-weight: 600; letter-spacing: 0; color: var(--ink); }
+/* 1 · the kind of an entry is a tag, sentence case, not a caps key */
+#s-thread .ev__t .kind { font-size: 12px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--ink-3); }
+#s-thread .ev__t .by { order: 3; font-size: 13px; font-weight: 400; color: var(--ink-3); }
+/* 3 · changelog: the old value is a small value, sized to itself; "no previous
+   value" is plain muted text, not something that looks like a field */
+.feed--clog .prev { align-self: flex-start; justify-self: start; width: fit-content; max-width: 100%; }
+.feed--clog .prev--none { padding: 0; box-shadow: none; background: none; font-size: 13px; color: var(--ink-3); }
+/* the save action stays at the right end of its form, as Save contact on Single
+   Lead; the status message takes the free space on the left */
+.wo .form__f { justify-content: flex-end; padding-left: 0; padding-right: 0; }
+.wo .form__msg { margin-right: auto; }
+.wo .form__f > .btn { margin: 0; }
+/* ≤1280: the title needs the room. The three chips repeat Work Status,
+   Priority and Work Type, which the Work Order block now shows on the first
+   screen, so they step aside instead of the title being cut to "#1047…" */
+@media (max-width: 1280px) {
+  .head .chips { display: none; }
+  .head__id { flex: 1 1 auto; }
+}
+/* the first cell of a row starts on the card title's 24px edge (an older
+   dock-open rule gave it 12px, so "TIME SPENT" stood right of "This ticket") */
+/* 16px each side of a cell divider at every width (the dock-open rule above
+   cut it to 12) */
+.bento .pulse > .tile { padding-left: var(--s4); padding-right: var(--s4); }
+.bento .pulse > .tile:first-child { padding-left: 0; }
+/* ≤1360 five figures do not fit one row with their air ("03/31 → 04/01"
+   touched "$15,996.00" at 1280): three over two, as at 1024 */
+@media (max-width: 1360px) {
+  .bento .pulse { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: var(--s4); }
+  .bento .pulse > .tile:nth-child(4) { padding-left: 0; box-shadow: none; }
+}

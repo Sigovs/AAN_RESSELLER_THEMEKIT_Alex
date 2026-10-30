@@ -10,9 +10,9 @@
    `aan-theme` key is shared with the Gen 10 pages, so a stored `dark` must not land this
    page in a half-dark state at load. Temporary; the dark-theme stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="single-ticket-gen11.css?v=20261029-board6">
+<link rel="stylesheet" href="single-ticket-gen11.css?v=20261029-ds6">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
-<link rel="stylesheet" href="../_aan-components.css?v=20261002-fix">
+<link rel="stylesheet" href="../_aan-components.css?v=20261029-selected">
 </head>
 <body>
 
@@ -140,7 +140,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 
       <!-- ── 1 · WORK ORDER ──────────────────────────────────────────────── -->
       <section class="sec" id="s-work" aria-labelledby="t-work">
-        <div class="sec__h"><h2 id="t-work">Work Order</h2><span class="s">what this ticket is, who asked, and when it is due</span></div>
+        <div class="sec__h"><h2 id="t-work">Work Order</h2></div>
         <div class="sec__b">
           <!-- Ivaylo, ST note 7: "this all just... blends together … i would drastically
                reduct the size of this". The original's three columns side by side, in
@@ -177,7 +177,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
               </div>
             </div>
             <div class="form__f">
-              <span class="form__note">Saves classification, contact, schedule and billing on this ticket</span>
               <span class="form__msg" id="w-msg" role="status" aria-live="polite"></span>
               <button class="btn btn--primary" type="submit" data-act="save">Save Ticket</button>
             </div>
@@ -271,7 +270,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <section class="sec" id="s-atts" aria-labelledby="t-atts">
         <div class="sec__h"><h2 id="t-atts">Attachments</h2><span class="s" id="atts-s"></span></div>
         <div class="sec__b">
-          <p class="src" id="atts-src" hidden>Files posted on this ticket. The export carries the filenames but not the bytes, so every row here reports its file as missing rather than offering a download that cannot resolve.</p>
           <div class="atts" id="atts"></div>
         </div>
       </section>
@@ -323,6 +321,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 </div>
 
 <script src="single-ticket-gen11.data.js?v=20260930234502"></script>
-<script src="single-ticket-gen11.js?v=20261029-board4"></script>
+<script src="single-ticket-gen11.js?v=20261029-ds"></script>
 </body>
 </html>

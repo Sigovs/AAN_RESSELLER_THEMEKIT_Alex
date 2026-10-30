@@ -123,8 +123,13 @@
     return p(d.getMonth() + 1) + '/' + p(d.getDate()) + '/' + d.getFullYear() + ' ' + p(h) + ':' + p(d.getMinutes()) + ' ' + ap;
   }
   function splitWhen(when) {
-    var m = String(when || '').match(/^(\S+)\s+(.*)$/);
-    return m ? { d: m[1], t: m[2] } : { d: String(when || ''), t: '' };
+    var s = String(when || ''), by = '';
+    /* ToDos carry who set them first: "by Alex Sigoff · 05/12/2026 01:51 PM".
+       Split on the first space alone, "by" became the date and the rest wrapped. */
+    var b = s.match(/^by\s+(.+?)\s+·\s+(.*)$/);
+    if (b) { by = b[1]; s = b[2]; }
+    var m = s.match(/^(\S+)\s+(.*)$/);
+    return m ? { d: m[1], t: m[2], by: by } : { d: s, t: '', by: by };
   }
 
   /* ══ SEED — one working copy per render ════════════════════════════════ */
@@ -318,7 +323,7 @@
     { k: 'todo', label: 'ToDos' },
     { k: 'woc', label: 'Waiting on client' }
   ];
-  var KINDW = { message: 'Message', note: 'Internal Note', todo: 'ToDo', woc: 'Waiting on Client' };
+  var KINDW = { message: 'Message', note: 'Internal note', todo: 'ToDo', woc: 'Waiting on client' };
   var KINDI = { message: 'i-mail', note: 'i-note', todo: 'i-todo', woc: 'i-clock' };
 
   function laneCount(k) {
@@ -364,7 +369,8 @@
       return '<li class="ev ev--' + e.kind + (e.replyTo ? ' ev--reply' : '') + '" data-ev="' + esc(e.id) + '">'
         + '<span class="ev__i">' + ic(KINDI[e.kind]) + '</span>'
         + '<div class="ev__b">'
-        + '<div class="ev__t"><span class="kind">' + esc(KINDW[e.kind]) + '</span><span class="who">' + esc(e.who || '—') + '</span></div>'
+        + '<div class="ev__t"><span class="kind">' + esc(KINDW[e.kind]) + '</span><span class="who">' + esc(e.who || '—') + '</span>'
+        + (w.by ? '<span class="by">by ' + esc(w.by) + '</span>' : '') + '</div>'
         + (e.body ? '<span class="ev__n' + (long && !e.open ? ' ev__n--clamp' : '') + '">' + esc(e.body) + '</span>' : '')
         + (long ? '<button class="ev__more" type="button" data-more="' + esc(e.id) + '">' + (e.open ? 'Show less' : 'Show all') + '</button>' : '')
         + atts
@@ -420,7 +426,6 @@
     $('#atts-s').textContent = T.atts.length
       ? T.atts.length + (T.atts.length === 1 ? ' file' : ' files')
       : 'no attachments on this ticket';
-    $('#atts-src').hidden = !T.atts.length;
     $('#atts').innerHTML = T.atts.length
       ? T.atts.map(function (a) {
           return '<div class="att">' + ic('i-file')
