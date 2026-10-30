@@ -308,6 +308,18 @@ window.AC = {
     {
      "label": "Out - Cars.com Image Feeds",
      "kind": "ext"
+    },
+    {
+     "label": "Out - Cobalt Feeds",
+     "kind": null
+    },
+    {
+     "label": "Out - Dealer Specialty Feeds",
+     "kind": null
+    },
+    {
+     "label": "Out - eBizAutos Feeds",
+     "kind": null
     }
    ]
   },

@@ -130,7 +130,7 @@
             if (l === 'Add New Dealer') href = 'dealer-edit-gen11.html?dealer=new';
             else if (l === 'View Dealers' || l === 'View Pending Dealers') href = 'manage-dealers-gen11.html';
             else if (l === 'My Work') href = 'my-work-queue-gen11.html';
-            return '<a class="mn__it" href="' + href + '">' + esc(l) + '</a>';
+            return '<a class="mn__it' + (l.indexOf('--') === 0 ? ' mn__it--sub' : '') + '" href="' + href + '">' + esc(l) + '</a>';
           }).join('') +
         '</div></div>';
     }).join('');

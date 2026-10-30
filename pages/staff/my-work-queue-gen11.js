@@ -110,7 +110,7 @@
           esc(g.g) + ic('i-chev') + '</button>' +
         '<div class="pop" id="' + id + '"><div class="caps pop__lab">' + esc(g.g) + '</div>' +
           g.i.filter(navShown).map(function (l) {
-            return '<a class="mn__it" href="#">' + esc(l) + '</a>';
+            return '<a class="mn__it' + (l.indexOf('--') === 0 ? ' mn__it--sub' : '') + '" href="#">' + esc(l) + '</a>';
           }).join('') +
         '</div></div>';
     }).join('');

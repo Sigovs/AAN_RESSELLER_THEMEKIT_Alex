@@ -538,3 +538,19 @@ select.sel, select.ui-ctl, .rows select, .cmd select, .zone select, .form select
   color: var(--ink-4); font-variant-numeric: tabular-nums;
 }
 .zone__t { font-size: 17px; }
+
+/* == ONE SYSTEM (Alex 10-30: "the same elements, shadows, colours, dividers on every page") ==
+   Measured against All Vehicles and Single Vehicle, the pages made first, which are the
+   reference. Loaded last on every page, so a page cannot drift from these again. */
+/* buttons: one radius */
+.app .btn { border-radius: 9px; }
+/* the primary action: brand fill and its blue lift, as All Vehicles' Add vehicle */
+.app .btn--primary { background-color: var(--brand); color: #fff; box-shadow: 0 10px 22px -10px rgba(29, 95, 230, .70), inset 0 1px 0 rgba(255, 255, 255, .32); }
+.app .btn--primary:hover { background-color: var(--brand-hover, #1a50c4); }
+.app .btn--primary:disabled { box-shadow: none; }
+/* state chips: the status chip of All Vehicles - 24px, 7px radius, 13 / 600 */
+.app .stat, .app .chips .chip:not(.chip--id):not(.wchip):not(.chip--type), .app .head__sub > .chip:not(.chip--id), .app .bdg, .app .c-pkg .bdg { height: 24px; border-radius: 7px; line-height: 1; }
+/* the demo marker reads in sentence case like every other tag */
+.app .demo { text-transform: none; letter-spacing: 0; font-size: 12px; font-weight: 600; }
+/* a sub-entry of a menu ("--Last 200" under its queue), the same on every staff page */
+.app .mn__it--sub { padding-left: var(--s5); color: var(--ink-3); font-size: 13px; }

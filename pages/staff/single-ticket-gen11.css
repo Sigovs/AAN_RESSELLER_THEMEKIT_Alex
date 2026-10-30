@@ -188,19 +188,29 @@
 /* ============================================================================
    2 · BASE
    ========================================================================== */
+/* the type files every Gen 11 page loads (Alex 10-30: "the font is different here") - the staff
+   pages asked the machine for a local Archivo and fell back to Segoe UI wherever it is not installed */
 @font-face {
   font-family: "Archivo";
   font-style: normal;
   font-weight: 100 900;
+  font-stretch: 62% 125%;
   font-display: swap;
-  src: local("Archivo"), local("Archivo Variable");
+  src: url("../../ds/fonts/archivo-latin-var.woff2") format("woff2");
 }
 @font-face {
   font-family: "Plex Mono";
   font-style: normal;
-  font-weight: 400 600;
+  font-weight: 400;
   font-display: swap;
-  src: local("IBM Plex Mono"), local("Cascadia Mono"), local("Consolas");
+  src: url("../../ds/fonts/plex-mono-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Plex Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../../ds/fonts/plex-mono-600.woff2") format("woff2");
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -1672,3 +1682,6 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 @media (max-width: 1240px) { .app.dock-open .bento { grid-template-columns: minmax(0, 1fr); grid-template-areas: "dealer" "pulse"; } }
 /* == DESIGN.md §18 type roles, pinned (Alex 10-30: "why do we make a DS if nothing changed by it?!"). Last in the file, so each role reads the same on every page. == */
 .app .chips .chip { font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; }
+/* the page title as on the dealer pages: Archivo at 92% width */
+.app .head h1 { font-stretch: 92%; }
+.app .pulse .tile__v { font-stretch: 88%; }

@@ -8,9 +8,9 @@
    cannot land this one in a half-dark state. Only an explicit `light` is honoured. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
 <link rel="stylesheet" href="all-vehicles-gen11.css?v=20261029-broom">
-<link rel="stylesheet" href="single-lead-gen11.css?v=20261030-roles">
+<link rel="stylesheet" href="single-lead-gen11.css?v=20261030-onesys">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
-<link rel="stylesheet" href="../_aan-components.css?v=20261029-selected">
+<link rel="stylesheet" href="../_aan-components.css?v=20261030-onesys2">
 </head>
 <body>
 
@@ -93,7 +93,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <div class="nav__it nav__it--on">
         <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Leads<svg class="i"><use href="#i-chev"/></svg></button>
         <div class="menu"><div class="menu__col"><div class="caps menu__t">Leads</div>
-          <a class="menu__l menu__l--on" href="all-leads-gen10.html" aria-current="page"><b>Lead Manager</b><span>Every enquiry, by stage</span></a>
+          <a class="menu__l menu__l--on" href="all-leads-gen11.html" aria-current="page"><b>Lead Manager</b><span>Every enquiry, by stage</span></a>
           <a class="menu__l" href="#"><b>Customers</b><span>People who enquired or bought</span></a>
           <a class="menu__l" href="#"><b>Referrals</b><span>Where leads came from</span></a>
         </div></div>
@@ -155,7 +155,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
        record actions, the lead's name, then its state and number. -->
   <div class="head head--card">
     <div class="head__top">
-      <a class="btn btn--quiet btn--sm" href="all-leads-gen10.html"><svg class="i"><use href="#i-left"/></svg> Back to board</a>
+      <a class="btn btn--quiet btn--sm" href="all-leads-gen11.html"><svg class="i"><use href="#i-left"/></svg> Back to board</a>
       <span class="head__sp"></span>
       <span class="walk" role="group" aria-label="Record navigation"><button class="btn btn--quiet btn--sm" type="button" data-act="prev"><svg class="i"><use href="#i-left"/></svg> Prev</button><button class="btn btn--quiet btn--sm" type="button" data-act="next">Next <svg class="i"><use href="#i-right"/></svg></button></span>
       <button class="btn btn--sheet btn--sm" type="button" data-act="goto-note"><svg class="i"><use href="#i-edit"/></svg> Note</button>
@@ -382,6 +382,6 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 
 <script src="all-vehicles-gen11.data.js?v=20260930234502"></script>
 <script src="all-leads-gen10.data.js?v=20260930234502"></script>
-<script src="single-lead-gen11.js?v=20261030-ds"></script>
+<script src="single-lead-gen11.js?v=20261030-back"></script>
 </body>
 </html>

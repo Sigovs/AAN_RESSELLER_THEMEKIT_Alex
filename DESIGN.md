@@ -629,3 +629,17 @@ Added 2026-10-29 on Single Ticket's Ticket History; the rules for any feed of po
 Single Lead's Activity follows the same rules: the entry kind is a sentence-case tag ("Note", "Mail", "Created"), and "Add a note" is a post box in the note tone. Watch two shared names there: the page's own `.kind` (the lead-type switch, with a bottom margin) and the shared caps `.composer__lab` — both are overridden inside the feed.
 
 **Files** go with any post: the drop names what was picked before posting, and a posted file sits in its entry and in the page file list.
+
+---
+
+## 23 · One system — what every page shares
+
+Added 2026-10-30 (Alex: "one system — the same elements, shadows, colours, dividers, navigation on every page"). The reference is All Vehicles and Single Vehicle, the pages made first.
+
+- **Type files:** every page loads Archivo (variable, `font-stretch: 62% 125%`) and Plex Mono from `ds/fonts`. The staff pages asked the machine for a local Archivo and fell back to Segoe UI where it is not installed — never use `local()` alone.
+- **Widths:** page title Archivo 92%, board figures 88%, as All Vehicles.
+- **Tokens** (colours, radii, lines, shadows) come from `_aan-family.css`, loaded after each page; a page does not restate them.
+- **Shared elements** are pinned in `_aan-components.css` (loaded last): buttons 9px radius; the primary button is the brand fill with its blue lift; state chips are 24px, 7px radius, 13/600; the Demo tag is sentence case; a menu sub-entry ("--Last 200") is indented and muted.
+- **Row dividers** on every list are All Vehicles' line (`line-2` at 65% over the sheet).
+- **Navigation:** one dealer menu on the four dealer pages; one staff menu on the five staff pages, the original's full set (each page's data had lost a part), with the same hidden items (`NAV_HIDDEN`, `NAV_HIDDEN_GROUPS`). When something is removed from a menu, it is removed in every page's data and hidden list.
+- **The way back** on a record page is the quiet button "‹ Back to …" in the first row of the head card, pointing at a Gen 11 page.

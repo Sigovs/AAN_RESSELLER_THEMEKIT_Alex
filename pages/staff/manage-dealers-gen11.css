@@ -151,19 +151,29 @@
 /* ============================================================================
    BASE
    ========================================================================== */
+/* the type files every Gen 11 page loads (Alex 10-30: "the font is different here") - the staff
+   pages asked the machine for a local Archivo and fell back to Segoe UI wherever it is not installed */
 @font-face {
   font-family: "Archivo";
   font-style: normal;
   font-weight: 100 900;
+  font-stretch: 62% 125%;
   font-display: swap;
-  src: local("Archivo"), local("Archivo Variable");
+  src: url("../../ds/fonts/archivo-latin-var.woff2") format("woff2");
 }
 @font-face {
   font-family: "Plex Mono";
   font-style: normal;
-  font-weight: 400 600;
+  font-weight: 400;
   font-display: swap;
-  src: local("IBM Plex Mono"), local("Cascadia Mono"), local("Consolas");
+  src: url("../../ds/fonts/plex-mono-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Plex Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../../ds/fonts/plex-mono-600.woff2") format("woff2");
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -1103,3 +1113,7 @@ html.no-js .field, html.no-js .tally { display: none; }
 .app .row .c-st { display: inline-flex; align-items: center; align-self: center; width: max-content; height: 24px; padding: 0 8px; border-radius: 7px; background: var(--ok-soft, #e5f5ec); box-shadow: inset 0 0 0 1px var(--ok-line, #bfe3cd); color: var(--ok); font-size: 13px; font-weight: 600; }
 .app .row .c-st--pend { background: var(--violet-soft, #efebfc); box-shadow: inset 0 0 0 1px var(--violet-line, #d6ccf6); color: var(--violet, #5c42c9); }
 .app .row .c-st--inactive { background: var(--slate-soft, var(--well)); box-shadow: inset 0 0 0 1px var(--line-3); color: var(--ink-3); }
+/* the page title as on the dealer pages: Archivo at 92% width */
+.app .head h1 { font-stretch: 92%; }
+/* row divider as All Vehicles (one system) */
+.app #tb .row { box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--line-2) 65%, var(--sheet)); }

@@ -1101,3 +1101,11 @@
 .app { --headh: auto; }
 /* == DESIGN.md §18 type roles, pinned (Alex 10-30: "why do we make a DS if nothing changed by it?!"). Last in the file, so each role reads the same on every page. == */
 .app .sec__h h2 { font-size: 18px; font-weight: 600; letter-spacing: -.012em; }
+/* the page title at Archivo 92% width, as All Vehicles and All Leads */
+.app .head h1, .head--card > h1 { font-stretch: 92%; }
+/* Activity entries as Single Ticket's history (one system): white cards, no timeline rail */
+#s-activity .feed::before { content: none; }
+#s-activity .ev { margin-bottom: 8px; padding: 12px 14px; border-radius: 10px; background: var(--sheet); box-shadow: inset 0 0 0 1px var(--line-2); }
+#s-activity .ev + .ev { box-shadow: inset 0 0 0 1px var(--line-2); }
+#s-activity .ev:hover { box-shadow: inset 0 0 0 1px var(--line); }
+#s-activity > .sec__b > .src { display: none; }

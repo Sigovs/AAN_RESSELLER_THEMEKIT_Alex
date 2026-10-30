@@ -60,7 +60,7 @@
             if (l === 'Add New Dealer') href = 'dealer-edit-gen11.html?dealer=new';
             else if (l === 'View Dealers' || l === 'View Pending Dealers') href = 'manage-dealers-gen11.html';
             else if (l === 'My Work') href = 'my-work-queue-gen11.html';
-            return '<a class="mn__it" href="' + href + '">' + esc(l) + '</a>';
+            return '<a class="mn__it' + (l.indexOf('--') === 0 ? ' mn__it--sub' : '') + '" href="' + href + '">' + esc(l) + '</a>';
           }).join('') +
         '</div></div>';
     }).join('');
@@ -69,8 +69,8 @@
   /* ══ RECORD HEAD ══════════════════════════════════════════════════════════ */
 
   function renderHead() {
-    var back = '<a class="head__back" href="manage-dealers-gen11.html" title="Back to Manage Dealers" ' +
-      'aria-label="Back to Manage Dealers">' + ic('i-left') + '</a>';
+    /* the way back reads as on every record page (DESIGN.md §21): "‹ Back to …" */
+    var back = '<a class="btn btn--quiet btn--sm head__back head__back--txt" href="manage-dealers-gen11.html">' + ic('i-left') + ' Back to dealers</a>';
 
     if (!R) {
       $('#head').innerHTML = back +
@@ -102,12 +102,15 @@
         }).join('') + '</nav>'
       : '';
 
-    $('#head').innerHTML = back +
-      '<div class="head__id">' +
-        '<div class="head__row"><h1>' + esc(R.title) + '</h1>' +
-          (R.id ? '<span class="head__n">#' + R.id + '</span>' : '') + chips + db +
-        '</div>' + audit +
-      '</div>' + quick;
+    /* the record head of DESIGN.md §21, as Single Ticket, Single Lead and Single
+       Vehicle: the way back and the dealer's routes, the title, then its state,
+       number and dates */
+    $('#head').innerHTML =
+      '<div class="head__top">' + back + '<span class="head__sp"></span>' + quick + '</div>' +
+      '<h1>' + esc(R.title) + '</h1>' +
+      '<div class="head__sub">' + chips +
+        (R.id ? '<span class="chip--id"><span class="head__k">Dealer number:</span> <b>' + R.id + '</b></span>' : '') +
+        db + audit + '</div>';
 
     document.title = (R.name || 'Add New Dealer') + ' — Dealer File · AAN (Gen 11)';
   }

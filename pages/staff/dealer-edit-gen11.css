@@ -154,19 +154,29 @@
 /* ============================================================================
    BASE
    ========================================================================== */
+/* the type files every Gen 11 page loads (Alex 10-30: "the font is different here") - the staff
+   pages asked the machine for a local Archivo and fell back to Segoe UI wherever it is not installed */
 @font-face {
   font-family: "Archivo";
   font-style: normal;
   font-weight: 100 900;
+  font-stretch: 62% 125%;
   font-display: swap;
-  src: local("Archivo"), local("Archivo Variable");
+  src: url("../../ds/fonts/archivo-latin-var.woff2") format("woff2");
 }
 @font-face {
   font-family: "Plex Mono";
   font-style: normal;
-  font-weight: 400 600;
+  font-weight: 400;
   font-display: swap;
-  src: local("IBM Plex Mono"), local("Cascadia Mono"), local("Consolas");
+  src: url("../../ds/fonts/plex-mono-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Plex Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../../ds/fonts/plex-mono-600.woff2") format("woff2");
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -940,3 +950,22 @@ html.no-js .body, html.no-js .savebar { display: none; }
 .app .zone__t { font-size: 18px; font-weight: 600; letter-spacing: -.012em; }
 .app .chip, .app .stat { font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; }
 .app .hd .th, .app th { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+/* the way back as a quiet button with its words, as Single Ticket / Single Lead */
+.app .head__back.head__back--txt { width: auto; height: 30px; padding: 0 var(--s3); gap: var(--s2); border: 0; box-shadow: none; background: none; font-size: 14px; font-weight: 500; color: var(--ink-2); }
+.app .head__back.head__back--txt:hover { background: var(--wash); color: var(--ink); }
+/* the page title as on the dealer pages: Archivo at 92% width */
+.app .head h1 { font-stretch: 92%; }
+/* == record head card (DESIGN.md §21), not sticky: the save bar at the foot carries Save == */
+:root { --stick-head: 0px; }
+.app .head { position: static; display: flex; flex-direction: column; align-items: stretch; gap: 0; min-height: 0; margin: var(--s2) 0 var(--gutter); padding: var(--s3) var(--s5) var(--s5); border-radius: var(--r-card); background: var(--sheet); box-shadow: var(--sh-soft); -webkit-backdrop-filter: none; backdrop-filter: none; }
+.app .head.head--stuck { background: var(--sheet); box-shadow: var(--sh-soft); border-radius: var(--r-card); }
+.head__top { display: flex; align-items: center; gap: var(--s2); min-width: 0; }
+.head__top > .head__back { margin-left: calc(-1 * var(--s3)); }
+.head__sp { flex: 1 1 auto; }
+.app .head > h1 { margin: var(--s3) 0 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.head__sub { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s2) var(--s3); margin-top: var(--s3); min-width: 0; }
+.head__sub .head__audit { margin: 0; font-size: 13px; }
+.head__sub .head__audit i { font-family: var(--font); font-variant-numeric: tabular-nums; }
+.chip--id { display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 10px; border-radius: var(--r-pill); box-shadow: inset 0 0 0 1px var(--line-3); font-size: 12.5px; font-weight: 500; color: var(--ink-3); white-space: nowrap; }
+.chip--id b { font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+.app .head__quick { padding-top: 0; }
