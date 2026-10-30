@@ -1624,3 +1624,17 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 .rbox .drop { margin: 0; }
 /* every composer's post action stands at the right end of its row (§11) */
 .composer__f > .btn--primary { margin-left: auto; }
+/* the sections must be seen at a glance (Alex 10-29: "they got lost, make them
+   visible"): a stronger tone rail, the header as a board-card title in the
+   section tone with its count in a filled pill, and the composer framed on the
+   sheet so it reads as the place to write, not as one more entry */
+.tsec { padding-left: var(--s4); box-shadow: inset 4px 0 0 var(--tone-ink); }
+.tsec__h { min-height: 44px; align-items: center; padding: 0 var(--s3) 0 var(--s4); border-radius: 10px; box-shadow: inset 0 0 0 1px var(--tone-line); }
+.tsec__h h3 { font-size: 16px; font-weight: 700; letter-spacing: -.01em; }
+.tsec__n { display: inline-grid; place-items: center; min-width: 28px; height: 24px; padding: 0 8px; border-radius: var(--r-pill); background: var(--tone-ink); color: #fff; font-size: 12.5px; }
+.tsec .composer { padding: var(--s3) var(--s4); border-radius: 10px; background: var(--sheet); box-shadow: inset 0 0 0 1px var(--line-2), 0 1px 2px rgba(16, 24, 40, .04); }
+.tsecs { gap: var(--s6); }
+.tsec--message { --tone-line: var(--brand-soft-2); }
+.tsec--note { --tone-line: var(--signal-line); }
+.tsec--woc { --tone-line: var(--violet-line); }
+.tsec--todo { --tone-line: var(--ok-line); }
