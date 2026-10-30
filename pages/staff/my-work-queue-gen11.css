@@ -858,7 +858,6 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 /* status / priority badge — the department tone family */
 .bdg {
   display: inline-flex; align-items: center; max-width: 100%;
-  min-height: 26px;
   padding: 0 11px;
   border-radius: var(--r-pill);
   background: var(--bdg-bg, var(--t-slate-bg));
@@ -947,7 +946,7 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 }
 .c-amt { font: 500 12px var(--mono); color: var(--ink-2); }
 .c-amt .na, .c-est .na, .c-left .na { color: var(--ink-4); font-family: var(--font); font-size: 12px; }
-.c-age, .c-since { font-weight: 600; color: var(--ink-2); }
+.row .c-age, .row .c-since { font-weight: 600; color: var(--ink-2); } /* cells only: the header keeps the caps key */
 .c-left .v--neg { color: var(--danger); font-weight: 600; }
 .c-cre { font: 500 12px var(--mono); color: var(--ink-2); }
 .c-grip { align-items: center; }
@@ -1004,7 +1003,7 @@ mark {
   display: inline-grid; place-items: center;
   min-width: 30px; height: 30px; padding: 0 6px;
   border-radius: var(--s2);
-  color: var(--ink-2); font-weight: 500; font-variant-numeric: tabular-nums;
+  color: var(--ink-2); font-size: 14px; font-weight: 500; font-variant-numeric: tabular-nums;
 }
 .pg button:hover:not([disabled]) { background: var(--wash); color: var(--ink); }
 .pg button[disabled] { color: var(--ink-4); cursor: default; }
@@ -1354,14 +1353,20 @@ html.no-js .cmdtop, html.no-js .cmd, html.no-js .sub, html.no-js .hd, html.no-js
 .app .head__meta { margin: 0; font-size: 14px; color: var(--ink-3); }
 .app .head__meta::before { content: "\00b7"; margin-right: var(--s3); color: var(--ink-4); }
 /* dates and money are text with even figures, not mono (only ids, codes and phones are mono) */
-.app .c-mod i, .app .c-beg .ed, .app .c-done .ed, .app .c-beg .d, .app .c-done .d, .app .c-amt { font-family: var(--font); font-size: 13px; font-variant-numeric: tabular-nums; }
+.app .c-mod i, .app .c-beg .ed, .app .c-done .ed, .app .c-beg .d, .app .c-done .d, .app .row .c-amt { font-family: var(--font); font-size: 13px; font-variant-numeric: tabular-nums; }
 /* status as the status chip of All Leads: 24px, 7px radius, 13 / 600 */
-.app .bdg { height: 24px; padding: 0 8px; border-radius: 7px; font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; }
+.app .bdg { box-sizing: border-box; height: 24px; padding: 0 8px; border-radius: 7px; font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; }
 /* the dealer name reads from its first letter, left-aligned (it was centred and cut on the left) */
 .app .row .c-dlr { flex-direction: row; align-items: center; justify-content: flex-start; text-align: left; overflow: hidden; }
 .app .c-dlr .dlr { min-width: 0; max-width: 100%; justify-content: flex-start; }
-/* the page title as on the dealer pages: Archivo at 92% width */
-.app .head h1 { font-stretch: 92%; }
 /* row divider as All Vehicles (one system) */
 .app #tb .row { box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--line-2) 65%, var(--sheet)); }
-.app .c .bdg { display: inline-flex; align-items: center; box-sizing: border-box; height: 24px; }
+/* the Waiting flag is the flag-tag role, 12 / 600 (the family chip rule had set it 12.5 / 700) */
+.app .tag { font-size: 12px; font-weight: 600; letter-spacing: 0; }
+/* the Dollar Amount header is a caps key like its neighbours (the cell rule .c-amt had reached it) */
+.app .hd > .c-amt { font-family: var(--font); font-size: 11px; font-weight: 700; color: var(--ink-3); }
+/* a popover in the page (Sort, a filter) floats as All Vehicles' do: --sh-soft. The platform bar's menus keep --el-3, as All Vehicles' .menu */
+.app .pop:not(.top .pop) { box-shadow: var(--sh-soft); }
+/* the command search as All Vehicles: 14px radius, 16px inset, 15px text */
+.app .search { padding-left: var(--s4); border-radius: var(--r-card); }
+.app .search input { font-size: 15px; }

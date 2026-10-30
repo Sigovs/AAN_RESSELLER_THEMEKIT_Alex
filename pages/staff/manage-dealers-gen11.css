@@ -1117,3 +1117,8 @@ html.no-js .field, html.no-js .tally { display: none; }
 .app .head h1 { font-stretch: 92%; }
 /* row divider as All Vehicles (one system) */
 .app #tb .row { box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--line-2) 65%, var(--sheet)); }
+/* a popover in the page (Sort, a filter) floats as All Vehicles' do: --sh-soft. The platform bar's menus keep --el-3, as All Vehicles' .menu */
+.app .pop:not(.top .pop) { box-shadow: var(--sh-soft); }
+/* the command search as All Vehicles: 14px radius, 16px inset, 15px text */
+.app .search { padding-left: var(--s4); border-radius: var(--r-card); }
+.app .search input { font-size: 15px; }

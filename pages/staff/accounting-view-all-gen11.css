@@ -1130,7 +1130,6 @@ html.no-js .deck, html.no-js .field, html.no-js .utils { display: none; }
 /* page title, DESIGN.md §18: 28 / 600 on every page (Alex 10-30: check everywhere) */
 .head h1 { font-size: 28px; font-weight: 600; letter-spacing: -.022em; line-height: 1.15; }
 /* == DESIGN.md §18 type roles, pinned (Alex 10-30: "why do we make a DS if nothing changed by it?!"). Last in the file, so each role reads the same on every page. == */
-.app .btn { font-weight: 500; }
 .app .row .c, .app #tb .c { font-size: 14px; }
 .app .btn, .app .btn.btn--primary, .app .btn.btn--sheet { font-weight: 500; }
 /* == The details All Leads and All Vehicles were given (Alex 10-30: "all the small details - tags,
@@ -1144,8 +1143,11 @@ html.no-js .deck, html.no-js .field, html.no-js .utils { display: none; }
 .app .head__meta::before { content: "\00b7"; margin-right: var(--s3); color: var(--ink-4); }
 /* dates and money are text with even figures, not mono (only ids, codes and phones are mono) */
 .app .num, .app .c-lp .amt, .app .lg .num, .app .tot b, .app .bch b { font-family: var(--font); font-size: 13.5px; font-variant-numeric: tabular-nums; }
-/* the page title as on the dealer pages: Archivo at 92% width */
-.app .head h1 { font-stretch: 92%; }
 /* row divider as All Vehicles (one system) */
 .app #tb .row { box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--line-2) 65%, var(--sheet)); }
 .app .deck .tile__v { font-stretch: 88%; }
+/* a popover in the page (Sort, a filter) floats as All Vehicles' do: --sh-soft. The platform bar's menus keep --el-3, as All Vehicles' .menu */
+.app .pop:not(.top .pop) { box-shadow: var(--sh-soft); }
+/* the command search as All Vehicles: 14px radius, 16px inset, 15px text */
+.app .search { padding-left: var(--s4); border-radius: var(--r-card); }
+.app .search input { font-size: 15px; }

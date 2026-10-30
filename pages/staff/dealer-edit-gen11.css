@@ -947,14 +947,11 @@ html.no-js .body, html.no-js .savebar { display: none; }
 /* page title, DESIGN.md §18: 28 / 600 on every page (Alex 10-30: check everywhere) */
 .head h1 { font-size: 28px; font-weight: 600; letter-spacing: -.022em; line-height: 1.15; }
 /* == DESIGN.md §18 type roles, pinned (Alex 10-30: "why do we make a DS if nothing changed by it?!"). Last in the file, so each role reads the same on every page. == */
-.app .zone__t { font-size: 18px; font-weight: 600; letter-spacing: -.012em; }
 .app .chip, .app .stat { font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; }
-.app .hd .th, .app th { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+.app th { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; } /* the caps key of All Vehicles: +.08em */
 /* the way back as a quiet button with its words, as Single Ticket / Single Lead */
 .app .head__back.head__back--txt { width: auto; height: 30px; padding: 0 var(--s3); gap: var(--s2); border: 0; box-shadow: none; background: none; font-size: 14px; font-weight: 500; color: var(--ink-2); }
 .app .head__back.head__back--txt:hover { background: var(--wash); color: var(--ink); }
-/* the page title as on the dealer pages: Archivo at 92% width */
-.app .head h1 { font-stretch: 92%; }
 /* == record head card (DESIGN.md §21), not sticky: the save bar at the foot carries Save == */
 :root { --stick-head: 0px; }
 .app .head { position: static; display: flex; flex-direction: column; align-items: stretch; gap: 0; min-height: 0; margin: var(--s2) 0 var(--gutter); padding: var(--s3) var(--s5) var(--s5); border-radius: var(--r-card); background: var(--sheet); box-shadow: var(--sh-soft); -webkit-backdrop-filter: none; backdrop-filter: none; }
@@ -966,8 +963,10 @@ html.no-js .body, html.no-js .savebar { display: none; }
 .head__sub { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s2) var(--s3); margin-top: var(--s3); min-width: 0; }
 .head__sub .head__audit { margin: 0; font-size: 13px; }
 .head__sub .head__audit i { font-family: var(--font); font-variant-numeric: tabular-nums; }
-.chip--id { display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 10px; border-radius: var(--r-pill); box-shadow: inset 0 0 0 1px var(--line-3); font-size: 12.5px; font-weight: 500; color: var(--ink-3); white-space: nowrap; }
-.chip--id b { font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
 .app .head__quick { padding-top: 0; }
 /* zone titles stand alone - the explanatory subtitle ("company · location · reseller · status") goes */
 .app .zone__s { display: none; }
+/* a popover in the page (Sort, a filter) floats as All Vehicles' do: --sh-soft. The platform bar's menus keep --el-3, as All Vehicles' .menu */
+.app .pop:not(.top .pop) { box-shadow: var(--sh-soft); }
+/* the checkbox of All Vehicles: 16px, 5px radius */
+.app .ck { width: 16px; height: 16px; border-radius: 5px; }

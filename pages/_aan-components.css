@@ -517,7 +517,8 @@ select.sel, select.ui-ctl, .rows select, .cmd select, .zone select, .form select
   font-size: 12px; font-weight: 600; letter-spacing: .04em;
   color: var(--ink-4); font-variant-numeric: tabular-nums;
 }
-.sec__h h2 { font-size: 19px; }
+/* the section title role (DESIGN.md §18): 18 / 600 on every page - set here once, no page restates it */
+.sec__h h2 { font-size: 18px; font-weight: 600; letter-spacing: -.012em; }
 /* Dealer Edit is the same record read at a different angle: seven zones on one
    white card, separated by a 1px inset that disappears at a distance. Same
    treatment, keyed to the class that page uses. No live chapter here — nothing
@@ -537,7 +538,7 @@ select.sel, select.ui-ctl, .rows select, .cmd select, .zone select, .form select
   font-size: 12px; font-weight: 600; letter-spacing: .04em;
   color: var(--ink-4); font-variant-numeric: tabular-nums;
 }
-.zone__t { font-size: 17px; }
+.zone__t { font-size: 18px; font-weight: 600; letter-spacing: -.012em; }
 
 /* == ONE SYSTEM (Alex 10-30: "the same elements, shadows, colours, dividers on every page") ==
    Measured against All Vehicles and Single Vehicle, the pages made first, which are the
@@ -554,3 +555,23 @@ select.sel, select.ui-ctl, .rows select, .cmd select, .zone select, .form select
 .app .demo { text-transform: none; letter-spacing: 0; font-size: 12px; font-weight: 600; }
 /* a sub-entry of a menu ("--Last 200" under its queue), the same on every staff page */
 .app .mn__it--sub { padding-left: var(--s5); color: var(--ink-3); font-size: 13px; }
+/* the page title is Archivo at 92% width on every page (was restated in five page files) */
+.app .head h1, .app .head--card > h1, .app .cock__t { font-stretch: 92%; }
+/* the platform bar: a 16px inset and the mark flush with it, so the AAN mark sits at x = 32 on every
+   shell page (the staff pages carried a padded brand link, and two of them an 8px bar inset) */
+.app .top { padding-left: var(--s4); padding-right: var(--s4); }
+.app .top .brand { padding: 0; }
+/* the account avatar is 28px on every page (Single Vehicle's .avt was 34) */
+.app .avt { width: 28px; height: 28px; font-size: 13px; }
+/* what is typed in the global search is ink, as on the dealer pages */
+.app .gsearch input { color: var(--ink); }
+/* facet buttons read ink-2 at rest, as All Vehicles */
+.app .facet__b { color: var(--ink-2); }
+/* menu items: ink at rest, the chosen one brand-ink 600, as All Vehicles */
+.app .mn__it:not(.mn__it--sub):not(.mn__it--danger) { color: var(--ink); }
+.app .mn__it.mn__it--on:not(.mn__it--danger) { color: var(--brand-ink); } /* (0,4,0): must outrank the rest rule above */
+/* a record's id: an outline pill with its label and the number in mono (DESIGN.md §21) */
+.app .chip--id { display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 10px; border-radius: var(--r-pill); background: none; box-shadow: inset 0 0 0 1px var(--line-3); font-size: 12.5px; font-weight: 500; color: var(--ink-3); white-space: nowrap; }
+.app .chip--id b { font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+/* the staff identity mark is the 28px avatar of All Vehicles (it was 26) */
+.app .top .me__mk { width: 28px; height: 28px; }

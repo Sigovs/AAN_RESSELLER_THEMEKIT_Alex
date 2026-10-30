@@ -2055,7 +2055,7 @@ body {
   padding: 0 12px;
   border-radius: 999px;
 }
-.btn--sheet { background: var(--sheet); color: var(--ink); box-shadow: var(--el-1); box-shadow: var(--sh-ctl); box-shadow: var(--sh-pill); }
+.btn--sheet { background: var(--sheet); color: var(--ink); box-shadow: var(--sh-pill); }
 .facet__b {
   display: inline-flex;
   align-items: center;

@@ -103,7 +103,7 @@
    viewport. The scope line under the band already carries the active lane.
    ========================================================================== */
 .cmdtop .lanes { flex-wrap: wrap; padding: 5px; gap: var(--s1); }
-.cmdtop .lane { font-size: 14px; }
+.cmdtop .lane { font-size: 13.5px; } /* the view-tab role, as every page */
 .cmdtop .lane b { font-size: 13px; font-weight: 600; }
 /* a zero lane stays legible rather than being greyed out of reach */
 .cmdtop .lane--zero, .cmdtop .lane--zero b { color: var(--ink-3); }
@@ -396,7 +396,7 @@
 /* 70 per page, 237 pages. The current page is an ink fill — the fourth of the
    five active-state means, and deliberately not the brand blue Gen 10 used:
    "which page am I on" is a view, not an action. */
-.pg button, .pg span { min-width: 32px; height: 32px; padding: 0 var(--s2); border-radius: var(--r-inner); font-size: 14px; }
+.pg button, .pg span { min-width: 30px; height: 30px; padding: 0 6px; border-radius: 8px; font-size: 14px; } /* the pager of All Vehicles */
 .pg button:disabled { color: var(--ink-4); }
 .pg span { color: var(--ink-4); }
 
@@ -482,5 +482,4 @@
    (Alex, after Karen's "Search first"): the default view reads as chosen */
 .cmdtop .lanes > .lane--on, .cmdtop .lanes > .lane--on:hover { background: var(--brand); color: #fff; box-shadow: none; font-weight: 500; } /* same weight as the others: the fill marks it, and the row never shifts */
 .cmdtop .lanes > .lane--on b { color: rgba(255, 255, 255, .82); }
-/* == DESIGN.md §18 type roles, pinned (Alex 10-30: "why do we make a DS if nothing changed by it?!"). Last in the file, so each role reads the same on every page. == */
-.app .row .c, .app #tb .c { font-size: 14px; }
+
