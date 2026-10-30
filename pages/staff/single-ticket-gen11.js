@@ -374,19 +374,62 @@
       + '</form></li>';
   }
 
+  /* Replies as a tree (Alex 10-29: "a proper tree"). Top-level entries keep the
+     feed's order (newest first); under each one its replies follow in the order
+     they were written, a reply to a reply one level further in. The indent stops
+     at four levels so the text column never gets narrow. Each row carries what
+     its connectors need: its depth, whether a sibling follows it, whether it has
+     replies, and which ancestor lines pass through it. */
+  var TREE_MAX = 4, TREE_IN = 40, replySeq = 0;
+  function treeRows(rows) {
+    var by = {}, kids = {}, out = [];
+    rows.forEach(function (e) { by[e.id] = e; });
+    var roots = rows.filter(function (e) { return !(e.replyTo && by[e.replyTo]); });
+    rows.forEach(function (e) {
+      if (e.replyTo && by[e.replyTo]) (kids[e.replyTo] = kids[e.replyTo] || []).push(e);
+    });
+    Object.keys(kids).forEach(function (k) { kids[k].sort(function (a, b) { return ((a.k || 0) - (b.k || 0)) || ((a.seq || 0) - (b.seq || 0)); }); });
+    (function walk(list, d, pass) {
+      list.forEach(function (e, i) {
+        var next = i < list.length - 1, ch = kids[e.id] || [];
+        out.push({ e: e, d: d, next: next, kids: ch.length > 0, pass: pass.slice() });
+        if (ch.length) walk(ch, d + 1, pass.concat(d > 0 ? [next] : []));
+      });
+    })(roots, 0, []);
+    return out;
+  }
+  function treeLines(r) {
+    if (!r.d && !r.kids) return '';
+    var vd = Math.min(r.d, TREE_MAX), h = '<span class="tr" aria-hidden="true">';
+    /* ancestor lines that continue past this row */
+    r.pass.forEach(function (on, i) {
+      var lvl = i + 1; if (!on || lvl > vd - 1) return;
+      h += '<i class="tr__v" style="left:' + (32 - (vd - lvl + 1) * TREE_IN) + 'px"></i>';
+    });
+    if (vd) {
+      h += '<i class="tr__e" style="left:' + (32 - TREE_IN) + 'px;width:' + (TREE_IN - 18) + 'px"></i>';
+      if (r.next) h += '<i class="tr__v tr__v--low" style="left:' + (32 - TREE_IN) + 'px"></i>';
+    }
+    if (r.kids) h += '<i class="tr__v tr__v--down" style="left:32px"></i>';
+    return h + '</span>';
+  }
+
   function renderThread() {
     var rows = thread.filter(function (e) { return lane === 'all' || e.kind === lane; });
+    var tree = treeRows(rows);
     var msgs = laneCount('message'), notes = laneCount('note'), todos = laneCount('todo');
     $('#thread-s').textContent = msgs + ' client-visible · ' + notes + ' internal · ' + todos + ' ToDos';
-    $('#thread').innerHTML = rows.map(function (e) {
-      var w = splitWhen(e.when);
+    $('#thread').innerHTML = tree.map(function (r) {
+      var e = r.e, w = splitWhen(e.when);
       var long = e.body && e.body.length > 420;
       var atts = e.atts && e.atts.length
         ? '<div class="evatt">Attachments: ' + e.atts.map(function (a) {
             return '<span class="evatt__f">' + ic('i-file') + esc(a) + ' <em>(file missing)</em></span>';
           }).join('') + '</div>'
         : '';
-      return '<li class="ev ev--' + e.kind + (e.replyTo ? ' ev--reply' : '') + '" data-ev="' + esc(e.id) + '">'
+      return '<li class="ev ev--' + e.kind + (r.d ? ' ev--reply' : '') + '" data-ev="' + esc(e.id) + '"'
+        + (r.d ? ' style="margin-left:' + Math.min(r.d, TREE_MAX) * TREE_IN + 'px"' : '') + '>'
+        + treeLines(r)
         + '<span class="ev__i">' + ic(KINDI[e.kind]) + '</span>'
         + '<div class="ev__b">'
         + '<div class="ev__t"><span class="kind">' + esc(KINDW[e.kind]) + '</span><span class="who">' + esc(e.who || '—') + '</span>'
@@ -661,8 +704,8 @@
     var at = -1;
     thread.forEach(function (x, i) { if (x.id === parentId) at = i; });
     var entry = {
-      id: 'note-reply-' + Date.now(), kind: 'note', who: D.me.name,
-      when: when, body: text, atts: [], k: key(when), open: false, replyTo: parentId
+      id: 'note-reply-' + Date.now() + '-' + (++replySeq), kind: 'note', who: D.me.name,
+      when: when, body: text, atts: [], k: key(when), seq: replySeq, open: false, replyTo: parentId
     };
     /* directly under what it answers, not at the top of the list */
     if (at >= 0) thread.splice(at + 1, 0, entry); else thread.unshift(entry);

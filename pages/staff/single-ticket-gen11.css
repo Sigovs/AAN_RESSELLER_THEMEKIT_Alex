@@ -1530,3 +1530,20 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 .ev > .ev__acts { grid-column: 2 / -1; margin-top: -4px; }
 /* the word, not its hover pad, lines up with the date above it */
 .ev > .ev__acts > .ev__rm { margin-right: -9px; }
+/* ══ reply tree (Alex 10-29) — one continuous line per branch: down from the
+   avatar of what was answered, an elbow into each reply's avatar, ending at
+   the last reply. The indent (40px a level) is set on the row by the script;
+   the old per-reply hook and the feed's long timeline line are retired here. ══ */
+#s-thread .feed::before { content: none; }
+#s-thread .ev--reply::before { content: none; }
+#s-thread .ev--reply { margin-left: 0; }
+.tr { position: absolute; inset: 0; pointer-events: none; }
+.tr i { position: absolute; display: block; border: 0 solid var(--line-3); }
+/* vertical: from the gap above this card (8px) to its foot */
+.tr .tr__v { top: -8px; bottom: 0; border-left-width: 1px; }
+/* the branch continues below this reply to the next one */
+.tr .tr__v--low { top: 30px; }
+/* a card with replies: from under its avatar to its foot */
+.tr .tr__v--down { top: 48px; }
+/* the elbow: down the branch, then across into the avatar (centre y 30px) */
+.tr .tr__e { top: -8px; height: 38px; border-left-width: 1px; border-bottom-width: 1px; border-bottom-left-radius: 10px; }
