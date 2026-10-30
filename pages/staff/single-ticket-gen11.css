@@ -1498,3 +1498,8 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 /* no leading dot on the dates: when they wrap to their own line at 1024 a dot
    would start the line alone */
 .head__sub > .head__meta { margin: 0; padding: 0; font-size: 13px; color: var(--ink-3); white-space: normal; overflow: visible; }
+/* "Ticket number: 1047015" — the label in the text face, the number a mono id */
+.head__sub > .head__ctx { font-family: var(--font); }
+.head__sub > .head__ctx, .head__sub > .head__ctx .head__k { text-transform: none; letter-spacing: 0; }
+.head__sub > .head__ctx .head__k { font-size: 13px; font-weight: 400; color: var(--ink-3); }
+.head__sub > .head__ctx b { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--ink-2); }

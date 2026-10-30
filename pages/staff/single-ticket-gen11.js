@@ -201,7 +201,8 @@
     document.title = 'Ticket ' + T.tid + ' · ' + T.subject + ' — AAN (Gen 11)';
     $('#h-title').textContent = T.subject;
     $('#h-title').title = T.subject;
-    $('#h-id').textContent = '#' + T.tid;
+    /* the number says what it is (Alex 10-29) */
+    $('#h-id').innerHTML = '<span class="head__k">Ticket number:</span> <b>' + esc(T.tid) + '</b>';
     /* opened · last modified · last activity — the dealer (first part) is not
        repeated: it is its own card below */
     $('#h-meta').textContent = String(T.meta || '').replace(/\s+/g, ' ').split('·').slice(1)
