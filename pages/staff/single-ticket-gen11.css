@@ -1543,7 +1543,6 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 .tr .tr__v { top: -8px; bottom: 0; border-left-width: 1px; }
 /* the branch continues below this reply to the next one */
 .tr .tr__v--low { top: 30px; }
-/* a card with replies: from under its avatar to its foot */
-.tr .tr__v--down { top: 48px; }
-/* the elbow: down the branch, then across into the avatar (centre y 30px) */
+/* the elbow: down the branch, then across to the reply card's left edge at the
+   height of its avatar (30px) — it stops at the edge */
 .tr .tr__e { top: -8px; height: 38px; border-left-width: 1px; border-bottom-width: 1px; border-bottom-left-radius: 10px; }

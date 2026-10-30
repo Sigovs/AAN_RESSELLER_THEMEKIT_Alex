@@ -398,19 +398,21 @@
     })(roots, 0, []);
     return out;
   }
+  /* Card to card (Alex 10-29: the line runs between the cards, never into
+     one): a branch leaves the answered card from its bottom edge, 20px in,
+     runs down the gap and turns into each reply's left edge at the height of
+     its avatar. Nothing is drawn inside a card. */
   function treeLines(r) {
-    if (!r.d && !r.kids) return '';
-    var vd = Math.min(r.d, TREE_MAX), h = '<span class="tr" aria-hidden="true">';
-    /* ancestor lines that continue past this row */
+    if (!r.d) return '';
+    var vd = Math.min(r.d, TREE_MAX), h = '<span class="tr" aria-hidden="true">', x;
+    /* branches of ancestors that continue past this row */
     r.pass.forEach(function (on, i) {
       var lvl = i + 1; if (!on || lvl > vd - 1) return;
-      h += '<i class="tr__v" style="left:' + (32 - (vd - lvl + 1) * TREE_IN) + 'px"></i>';
+      h += '<i class="tr__v" style="left:' + (20 - (vd - lvl + 1) * TREE_IN) + 'px"></i>';
     });
-    if (vd) {
-      h += '<i class="tr__e" style="left:' + (32 - TREE_IN) + 'px;width:' + (TREE_IN - 18) + 'px"></i>';
-      if (r.next) h += '<i class="tr__v tr__v--low" style="left:' + (32 - TREE_IN) + 'px"></i>';
-    }
-    if (r.kids) h += '<i class="tr__v tr__v--down" style="left:32px"></i>';
+    x = 20 - TREE_IN;
+    h += '<i class="tr__e" style="left:' + x + 'px;width:' + (-x) + 'px"></i>';
+    if (r.next) h += '<i class="tr__v tr__v--low" style="left:' + x + 'px"></i>';
     return h + '</span>';
   }
 
