@@ -8,9 +8,9 @@
    `dark` — the key is shared with the other Gen pages — cannot land this page in a
    half-dark state at load. Temporary; the dark-theme stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="all-vehicles-gen11.css?v=20261030-ds">
+<link rel="stylesheet" href="all-vehicles-gen11.css?v=20261116-swap2">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
-<link rel="stylesheet" href="../_aan-components.css?v=20261030-tab">
+<link rel="stylesheet" href="../_aan-components.css?v=20261116-bar">
 </head>
 <body>
 
@@ -65,9 +65,12 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         <div class="menu">
           <div class="menu__col"><div class="caps menu__t">Inventory</div>
             <a class="menu__l menu__l--on" href="#" aria-current="page"><b>Inventory Manager</b><span>Every vehicle, by lane</span></a>
-            <a class="menu__l" href="#"><b>New submissions</b><span>Vehicles waiting for review</span></a>
+            <!-- New submissions: not in the live system (checked Nov 16; Bill, Nov 6: "As for New Submissions what is that?"). A new-backend page, so it moves to the New features list. -->
+            <!-- <a class="menu__l" href="#"><b>New submissions</b><span>Vehicles waiting for review</span></a> -->
             <a class="menu__l" href="#"><b>Sort order</b><span>How vehicles list on your site</span></a>
             <a class="menu__l" href="#"><b>Auto Locator</b><span>Find a vehicle for a buyer</span></a>
+            <!-- Feed Out Manager (Bill, Nov 6: "We are missing the Feed Out Manager and most dealers 2020 and newer should have that link as it is a way for them to edit all available cars at once for their outgoing feeds") -->
+            <a class="menu__l" href="#"><b>Feed Out Manager</b><span>Outgoing feeds for all available cars</span></a>
           </div>
           <div class="menu__col"><div class="caps menu__t">Reports</div>
             <a class="menu__l" href="#"><b>Inventory aging</b><span>Days in stock, per vehicle</span></a>
@@ -79,20 +82,32 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Leads<svg class="i"><use href="#i-chev"/></svg></button>
         <div class="menu"><div class="menu__col"><div class="caps menu__t">Leads</div>
           <a class="menu__l" href="#"><b>Lead Manager</b><span>Every enquiry, by stage</span></a>
+          <!-- Customers and Referrals: not in the live system, whose Leads menu is only the Lead Manager (checked Nov 16; Bill, Nov 6: "there is really just the lead manager ... unless those will be new features"). New-backend pages, so they move to the New features list.
           <a class="menu__l" href="#"><b>Customers</b><span>People who enquired or bought</span></a>
-          <a class="menu__l" href="#"><b>Referrals</b><span>Where leads came from</span></a>
+          <a class="menu__l" href="#"><b>Referrals</b><span>Where leads came from</span></a> -->
         </div></div>
       </div>
       <div class="nav__it">
         <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Site<svg class="i"><use href="#i-chev"/></svg></button>
         <div class="menu"><div class="menu__col"><div class="caps menu__t">Site management</div>
           <a class="menu__l" href="#"><b>Site Content Manager</b><span>Pages, banners and copy</span></a>
+          <!-- Form Editor: in the live dealer menu for AAN admin users only (checked Nov 16; Bill, Nov 6: "Us admin users need a "Form Editor" link here but dealers do not") -->
+          <a class="menu__l" href="#" data-admin-only><b>Form Editor</b><span>Dealer forms · AAN admins only</span></a>
         </div></div>
       </div>
       <!-- Marketing menu (Newsletter tools, Craigslist posting; Posting tools & eBay was already hidden)
            removed: meeting with Ivaylo, 2026-10-29. Newsletter is untested and mails go out from
            the AAN server (spam-flag risk); Marketing comes back later as an analytics hub.
            Restore: git show c2a8808:pages/dealer/all-vehicles-gen11.html -->
+      <!-- Newsletter Tools is back (Alex, Nov 16; Bill, Nov 6: dealers use it to "download email lists" and it collects the
+           site's "newsletter subscribe forms"). The live dealer menu has it under Marketing. Only this item returns;
+           Craigslist posting stays out with the rest of the Oct 29 Marketing menu. -->
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Marketing<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Marketing applications</div>
+          <a class="menu__l" href="#"><b>Newsletter Tools</b><span>Email lists and subscribe forms</span></a>
+        </div></div>
+      </div>
       <div class="nav__it">
         <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Dealer tools<svg class="i"><use href="#i-chev"/></svg></button>
         <div class="menu"><div class="menu__col"><div class="caps menu__t">Dealer tools</div>
@@ -139,7 +154,10 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
     <h1>Vehicle Inventory</h1>
     <span class="live">Updated 5 min ago</span>
     <span class="head__sp"></span>
-    <button class="btn btn--quiet" type="button"><svg class="i"><use href="#i-grid"/></svg> Inline edit</button>
+    <!-- Inline edit (Bill, Nov 6: "Would love to see what this feature is?" and the fields "editable from this screen so
+         dealers can update them on multiple vehicles at one time ... an update button at the bottom"). The live
+         Inventory Manager edits Status, Price and Discount Price in the rows with one Update button (checked Nov 16). -->
+    <button class="btn btn--quiet" type="button" data-act="inline" aria-pressed="false"><svg class="i"><use href="#i-grid"/></svg> Inline edit</button>
     <button class="btn btn--quiet" type="button"><svg class="i"><use href="#i-file"/></svg> Carfax reports</button>
     <button class="btn btn--sheet" type="button"><svg class="i"><use href="#i-down"/></svg> Export</button>
     <button class="btn btn--primary" type="button"><svg class="i"><use href="#i-plus"/></svg> Add vehicle</button>
@@ -168,6 +186,14 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
     <div class="value">
       <div class="value__h"><span class="caps">Value</span></div>
       <div class="kv"><div><div class="l">Asking value</div><div class="v" title="$66,311,600">$66.3M</div></div><div><div class="l">Average price</div><div class="v" title="$293,414">$293K</div></div></div>
+      <!-- Total Discount Price and Total Invoice Price (Bill, Nov 6: "should also show totals for discount price and total
+           invoice (cost) price's too"). The live Inventory Manager shows Total Price, Total Discount Price and Total Invoice
+           Price above the list. Chicago Motor Cars' live figures on Nov 16 are $0 and $0 (it fills neither field); the
+           export has only the asking value. -->
+      <dl class="value__tot" title="Live system, Chicago Motor Cars, November 16">
+        <div><dt>Total discount price</dt><dd>$0</dd></div>
+        <div><dt>Total invoice price</dt><dd>$0</dd></div>
+      </dl>
     </div>
 
     <section class="attn" aria-label="Needs attention">
@@ -228,8 +254,16 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   </aside>
 </div>
 
+<!-- Inline edit: one Update for every changed vehicle (live: the Update button under the list) -->
+<div class="iebar" id="iebar" role="region" aria-label="Inline edit" hidden>
+  <span class="iebar__t"><b>Inline edit</b><span id="iebar-n">No changes yet</span></span>
+  <button class="btn btn--quiet btn--sm" type="button" data-act="ie-discard">Discard</button>
+  <button class="btn btn--primary btn--sm" type="button" data-act="ie-update" disabled>Update</button>
+  <button class="iebar__x" type="button" data-act="inline" aria-label="Close inline edit"><svg class="i"><use href="#i-x"/></svg></button>
+</div>
+
 <script src="all-vehicles-gen11.data.js?v=20260930234502"></script>
-<script src="all-vehicles-gen11.js?v=20261030-zoom"></script>
+<script src="all-vehicles-gen11.js?v=20261116-swap2"></script>
 <script src="../_aan-tablet.js?v=20261030-tab"></script>
 </body>
 </html>

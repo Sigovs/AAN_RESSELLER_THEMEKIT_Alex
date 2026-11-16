@@ -79,6 +79,7 @@
       'Print "As Is" Buyers Guide w/ No Service Contract',
       'Print "As Is" Buyers Guide w/ Manufacturer Warranty',
       'Print "In House" Limited Buyers Guide',
+      'Print "In House" Limited Buyers Guide w/ No Service Contract',   /* in the live system (Bill's screenshot item-22), missing here */
       'Print "Factory" Buyers Guide',
       'Print "Factory Full" Buyers Guide',
       'Print "Text Only" Buyers Guide',
@@ -281,9 +282,13 @@
       /* labels = the names dealers know from the old system (Scott, SV notes 11–15) */
       { id: 'main_text_1',       label: 'Main Description', rich: true },
       { id: 'main_text_2',       label: 'Search Listing Caption' },
-      { id: 'main_text_3',       label: 'Bulleted Text', rich: true },
-      { id: 'caption',           label: 'Description 2' },
-      { id: 'buyers_guide_text', label: 'Buyers Guide Text' }
+      /* Bill, Nov 6: Bulleted Text "Should not have HTML editor on this screen as this is where they enter
+         Options when no vin decoded options so they just enter each option on a new line"; Description 2
+         "Should have HTML editor on this description box". Was: rich on Bulleted Text, plain Description 2. */
+      { id: 'main_text_3',       label: 'Bulleted Text' },
+      { id: 'caption',           label: 'Description 2', rich: true },
+      /* moved to its own Buyers Guides section under the window sticker (Bill, Nov 6)
+      { id: 'buyers_guide_text', label: 'Buyers Guide Text' } */
     ]
   };
 })();

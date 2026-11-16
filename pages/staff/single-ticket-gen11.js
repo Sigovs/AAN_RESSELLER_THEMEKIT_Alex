@@ -233,7 +233,10 @@
       var isType = /--worktype/.test(c.cls);
       var dot = /ui-badge--dot/.test(c.cls);
       var cls = isType ? 'chip chip--type' : 'chip chip--' + t + (dot ? ' chip--dot' : '');
-      return '<span class="' + cls + '">' + esc(c.label) + '</span>';
+      /* each chip opens its field in the Work Order (Bill, Nov 11: "these should be editable so
+         that if assigned wrong it can be changed easily") */
+      var fld = /priority/.test(c.badge || '') ? 'w-priority' : isType ? 'w-type' : 'w-status';
+      return '<button class="' + cls + ' chip--edit" type="button" data-wo="' + fld + '" title="Change in the Work Order">' + esc(c.label) + '</button>';
     }).join('');
   }
 
@@ -300,7 +303,7 @@
      the history's own sections stand in it directly, each with a dot of its
      tone; "History" and "All" were the same thing twice. */
   var SECS = [
-    /* { id: 's-work', label: 'Work order', n: null },  - hidden for now (Alex 10-30) */
+    { id: 's-work', label: 'Work order', n: null },   /* back (Bill, Nov 11); was hidden 10-30 */
     { id: 'ts-message', label: 'Messages', tone: 'message', n: function () { return laneCount('message'); } },
     { id: 'ts-note', label: 'Internal notes', tone: 'note', n: function () { return laneCount('note'); } },
     { id: 'ts-todo', label: 'ToDos', tone: 'todo', n: function () { return laneCount('todo'); } },
@@ -314,6 +317,7 @@
         + (s.tone ? ' data-tone="' + s.tone + '"' : '') + '>'
         + esc(s.label) + (c === null ? '' : '<b>' + c + '</b>') + '</a>';
     }).join('');
+    syncNav();   /* a re-render (after posting) keeps the section you are in lit, not the first one */
   }
 
   /* ══ WORK ORDER ════════════════════════════════════════════════════════ */
@@ -396,15 +400,19 @@
   function editBox(e) {
     return '<form class="rbox__f rbox__f--edit" data-edit-of="' + esc(e.id) + '">'
       + '<textarea class="rbox__t" name="body" rows="3" aria-label="Edit entry">' + esc(e.body || '') + '</textarea>'
-      + '<div class="rbox__r"><span class="rbox__who">Editing ' + esc((KINDW[e.kind] || 'entry').toLowerCase()) + '</span>'
+      + '<div class="rbox__r">'
+      /* a ToDo is removed from its Edit (Alex, Nov 15), not from the row */
+      + (e.kind === 'todo' ? '<button class="ev__rm" type="button" data-rm="' + esc(e.id) + '">' + RM.todo + '</button>' : '')
+      + '<span class="rbox__who">Editing ' + esc((KINDW[e.kind] || 'entry').toLowerCase()) + '</span>'
       + '<button class="btn btn--quiet btn--sm" type="button" data-edit-cancel>Cancel</button>'
       + '<button class="btn btn--primary btn--sm" type="submit">Save</button></div>'
       + '</form>';
   }
-  /* Remove is the original's: "Remove message" and "Remove note" (ToDos have
-     none). Production logs a removal in the changelog as "Note deleted" with the
-     text it removed, so this does too. */
-  var RM = { message: 'Remove message', note: 'Remove note' };
+  /* Remove is the original's: "Remove message" and "Remove note". ToDos have none
+     in the new-backend export; Alex, Nov 15: a ToDo can be removed too, from its Edit
+     (question to Ivaylo: removeTodo). Production logs a removal in the changelog as "Note deleted"
+     with the text it removed, so this does too. */
+  var RM = { message: 'Remove message', note: 'Remove note', todo: 'Remove ToDo' };
   /* Reply under a client's message answers the CLIENT (Alex 10-29, A): it is a
      message, emailed like Post Message, and it threads under what it answers.
      Under an internal note or a ToDo, Reply stays an internal note. */
@@ -507,7 +515,7 @@
         + (editOpen === e.id ? '' : '<div class="ev__acts"><button class="ev__reply ev__reply--main" type="button" data-reply="' + esc(e.id) + '">'
           + ic('i-hist') + 'Reply</button>'
           + '<button class="ev__reply" type="button" data-edit="' + esc(e.id) + '">' + ic('i-note') + 'Edit</button>'
-          + (RM[e.kind] ? '<button class="ev__rm" type="button" data-rm="' + esc(e.id) + '">' + RM[e.kind] + '</button>' : '')
+          + (RM[e.kind] && e.kind !== 'todo' ? '<button class="ev__rm" type="button" data-rm="' + esc(e.id) + '">' + RM[e.kind] + '</button>' : '')
           + '</div>')
         + '</li>'
         + (replyOpen === e.id ? replyBox(e) : '');
@@ -594,9 +602,11 @@
         + '<span class="tm tm--narrow"><span class="tm__k">Est.</span>'
         + '<input class="fld" type="text" value="' + esc(c.est) + '" placeholder="—" data-est="' + n + '" name="est-' + n + '" aria-label="Estimated time for ' + esc(c.name) + '">'
         + '<span class="tm__echo">' + (eh ? '= ' + dec(eh) : '') + '</span></span>'
-        + '<button class="cc__disc" type="button" data-dates="' + n + '" aria-expanded="' + c.dates + '">Dates' + ic('i-chev') + '</button>'
+        /* the Dates toggle is gone: dates are always open (Bill, Nov 11: "dates should always be open
+           and available we do not need a toggle that wastes time")
+        + '<button class="cc__disc" type="button" data-dates="' + n + '" aria-expanded="' + c.dates + '">Dates' + ic('i-chev') + '</button>' */
         + '</div>'
-        + (c.dates
+        + (true
             ? '<div class="cc__dates">'
               + '<label>Begin<input class="fld" type="date" value="' + esc(c.begin) + '" data-begin="' + n + '" name="begin-' + n + '"></label>'
               + '<label>Done by<input class="fld" type="date" value="' + esc(c.doneBy) + '" data-doneby="' + n + '" name="doneby-' + n + '"></label>'
@@ -665,7 +675,11 @@
     renderLanes(); renderThread();
     renderClog(); renderAtts();
     renderCrew(); renderSecnav();
-    $('#legend-ex').textContent = D.timeHelp;
+    /* "Time Examples: 5 min = 0.08 | 10 min = 0.16 | ..." -> one term / value pair each */
+    $('#legend-ex').innerHTML = String(D.timeHelp || '').replace(/^[^:]*:/, '').split('|').map(function (p) {
+      var kv = p.split('='); if (kv.length < 2) return '';
+      return '<div><dt>' + esc(kv[0].trim()) + '</dt><dd>' + esc(kv[1].trim()) + '</dd></div>';
+    }).join('');
     sizeExtender(); syncNav();
   }
 
@@ -710,7 +724,8 @@
   function syncNav() {
     var line = stack() + anchorGap() + 1, cur = null;
     $$('.sec, .tsec').forEach(function (s) { if (!s.hidden && s.getBoundingClientRect().top <= line) cur = s.id; });
-    if (!cur || cur === 's-work' || cur === 's-thread') cur = 'ts-message';   /* the history's header belongs to its first section */   /* the history's header belongs to its first section */
+    if (!cur) cur = ($$('.sec:not([hidden])')[0] || {}).id;
+    if (cur === 's-thread') cur = 'ts-message';   /* the history's header belongs to its first section */
     $$('.secnav__b').forEach(function (b) {
       var on = b.dataset.sec === cur;
       b.classList.toggle('secnav__b--on', on);
@@ -841,9 +856,11 @@
       if (!gone || !window.confirm((RM[gone.kind] || 'Remove') + '?')) return;
       thread = thread.filter(function (x) { return x.id !== rid; });
       thread.forEach(function (x) { if (x.replyTo === rid) x.replyTo = null; });
+      /* "This deletes it (and its attached files) permanently" (the original's confirm) */
+      T.atts = T.atts.filter(function (a) { return a.ev !== rid; }); renderAtts();
       var d = new Date(), p = function (n) { return (n < 10 ? '0' : '') + n; };
       T.clog.unshift({ when: d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds()),
-        who: D.me.name, field: 'Note deleted', key: 'note_deleted', prev: gone.body || '', assignee: '—' });
+        who: D.me.name, field: gone.kind === 'todo' ? 'ToDo deleted' : 'Note deleted', key: 'note_deleted', prev: gone.body || '', assignee: '—' });
       renderLanes(); renderThread(); renderSecnav(); renderClog(); sizeExtender();
       return;
     }
@@ -880,6 +897,13 @@
 
     if ((el = t.closest('[data-rm-email]'))) { T.form.emails.splice(+el.dataset.rmEmail, 1); renderEmails(); return; }
     if (t.closest('[data-act="add-email"]')) { T.form.emails.push(''); renderEmails(); $$('#w-emails .fld').pop().focus(); return; }
+
+    /* a head chip opens its field in the Work Order (Bill, Nov 11) */
+    if ((el = t.closest('[data-wo]'))) {
+      var f = document.getElementById(el.dataset.wo);
+      if (f && !$('#s-work').hidden) { goTo($('#s-work')); setTimeout(function () { f.focus({ preventScroll: true }); }, 450); }
+      return;
+    }
 
     if ((el = t.closest('[data-dates]'))) {
       var n = +el.dataset.dates;
@@ -978,9 +1002,19 @@
     d.classList.toggle('drop--has', names.length > 0);
     if (names.length) {
       p = document.createElement('span'); p.className = 'drop__picked';
-      p.textContent = names.length + (names.length === 1 ? ' file: ' : ' files: ') + names.join(', ');
+      p.innerHTML = '<span>' + esc(names.length + (names.length === 1 ? ' file: ' : ' files: ') + names.join(', ')) + '</span>'
+        /* changed your mind: drop the picked files before posting (Alex, Nov 15) */
+        + '<button class="rowx" type="button" data-drop-clear aria-label="Remove the picked ' + (names.length === 1 ? 'file' : 'files') + '" title="Remove">' + ic('i-x') + '</button>';
       d.appendChild(p);
     }
+  });
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-drop-clear]'); if (!b) return;
+    e.preventDefault();
+    var d = b.closest('.drop'), inp = d.querySelector('input[type="file"]');
+    if (inp) inp.value = '';
+    d.classList.remove('drop--has'); b.closest('.drop__picked').remove();
+    if (inp) inp.focus();
   });
 
   /* an attachment row that opens its entry answers Enter and Space too */

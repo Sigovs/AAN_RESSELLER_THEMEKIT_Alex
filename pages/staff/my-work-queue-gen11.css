@@ -672,6 +672,8 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
     80px                  /* remaining   */
     92px                  /* last mod.   */
     80px                  /* assigned    */
+    64px                  /* my begin    MY BEGIN on one line (Bill, Nov 11)  */
+    112px                 /* my compl.   MY COMPLETION on one line            */
     52px                  /* begin       */
     92px                  /* completion  */
     36px;                 /* actions     */
@@ -935,7 +937,7 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
   border-radius: var(--r-pill); background: var(--signal-fill);
 }
 .c-beg .ed, .c-done .ed { font: 500 12px var(--mono); color: var(--ink-2); }
-.c-beg .d, .c-done .d { font: 500 12px var(--mono); color: var(--ink-2); }
+.c-beg .d, .c-done .d, .c-mbeg .d, .c-mdone .d { font: 500 12px var(--mono); color: var(--ink-2); }
 
 /* numeric tracks — tabular, right-aligned, and quiet when the value is absent.
    No age banding: production defines no day thresholds for a ticket, and
@@ -1353,7 +1355,7 @@ html.no-js .cmdtop, html.no-js .cmd, html.no-js .sub, html.no-js .hd, html.no-js
 .app .head__meta { margin: 0; font-size: 14px; color: var(--ink-3); }
 .app .head__meta::before { content: "\00b7"; margin-right: var(--s3); color: var(--ink-4); }
 /* dates and money are text with even figures, not mono (only ids, codes and phones are mono) */
-.app .c-mod i, .app .c-beg .ed, .app .c-done .ed, .app .c-beg .d, .app .c-done .d, .app .row .c-amt { font-family: var(--font); font-size: 13px; font-variant-numeric: tabular-nums; }
+.app .c-mod i, .app .c-beg .ed, .app .c-done .ed, .app .c-beg .d, .app .c-done .d, .app .c-mbeg .d, .app .c-mdone .d, .app .row .c-amt { font-family: var(--font); font-size: 13px; font-variant-numeric: tabular-nums; }
 /* status as the status chip of All Leads: 24px, 7px radius, 13 / 600 */
 .app .bdg { box-sizing: border-box; height: 24px; padding: 0 8px; border-radius: 7px; font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; }
 /* the dealer name reads from its first letter, left-aligned (it was centred and cut on the left) */
@@ -1370,3 +1372,59 @@ html.no-js .cmdtop, html.no-js .cmd, html.no-js .sub, html.no-js .hd, html.no-js
 /* the command search as All Vehicles: 14px radius, 16px inset, 15px text */
 .app .search { padding-left: var(--s4); border-radius: var(--r-card); }
 .app .search input { font-size: 15px; }
+
+/* ── review round 2 (Bill, Nov 11) ──────────────────────────────────────── */
+/* Priority: a plain drop-down 0-299, the dense control (30px) */
+.app .c-rank .rk { height: 30px; min-width: 58px; padding: 0 22px 0 8px; border-radius: var(--r-inner); background: var(--sheet) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 3.5l3 3 3-3' fill='none' stroke='%23697181' stroke-width='1.4'/%3E%3C/svg%3E") no-repeat right 7px center; box-shadow: inset 0 0 0 1px var(--line-3); border: 0; appearance: none; -webkit-appearance: none; font: 600 13px var(--font); color: var(--ink); font-variant-numeric: tabular-nums; cursor: pointer; }
+.app .c-rank .rk:hover { box-shadow: inset 0 0 0 1px var(--ink-4); }
+/* every assignee on its own line: a row with three or more grows, every other keeps 64px */
+.app #tb .row:has(.c-who--many) { height: auto; min-height: var(--row); padding-top: 10px; padding-bottom: 10px; }
+
+/* With my own dates beside the ticket's (Bill, Nov 11; the live list's four date columns) My Work is wider
+   than the screen below about 1540px. From 1280 up it scrolls inside its own container exactly as every
+   list does below 1280 (_aan-components.css TABLET, _aan-tablet.js via data-wide): the head stays sticky
+   and follows the rows, the ticket number stays in view, the page itself never scrolls. */
+@media (min-width: 1280px) {
+  .app .rows.ui-table[data-wide] { overflow: visible; }
+  .app .rows.ui-table[data-wide] > #tb { position: relative; overflow-x: auto; overscroll-behavior-x: contain; }
+  .app .rows.ui-table[data-wide] > #tb > .row, .app .rows.ui-table[data-wide] > .hd { width: var(--tw, auto); min-width: 0; }
+  .app .rows.ui-table[data-wide] > .hd { transform: translateX(calc(var(--sx, 0) * -1px)); }
+  .app .rows.ui-table[data-wide] > #tb > :is(.exp, .empty, .gal) { position: sticky; left: 0; }
+  .app .rows.ui-table[data-wide] > #tb > .row > .c-tkt { position: sticky; left: 0; z-index: 2; background: inherit; box-shadow: 1px 0 0 var(--line-2); }
+  .app .rows.ui-table[data-wide] > .hd > .c-tkt { position: relative; z-index: 2; background: inherit; box-shadow: 1px 0 0 var(--line-2); translate: max(0px, calc(var(--sx, 0) * 1px - var(--idx, 0px))) 0; }
+}
+
+/* the column head keeps the rows' inset: the shared .ui-thead (loaded last) fixed it at --inset, so at 1400px
+   and below, where the rows step to 8px, every heading sat 6-8px right of its values (found Nov 16) */
+.app .hd.ui-thead { padding-left: var(--sheet-inset); padding-right: var(--sheet-inset); }
+
+/* ============================================================================
+   FILTERS DOCK (Bill, Nov 11; Alex, Nov 16): the staff dock of Single Ticket, on the right of the list, open until
+   closed. Rows above the list keep the full width; the list shares its row with the dock.
+   ========================================================================== */
+:root { --dock: 340px; }
+.app.dock-open { grid-template-columns: minmax(0, 1fr) var(--dock); column-gap: var(--gutter); }
+.app.dock-open > :not(.field):not(.dock) { grid-column: 1 / -1; }
+.dock {
+  grid-row: 4;
+  grid-column: 2;
+  display: none;
+  flex-direction: column;
+  position: sticky;
+  top: calc(var(--stick-bar) + var(--s2));
+  align-self: start;
+  max-height: calc(100vh - var(--stick-bar) - var(--s5));
+  border-radius: var(--r-card);
+  background: var(--sheet);
+  box-shadow: var(--sh-soft);
+  overflow: hidden;
+}
+.app.dock-open .dock { display: flex; }
+.dock__h { display: flex; align-items: center; gap: var(--s2); min-height: 58px; padding: 0 var(--s3) 0 var(--s5); box-shadow: inset 0 -1px 0 var(--line-2); }
+.dock__t { font-size: 15px; font-weight: 600; }
+.dock__c { flex: 1; min-width: 0; font-size: 14px; color: var(--ink-3); }
+.dock__x { display: grid; place-items: center; width: 34px; height: 34px; flex: none; border-radius: var(--r-control); color: var(--ink-2); }
+.dock__x:hover { background: var(--well); color: var(--ink); }
+.dock__b { flex: 1 1 auto; min-height: 0; padding: var(--s3) var(--s2); overflow: auto; overscroll-behavior: contain; }
+.dock .mn__row .sel { max-width: none !important; }
+.facet__b--on { background: var(--brand-soft); color: var(--brand-ink); }

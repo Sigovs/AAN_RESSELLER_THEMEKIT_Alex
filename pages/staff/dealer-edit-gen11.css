@@ -978,3 +978,11 @@ html.no-js .body, html.no-js .savebar { display: none; }
   .side { position: static; grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; }
   .panel { flex: 1 1 280px; }
 }
+
+/* Multi Dealer = Yes: the group picker opens beside the switch (live: "Select Group"), in the same cell, so the
+   fields after it never shift (Bill, Nov 6; checked in the live Dealer Account Settings, Nov 16) */
+.fdep-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); min-width: 0; }
+.fdep-row > .seg { flex: none; }
+.fdep { flex: 1 1 200px; min-width: 0; }  /* below ~310px of cell it drops under the switch rather than cut its text */
+.fdep[hidden] { display: none; }
+.fdep > .fld { width: 100%; }

@@ -24,7 +24,9 @@
       var hd = rows.querySelector(':scope > .hd');
       if (!tb) continue;
       rows.style.removeProperty('--tw'); rows.style.removeProperty('--sx'); rows.style.removeProperty('--idx');
-      if (!TABLET.matches) continue;
+      /* a list marked data-wide scrolls the same way at every width when it is wider than its page
+         (My Work, with the four date columns; Nov 16) */
+      if (!TABLET.matches && !rows.hasAttribute('data-wide')) continue;
       var first = tb.querySelector(':scope > .row');
       var w = Math.max(first ? first.scrollWidth : 0, hd ? hd.scrollWidth : 0);
       if (w > tb.clientWidth + 1) rows.style.setProperty('--tw', Math.ceil(w) + 'px');

@@ -3,6 +3,9 @@
 
     python tools/build-aan-zip.py            # zip from HEAD of the current branch
     python tools/build-aan-zip.py --ref main # or name the commit to build from
+    python tools/build-aan-zip.py --version v3 --notes-table aan-gen11_v3_comments
+                                             # a build for a new preview folder whose notes
+                                             # live in their own table (v2's stay untouched)
 
 What it does, and what it never does:
 
@@ -136,6 +139,9 @@ def main():
     ap.add_argument('--out', help='zip path (default: next to the repo folder)')
     ap.add_argument('--force', action='store_true',
                     help='build even with uncommitted changes or a tree behind origin')
+    ap.add_argument('--version', help='label for the zip name and the upload hint, e.g. v3 (folder aan_reseller_2026_design_v3)')
+    ap.add_argument('--notes-table', help="notes table for this build, e.g. aan-gen11_v3_comments; same project and append key, "
+                                          "so an earlier preview keeps its own notes untouched (default: the tool's aan-gen11_comments)")
     a = ap.parse_args()
 
     repo = git('rev-parse', '--show-toplevel', cwd=os.getcwd()).strip()
@@ -160,6 +166,16 @@ def main():
         export(a.ref, tmp, repo)
         export(overlay_ref, tmp, repo, OVERLAY)
         shutil.move(os.path.join(tmp, 'aan', 'index.html'), os.path.join(tmp, 'index.html'))
+        if a.notes_table:
+            if not re.fullmatch(r'[a-z0-9][a-z0-9_-]*', a.notes_table):
+                sys.exit('--notes-table: lowercase letters, digits, - and _ only')
+            for f in ('pages/_aan-notes.js', 'comments.html'):
+                fp = os.path.join(tmp, f)
+                s = open(fp, encoding='utf-8').read()
+                if s.count("'aan-gen11_comments'") != 1:
+                    sys.exit('%s: expected one default notes table to replace' % f)
+                open(fp, 'w', encoding='utf-8', newline='\n').write(s.replace("'aan-gen11_comments'", "'%s'" % a.notes_table))
+            print('Notes table for this build: %s\n' % a.notes_table)
 
         pages = sorted('pages/%s/%s' % (d, f) for d in ('dealer', 'staff')
                        for f in os.listdir(os.path.join(tmp, 'pages', d)) if f.endswith('-gen11.html'))
@@ -196,7 +212,7 @@ def main():
                     keep.add(os.path.relpath(os.path.join(base, x), tmp).replace(os.sep, '/'))
         keep = {k for k in keep if not k.endswith('.md') and not k.startswith('aan/')}
 
-        out = a.out or os.path.join(os.path.dirname(repo), 'AAN_Gen11_review_build_%s.zip' % stamp[:8])
+        out = a.out or os.path.join(os.path.dirname(repo), 'AAN_Gen11_review_build_%s%s.zip' % (stamp[:8], ('_' + a.version) if a.version else ''))
         with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as z:
             for k in sorted(keep):
                 z.write(os.path.join(tmp, k), k)
@@ -208,7 +224,11 @@ def main():
         size = os.path.getsize(out) / 1e6
         print('Built from %s + %s overlay' % (ref_name, overlay_ref))
         print('%d files, %.1f MB -> %s' % (len(keep), size, out))
-        print('Upload to httpdocs/previews/aan_reseller_2026, Extract (replace files), delete the zip.')
+        if a.version:
+            print('Upload to httpdocs/previews/aan_reseller_2026_design_%s (a NEW folder; leave the others alone),'
+                  ' Extract, delete the zip.' % a.version)
+        else:
+            print('Upload to httpdocs/previews/aan_reseller_2026, Extract (replace files), delete the zip.')
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
 

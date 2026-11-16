@@ -20,6 +20,11 @@
   'use strict';
 
   var D = window.DE;
+  /* Zones the live system removed on purpose (Bill, Nov 11: "we removed that tab on
+     purpose because it was never used"). They came from the new-backend export;
+     kept in the data, left out of the form. Delete an id here to bring a zone back. */
+  var ZONE_HIDDEN = ['zWeb', 'zEmail', 'zInv'];
+  D.zones = D.zones.filter(function (z) { return ZONE_HIDDEN.indexOf(z.id) < 0; });
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
@@ -299,7 +304,25 @@
     }
     if (f.t === 'projact') return '<div class="fw' + span + '">' + control(f, id) + '</div>';
     if (f.t === 'routing') return '<div class="fw' + span + '">' + control(f, id) + '</div>';
+    /* a field that only shows for one answer of another, as live: Multi Dealer = Yes reveals Select Group.
+       An inline one sits beside its switch, in the same cell, so showing it moves nothing else on the page. */
+    if (f.showIf && f.inline) return '';
+    var dep = inlineDep(f.k);
+    if (dep) {
+      var did = id + '-dep';
+      return '<div class="fw' + span + '">' + label(f, id) +
+        '<div class="fdep-row">' + control(f, id) +
+          '<span class="fdep" data-show-k="' + esc(f.k) + '" data-show-v="' + esc(dep.showIf.v) + '"' +
+            (String(val(f.k)) === String(dep.showIf.v) ? '' : ' hidden') + '>' +
+            '<label class="vh" for="' + did + '">' + esc(dep.l) + '</label>' + control(dep, did) + '</span>' +
+        '</div>' + help(f) + '</div>';
+    }
     return '<div class="fw' + span + '">' + label(f, id) + control(f, id) + help(f) + '</div>';
+  }
+  function inlineDep(k) {
+    var hit = null;
+    D.zones.forEach(function (z) { z.fields.forEach(function (x) { if (x.showIf && x.inline && x.showIf.k === k) hit = x; }); });
+    return hit;
   }
 
   function renderZones() {
@@ -440,6 +463,7 @@
       var seg = el.closest('.seg');
       if (seg) seg.classList.remove('seg--unset');
     }
+    document.querySelectorAll('[data-show-k="' + k + '"]').forEach(function (w) { w.hidden = String(V[k]) !== w.getAttribute('data-show-v'); });
     bump();
   }
 
@@ -482,7 +506,9 @@
   function renderZoneEmail() {
     var host = $('[data-routing]');
     if (!host) return;
-    var f = D.zones.filter(function (z) { return z.id === 'zEmail'; })[0].fields[0];
+    var z = D.zones.filter(function (z) { return z.id === 'zEmail'; })[0];
+    if (!z) return;
+    var f = z.fields[0];
     host.outerHTML = routing(f);
   }
 
@@ -619,6 +645,8 @@
       var el = document.getElementById(id);
       if (el && el.getBoundingClientRect().top <= limit) cur = id;
     });
+    /* at the end of the page the last zone can never reach the top: it is the one in view */
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) cur = 'zNotes';
     mark(cur);
   }
   window.addEventListener('scroll', spy, { passive: true });

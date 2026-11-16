@@ -10,9 +10,9 @@
    `dark` — the key is shared with the other Gen pages — cannot land this page
    in a half-dark state at load. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="manage-dealers-gen11.css?v=20261030-ds">
+<link rel="stylesheet" href="manage-dealers-gen11.css?v=20261116-cfg">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
-<link rel="stylesheet" href="../_aan-components.css?v=20261030-tab">
+<link rel="stylesheet" href="../_aan-components.css?v=20261116-bar">
 </head>
 <body>
 
@@ -90,7 +90,8 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
     <span class="head__ctx">Dealer Management</span>
     <span class="head__sp"></span>
     <div class="head__actions">
-      <button class="btn btn--quiet" type="button" data-act="print"><svg class="i"><use href="#i-print"/></svg> Print</button>
+      <!-- Print removed (Bill, Nov 11): not in the live system; the browser prints if anyone needs it
+      <button class="btn btn--quiet" type="button" data-act="print"><svg class="i"><use href="#i-print"/></svg> Print</button> -->
       <button class="btn btn--sheet" type="button" data-act="csv"><svg class="i"><use href="#i-down"/></svg> Dealers CSV</button>
       <button class="btn btn--sheet" type="button" data-act="pkg-new"><svg class="i"><use href="#i-pkg"/></svg> Create Package</button>
       <a class="btn btn--primary" href="dealer-edit-gen11.html?dealer=new"><svg class="i"><use href="#i-plus"/></svg> Add New Dealer</a>
@@ -233,8 +234,25 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   </form>
 </dialog>
 
+<!-- Config Manual (Bill, Nov 6): the live system's popup of page-template examples for inventory.php -->
+<dialog class="modal modal--wide" id="cfgman" aria-labelledby="cfgman-t">
+  <form method="dialog" class="modal__in">
+    <div class="modal__hd">
+      <h2 class="modal__t" id="cfgman-t">Config Manual</h2>
+      <button class="modal__x" type="submit" value="close" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="modal__bd">
+      <p class="fld-h cfgman__lead">Page template examples: the inventory.php parameters a dealer page can use.</p>
+      <ol class="cfgman" id="cfg-list"></ol>
+    </div>
+    <div class="modal__ft">
+      <button class="btn btn--quiet" type="submit" value="close">Close</button>
+    </div>
+  </form>
+</dialog>
+
 <script src="manage-dealers-gen11.data.js?v=20261030-nav"></script>
-<script src="manage-dealers-gen11.js?v=20261030-nav"></script>
+<script src="manage-dealers-gen11.js?v=20261116-cfg"></script>
 <script src="../_aan-tablet.js?v=20261030-tab"></script>
 </body>
 </html>

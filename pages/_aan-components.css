@@ -639,8 +639,9 @@ select.sel, select.ui-ctl, .rows select, .cmd select, .zone select, .form select
     translate: max(0px, calc(var(--sx, 0) * 1px - var(--idx, 0px))) 0;
   }
 }
-/* the dealer bar has room for one row down to 1024 */
-@media (max-width: 1023.98px) {
+/* the dealer bar has room for one row down to 1140 (was 1024; Marketing came back to the menu on Nov 16 and the row
+   needed 1100px) */
+@media (max-width: 1139.98px) {
   :root:has(.app > .top .dealer) { --stick-bar: 100px; --bar-track: 120px; }
   .app > .top:has(.dealer) { height: var(--stick-bar); flex-wrap: wrap; align-content: center; row-gap: 14px; }
   .app > .top:has(.dealer) > .nav { order: 9; flex: 1 0 100%; min-width: 0; margin: 0; }

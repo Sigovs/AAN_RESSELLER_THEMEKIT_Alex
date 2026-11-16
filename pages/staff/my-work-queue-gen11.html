@@ -10,9 +10,9 @@
    `dark` — the key is shared with the other Gen pages — cannot land this page
    in a half-dark state at load. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="my-work-queue-gen11.css?v=20261030-ds">
+<link rel="stylesheet" href="my-work-queue-gen11.css?v=20261116-dock">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
-<link rel="stylesheet" href="../_aan-components.css?v=20261030-tab">
+<link rel="stylesheet" href="../_aan-components.css?v=20261116-bar">
 </head>
 <body>
 
@@ -136,15 +136,18 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       </div>
 
       <div class="facet">
-        <button class="facet__b facet__b--icon" type="button" data-pop="p-filt" aria-haspopup="true" aria-expanded="false">
+        <!-- Filters open as a side panel on the right that stays until closed (Bill, Nov 11: "open on the right side of
+             the screen and stay open until we close it based on user"; Alex, Nov 16: the dock, as All Vehicles).
+             Was: a popover over the right columns. -->
+        <button class="facet__b facet__b--icon" type="button" data-act="filters" aria-controls="f-dock" aria-expanded="false">
           <svg class="i"><use href="#i-sliders"/></svg>
           <span class="facet__v">Filters</span>
           <span class="facet__cnt" id="fcnt" hidden>0</span>
         </button>
-        <div class="pop pop--r pop--wide" id="p-filt">
+        <!-- <div class="pop pop--r pop--wide" id="p-filt">
           <div class="caps pop__lab">Add filter</div>
           <div id="filt-list"></div>
-        </div>
+        </div> -->
       </div>
 
       <span class="cmd__div"></span>
@@ -160,7 +163,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
     </div>
 
     <!-- the list -->
-    <div class="rows ui-table" id="rows" role="table" aria-labelledby="page-t">
+    <div class="rows ui-table" id="rows" role="table" aria-labelledby="page-t" data-wide>
       <div class="hd ui-thead" id="hd" role="row"></div>
       <div id="tb" role="rowgroup"></div>
     </div>
@@ -178,10 +181,16 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <nav class="pg" id="pg" aria-label="Pagination"></nav>
     </div>
   </section>
+
+  <aside class="dock" id="f-dock" aria-labelledby="f-dock-t">
+    <div class="dock__h"><h2 class="dock__t" id="f-dock-t">Filters</h2><span class="dock__c" id="f-dock-c"></span><button class="dock__x" type="button" data-act="filters" aria-label="Close filters"><svg class="i"><use href="#i-x"/></svg></button></div>
+    <div class="dock__b"><div id="filt-list"></div></div>
+  </aside>
 </div>
 
 <script src="my-work-queue-gen11.data.js?v=20261030-five"></script>
-<script src="my-work-queue-gen11.js?v=20261030-five"></script>
-<script src="../_aan-tablet.js?v=20261030-tab"></script>
+<script src="my-work-queue-gen11.js?v=20261116-dock"></script>
+<!-- the Filters panel comes back open if it was left open (Bill, Nov 11): set in the script from localStorage -->
+<script src="../_aan-tablet.js?v=20261116-wide"></script>
 </body>
 </html>

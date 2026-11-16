@@ -609,22 +609,39 @@
   }
   function renderVideo() {
     var id = ytId(S.v.YouTube_url), a = $('#vid-prev'), has = !!(id || S.v.video_url);
+    if (a.tagName !== 'A') {   /* the player was open: back to the preview */
+      var na = document.createElement('a'); na.id = 'vid-prev'; na.target = '_blank'; na.rel = 'noopener';
+      a.parentNode.replaceChild(na, a); a = na;
+    }
     if (id) {
       a.href = 'https://www.youtube.com/watch?v=' + id;
       a.className = 'vid__prev';
+      a.dataset.yt = id;
       a.innerHTML = '<img src="https://img.youtube.com/vi/' + id + '/mqdefault.jpg" alt="YouTube video preview">' +
         '<span class="vid__play">' + ic('i-play') + '</span>';
-      a.title = 'Open the video on YouTube';
+      a.title = 'Play the video here';
     } else {
       a.removeAttribute('href');
       a.className = 'vid__prev vid__prev--none';
       a.innerHTML = '<span class="vid__none">' + ic('i-play') + '<b>No video yet</b><span>Paste a YouTube link</span></span>';
       a.title = '';
     }
+    if (!id) delete a.dataset.yt;
     var b = $('#b-video');
     b.textContent = has ? 'yes' : 'none';
     b.className = 'badge' + (has ? ' badge--ok' : '');
   }
+
+  /* The video plays here, in YouTube's embedded player with rel=0, instead of opening youtube.com (Karen, Nov 3: the
+     YouTube page's "ALL videos" tab shows "many videos that are not vehicle-related"; Alex, Nov 16: play it inside).
+     rel=0 keeps the suggestions at the end to the same channel. */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('#vid-prev[data-yt]'); if (!a) return;
+    e.preventDefault();
+    var box = document.createElement('div'); box.id = 'vid-prev'; box.className = 'vid__prev vid__prev--play';
+    box.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(a.dataset.yt) + '?rel=0&autoplay=1&modestbranding=1" title="Vehicle video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+    a.parentNode.replaceChild(box, a);
+  });
 
   /* CARFAX (SV note 23): status first, then the two ways in — paste the
      report link (a real field, tracked as an unsaved change) or upload the
@@ -644,7 +661,7 @@
     $('#cfx-state').innerHTML = has
       ? '<span class="cfx__dot cfx__dot--ok">' + ic('i-check') + '</span><span><b>Report attached</b>' +
           (v.carfax ? '<a href="' + esc(v.carfax) + '" target="_blank" rel="noopener">Open report ' + ic('i-ext') + '</a>' : '<span>' + esc(file) + '</span>') + '</span>'
-      : '<span class="cfx__dot">' + ic('i-file') + '</span><span><b>No CARFAX report</b><span>Paste the report link or upload the PDF</span></span>';
+      : '<span class="cfx__dot">' + ic('i-file') + '</span><span><b>No CARFAX report</b><span>Paste the report link</span></span>';   /* was: "or upload the PDF" (upload commented out, Bill Nov 6) */
   }
   function renderCarfax() {
     var v = S.v, file = S.cfxFile[S.ix];
@@ -653,20 +670,45 @@
         '<div class="cfx__state" id="cfx-state"></div>' +
         '<div class="f"><label class="f__l" for="cfx-link">Report link</label>' +
           '<input class="in" id="cfx-link" type="url" inputmode="url" spellcheck="false" autocomplete="off" placeholder="https://www.carfax.com/vehiclehistory/…" value="' + esc(v.carfax || '') + '"></div>' +
+        /* PDF upload commented out (Bill, Nov 6: "Only dealer who uploads a carfax report in our system is Mild Collection
+           so this would only be for them. Carfax sends us URL links only no PDFs."). Live checked Nov 16: Miller Motorcars'
+           editor has no CARFAX upload. A per-dealer option for Mild Collection. Before: review-shots/40-single-vehicle-carfax-upload-before.png
         '<div class="cfx__up">' +
           (file
             ? '<span class="wstk__file">' + ic('i-file') + '<b>' + esc(file) + '</b></span><button class="btn btn--sheet btn--sm" type="button" data-act="cfx-rm">' + ic('i-x') + 'Remove</button>'
             : '<label class="btn btn--sheet"><input type="file" accept="application/pdf" id="cfx-file" class="sr">' + ic('i-plus') + 'Upload CARFAX report (PDF)</label>') +
           '<span class="chip-src">Mock addition</span>' +
-        '</div>' +
+        '</div>' + */
       '</div>' +
       '<div class="cfx__card">' +
         '<label class="cfx__sw" for="custom-no_carfax">' +
           '<span class="sw"><input type="checkbox" id="custom-no_carfax" name="custom-no_carfax" data-custom="no_carfax"' + (v.custom.no_carfax ? ' checked' : '') + '><span class="sw__t"></span></span>' +
           '<span><b>Do Not Report VIN To Carfax</b><span>Keeps this VIN out of the CARFAX dealer feed</span></span></label>' +
-        '<div class="cfx__dates">' + cfxField('cfx_date', 'Report date') + cfxField('carfax_timestamp', 'Last checked') + '</div>' +
+        /* Report date and Last checked out (Bill, Nov 6: "we don't have this info so this field can be removed" / "we also don't have this data")
+        '<div class="cfx__dates">' + cfxField('cfx_date', 'Report date') + cfxField('carfax_timestamp', 'Last checked') + '</div>' + */
       '</div>';
     renderCarfaxStatus();
+  }
+
+  /* VIN Decoder Selectable (Bill, Nov 9; live editor): the choices the decode returned, one pick list each. A vehicle
+     whose fixture carries `decoded` lists fills them; this one has none, so the live system's empty state shows. */
+  function renderVDS() {
+    var d = (S.v && S.v.decoded) || {}, any = false;
+    ['style', 'engine', 'trans'].forEach(function (k) {
+      var list = d[k] || [], el = $('#vds-' + k);
+      if (!el) return;
+      any = any || list.length > 0;
+      el.innerHTML = list.map(function (o, i) { return '<option' + (i === 0 ? ' selected' : '') + '>' + esc(o) + '</option>'; }).join('');
+      el.disabled = !list.length;
+    });
+    $('#vds-none').hidden = any;
+  }
+
+  /* Buyers Guides section (Bill, Nov 6): the print links and the guide text in one place */
+  function renderBG() {
+    $('#bg-links').innerHTML = D.prints.guides.map(function (s) {
+      return '<button class="btn btn--quiet btn--sm" type="button" data-print="' + esc(s) + '">' + ic('i-print') + esc(s.replace(/^Print /, '')) + '</button>';
+    }).join('');
   }
 
   function renderPrints() {
@@ -686,7 +728,8 @@
       if (el) el.value = S.v[c[0]] == null ? '' : S.v[c[0]];
     });
     $('#vinbar-v').textContent = S.v.vin;
-    $('#core-zero_down').checked = !!S.v.zero_down;
+    if ($('#core-zero_down')) $('#core-zero_down').checked = !!S.v.zero_down;   
+    $('#bg-text').value = (S.v.desc && S.v.desc.buyers_guide_text) || '';   /* Zero Down is commented out (Bill, Nov 6) */
     $('#reset-when-added').checked = !!S.v.reset_when_added;
 
     $$('[data-seg]').forEach(function (seg) {
@@ -782,6 +825,7 @@
     renderCarfax();
     renderValues();
     renderSwatches();
+    renderVDS();
     renderDirty();
     spy();
   }
@@ -802,14 +846,16 @@
 
   /* All Vehicles · Photos view links here as #photos: arrive on the Photos
      section, placed as the rail places it, without a scroll ride from the top */
-  if (location.hash === '#photos') window.addEventListener('load', function () {
+  /* ... and #sticker for the Window sticker action (Bill, Nov 6: "will they link to those tabs in the edit of the car") */
+  var HASH_ZONE = { '#photos': 'zPhotos', '#sticker': 'zSticker' };
+  if (HASH_ZONE[location.hash]) window.addEventListener('load', function () {
     requestAnimationFrame(function () {
-      var el = document.getElementById('zPhotos'); if (!el) return;
+      var el = document.getElementById(HASH_ZONE[location.hash]); if (!el) return;
       window.scrollTo({ top: Math.max(0, Math.round(el.getBoundingClientRect().top + window.scrollY - stickTotal() - cssPx('--anchor-gap', 10))), behavior: 'auto' });
     });
   });
 
-  var ZONES = ['zStatus', 'zPricing', 'zCustom', 'zPhotos', 'zVideo', 'zCarfax', 'zSpecs', 'zColors', 'zDesc', 'zFeat', 'zSticker', 'zFeeds', 'zMore', 'zUtil'];
+  var ZONES = ['zSpecs', 'zStatus', 'zPricing', 'zCustom', 'zPhotos', 'zVideo', 'zCarfax', 'zColors',   /* Specs first (Bill, Nov 6) */ 'zDesc', 'zFeat', 'zSticker', 'zBG', 'zFeeds', 'zMore', 'zUtil'];
   function spy() {
     var line = stickTotal() + cssPx('--anchor-gap', 10) + 1, cur = ZONES[0], i, el;
     for (i = 0; i < ZONES.length; i++) {
@@ -884,8 +930,9 @@
     }
   }
 
-  /* edit lock (SV note 19): shown only while someone else holds it */
-  S.locked = false;
+  /* edit lock (SV note 19): shown only while someone else holds it. Opened with #view from the inventory list's
+     "View only" (Bill, Nov 6), the page starts in that state; #unlock ("Unlock and take control") starts with your lock. */
+  S.locked = location.hash === '#view';
   function renderLock() {
     $('#lock').hidden = !S.locked;
     $('#lock-mine').hidden = S.locked;
@@ -1140,7 +1187,8 @@
 
   /* ── boot ────────────────────────────────────────────────────────────── */
   fillSelects();
-  renderPrints();
+  renderPrints(); renderBG();
+  if (S.locked) { var dlk = $('#demo-lock'); if (dlk) dlk.checked = true; renderLock(); }   /* opened "View only" (#view) */
   load(0);
 
   window.SV11demo = { S: S, load: load, changes: changes, jump: jump, stickTotal: stickTotal };

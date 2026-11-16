@@ -140,7 +140,17 @@
     $('#tally').innerHTML = '<span class="caps tally__l">Roster</span>' +
       D.counts.map(function (c) {
         return '<span class="tl"><span>' + esc(c.l) + '</span><b>' + nf(c.n) + '</b></span>';
-      }).join('');
+      }).join('') +
+      /* Bill, Nov 11: "Need a "Dealer Intake Form Answers" link on the right side here. Also a link
+         to "Config Manual" that opens a popup with page template examples as we use these a lot too".
+         Both exist in the live system; routes out of this page, like Accounting's utility links. */
+      '<nav class="tally__links" aria-label="Dealer references">' +
+        /* live: a link to the Google Sheet of intake-form answers. The sheet's address is not copied into a
+           mockup that is published on a preview site; Ivaylo wires the real one. */
+        '<a href="#" title="Opens the Google Sheet of Dealer Intake Form answers (live system)">Dealer Intake Form Answers</a>' +
+        '<span class="tally__sep">·</span>' +
+        '<a href="#" data-act="cfgman" aria-haspopup="dialog" title="Page template examples">Config Manual</a>' +
+      '</nav>';
   }
 
   function renderModes() {
@@ -192,23 +202,33 @@
     return '<b>' + esc(p[0]) + '</b><i>' + esc(p[1] || '') + '</i>';
   }
 
+  /* Review round 2 (Bill, Nov 11):
+     - "remove "CL" it is old feature that is no longer used" - CL stays in the data, it is just not shown;
+     - "change LS to LMS so that we know what it means";
+     - "please have it show all items and not a +2" - every tag is shown, the cell wraps. */
+  var FEAT_HIDDEN = ['CL'];
+  var FEAT_LABEL = { LS: 'LMS' };
+
   function cellFeat(r) {
-    var all = r.feat.map(function (f) { return f.t; });
+    var feat = r.feat.filter(function (f) { return FEAT_HIDDEN.indexOf(f.t) < 0; });
+    var all = feat.map(function (f) { return FEAT_LABEL[f.t] || f.t; });
     var out = [];
     if (r.warn) {
       out.push('<span class="fw' + (r.warn === 'connection_failed' ? ' fw--fail' : '') +
         '" title="' + esc(r.warn === 'connection_failed' ? 'Connection failed' : 'No connection row') + '">' +
         ic('i-alert') + '</span>');
     }
-    r.feat.slice(0, 2).forEach(function (f) {
+    feat.forEach(function (f) {
       /* a tag reads in sentence case (DESIGN.md §18): "Craigslist", "Carfax"; a two-
-         or three-letter code stays as it is ("CL", "LS") */
-      var lab = f.t.length > 3 ? f.t.charAt(0) + f.t.slice(1).toLowerCase() : f.t;
-      out.push('<span class="ft" title="' + esc(f.title) + '">' + esc(lab) + '</span>');
+         or three-letter code stays as it is ("LMS") */
+      var t = FEAT_LABEL[f.t] || f.t;
+      var lab = t.length > 3 ? t.charAt(0) + t.slice(1).toLowerCase() : t;
+      out.push('<span class="ft" title="' + esc(FEAT_LABEL[f.t] ? t : f.title) + '">' + esc(lab) + '</span>');
     });
+    /* was: the first two tags and a "+N" (Bill: show all items)
     if (r.feat.length > 2) {
       out.push('<span class="ft ft--more">+' + (r.feat.length - 2) + '</span>');
-    }
+    } */
     out.push('<button class="frf" type="button" data-refresh="' + r.id +
       '" title="Recompute this dealer&rsquo;s features now" aria-label="Recompute features">' + ic('i-refresh') + '</button>');
     var t = (all.length ? all.join(' · ') : 'no features') +
@@ -484,6 +504,40 @@
     if (p) openPkg(p.getAttribute('data-pkg'));
   });
 
+  /* ── Config Manual: the live popup's page-template examples, word for word (checked Nov 16) ── */
+  var CFG_MANUAL = [
+    "inventory.php?type=New&sold=Available&specials=on&orderby=price",
+    "inventory.php?type=Used&sold=Available&price=1-10000",
+    "inventory.php?type=Used&sold=30_days ( number of days variable )",
+    "inventory.php?orderby=FIELD( make,\"Ferrari\"),desc,year,make,desc //--\"Ferrari\" on top",
+    "inventory.php?type=Used&sold=Available&make=Porsche&year=<2005&orderby=make,price,desc // greater / less",
+    "inventory.php?type=New&sold=30_days&orderby=year,desc",
+    "inventory.php?sold=Available&when_added=30_days&orderby=year,desc //  New Arrivals",
+    "inventory.php?sold=Available&when_added=<30_days&orderby=year,desc // when_added older than",
+    "inventory.php?if_else=IF( sold = \"Sold\", IF( display_sold = 1, 1, 0), 1)&consignment_inventory=1 // IF ELSE",
+    "inventory.php?sold=Available&if_else=IF(type=\"Used\" AND make=\"Karma\",0,1)&orderby // IF ELSE",
+    "inventory.php?trim=LIKE Boxster% // LIKE",
+    "inventory.php?make=IN (\"Glickenhaus%20SCG\",\"Morgan\")  // IN",
+    "inventory.php?make=NOT IN (\"Glickenhaus%20SCG\",\"Morgan\")  // NOT IN",
+    "inventory.php?commercial=!1  // NOT Equal",
+    "inventory.php?sold=Available||display_sold::1&orderby=sold,price,desc  // OR",
+    "inventory.php?sold=Available&type=New&finance_price=>0||lease_price::>0&orderby=price // OR 2024 with > or <",
+    "inventory.php?sold=Available&lease_price=>0||finance_price>0||lease_text<>''&orderby=FIELD( location,\"Beverly Hills\"),desc  // OR 2023",
+    "inventory.php?type=Used&sold=Available&orderby=CASE WHEN make IN(\"Aston Martin\", \"Cadillac\") THEN make END DESC,CASE WHEN make=\"Cadillac\" AND certified=\"true\" THEN certified END  DESC,make,year",
+    "inventory.php?sold=Available&type=New&make=Aston Martin&body=SUV&limit=5&orderby=price // LIMIT",
+    "-- widget price for 2023 sites",
+    "data-sales-price=\"${ parseInt(veh.discount_price) > 0 ? veh.discount_price : veh.price }\""
+  ];
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-act="cfgman"]'); if (!a) return;
+    e.preventDefault();
+    var box = $('#cfg-list');
+    if (!box.childElementCount) box.innerHTML = CFG_MANUAL.map(function (l) {
+      return /^--/.test(l) ? '<li class="cfgman__h">' + esc(l.replace(/^--\s*/, '')) + '</li>' : '<li><code>' + esc(l) + '</code></li>';
+    }).join('');
+    var d = $('#cfgman'); if (typeof d.showModal === 'function') d.showModal();
+  });
+
   /* ── the Dealer Package dialog ──────────────────────────────────────────── */
   var dlg = $('#pkg');
 
@@ -522,7 +576,8 @@
   }
 
   /* Print — the export's page is printable and the stylesheet has a print rule */
-  $('[data-act="print"]').addEventListener('click', function () { window.print(); });
+  var pr = $('[data-act="print"]'); /* the button is commented out (Bill, Nov 11) */
+  if (pr) pr.addEventListener('click', function () { window.print(); });
   $('[data-act="csv"]').addEventListener('click', function (e) {
     e.currentTarget.title = 'Dealers CSV is generated on the server; this build has none';
   });

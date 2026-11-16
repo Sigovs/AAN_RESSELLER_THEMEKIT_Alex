@@ -10,9 +10,9 @@
    `aan-theme` key is shared with the Gen 10 pages, so a stored `dark` must not land this
    page in a half-dark state at load. Temporary; the dark-theme stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="single-ticket-gen11.css?v=20261030-ds">
+<link rel="stylesheet" href="single-ticket-gen11.css?v=20261115-r4">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
-<link rel="stylesheet" href="../_aan-components.css?v=20261030-tab">
+<link rel="stylesheet" href="../_aan-components.css?v=20261116-bar">
 </head>
 <body>
 
@@ -150,7 +150,10 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
            out - and put it in our question list"). The script owns these fields, so the
            section stays in the page with `hidden`; to bring it back drop the attribute
            and un-comment its entry in SECS. -->
-      <section class="sec" id="s-work" aria-labelledby="t-work" hidden>
+      <!-- Back on the page (Bill, Nov 11: "Where are the fields for assiging to the dealership ...
+           Also there should be fields to enter the Name, email(s), phone and subject line and they
+           should always be present in the tickets"). Q10 answered by the team. -->
+      <section class="sec" id="s-work" aria-labelledby="t-work">
         <div class="sec__h"><h2 id="t-work">Work Order</h2></div>
         <div class="sec__b">
           <!-- Ivaylo, ST note 7: "this all just... blends together … i would drastically
@@ -251,6 +254,10 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
                 <div class="composer__b">
                   <label class="composer__lab" for="in-todo">New ToDo</label>
                   <textarea class="fld" id="in-todo" name="in-todo" rows="2" placeholder="New ToDo…"></textarea>
+                  <!-- files on a ToDo too (Bill, Nov 11: "need ability to add a file attachement to a todo as well";
+                       Alex, Nov 15: the live system has it). The same drop as Messages / Internal notes: posting puts
+                       the files on the ToDo and into the ticket's Attachments list. -->
+                  <div class="drop"><svg class="i"><use href="#i-clip"/></svg><b>Drop files here or click to browse</b><span>Up to 20 MB per file</span><input type="file" id="in-todo-files" name="in-todo-files" multiple aria-label="Attach files to the ToDo"></div>
                   <div class="composer__f">
                     <span class="hint">For</span>
                     <select class="sel sel--sm" id="in-todo-who" name="in-todo-who" aria-label="ToDo assignee"></select>
@@ -308,6 +315,14 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       </div>
       <div class="crew" id="crew"></div>
       <div class="crewfoot" id="crewfoot"></div>
+      <!-- Time entry help, open and right under the time totals (Bill, Nov 11: "We need the time
+           examples like in the live system so it makes it faster for employees to enter their time").
+           The figures are the export's, verbatim. It was a folded <details> at the end of the dock. -->
+      <div class="legend legend--open">
+        <span class="caps">Time examples</span>
+        <dl class="legend__ex" id="legend-ex"></dl>
+        <p>Accepted formats: <span class="mono">45m</span> · <span class="mono">1:20</span> · <span class="mono">1h 20m</span> · <span class="mono">2h</span> · decimal hours (<span class="mono">1.33</span>) — saved as decimal.</p>
+      </div>
       <div class="follow">
         <span class="caps">Following</span>
         <span class="follow__v" id="follow"></span>
@@ -316,11 +331,12 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
           <button class="btn btn--sheet btn--sm" type="button" data-act="add-follower">Add</button>
         </div>
       </div>
+      <!-- was (folded, at the end of the dock):
       <details class="legend">
         <summary><span class="caps">Time entry help</span><span class="s">expand</span></summary>
         <p id="legend-ex"></p>
-        <p>Accepted formats: <span class="mono">45m</span> · <span class="mono">1:20</span> · <span class="mono">1h 20m</span> · <span class="mono">2h</span> · decimal hours (<span class="mono">1.33</span>) — saved as decimal.</p>
-      </details>
+        <p>Accepted formats: ... saved as decimal.</p>
+      </details> -->
     </div>
     <div class="dock__f" id="crew-foot">
       <span class="dock__note" id="crew-note">No unsaved changes</span>
@@ -337,7 +353,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 </div>
 
 <script src="single-ticket-gen11.data.js?v=20261030-nav"></script>
-<script src="single-ticket-gen11.js?v=20261030-wohide"></script>
+<script src="single-ticket-gen11.js?v=20261115-r6"></script>
 <script src="../_aan-tablet.js?v=20261030-tab"></script>
 </body>
 </html>

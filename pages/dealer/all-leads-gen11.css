@@ -41,15 +41,16 @@
 .field {
   --cols:
     26px                        /* checkbox   */
-    minmax(150px, 1.2fr)        /* Lead       */
-    minmax(160px, 1.35fr)       /* Contact    */
-    minmax(140px, 1.1fr)        /* Vehicle    */
+    minmax(112px, 1.2fr)        /* Lead       floors lowered (was 150 / 160 / 140) to make room for Comments down to 1401px (Nov 16) */
+    minmax(130px, 1.35fr)       /* Contact    */
+    minmax(110px, 1.1fr)        /* Vehicle    */
     112px                       /* Type       */
     104px                       /* Source     */
     132px                       /* Status     */
     116px                       /* Assigned   */
     96px                        /* Created    */
     96px                        /* Follow-up  */
+    92px                        /* Comments   COMMENTS 84px at the header face (Bill, Nov 10) */
     124px;                      /* Activity   */
   /* Follow-up is 96 rather than 88 because its own column label is the widest
      thing in it: `FOLLOW-UP` measures 85px at the header's 13px/700/.06em, and
@@ -169,7 +170,8 @@
 .vh--none .vh__n { color: var(--ink-4); font-weight: 400; }
 
 /* — Type · Source · Assigned */
-.ty { min-width: 0; font: 12px var(--mono); color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* Type in the page's text face, as Source beside it (Karen, Nov 3: "Under Type, the font should match the rest of the page"); was 12px mono */
+.ty { min-width: 0; font: 14px var(--font); color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sc { min-width: 0; font-size: 14px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sc em { font-style: normal; color: var(--ink-3); }
 .as { min-width: 0; font-size: 14px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -418,15 +420,16 @@
   .field {
     --cols:
       24px
-      minmax(112px, 1.2fr)
-      minmax(120px, 1.35fr)
-      minmax(104px, 1.1fr)
+      minmax(100px, 1.2fr)
+      minmax(112px, 1.35fr)
+      minmax(96px, 1.1fr)
       104px
       96px
       126px
       104px
       92px
       92px
+      88px
       110px;
   }
   .hd, .row { gap: var(--col-gap); }
@@ -483,3 +486,21 @@
 .cmdtop .lanes > .lane--on, .cmdtop .lanes > .lane--on:hover { background: var(--brand); color: #fff; box-shadow: none; font-weight: 500; } /* same weight as the others: the fill marks it, and the row never shifts */
 .cmdtop .lanes > .lane--on b { color: rgba(255, 255, 255, .82); }
 
+/* A selected row carries the class `sel`, which is also the system's select-control class: the
+   shared rules made the row an inline-flex pill (narrower, rounded, 14px/500). Found with the
+   select-all checkbox (Bill, Nov 10). The row keeps its own box. */
+.app #tb > .row.sel { display: grid; justify-content: normal; line-height: inherit; font-weight: 400; border-radius: 0; }
+
+/* More → Vehicle of interest: Available stock + Include Sold (Bill, Nov 6; live Lead Manager) */
+.more .pop__row > .sel { flex: 1; min-width: 0; }
+.more__opt { display: inline-flex; align-items: center; gap: var(--s2); min-height: 32px; font-size: 14px; color: var(--ink-2); cursor: pointer; }
+
+/* More opened off the left edge at 768 (found Nov 16): flipped to open rightward from its facet */
+.pop--right.pop--flip { left: 0; right: auto; }
+
+/* Comments: the date the last comment was added (Bill, Nov 10; live Lead Manager) — the Follow-up cell's type */
+.cm { min-width: 0; line-height: 1.25; font-variant-numeric: tabular-nums; }
+.cm b { display: block; font-size: 14px; font-weight: 500; color: var(--ink-2); white-space: nowrap; }
+.cm--none b { color: var(--ink-4); font-weight: 400; }
+.row.open .cm b { color: var(--focal-ink); }
+.row.open .cm--none b { color: var(--focal-ink-3); }

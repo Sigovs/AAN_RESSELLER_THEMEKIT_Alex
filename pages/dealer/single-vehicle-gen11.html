@@ -8,9 +8,9 @@
    `aan-theme` key is shared with the other Gen pages, so a stored `dark` must not
    land this page in a half-dark state at load. Temporary; the dark stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="single-vehicle-gen11.css?v=20261030-tab">
+<link rel="stylesheet" href="single-vehicle-gen11.css?v=20261116-yt">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
-<link rel="stylesheet" href="../_aan-components.css?v=20261030-tab">
+<link rel="stylesheet" href="../_aan-components.css?v=20261116-bar">
 </head>
 <body>
 
@@ -55,9 +55,12 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         <div class="menu">
           <div class="menu__col"><div class="caps menu__t">Inventory</div>
             <a class="menu__l menu__l--on" href="all-vehicles-gen11.html"><b>Inventory Manager</b><span>Every vehicle, by lane</span></a>
-            <a class="menu__l" href="#"><b>New submissions</b><span>Vehicles waiting for review</span></a>
+            <!-- New submissions: not in the live system (checked Nov 16; Bill, Nov 6: "As for New Submissions what is that?"). A new-backend page, so it moves to the New features list. -->
+            <!-- <a class="menu__l" href="#"><b>New submissions</b><span>Vehicles waiting for review</span></a> -->
             <a class="menu__l" href="#"><b>Sort order</b><span>How vehicles list on your site</span></a>
             <a class="menu__l" href="#"><b>Auto Locator</b><span>Find a vehicle for a buyer</span></a>
+            <!-- Feed Out Manager (Bill, Nov 6: "We are missing the Feed Out Manager and most dealers 2020 and newer should have that link as it is a way for them to edit all available cars at once for their outgoing feeds") -->
+            <a class="menu__l" href="#"><b>Feed Out Manager</b><span>Outgoing feeds for all available cars</span></a>
           </div>
           <div class="menu__col"><div class="caps menu__t">Reports</div>
             <a class="menu__l" href="#"><b>Inventory aging</b><span>Days in stock, per vehicle</span></a>
@@ -69,20 +72,32 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Leads<svg class="i"><use href="#i-chev"/></svg></button>
         <div class="menu"><div class="menu__col"><div class="caps menu__t">Leads</div>
           <a class="menu__l" href="#"><b>Lead Manager</b><span>Every enquiry, by stage</span></a>
+          <!-- Customers and Referrals: not in the live system, whose Leads menu is only the Lead Manager (checked Nov 16; Bill, Nov 6: "there is really just the lead manager ... unless those will be new features"). New-backend pages, so they move to the New features list.
           <a class="menu__l" href="#"><b>Customers</b><span>People who enquired or bought</span></a>
-          <a class="menu__l" href="#"><b>Referrals</b><span>Where leads came from</span></a>
+          <a class="menu__l" href="#"><b>Referrals</b><span>Where leads came from</span></a> -->
         </div></div>
       </div>
       <div class="nav__it">
         <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Site<svg class="i"><use href="#i-chev"/></svg></button>
         <div class="menu"><div class="menu__col"><div class="caps menu__t">Site management</div>
           <a class="menu__l" href="#"><b>Site Content Manager</b><span>Pages, banners and copy</span></a>
+          <!-- Form Editor: in the live dealer menu for AAN admin users only (checked Nov 16; Bill, Nov 6: "Us admin users need a "Form Editor" link here but dealers do not") -->
+          <a class="menu__l" href="#" data-admin-only><b>Form Editor</b><span>Dealer forms · AAN admins only</span></a>
         </div></div>
       </div>
       <!-- Marketing menu (Newsletter tools, Craigslist posting; Posting tools & eBay was already hidden)
            removed: meeting with Ivaylo, 2026-10-29. Newsletter is untested and mails go out from
            the AAN server (spam-flag risk); Marketing comes back later as an analytics hub.
            Restore: git show c2a8808:pages/dealer/single-vehicle-gen11.html -->
+      <!-- Newsletter Tools is back (Alex, Nov 16; Bill, Nov 6: dealers use it to "download email lists" and it collects the
+           site's "newsletter subscribe forms"). The live dealer menu has it under Marketing. Only this item returns;
+           Craigslist posting stays out with the rest of the Oct 29 Marketing menu. -->
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Marketing<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Marketing applications</div>
+          <a class="menu__l" href="#"><b>Newsletter Tools</b><span>Email lists and subscribe forms</span></a>
+        </div></div>
+      </div>
       <div class="nav__it">
         <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Dealer tools<svg class="i"><use href="#i-chev"/></svg></button>
         <div class="menu"><div class="menu__col"><div class="caps menu__t">Dealer tools</div>
@@ -162,7 +177,9 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <span class="idp"><span class="idp__k">VIN:</span> <span class="vin" id="cock-vin"></span><button class="copy" type="button" data-copy="vin" aria-label="Copy VIN" title="Copy VIN"><svg class="i"><use href="#i-copy"/></svg></button></span>
       <span class="cock__dates">Added <b id="v-added"></b><span class="age" id="v-age"></span> · Modified <b id="v-modified"></b> · Views <b id="v-views"></b></span>
       <span class="lock lock--mine" id="lock-mine" tabindex="0" aria-describedby="lock-tip"><svg class="i"><use href="#i-lock"/></svg>You hold the edit lock<i class="lock__q" aria-hidden="true">?</i><span class="lock__tip" id="lock-tip" role="tooltip">While you have this car open, colleagues can view it but not save — so nobody overwrites your changes. It is released when you leave the page.</span></span>
-    <span class="lock lock--other" id="lock" hidden><svg class="i"><use href="#i-lock"/></svg>Mike R. is editing this car — you can view, not save</span>
+    <!-- who is editing and since when (Bill, Nov 6: "show you at the very top who is editing and when they started their
+         edit session"). Demo name and time, as the switch in Utilities. -->
+    <span class="lock lock--other" id="lock" hidden><svg class="i"><use href="#i-lock"/></svg>Mike R. is editing this car since 10:42 AM — view only, you cannot save</span>
       <span class="cock__sp"></span>
       <button class="linkbtn" type="button" data-act="changelog">Change log<svg class="i"><use href="#i-ext"/></svg></button>
     </div>
@@ -173,17 +190,18 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
     <!-- ══ RAIL — the section index. A full object page uses a rail; that is
          what lets eleven sections exist without accordions. ══ -->
     <nav class="rail ui-nav" id="rail" aria-label="Sections">
-      <button class="rail__i ui-nav__i rail__i--on ui-nav__i--on" type="button" data-jump="zStatus"><span>Status</span><span class="badge badge--ok" id="b-status">AVAIL</span></button>
+      <button class="rail__i ui-nav__i rail__i--on ui-nav__i--on" type="button" data-jump="zSpecs"><span>Specs &amp; VIN</span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zStatus"><span>Status</span><span class="badge badge--ok" id="b-status">AVAIL</span></button>
       <button class="rail__i ui-nav__i" type="button" data-jump="zPricing"><span>Pricing</span><span class="badge" id="b-pricing"></span></button>
       <button class="rail__i ui-nav__i" type="button" data-jump="zCustom"><span>Custom Fields</span><span class="badge" id="b-custom">10</span></button>
       <button class="rail__i ui-nav__i" type="button" data-jump="zPhotos"><span>Photos</span><span class="badge" id="b-photos"></span></button>
       <button class="rail__i ui-nav__i" type="button" data-jump="zVideo"><span>Video</span><span class="badge" id="b-video"></span></button>
       <button class="rail__i ui-nav__i" type="button" data-jump="zCarfax"><span>CARFAX</span><span class="badge" id="b-carfax"></span></button>
-      <button class="rail__i ui-nav__i" type="button" data-jump="zSpecs"><span>Specs &amp; VIN</span></button>
       <button class="rail__i ui-nav__i" type="button" data-jump="zColors"><span>Colors</span></button>
       <button class="rail__i ui-nav__i" type="button" data-jump="zDesc"><span>Descriptions</span><span class="badge" id="b-desc"></span></button>
       <button class="rail__i ui-nav__i" type="button" data-jump="zFeat"><span>Features</span><span class="badge" id="b-feat"></span></button>
       <button class="rail__i ui-nav__i" type="button" data-jump="zSticker"><span>Window Sticker</span></button>
+      <button class="rail__i ui-nav__i" type="button" data-jump="zBG"><span>Buyers Guides</span></button>
       <button class="rail__i ui-nav__i" type="button" data-jump="zFeeds"><span>Feeds</span><span class="badge badge--ok" id="b-feeds">all on</span></button>
       <button class="rail__i ui-nav__i" type="button" data-jump="zMore"><span>More Details</span></button>
       <button class="rail__i ui-nav__i" type="button" data-jump="zUtil"><span>Utilities</span></button>
@@ -191,6 +209,58 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 
     <!-- ══ ZONES — one field, eleven attached regions ══ -->
     <div class="zones" id="zones">
+
+      <!-- Specs & VIN first (Bill, Nov 6: "This should be on top of all the other sections...this is the meat and potatoes about the car and shows them that they are on the right car when they land on this edit car page"). It was the 4th section. -->
+      <!-- 4 · SPECS & VIN -->
+      <section class="zone" id="zSpecs" aria-labelledby="t-specs">
+        <div class="zone__h">
+          <h2 class="zone__t" id="t-specs">Specs &amp; VIN</h2>
+        </div>
+        <div class="zone__b">
+          <div class="vinbar">
+            <span class="caps">VIN</span>
+            <span class="vinbar__v" id="vinbar-v"></span>
+            <button class="copy" type="button" data-copy="vin" aria-label="Copy VIN" title="Copy VIN"><svg class="i"><use href="#i-copy"/></svg></button>
+            <span class="vinbar__sp"></span>
+            <span class="note" id="decode-note" hidden><svg class="i"><use href="#i-alert"/></svg>VIN decoding is not connected in this prototype.</span>
+            <button class="btn btn--sheet btn--sm" type="button" data-act="decode"><svg class="i"><use href="#i-zap"/></svg>Decode VIN</button>
+          </div>
+          <div class="grid">
+            <div class="f" data-f="stockno"><label class="f__l" for="core-stockno">Stock</label><input class="in" id="core-stockno" type="text" autocomplete="off"></div>
+            <div class="f" data-f="vin"><label class="f__l" for="core-vin">VIN</label><input class="in in--mono" id="core-vin" type="text" autocomplete="off" spellcheck="false"></div>
+            <div class="f" data-f="year"><label class="f__l" for="core-year">Year</label><input class="in" id="core-year" type="text" inputmode="numeric" autocomplete="off"></div>
+            <div class="f" data-f="make"><label class="f__l" for="core-make">Make</label><input class="in" id="core-make" type="text" autocomplete="off"></div>
+            <div class="f" data-f="model"><label class="f__l" for="core-model">Model</label><input class="in" id="core-model" type="text" autocomplete="off"></div>
+            <div class="f f--w2" data-f="trim"><label class="f__l" for="core-trim">Trim</label><input class="in" id="core-trim" type="text" autocomplete="off"></div>
+            <div class="f" data-f="body"><label class="f__l" for="core-body">Body</label><input class="in" id="core-body" type="text" autocomplete="off"></div>
+            <div class="f" data-f="mileage"><label class="f__l" for="core-mileage">Mileage</label><input class="in" id="core-mileage" type="text" inputmode="numeric" autocomplete="off"></div>
+            <div class="f f--w2" data-f="engine"><label class="f__l" for="core-engine">Engine</label><input class="in" id="core-engine" type="text" autocomplete="off"></div>
+            <div class="f" data-f="trans"><label class="f__l" for="core-trans">Transmission</label><input class="in" id="core-trans" type="text" autocomplete="off"></div>
+            <div class="f" data-f="mpg_cty"><label class="f__l" for="core-mpg_cty">MPG City</label><input class="in" id="core-mpg_cty" type="text" inputmode="numeric" autocomplete="off"></div>
+            <div class="f" data-f="mpg_hwy"><label class="f__l" for="core-mpg_hwy">MPG Highway</label><input class="in" id="core-mpg_hwy" type="text" inputmode="numeric" autocomplete="off"></div>
+            <div class="f" data-f="fuel"><label class="f__l" for="core-fuel">Fuel Type</label><input class="in" id="core-fuel" type="text" autocomplete="off"></div>
+            <div class="f" data-f="drivetrain"><label class="f__l" for="core-drivetrain">Drivetrain</label><input class="in" id="core-drivetrain" type="text" autocomplete="off"></div>
+            <div class="f" data-f="cylinders"><label class="f__l" for="core-cylinders">Cylinders</label><select class="sel" id="core-cylinders" data-opt="cylinders"></select></div>
+            <div class="f" data-f="displacement"><label class="f__l" for="core-displacement">Displacement</label><input class="in" id="core-displacement" type="text" autocomplete="off"></div>
+            <div class="f" data-f="curb_weight"><label class="f__l" for="core-curb_weight">Curb Weight</label><input class="in" id="core-curb_weight" type="text" inputmode="numeric" autocomplete="off"></div>
+            <div class="f" data-f="doors"><label class="f__l" for="core-doors">Doors</label><input class="in" id="core-doors" type="text" inputmode="numeric" autocomplete="off"></div>
+            <div class="f" data-f="vehicle_type"><label class="f__l" for="core-vehicle_type">Vehicle Type</label><input class="in" id="core-vehicle_type" type="text" autocomplete="off"></div>
+          </div>
+          <!-- VIN Decoder Selectable (Bill, Nov 9: "missing the VIN Decoding styles/engines/transmission fields that are
+               selectable in order to properly VIN decode cars"; his screenshot bill changes/item25). The live editor, checked
+               Nov 16: three short pick lists (Decoded styles / engines / transmissions) and, when the decode returned no
+               choices, "NO selectable for this vehicle." This fixture has no decoded choices, so it shows that state. -->
+          <div class="vds" role="group" aria-labelledby="vds-h">
+            <div class="cgrp__h" id="vds-h">VIN Decoder Selectable</div>
+            <div class="vds__g">
+              <div class="f"><label class="f__l" for="vds-style">Decoded styles</label><select class="vds__l" id="vds-style" size="4" data-vds="style"></select></div>
+              <div class="f"><label class="f__l" for="vds-engine">Decoded engines</label><select class="vds__l" id="vds-engine" size="4" data-vds="engine"></select></div>
+              <div class="f"><label class="f__l" for="vds-trans">Decoded transmissions</label><select class="vds__l" id="vds-trans" size="4" data-vds="trans"></select></div>
+            </div>
+            <p class="vds__none" id="vds-none">No selectable for this vehicle.</p>
+          </div>
+        </div>
+      </section>
 
       <!-- 1 · STATUS & VISIBILITY -->
       <section class="zone" id="zStatus" aria-labelledby="t-status">
@@ -204,7 +274,8 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
               <div class="seg" role="group" aria-labelledby="l-sold" data-seg="status">
                 <button class="seg__b" type="button" data-v="Available" aria-pressed="false">Available</button>
                 <button class="seg__b" type="button" data-v="Sold" aria-pressed="false">Sold</button>
-                <button class="seg__b" type="button" data-v="Pending" aria-pressed="false">Pending</button>
+                <!-- no Pending status in the system (Bill, Nov 6: "We do not have a Pending option so that should be removed ... Sale Pending is accounted for below"); Staging stays
+                <button class="seg__b" type="button" data-v="Pending" aria-pressed="false">Pending</button> -->
                 <button class="seg__b" type="button" data-v="Staging" aria-pressed="false">Staging</button>
               </div>
             </div>
@@ -298,8 +369,10 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
           <div class="vid">
             <a class="vid__prev" id="vid-prev" target="_blank" rel="noopener"></a>
             <div class="vid__f">
-              <div class="f" data-f="YouTube_url"><label class="f__l" for="core-YouTube_url">YouTube URL</label><input class="in" id="core-YouTube_url" type="url" autocomplete="off" spellcheck="false" placeholder="https://www.youtube.com/watch?v=…"></div>
-              <div class="f" data-f="video_url"><label class="f__l" for="core-video_url">Other video link</label><input class="in" id="core-video_url" type="url" autocomplete="off" spellcheck="false" placeholder="Vimeo, walk-around video, …"></div>
+              <!-- YouTube only, several in one field, one link per line (Bill, Nov 6: "we just need a textarea box as you just put each video on a new line in the same field") -->
+              <div class="f" data-f="YouTube_url"><label class="f__l" for="core-YouTube_url">YouTube URLs</label><textarea class="ta" id="core-YouTube_url" rows="3" autocomplete="off" spellcheck="false" placeholder="https://www.youtube.com/watch?v=…&#10;one link per line"></textarea></div>
+              <!-- "We can remove the Other Video Link field as it is not something we have in our system currently" (Bill, Nov 6)
+              <div class="f" data-f="video_url"><label class="f__l" for="core-video_url">Other video link</label><input class="in" id="core-video_url" type="url" autocomplete="off" spellcheck="false" placeholder="Vimeo, walk-around video, …"></div> -->
             </div>
           </div>
         </div>
@@ -317,63 +390,37 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         <div class="zone__b"><div class="cfx" id="cfx"></div></div>
       </section>
 
-      <!-- 4 · SPECS & VIN -->
-      <section class="zone" id="zSpecs" aria-labelledby="t-specs">
-        <div class="zone__h">
-          <h2 class="zone__t" id="t-specs">Specs &amp; VIN</h2>
-        </div>
-        <div class="zone__b">
-          <div class="vinbar">
-            <span class="caps">VIN</span>
-            <span class="vinbar__v" id="vinbar-v"></span>
-            <button class="copy" type="button" data-copy="vin" aria-label="Copy VIN" title="Copy VIN"><svg class="i"><use href="#i-copy"/></svg></button>
-            <span class="vinbar__sp"></span>
-            <span class="note" id="decode-note" hidden><svg class="i"><use href="#i-alert"/></svg>VIN decoding is not connected in this prototype.</span>
-            <button class="btn btn--sheet btn--sm" type="button" data-act="decode"><svg class="i"><use href="#i-zap"/></svg>Decode VIN</button>
-          </div>
-          <div class="grid">
-            <div class="f" data-f="stockno"><label class="f__l" for="core-stockno">Stock</label><input class="in" id="core-stockno" type="text" autocomplete="off"></div>
-            <div class="f" data-f="vin"><label class="f__l" for="core-vin">VIN</label><input class="in in--mono" id="core-vin" type="text" autocomplete="off" spellcheck="false"></div>
-            <div class="f" data-f="year"><label class="f__l" for="core-year">Year</label><input class="in" id="core-year" type="text" inputmode="numeric" autocomplete="off"></div>
-            <div class="f" data-f="make"><label class="f__l" for="core-make">Make</label><input class="in" id="core-make" type="text" autocomplete="off"></div>
-            <div class="f" data-f="model"><label class="f__l" for="core-model">Model</label><input class="in" id="core-model" type="text" autocomplete="off"></div>
-            <div class="f f--w2" data-f="trim"><label class="f__l" for="core-trim">Trim</label><input class="in" id="core-trim" type="text" autocomplete="off"></div>
-            <div class="f" data-f="body"><label class="f__l" for="core-body">Body</label><input class="in" id="core-body" type="text" autocomplete="off"></div>
-            <div class="f" data-f="mileage"><label class="f__l" for="core-mileage">Mileage</label><input class="in" id="core-mileage" type="text" inputmode="numeric" autocomplete="off"></div>
-            <div class="f f--w2" data-f="engine"><label class="f__l" for="core-engine">Engine</label><input class="in" id="core-engine" type="text" autocomplete="off"></div>
-            <div class="f" data-f="trans"><label class="f__l" for="core-trans">Transmission</label><input class="in" id="core-trans" type="text" autocomplete="off"></div>
-            <div class="f" data-f="mpg_cty"><label class="f__l" for="core-mpg_cty">MPG City</label><input class="in" id="core-mpg_cty" type="text" inputmode="numeric" autocomplete="off"></div>
-            <div class="f" data-f="mpg_hwy"><label class="f__l" for="core-mpg_hwy">MPG Highway</label><input class="in" id="core-mpg_hwy" type="text" inputmode="numeric" autocomplete="off"></div>
-            <div class="f" data-f="fuel"><label class="f__l" for="core-fuel">Fuel Type</label><input class="in" id="core-fuel" type="text" autocomplete="off"></div>
-            <div class="f" data-f="drivetrain"><label class="f__l" for="core-drivetrain">Drivetrain</label><input class="in" id="core-drivetrain" type="text" autocomplete="off"></div>
-            <div class="f" data-f="cylinders"><label class="f__l" for="core-cylinders">Cylinders</label><select class="sel" id="core-cylinders" data-opt="cylinders"></select></div>
-            <div class="f" data-f="displacement"><label class="f__l" for="core-displacement">Displacement</label><input class="in" id="core-displacement" type="text" autocomplete="off"></div>
-            <div class="f" data-f="curb_weight"><label class="f__l" for="core-curb_weight">Curb Weight</label><input class="in" id="core-curb_weight" type="text" inputmode="numeric" autocomplete="off"></div>
-            <div class="f" data-f="doors"><label class="f__l" for="core-doors">Doors</label><input class="in" id="core-doors" type="text" inputmode="numeric" autocomplete="off"></div>
-            <div class="f" data-f="vehicle_type"><label class="f__l" for="core-vehicle_type">Vehicle Type</label><input class="in" id="core-vehicle_type" type="text" autocomplete="off"></div>
-          </div>
-        </div>
-      </section>
-
       <!-- 5 · COLORS -->
       <section class="zone" id="zColors" aria-labelledby="t-colors">
         <div class="zone__h">
           <h2 class="zone__t" id="t-colors">Colors</h2>
         </div>
         <div class="zone__b">
-          <div class="grid">
+          <!-- two parts, Exterior then Interior, each with its own fields and swatches (Bill, Nov 6: "There would be 2 sets
+               of colors from VIN decoding, one for Exterior and one for Interior ... grouped together for what they are for").
+               Was: one grid of four fields with the exterior swatches under it. -->
+          <div class="cgrp" role="group" aria-labelledby="cg-ext">
+          <div class="cgrp__h" id="cg-ext">Exterior</div>
+          <div class="grid grid--2">
             <div class="f" data-f="ext_color"><label class="f__l" for="core-ext_color">Exterior Color</label><span class="inw"><i class="inw__dot" id="ext-dot" aria-hidden="true"></i><input class="in" id="core-ext_color" type="text" autocomplete="off"></span></div>
             <div class="f" data-f="basic_ext_color">
               <label class="f__l" for="core-basic_ext_color">Basic Exterior Color<i class="f__q" tabindex="0" title="Saving copies this into Exterior Color" aria-label="Saving copies this into Exterior Color">?</i></label>
               <select class="sel" id="core-basic_ext_color" data-opt="basicExt"></select>
             </div>
+          </div>
+          <div class="fsw" id="fsw" aria-label="Factory exterior colors from the VIN decode"></div>
+          </div>
+          <div class="cgrp" role="group" aria-labelledby="cg-int">
+          <div class="cgrp__h" id="cg-int">Interior</div>
+          <div class="grid grid--2">
             <div class="f" data-f="int_color"><label class="f__l" for="core-int_color">Interior Color</label><input class="in" id="core-int_color" type="text" autocomplete="off"></div>
             <div class="f" data-f="basic_int_color">
               <label class="f__l" for="core-basic_int_color">Basic Interior Color<i class="f__q" tabindex="0" title="Saving copies this into Interior Color" aria-label="Saving copies this into Interior Color">?</i></label>
               <select class="sel" id="core-basic_int_color" data-opt="basicInt"></select>
             </div>
           </div>
-          <div class="fsw" id="fsw" aria-label="Factory colors from the VIN decode"></div>
+          <!-- interior factory swatches go here when the decode returns them (no interior colours in this fixture) -->
+          </div>
         </div>
       </section>
 
@@ -450,7 +497,8 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
                 <span>Built from this vehicle's specs, price and equipment — the same one as Window Stickers → Window Sticker.</span>
                 <div class="wstk__acts">
                   <button class="btn btn--sheet" type="button" data-print="Window Sticker"><svg class="i"><use href="#i-print"/></svg>Print</button>
-                  <button class="btn btn--sheet" type="button" data-act="sticker-pdf"><svg class="i"><use href="#i-ext"/></svg>Open PDF</button>
+                  <!-- no PDF version (Bill, Nov 6: "We don't have a PDF version so this button should be removed ... they all ... just open in a new tab to print")
+                  <button class="btn btn--sheet" type="button" data-act="sticker-pdf"><svg class="i"><use href="#i-ext"/></svg>Open PDF</button> -->
                 </div>
               </div>
               <div class="wstk__row">
@@ -459,6 +507,24 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
                 <div class="wstk__acts" id="wstk-up"></div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BUYERS GUIDES - its own section under the window sticker (Bill, Nov 6: "there should be a Buyers Guide
+           section under the window sticker that has all the links. and I think this Buyers Guide Text field should
+           be in that same section"; his screenshot bill changes/item-22). The links are the Window Stickers menu's;
+           the text moved here from the description tabs. -->
+      <section class="zone" id="zBG" aria-labelledby="t-bg">
+        <div class="zone__h">
+          <h2 class="zone__t" id="t-bg">Buyers Guides</h2>
+        </div>
+        <div class="zone__b">
+          <div class="bg__links" id="bg-links"></div>
+          <div class="f bg__text" data-f="desc.buyers_guide_text">
+            <label class="f__l" for="bg-text">Buyers Guide Additional Information</label>
+            <textarea class="ta" id="bg-text" data-desc="buyers_guide_text" rows="4" spellcheck="true"></textarea>
+            <span class="f__help">Prints on the buyers guide. Autosaved when you click a print link.</span>
           </div>
         </div>
       </section>
@@ -490,17 +556,20 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         </div>
         <div class="zone__b">
           <div class="grid">
+            <!-- removed (Bill, Nov 6): Book Value and Discount "need to be deleted from all dealers databases as it is not used"; Original Price "is not a real thing...there is just price history"
             <div class="f" data-f="bookvalue"><label class="f__l" for="core-bookvalue">Book Value</label><div class="money"><input class="in" id="core-bookvalue" type="text" inputmode="numeric" autocomplete="off"></div></div>
             <div class="f" data-f="discount"><label class="f__l" for="core-discount">Discount</label><input class="in" id="core-discount" type="text" inputmode="numeric" autocomplete="off"></div>
-            <div class="f" data-f="original_price"><label class="f__l" for="core-original_price">Original Price</label><div class="money"><input class="in" id="core-original_price" type="text" inputmode="numeric" autocomplete="off"></div></div>
+            <div class="f" data-f="original_price"><label class="f__l" for="core-original_price">Original Price</label><div class="money"><input class="in" id="core-original_price" type="text" inputmode="numeric" autocomplete="off"></div></div> -->
             <div class="f" data-f="location"><label class="f__l" for="core-location">Location</label><select class="sel" id="core-location" data-opt="location"></select></div>
+            <!-- removed (Bill, Nov 6): Model Number "Not needed ... Not Used for any dealers"; Body Code "not used for any dealers";
+                 Add Options "used by the vin decoding so it is covered above in the options"; Zero Down "no dealers use this field"
             <div class="f" data-f="modelnumber"><label class="f__l" for="core-modelnumber">Model Number</label><input class="in" id="core-modelnumber" type="text" autocomplete="off"></div>
             <div class="f" data-f="bodyCode"><label class="f__l" for="core-bodyCode">Body Code</label><input class="in" id="core-bodyCode" type="text" autocomplete="off"></div>
             <div class="f f--w2" data-f="add_options"><label class="f__l" for="core-add_options">Add Options</label><input class="in" id="core-add_options" type="text" autocomplete="off"></div>
             <div class="swrow" style="align-self:end;box-shadow:none">
               <span class="swrow__x"><b>Zero Down</b></span>
               <label class="sw"><input type="checkbox" id="core-zero_down" data-sw="zero_down" aria-label="Zero Down"><span class="sw__t"></span></label>
-            </div>
+            </div> -->
           </div>
         </div>
       </section>
@@ -564,8 +633,8 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
      buttons as newbackendcert / the old backend (Ivaylo, 2026-10-22: keep our
      old text tools). Flat moono-lisa skin, tuned to the page tokens. -->
 <script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
-<script src="single-vehicle-gen11.data.js?v=20261030-five"></script>
-<script src="single-vehicle-gen11.js?v=20261030-five"></script>
+<script src="single-vehicle-gen11.data.js?v=20261115-r2d"></script>
+<script src="single-vehicle-gen11.js?v=20261116-yt"></script>
 <script src="../_aan-tablet.js?v=20261030-tab"></script>
 </body>
 </html>

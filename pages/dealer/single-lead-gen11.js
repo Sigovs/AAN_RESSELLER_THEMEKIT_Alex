@@ -372,6 +372,29 @@
       + '    <provider><name>' + L.provider + '</name></provider>\n  </prospect>\n</adf>';
   }
 
+  /* ── Write email (Bill, Nov 10; the live lead's Email tab: To · BCC · Subject · File · message · Send).
+        The demo has no mailbox: Send puts the email at the top of this list as sent. ── */
+  function openMail() {
+    var f = $('#f-mail');
+    if (f.hidden) { f.reset(); $('#mail-to').value = L.email || ''; $('#mail-subj').value = L.car ? L.car : ''; $('#mail-file-n').textContent = 'File to attach'; }
+    f.hidden = false; goTo($('#s-emails'));
+    setTimeout(function () { $('#mail-subj').focus(); }, 450);
+  }
+  function closeMail() { $('#f-mail').hidden = true; sizeExtender(); }
+  $('#mail-file').addEventListener('change', function (e) {
+    var n = e.target.files && e.target.files[0] ? e.target.files[0].name : '';
+    $('#mail-file-n').textContent = n || 'File to attach';
+  });
+  $('#f-mail').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var to = $('#mail-to'), subj = $('#mail-subj'), ok = true;
+    [to, subj].forEach(function (x) { var bad = !x.value.trim(); x.classList.toggle('fld--bad', bad); if (bad && ok) { x.focus(); ok = false; } });
+    if (!ok) return;
+    var file = $('#mail-file').files && $('#mail-file').files[0] ? $('#mail-file').files[0].name : '';
+    emails.unshift({ dir: 'OUT', d: fdt(new Date().toISOString()), s: subj.value.trim(), b: $('#mail-body').value.trim() + (file ? '\n\nAttached: ' + file : '') });
+    closeMail(); renderEmails(); sizeExtender();
+  });
+
   function renderEmails() {
     var who = repOf(L);
     var snip = function (e, i) {
@@ -398,13 +421,13 @@
         var unread = e.dir === 'IN' && i === 0 && L.newMail;
         return '<div class="em' + (unread ? ' em--unread' : '') + '" data-em="' + i + '" role="button" tabindex="0" aria-expanded="false">'
           + '<span class="em__dir em__dir--' + e.dir.toLowerCase() + '">' + e.dir + '</span>'
-          + '<span class="em__s" title="' + esc(e.s) + '">' + esc(e.s) + '<span class="em__p">' + esc(snip(e, i)) + '</span></span>'
+          + '<span class="em__s" title="' + esc(e.s) + '">' + esc(e.s) + '<span class="em__p">' + esc(e.b || snip(e, i)) + '</span></span>'
           + '<span class="em__w" title="' + esc(e.dir === 'IN' ? 'From ' + L.name + ' to ' + who : 'From ' + who + ' to ' + L.name) + '">' + (e.dir === 'IN'
             ? '<b>' + esc(L.name) + '</b> <em>→</em> ' + esc(who)
             : '<b>' + esc(who) + '</b> <em>→</em> ' + esc(L.name)) + '</span>'
           + '<span class="em__d">' + esc(e.d) + '</span>'
           + '<span class="em__x">' + ic('i-chev') + '</span>'
-          + '<div class="em__body">' + esc(snip(e, i)) + '\n\n— ' + esc(e.dir === 'IN' ? L.name : who) + '</div></div>';
+          + '<div class="em__body">' + esc(e.b || snip(e, i)) + '\n\n— ' + esc(e.dir === 'IN' ? L.name : who) + '</div></div>';
       }).join('')
       + '<div class="mail__f"><span>' + emails.length + ' emails · newest first</span></div>';
   }
@@ -417,7 +440,7 @@
       status: $('#wf-status').value,
       rep: $('#wf-rep').value,
       follow: $('#wf-follow').value,
-      internet: $('#wf-internet').checked,
+      internet: !!($('#wf-internet') || {}).checked,   /* the Internet box is commented out (Bill, Nov 10) */
       imc: $('#wf-imc').checked
     };
   }
@@ -474,9 +497,56 @@
     renderTrade();
     renderActivity();
     renderEmails();
+    renderCredit();
     renderWorkflow();
     sizeExtender();
     syncNav();
+  }
+
+  /* ══ CREDIT APP (Bill, Nov 10) ═══════════════════════════════════════════
+     The new backend's sections and labels, verbatim. Shown only when the lead is
+     a credit app; a user blocked from credit apps would not get the tab at all
+     (the block is the server's). Values: what this demo lead has; sensitive
+     numbers sealed; everything else empty, never invented. */
+  var CREDIT = [
+    ['Personal Information', ['First Name', 'Middle Name', 'Last Name', 'Email Address', 'Phone', '*Drivers License No.', '*Expiration date', '*Date of Birth', '*Social Security No.']],
+    ['Residence Information', ['Address', 'City', 'State', 'Zip', 'Time at Address years', 'months', 'Residence Type', 'Monthly Payment']],
+    ['Previous Residence Information', ['Previous Address', 'Previous City', 'Previous State', 'Previous Zip', 'Previous Time at Address years', 'months', 'Previous Residence Type', 'Previous Monthly Payment']],
+    ['Employment Information', ['Employer', 'Address', 'City', 'State', 'Zip', 'Office Phone', 'Supervisor', 'Gross Monthly Income', 'Other Monthly Income', 'Occupation', 'Number of Years at Present Job? If less than 2, where did you work previously?']],
+    ['Previous Employment Information', ['Employer', 'Office Phone', 'Supervisor', 'Occupation']],
+    ['Trade-In Vehicle Information', ['Vehicle', 'Vehicle Status']],
+    ['Vehicle of Interest', ['Vehicle of interest make', 'Vehicle of interest model', 'Or enter Stock#', 'Down Payment']],
+    ['Additional Information', ['Additional Information']],
+    ['Terms And Conditions', ['I agree']]
+  ];
+  function renderCredit() {
+    var on = L.type === 'credit-app';
+    $('#nav-credit').hidden = !on;
+    $('#s-credit').hidden = !on;
+    if ($('#paper-form') && !$('#paper-form').hidden) $('#paper-capp').innerHTML = cappHTML();
+    if (!on) { $('#capp').innerHTML = ''; return; }
+    $('#capp').innerHTML = cappHTML();
+  }
+  /* the application's groups and fields, filled from this lead: the Credit App section and Dealer Paperwork's form */
+  function cappHTML() {
+    var nm = String(L.name || '').split(' '), city = String(L.city || '').split(',');
+    var car = String(L.car || '').split(' ');
+    var known = {
+      'Personal Information|First Name': nm[0], 'Personal Information|Last Name': nm.slice(1).join(' '),
+      'Personal Information|Email Address': L.email, 'Personal Information|Phone': L.phone,
+      'Residence Information|City': city[0], 'Residence Information|State': (city[1] || '').trim(),
+      'Vehicle of Interest|Vehicle of interest make': L.car ? car.slice(1, 2).join(' ') : '',
+      'Vehicle of Interest|Vehicle of interest model': L.car ? car.slice(2).join(' ') : '',
+      'Vehicle of Interest|Or enter Stock#': L.stock
+    };
+    return CREDIT.map(function (g) {
+      return '<div class="capp__g"><div class="grp__t">' + esc(g[0]) + '</div><div class="rec__g capp__f">' + g[1].map(function (f) {
+        var sealed = f.charAt(0) === '*', lab = sealed ? f.slice(1) : f, v = known[g[0] + '|' + lab];
+        var val = sealed ? '<span class="rec__v capp__seal" title="Sealed in the mockup">' + ic('i-lock') + ' sealed</span>'
+          : (v ? '<span class="rec__v">' + esc(v) + '</span>' : '<span class="rec__v none">—</span>');
+        return '<div' + (lab.length > 40 ? ' class="capp__w"' : lab.length > 24 ? ' class="capp__w2"' : '') + '><span class="rec__l">' + esc(lab) + '</span>' + val + '</div>';
+      }).join('') + '</div></div>';
+    }).join('');
   }
 
   /* ══ THE SECTION ANCHOR ════════════════════════════════════════════════
@@ -499,7 +569,7 @@
      own contribution. It is load-bearing even when it computes to 0. */
   function sizeExtender() {
     var sp = $('#sec-space');
-    var last = $$('.sec').pop();
+    var last = $$('.sec:not([hidden])').pop();
     if (!sp || !last) return;
     sp.style.height = '0px';
     var need = anchorOf(last) - (document.documentElement.scrollHeight - window.innerHeight);
@@ -515,11 +585,12 @@
      itself lands on. */
   function syncNav() {
     var line = stack() + anchorGap() + 1, cur = null;
-    $$('.sec').forEach(function (s) { if (s.getBoundingClientRect().top <= line) cur = s.id; });
+    $$('.sec:not([hidden])').forEach(function (s) { if (s.getBoundingClientRect().top <= line) cur = s.id; });
     if (!cur) cur = $$('.sec')[0].id;
     $$('.secnav__b').forEach(function (b) {
       var on = b.dataset.sec === cur;
       b.classList.toggle('secnav__b--on', on);
+      b.classList.toggle('ui-view--on', on);   /* Overview's static ui-view--on kept it blue beside the current section */
       if (on) { b.setAttribute('aria-current', 'true'); } else { b.removeAttribute('aria-current'); }
     });
   }
@@ -602,7 +673,15 @@
     if ((el = t.closest('[data-sec]'))) { e.preventDefault(); goTo($('#' + el.dataset.sec)); return; }
 
     if (t.closest('[data-act="goto-note"]')) { goTo($('#s-activity')); $('#note-in').focus({ preventScroll: true }); return; }
-    if (t.closest('[data-act="goto-email"]') || t.closest('[data-act="write-email"]')) { goTo($('#s-emails')); return; }
+    if (t.closest('[data-act="goto-email"]')) { goTo($('#s-emails')); return; }
+    if (t.closest('[data-act="write-email"]')) { openMail(); return; }
+    if (t.closest('[data-act="mail-cancel"]')) { closeMail(); return; }
+    if ((el = t.closest('[data-paper]'))) {
+      var pf = $('#paper-form'), open = pf.hidden;
+      pf.hidden = !open; el.setAttribute('aria-expanded', String(open)); el.classList.toggle('btn--on', open);
+      if (open) $('#paper-capp').innerHTML = cappHTML();
+      sizeExtender(); return;
+    }
     if (t.closest('[data-act="vfields"]')) { setVf(!$('.vacc').classList.contains('acc--open')); return; }
     if (t.closest('[data-act="find-veh"]')) {
       setVf(true);
@@ -647,6 +726,7 @@
   document.addEventListener('submit', function (e) {
     var f = e.target;
     e.preventDefault();
+    if (f.id === 'f-mail') return;   /* the email composer has its own handler; this one re-renders the record */
 
     if (f.id === 'f-note') {
       var v = $('#note-in').value.trim();

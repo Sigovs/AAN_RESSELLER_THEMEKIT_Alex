@@ -11701,3 +11701,9 @@ window.AC = {
   }
  }
 };
+
+/* Marketing (Bill, Nov 11: "we have that column in the live system now").
+   This export predates that column, so the flag is taken from the Manage
+   Dealers export (s11-manage-dealers-2, "Marketing Dealers"): the dealer ids
+   whose package badge is Marketing. Same live system, matched by dealer id. */
+window.AC.mkt = [67,167,186,213,241,277,339,458,460,461,462,463,464,465,468,469,470,481,522,526,583,600,615,620,677,680,697,729,757,765,772,805,806,820,821,829,846,849,850,860,878,880,907,924,933,938,966,978,992,998,1017,1021,1034,1055,1069,1078,1093,1095,1116];

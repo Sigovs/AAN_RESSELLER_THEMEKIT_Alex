@@ -8,9 +8,9 @@
    cannot land this one in a half-dark state. Only an explicit `light` is honoured. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
 <link rel="stylesheet" href="all-vehicles-gen11.css?v=20261030-ds">
-<link rel="stylesheet" href="single-lead-gen11.css?v=20261030-ds">
+<link rel="stylesheet" href="single-lead-gen11.css?v=20261116-paper">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
-<link rel="stylesheet" href="../_aan-components.css?v=20261030-tab">
+<link rel="stylesheet" href="../_aan-components.css?v=20261116-bar">
 </head>
 <body>
 
@@ -80,9 +80,12 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         <div class="menu">
           <div class="menu__col"><div class="caps menu__t">Inventory</div>
             <a class="menu__l" href="all-vehicles-gen11.html"><b>Inventory Manager</b><span>Every vehicle, by lane</span></a>
-            <a class="menu__l" href="#"><b>New submissions</b><span>Vehicles waiting for review</span></a>
+            <!-- New submissions: not in the live system (checked Nov 16; Bill, Nov 6: "As for New Submissions what is that?"). A new-backend page, so it moves to the New features list. -->
+            <!-- <a class="menu__l" href="#"><b>New submissions</b><span>Vehicles waiting for review</span></a> -->
             <a class="menu__l" href="#"><b>Sort order</b><span>How vehicles list on your site</span></a>
             <a class="menu__l" href="#"><b>Auto Locator</b><span>Find a vehicle for a buyer</span></a>
+            <!-- Feed Out Manager (Bill, Nov 6: "We are missing the Feed Out Manager and most dealers 2020 and newer should have that link as it is a way for them to edit all available cars at once for their outgoing feeds") -->
+            <a class="menu__l" href="#"><b>Feed Out Manager</b><span>Outgoing feeds for all available cars</span></a>
           </div>
           <div class="menu__col"><div class="caps menu__t">Reports</div>
             <a class="menu__l" href="#"><b>Inventory aging</b><span>Days in stock, per vehicle</span></a>
@@ -94,20 +97,32 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Leads<svg class="i"><use href="#i-chev"/></svg></button>
         <div class="menu"><div class="menu__col"><div class="caps menu__t">Leads</div>
           <a class="menu__l menu__l--on" href="all-leads-gen11.html" aria-current="page"><b>Lead Manager</b><span>Every enquiry, by stage</span></a>
+          <!-- Customers and Referrals: not in the live system, whose Leads menu is only the Lead Manager (checked Nov 16; Bill, Nov 6: "there is really just the lead manager ... unless those will be new features"). New-backend pages, so they move to the New features list.
           <a class="menu__l" href="#"><b>Customers</b><span>People who enquired or bought</span></a>
-          <a class="menu__l" href="#"><b>Referrals</b><span>Where leads came from</span></a>
+          <a class="menu__l" href="#"><b>Referrals</b><span>Where leads came from</span></a> -->
         </div></div>
       </div>
       <div class="nav__it">
         <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Site<svg class="i"><use href="#i-chev"/></svg></button>
         <div class="menu"><div class="menu__col"><div class="caps menu__t">Site management</div>
           <a class="menu__l" href="#"><b>Site Content Manager</b><span>Pages, banners and copy</span></a>
+          <!-- Form Editor: in the live dealer menu for AAN admin users only (checked Nov 16; Bill, Nov 6: "Us admin users need a "Form Editor" link here but dealers do not") -->
+          <a class="menu__l" href="#" data-admin-only><b>Form Editor</b><span>Dealer forms · AAN admins only</span></a>
         </div></div>
       </div>
       <!-- Marketing menu (Newsletter tools, Craigslist posting; Posting tools & eBay was already hidden)
            removed: meeting with Ivaylo, 2026-10-29. Newsletter is untested and mails go out from
            the AAN server (spam-flag risk); Marketing comes back later as an analytics hub.
            Restore: git show c2a8808:pages/dealer/single-lead-gen11.html -->
+      <!-- Newsletter Tools is back (Alex, Nov 16; Bill, Nov 6: dealers use it to "download email lists" and it collects the
+           site's "newsletter subscribe forms"). The live dealer menu has it under Marketing. Only this item returns;
+           Craigslist posting stays out with the rest of the Oct 29 Marketing menu. -->
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Marketing<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Marketing applications</div>
+          <a class="menu__l" href="#"><b>Newsletter Tools</b><span>Email lists and subscribe forms</span></a>
+        </div></div>
+      </div>
       <div class="nav__it">
         <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Dealer tools<svg class="i"><use href="#i-chev"/></svg></button>
         <div class="menu"><div class="menu__col"><div class="caps menu__t">Dealer tools</div>
@@ -156,6 +171,9 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
   <div class="head head--card">
     <div class="head__top">
       <a class="btn btn--quiet btn--sm" href="all-leads-gen11.html"><svg class="i"><use href="#i-left"/></svg> Back to board</a>
+      <!-- ReSend / Email (Bill, Nov 10): in the live system now - re-sends the lead to the dealership's
+           lead-routing emails or CRM (the emails in the settings), for "I never got that lead" -->
+      <button class="btn btn--sheet btn--sm" type="button" data-act="resend" title="Re-send this lead to the dealership's lead-routing emails or CRM"><svg class="i"><use href="#i-mail"/></svg> ReSend / Email</button>
       <span class="head__sp"></span>
       <span class="walk" role="group" aria-label="Record navigation"><button class="btn btn--quiet btn--sm" type="button" data-act="prev"><svg class="i"><use href="#i-left"/></svg> Prev</button><button class="btn btn--quiet btn--sm" type="button" data-act="next">Next <svg class="i"><use href="#i-right"/></svg></button></span>
       <button class="btn btn--sheet btn--sm" type="button" data-act="goto-note"><svg class="i"><use href="#i-edit"/></svg> Note</button>
@@ -215,6 +233,10 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         <a class="secnav__b ui-view" href="#s-trade" data-sec="s-trade">Trade-in</a>
         <a class="secnav__b ui-view" href="#s-activity" data-sec="s-activity">Activity <b id="n-act">0</b></a>
         <a class="secnav__b ui-view" href="#s-emails" data-sec="s-emails">Emails <b id="n-em">0</b></a>
+        <!-- Credit App: only on credit-app leads, and only for users allowed to see them (Bill, Nov 10) -->
+        <a class="secnav__b ui-view" href="#s-credit" data-sec="s-credit" id="nav-credit" hidden>Credit App</a>
+        <!-- Dealer Paperwork (Bill, Nov 10; the live lead card's "Dealer Paperwork" tab, checked Nov 16) -->
+        <a class="secnav__b ui-view" href="#s-paper" data-sec="s-paper">Paperwork</a>
       </nav>
       <span class="cmd__sp"></span>
       <button class="btn btn--sheet btn--sm ui-ctl btn--on" type="button" data-act="dock" aria-expanded="true" aria-controls="dock"><svg class="i"><use href="#i-sliders"/></svg> Workflow</button>
@@ -330,7 +352,55 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         <div class="sec__h"><h2 id="t-emails">Emails</h2><span class="demo">Demo</span><span class="s" id="em-s">0 emails</span><button class="btn btn--primary btn--sm" type="button" data-act="write-email"><svg class="i"><use href="#i-mail"/></svg> Write email</button></div>
         <div class="sec__b">
           <p class="src">Subjects and bodies are demo data generated from this lead's email count — no mailbox connected.</p>
+          <!-- Write email (Bill, Nov 10: "no mockup for sending email?"). The live lead's Email tab, checked Nov 16:
+               Email To · BCC · Subject · File to attach · the message in a rich-text editor · Send. -->
+          <form class="mailc" id="f-mail" autocomplete="off" novalidate hidden>
+            <div class="mailc__h"><b>New email</b><span class="hint">to this lead · sent from the dealership's address</span></div>
+            <div class="mailc__g">
+              <label class="f"><span>Email To</span><input class="fld" type="email" name="send_to" id="mail-to"></label>
+              <label class="f"><span>BCC</span><input class="fld" type="email" name="bcc_address"></label>
+              <label class="f mailc__w"><span>Subject</span><input class="fld" type="text" name="subject" id="mail-subj"></label>
+              <label class="f mailc__w"><span>Message</span><textarea class="fld" name="email_text" id="mail-body" rows="6"></textarea></label>
+            </div>
+            <div class="mailc__f">
+              <label class="btn btn--sheet btn--sm mailc__file"><input type="file" name="upfile0" id="mail-file"><svg class="i"><use href="#i-plus"/></svg> <span id="mail-file-n">File to attach</span></label>
+              <span class="mailc__sp"></span>
+              <button class="btn btn--quiet btn--sm" type="button" data-act="mail-cancel">Cancel</button>
+              <button class="btn btn--primary btn--sm" type="submit">Send</button>
+            </div>
+          </form>
           <div class="mail" id="em-tbl"></div>
+        </div>
+      </section>
+
+      <!-- ── CREDIT APP — the printable finance application (Bill, Nov 10: "When the lead is a credit app we have a tab
+           ... that reads "Credit App" and when clicked it opens the entire printable finance app ... some users are
+           blocked from seeing the credit app leads so if they are blocked ... this tab doesn't show up"; his screenshot
+           bill changes/item4). Sections and labels are the new backend's (d15 export, #ldossier-sec-creditapp) with
+           its Print Application button. No real applicant data is copied: values come from this demo lead, and the
+           sensitive numbers are sealed. -->
+      <section class="sec" id="s-credit" aria-labelledby="t-credit" hidden>
+        <div class="sec__h"><h2 id="t-credit">Credit App</h2><span class="demo">Demo</span><span class="s">finance application</span><a class="btn btn--primary btn--sm" href="#" target="_blank" rel="noopener" data-act="print-app"><svg class="i"><use href="#i-print"/></svg> Print Application</a></div>
+        <div class="sec__b">
+          <p class="src">The fields are the live application's. Values not on this demo lead are empty; licence, birth date and social security number are sealed.</p>
+          <div class="capp" id="capp"></div>
+        </div>
+      </section>
+
+      <!-- ── DEALER PAPERWORK (Bill, Nov 10: Paperwork forms filled with the customer's and the dealer's info; his
+           screenshot bill changes/item5 shows another dealer's list). The live lead card has a "Dealer Paperwork" tab:
+           each of the dealer's forms opens filled in from the lead (sale_paperwork.php, one template per form). Checked
+           Nov 16: Chicago Motor Cars and Miller Motorcars both have one form, Credit Application. -->
+      <section class="sec" id="s-paper" aria-labelledby="t-paper">
+        <div class="sec__h"><h2 id="t-paper">Dealer Paperwork</h2><span class="demo">Demo</span><span class="s">this dealer's forms, filled in from the lead</span></div>
+        <div class="sec__b">
+          <div class="paper" id="paper-list" role="group" aria-label="Forms">
+            <button class="btn btn--sheet btn--sm" type="button" data-paper="credit" aria-expanded="false" aria-controls="paper-form"><svg class="i"><use href="#i-file"/></svg> Credit Application</button>
+          </div>
+          <div class="paper__form" id="paper-form" hidden>
+            <div class="paper__h"><b>Credit Application</b><span class="hint">filled in from this lead · the sensitive numbers are sealed</span><a class="btn btn--primary btn--sm" href="#" target="_blank" rel="noopener" data-act="print-paper"><svg class="i"><use href="#i-print"/></svg> Print</a></div>
+            <div class="capp" id="paper-capp"></div>
+          </div>
         </div>
       </section>
     </div>
@@ -349,8 +419,9 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         <fieldset class="wf__flags">
           <legend class="caps">Flags</legend>
           <div class="workflow-flags">
-            <label class="flag"><input class="ck" type="checkbox" id="wf-internet"><span>Internet</span></label>
-            <label class="flag"><input class="ck" type="checkbox" id="wf-imc"><span>Mgmt checkoff</span></label>
+            <!-- one checkbox (Bill, Nov 10: "this should be one checkbox labeled "Internet Management Checkoff" not 2 checkboxes")
+            <label class="flag"><input class="ck" type="checkbox" id="wf-internet"><span>Internet</span></label> -->
+            <label class="flag"><input class="ck" type="checkbox" id="wf-imc"><span>Internet Management Checkoff</span></label>
           </div>
         </fieldset>
       </form>
@@ -381,7 +452,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 
 <script src="all-vehicles-gen11.data.js?v=20260930234502"></script>
 <script src="all-leads-gen10.data.js?v=20260930234502"></script>
-<script src="single-lead-gen11.js?v=20261030-back"></script>
+<script src="single-lead-gen11.js?v=20261116-paper"></script>
 <script src="../_aan-tablet.js?v=20261030-tab"></script>
 </body>
 </html>

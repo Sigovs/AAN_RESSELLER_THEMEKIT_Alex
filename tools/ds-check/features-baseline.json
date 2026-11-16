@@ -24,12 +24,6 @@
    "hid": 0,
    "lost": 0
   },
-  "nav | New submissionsVehicles waiting for review": {
-   "vis": 0,
-   "disc": 1,
-   "hid": 0,
-   "lost": 0
-  },
   "nav | Sort orderHow vehicles list on your site": {
    "vis": 0,
    "disc": 1,
@@ -37,6 +31,12 @@
    "lost": 0
   },
   "nav | Auto LocatorFind a vehicle for a buyer": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
+  "nav | Feed Out ManagerOutgoing feeds for all available cars": {
    "vis": 0,
    "disc": 1,
    "hid": 0,
@@ -66,18 +66,6 @@
    "hid": 0,
    "lost": 0
   },
-  "nav | CustomersPeople who enquired or bought": {
-   "vis": 0,
-   "disc": 1,
-   "hid": 0,
-   "lost": 0
-  },
-  "nav | ReferralsWhere leads came from": {
-   "vis": 0,
-   "disc": 1,
-   "hid": 0,
-   "lost": 0
-  },
   "nav | Site": {
    "vis": 1,
    "disc": 0,
@@ -85,6 +73,12 @@
    "lost": 0
   },
   "nav | Site Content ManagerPages, banners and copy": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
+  "nav | Form EditorDealer forms · AAN admins only": {
    "vis": 0,
    "disc": 1,
    "hid": 0,
@@ -210,10 +204,10 @@
    "hid": 0,
    "lost": 0
   },
-  "column | ": {
-   "vis": 0,
+  "column | hd--sw": {
+   "vis": 1,
    "disc": 0,
-   "hid": 1,
+   "hid": 0,
    "lost": 0
   },
   "column | Stock": {
@@ -798,6 +792,42 @@
    "hid": 0,
    "lost": 0
   },
+  "button | Swap the Thumbnail column": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Swap the Trim column": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Swap the Color column": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Swap the Mileage column": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Swap the Listing column": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Swap the Added column": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
   "button | Edit vehicle": {
    "vis": 16,
    "disc": 0,
@@ -832,6 +862,24 @@
    "vis": 0,
    "disc": 1,
    "hid": 0,
+   "lost": 0
+  },
+  "button | Discard": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "button | Update": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "button | Close inline edit": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
    "lost": 0
   },
   "link | soldmo": {
@@ -968,12 +1016,6 @@
    "hid": 0,
    "lost": 0
   },
-  "nav | New submissionsVehicles waiting for review": {
-   "vis": 0,
-   "disc": 1,
-   "hid": 0,
-   "lost": 0
-  },
   "nav | Sort orderHow vehicles list on your site": {
    "vis": 0,
    "disc": 1,
@@ -981,6 +1023,12 @@
    "lost": 0
   },
   "nav | Auto LocatorFind a vehicle for a buyer": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
+  "nav | Feed Out ManagerOutgoing feeds for all available cars": {
    "vis": 0,
    "disc": 1,
    "hid": 0,
@@ -1010,18 +1058,6 @@
    "hid": 0,
    "lost": 0
   },
-  "nav | CustomersPeople who enquired or bought": {
-   "vis": 0,
-   "disc": 1,
-   "hid": 0,
-   "lost": 0
-  },
-  "nav | ReferralsWhere leads came from": {
-   "vis": 0,
-   "disc": 1,
-   "hid": 0,
-   "lost": 0
-  },
   "nav | Site": {
    "vis": 1,
    "disc": 0,
@@ -1029,6 +1065,12 @@
    "lost": 0
   },
   "nav | Site Content ManagerPages, banners and copy": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
+  "nav | Form EditorDealer forms · AAN admins only": {
    "vis": 0,
    "disc": 1,
    "hid": 0,
@@ -1142,6 +1184,12 @@
    "hid": 0,
    "lost": 0
   },
+  "rail | Specs & VIN": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
   "rail | StatusAvailable": {
    "vis": 1,
    "disc": 0,
@@ -1178,12 +1226,6 @@
    "hid": 0,
    "lost": 0
   },
-  "rail | Specs & VIN": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "rail | Colors": {
    "vis": 1,
    "disc": 0,
@@ -1208,6 +1250,12 @@
    "hid": 0,
    "lost": 0
   },
+  "rail | Buyers Guides": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
   "rail | Feedsall on": {
    "vis": 1,
    "disc": 0,
@@ -1221,6 +1269,12 @@
    "lost": 0
   },
   "rail | Utilities": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "section | Specs & VIN": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -1262,12 +1316,6 @@
    "hid": 0,
    "lost": 0
   },
-  "section | Specs & VIN": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "section | Colors": {
    "vis": 1,
    "disc": 0,
@@ -1298,6 +1346,12 @@
    "hid": 0,
    "lost": 0
   },
+  "section | Buyers Guides": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
   "section | Marketplace Feeds": {
    "vis": 1,
    "disc": 0,
@@ -1311,150 +1365,6 @@
    "lost": 0
   },
   "section | Utilities": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:checkbox Specials": {
-   "vis": 0,
-   "disc": 0,
-   "hid": 1,
-   "lost": 0
-  },
-  "input | input:checkbox Incoming Data Feed": {
-   "vis": 0,
-   "disc": 0,
-   "hid": 1,
-   "lost": 0
-  },
-  "input | input:checkbox Do Not Display on Site": {
-   "vis": 0,
-   "disc": 0,
-   "hid": 1,
-   "lost": 0
-  },
-  "input | input:checkbox Pending Sale": {
-   "vis": 0,
-   "disc": 0,
-   "hid": 1,
-   "lost": 0
-  },
-  "input | input:checkbox Do Not Feed Out": {
-   "vis": 0,
-   "disc": 0,
-   "hid": 1,
-   "lost": 0
-  },
-  "input | input:text Price": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Discount Price": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Invoice (Cost) Price": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Lease Price": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | select:select-one Lease Term": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text OVE Feed Data?": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Pending Sale Name": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Truck / Trailer Category": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:checkbox Trucks And Equipment": {
-   "vis": 0,
-   "disc": 0,
-   "hid": 1,
-   "lost": 0
-  },
-  "input | input:checkbox Truck / Trailer": {
-   "vis": 0,
-   "disc": 0,
-   "hid": 1,
-   "lost": 0
-  },
-  "input | input:checkbox Images Timestamp": {
-   "vis": 0,
-   "disc": 0,
-   "hid": 1,
-   "lost": 0
-  },
-  "input | input:checkbox Do Not Display VIN On Website": {
-   "vis": 0,
-   "disc": 0,
-   "hid": 1,
-   "lost": 0
-  },
-  "input | input:url YouTube URL": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:url Other video link": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:url Report link": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:file Upload CARFAX report (PDF)": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:checkbox Do Not Report VIN To CarfaxKeeps this VIN out of the CARFAX deal": {
-   "vis": 0,
-   "disc": 0,
-   "hid": 1,
-   "lost": 0
-  },
-  "input | input:text Report date": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Last checked": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -1574,6 +1484,144 @@
    "hid": 0,
    "lost": 0
   },
+  "input | select:select-one Decoded styles": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Decoded engines": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Decoded transmissions": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | input:checkbox Specials": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "input | input:checkbox Incoming Data Feed": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "input | input:checkbox Do Not Display on Site": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "input | input:checkbox Pending Sale": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "input | input:checkbox Do Not Feed Out": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "input | input:text Price": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | input:text Discount Price": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | input:text Invoice (Cost) Price": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | input:text Lease Price": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Lease Term": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | input:text OVE Feed Data?": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | input:text Pending Sale Name": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | input:text Truck / Trailer Category": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | input:checkbox Trucks And Equipment": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "input | input:checkbox Truck / Trailer": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "input | input:checkbox Images Timestamp": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "input | input:checkbox Do Not Display VIN On Website": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "input | textarea:textarea YouTube URLs": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | input:url Report link": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | input:checkbox Do Not Report VIN To CarfaxKeeps this VIN out of the CARFAX deal": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
   "input | input:text Exterior Color": {
    "vis": 1,
    "disc": 0,
@@ -1617,6 +1665,12 @@
    "lost": 0
   },
   "input | input:file Upload factory sticker (PDF)": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | textarea:textarea Buyers Guide Additional Information": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -1790,52 +1844,10 @@
    "hid": 1,
    "lost": 0
   },
-  "input | input:text Book Value": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Discount": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Original Price": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "input | select:select-one Location": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Model Number": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Body Code": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Add Options": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:checkbox Zero Down": {
-   "vis": 0,
-   "disc": 0,
-   "hid": 1,
    "lost": 0
   },
   "input | input:checkbox Renew listing on save": {
@@ -1916,6 +1928,12 @@
    "hid": 0,
    "lost": 0
   },
+  "button | Print \"In House\" Limited Buyers Guide w/ No Service Contract": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
   "button | Print \"Factory\" Buyers Guide": {
    "vis": 0,
    "disc": 1,
@@ -1964,6 +1982,12 @@
    "hid": 0,
    "lost": 0
   },
+  "button | Decode VIN": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
   "button | Available": {
    "vis": 1,
    "disc": 0,
@@ -1971,12 +1995,6 @@
    "lost": 0
   },
   "button | Sold": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | Pending": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -2031,12 +2049,6 @@
    "lost": 0
   },
   "button | +63Studio": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | Decode VIN": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -2132,12 +2144,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | Buyers Guide Text": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | Close the writer": {
    "vis": 0,
    "disc": 0,
@@ -2210,7 +2216,55 @@
    "hid": 0,
    "lost": 0
   },
-  "button | Open PDF": {
+  "button | \"As Is\" Buyers Guide": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | \"As Is\" Buyers Guide w/ No Service Contract": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | \"As Is\" Buyers Guide w/ Manufacturer Warranty": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | \"In House\" Limited Buyers Guide": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | \"In House\" Limited Buyers Guide w/ No Service Contract": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | \"Factory\" Buyers Guide": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | \"Factory Full\" Buyers Guide": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | \"Text Only\" Buyers Guide": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Buyers Guide Back Page": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -2290,12 +2344,6 @@
    "hid": 0,
    "lost": 0
   },
-  "nav | New submissionsVehicles waiting for review": {
-   "vis": 0,
-   "disc": 1,
-   "hid": 0,
-   "lost": 0
-  },
   "nav | Sort orderHow vehicles list on your site": {
    "vis": 0,
    "disc": 1,
@@ -2303,6 +2351,12 @@
    "lost": 0
   },
   "nav | Auto LocatorFind a vehicle for a buyer": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
+  "nav | Feed Out ManagerOutgoing feeds for all available cars": {
    "vis": 0,
    "disc": 1,
    "hid": 0,
@@ -2332,18 +2386,6 @@
    "hid": 0,
    "lost": 0
   },
-  "nav | CustomersPeople who enquired or bought": {
-   "vis": 0,
-   "disc": 1,
-   "hid": 0,
-   "lost": 0
-  },
-  "nav | ReferralsWhere leads came from": {
-   "vis": 0,
-   "disc": 1,
-   "hid": 0,
-   "lost": 0
-  },
   "nav | Site": {
    "vis": 1,
    "disc": 0,
@@ -2351,6 +2393,12 @@
    "lost": 0
   },
   "nav | Site Content ManagerPages, banners and copy": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
+  "nav | Form EditorDealer forms · AAN admins only": {
    "vis": 0,
    "disc": 1,
    "hid": 0,
@@ -2470,10 +2518,10 @@
    "hid": 0,
    "lost": 0
   },
-  "column | ": {
-   "vis": 0,
+  "column | hd__ck": {
+   "vis": 1,
    "disc": 0,
-   "hid": 1,
+   "hid": 0,
    "lost": 0
   },
   "column | Lead": {
@@ -2525,6 +2573,12 @@
    "lost": 0
   },
   "column | Follow-up": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "column | Comments": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -2740,6 +2794,18 @@
    "hid": 0,
    "lost": 0
   },
+  "input | select:select-one Available stock": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | input:checkbox Include Sold": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
   "input | input:search Stock #": {
    "vis": 0,
    "disc": 1,
@@ -2784,6 +2850,12 @@
   },
   "input | select:select-one Rows per page": {
    "vis": 2,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | input:checkbox Select all rows on this page": {
+   "vis": 1,
    "disc": 0,
    "hid": 0,
    "lost": 0
@@ -3169,7 +3241,7 @@
   "button | Unassigned": {
    "vis": 0,
    "disc": 2,
-   "hid": 0,
+   "hid": 1,
    "lost": 0
   },
   "button | Chicago Motor Cars": {
@@ -3259,43 +3331,43 @@
   "button | New Lead": {
    "vis": 0,
    "disc": 1,
-   "hid": 0,
+   "hid": 1,
    "lost": 0
   },
   "button | Active Prospect": {
    "vis": 0,
    "disc": 1,
-   "hid": 0,
+   "hid": 1,
    "lost": 0
   },
   "button | Bought Here": {
    "vis": 0,
    "disc": 1,
-   "hid": 0,
+   "hid": 1,
    "lost": 0
   },
   "button | Galleria": {
    "vis": 0,
    "disc": 1,
-   "hid": 0,
+   "hid": 1,
    "lost": 0
   },
   "button | Hot": {
    "vis": 0,
    "disc": 1,
-   "hid": 0,
+   "hid": 1,
    "lost": 0
   },
   "button | Just Looking": {
    "vis": 0,
    "disc": 1,
-   "hid": 0,
+   "hid": 1,
    "lost": 0
   },
   "button | Long Term Lead": {
    "vis": 0,
    "disc": 1,
-   "hid": 0,
+   "hid": 1,
    "lost": 0
   },
   "button | Looking": {
@@ -3307,31 +3379,31 @@
   "button | Pending": {
    "vis": 0,
    "disc": 1,
-   "hid": 0,
+   "hid": 1,
    "lost": 0
   },
   "button | Sale Pending": {
    "vis": 0,
    "disc": 1,
-   "hid": 0,
+   "hid": 1,
    "lost": 0
   },
   "button | Service": {
    "vis": 0,
    "disc": 1,
-   "hid": 0,
+   "hid": 1,
    "lost": 0
   },
   "button | Storage": {
    "vis": 0,
    "disc": 1,
-   "hid": 0,
+   "hid": 1,
    "lost": 0
   },
   "button | Trade Appraisal": {
    "vis": 0,
    "disc": 1,
-   "hid": 0,
+   "hid": 1,
    "lost": 0
   },
   "button | Web Site": {
@@ -3569,6 +3641,12 @@
    "lost": 0
   },
   "button | Unassign": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "button | Set status…": {
    "vis": 0,
    "disc": 0,
    "hid": 1,
@@ -3912,12 +3990,6 @@
    "hid": 0,
    "lost": 0
   },
-  "nav | New submissionsVehicles waiting for review": {
-   "vis": 0,
-   "disc": 1,
-   "hid": 0,
-   "lost": 0
-  },
   "nav | Sort orderHow vehicles list on your site": {
    "vis": 0,
    "disc": 1,
@@ -3925,6 +3997,12 @@
    "lost": 0
   },
   "nav | Auto LocatorFind a vehicle for a buyer": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
+  "nav | Feed Out ManagerOutgoing feeds for all available cars": {
    "vis": 0,
    "disc": 1,
    "hid": 0,
@@ -3954,18 +4032,6 @@
    "hid": 0,
    "lost": 0
   },
-  "nav | CustomersPeople who enquired or bought": {
-   "vis": 0,
-   "disc": 1,
-   "hid": 0,
-   "lost": 0
-  },
-  "nav | ReferralsWhere leads came from": {
-   "vis": 0,
-   "disc": 1,
-   "hid": 0,
-   "lost": 0
-  },
   "nav | Site": {
    "vis": 1,
    "disc": 0,
@@ -3973,6 +4039,12 @@
    "lost": 0
   },
   "nav | Site Content ManagerPages, banners and copy": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
+  "nav | Form EditorDealer forms · AAN admins only": {
    "vis": 0,
    "disc": 1,
    "hid": 0,
@@ -4116,6 +4188,18 @@
    "hid": 0,
    "lost": 0
   },
+  "tab | Credit App": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "tab | Paperwork": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
   "dock | Workflow": {
    "vis": 1,
    "disc": 0,
@@ -4189,6 +4273,18 @@
    "lost": 0
   },
   "section | Emails": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "section | Credit App": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "section | Dealer Paperwork": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -4356,6 +4452,36 @@
    "hid": 0,
    "lost": 0
   },
+  "input | input:email Email To": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "input | input:email BCC": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "input | input:text Subject": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "input | textarea:textarea Message": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "input | input:file File to attach": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
   "input | select:select-one StatusUnassignedNew LeadActive ProspectArchived Phone LeadBought": {
    "vis": 1,
    "disc": 0,
@@ -4374,13 +4500,7 @@
    "hid": 0,
    "lost": 0
   },
-  "input | input:checkbox Internet": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:checkbox Mgmt checkoff": {
+  "input | input:checkbox Internet Management Checkoff": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -4393,6 +4513,12 @@
    "lost": 0
   },
   "button | Back to board": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | ReSend / Email": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -4500,6 +4626,18 @@
    "hid": 0,
    "lost": 0
   },
+  "button | Cancel": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "button | Send": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
   "button | OUT2015 Aston Martin VanquishHi Patrick, thanks for reaching out": {
    "vis": 1,
    "disc": 0,
@@ -4515,6 +4653,24 @@
   "button | OUT2015 Aston Martin VanquishFollowing up on your enquiry — any ": {
    "vis": 1,
    "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Print Application": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "button | Credit Application": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Print": {
+   "vis": 0,
+   "disc": 1,
    "hid": 0,
    "lost": 0
   },
@@ -5122,6 +5278,18 @@
    "hid": 0,
    "lost": 0
   },
+  "column | My Begin Date": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "column | My Completion Date": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
   "column | Begin Date": {
    "vis": 1,
    "disc": 0,
@@ -5266,7 +5434,577 @@
    "hid": 0,
    "lost": 0
   },
+  "input | select:select-one Reporting": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
   "input | select:select-one Per page": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048663": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048637": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048529": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048625": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048635": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048636": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048598": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048573": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048601": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048587": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048568": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1047524": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048556": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048166": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048414": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048197": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048334": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048318": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048162": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1046445": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048071": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048056": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1048015": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1047975": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1047985": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1047913": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1047753": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1047743": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1047686": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1047644": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1047005": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1047511": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1047478": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1046702": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1047291": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1047239": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1047152": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1047091": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1047015": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1046815": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1046885": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1046635": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1046615": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1046571": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1046549": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1046554": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1046316": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1046345": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1046447": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1046251": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1046126": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1046102": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1045628": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1045588": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1045842": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1045751": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1045644": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1045691": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1045662": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1045569": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1045511": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1045417": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1044847": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1045146": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1045128": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1045113": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1043957": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1044962": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1044803": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1044528": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1042269": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1043795": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1043074": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1044355": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1047712": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1043653": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1044119": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1044031": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1043865": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1043615": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1043379": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1043086": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1042602": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1042690": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1041054": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1042339": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1040878": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1032718": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1041877": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1040402": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1041997": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1037281": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1037932": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work priority for ticket 1027798": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -5530,12 +6268,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 1": {
-   "vis": 6,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 0": {
    "vis": 38,
    "disc": 0,
@@ -5560,12 +6292,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 2": {
-   "vis": 11,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 9/3/26": {
    "vis": 4,
    "disc": 0,
@@ -5574,12 +6300,6 @@
   },
   "button | Reorder ticket 1048529": {
    "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 3": {
-   "vis": 4,
    "disc": 0,
    "hid": 0,
    "lost": 0
@@ -5602,12 +6322,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 4": {
-   "vis": 8,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 9/4/26": {
    "vis": 3,
    "disc": 0,
@@ -5620,8 +6334,8 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 5": {
-   "vis": 7,
+  "button | 2": {
+   "vis": 10,
    "disc": 0,
    "hid": 0,
    "lost": 0
@@ -5644,20 +6358,8 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 6": {
-   "vis": 2,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | Reorder ticket 1048598": {
    "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 7": {
-   "vis": 2,
    "disc": 0,
    "hid": 0,
    "lost": 0
@@ -5670,12 +6372,6 @@
   },
   "button | Reorder ticket 1048573": {
    "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 8": {
-   "vis": 2,
    "disc": 0,
    "hid": 0,
    "lost": 0
@@ -5698,8 +6394,8 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 9": {
-   "vis": 2,
+  "button | 4": {
+   "vis": 7,
    "disc": 0,
    "hid": 0,
    "lost": 0
@@ -5716,12 +6412,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 10": {
-   "vis": 3,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 8/31/26": {
    "vis": 1,
    "disc": 0,
@@ -5729,12 +6419,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1048568": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 11": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -5748,12 +6432,6 @@
   },
   "button | Reorder ticket 1047524": {
    "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 12": {
-   "vis": 3,
    "disc": 0,
    "hid": 0,
    "lost": 0
@@ -5782,12 +6460,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 13": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 8/27/26": {
    "vis": 1,
    "disc": 0,
@@ -5800,14 +6472,8 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 14": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 23": {
-   "vis": 2,
+   "vis": 1,
    "disc": 0,
    "hid": 0,
    "lost": 0
@@ -5820,12 +6486,6 @@
   },
   "button | Reorder ticket 1048414": {
    "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 15": {
-   "vis": 2,
    "disc": 0,
    "hid": 0,
    "lost": 0
@@ -5848,12 +6508,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 16": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 7/28/26": {
    "vis": 1,
    "disc": 0,
@@ -5867,12 +6521,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1048334": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 17": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -5902,19 +6550,7 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 18": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | Reorder ticket 1048162": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 19": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -5933,7 +6569,7 @@
    "lost": 0
   },
   "button | 20": {
-   "vis": 3,
+   "vis": 2,
    "disc": 0,
    "hid": 0,
    "lost": 0
@@ -5956,12 +6592,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 21": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 7/20/26": {
    "vis": 1,
    "disc": 0,
@@ -5969,12 +6599,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1048056": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 22": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -6004,12 +6628,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 24": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 7/9/26": {
    "vis": 1,
    "disc": 0,
@@ -6028,12 +6646,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 25": {
-   "vis": 2,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 7/10/26": {
    "vis": 1,
    "disc": 0,
@@ -6046,8 +6658,8 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 26": {
-   "vis": 1,
+  "button | 1": {
+   "vis": 5,
    "disc": 0,
    "hid": 0,
    "lost": 0
@@ -6065,12 +6677,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1047753": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 27": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -6100,12 +6706,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 28": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 6/15/26": {
    "vis": 1,
    "disc": 0,
@@ -6124,12 +6724,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 29": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 6/9/26": {
    "vis": 1,
    "disc": 0,
@@ -6138,12 +6732,6 @@
   },
   "button | Reorder ticket 1047644": {
    "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 30": {
-   "vis": 2,
    "disc": 0,
    "hid": 0,
    "lost": 0
@@ -6161,12 +6749,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1047005": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 31": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -6190,12 +6772,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 32": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 5/20/26": {
    "vis": 1,
    "disc": 0,
@@ -6203,12 +6779,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1047478": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 33": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -6232,12 +6802,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 34": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 2/24/26": {
    "vis": 1,
    "disc": 0,
@@ -6251,12 +6815,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1047291": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 35": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -6280,12 +6838,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 36": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 4/20/26": {
    "vis": 1,
    "disc": 0,
@@ -6304,8 +6856,8 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 37": {
-   "vis": 1,
+  "button | 12": {
+   "vis": 2,
    "disc": 0,
    "hid": 0,
    "lost": 0
@@ -6328,12 +6880,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 38": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 4/8/26": {
    "vis": 1,
    "disc": 0,
@@ -6346,7 +6892,7 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 39": {
+  "button | 15": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -6365,12 +6911,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1046815": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 40": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -6400,12 +6940,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 41": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 3/16/26": {
    "vis": 1,
    "disc": 0,
@@ -6424,7 +6958,7 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 42": {
+  "button | 6": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -6442,12 +6976,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 43": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 2/13/26": {
    "vis": 3,
    "disc": 0,
@@ -6460,7 +6988,7 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 44": {
+  "button | 8": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -6478,12 +7006,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 45": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 2/9/26": {
    "vis": 2,
    "disc": 0,
@@ -6496,19 +7018,13 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 46": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | Reorder ticket 1046316": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
    "lost": 0
   },
-  "button | 47": {
+  "button | 9": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -6521,12 +7037,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1046345": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 48": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -6550,7 +7060,7 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 49": {
+  "button | 30": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -6574,12 +7084,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 50": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 1/12/26": {
    "vis": 1,
    "disc": 0,
@@ -6593,12 +7097,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1046126": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 51": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -6622,12 +7120,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 52": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 12/22/25": {
    "vis": 1,
    "disc": 0,
@@ -6640,12 +7132,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 53": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 11/14/25": {
    "vis": 2,
    "disc": 0,
@@ -6653,12 +7139,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1045588": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 54": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -6682,12 +7162,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 55": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 11/25/25": {
    "vis": 1,
    "disc": 0,
@@ -6701,12 +7175,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1045751": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 56": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -6730,12 +7198,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 57": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 11/21/25": {
    "vis": 2,
    "disc": 0,
@@ -6748,8 +7210,8 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 58": {
-   "vis": 1,
+  "button | 3": {
+   "vis": 3,
    "disc": 0,
    "hid": 0,
    "lost": 0
@@ -6767,12 +7229,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1045662": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 59": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -6796,12 +7252,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 60": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 11/3/25": {
    "vis": 1,
    "disc": 0,
@@ -6809,12 +7259,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1045511": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 61": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -6838,12 +7282,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 62": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 10/17/25": {
    "vis": 1,
    "disc": 0,
@@ -6857,12 +7295,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1044847": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 63": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -6886,12 +7318,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 64": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 9/26/25": {
    "vis": 2,
    "disc": 0,
@@ -6910,12 +7336,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 65": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 9/24/25": {
    "vis": 2,
    "disc": 0,
@@ -6928,12 +7348,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 66": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 9/25/25": {
    "vis": 1,
    "disc": 0,
@@ -6941,12 +7355,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1043957": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 67": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -6970,12 +7378,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 68": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 9/9/25": {
    "vis": 1,
    "disc": 0,
@@ -6983,12 +7385,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1044803": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 69": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -7012,12 +7408,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 70": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 8/4/25": {
    "vis": 1,
    "disc": 0,
@@ -7036,8 +7426,8 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 71": {
-   "vis": 1,
+  "button | 5": {
+   "vis": 6,
    "disc": 0,
    "hid": 0,
    "lost": 0
@@ -7055,12 +7445,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1043795": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 72": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -7084,12 +7468,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 73": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 3/4/25": {
    "vis": 1,
    "disc": 0,
@@ -7103,12 +7481,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1044355": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 74": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -7132,12 +7504,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 75": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 6/23/26": {
    "vis": 1,
    "disc": 0,
@@ -7145,12 +7511,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1043653": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 76": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -7174,12 +7534,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 77": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 7/5/25": {
    "vis": 1,
    "disc": 0,
@@ -7187,12 +7541,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1044031": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 78": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -7222,12 +7570,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 79": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 5/23/25": {
    "vis": 1,
    "disc": 0,
@@ -7240,7 +7582,7 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 80": {
+  "button | 7": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -7253,12 +7595,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1043379": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 81": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -7282,12 +7618,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 82": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 3/6/25": {
    "vis": 1,
    "disc": 0,
@@ -7301,12 +7631,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1042602": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 84": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -7330,12 +7654,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 85": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 2/6/25": {
    "vis": 1,
    "disc": 0,
@@ -7354,12 +7672,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 86": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 9/16/24": {
    "vis": 1,
    "disc": 0,
@@ -7367,12 +7679,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1042339": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 87": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -7396,12 +7702,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 88": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 8/28/24": {
    "vis": 1,
    "disc": 0,
@@ -7420,8 +7720,8 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 89": {
-   "vis": 1,
+  "button | 10": {
+   "vis": 2,
    "disc": 0,
    "hid": 0,
    "lost": 0
@@ -7444,7 +7744,7 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 90": {
+  "button | 25": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -7457,12 +7757,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1040402": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 91": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -7486,12 +7780,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 92": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 12/9/24": {
    "vis": 1,
    "disc": 0,
@@ -7505,12 +7793,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1037281": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 93": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -7534,12 +7816,6 @@
    "hid": 0,
    "lost": 0
   },
-  "button | 95": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "button | 12/11/23": {
    "vis": 1,
    "disc": 0,
@@ -7553,12 +7829,6 @@
    "lost": 0
   },
   "button | Reorder ticket 1027798": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | 97": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -10350,6 +10620,12 @@
    "hid": 0,
    "lost": 0
   },
+  "tab | Work order": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
   "tab | Messages1": {
    "vis": 1,
    "disc": 0,
@@ -10447,9 +10723,9 @@
    "lost": 0
   },
   "section | Work Order": {
-   "vis": 0,
+   "vis": 1,
    "disc": 0,
-   "hid": 1,
+   "hid": 0,
    "lost": 0
   },
   "section | Ticket History": {
@@ -10495,81 +10771,81 @@
    "lost": 0
   },
   "input | select:select-one Dealership *One Exotics Luxury Vehicles LLC": {
-   "vis": 0,
+   "vis": 1,
    "disc": 0,
-   "hid": 1,
+   "hid": 0,
    "lost": 0
   },
   "input | input:text Subject *": {
-   "vis": 0,
+   "vis": 1,
    "disc": 0,
-   "hid": 1,
+   "hid": 0,
    "lost": 0
   },
   "input | select:select-one Work StatusPendingSupport OpenSupport ClosedSupport CancelledCli": {
-   "vis": 0,
+   "vis": 1,
    "disc": 0,
-   "hid": 1,
+   "hid": 0,
    "lost": 0
   },
   "input | select:select-one Work TypePlease Set Work TypeMarketing - AnalyticsMarketing - Co": {
-   "vis": 0,
+   "vis": 1,
    "disc": 0,
-   "hid": 1,
+   "hid": 0,
    "lost": 0
   },
   "input | select:select-one Priority—Hot 24Go LiveHighAs ScheduledMediumLow": {
-   "vis": 0,
+   "vis": 1,
    "disc": 0,
-   "hid": 1,
+   "hid": 0,
    "lost": 0
   },
   "input | input:text Your Name": {
-   "vis": 0,
+   "vis": 1,
    "disc": 0,
-   "hid": 1,
+   "hid": 0,
    "lost": 0
   },
   "input | input:tel Phone": {
-   "vis": 0,
+   "vis": 1,
    "disc": 0,
-   "hid": 1,
+   "hid": 0,
    "lost": 0
   },
   "input | input:email Email 1": {
-   "vis": 0,
+   "vis": 1,
    "disc": 0,
-   "hid": 1,
+   "hid": 0,
    "lost": 0
   },
   "input | input:date Begin Date": {
-   "vis": 0,
+   "vis": 1,
    "disc": 0,
-   "hid": 1,
+   "hid": 0,
    "lost": 0
   },
   "input | input:date Completion Date": {
-   "vis": 0,
+   "vis": 1,
    "disc": 0,
-   "hid": 1,
+   "hid": 0,
    "lost": 0
   },
   "input | input:checkbox Waiting on Client or Third party": {
-   "vis": 0,
+   "vis": 1,
    "disc": 0,
-   "hid": 1,
+   "hid": 0,
    "lost": 0
   },
   "input | input:checkbox Billable": {
-   "vis": 0,
+   "vis": 1,
    "disc": 0,
-   "hid": 1,
+   "hid": 0,
    "lost": 0
   },
   "input | input:text Billable amount": {
-   "vis": 0,
+   "vis": 1,
    "disc": 0,
-   "hid": 1,
+   "hid": 0,
    "lost": 0
   },
   "input | textarea:textarea Reply to the client": {
@@ -10620,6 +10896,12 @@
    "hid": 0,
    "lost": 0
   },
+  "input | input:file Attach files to the ToDo": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
   "input | select:select-one ToDo assignee": {
    "vis": 1,
    "disc": 0,
@@ -10646,6 +10928,18 @@
   },
   "input | input:text Estimated time for Ivaylo Guenkov": {
    "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | input:date Begin": {
+   "vis": 5,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | input:date Done by": {
+   "vis": 5,
    "disc": 0,
    "hid": 0,
    "lost": 0
@@ -10753,9 +11047,27 @@
    "lost": 0
   },
   "button | Save Ticket": {
+   "vis": 2,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Marketing Project Open": {
    "vis": 1,
    "disc": 0,
-   "hid": 1,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | High": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Marketing - Misc.": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
    "lost": 0
   },
   "button | Waiting on client": {
@@ -10765,15 +11077,15 @@
    "lost": 0
   },
   "button | Remove info@oneexoticstampa.com": {
-   "vis": 0,
+   "vis": 1,
    "disc": 0,
-   "hid": 1,
+   "hid": 0,
    "lost": 0
   },
   "button | + Add email": {
-   "vis": 0,
+   "vis": 1,
    "disc": 0,
-   "hid": 1,
+   "hid": 0,
    "lost": 0
   },
   "button | Post Message": {
@@ -10892,12 +11204,6 @@
   },
   "button | Add": {
    "vis": 2,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | Dates": {
-   "vis": 5,
    "disc": 0,
    "hid": 0,
    "lost": 0
@@ -11574,12 +11880,6 @@
    "vis": 0,
    "disc": 0,
    "hid": 1,
-   "lost": 0
-  },
-  "button | Print": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
    "lost": 0
   },
   "button | Dealers CSV": {
@@ -12275,7 +12575,7 @@
   "button | Close": {
    "vis": 0,
    "disc": 0,
-   "hid": 2,
+   "hid": 4,
    "lost": 0
   },
   "button | Delete Package": {
@@ -12288,6 +12588,18 @@
    "vis": 0,
    "disc": 0,
    "hid": 1,
+   "lost": 0
+  },
+  "link | Dealer Intake Form Answers": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "link | Config Manual": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
    "lost": 0
   },
   "link | 1 Stop Leasing#659": {
@@ -15130,36 +15442,6 @@
    "hid": 0,
    "lost": 0
   },
-  "column | Email address": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "column | Purpose": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "column | Forward to": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "column | Lead format": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "column | Remove": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
   "rail | Identity & Status— filled": {
    "vis": 1,
    "disc": 0,
@@ -15185,24 +15467,6 @@
    "lost": 0
   },
   "rail | Integrations— empty": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "rail | Web & Domains— partly filled": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "rail | Email Routing— empty": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "rail | Inventory & DMS— empty": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -15239,24 +15503,6 @@
    "lost": 0
   },
   "section | Integrations": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "section | Web & Domains": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "section | Email Routing": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "section | Inventory & DMS": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -15325,7 +15571,13 @@
   "input | input:radio No": {
    "vis": 0,
    "disc": 0,
-   "hid": 2,
+   "hid": 1,
+   "lost": 0
+  },
+  "input | select:select-one Select Group": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
    "lost": 0
   },
   "input | input:text Address": {
@@ -15544,240 +15796,6 @@
    "hid": 0,
    "lost": 0
   },
-  "input | input:text Current Website": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Webmaster Name": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Webmaster Phone": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Webmaster Email": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Manufacturer Site": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Manufacturer FTP Login": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Comments": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Domain 1": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Domain 2": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Domain 3": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Domain 4": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Domain 5": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Domain 6": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Repoint From": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Registrar": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Registrar Username": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Email address, row 1": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Purpose, row 1": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Forward to, row 1": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:radio HTML": {
-   "vis": 0,
-   "disc": 0,
-   "hid": 4,
-   "lost": 0
-  },
-  "input | input:radio XML": {
-   "vis": 0,
-   "disc": 0,
-   "hid": 4,
-   "lost": 0
-  },
-  "input | input:text Email address, row 2": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Purpose, row 2": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Forward to, row 2": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Email address, row 3": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Purpose, row 3": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Forward to, row 3": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Email address, row 4": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Purpose, row 4": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Forward to, row 4": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Current LMP": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | select:select-one Photo Service": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Photo Service — other": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | select:select-one Picture Management": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:text Picture Management — other": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:checkbox New": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:checkbox Used": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:checkbox Certified": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | input:radio DMS Import": {
-   "vis": 0,
-   "disc": 0,
-   "hid": 1,
-   "lost": 0
-  },
   "input | textarea:textarea New note": {
    "vis": 1,
    "disc": 0,
@@ -15857,36 +15875,6 @@
    "lost": 0
   },
   "button | Set": {
-   "vis": 3,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | Remove mailbox row 1": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | Remove mailbox row 2": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | Remove mailbox row 3": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | Remove mailbox row 4": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | + Add mailbox": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -16417,6 +16405,12 @@
    "lost": 0
   },
   "column | Monthly": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "column | Marketing": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -17743,12 +17737,6 @@
    "lost": 0
   },
   "button | Inv PDFs": {
-   "vis": 1,
-   "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "button | Print": {
    "vis": 1,
    "disc": 0,
    "hid": 0,

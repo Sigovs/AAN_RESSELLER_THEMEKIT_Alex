@@ -66,6 +66,10 @@
       { c: 'c-left', l: 'Remaining Time',                r: true },
       { c: 'c-mod',  l: 'Last Modified',   s: 'mod' },
       { c: 'c-who',  l: 'Assigned' },
+      /* my own dates on the ticket, then the ticket's (Bill, Nov 11: "There should be 2 sets of dates here";
+         the live My Work list has My Begin Date · My Completion Date · Begin Date · Completion Date) */
+      { c: 'c-mbeg',  l: 'My Begin Date' },
+      { c: 'c-mdone', l: 'My Completion Date' },
       { c: 'c-beg',  l: 'Begin Date',      s: 'begin' },
       { c: 'c-done', l: 'Completion Date', s: 'done' },
       { c: 'c-act',  l: '' }
@@ -274,8 +278,27 @@
     { k: 'status',   l: 'Status',    o: 'status',   w: 200, hint: 'in this view' },
     { k: 'dept',     l: 'Work Type', o: 'dept',     w: 200 },
     { k: 'priority', l: 'Priority',  o: 'priority', w: 170 },
-    { k: 'assignee', l: 'Assigned',  o: 'assignee', w: 190 }
+    { k: 'assignee', l: 'Assigned',  o: 'assignee', w: 190 },
+    /* Reporting (Bill, Nov 11: "This button is missing the "reporting" search drop down"). The
+       production menu, options verbatim. Waiting On Client, Past Due and Due Today are worked out
+       here from the row (dates against the export day, 09/10/26); Tagged As Completed and Marketing
+       Clients are decided by the server and are not applied in this mockup. */
+    { k: 'reporting', l: 'Reporting', o: 'reporting', w: 190 }
   ];
+  D.opts.reporting = D.opts.reporting || [
+    { v: '', l: '' }, { v: '1', l: 'Tagged As Completed' }, { v: '2', l: 'Waiting On Client' },
+    { v: '3', l: 'Past Due' }, { v: '4', l: 'Due Today' }, { v: '5', l: 'Marketing Clients' }
+  ];
+  var EXPORT_DAY = new Date(2026, 8, 10);
+  function mdy(s) { var m = String(s || '').match(/^(\d{1,2})\/(\d{1,2})\/(\d{2})$/); return m ? new Date(2000 + +m[3], +m[1] - 1, +m[2]) : null; }
+  function reportingOk(r, v) {
+    if (v === '2') return !!(r.done && r.done.note);
+    if (v === '3' || v === '4') {
+      var d = mdy(r.done && editVal(r, 'done', r.done.date)); if (!d) return false;
+      return v === '3' ? d < EXPORT_DAY : d.getTime() === EXPORT_DAY.getTime();
+    }
+    return true;
+  }
 
   function renderFilterMenu() {
     $('#filt-list').innerHTML = FILTERS.map(function (f) {
@@ -349,17 +372,13 @@
   function cWho(r) {
     var w = r.who || [];
     if (!w.length) return '<span class="c c-who" role="cell"></span>';
-    var vis = w.slice(0, 2), rest = w.length - vis.length;
     var all = w.map(function (x) { return x.o ? '(' + x.n + ')' : x.n; }).join(' · ');
     function nm(x) { return x.o ? '<i class="own">(' + esc(x.n) + ')</i>' : '<span>' + esc(x.n) + '</span>'; }
-    /* two lines, never three: the overflow count rides with the second name so
-       a four-assignee ticket is the same height as a one-assignee ticket */
-    var l1 = nm(vis[0]);
-    var l2 = vis[1] ? nm(vis[1]) : '';
-    var more = rest > 0 ? '<span class="more" aria-hidden="true">+' + rest + '</span>' : '';
-    return '<span class="c c-who" role="cell" title="' + esc(all) + '">' +
-      '<span class="c-who__l">' + l1 + (l2 ? '' : more) + '</span>' +
-      (l2 ? '<span class="c-who__l">' + l2 + more + '</span>' : '') + '</span>';
+    /* every assignee, one per line - the row grows for three or more (Bill, Nov 11: "Can the bar
+       just be taller when more that 2 people assigned to a ticket so we can see who all is assigned
+       at a glance"). Was: two lines and a "+N" riding on the second. */
+    return '<span class="c c-who' + (w.length > 2 ? ' c-who--many' : '') + '" role="cell" title="' + esc(all) + '">' +
+      w.map(function (x) { return '<span class="c-who__l">' + nm(x) + '</span>'; }).join('') + '</span>';
   }
 
   function cDate(r, field, obj, editable) {
@@ -373,13 +392,22 @@
       inner + '</span>';
   }
 
+  var RANKS = []; for (var ri = 0; ri <= 299; ri++) RANKS.push(ri);
+  function rankOpts(v) {
+    v = String(v);
+    return RANKS.map(function (n) { return '<option' + (String(n) === v ? ' selected' : '') + '>' + n + '</option>'; }).join('');
+  }
+
   function rowMine(r) {
     var url = D.ticketBase + r.id;
     return '<div class="row" role="row" data-id="' + r.id + '">' +
       '<span class="c c-grip" role="cell"><button class="grip" type="button" draggable="true" ' +
         'aria-label="Reorder ticket ' + esc(r.ticket) + '" title="Drag to reorder">' + ic('i-grip') + '</button></span>' +
-      '<span class="c c-rank ctr" role="cell"><button class="ed ed--num" type="button" data-ed="rank" data-kind="rank" ' +
-        'title="Set work priority (0–299)">' + esc(editVal(r, 'rank', r.rank)) + '</button></span>' +
+      /* a plain drop-down 0-299, always open to change (Bill, Nov 11: "It should just be a drop down
+         like on the live system ... simple drop down you can scroll up and down and see all the numbers").
+         Was: a button that opened a number field. */
+      '<span class="c c-rank ctr" role="cell"><select class="rk" data-rank="' + r.id + '" aria-label="Work priority for ticket ' + esc(r.ticket) + '" ' +
+        'title="Set work priority (0–299)">' + rankOpts(editVal(r, 'rank', r.rank)) + '</select></span>' +
       '<span class="c c-tkt" role="cell"><a class="tkt" href="' + url + '">' + hl(r.ticket) + '</a></span>' +
       cDealer(r) +
       cSubject(r, url) +
@@ -392,10 +420,17 @@
       cNum(r, 'left', r.left, 'c-left') +
       cMod(r) +
       cWho(r) +
+      cMine(r.myBegin, 'c-mbeg', 'My begin date') +
+      cMine(r.myDone, 'c-mdone', 'My completion date') +
       cDate(r, 'begin', { date: r.begin }, true) +
       cDate(r, 'done', r.done, true) +
       cAct(r, url) +
       '</div>';
+  }
+  /* the assignee's own dates are set on the ticket (Assigned To); the list only shows them. This fixture
+     (the new-backend export) has none, so every row reads "—", as the live list reads "N/A" when unset. */
+  function cMine(v, cls, what) {
+    return '<span class="c ' + cls + '" role="cell"><span class="d"' + (v ? '' : ' title="' + what + ' not set"') + '>' + esc(v || '—') + '</span></span>';
   }
 
   function rowOpen(r) {
@@ -470,6 +505,7 @@
       if (f.dept && r.work !== deptLabel(f.dept)) return false;
       if (f.priority && (!r.pri || r.pri.label !== f.priority)) return false;
       if (f.assignee && !(r.who || []).some(function (x) { return x.n === assigneeLabel(f.assignee).split(' ')[0]; })) return false;
+      if (f.reporting && !reportingOk(r, f.reporting)) return false;
       return true;
     });
 
@@ -582,11 +618,20 @@
       e.preventDefault();
       return;
     }
+    if (e.target.closest('[data-act="filters"]')) { setFilters(!$('#app').classList.contains('dock-open')); return; }
     if (!e.target.closest('.pop')) closePops();
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closePops();
   });
+  /* Filters is a side panel that stays until it is closed, remembered in this browser (Bill, Nov 11; Alex, Nov 16) */
+  function setFilters(open) {
+    $('#app').classList.toggle('dock-open', open);
+    $$('[data-act="filters"]').forEach(function (b) { if (b.closest('.facet')) { b.setAttribute('aria-expanded', String(open)); b.classList.toggle('facet__b--on', open); } });
+    try { localStorage.setItem('aan-mwq-filters-open', open ? '1' : '0'); } catch (x) { }
+    window.dispatchEvent(new Event('resize'));   /* the list's width changed: the wide-list scroll re-measures */
+  }
+  try { if (localStorage.getItem('aan-mwq-filters-open') === '1') setFilters(true); } catch (x) { }
 
   /* ── actions ─────────────────────────────────────────────────────────── */
   document.addEventListener('click', function (e) {
@@ -682,6 +727,8 @@
   });
 
   document.addEventListener('change', function (e) {
+    var rk = e.target.closest('[data-rank]');
+    if (rk) { S.edits[rk.getAttribute('data-rank') + ':rank'] = rk.value; render(); return; }
     var sel = e.target.closest('[data-filter]');
     if (!sel) return;
     var k = sel.getAttribute('data-filter');
@@ -689,7 +736,7 @@
     var meta = FILTERS.filter(function (f) { return f.k === k; })[0];
     S.chips = S.chips.filter(function (c) { return c.f !== k; });
     if (sel.value) S.chips.push({ k: meta.l, v: pick(D.opts[meta.o], sel.value), f: k });
-    closePops();
+    if (!$('#f-dock').contains(sel)) closePops();   /* the Filters panel stays open (Bill, Nov 11) */
     render();
   });
 

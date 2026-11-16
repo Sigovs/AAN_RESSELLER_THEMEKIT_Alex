@@ -54,7 +54,7 @@
     /* Open state for both disclosure families: the vehicle sheet's four stacked
        regions, then the Filters dock's facet groups. */
     acc: { health: true, market: false, spec: false, hist: false, 'f-make': true, 'f-price': true, 'f-year': false, 'f-model': false, 'f-mile': false, 'f-loc': false, 'f-type': false, 'f-merch': false, 'f-color': false, 'f-opt': false, 'f-audit': false },
-    cols: null,
+    cols: null, inline: false, ie: {},
     view: (function () { try { var v = window.localStorage.getItem('aan.gen11.allVehicles.view'); return v === 'gallery' || (v === 'photos' && document.querySelector('[data-view="photos"]')) ? v : 'rows'; } catch (e) { return 'rows'; } })()
   };
 
@@ -118,7 +118,7 @@
     { id: 'lease',  label: 'Lease Price',            grp: 'Pricing', off: true, dockOff: true, track: { lg: 100, sm: 96 }, cell: function (v) { return money(v.lease); } },
     { id: 'lterm',  label: 'Lease Term',             grp: 'Pricing', off: true, dockOff: true, track: { lg: 92, sm: 88 }, cell: function (v) { return v.lt ? '<div>' + v.lt + ' mo</div>' : NOD; } },
     { id: 'nph',    label: '# Photos',               grp: 'Listing & feeds', off: true, dockOff: true, track: { lg: 80, sm: 76 }, cell: function (v) { return '<div class="num-c">' + nf(v.ph || 0) + '</div>'; } },
-    { id: 'hide',   label: 'Do Not Display On Site', grp: 'Listing & feeds', off: true, dockOff: true, track: { lg: 120, sm: 112 }, cell: function (v) { return v.f.indexOf('Hidden') >= 0 ? '<div class="yn yn--bad">Hidden</div>' : '<div class="yn">No</div>'; } },
+    { id: 'hide',   label: 'Do Not Display On Site', grp: 'Listing & feeds', cls: 'c-hide', off: true, dockOff: true, track: { lg: 120, sm: 112 }, cell: function (v) { return v.f.indexOf('Hidden') >= 0 ? '<div class="yn yn--bad">Hidden</div>' : '<div class="yn">No</div>'; } },
     { id: 'feed',   label: 'Outgoing Feed Status',   grp: 'Listing & feeds', off: true, dockOff: true, track: { lg: 120, sm: 112 }, cell: function (v) { return v.f.indexOf('Feed off') >= 0 ? '<div class="yn">Off</div>' : '<div class="yn yn--ok">On</div>'; } },
     { id: 'pend',   label: 'Sale Pending',           grp: 'Listing & feeds', off: true, dockOff: true, track: { lg: 96, sm: 92 }, cell: function (v) { return v.f.indexOf('Pending') >= 0 ? '<div class="yn yn--warn">Pending</div>' : NOD; } },
     { id: 'specials', label: 'Specials',             grp: 'Listing & feeds', off: true, dockOff: true, nodata: true, track: { lg: 84, sm: 80 } },
@@ -237,6 +237,8 @@
     return dockOpen() ? (narrow ? 'dockSm' : 'dock') : (narrow ? 'sm' : 'lg');
   }
   function colOn(c) { return c.locked || c.system || S.cols[c.id] !== false; }
+  /* Inline edit shows a working set: who the car is, then the five fields Bill listed, each in its own column */
+  var IE_SET = ['status', 'stock', 'year', 'make', 'model', 'price', 'disc', 'inv', 'hide', 'pend', 'actions'];
   /* Photos view: the original's photographer preset — its own columns in its
      own order, with a large photo. The dealer's Rows columns are left alone. */
   var PHOTO_COLS = ['stock', 'vin', 'vtype', 'year', 'make', 'model', 'trim', 'colour', 'thumb', 'status', 'days', 'actions'];
@@ -244,6 +246,7 @@
   /* the slack is shared by the descriptive columns, not handed to Model alone */
   var PHOTO_GROW = { make: 1, model: 2, trim: 1.5, colour: 1 };
   function visibleCols() {
+    if (S.inline && S.view === 'rows') return IE_SET.map(colById);
     var dk = dockOpen();
     if (S.view === 'photos') return fitCols(PHOTO_COLS.map(colById).filter(function (c) { return !dk || !c.dockOff || c.id === 'thumb'; }));
     return fitCols(orderedCols().filter(function (c) { return (!dk || !c.dockOff) && colOn(c); }));
@@ -280,6 +283,28 @@
     }).join(' ');
   }
 
+  function openSwap(btn) {
+    var id = btn.dataset.swap, cur = colById(id), p = $('#p-swap');
+    if (!p) { p = document.createElement('div'); p.id = 'p-swap'; p.className = 'pop mn swap'; p.setAttribute('role', 'menu'); document.body.appendChild(p); }
+    if (p.classList.contains('pop--open') && p.dataset.for === id) { closePops(); return; }
+    closePops();
+    var room = tableRoom() + trackPx(cur);
+    var free = S.order.map(colById).filter(function (c) { return c && !c.locked && !c.system && !colOn(c); });
+    p.dataset.for = id;
+    p.innerHTML = '<div class="caps mn__lab">Swap ' + esc(cur.label) + ' for</div><div class="swap__list">' + free.map(function (c) {
+      var ok = trackPx(c) <= room;
+      return '<button class="mn__it" type="button" role="menuitem" data-swap-from="' + id + '" data-swap-to="' + c.id + '"' + (ok ? '' : ' disabled title="No room for this column at this width"') + '>' + esc(c.label) + (ok ? '' : '<span class="swap__nr">No room</span>') + '</button>';
+    }).join('') + '</div><div class="mn__sep"></div>' +
+      '<button class="mn__it" type="button" role="menuitem" data-swap-rm="' + id + '">' + ic('i-x') + 'Remove column</button>' +
+      '<button class="mn__it" type="button" role="menuitem" data-swap-reset>' + ic('i-broom') + 'Reset to default (all columns)</button>';
+    p.classList.add('pop--open');
+    var r = btn.getBoundingClientRect(), w = p.offsetWidth, h = p.offsetHeight;
+    var left = Math.min(Math.max(8, r.right - w), window.innerWidth - w - 8);
+    var top = r.bottom + 6 + h > window.innerHeight - 8 ? Math.max(8, r.top - 6 - h) : r.bottom + 6;
+    p.style.left = left + 'px'; p.style.top = top + 'px';
+    var first = p.querySelector('.mn__it:not([disabled])'); if (first) first.focus();
+  }
+
   function headerHTML() {
     return visibleCols().map(function (c) {
       var cls = [];
@@ -288,8 +313,14 @@
       if (c.cls) cls.push(c.cls);
       var label = c.system || (c.id === 'thumb' && S.view !== 'photos') ? '' : c.id === 'thumb' ? 'Photos' : c.id === 'days' && S.view === 'photos' ? 'Days' : esc(c.label) + (c.demo ? '<i class="hd-demo" title="Demo figures — no mileage in the sample data">demo</i>' : '');
       var arrow = (c.sort && c.sort === S.sort) ? ' ' + ic(S.dir === 'asc' ? 'i-up' : 'i-dn') : '';
+      /* the swap control (Bill, Nov 6: "The current system has a gear next to the heading that you can quickly swap it
+         with another un-used field"; live: preferences icon on each heading, checked Nov 16). On every column the dealer
+         may change; the locked ones (Status, Stock, Make, Model, Price, Actions) stay as they are. */
+      var swap = (S.view === 'rows' && !S.inline && !c.locked && !c.system && c.id !== 'year')   /* Year is too narrow for its label and the icon */
+        ? '<button class="hd__sw" type="button" data-swap="' + c.id + '" aria-haspopup="true" aria-label="Swap the ' + esc(c.label) + ' column" title="Swap this column">' + ic('i-sliders') + '</button>' : '';
+      if (swap) cls.push('hd--sw');
       return '<span' + (cls.length ? ' class="' + cls.join(' ') + '"' : '') +
-        (c.sort ? ' data-sort="' + c.sort + '"' : '') + (c.tip ? ' title="' + esc(c.tip) + '"' : '') + '>' + label + arrow + '</span>';
+        (c.sort ? ' data-sort="' + c.sort + '"' : '') + (c.tip ? ' title="' + esc(c.tip) + '"' : '') + '>' + label + arrow + swap + '</span>';
     }).join('');
   }
 
@@ -517,15 +548,57 @@
       status: '<div class="st"><span class="stat stat--' + (S.lane === 'Sold' ? 'sold' : 'ok') + '">' + (S.lane === 'All' ? 'Available' : esc(S.lane)) + '</span></div>',
       health: '<div class="tags">' + (v.f.length ? tags.map(tag).join('') + (rest > 0 ? '<span class="tag tag--more" title="' + esc(v.f.slice(tags.length).join(' · ')) + '">+' + rest + '</span>' : '') : '<span class="noflag" title="No listing flags">—</span>') + '</div>',
       age: '<div class="added age--' + b + '" title="Added ' + addedOn(v.d) + ' · ' + nf(v.d) + ' days in stock"><b>' + addedOn(v.d) + '</b><span>' + lab(v.d) + '</span></div>',
-      actions: '<span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop data-go="' + EDITOR + '">' + ic('i-edit') + '</button><button type="button" title="Photos" aria-label="Photos" data-stop>' + ic('i-cam') + '</button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop>' + ic('i-print') + '</button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop>' + ic('i-trash') + '</button></span>'
+      actions: '<span class="acts"><button type="button" title="Edit vehicle" aria-label="Edit vehicle" data-stop data-go="' + EDITOR + '">' + ic('i-edit') + '</button><button type="button" title="Photos" aria-label="Photos" data-stop data-go="' + EDITOR + '#photos">' + ic('i-cam') + '</button><button type="button" title="Window sticker" aria-label="Window sticker" data-stop data-go="' + EDITOR + '#sticker">' + ic('i-print') + '</button><button type="button" class="del" title="Delete vehicle" aria-label="Delete vehicle" data-stop>' + ic('i-trash') + '</button></span>'
     };
   }
   /* Added: the demo lot's day count read back from the date of this snapshot,
      so the dates stay fixed between visits. */
   var ASOF = Date.UTC(2026, 9, 1), MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   function addedOn(d) { var t = new Date(ASOF - d * 864e5); return MON[t.getUTCMonth()] + ' ' + t.getUTCDate() + ', ' + t.getUTCFullYear(); }
+  /* ── Inline edit (Bill, Nov 6; live Inventory Manager): Price, Discount Price, Invoice Price, Do Not Display On Site,
+        Sale Pending, edited in the rows; one Update saves every changed vehicle ── */
+  function ieVal(v, k) {
+    var e = S.ie[v.id] || {};
+    if (k in e) return e[k];
+    return k === 'p' ? v.p : k === 'disc' ? v.disc : k === 'inv' ? v.inv : k === 'hide' ? v.f.indexOf('Hidden') >= 0 : v.f.indexOf('Pending') >= 0;
+  }
+  function ieChanged(v, k) { var e = S.ie[v.id]; return !!(e && k in e); }
+  function ieMoney(v, k, label) {
+    var x = ieVal(v, k);
+    return '<label class="iein' + (ieChanged(v, k) ? ' iein--chg' : '') + '" data-stop><span>$</span><input type="text" inputmode="numeric" data-ie="' + k + '" data-id="' + v.id + '" aria-label="' + label + ', ' + esc(v.s) + '" value="' + (x == null ? '' : x) + '"></label>';
+  }
+  function ieCheck(v, k, label) {
+    return '<label class="iech' + (ieChanged(v, k) ? ' iech--chg' : '') + '" data-stop><input type="checkbox" class="ck" data-ie="' + k + '" data-id="' + v.id + '" aria-label="' + label + ', ' + esc(v.s) + '"' + (ieVal(v, k) ? ' checked' : '') + '></label>';
+  }
+  function ieCount() { return Object.keys(S.ie).filter(function (id) { return Object.keys(S.ie[id]).length; }).length; }
+  function ieSet(t) {
+    var id = t.dataset.id, k = t.dataset.ie, v = V.filter(function (x) { return String(x.id) === String(id); })[0]; if (!v) return;
+    var val = t.type === 'checkbox' ? t.checked : t.value.trim();
+    var orig = k === 'p' ? v.p : k === 'disc' ? v.disc : k === 'inv' ? v.inv : k === 'hide' ? v.f.indexOf('Hidden') >= 0 : v.f.indexOf('Pending') >= 0;
+    var same = t.type === 'checkbox' ? val === orig : String(val).replace(/[^0-9.]/g, '') === String(orig == null ? '' : orig);
+    S.ie[id] = S.ie[id] || {};
+    if (same) delete S.ie[id][k]; else S.ie[id][k] = val;
+    var box = t.closest('.iein, .iech'); if (box) box.classList.toggle(box.classList.contains('iein') ? 'iein--chg' : 'iech--chg', !same);
+    renderIEBar();
+  }
+  function renderIEBar() {
+    var bar = $('#iebar'); if (!bar) return;
+    bar.hidden = !S.inline;
+    var n = ieCount();
+    $('#iebar-n').textContent = n ? n + (n === 1 ? ' vehicle changed' : ' vehicles changed') : 'No changes yet';
+    $('[data-act="ie-update"]').disabled = !n;
+    $$('.head [data-act="inline"]').forEach(function (b) { b.setAttribute('aria-pressed', String(S.inline)); b.classList.toggle('btn--on', S.inline); });
+  }
+
   function row(v, i) {
     var cells = rowCells(v), name = v.y + ' ' + v.mk + ' ' + v.md;
+    if (S.inline && S.view === 'rows') {
+      cells.price = ieMoney(v, 'p', 'Price');
+      cells.disc = ieMoney(v, 'disc', 'Discount Price');
+      cells.inv = ieMoney(v, 'inv', 'Invoice Price');
+      cells.hide = ieCheck(v, 'hide', 'Do Not Display On Site');
+      cells.pend = ieCheck(v, 'pend', 'Sale Pending');
+    }
     return '<div class="row' + (i % 2 ? ' row--alt' : '') + (S.cur === v.id ? ' open' : '') + '" data-id="' + v.id + '" tabindex="0" aria-label="' + esc(name) + '">' +
       visibleCols().map(function (c) { return cells[c.id] != null ? cells[c.id] : c.cell ? c.cell(v) : NOD; }).join('') +
       '</div>';
@@ -607,6 +680,7 @@
     var gal = S.view === 'gallery';
     $('.field').classList.toggle('field--gallery', gal);
     $('.field').classList.toggle('field--photos', S.view === 'photos');
+    $('.field').classList.toggle('field--ie', !!S.inline && S.view === 'rows');   /* inline edit: two-line heads */
     $$('[data-view]').forEach(function (b) { var on = b.dataset.view === S.view; b.classList.toggle('seg__b--on', on); b.setAttribute('aria-pressed', on); });
     var sheet = function (v) { return '<div class="exp' + (S.still ? ' exp--open' : '') + '" id="exp"><div><div class="exp__in">' + vehicleSheet(v) + '</div></div></div>'; };
     var openV = S.cur && L.filter(function (v) { return v.id === S.cur; })[0];
@@ -782,13 +856,22 @@
   }
   function vehicleSheet(v) {
     var has = function (t) { return v.f.indexOf(t) >= 0; };
-    var ab = function (cls, icon, label) { return '<button class="btn ' + cls + '" type="button">' + ic(icon) + '<span>' + label + '</span></button>'; };
+    var ab = function (cls, icon, label, go) { return '<button class="btn ' + cls + '" type="button"' + (go ? ' data-go="' + go + '"' : '') + '>' + ic(icon) + '<span>' + label + '</span></button>'; };
     /* Edit vehicle is the way into the full editor, so it leads the key figures
        at their own height instead of sitting first in a row of six peers
        (review note, Ivaylo 2026-10-07). The row below keeps the secondary actions. */
     var lead = '<button class="btn btn--primary btn--lead" type="button" data-go="' + EDITOR + '">' + ic('i-edit') + '<span>Edit vehicle</span>' + ic('i-right') + '</button>';
+    /* Edit lock (Bill, Nov 6: "it should show the record as locked on the main inventory admin screen with 2 options
+       (view only / unlock and take controls)"). The live list's unlockVehicle() asks "This vehicle being edited by NAME
+       since TIME. Are you sure you want to unblock and take control of next save" (checked Nov 16). The fixture only
+       says the car is locked, not by whom. */
+    if (v.lock) lead = '<div class="vlock" role="group" aria-label="This vehicle is being edited">' +
+      '<p class="vlock__t">' + ic('i-lock') + '<span><b>Being edited by another user</b>Open it view only, or take over the next save.</span></p>' +
+      '<div class="vlock__a"><button class="btn btn--sheet btn--sm" type="button" data-go="' + EDITOR + '#view">' + ic('i-eye') + '<span>View only</span></button>' +
+      '<button class="btn btn--primary btn--sm" type="button" data-unlock="' + EDITOR + '#unlock">' + ic('i-lock') + '<span>Unlock and take control</span></button></div></div>';
     var acts = '<div class="veh__acts">' +
-      ab('btn--sheet', 'i-cam', 'Photos') + ab('btn--sheet', 'i-print', 'Window sticker') +
+      /* Photos and Window sticker open those sections of the editor (Bill, Nov 6) */
+      ab('btn--sheet', 'i-cam', 'Photos', EDITOR + '#photos') + ab('btn--sheet', 'i-print', 'Window sticker', EDITOR + '#sticker') +
       ab('btn--sheet', 'i-file', 'Carfax') + ab('btn--sheet', 'i-rss', has('Feed off') ? 'Include in feeds' : 'Exclude feeds') +
       siteSwitch(v) + ab('btn--sheet btn--del', 'i-trash', 'Delete…') + '</div>';
     var p = vehicleBody(v);
@@ -865,7 +948,7 @@
     var specIn = '<div class="spec2"><div><span>Trim</span><span title="' + esc(v.tr) + '">' + (esc(v.tr) || '—') + '</span></div><div><span>Exterior</span><span>' + esc(v.c) + '</span></div><div><span>Type</span><span>Used</span></div><div><span>Mileage</span><span>' + (v.mi == null ? 'No odometer' : nf(v.mi) + ' mi') + '</span></div><div><span>Location</span><span>Chicago Motor Cars</span></div><div><span>Stock #</span><span class="mono">' + esc(v.s) + '</span></div></div>';
 
     return {
-      img: '<div class="veh__img">' + (v.t ? '<img alt="' + esc(v.y + ' ' + v.mk + ' ' + v.md) + '" src="img/' + esc(v.t) + '"><span class="cnt">' + ic('i-cam') + nf(v.ph || 0) + ' photos</span>' : '<div class="none">' + ic('i-cam-off') + 'No photos uploaded<button class="btn btn--sm" type="button">' + ic('i-plus') + ' Upload photos</button></div>') + '</div>',
+      img: '<div class="veh__img">' + (v.t ? '<img alt="' + esc(v.y + ' ' + v.mk + ' ' + v.md) + '" src="img/' + esc(v.t) + '"><span class="cnt">' + ic('i-cam') + nf(v.ph || 0) + ' photos</span>' : '<div class="none">' + ic('i-cam-off') + 'No photos uploaded<button class="btn btn--sm" type="button" data-go="' + EDITOR + '#photos" title="Opens the photo uploader in the vehicle editor">' + ic('i-plus') + ' Upload photos</button></div>') + '</div>',
       facts: factsIn,
       meta: '<div class="veh__m"><span class="idtag">' + esc(v.s) + '</span><span class="mono">VIN ' + esc(v.vin) + '</span><span class="veh__st">Available</span>' + (v.lock ? '<span class="lock" title="Being edited by another user">' + ic('i-lock') + '</span>' : '') + '</div>',
       tags: '<div class="veh__tags">' + v.f.map(tag).join('') + '</div>',   // always present: flipping On website must not move the sheet
@@ -934,7 +1017,10 @@
     h += acc('f-type', 'Type', sum('type', 'New · Used'), facetList('type', G.type));
     h += acc('f-merch', 'Merchandising', sum('merch', 'Site · feeds · pending'), facetList('merch', G.merch));
     h += acc('f-color', 'Exterior color', sum('color', 'Any'), '<div class="sws">' + COLORS.map(function (c) { var on = !!S.f.color[c[0]]; return '<button type="button" class="swb' + (on ? ' swb--on' : '') + '" data-fk="color:' + c[0] + '" aria-pressed="' + on + '"><span class="sw" style="--c:' + c[1] + '"></span>' + c[0] + '<b>' + c[2] + '</b></button>'; }).join('') + '</div>');
-    h += acc('f-opt', 'Options', sum('opt', 'Decoded from VIN'), facetList('opt', G.opt), ' <span class="demo">Demo</span>');
+    /* Options filter commented out (Bill, Nov 6: "Not sure if this is needed ... with the keyword search being able to
+       search them I feel that is enough for the options"). It was a mockup demo: neither the live Inventory Manager nor
+       the new-backend export has an options filter (checked Nov 16). Before: review-shots/62-all-vehicles-options-filter-before.png
+    h += acc('f-opt', 'Options', sum('opt', 'Decoded from VIN'), facetList('opt', G.opt), ' <span class="demo">Demo</span>'); */
     h += acc('f-audit', 'Audit', 'Missing items · custom field',
       '<label class="f"><span>Missing items</span><select class="sel"><option value="">— any —</option><optgroup label="Photos"><option>Images</option><option>1 image or less</option></optgroup><optgroup label="Identity"><option>VIN decoding</option><option>Stock number</option><option>Make</option><option>Model</option><option>Trim</option><option>Year</option><option>VIN number</option><option>Vehicle type</option></optgroup><optgroup label="Specs"><option>Body</option><option>Transmission</option><option>Mileage</option><option>Exterior color</option><option>Interior color</option><option>Fuel</option><option>Location</option></optgroup><optgroup label="Pricing"><option>Price</option><option>Discounted price</option><option>Invoice price</option><option>Lease price</option><option>Lease term</option></optgroup><optgroup label="Copy"><option>Intro description</option><option>Caption</option><option>Main description</option><option>Bulleted text</option><option>Description 2</option><option>Buyers guide text</option></optgroup></select></label>' +
       '<div class="f"><span>Custom field</span><div class="pop__row"><select class="sel" aria-label="Custom field"><option value="">—</option><option>cfx_date</option><option>trucks_and_equipment</option><option>ove_feed_data</option><option>no_carfax</option><option>pending_sale_name</option><option>truck_trailer</option><option>images_timestamp</option><option>no_vin</option><option>carfax_timestamp</option></select><input class="fld" type="search" placeholder="value…" aria-label="Custom field value"></div></div>' +
@@ -1021,6 +1107,16 @@
        click does not pin a menu open, so two can never overlap. Touch has no
        hover and keeps the tap-to-open; keyboard uses :focus-within. */
     if ((el = t.closest('[data-menu]')) && window.matchMedia('(hover: hover) and (pointer: fine)').matches) { closeMenus(); return; }
+    /* ── column swap from the heading (Bill, Nov 6; live preferences menu: the unused fields, "remove item",
+          "Reset to default (all columns)") ── */
+    if ((el = t.closest('[data-swap]'))) { e.stopPropagation(); openSwap(el); return; }
+    if ((el = t.closest('[data-swap-to]'))) {
+      var from = el.dataset.swapFrom, to = el.dataset.swapTo, ord = S.order.filter(function (id) { return id !== to; });
+      ord.splice(ord.indexOf(from), 0, to); S.order = ord;
+      S.cols[to] = true; S.cols[from] = false; saveCols(); saveOrder(); closePops(); render(); return;
+    }
+    if ((el = t.closest('[data-swap-rm]'))) { S.cols[el.dataset.swapRm] = false; saveCols(); closePops(); render(); return; }
+    if ((el = t.closest('[data-swap-reset]'))) { S.cols = colDefaults(); saveCols(); S.order = orderDefault(); saveOrder(); closePops(); render(); return; }
     if ((el = t.closest('[data-menu]'))) { var it = el.closest('.nav__it'), open = !it.classList.contains('nav__it--open'); closeMenus(it); it.classList.toggle('nav__it--open', open); el.setAttribute('aria-expanded', open); return; }
     if (!t.closest('.nav__it')) closeMenus();
     if ((el = t.closest('[data-pop]'))) {
@@ -1041,6 +1137,29 @@
       return;
     }
     if ((el = t.closest('[data-go]'))) { location.href = el.dataset.go; return; }
+    if ((el = t.closest('[data-act="inline"]'))) {
+      if (S.inline && ieCount() && !window.confirm('Discard the changes to ' + ieCount() + ' vehicle(s)?')) return;
+      S.inline = !S.inline; S.ie = {}; if (S.inline && S.view !== 'rows') S.view = 'rows'; if (S.inline && S.dock) closeDock();
+      render(); renderIEBar(); return;
+    }
+    if ((el = t.closest('[data-act="ie-discard"]'))) { S.ie = {}; render(); renderIEBar(); return; }
+    if ((el = t.closest('[data-act="ie-update"]'))) {
+      var n = ieCount();
+      Object.keys(S.ie).forEach(function (id) {
+        var v = V.filter(function (x) { return String(x.id) === String(id); })[0], e2 = S.ie[id]; if (!v) return;
+        ['p', 'disc', 'inv'].forEach(function (k) { if (k in e2) v[k] = e2[k] === '' ? null : +String(e2[k]).replace(/[^0-9.]/g, '') || null; });
+        var flag = function (name, on) { var at = v.f.indexOf(name); if (on && at < 0) v.f.push(name); if (!on && at >= 0) v.f.splice(at, 1); };
+        if ('hide' in e2) flag('Hidden', e2.hide);
+        if ('pend' in e2) flag('Pending', e2.pend);
+      });
+      S.ie = {}; render(); renderIEBar();
+      $('#iebar-n').textContent = n + (n === 1 ? ' vehicle updated' : ' vehicles updated');
+      return;
+    }
+    if ((el = t.closest('[data-unlock]'))) {
+      if (window.confirm('This vehicle is being edited by another user.\nAre you sure you want to unblock it and take control of the next save?')) location.href = el.dataset.unlock;
+      return;
+    }
     if ((el = t.closest('[data-site]'))) {
       var sv = byId(el.dataset.site), at = sv.f.indexOf('Hidden');
       if (at >= 0) sv.f.splice(at, 1); else sv.f.push('Hidden');
@@ -1116,11 +1235,13 @@
       return;
     }
     var t = e.target;
+    if (t.matches('[data-ie]') && t.type === 'checkbox') { ieSet(t); return; }
     if (t.matches('[data-f]')) { tog(t.dataset.f, t.dataset.k, t.checked); return; }
     if (t.matches('[data-per]')) { S.per = +t.value; S.page = 1; render(); }
   });
   document.addEventListener('input', function (e) {
     var t = e.target;
+    if (t.matches('[data-ie]') && t.type !== 'checkbox') { ieSet(t); return; }
     if (t.matches('[data-filter]')) { var q = t.value.toLowerCase(); $$('#make-list .pop__it').forEach(function (it) { it.style.display = it.textContent.toLowerCase().indexOf(q) >= 0 ? '' : 'none'; }); }
     if (t.matches('[data-fq]')) { S.fq = t.value; applyFq(); }
     if (t.id === 'q') { S.q = t.value; S.page = 1; render(); }

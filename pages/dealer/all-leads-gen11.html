@@ -12,9 +12,9 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
      in-flow expansion) is declared once, in the All Vehicles sheet. This page adds
      only what the Lead Desk owns. Same relationship All Leads Gen 10 had to its base. -->
 <link rel="stylesheet" href="all-vehicles-gen11.css?v=20261030-ds">
-<link rel="stylesheet" href="all-leads-gen11.css?v=20261030-ds">
+<link rel="stylesheet" href="all-leads-gen11.css?v=20261116-cmt3">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
-<link rel="stylesheet" href="../_aan-components.css?v=20261030-tab">
+<link rel="stylesheet" href="../_aan-components.css?v=20261116-bar">
 </head>
 <body>
 
@@ -68,9 +68,12 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         <div class="menu">
           <div class="menu__col"><div class="caps menu__t">Inventory</div>
             <a class="menu__l" href="all-vehicles-gen11.html"><b>Inventory Manager</b><span>Every vehicle, by lane</span></a>
-            <a class="menu__l" href="#"><b>New submissions</b><span>Vehicles waiting for review</span></a>
+            <!-- New submissions: not in the live system (checked Nov 16; Bill, Nov 6: "As for New Submissions what is that?"). A new-backend page, so it moves to the New features list. -->
+            <!-- <a class="menu__l" href="#"><b>New submissions</b><span>Vehicles waiting for review</span></a> -->
             <a class="menu__l" href="#"><b>Sort order</b><span>How vehicles list on your site</span></a>
             <a class="menu__l" href="#"><b>Auto Locator</b><span>Find a vehicle for a buyer</span></a>
+            <!-- Feed Out Manager (Bill, Nov 6: "We are missing the Feed Out Manager and most dealers 2020 and newer should have that link as it is a way for them to edit all available cars at once for their outgoing feeds") -->
+            <a class="menu__l" href="#"><b>Feed Out Manager</b><span>Outgoing feeds for all available cars</span></a>
           </div>
           <div class="menu__col"><div class="caps menu__t">Reports</div>
             <a class="menu__l" href="#"><b>Inventory aging</b><span>Days in stock, per vehicle</span></a>
@@ -82,20 +85,32 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Leads<svg class="i"><use href="#i-chev"/></svg></button>
         <div class="menu"><div class="menu__col"><div class="caps menu__t">Leads</div>
           <a class="menu__l menu__l--on" href="#" aria-current="page"><b>Lead Manager</b><span>Every enquiry, by stage</span></a>
+          <!-- Customers and Referrals: not in the live system, whose Leads menu is only the Lead Manager (checked Nov 16; Bill, Nov 6: "there is really just the lead manager ... unless those will be new features"). New-backend pages, so they move to the New features list.
           <a class="menu__l" href="#"><b>Customers</b><span>People who enquired or bought</span></a>
-          <a class="menu__l" href="#"><b>Referrals</b><span>Where leads came from</span></a>
+          <a class="menu__l" href="#"><b>Referrals</b><span>Where leads came from</span></a> -->
         </div></div>
       </div>
       <div class="nav__it">
         <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Site<svg class="i"><use href="#i-chev"/></svg></button>
         <div class="menu"><div class="menu__col"><div class="caps menu__t">Site management</div>
           <a class="menu__l" href="#"><b>Site Content Manager</b><span>Pages, banners and copy</span></a>
+          <!-- Form Editor: in the live dealer menu for AAN admin users only (checked Nov 16; Bill, Nov 6: "Us admin users need a "Form Editor" link here but dealers do not") -->
+          <a class="menu__l" href="#" data-admin-only><b>Form Editor</b><span>Dealer forms · AAN admins only</span></a>
         </div></div>
       </div>
       <!-- Marketing menu (Newsletter tools, Craigslist posting; Posting tools & eBay was already hidden)
            removed: meeting with Ivaylo, 2026-10-29. Newsletter is untested and mails go out from
            the AAN server (spam-flag risk); Marketing comes back later as an analytics hub.
            Restore: git show c2a8808:pages/dealer/all-leads-gen11.html -->
+      <!-- Newsletter Tools is back (Alex, Nov 16; Bill, Nov 6: dealers use it to "download email lists" and it collects the
+           site's "newsletter subscribe forms"). The live dealer menu has it under Marketing. Only this item returns;
+           Craigslist posting stays out with the rest of the Oct 29 Marketing menu. -->
+      <div class="nav__it">
+        <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Marketing<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu"><div class="menu__col"><div class="caps menu__t">Marketing applications</div>
+          <a class="menu__l" href="#"><b>Newsletter Tools</b><span>Email lists and subscribe forms</span></a>
+        </div></div>
+      </div>
       <div class="nav__it">
         <button class="nav__b" type="button" data-menu aria-haspopup="true" aria-expanded="false">Dealer tools<svg class="i"><use href="#i-chev"/></svg></button>
         <div class="menu"><div class="menu__col"><div class="caps menu__t">Dealer tools</div>
@@ -213,7 +228,12 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
           <div class="pop" id="p-created"><div class="pop__body"><div class="caps mn__lab">Lead submit date</div><div class="pop__row"><input class="fld" type="date" aria-label="From"><span>–</span><input class="fld" type="date" aria-label="To"></div><div class="pop__quick"><button class="btn btn--sheet btn--sm" type="button" data-created="today">Today</button><button class="btn btn--sheet btn--sm" type="button" data-created="7">Last 7 days</button><button class="btn btn--sheet btn--sm" type="button" data-created="30">Last 30 days</button><button class="btn btn--sheet btn--sm" type="button" data-created="any">Any time</button></div></div></div></div>
         <div class="facet"><button class="facet__b" type="button" data-pop="p-more"><span class="facet__v">More</span><svg class="i"><use href="#i-chev"/></svg></button>
           <div class="pop pop--right" id="p-more"><div class="pop__body more">
-            <div class="caps mn__lab">Vehicle of interest</div><div class="pop__row"><input class="fld" type="search" placeholder="Stock #" aria-label="Stock #"><input class="fld" type="search" placeholder="Year" aria-label="Year"></div><div class="pop__row"><input class="fld" type="search" placeholder="Make" aria-label="Make"><input class="fld" type="search" placeholder="Model" aria-label="Model"></div>
+            <!-- Available stock + Include Sold (Bill, Nov 6; the live Lead Manager has "Available Stocks": All, then
+                 "stock year make model", which fills the Stock # search, and an "Include Sold" checkbox; checked Nov 16) -->
+            <div class="caps mn__lab">Vehicle of interest</div>
+            <div class="pop__row"><select class="sel" id="v-avail" aria-label="Available stock"></select></div>
+            <label class="more__opt"><input class="ck" type="checkbox" id="v-sold"> Include Sold</label>
+            <div class="pop__row"><input class="fld" type="search" id="v-stock" placeholder="Stock #" aria-label="Stock #"><input class="fld" type="search" placeholder="Year" aria-label="Year"></div><div class="pop__row"><input class="fld" type="search" placeholder="Make" aria-label="Make"><input class="fld" type="search" placeholder="Model" aria-label="Model"></div>
             <div class="caps mn__lab">Trade-in</div><div class="pop__row"><input class="fld" type="search" placeholder="Trade-in year" aria-label="Trade-in year"><input class="fld" type="search" placeholder="Make" aria-label="Trade-in make"><input class="fld" type="search" placeholder="Model" aria-label="Trade-in model"></div>
             <div class="caps mn__lab">Flags</div><div class="pop__quick"><button class="btn btn--sheet btn--sm" type="button" data-flag="newmail">New mail</button><button class="btn btn--sheet btn--sm" type="button" data-flag="pastdue">Past due</button></div>
           </div></div></div>
@@ -227,7 +247,8 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 
     <div class="rows ui-table" id="rows">
       <div class="hd ui-thead">
-        <span></span>
+        <!-- select all (Bill, Nov 10: "Missing checkall checkbox"); the export has it: "Select all rows" -->
+        <span class="hd__ck"><input class="ck" type="checkbox" id="sel-all" aria-label="Select all rows on this page"></span>
         <span class="s c-lead" data-sort="name">Lead</span>
         <span class="c-contact">Contact</span>
         <span class="c-vehicle">Vehicle</span>
@@ -237,6 +258,9 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
         <span class="s c-rep" data-sort="rep">Assigned</span>
         <span class="r s on c-created" data-sort="created">Created <svg class="i"><use href="#i-dn"/></svg></span>
         <span class="s c-follow" data-sort="follow">Follow-up</span>
+        <!-- Comments (Bill, Nov 10: "In the current system there is a column for Comments ... it shows the date the last
+             comment was added to the lead"; the live Lead Manager's Search list has it, checked Nov 16) -->
+        <span class="c-comments">Comments</span>
         <span class="c-activity">Activity</span>
       </div>
       <div id="tb"></div>
@@ -244,12 +268,12 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 
     <div class="foot pgr" id="pg-bot" aria-label="Pages"></div>
 
-    <div class="tray" id="tray"><b><span id="tray-n">0</span> selected</b><div class="facet"><button type="button" data-pop="p-assign">Assign to… <svg class="i"><use href="#i-chev"/></svg></button><div class="pop mn" id="p-assign"><div class="caps mn__lab">Assign to</div><button class="mn__it" type="button" data-assign="Chicago Motor Cars"><svg class="i"><use href="#i-check"/></svg>Chicago Motor Cars</button><button class="mn__it" type="button" data-assign="Parin"><svg class="i"><use href="#i-check"/></svg>Parin</button><button class="mn__it" type="button" data-assign="Tony McFarland"><svg class="i"><use href="#i-check"/></svg>Tony McFarland</button><button class="mn__it" type="button" data-assign="Karen Conrad"><svg class="i"><use href="#i-check"/></svg>Karen Conrad</button><button class="mn__it" type="button" data-assign="Dmitriy Lebedev"><svg class="i"><use href="#i-check"/></svg>Dmitriy Lebedev</button><button class="mn__it" type="button" data-assign="Chicago Motor Cars - Justin"><svg class="i"><use href="#i-check"/></svg>Chicago Motor Cars - Justin</button><button class="mn__it" type="button" data-assign="Chicago Motor Cars - Chris Moran"><svg class="i"><use href="#i-check"/></svg>Chicago Motor Cars - Chris Moran</button><button class="mn__it" type="button" data-assign="Marcus Davis"><svg class="i"><use href="#i-check"/></svg>Marcus Davis</button><button class="mn__it" type="button" data-assign="Chicago Motor Cars - Mike Salerno"><svg class="i"><use href="#i-check"/></svg>Chicago Motor Cars - Mike Salerno</button><button class="mn__it" type="button" data-assign="David Bakalov"><svg class="i"><use href="#i-check"/></svg>David Bakalov</button><button class="mn__it" type="button" data-assign="Mike Verthein"><svg class="i"><use href="#i-check"/></svg>Mike Verthein</button><button class="mn__it" type="button" data-assign="Chicago Motor Cars - Sam Salameh"><svg class="i"><use href="#i-check"/></svg>Chicago Motor Cars - Sam Salameh</button><button class="mn__it" type="button" data-assign="Scott McFarland"><svg class="i"><use href="#i-check"/></svg>Scott McFarland</button><button class="mn__it" type="button" data-assign="Ivaylo Guenkov"><svg class="i"><use href="#i-check"/></svg>Ivaylo Guenkov</button></div></div><button type="button" data-act="unassign">Unassign</button><button type="button" class="x" data-act="clear-sel" aria-label="Clear selection"><svg class="i"><use href="#i-x"/></svg></button></div>
+    <div class="tray" id="tray"><b><span id="tray-n">0</span> selected</b><div class="facet"><button type="button" data-pop="p-assign">Assign to… <svg class="i"><use href="#i-chev"/></svg></button><div class="pop mn" id="p-assign"><div class="caps mn__lab">Assign to</div><button class="mn__it" type="button" data-assign="Chicago Motor Cars"><svg class="i"><use href="#i-check"/></svg>Chicago Motor Cars</button><button class="mn__it" type="button" data-assign="Parin"><svg class="i"><use href="#i-check"/></svg>Parin</button><button class="mn__it" type="button" data-assign="Tony McFarland"><svg class="i"><use href="#i-check"/></svg>Tony McFarland</button><button class="mn__it" type="button" data-assign="Karen Conrad"><svg class="i"><use href="#i-check"/></svg>Karen Conrad</button><button class="mn__it" type="button" data-assign="Dmitriy Lebedev"><svg class="i"><use href="#i-check"/></svg>Dmitriy Lebedev</button><button class="mn__it" type="button" data-assign="Chicago Motor Cars - Justin"><svg class="i"><use href="#i-check"/></svg>Chicago Motor Cars - Justin</button><button class="mn__it" type="button" data-assign="Chicago Motor Cars - Chris Moran"><svg class="i"><use href="#i-check"/></svg>Chicago Motor Cars - Chris Moran</button><button class="mn__it" type="button" data-assign="Marcus Davis"><svg class="i"><use href="#i-check"/></svg>Marcus Davis</button><button class="mn__it" type="button" data-assign="Chicago Motor Cars - Mike Salerno"><svg class="i"><use href="#i-check"/></svg>Chicago Motor Cars - Mike Salerno</button><button class="mn__it" type="button" data-assign="David Bakalov"><svg class="i"><use href="#i-check"/></svg>David Bakalov</button><button class="mn__it" type="button" data-assign="Mike Verthein"><svg class="i"><use href="#i-check"/></svg>Mike Verthein</button><button class="mn__it" type="button" data-assign="Chicago Motor Cars - Sam Salameh"><svg class="i"><use href="#i-check"/></svg>Chicago Motor Cars - Sam Salameh</button><button class="mn__it" type="button" data-assign="Scott McFarland"><svg class="i"><use href="#i-check"/></svg>Scott McFarland</button><button class="mn__it" type="button" data-assign="Ivaylo Guenkov"><svg class="i"><use href="#i-check"/></svg>Ivaylo Guenkov</button></div></div><button type="button" data-act="unassign">Unassign</button><div class="facet"><button type="button" data-pop="p-bstatus">Set status… <svg class="i"><use href="#i-chev"/></svg></button><div class="pop mn" id="p-bstatus"><div class="caps mn__lab">Set status</div><div id="bstatus-list"></div></div></div><button type="button" class="x" data-act="clear-sel" aria-label="Clear selection"><svg class="i"><use href="#i-x"/></svg></button></div>
   </section>
 </div>
 
 <script src="all-leads-gen11.data.js?v=20260930234502"></script>
-<script src="all-leads-gen11.js?v=20261029-pager"></script>
+<script src="all-leads-gen11.js?v=20261116-cmt"></script>
 <script src="../_aan-tablet.js?v=20261030-tab"></script>
 </body>
 </html>

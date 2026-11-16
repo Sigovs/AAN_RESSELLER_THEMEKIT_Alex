@@ -79,7 +79,7 @@
   var S = {
     q: '', lane: 'search', sort: 'created', dir: 'desc',
     status: 'Any', rep: 'Any', source: 'Any', provider: 'Any', type: 'Any',
-    created: 'any', flag: null, page: 1, per: 50, sel: {}, cur: null,
+    created: 'any', flag: null, page: 1, per: 50, sel: {}, cur: null, vstock: '', vsold: false,
     thirdParty: false, archived: false,
     /* The five regions of the lead workspace. Vehicle of interest opens by
        default and can also be closed; any number may be open at once (§9). */
@@ -126,6 +126,7 @@
       if (S.created === '7' && daysAgo(l.d) > 7) return false;
       if (S.created === '30' && daysAgo(l.d) > 30) return false;
       if (S.flag) { var f = FLAGS.filter(function (x) { return x[0] === S.flag; })[0]; if (f && !f[4](l)) return false; }
+      if (S.vstock && String(l.stock || '').toLowerCase().indexOf(S.vstock.toLowerCase()) < 0) return false;
       return true;
     });
     var s = S.sort, k = S.dir === 'asc' ? 1 : -1;
@@ -225,6 +226,12 @@
       (l.follow
         ? '<div class="fu' + (l.pastDue ? ' fu--due' : '') + '"><b>' + fd(l.follow) + '</b>' + (l.pastDue ? '<span class="fu__due">' + ic('i-alert') + 'past due</span>' : '') + '</div>'
         : '<div class="fu fu--none"><b>no follow-up</b></div>') +
+
+      /* the date the last comment was added (live: Comments). The demo knows it only where the last activity is
+         "Comments Added"; elsewhere it shows a dash rather than a guessed date */
+      (l.act && l.act.k === 'Comments Added'
+        ? '<div class="cm" title="Last comment added ' + fd(l.act.d) + '"><b>' + fd(l.act.d) + '</b></div>'
+        : '<div class="cm cm--none" title="No comment date"><b>—</b></div>') +
 
       (l.act
         ? '<div class="ac" title="' + esc(l.act.k) + ' · ' + fd(l.act.d) + '"><b>' + esc(l.act.k) + '</b><span>' + fd(l.act.d) + '</span></div>'
@@ -390,6 +397,7 @@
     ch('status'); ch('rep'); ch('source'); ch('provider'); ch('type');
     ch('created', { today: 'Today', '7': 'Last 7 days', '30': 'Last 30 days' }[S.created]);
     if (S.flag) chips.push({ v: FLAGS.filter(function (f) { return f[0] === S.flag; })[0][1], cls: 'chip--attn', off: function () { S.flag = null; } });
+    if (S.vstock) chips.push({ v: 'Stock ' + S.vstock, off: function () { S.vstock = ''; syncStock(); } });
     if (S.q) chips.push({ v: '“' + S.q + '”', off: function () { S.q = ''; $('#q').value = ''; } });
 
     var totalN = S.lane === 'search' && !chips.length ? T.all : L.length;
@@ -442,6 +450,12 @@
 
     /* selection tray, flags, status rows */
     var n = Object.keys(S.sel).length;
+    /* select all: on when every row on this page is selected, mixed when some are */
+    var boxes = $$('#tb [data-sel]'), on = boxes.filter(function (b) { return b.checked; }).length, sa = $('#sel-all');
+    if (sa) { sa.checked = boxes.length > 0 && on === boxes.length; sa.indeterminate = on > 0 && on < boxes.length; }
+    if (!$('#bstatus-list').firstChild) $('#bstatus-list').innerHTML = Object.keys(STCLS).filter(function (k) { return k !== 'Looking'; }).map(function (k) {
+      return '<button class="mn__it" type="button" data-bstatus="' + esc(k) + '">' + ic('i-check') + esc(k) + '</button>';
+    }).join('');
     $('#tray-n').textContent = n;
     $('#tray').classList.toggle('tray--on', n > 0);
     $$('.ar').forEach(function (b) { var on = b.dataset.flag === S.flag; b.classList.toggle('ar--on', on); b.setAttribute('aria-pressed', on); });
@@ -523,7 +537,12 @@
 
     if ((el = t.closest('[data-pop]'))) {
       var p = $('#' + el.dataset.pop), wasOpen = p && p.classList.contains('pop--open');
-      closePops(); if (p && !wasOpen) p.classList.add('pop--open'); return;
+      closePops(); if (p && !wasOpen) {
+        p.classList.remove('pop--flip'); p.classList.add('pop--open');
+        /* a right-aligned popover whose facet wrapped to the left edge (tablet) opens rightward instead of off-screen */
+        if (p.getBoundingClientRect().left < 8) p.classList.add('pop--flip');
+      }
+      return;
     }
     if (!t.closest('.pop')) closePops();
 
@@ -566,6 +585,14 @@
       });
       S.sel = {}; closePops(); renderBoard(); render(); return;
     }
+    /* bulk status (the export's "Set status…" beside Assign) */
+    if ((el = t.closest('[data-bstatus]'))) {
+      Object.keys(S.sel).forEach(function (id) {
+        var l = V.filter(function (x) { return x.id === +id; })[0];
+        if (l) { l.status = el.dataset.bstatus; if (l.status === 'Unassigned') { l.rep = 'Unassigned'; l.unassigned = true; } }
+      });
+      S.sel = {}; closePops(); renderBoard(); render(); return;
+    }
     if ((el = t.closest('[data-act="unassign"]'))) {
       Object.keys(S.sel).forEach(function (id) {
         var l = V.filter(function (x) { return x.id === +id; })[0];
@@ -577,7 +604,7 @@
     if ((el = t.closest('[data-act="clear-all"]'))) {
       S.q = ''; $('#q').value = '';
       S.status = S.rep = S.source = S.provider = S.type = 'Any';
-      S.created = 'any'; S.flag = null; S.lane = 'search'; S.page = 1;
+      S.created = 'any'; S.flag = null; S.lane = 'search'; S.page = 1; S.vstock = ''; syncStock();
       renderBoard(); render(); return;
     }
     if ((el = t.closest('[data-act="clear-sel"]'))) { S.sel = {}; render(); return; }
@@ -598,8 +625,31 @@
   document.addEventListener('change', function (e) {
     var t = e.target;
     if (t.matches('[data-sel]')) { if (t.checked) S.sel[t.dataset.sel] = true; else delete S.sel[t.dataset.sel]; render(); }
+    if (t.matches('#sel-all')) { $$('#tb [data-sel]').forEach(function (b) { if (t.checked) S.sel[b.dataset.sel] = true; else delete S.sel[b.dataset.sel]; }); render(); }
     if (t.matches('[data-per]')) { S.per = +t.value; S.page = 1; render(); }
+    if (t.matches('#v-avail')) { S.vstock = t.value; S.page = 1; syncStock(); render(); }
+    if (t.matches('#v-sold')) { S.vsold = t.checked; renderAvail(); }
   });
+  $('#v-stock').addEventListener('input', function (e) { S.vstock = e.target.value.trim(); S.page = 1; syncStock(true); render(); });
+
+  /* Available stock (Bill, Nov 6; live Lead Manager): "All", then one line per vehicle, "stock year make model".
+     Picking one searches by its stock number. The demo's vehicles are the ones its leads ask about (the export
+     carries no sold flag for them, so Include Sold has nothing more to add here; in the live list it adds the
+     sold cars). */
+  function renderAvail() {
+    var seen = {}, cars = [];
+    V.forEach(function (l) { if (l.stock && !seen[l.stock]) { seen[l.stock] = 1; cars.push([l.stock, l.car || '']); } });
+    cars.sort(function (a, b) { return a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0; });
+    $('#v-avail').innerHTML = '<option value="">All</option>' + cars.map(function (c) {
+      return '<option value="' + esc(c[0]) + '"' + (c[0] === S.vstock ? ' selected' : '') + '>' + esc(c[0] + ' ' + c[1]) + '</option>';
+    }).join('');
+  }
+  function syncStock(fromField) {
+    var sel = $('#v-avail');
+    if (sel) sel.value = [].some.call(sel.options, function (o) { return o.value === S.vstock; }) ? S.vstock : '';
+    if (!fromField && $('#v-stock')) $('#v-stock').value = S.vstock;
+  }
+  renderAvail();
 
   $('#q').addEventListener('input', function (e) { S.q = e.target.value; S.page = 1; render(); });
 

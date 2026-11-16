@@ -38,6 +38,9 @@
 
   var D = window.AC;
   var ALL = D.dealers;
+  /* Marketing flag (Bill, Nov 11) - see the note at the end of the data file */
+  var MKT = {}; (D.mkt || []).forEach(function (id) { MKT[id] = true; });
+  ALL.forEach(function (d) { d.mkt = !!MKT[d.id]; });
 
   /* ── money ────────────────────────────────────────────────────────────── */
   function usd(n) {
@@ -237,6 +240,7 @@
       + '<span class="c c-lp">' + lp + '</span>'
       + '<span class="c num c-bal">' + (d.bal ? '<span class="due">' + usd(d.bal) + '</span>' : '<span class="zero">—</span>') + '</span>'
       + '<span class="c num c-mo">' + (d.mo ? usd(d.mo) : '<span class="zero">—</span>') + '</span>'
+      + '<span class="c c-mkt">' + (d.mkt ? '<span class="mkt">Marketing</span>' : '<span class="zero">—</span>') + '</span>'
       + '<span class="c c-act">'
         + '<button class="btn btn--primary btn--xs" type="button" data-pay="' + d.id + '" title="Unpaid balances / post payments">Pay</button>'
         + '<button class="btn btn--sheet btn--xs" type="button" data-hist="' + d.id + '" title="Ledger / history">History</button>'
@@ -483,7 +487,7 @@
 
     if ((el = t.closest('.hd .s'))) {
       var k = el.dataset.sort;
-      if (S.sort === k) { S.dir = -S.dir; } else { S.sort = k; S.dir = (k === 'bal' || k === 'mo' || k === 'lpDate') ? -1 : 1; }
+      if (S.sort === k) { S.dir = -S.dir; } else { S.sort = k; S.dir = (k === 'bal' || k === 'mo' || k === 'lpDate' || k === 'mkt') ? -1 : 1; }
       render();
       return;
     }

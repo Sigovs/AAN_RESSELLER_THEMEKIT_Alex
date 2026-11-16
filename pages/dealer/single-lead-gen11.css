@@ -1099,3 +1099,37 @@
 #s-activity .ev + .ev { box-shadow: inset 0 0 0 1px var(--line-2); }
 #s-activity .ev:hover { box-shadow: inset 0 0 0 1px var(--line); }
 #s-activity > .sec__b > .src { display: none; }
+
+/* Credit App (Bill, Nov 10): the record's key / value grid, one group per section of the application */
+.sec[hidden], .secnav__b[hidden] { display: none; }
+.capp__g + .capp__g { margin-top: var(--s5); }
+.capp__f { margin-top: var(--s2); }
+.capp__f > .capp__w { grid-column: 1 / -1; }
+.capp__f > .capp__w2 { grid-column: span 2; }
+.capp__f .rec__v { white-space: normal; }
+.capp__seal { display: inline-flex; align-items: center; gap: 5px; color: var(--ink-3); font-weight: 500; }
+.capp__seal .i { width: 12px; height: 12px; }
+@media (max-width: 1279px) { .capp__f { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Write email (Bill, Nov 10; live Email tab): the note composer's card, two fields to a row, the message full width */
+.mailc { display: grid; gap: var(--s3); margin: 0 0 var(--s5); padding: var(--s3) var(--s4) var(--s4); border-radius: 12px; background: var(--wash); box-shadow: inset 0 0 0 1px var(--line-2); }
+.mailc[hidden] { display: none; }
+.mailc__h { display: flex; align-items: baseline; gap: var(--s2); }
+.mailc__h b { font-size: 14px; font-weight: 600; color: var(--ink); }
+.mailc__g { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s3); }
+.mailc__w { grid-column: 1 / -1; }
+.mailc textarea.fld { height: auto; min-height: 120px; padding: var(--s2) var(--s3); resize: vertical; font: inherit; font-size: 14px; line-height: 1.45; }
+.mailc__f { display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap; }
+.mailc__sp { flex: 1; }
+.mailc__file { position: relative; cursor: pointer; max-width: 100%; }
+.mailc__file input[type="file"] { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
+.mailc__file span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 260px; }
+.mailc__file:focus-within { box-shadow: 0 0 0 2px var(--brand); }
+
+/* Dealer Paperwork (Bill, Nov 10; live "Dealer Paperwork" tab): the dealer's forms as buttons, the open one filled in below */
+.paper { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.paper__form { margin-top: var(--s4); padding: var(--s4); border-radius: 12px; box-shadow: inset 0 0 0 1px var(--line-2); }
+.paper__form[hidden] { display: none; }
+.paper__h { display: flex; align-items: baseline; gap: var(--s2); margin-bottom: var(--s4); flex-wrap: wrap; }
+.paper__h b { font-size: 15px; font-weight: 600; color: var(--ink); }
+.paper__h .btn { margin-left: auto; align-self: center; }

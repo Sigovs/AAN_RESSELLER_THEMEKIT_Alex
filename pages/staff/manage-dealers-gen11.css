@@ -1122,3 +1122,21 @@ html.no-js .field, html.no-js .tally { display: none; }
 /* the command search as All Vehicles: 14px radius, 16px inset, 15px text */
 .app .search { padding-left: var(--s4); border-radius: var(--r-card); }
 .app .search input { font-size: 15px; }
+/* Dealer Intake Form Answers · Config Manual (Bill, Nov 11): routes out, quiet text links at the right
+   end of the roster counts - Accounting's utility links (.utils), the same size, colour and hover */
+.tally__links { display: flex; align-items: center; gap: var(--s1); margin-left: auto; font-size: 13px; }
+.tally__links a { display: inline-flex; align-items: center; height: 32px; padding: 0 var(--s2); border-radius: var(--r-inner); color: var(--ink-2); font-weight: 500; white-space: nowrap; transition: background var(--dur) var(--ease), color var(--dur) var(--ease); }
+.tally__links a:hover { background: rgba(255,255,255,.72); color: var(--brand-ink); text-decoration: none; }
+.tally__sep { color: var(--line-3); }
+/* every feature tag is shown now (Bill, Nov 11: no "+2"), so a dealer with three wraps to two lines:
+   the row grows for it instead of the tags touching its edges. 56px stays the height of every other row. */
+.app #tb .row:has(.c-feat .ft ~ .ft ~ .ft) { height: auto; min-height: var(--row); padding-top: 8px; padding-bottom: 8px; }
+
+/* Config Manual (live popup, checked Nov 16): one example per line, in the code face, wrapping anywhere */
+.modal--wide { width: 860px; }
+.cfgman__lead { margin: 0 0 var(--s3); }
+.cfgman { margin: 0; padding: 0; list-style: none; }
+.cfgman li { padding: var(--s2) 0; box-shadow: inset 0 -1px 0 var(--line-2); }
+.cfgman li:last-child { box-shadow: none; }
+.cfgman code { font: 13px/1.5 var(--mono); color: var(--ink); overflow-wrap: anywhere; user-select: all; }
+.cfgman__h { padding-top: var(--s4) !important; font-size: 13px; font-weight: 600; color: var(--ink-2); }

@@ -796,6 +796,211 @@ window.DE = {
      ]
     },
     {
+     "k": "f.multi_dealer_group",
+     "l": "Select Group",
+     "t": "select",
+     "inline": true,
+     "showIf": {
+      "k": "f.multi_dealer",
+      "v": "Y"
+     },
+     "note": "Multi Dealer = Yes reveals this one field in the live Dealer Account Settings (checked Nov 16; Bill, Nov 6). The 47 dealer groups are the live list's; its two junk entries are left out.",
+     "opts": [
+      {
+       "v": "",
+       "l": "Please select group"
+      },
+      {
+       "v": "Bill Kay",
+       "l": "Bill Kay"
+      },
+      {
+       "v": "Outten Auto Group",
+       "l": "Outten Auto Group"
+      },
+      {
+       "v": "Shawnee Mission Auto Group",
+       "l": "Shawnee Mission Auto Group"
+      },
+      {
+       "v": "Courtesy Auto Group",
+       "l": "Courtesy Auto Group"
+      },
+      {
+       "v": "Condor Automotive Group",
+       "l": "Condor Automotive Group"
+      },
+      {
+       "v": "Sunset Ford",
+       "l": "Sunset Ford"
+      },
+      {
+       "v": "Dan Wolfe Auto Group",
+       "l": "Dan Wolfe Auto Group"
+      },
+      {
+       "v": "Peruzzi Group",
+       "l": "Peruzzi Group"
+      },
+      {
+       "v": "Dorr Auto Group",
+       "l": "Dorr Auto Group"
+      },
+      {
+       "v": "Bossier Auto Group",
+       "l": "Bossier Auto Group"
+      },
+      {
+       "v": "St Charles Auto Group",
+       "l": "St Charles Auto Group"
+      },
+      {
+       "v": "Classic Cars Auto Group",
+       "l": "Classic Cars Auto Group"
+      },
+      {
+       "v": "Lake Forest Sports Cars",
+       "l": "Lake Forest Sports Cars"
+      },
+      {
+       "v": "Bill Jacobs Auto Group",
+       "l": "Bill Jacobs Auto Group"
+      },
+      {
+       "v": "McGavock Auto Group",
+       "l": "McGavock Auto Group"
+      },
+      {
+       "v": "Gregroy Auto Group",
+       "l": "Gregroy Auto Group"
+      },
+      {
+       "v": "Ferrari - Maserati Of Long Island",
+       "l": "Ferrari - Maserati Of Long Island"
+      },
+      {
+       "v": "Admiral Auto Group",
+       "l": "Admiral Auto Group"
+      },
+      {
+       "v": "Vinart Dealerships",
+       "l": "Vinart Dealerships"
+      },
+      {
+       "v": "Stark Auto Group",
+       "l": "Stark Auto Group"
+      },
+      {
+       "v": "Faulkner-Ciocca Dealerships",
+       "l": "Faulkner-Ciocca Dealerships"
+      },
+      {
+       "v": "Experience Auto Group",
+       "l": "Experience Auto Group"
+      },
+      {
+       "v": "Post Oak Motor Cars, Ltd.",
+       "l": "Post Oak Motor Cars, Ltd."
+      },
+      {
+       "v": "Post Oak Motor Cars",
+       "l": "Post Oak Motor Cars"
+      },
+      {
+       "v": "Miller Motorcars",
+       "l": "Miller Motorcars"
+      },
+      {
+       "v": "Ultimate Motors",
+       "l": "Ultimate Motors"
+      },
+      {
+       "v": "Faulkner",
+       "l": "Faulkner"
+      },
+      {
+       "v": "Chicago Motor Cars",
+       "l": "Chicago Motor Cars"
+      },
+      {
+       "v": "Davinci Motor Group",
+       "l": "Davinci Motor Group"
+      },
+      {
+       "v": "IL Lift Equipment",
+       "l": "IL Lift Equipment"
+      },
+      {
+       "v": "FC Kerbeck Group",
+       "l": "FC Kerbeck Group"
+      },
+      {
+       "v": "Ewald Automotive Group",
+       "l": "Ewald Automotive Group"
+      },
+      {
+       "v": "Baker Auto Group",
+       "l": "Baker Auto Group"
+      },
+      {
+       "v": "Art Hill Auto Group",
+       "l": "Art Hill Auto Group"
+      },
+      {
+       "v": "Warrenton Auto Group",
+       "l": "Warrenton Auto Group"
+      },
+      {
+       "v": "Long Island Sports Cars",
+       "l": "Long Island Sports Cars"
+      },
+      {
+       "v": "Gravity Auto",
+       "l": "Gravity Auto"
+      },
+      {
+       "v": "Paramount Automotive Group",
+       "l": "Paramount Automotive Group"
+      },
+      {
+       "v": "Ansa Motors",
+       "l": "Ansa Motors"
+      },
+      {
+       "v": "Gravity Auto Group",
+       "l": "Gravity Auto Group"
+      },
+      {
+       "v": "Glenview Luxury Imports",
+       "l": "Glenview Luxury Imports"
+      },
+      {
+       "v": "Shortline Auto",
+       "l": "Shortline Auto"
+      },
+      {
+       "v": "St Louis Motorcars",
+       "l": "St Louis Motorcars"
+      },
+      {
+       "v": "Thrifty Auto Sales",
+       "l": "Thrifty Auto Sales"
+      },
+      {
+       "v": "Naples Motorsports",
+       "l": "Naples Motorsports"
+      },
+      {
+       "v": "NYC Motorcars",
+       "l": "NYC Motorcars"
+      },
+      {
+       "v": "Towbin Motorcars",
+       "l": "Towbin Motorcars"
+      }
+     ]
+    },
+    {
      "k": "f.address",
      "l": "Address",
      "t": "text",
