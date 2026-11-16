@@ -40,7 +40,9 @@ import zipfile
 OVERLAY = ['pages/_aan-notes.js', 'comments.html', 'aan/index.html']
 NOTES_TAG = ('<!-- team review notes: one self-contained layer, appended to <body>, in a shadow root.\n'
              '     It adds no rule to the page and no box to its layout. -->\n'
-             '<script src="../_aan-notes.js?v={v}" defer></script>')
+             '<script src="../_aan-notes.js?v={v}" defer></script>\n'
+             '<!-- "See the fix" links from the round dashboard: open the change\'s state and outline it (review only) -->\n'
+             '<script src="../_aan-fix.js?v={v}" defer></script>')
 # folders a page loads from JavaScript, by name, where a crawl cannot see them
 WHOLE_DIRS = ['pages/dealer/img', 'pages/dealer/video', 'ds/fonts']
 LINK = re.compile(r'''(?:src|href|poster)\s*=\s*["']([^"'#?]+)|url\(\s*["']?([^"')#?]+)|["']([^"'\s<>()+]+\.(?:css|js|json|jpe?g|png|webp|svg|woff2?|gif|avif|mp4|glb|html))["']''', re.I)
@@ -217,7 +219,7 @@ def main():
             for k in sorted(keep):
                 z.write(os.path.join(tmp, k), k)
 
-        must = ['index.html', 'comments.html', 'pages/_aan-notes.js'] + pages
+        must = ['index.html', 'comments.html', 'pages/_aan-notes.js', 'pages/_aan-fix.js'] + pages
         lost = [m for m in must if m not in keep]
         if lost:
             sys.exit('Zip is missing required files: %s' % ', '.join(lost))
