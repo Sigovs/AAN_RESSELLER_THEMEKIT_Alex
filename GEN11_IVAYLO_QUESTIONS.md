@@ -141,3 +141,19 @@ Each entry: what we did · the note verbatim, with author and date · the open q
   - Bulk edit (mw5i6v4ypnczi): built in the mockup on Nov 16 behind "Inline edit" (Price, Discount Price, Invoice Price, Do Not Display On Site, Sale Pending; one Update), as the live Inventory Manager's in-row editing. Is there an endpoint that saves many vehicles in one call?
   - Value totals (mw5i9qmktowkl): is there an endpoint for inventory-wide Discount / Invoice totals?
   - Column order per user (mw5iujnxurg28): the mockup has Columns (show, hide, order, reset) and, since Nov 16, the live heading swap menu. It saves in the browser. Can the new backend save the layout per user, as the live system does?
+
+## Checked in the new backend (newbackendcert.aandemo.com, Nov 16)
+Alex and Claude read the new backend: the menus, the Add New Dealer form and the API Console (255 endpoints). Nothing was saved. Several questions above are answered:
+- **5. Dealer groups:** answered. The new backend has a Dealer Groups page (`/manage/dealer-groups`, endpoints `dealer-groups.index/store/update`). Its dealer form shows **Dealer Group** (`f.multi_dealer_group`, "— choose —" + 49 groups, A–Z) when Multi Dealer = Yes, as the live system does. The two SQL-injection test strings (`1'`, `1',sleep(3))-- -`) were migrated into it too: clean them up there.
+- **4. Dealer Edit zones:** the new backend still has Web & Domains, Email Routing and Inventory & DMS. The only question left is whether to remove them or keep them hidden.
+- **6. Craigslist:** still a live feature in the new backend (`craigslist.postings / posts.store / inquiries / stats`). The CRAIGSLIST tag stays.
+- **14. Single Lead:** email from a lead `leads.emails.store`; Credit App view and print `leads.finance-app.show/print`; Paperwork with per-dealer templates, print and email `legacy.paperwork.*`. All there. No ReSend endpoint was found: is ReSend `leads.emails.store`, or still to come?
+- **15. All Leads:** bulk actions `leads.bulk`; the Available stock list can use `leads.vehicle.search`. Open: does `leads.index` return each lead's last comment date (`leads.notes.store` writes the notes)?
+- **18 / Edit lock:** `vehicles.locks.index` (the list) and `vehicles.lock.store/destroy`; VIN Decoder `vehicles.vin-decode`; per-dealer CARFAX settings `dealers.carfax.preferences` (a place for Mild Collection's PDF upload option).
+- **19. Bulk edit:** `vehicles.bulk-update` exists.
+- **19. Customers / Referrals:** they exist as legacy tools (`/legacy-tools/customers`, `/legacy-tools/referrals`). They stay out of the dealer menu until after go-live (facelift rule).
+- **19. Newsletter Tools:** no newsletter endpoints at all. But `leads.update` subscribes the person to newsletter topics (`nl_utot`), so subscriber data is kept. Needed for go-live: the list download and the subscribe-form collection (Bill), or Newsletter Tools stays a link to the legacy page.
+- **10. ToDo:** no ToDo endpoints, no ticket attachments, and no delete for any ticket entry (`tickets.*` has store, queue, show, update, changelog, messages.store, rank.store, values.update). The mockup now matches the old system: no Remove ToDo (after go-live). Do ToDo attachments (which the live system has) go through `tickets.messages.store`?
+- **19. Column layout per user:** settings exist per dealer only (`dealers.settings`), none per user. The live system remembers the layout per user, so the new backend needs a user setting.
+- **19. Auction Tools:** no endpoints. Is it still used?
+- **Still for Ivaylo (fields not shown in the console):** 13 which flag the Internet checkbox writes (`leads.update`); 17 whether the YouTube field keeps several links; 11 whether `tickets.queue` returns the viewer's own Begin / Completion dates; 19 / #64 whether `vehicles.index` returns inventory-wide Discount and Invoice totals.
