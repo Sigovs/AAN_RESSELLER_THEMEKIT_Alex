@@ -619,7 +619,7 @@
       a.dataset.yt = id;
       a.innerHTML = '<img src="https://img.youtube.com/vi/' + id + '/mqdefault.jpg" alt="YouTube video preview">' +
         '<span class="vid__play">' + ic('i-play') + '</span>';
-      a.title = 'Play the video here';
+      a.title = 'Open the video on YouTube';   /* was 'Play the video here' (the in-place player is commented out below) */
     } else {
       a.removeAttribute('href');
       a.className = 'vid__prev vid__prev--none';
@@ -635,13 +635,14 @@
   /* The video plays here, in YouTube's embedded player with rel=0, instead of opening youtube.com (Karen, Nov 3: the
      YouTube page's "ALL videos" tab shows "many videos that are not vehicle-related"; Alex, Nov 16: play it inside).
      rel=0 keeps the suggestions at the end to the same channel. */
+  /* In-place player commented out: not in the old system; a facelift only, new items wait for after go-live (Alex, Nov 16). The preview opens YouTube again, as in the old system.
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('#vid-prev[data-yt]'); if (!a) return;
     e.preventDefault();
     var box = document.createElement('div'); box.id = 'vid-prev'; box.className = 'vid__prev vid__prev--play';
     box.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(a.dataset.yt) + '?rel=0&autoplay=1&modestbranding=1" title="Vehicle video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
     a.parentNode.replaceChild(box, a);
-  });
+  }); */
 
   /* CARFAX (SV note 23): status first, then the two ways in — paste the
      report link (a real field, tracked as an unsaved change) or upload the

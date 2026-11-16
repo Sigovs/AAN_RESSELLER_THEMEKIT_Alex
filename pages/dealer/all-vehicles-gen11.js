@@ -237,8 +237,10 @@
     return dockOpen() ? (narrow ? 'dockSm' : 'dock') : (narrow ? 'sm' : 'lg');
   }
   function colOn(c) { return c.locked || c.system || S.cols[c.id] !== false; }
-  /* Inline edit shows a working set: who the car is, then the five fields Bill listed, each in its own column */
-  var IE_SET = ['status', 'stock', 'year', 'make', 'model', 'price', 'disc', 'inv', 'hide', 'pend', 'actions'];
+  /* Inline edit shows what the old Inventory Manager edits in its rows: Status, Price and Discount Price (checked Nov 16).
+     Invoice Price, Do Not Display On Site and Sale Pending (Bill's list) are commented out: not in the old system; a facelift only, new items wait for after go-live (Alex, Nov 16).
+     Was: var IE_SET = ['status', 'stock', 'year', 'make', 'model', 'price', 'disc', 'inv', 'hide', 'pend', 'actions']; */
+  var IE_SET = ['status', 'stock', 'year', 'make', 'model', 'trim', 'price', 'disc', 'actions'];
   /* Photos view: the original's photographer preset — its own columns in its
      own order, with a large photo. The dealer's Rows columns are left alone. */
   var PHOTO_COLS = ['stock', 'vin', 'vtype', 'year', 'make', 'model', 'trim', 'colour', 'thumb', 'status', 'days', 'actions'];
@@ -560,7 +562,7 @@
   function ieVal(v, k) {
     var e = S.ie[v.id] || {};
     if (k in e) return e[k];
-    return k === 'p' ? v.p : k === 'disc' ? v.disc : k === 'inv' ? v.inv : k === 'hide' ? v.f.indexOf('Hidden') >= 0 : v.f.indexOf('Pending') >= 0;
+    return k === 'st' ? null : k === 'p' ? v.p : k === 'disc' ? v.disc : k === 'inv' ? v.inv : k === 'hide' ? v.f.indexOf('Hidden') >= 0 : v.f.indexOf('Pending') >= 0;
   }
   function ieChanged(v, k) { var e = S.ie[v.id]; return !!(e && k in e); }
   function ieMoney(v, k, label) {
@@ -570,15 +572,21 @@
   function ieCheck(v, k, label) {
     return '<label class="iech' + (ieChanged(v, k) ? ' iech--chg' : '') + '" data-stop><input type="checkbox" class="ck" data-ie="' + k + '" data-id="' + v.id + '" aria-label="' + label + ', ' + esc(v.s) + '"' + (ieVal(v, k) ? ' checked' : '') + '></label>';
   }
+  var IE_STATUS = ['Available', 'Sold', 'Staging'];   /* the editor's own Status choices (Pending is commented out there) */
+  function ieStatus(v) {
+    var cur = ieVal(v, 'st') || v.st || (S.lane === 'Sold' ? 'Sold' : 'Available');
+    return '<label class="iest' + (ieChanged(v, 'st') ? ' iest--chg' : '') + '" data-stop><select class="sel" data-ie="st" data-id="' + v.id + '" aria-label="Status, ' + esc(v.s) + '">' +
+      IE_STATUS.map(function (o) { return '<option' + (o === cur ? ' selected' : '') + '>' + o + '</option>'; }).join('') + '</select></label>';
+  }
   function ieCount() { return Object.keys(S.ie).filter(function (id) { return Object.keys(S.ie[id]).length; }).length; }
   function ieSet(t) {
     var id = t.dataset.id, k = t.dataset.ie, v = V.filter(function (x) { return String(x.id) === String(id); })[0]; if (!v) return;
     var val = t.type === 'checkbox' ? t.checked : t.value.trim();
-    var orig = k === 'p' ? v.p : k === 'disc' ? v.disc : k === 'inv' ? v.inv : k === 'hide' ? v.f.indexOf('Hidden') >= 0 : v.f.indexOf('Pending') >= 0;
-    var same = t.type === 'checkbox' ? val === orig : String(val).replace(/[^0-9.]/g, '') === String(orig == null ? '' : orig);
+    var orig = k === 'st' ? (v.st || (S.lane === 'Sold' ? 'Sold' : 'Available')) : k === 'p' ? v.p : k === 'disc' ? v.disc : k === 'inv' ? v.inv : k === 'hide' ? v.f.indexOf('Hidden') >= 0 : v.f.indexOf('Pending') >= 0;
+    var same = t.type === 'checkbox' ? val === orig : k === 'st' ? val === orig : String(val).replace(/[^0-9.]/g, '') === String(orig == null ? '' : orig);
     S.ie[id] = S.ie[id] || {};
     if (same) delete S.ie[id][k]; else S.ie[id][k] = val;
-    var box = t.closest('.iein, .iech'); if (box) box.classList.toggle(box.classList.contains('iein') ? 'iein--chg' : 'iech--chg', !same);
+    var box = t.closest('.iein, .iech, .iest'); if (box) box.classList.toggle(box.classList.contains('iein') ? 'iein--chg' : box.classList.contains('iest') ? 'iest--chg' : 'iech--chg', !same);
     renderIEBar();
   }
   function renderIEBar() {
@@ -595,9 +603,10 @@
     if (S.inline && S.view === 'rows') {
       cells.price = ieMoney(v, 'p', 'Price');
       cells.disc = ieMoney(v, 'disc', 'Discount Price');
-      cells.inv = ieMoney(v, 'inv', 'Invoice Price');
+      /* cells.inv = ieMoney(v, 'inv', 'Invoice Price');
       cells.hide = ieCheck(v, 'hide', 'Do Not Display On Site');
-      cells.pend = ieCheck(v, 'pend', 'Sale Pending');
+      cells.pend = ieCheck(v, 'pend', 'Sale Pending'); */
+      cells.status = ieStatus(v);   /* the old list's Status drop-down in each row */
     }
     return '<div class="row' + (i % 2 ? ' row--alt' : '') + (S.cur === v.id ? ' open' : '') + '" data-id="' + v.id + '" tabindex="0" aria-label="' + esc(name) + '">' +
       visibleCols().map(function (c) { return cells[c.id] != null ? cells[c.id] : c.cell ? c.cell(v) : NOD; }).join('') +
@@ -1151,6 +1160,7 @@
         var flag = function (name, on) { var at = v.f.indexOf(name); if (on && at < 0) v.f.push(name); if (!on && at >= 0) v.f.splice(at, 1); };
         if ('hide' in e2) flag('Hidden', e2.hide);
         if ('pend' in e2) flag('Pending', e2.pend);
+        if ('st' in e2) v.st = e2.st;   /* kept on the car; the lanes are the server's */
       });
       S.ie = {}; render(); renderIEBar();
       $('#iebar-n').textContent = n + (n === 1 ? ' vehicle updated' : ' vehicles updated');
@@ -1235,7 +1245,7 @@
       return;
     }
     var t = e.target;
-    if (t.matches('[data-ie]') && t.type === 'checkbox') { ieSet(t); return; }
+    if (t.matches('[data-ie]') && (t.type === 'checkbox' || t.tagName === 'SELECT')) { ieSet(t); return; }
     if (t.matches('[data-f]')) { tog(t.dataset.f, t.dataset.k, t.checked); return; }
     if (t.matches('[data-per]')) { S.per = +t.value; S.page = 1; render(); }
   });

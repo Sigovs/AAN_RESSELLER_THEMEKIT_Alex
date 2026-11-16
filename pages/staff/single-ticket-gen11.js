@@ -401,8 +401,8 @@
     return '<form class="rbox__f rbox__f--edit" data-edit-of="' + esc(e.id) + '">'
       + '<textarea class="rbox__t" name="body" rows="3" aria-label="Edit entry">' + esc(e.body || '') + '</textarea>'
       + '<div class="rbox__r">'
-      /* a ToDo is removed from its Edit (Alex, Nov 15), not from the row */
-      + (e.kind === 'todo' ? '<button class="ev__rm" type="button" data-rm="' + esc(e.id) + '">' + RM.todo + '</button>' : '')
+      /* Remove ToDo commented out: not in the old system; a facelift only, new items wait for after go-live (Alex, Nov 16). Was: a ToDo removed from its Edit (Alex, Nov 15)
+      + (e.kind === 'todo' ? '<button class="ev__rm" type="button" data-rm="' + esc(e.id) + '">' + RM.todo + '</button>' : '') */
       + '<span class="rbox__who">Editing ' + esc((KINDW[e.kind] || 'entry').toLowerCase()) + '</span>'
       + '<button class="btn btn--quiet btn--sm" type="button" data-edit-cancel>Cancel</button>'
       + '<button class="btn btn--primary btn--sm" type="submit">Save</button></div>'
@@ -1002,9 +1002,9 @@
     d.classList.toggle('drop--has', names.length > 0);
     if (names.length) {
       p = document.createElement('span'); p.className = 'drop__picked';
-      p.innerHTML = '<span>' + esc(names.length + (names.length === 1 ? ' file: ' : ' files: ') + names.join(', ')) + '</span>'
-        /* changed your mind: drop the picked files before posting (Alex, Nov 15) */
-        + '<button class="rowx" type="button" data-drop-clear aria-label="Remove the picked ' + (names.length === 1 ? 'file' : 'files') + '" title="Remove">' + ic('i-x') + '</button>';
+      p.innerHTML = '<span>' + esc(names.length + (names.length === 1 ? ' file: ' : ' files: ') + names.join(', ')) + '</span>';
+        /* the × that dropped the picked files before posting (Alex, Nov 15) is commented out: not in the old system; a facelift only, new items wait for after go-live (Alex, Nov 16)
+        + '<button class="rowx" type="button" data-drop-clear aria-label="Remove the picked ' + (names.length === 1 ? 'file' : 'files') + '" title="Remove">' + ic('i-x') + '</button>'; */
       d.appendChild(p);
     }
   });
