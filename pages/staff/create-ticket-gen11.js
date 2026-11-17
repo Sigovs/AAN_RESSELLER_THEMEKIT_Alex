@@ -96,7 +96,8 @@
     $('#tf-' + kind).innerHTML = list.map(function (p, n) {
       return '<li class="ev ev--' + (kind === 'woc' ? 'note' : kind) + '"><span class="ev__i">' + ic(KIND[kind][1]) + '</span>'
         + '<div class="ev__b"><div class="ev__t"><span class="kind">' + KIND[kind][0] + '</span><span class="who">' + esc(D.me.name) + '</span>'
-        + (p.who ? '<span class="who">for ' + esc(p.who) + '</span>' : '') + '</div><span class="ev__n">' + esc(p.text) + '</span></div>'
+        + (p.who ? '<span class="who">for ' + esc(p.who) + '</span>' : '') + '</div><span class="ev__n">' + esc(p.text) + '</span>'
+        + (p.files.length ? '<div class="evatt">Attachments: ' + p.files.map(function (f) { return '<span class="evatt__f">' + ic('i-clip') + esc(f) + '</span>'; }).join(' ') + '</div>' : '') + '</div>'
         + '<div class="ev__d">' + p.when[0] + '<small>' + p.when[1] + '</small></div>'
         + '<div class="ev__acts"><button class="ev__rm" type="button" data-rm-post="' + kind + ':' + n + '">' + KIND[kind][2] + '</button></div></li>';
     }).join('');
@@ -106,9 +107,24 @@
     var kind = form.getAttribute('data-kind'), ta = $('textarea', form), text = ta.value.trim();
     if (!text) { ta.focus(); return; }
     var who = kind === 'note' && $('#in-flag').checked ? $('#in-flag-who').value : kind === 'todo' ? $('#in-todo-who').value : '';
-    S.posts[kind].push({ text: text, who: who, when: stamp() });
-    ta.value = ''; renderPosts(kind);
+    S.posts[kind].push({ text: text, who: who, when: stamp(), files: picked(form) });
+    ta.value = ''; clearDrop(form); renderPosts(kind);
   }
+  /* files: Single Ticket's drop — it says what was picked, so a file is never posted unseen */
+  function picked(form) { var i = form && form.querySelector('.drop input[type="file"]'); return i && i.files ? [].map.call(i.files, function (f) { return f.name; }) : []; }
+  function clearDrop(form) {
+    var d = form && form.querySelector('.drop'); if (!d) return;
+    var i = d.querySelector('input[type="file"]'); if (i) i.value = '';
+    d.classList.remove('drop--has'); var p = d.querySelector('.drop__picked'); if (p) p.remove();
+  }
+  document.addEventListener('change', function (e) {
+    var inp = e.target; if (!inp.matches || !inp.matches('.drop input[type="file"]')) return;
+    var d = inp.closest('.drop'), names = [].map.call(inp.files || [], function (f) { return f.name; });
+    var p = d.querySelector('.drop__picked'); if (p) p.remove();
+    d.classList.toggle('drop--has', names.length > 0);
+    if (names.length) { p = document.createElement('span'); p.className = 'drop__picked'; p.innerHTML = '<span>' + esc(names.length + (names.length === 1 ? ' file: ' : ' files: ') + names.join(', ')) + '</span>'; d.appendChild(p); }
+  });
+
   function setWoc(open) {
     S.wocOpen = open; $('#ts-woc').hidden = !open;
     var b = $('[data-act="woc"]'); b.setAttribute('aria-expanded', String(open));
