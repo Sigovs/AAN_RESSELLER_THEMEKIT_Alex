@@ -602,8 +602,24 @@
       b.classList.toggle('secnav__b--on', on);
       b.classList.toggle('ui-view--on', on);   /* Overview's static ui-view--on kept it blue beside the current section */
       if (on) { b.setAttribute('aria-current', 'true'); } else { b.removeAttribute('aria-current'); }
+      /* below 1280 the pills may scroll inside their track (Nov 17): keep the current one in view, the page itself never moves */
+      var nav = b.parentNode;
+      if (on && nav.scrollWidth > nav.clientWidth) {
+        var l = b.offsetLeft - nav.offsetLeft, r = l + b.offsetWidth;
+        if (l < nav.scrollLeft + 8) nav.scrollLeft = Math.max(0, l - 8);
+        else if (r > nav.scrollLeft + nav.clientWidth - 8) nav.scrollLeft = r - nav.clientWidth + 8;
+      }
     });
+    navEdges();
   }
+  /* a soft edge on the side where more pills wait, so a cut pill reads as "more", not as a fault */
+  function navEdges() {
+    var nav = $('#secnav'); if (!nav) return;
+    nav.classList.toggle('secnav--l', nav.scrollLeft > 2);
+    nav.classList.toggle('secnav--r', nav.scrollLeft + nav.clientWidth < nav.scrollWidth - 2);
+  }
+  if ($('#secnav')) $('#secnav').addEventListener('scroll', navEdges, { passive: true });
+  window.addEventListener('resize', navEdges);
 
   /* ── the engaged stack, published in two places by one handler ─────────── */
   var band = null, app = null, engaged = null;

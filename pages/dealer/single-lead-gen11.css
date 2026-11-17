@@ -1135,9 +1135,11 @@
 .paper__h .btn { margin-left: auto; align-self: center; }
 .paper__note { margin: var(--s4) 0 0; }
 
-/* Head bar below 768 (Alex, Nov 17: the actions fell apart one by one). Two composed rows instead:
-   the way back and Prev / Next, then the three record actions. 768 and up are untouched. */
-@media (max-width: 767.98px) {
+/* Head bar below 720 (Alex, Nov 17: the actions fell apart one by one). Two composed rows instead:
+   the way back and Prev / Next, then the three record actions. 720 and up keep the one row.
+   The section bar likewise never wraps: Workflow stays on its row, and the section pills scroll
+   sideways inside their own track when they run out of room. */
+@media (max-width: 719.98px) {   /* one row needs ~630px of bar, which a 710px window still gives (measured Nov 17) */
   .app .head--card .head__top { flex-wrap: wrap; row-gap: var(--s2); }
   .head--card .head__top > .walk { order: 1; margin: 0 calc(-1 * var(--s3)) 0 auto; }
   .head--card .head__top > .head__sp { order: 2; flex: 0 0 100%; height: 0; }
@@ -1147,4 +1149,15 @@
 @media (max-width: 479.98px) {
   .head--card .head__top > [data-act="goto-note"], .head--card .head__top > [data-act="goto-email"] { flex: 1 1 calc(50% - var(--s2)); justify-content: center; }
   .head--card .head__top > [data-act="resend"] { flex: 1 1 100%; justify-content: center; }
+}
+@media (max-width: 1279.98px) {
+  .app .cmd.cmd--sec { flex-wrap: nowrap; }
+  .cmd.cmd--sec .secnav { flex: 0 1 auto; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .cmd.cmd--sec .secnav::-webkit-scrollbar { display: none; }
+  .cmd.cmd--sec .secnav__b, .cmd.cmd--sec > .btn { flex: none; }
+}
+@media (max-width: 1279.98px) {
+  .cmd.cmd--sec .secnav.secnav--r { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); }
+  .cmd.cmd--sec .secnav.secnav--l { -webkit-mask-image: linear-gradient(to right, transparent, #000 32px); mask-image: linear-gradient(to right, transparent, #000 32px); }
+  .cmd.cmd--sec .secnav.secnav--l.secnav--r { -webkit-mask-image: linear-gradient(to right, transparent, #000 32px, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to right, transparent, #000 32px, #000 calc(100% - 32px), transparent); }
 }
