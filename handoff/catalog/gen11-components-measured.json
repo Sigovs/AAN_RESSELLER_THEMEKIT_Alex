@@ -2322,13 +2322,13 @@
   "sel": ".tag",
   "tag": "span",
   "cls": "tag tag--flag",
-  "size": "73x24",
+  "size": "77x24",
   "comp": {
    "display": "flex",
-   "width": "73.1406px",
+   "width": "77.1406px",
    "height": "24px",
    "minHeight": "auto",
-   "padding": "0px 6px",
+   "padding": "0px 8px",
    "margin": "0px",
    "gap": "4px",
    "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
@@ -2485,6 +2485,12 @@
     "media": "",
     "sel": ".bdg, .badge, .tag, .chip, .pill",
     "css": "padding-top: 0px; padding-bottom: 0px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".app .row .tags .tag--flag, .app .tag--flag, .app .row .tags .tag--more, .app .tag--more",
+    "css": "padding-left: 8px; padding-right: 8px;"
    }
   ],
   "html": "<span class=\"tag tag--flag\"><svg class=\"i\"><use href=\"#i-tag\"></use></svg>No price</span>"
@@ -2628,13 +2634,13 @@
   "sel": ".nav__b",
   "tag": "a",
   "cls": "nav__b",
-  "size": "47x30",
+  "size": "51x30",
   "comp": {
    "display": "flex",
-   "width": "47.25px",
+   "width": "51.25px",
    "height": "30px",
    "minHeight": "auto",
-   "padding": "0px 6px",
+   "padding": "0px 8px",
    "margin": "0px",
    "gap": "6px",
    "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
@@ -2833,6 +2839,12 @@
     "media": "(pointer: coarse) and (max-width: 1279.98px)",
     "sel": ".app :is(a[href]:not([class]), a.stock, a.tkt, a.dlr, a.dlr__site, a.gear, a.ra, a.c--1, a.s, a.gl, a.atlas, a.brand, a.ctag, a.dbchip, .copy, .del, .ed, .ev__m",
     "css": "content: \"\"; position: absolute; z-index: 1; inset: min(0px, 50% - 18px);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1799.98px)",
+    "sel": ".app .top .nav__b",
+    "css": "padding-left: 8px; padding-right: 8px;"
    }
   ],
   "html": "<a class=\"nav__b\" href=\"#\">Home</a>"
@@ -4974,10 +4986,10 @@
   "sel": ".card, .login, form",
   "tag": "section",
   "cls": "card",
-  "size": "400x523",
+  "size": "320x523",
   "comp": {
    "display": "block",
-   "width": "400px",
+   "width": "320px",
    "height": "522.688px",
    "minHeight": "auto",
    "padding": "36px 32px 28px",

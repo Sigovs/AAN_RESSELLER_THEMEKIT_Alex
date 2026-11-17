@@ -11,7 +11,7 @@ const openPkg = `const b=document.querySelector('[data-act="pkg-new"]'); b&&b.cl
 // [slug, page, selector, prep, pad]
 const R = [
   ['btn-primary', AV, '.head .btn--primary, .btn--primary', '', 12],
-  ['btn-secondary', AV, '.head .btn--sheet, .btn--sheet', '', 12],
+  ['btn-secondary', AV, '.head .btn--sheet, .btn--sheet', '', 6],
   ['btn-ghost', AV, '.btn--quiet', '', 12],
   ['btn-danger', MD, '.modal .btn--danger', openPkg, 12],
   ['input', SV, 'input.in', '', 12],

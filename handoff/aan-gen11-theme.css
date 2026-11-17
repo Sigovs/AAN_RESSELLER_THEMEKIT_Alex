@@ -32,7 +32,7 @@
   --font-sans: "Archivo", "Segoe UI", system-ui, sans-serif;          /* was IBM Plex Sans */
   --font-mono: "Plex Mono", "IBM Plex Mono", ui-monospace, monospace;  /* same family; mono only for codes: stock, VIN, phone, IP */
   /* --text-* scale: kept (2xs 14 · xs 13 · sm 14 · md 15 · lg 17 · xl 20 · 2xl 25). Gen 11 body text is 14px.
-     Gen 11 page titles: 28px/600 (record name), section titles 20px/600 — set per component, not here. */
+     Gen 11 page titles: 28px/600 (record name), section titles 18px/600 — set per component, not here. */
   --leading-normal: 1.4;            /* was 1.45; Gen 11 body 14/19.6 */
   /* --leading-tight, --weight-*: kept */
 
@@ -50,7 +50,7 @@
 
   /* ── Elevation ────────────────────────────────────────────────────────── */
   --shadow-sm: 0 1px 2px rgba(16,24,40,.08), 0 0 0 1px rgba(16,24,40,.04);     /* Gen 11 --el-1 */
-  --shadow-md: 0 12px 30px -14px rgba(16,24,40,.22), 0 2px 6px rgba(16,24,40,.06); /* Gen 11 --el-2 (menus, popovers) */
+  --shadow-md: 0 12px 30px -14px rgba(16,24,40,.22), 0 2px 6px rgba(16,24,40,.06); /* Gen 11 --el-2 (the dock; in-page popovers take --g11-soft) */
   --shadow-lg: 0 30px 64px -18px rgba(16,24,40,.34), 0 4px 12px rgba(16,24,40,.08); /* Gen 11 --el-3 (dialogs) */
   --focus-ring: 0 0 0 2px #ffffff, 0 0 0 4px #1f5fe0;                          /* Gen 11 --focus */
 
