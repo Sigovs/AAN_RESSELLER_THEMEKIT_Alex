@@ -312,12 +312,46 @@
       var did = id + '-dep';
       return '<div class="fw' + span + '">' + label(f, id) +
         '<div class="fdep-row">' + control(f, id) +
-          '<span class="fdep" data-show-k="' + esc(f.k) + '" data-show-v="' + esc(dep.showIf.v) + '"' +
+          '<span class="fdep' + (dep.k === 'f.multi_dealer_group' ? ' fdep--grp' : '') + '" data-show-k="' + esc(f.k) + '" data-show-v="' + esc(dep.showIf.v) + '"' +
             (String(val(f.k)) === String(dep.showIf.v) ? '' : ' hidden') + '>' +
-            '<label class="vh" for="' + did + '">' + esc(dep.l) + '</label>' + control(dep, did) + '</span>' +
+            '<label class="vh" for="' + did + '">' + esc(dep.l) + '</label>' + depControl(dep, did) + '</span>' +
         '</div>' + help(f) + '</div>';
     }
     return '<div class="fw' + span + '">' + label(f, id) + control(f, id) + help(f) + '</div>';
+  }
+  /* Select Group carries the live "New Group" button beside it (Bill #6, Nov 17: "a button to add a new group and then if you
+     click and add a new dealer group name it shows up on the drop down list"; live: Dealer Edit's New Group, checked Nov 17).
+     Live it opens a small window; here the name field takes the list's place in the same row, so nothing moves. */
+  function depControl(dep, did) {
+    if (dep.k !== 'f.multi_dealer_group') return control(dep, did);
+    return '<span class="fdep-pick">' + control(dep, did) +
+        '<button class="btn btn--sheet btn--sm" type="button" data-act="grp-new">New Group</button></span>' +
+      '<span class="fdep-new" hidden>' +
+        '<label class="vh" for="' + did + '-new">New group name</label>' +
+        '<input class="fld" type="text" id="' + did + '-new" placeholder="New group name" autocomplete="off" maxlength="80">' +
+        '<button class="btn btn--primary btn--sm" type="button" data-act="grp-add">Add</button>' +
+        '<button class="btn btn--quiet btn--sm" type="button" data-act="grp-cancel">Cancel</button></span>';
+  }
+  function grpMode(box, adding) {
+    box.querySelector('.fdep-pick').hidden = adding;
+    box.querySelector('.fdep-new').hidden = !adding;
+    var inp = box.querySelector('.fdep-new .fld');
+    if (adding) { inp.value = ''; inp.focus(); } else { box.querySelector('.fdep-pick .fld').focus(); }
+  }
+  function grpAdd(box) {
+    var inp = box.querySelector('.fdep-new .fld'), name = inp.value.trim().replace(/\s+/g, ' ');
+    if (!name) { inp.focus(); return; }
+    var sel = box.querySelector('.fdep-pick select'), f = inlineDep('f.multi_dealer');
+    var same = [].filter.call(sel.options, function (o) { return o.value && o.text.toLowerCase() === name.toLowerCase(); })[0];
+    if (!same) {
+      /* A–Z after "Please select group", as the live list is; kept in the field's options so a redraw keeps it too */
+      var at = 1; while (at < sel.options.length && sel.options[at].text.toLowerCase() < name.toLowerCase()) at++;
+      sel.add(new Option(name, name), at);
+      if (f && f.opts) f.opts.splice(at, 0, { v: name, l: name });
+    }
+    sel.value = same ? same.value : name;
+    grpMode(box, false);
+    sel.dispatchEvent(new Event('change', { bubbles: true }));
   }
   function inlineDep(k) {
     var hit = null;
@@ -470,6 +504,10 @@
   document.addEventListener('click', function (e) {
     var t;
 
+    if ((t = e.target.closest('[data-act="grp-new"]'))) { grpMode(t.closest('.fdep'), true); return; }
+    if ((t = e.target.closest('[data-act="grp-cancel"]'))) { grpMode(t.closest('.fdep'), false); return; }
+    if ((t = e.target.closest('[data-act="grp-add"]'))) { grpAdd(t.closest('.fdep')); return; }
+
     if ((t = e.target.closest('[data-rep-add]'))) {
       var k = t.getAttribute('data-rep-add');
       V[k] = (V[k] || []).concat(['']);
@@ -560,6 +598,9 @@
 
   /* ══ KEYS — both are the export's own ═════════════════════════════════════ */
   document.addEventListener('keydown', function (e) {
+    var gn = e.target.closest && e.target.closest('.fdep-new');
+    if (gn && e.key === 'Enter') { e.preventDefault(); grpAdd(gn.closest('.fdep')); return; }
+    if (gn && e.key === 'Escape') { grpMode(gn.closest('.fdep'), false); return; }
     if (e.key === 'Escape') { closePops(null); return; }
     if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
       e.preventDefault();
