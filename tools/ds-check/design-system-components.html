@@ -1,0 +1,251 @@
+<!-- Component boards for tools/ds-check/design-system.py.
+     Block:  <!--C id | Title | ORIGIN | DESIGN.md § | lead-->  …frames…  <!--N--> notes <!--/N-->  <!--/C-->
+     Frame:  <!--F caption-->markup<!--/F-->   or   <!--F caption @ORIGIN-->  to draw a frame with another page's CSS.
+     Origins: AV All Vehicles · SV Single Vehicle · AL All Leads · SL Single Lead · ST Single Ticket · MD Manage Dealers · DE Dealer Edit.
+     Markup is the pages' own (harvested from the rendered pages); states use .is-hover / .is-focus, which mirror the
+     pages' :hover / :focus-visible rules, or the real attribute (disabled, aria-pressed). Names and contacts are made up. -->
+
+<!--C buttons | Buttons | AV | DESIGN.md §11 · §38.1 | One primary per view; every other action is secondary or ghost. Radius 9 on every button, sized by its label, 8px apart.-->
+<!--F Variants × states-->
+<div class="dsm" style="--c:5">
+  <span></span><span class="h">Default</span><span class="h">Hover</span><span class="h">Focus</span><span class="h">Disabled</span><span class="h">On</span>
+  <span class="r">Primary<small>.btn--primary</small></span>
+  <button class="btn btn--primary" type="button"><svg class="i"><use href="#i-plus"/></svg> Add vehicle</button>
+  <button class="btn btn--primary is-hover" type="button"><svg class="i"><use href="#i-plus"/></svg> Add vehicle</button>
+  <button class="btn btn--primary is-focus" type="button"><svg class="i"><use href="#i-plus"/></svg> Add vehicle</button>
+  <button class="btn btn--primary" type="button" disabled><svg class="i"><use href="#i-plus"/></svg> Add vehicle</button>
+  <span class="na">—</span>
+  <span class="r">Secondary<small>.btn--sheet</small></span>
+  <button class="btn btn--sheet" type="button"><svg class="i"><use href="#i-down"/></svg> Export</button>
+  <button class="btn btn--sheet is-hover" type="button"><svg class="i"><use href="#i-down"/></svg> Export</button>
+  <button class="btn btn--sheet is-focus" type="button"><svg class="i"><use href="#i-down"/></svg> Export</button>
+  <button class="btn btn--sheet" type="button" disabled><svg class="i"><use href="#i-down"/></svg> Export</button>
+  <button class="btn btn--sheet btn--on" type="button" aria-pressed="true"><svg class="i"><use href="#i-sliders"/></svg> Workflow</button>
+  <span class="r">Ghost<small>.btn--quiet</small></span>
+  <button class="btn btn--quiet" type="button"><svg class="i"><use href="#i-grid"/></svg> Inline edit</button>
+  <button class="btn btn--quiet is-hover" type="button"><svg class="i"><use href="#i-grid"/></svg> Inline edit</button>
+  <button class="btn btn--quiet is-focus" type="button"><svg class="i"><use href="#i-grid"/></svg> Inline edit</button>
+  <button class="btn btn--quiet" type="button" disabled><svg class="i"><use href="#i-grid"/></svg> Inline edit</button>
+  <button class="btn btn--quiet btn--on" type="button" aria-pressed="true"><svg class="i"><use href="#i-grid"/></svg> Inline edit</button>
+</div>
+<!--/F-->
+<!--F Sizes @SV-->
+<div class="dsr">
+  <div class="dsc"><em>Default · 36</em><button class="btn btn--sheet" type="button">Preview</button></div>
+  <div class="dsc"><em>Small · 30</em><button class="btn btn--sheet btn--sm" type="button">Print</button></div>
+  <div class="dsc"><em>Small primary · 30</em><button class="btn btn--primary btn--sm" type="button">Save Vehicle</button></div>
+  <div class="dsc"><em>Icon · 30 × 30</em><button class="btn btn--sheet btn--sm btn--icon" type="button" aria-label="Next vehicle" title="Next vehicle"><svg class="i"><use href="#i-right"/></svg></button></div>
+  <div class="dsc"><em>The way back · small ghost</em><a class="btn btn--quiet btn--sm" href="#"><svg class="i"><use href="#i-left"/></svg> Back to inventory</a></div>
+</div>
+<!--/F-->
+<!--F Destructive @MD-->
+<div class="dsr">
+  <div class="dsc"><em>Default</em><button class="btn btn--danger" type="button">Delete Package</button></div>
+  <div class="dsc"><em>Hover</em><button class="btn btn--danger is-hover" type="button">Delete Package</button></div>
+  <div class="dsc"><em>Focus</em><button class="btn btn--danger is-focus" type="button">Delete Package</button></div>
+  <div class="dsc"><em>In a footer: far end, before the primary</em><span style="display:flex;gap:8px"><button class="btn btn--quiet" type="button">Close</button><button class="btn btn--danger" type="button">Delete Package</button><button class="btn btn--primary" type="button">Update Package</button></span></div>
+</div>
+<!--/F-->
+<!--N--><div class="note-do"><div><h4>Do</h4><ul><li>One filled primary per view.</li><li>Sentence case, three words or fewer.</li><li>Padding 14 (small 10); text never touches the edge.</li><li>Icon-only: <code>aria-label</code> and <code>title</code>.</li></ul></div>
+<div><h4>Don't</h4><ul><li>A second filled button, a pill, a red fill.</li><li>A button that changes width when its label changes.</li><li>Loading that hides the label: the button is disabled, the label stays.</li></ul></div></div><!--/N-->
+<!--/C-->
+
+<!--C fields | Text fields and select | SV | DESIGN.md §24 · §38.11 | One value to type or pick. 36 tall, radius 7, a 1px edge; the label sits above, the help line under.-->
+<!--F Text input-->
+<div class="dsm" style="--c:6">
+  <span></span><span class="h">Default</span><span class="h">Placeholder</span><span class="h">Hover</span><span class="h">Focus</span><span class="h">Disabled</span><span class="h">Mono value</span>
+  <span class="r">Input<small>input.in</small></span>
+  <input class="in" type="text" value="Ferrari" aria-label="Make" style="width:150px">
+  <input class="in" type="text" placeholder="e.g. Rosso Corsa" aria-label="Color" style="width:150px">
+  <input class="in is-hover" type="text" value="812 GTS" aria-label="Model" style="width:150px">
+  <input class="in is-focus" type="text" value="2023" aria-label="Year" style="width:150px">
+  <input class="in" type="text" value="Read only" disabled aria-label="Disabled" style="width:150px">
+  <input class="in" type="text" value="ZFF97CMA0P0300236" aria-label="VIN" style="width:170px;font-family:var(--mono);font-size:13px">
+</div>
+<!--/F-->
+<!--F Select and textarea-->
+<div class="dsr">
+  <div class="dsc"><em>Select · 36</em><select class="sel" aria-label="Cylinders" style="width:150px"><option>12</option></select></div>
+  <div class="dsc"><em>Select · hover</em><select class="sel is-hover" aria-label="Doors" style="width:150px"><option>2</option></select></div>
+  <div class="dsc"><em>Select · focus</em><select class="sel is-focus" aria-label="Body" style="width:150px"><option>Convertible</option></select></div>
+  <div class="dsc"><em>Textarea</em><textarea class="ta" rows="3" aria-label="Notes" style="width:320px">One link per line.</textarea></div>
+</div>
+<!--/F-->
+<!--F Field: label, control, help · "?" mark-->
+<div class="dsr">
+  <div class="f" style="width:260px"><span class="f__l">Stock #</span><input class="in" type="text" value="0P0300236 PS" aria-label="Stock #"><span class="f__help">As the feed sends it.</span></div>
+  <div class="f" style="width:260px"><span class="f__l">Status (sold)<i class="f__q" tabindex="0" title="Switching to Sold clears Pending Sale when you save." aria-label="Switching to Sold clears Pending Sale when you save.">?</i></span><select class="sel" aria-label="Status"><option>Available</option></select></div>
+  <div class="f" style="width:260px"><span class="f__l">Primary contact email</span><input class="in" type="text" value="" placeholder="name@example.com" aria-label="Primary contact email"></div>
+</div>
+<!--/F-->
+<!--F Missing value (Dealer Edit rates) @DE-->
+<table class="rtbl"><tbody><tr class="rt--warn"><td><input class="fld" value="" aria-label="Rate" style="width:150px"></td><td style="padding-left:16px;font:400 13px Archivo;color:#576070">The one missing-value style on the pages: signal-soft fill, #efcd93 ring.</td></tr></tbody></table>
+<!--/F-->
+<!--N--><div class="note-do"><div><h4>States on the pages</h4><ul><li>Focus: brand edge plus the 2px ring.</li><li>Disabled: wash fill, ink-3 text.</li><li>Empty read-only value: "not set" in ink-4, never blank.</li><li>Error: no error style exists yet; the result stands beside the action that produced it, 16px to its left (§11).</li></ul></div>
+<div><h4>Don't</h4><ul><li>A placeholder instead of a label.</li><li>A label on two lines: widen the cell.</li><li>Mono for names, money or dates.</li></ul></div></div><!--/N-->
+<!--/C-->
+
+<!--C selection | Checkbox, switch, segmented | SV | DESIGN.md §25 · §38.12 | Picking on/off and one-of-a-few. The checkbox is ours (16 × 16, radius 5), never the browser's.-->
+<!--F Checkbox @AL-->
+<div class="dsr">
+  <div class="dsc"><em>Off</em><input class="ck" type="checkbox" aria-label="Select row"></div>
+  <div class="dsc"><em>On</em><input class="ck" type="checkbox" checked aria-label="Select row"></div>
+  <div class="dsc"><em>Hover</em><input class="ck is-hover" type="checkbox" aria-label="Select row"></div>
+  <div class="dsc"><em>Focus</em><input class="ck is-focus" type="checkbox" aria-label="Select row"></div>
+  <div class="dsc"><em>Disabled</em><input class="ck" type="checkbox" disabled aria-label="Select row"></div>
+</div>
+<!--/F-->
+<!--F Switch — the origin: All Vehicles' row switch @AV-->
+<div class="dsr">
+  <div class="dsc"><em>On · on website</em><button class="sitesw" type="button" role="switch" aria-checked="true"><span class="sitesw__t" aria-hidden="true"><i></i></span>On website</button></div>
+  <div class="dsc"><em>Hover</em><button class="sitesw is-hover" type="button" role="switch" aria-checked="true"><span class="sitesw__t" aria-hidden="true"><i></i></span>On website</button></div>
+  <div class="dsc"><em>Focus</em><button class="sitesw is-focus" type="button" role="switch" aria-checked="true"><span class="sitesw__t" aria-hidden="true"><i></i></span>On website</button></div>
+  <div class="dsc"><em>Off is a problem</em><button class="sitesw sitesw--off" type="button" role="switch" aria-checked="false"><span class="sitesw__t" aria-hidden="true"><i></i></span>Hidden on site</button></div>
+</div>
+<!--/F-->
+<!--F Single Vehicle's switches — converge on the origin-->
+<div class="vis" style="display:grid;gap:8px;max-width:640px">
+<div class="swrow"><span class="swrow__x"><b>Specials</b><span>Feature this car in the site's Specials rail</span><i class="swrow__on">On</i></span><label class="sw"><input type="checkbox" aria-label="Specials"><span class="sw__t"></span></label></div>
+<div class="swrow swrow--on"><span class="swrow__x"><b>Price on site</b><span>Show the price to visitors</span><i class="swrow__on">On</i></span><label class="sw"><input type="checkbox" checked aria-label="Price on site"><span class="sw__t"></span></label></div>
+<div class="swrow swrow--danger swrow--on"><span class="swrow__x"><b>Hide on site</b><span>Take the car off the dealer's site</span><i class="swrow__on">Hidden on site</i></span><label class="sw sw--danger"><input type="checkbox" checked aria-label="Hide on site"><span class="sw__t"></span></label></div>
+</div>
+<!--/F-->
+<!--F Segmented control @AV-->
+<div class="dsr">
+  <div class="dsc"><em>View · Rows chosen</em><div class="seg" role="group" aria-label="View"><button class="seg__b seg__b--on" type="button" aria-pressed="true" aria-label="Rows"><svg class="i"><use href="#i-table"/></svg></button><button class="seg__b" type="button" aria-pressed="false" aria-label="Gallery"><svg class="i"><use href="#i-cards"/></svg></button></div></div>
+  <div class="dsc"><em>Hover on the other</em><div class="seg" role="group" aria-label="View"><button class="seg__b seg__b--on" type="button" aria-pressed="true" aria-label="Rows"><svg class="i"><use href="#i-table"/></svg></button><button class="seg__b is-hover" type="button" aria-pressed="false" aria-label="Gallery"><svg class="i"><use href="#i-cards"/></svg></button></div></div>
+</div>
+<!--/F-->
+<!--F Status picker: a record's state-->
+<div class="f scard scard--status" style="max-width:520px"><span class="f__l">Status</span><div class="seg" role="group" aria-label="Status"><button class="seg__b seg__b--on" type="button" aria-pressed="true">Available</button><button class="seg__b" type="button" aria-pressed="false">Sold</button><button class="seg__b" type="button" aria-pressed="false">Staging</button></div></div>
+<!--/F-->
+<!--N--><div class="note-do"><div><h4>Which one</h4><ul><li>A setting that takes effect: switch.</li><li>Two views of one thing: segmented.</li><li>A record's state: status picker (the chosen state takes its tone).</li><li>Bulk selection: checkbox; the row takes the brand-soft tint.</li></ul></div>
+<div><h4>Converge</h4><ul><li>The origin is All Vehicles' row switch: 34 × 20, on = green, off-as-a-problem = red.</li><li>Single Vehicle draws 42 × 24 (on = ink, brand in the visibility rows) and My Work Queue 30 × 18. They converge on the origin once Alex approves.</li></ul></div></div><!--/N-->
+<!--/C-->
+
+<!--C chips | Status chips, tags and badges | AV | DESIGN.md §27 · §38.6–38.7 | A record's state, a flag on a record, a count, provenance. Sentence case everywhere; at least 8px of air inside.-->
+<!--F Vehicle status-->
+<div class="dsr">
+  <div class="dsc"><em>Available</em><span class="stat stat--ok">Available</span></div>
+  <div class="dsc"><em>Staging</em><span class="stat stat--staging">Staging</span></div>
+  <div class="dsc"><em>Sold</em><span class="stat stat--sold">Sold</span></div>
+</div>
+<!--/F-->
+<!--F Lead status @AL-->
+<div class="dsr">
+  <div class="dsc"><em>New</em><span class="stat stat--new">New Lead</span></div>
+  <div class="dsc"><em>Active</em><span class="stat stat--active">Active Prospect</span></div>
+  <div class="dsc"><em>Hot</em><span class="stat stat--hot">Hot</span></div>
+  <div class="dsc"><em>Pending</em><span class="stat stat--pend">Sale Pending</span></div>
+  <div class="dsc"><em>Trade</em><span class="stat stat--trade">Trade Appraisal</span></div>
+  <div class="dsc"><em>Won</em><span class="stat stat--won">Bought Here</span></div>
+  <div class="dsc"><em>Quiet · everything else</em><span class="stat stat--quiet">Just Looking</span></div>
+</div>
+<!--/F-->
+<!--F Flag tags-->
+<div class="dsr">
+  <div class="dsc"><em>Flag with its glyph</em><span class="tag tag--flag"><svg class="i"><use href="#i-tag"/></svg>No price</span></div>
+  <div class="dsc"><em>Two flags and the rest</em><span class="tags"><span class="tag tag--flag"><svg class="i"><use href="#i-tag"/></svg>No price</span><span class="tag tag--flag"><svg class="i"><use href="#i-image"/></svg>No photos</span><span class="tag tag--more" title="No description">+1</span></span></div>
+</div>
+<!--/F-->
+<!--F Counters, age, provenance @SV-->
+<div class="dsr">
+  <div class="dsc"><em>Counter badge</em><span class="badge">64</span></div>
+  <div class="dsc"><em>Counter, state</em><span class="badge badge--ok">Available</span></div>
+  <div class="dsc"><em>Age · fresh / mid / late</em><span style="display:flex;gap:8px"><span class="age age--fresh">6d</span><span class="age age--mid">40d</span><span class="age age--late">95d</span></span></div>
+  <div class="dsc"><em>Mock addition</em><span class="chip-src">Mock addition</span></div>
+</div>
+<!--/F-->
+<!--F Demo tag @SL-->
+<div class="dsr"><div class="dsc"><em>On a sheet</em><span class="demo">Demo</span></div><div class="dsc dsdark"><em style="color:#c9d2e0">On the dark board</em><span class="demo">Demo</span></div></div>
+<!--/F-->
+<!--N--><div class="note-do"><div><h4>Do</h4><ul><li>Status chip: 24 tall, radius 7, its tone on a soft fill with a 1px ring.</li><li>The column is as wide as the longest state; a chip never truncates.</li><li>At most two flags, then <code>+N</code>.</li></ul></div>
+<div><h4>Don't</h4><ul><li>Caps: "No price", never "NO PRICE".</li><li>A pill-shaped status chip, or a chip for a count.</li><li>Grades: "health", "needs work", a green "OK". Red only for Hidden on site.</li></ul></div></div><!--/N-->
+<!--/C-->
+
+<!--C band | Search, facets and view tabs | AV | DESIGN.md §26 · §38.8–38.10 | The command band of a list: find, narrow, switch the saved view.-->
+<!--F Command search-->
+<div class="cmd ui-toolbar" style="position:static;height:auto;min-height:0;box-shadow:none;background:transparent;padding:0;flex-wrap:wrap;gap:20px 32px;align-items:flex-start">
+
+  <div class="dsc" style="width:420px"><em>Empty</em><label class="search" style="width:100%"><svg class="i"><use href="#i-search"/></svg><input type="search" placeholder="Find a vehicle — stock, VIN, year, make, model, color…" autocomplete="off" aria-label="Find"><kbd>/</kbd></label></div>
+  <div class="dsc" style="width:420px"><em>Typed</em><label class="search" style="width:100%"><svg class="i"><use href="#i-search"/></svg><input type="search" value="812 GTS" autocomplete="off" aria-label="Find"><kbd>/</kbd></label></div>
+</div>
+<!--/F-->
+<!--F Facet buttons-->
+<div class="cmd ui-toolbar" style="position:static;height:auto;min-height:0;box-shadow:none;background:transparent;padding:0;flex-wrap:wrap;gap:20px 32px;align-items:flex-start">
+
+  <div class="dsc"><em>Default</em><div class="facet"><button class="facet__b" type="button"><span class="facet__k">Sort</span><span class="facet__v">When added ↑</span><svg class="i"><use href="#i-chev"/></svg></button></div></div>
+  <div class="dsc"><em>Hover</em><div class="facet"><button class="facet__b is-hover" type="button"><span class="facet__k">Make</span><span class="facet__v">Any</span><svg class="i"><use href="#i-chev"/></svg></button></div></div>
+  <div class="dsc"><em>Focus</em><div class="facet"><button class="facet__b is-focus" type="button"><span class="facet__k">Make</span><span class="facet__v">Any</span><svg class="i"><use href="#i-chev"/></svg></button></div></div>
+  <div class="dsc"><em>On · a filter is set</em><div class="facet"><button class="facet__b facet__b--on" type="button"><svg class="i"><use href="#i-sliders"/></svg><span class="facet__v">Filters</span><span class="facet__cnt">2</span></button></div></div>
+</div>
+<!--/F-->
+<!--F View tabs @AL-->
+<div class="lanes ui-views" role="group" aria-label="Lane"><button class="lane ui-view ui-view--on" type="button" aria-pressed="true"><span>Search — all leads</span><b>16,574</b></button><button class="lane ui-view" type="button" aria-pressed="false"><span>New Mail</span><b>5</b></button><button class="lane ui-view is-hover" type="button" aria-pressed="false"><span>Assigned to me</span><b>12</b></button><button class="lane ui-view" type="button" aria-pressed="false"><span>Archived</span><b>0</b></button></div>
+<!--/F-->
+<!--F Lanes on the dark board-->
+<section class="focal" style="display:inline-block;height:auto;min-height:0;padding:20px 24px;grid-template:none"><div class="focal__main"><div class="lanes ui-views" role="group" aria-label="Lane"><button class="lane lane--on ui-view ui-view--on" type="button" aria-pressed="true">Available <b>359</b></button><button class="lane ui-view" type="button" aria-pressed="false">Pending <b>4</b></button><button class="lane ui-view" type="button" aria-pressed="false">Sold <b>1,208</b></button></div></div></section>
+<!--/F-->
+<!--N--><div class="note-do"><div><h4>Which one</h4><ul><li>Find within the list: search, one per list.</li><li>One dimension, few values: facet + popover.</li><li>Many dimensions: Filters, opening the dock.</li><li>Saved views of one list: view tabs.</li></ul></div>
+<div><h4>Don't</h4><ul><li>A native select in the band.</li><li>A chosen tab that turns bold: it moves its neighbours.</li><li>Two rows of tabs; a tab that filters a feed.</li></ul></div></div><!--/N-->
+<!--/C-->
+
+<!--C menus | Menus and popovers | AV | DESIGN.md §28 · §38.9 · §38.13 | A popover opens under its trigger, never covers it, and closes on outside click and Esc.-->
+<!--F In-page popover-->
+<div class="dsr">
+  <div class="pop pop--right mn" style="width:272px"><div class="caps mn__lab">Sort by</div><button class="mn__it" type="button"><svg class="i"><use href="#i-check"/></svg>Stock</button><button class="mn__it is-hover" type="button"><svg class="i"><use href="#i-check"/></svg>Year</button><button class="mn__it mn__it--on" type="button"><svg class="i"><use href="#i-check"/></svg>When added</button><button class="mn__it" type="button"><svg class="i"><use href="#i-check"/></svg>Listing flags first</button><div class="mn__sep"></div><button class="mn__it mn__it--on" type="button"><svg class="i"><use href="#i-up"/></svg>Ascending</button><button class="mn__it" type="button"><svg class="i"><use href="#i-dn"/></svg>Descending</button><div class="mn__sep"></div><button class="mn__it mn__it--danger" type="button"><svg class="i"><use href="#i-x"/></svg>Clear sort</button></div>
+  <div class="dsc" style="max-width:280px"><em>States, top to bottom</em><span style="font:400 13px/1.6 Archivo;color:#353e4e">Group label (a key, so caps) · item · hover · chosen (brand-ink 600) · separator · danger, last.</span></div>
+</div>
+<!--/F-->
+<!--N--><div class="note-do"><div><h4>Do</h4><ul><li>Item 34 tall, padding 8 10, radius 7, 14 / 400 ink.</li><li>The chosen item in brand-ink 600, with <code>aria-current</code>.</li><li>A long list gets a find field on top and Clear in a footer.</li></ul></div>
+<div><h4>Don't</h4><ul><li>An icon on every item.</li><li>More than one level.</li><li>A popover that covers its own trigger.</li></ul></div></div><!--/N-->
+<!--/C-->
+
+<!--C paging | Pager and A–Z | AV | DESIGN.md §10 · §38.17 · §38.22 | A paged list has a pager at the top and at the bottom. A long alphabetical list adds the A–Z jump.-->
+<!--F Pager-->
+<div class="foot pgr" aria-label="Pages" style="position:static"><span class="pgr__n">Showing <b>1–100</b> of <b>359</b></span><span class="sp"></span><span class="pg"><button type="button" aria-label="Previous page" disabled>‹</button><button type="button" class="on" aria-current="page">1</button><button type="button">2</button><span>…</span><button type="button">4</button><button type="button" aria-label="Next page">›</button></span><label class="pgr__per"><span>Rows</span><select class="sel sel--sm" aria-label="Rows per page"><option>100</option></select></label></div>
+<!--/F-->
+<!--F A–Z jump @MD-->
+<nav class="az" aria-label="Jump to letter"><button class="az__b" type="button">A</button><button class="az__b" type="button">B</button><button class="az__b" type="button">C</button><button class="az__b is-hover" type="button">D</button><button class="az__b" type="button">E</button><button class="az__b" type="button">F</button><button class="az__b" type="button" disabled>Q</button><button class="az__b" type="button">R</button><button class="az__b" type="button">S</button><button class="az__b" type="button" disabled>X</button></nav>
+<!--/F-->
+<!--/C-->
+
+<!--C record | Id pill, contact tag, save bar | SV | DESIGN.md §21 · §32 · §33 | The pieces of a record head and a long record.-->
+<!--F Id pill with copy-->
+<div class="dsr">
+  <div class="dsc"><em>Default</em><span class="idp"><span class="idp__k">Stock:</span> <b>0P0300236 PS</b><button class="copy" type="button" aria-label="Copy stock number" title="Copy stock number"><svg class="i"><use href="#i-copy"/></svg></button></span></div>
+  <div class="dsc"><em>Copied: the tick, same size</em><span class="idp"><span class="idp__k">Stock:</span> <b>0P0300236 PS</b><button class="copy copy--done" type="button" aria-label="Copied"><svg class="i"><use href="#i-check"/></svg></button></span></div>
+</div>
+<!--/F-->
+<!--F Contact tags on the dark board @SL-->
+<div class="dsdark" style="display:flex;gap:8px;flex-wrap:wrap"><span class="ctag"><svg class="i"><use href="#i-mail"/></svg><b title="dana.morales@example.com">dana.morales@example.com</b><button type="button" aria-label="Copy email address"><svg class="i"><use href="#i-copy"/></svg></button></span><span class="ctag"><svg class="i"><use href="#i-phone"/></svg><b style="font-family:var(--mono)">(555) 010-0142</b><button type="button" aria-label="Copy phone"><svg class="i"><use href="#i-copy"/></svg></button></span></div>
+<!--/F-->
+<!--F Save bar · clean and with changes-->
+<div class="savebar" style="position:static"><span class="savebar__n"><b>0</b> unsaved change(s)</span><span class="savebar__div"></span><button class="savebar__b" type="button" disabled><svg class="i"><use href="#i-list"/></svg>Review changes</button><button class="savebar__b savebar__b--discard" type="button" disabled><svg class="i"><use href="#i-undo"/></svg>Discard</button><button class="savebar__b savebar__b--save" type="button" disabled><svg class="i"><use href="#i-save"/></svg>Save Vehicle</button></div>
+<div class="savebar" style="position:static;margin-top:12px"><span class="savebar__n"><b>2</b> unsaved change(s)</span><span class="savebar__div"></span><button class="savebar__b" type="button"><svg class="i"><use href="#i-list"/></svg>Review changes</button><button class="savebar__b savebar__b--discard" type="button"><svg class="i"><use href="#i-undo"/></svg>Discard</button><button class="savebar__b savebar__b--save" type="button"><svg class="i"><use href="#i-save"/></svg>Save Vehicle</button></div>
+<!--/F-->
+<!--/C-->
+
+<!--C disclosure | Disclosure | SL | DESIGN.md §20 · §38.21 | Anything that opens looks openable at rest — a frame and a visible chevron — and changes visibly when open.-->
+<!--F Bar with a framed chevron, closed-->
+<section class="acc vacc"><h3><button class="acc__h" type="button" aria-expanded="false"><span class="acc__t">Vehicle fields</span><span class="acc__s">Stock 21902 · 2015 Aston Martin Vanquish</span><svg class="i"><use href="#i-chev"/></svg></button></h3></section>
+<!--/F-->
+<!--/C-->
+
+<!--C feed | Feed entry | ST | DESIGN.md §22 · §38.16 | One post in a record's history. Reply is its main action; Remove asks first and sits at the far right.-->
+<!--F Entry-->
+<ul style="list-style:none;margin:0;padding:0;max-width:940px"><li class="ev ev--message"><span class="ev__i"><svg class="i"><use href="#i-mail"/></svg></span><div class="ev__b"><div class="ev__t"><span class="kind">Message</span><span class="who">Dana Morales</span></div><span class="ev__n">We would like to schedule a call about the edits on our website and the SEO report. Please call or email when you can.</span><div class="evatt">Attachments: <span class="evatt__f"><svg class="i"><use href="#i-file"/></svg>seo-report.pdf <em>(file missing)</em></span></div></div><div class="ev__d">03/31/2026<small>10:26 AM</small></div><div class="ev__acts"><button class="ev__reply ev__reply--main" type="button"><svg class="i"><use href="#i-hist"/></svg>Reply</button><button class="ev__reply" type="button"><svg class="i"><use href="#i-note"/></svg>Edit</button><button class="ev__rm" type="button">Remove message</button></div></li></ul>
+<!--/F-->
+<!--/C-->
+
+<!--C dialog | Dialog | MD | DESIGN.md §28 · §31 | Only where the original has one. Esc closes it; focus returns to the control that opened it. A side task on the same page is the dock, not a dialog.-->
+<!--F Dialog-->
+<dialog class="modal" open aria-labelledby="ds-pkg-t" style="width:620px"><form method="dialog" class="modal__in"><div class="modal__hd"><h2 class="modal__t" id="ds-pkg-t">Dealer Package</h2><button class="modal__x" type="button" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div><div class="modal__bd"><div class="fg"><div class="fld-w fld-w--full"><label class="fld-l fld-l--req">Package Title</label><input class="fld" value="Marketing — Gold" aria-label="Package Title"></div><div class="fld-w fld-w--full"><label class="fld-l">Package Details</label><textarea class="fld fld--area" rows="3" aria-label="Package Details">Monthly SEO, two campaigns.</textarea></div></div></div><div class="modal__ft"><button class="btn btn--quiet" type="button">Close</button><button class="btn btn--danger" type="button">Delete Package</button><button class="btn btn--primary" type="button">Update Package</button></div></form></dialog>
+<!--/F-->
+<!--/C-->
+
+<!--C empty | Empty and not-set | AV | DESIGN.md §30 · §38.18 | No data is a sentence and one action, in the space the content will take. Never a blank area.-->
+<!--F Empty list and empty lane-->
+<div class="dsr"><div class="empty" style="position:static;display:block;width:560px">No vehicles match. <button type="button">Clear filters</button></div><div class="empty--lane" style="width:360px;min-height:0;padding:24px"><b>No pending vehicles</b><span>Pending sales will appear here.</span></div><div class="dsc"><em>A value that is not set</em><span class="none" style="color:#697181">not set</span></div></div>
+<!--/F-->
+<!--/C-->
