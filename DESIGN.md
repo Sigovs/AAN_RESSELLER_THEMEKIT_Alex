@@ -196,8 +196,8 @@ Origin: All Vehicles.
 --ink      #0d1320   primary text            --sheet  #ffffff   surface
 --ink-2    #353e4e   secondary text, controls --well   #e4e9f0   sunken
 --ink-3    #576070   tertiary, labels, keys  --wash   #eef1f5   page, hover
---ink-4    #697181   placeholder, empty      --line   #dfe3ea   divider
---line-2   #e9ecf1   hairline                --line-3 #c5cbd5   control ring
+--ink-4    #697181   placeholder, empty      --line   #d8dee7   divider
+--line-2   #e5e9ef   hairline                --line-3 #c5cbd5   control ring
 --brand      #1f5fe0  primary action         --ok      #12704a
 --brand-ink  #1747b3  brand text, links      --danger  #bd3328
 --brand-soft #e9f0fe  tint, bulk selection   --signal  #945000   --violet #5c42c9
