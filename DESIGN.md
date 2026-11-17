@@ -569,8 +569,10 @@ that produced them (§11).
 **Checkbox** — Origin: All Vehicles (`.ck`): 16×16, radius 5px, 1.5px `--line-3` edge, white; checked
 `--brand-btn` fill with a white 8×5 tick; hover edge ink-4. Never the native box (the Appendix).
 
-**Switch** — Origin: Single Vehicle (`.sw`): 42×24 pill track, white thumb; `--ok` when on;
-`.sw--danger` for Hidden on site.
+**Switch** — Origin: All Vehicles (`.sitesw`, the row's "On website"): 34×20 pill track, 16px white thumb;
+on = `--ok`; off where off is a problem = `--danger` track, danger-soft chip and the label "Hidden on site"; the
+control is as wide as its longer label in both states. Single Vehicle's `.sw` (42×24; on = `--ink`, `--brand` in the
+visibility rows, `--danger` in a danger row) and My Work Queue's (30×18) converge on it — waiting for Alex.
 
 **Segmented control** — Origin: All Vehicles (`.seg`, Rows / Gallery): one object — a sunken 36px pill
 track, padding 3px, white 30px pill thumb with `--sh-pill`, ink-2 labels. Dealer Edit's Yes / No follows.

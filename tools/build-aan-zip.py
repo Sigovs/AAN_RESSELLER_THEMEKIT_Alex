@@ -196,6 +196,16 @@ def main():
             for name, key in re.findall(r'([\w.-]+\.(?:css|js))\?v=([^"\'&]+)', open(os.path.join(tmp, p), encoding='utf-8').read()):
                 if name != '_aan-notes.js' and name != '_aan-fix.js':
                     keys.setdefault(name, {}).setdefault(key, []).append(p.split('/')[-1])
+        # a control character in markup is a broken edit (Nov 17: a "\1" that became \x01 ate the
+        # data-sort attribute of All Vehicles' "When added" sort item for weeks)
+        ctrl = re.compile(r'[\x01-\x08\x0b\x0e-\x1f]')
+        dirty = []
+        for base, _, files in os.walk(os.path.join(tmp, 'pages')):
+            for x in files:
+                if x.endswith(('.html', '.css', '.js')) and ctrl.search(open(os.path.join(base, x), encoding='utf-8', errors='replace').read()):
+                    dirty.append(x)
+        if dirty:
+            sys.exit('Stopping: control characters (a broken edit) in: %s' % ', '.join(sorted(dirty)))
         mixed = {n: k for n, k in keys.items() if len(k) > 1}
         if mixed:
             sys.exit('Stopping: these files are loaded with different ?v= keys on different pages. Give each one '
