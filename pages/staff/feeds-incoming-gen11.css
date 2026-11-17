@@ -1,7 +1,7 @@
 /* AAN · Staff UI · Feeds Incoming — GENERATION 11
    Only what Manage Dealers (the list skeleton this page reuses) does not have:
    one dealer row carrying several feed lines, the image-mode chip, the ON/OFF
-   switch (Single Vehicle's) and the main-log dialog. Every value comes from the
+   switch (shared ui-switch) and the main-log dialog. Every value comes from the
    system tokens; nothing new is introduced. */
 
 /* ── columns: dealer identity, then the feed lines (one divider where the feed group begins) ── */
@@ -55,22 +55,7 @@
 /* image mode: the backend's two-letter code, its meaning in the tooltip and the legend */
 .fi-img { background: var(--b-info-bg); color: var(--b-info-ink); }
 
-/* ON / OFF — Single Vehicle's switch (not yet a shared component; see the package notes) */
-.sw { position: relative; display: inline-flex; flex: 0 0 auto; }
-.sw input { position: absolute; opacity: 0; width: 0; height: 0; }
-.sw__t {
-  position: relative; display: block; width: 34px; height: 20px;
-  border-radius: var(--r-pill); background: var(--well); box-shadow: inset 0 0 0 1px var(--line-3);
-  cursor: pointer; transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
-}
-.sw__t::after {
-  content: ""; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%;
-  background: var(--sheet); box-shadow: var(--el-1); transition: transform var(--dur2) var(--ease);
-}
-.sw input:checked + .sw__t { background: var(--ok); box-shadow: inset 0 0 0 1px var(--ok); }
-.sw input:checked + .sw__t::after { transform: translateX(14px); }
-.sw input:focus-visible + .sw__t { outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); }
-@media (prefers-reduced-motion: reduce) { .sw__t, .sw__t::after { transition: none; } }
+/* ON / OFF: the shared ui-switch (_aan-components.css) */
 
 /* image-mode legend: in a popover beside the scope line, one code per line */
 .fi-legend { display: grid; gap: var(--s2); padding: var(--s1) var(--s2) var(--s2); }

@@ -695,3 +695,36 @@ select.sel, select.ui-ctl, .rows select, .cmd select, .zone select, .form select
     left: min(0px, calc((100% - 36px) / 2)); right: min(0px, calc((100% - 36px) / 2));
   }
 }
+
+/* ── SWITCH (ui-switch) ─────────────────────────────────────────────────────
+   The one on/off control. Geometry and ON colour from All Vehicles' "On
+   website" switch (the earliest page wins): a 34x20 track, a 16px thumb, ON in
+   --ok, "this thing is running". Two variants already exist on the pages:
+     --brand      a view or filter toggle (My Work Queue's "Archived")
+     --alert-off  OFF is a problem worth seeing (All Vehicles' "Hidden on site")
+   Markup: <label class="ui-switch"><input type="checkbox" role="switch">
+           <span class="ui-switch__t"></span><span class="ui-switch__l">Label</span></label>
+   The label text is optional; without it the input carries an aria-label.
+   Added 2026-11-17. Single Vehicle (.sw, 42x24) and My Work Queue (.sw, 30x18)
+   still draw their own and converge on this one once approved. */
+.ui-switch { position: relative; display: inline-flex; align-items: center; gap: var(--s2, 8px); flex: 0 0 auto; cursor: pointer; }
+.ui-switch input { position: absolute; opacity: 0; width: 0; height: 0; margin: 0; }
+.ui-switch__t {
+  position: relative; display: block; flex: none; width: 34px; height: 20px; border-radius: 999px;
+  background: var(--line-3, #c5cbd5);
+  transition: background-color var(--dur, 160ms) var(--ease, ease);
+}
+.ui-switch__t::after {
+  content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%;
+  background: #fff; box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+  transition: left var(--dur, 160ms) var(--ease, ease);
+}
+.ui-switch input:checked + .ui-switch__t { background: var(--ok, #12704a); }
+.ui-switch input:checked + .ui-switch__t::after { left: 16px; }
+.ui-switch--brand input:checked + .ui-switch__t { background: var(--brand, #1f5fe0); }
+.ui-switch--alert-off input:not(:checked) + .ui-switch__t { background: var(--danger, #bd3328); }
+.ui-switch input:focus-visible + .ui-switch__t { outline: 2px solid var(--brand, #1f5fe0); outline-offset: 2px; }
+.ui-switch input:disabled + .ui-switch__t { opacity: .5; cursor: not-allowed; }
+.ui-switch__l { font-size: 14px; color: var(--ink-2, #353e4e); white-space: nowrap; }
+@media (pointer: coarse) and (max-width: 1279.98px) { .app .ui-switch { min-height: 36px; } }
+@media (prefers-reduced-motion: reduce) { .ui-switch__t, .ui-switch__t::after { transition: none; } }

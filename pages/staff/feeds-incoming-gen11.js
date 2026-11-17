@@ -105,8 +105,8 @@
         '<span class="c-img ' + cls + '">' + (f[3]
           ? '<span class="ft fi-img" title="Images: from the feed file, ' + esc(D.images[f[3]]) + '">' + esc(f[3]) + '</span>' : '<span class="dash">—</span>') + '</span>' +
         '<span class="c-runs ' + cls + '" title="Runs in the last 24 hours">' + f[4] + '</span>' +
-        '<span class="c-on ' + cls + '"><label class="sw" title="ON / OFF"><input type="checkbox"' + (f[5] ? ' checked' : '') +
-          ' aria-label="' + esc(f[0]) + ' ON / OFF"><span class="sw__t"></span></label></span>' +
+        '<span class="c-on ' + cls + '"><label class="ui-switch" title="ON / OFF"><input type="checkbox" role="switch"' + (f[5] ? ' checked' : '') +
+          ' aria-label="' + esc(f[0]) + ' ON / OFF"><span class="ui-switch__t"></span></label></span>' +
         '<span class="c-act ' + cls + '">' +
           '<a class="ra" href="#" title="Edit Feed" aria-label="Edit Feed">' + ic('i-edit') + '</a>' +
           '<a class="ra" href="#" title="Log" aria-label="Log">' + ic('i-note') + '</a>' +
