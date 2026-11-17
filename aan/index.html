@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AAN Control Panel — Gen 11_2</title>
+<title>AAN Control Panel — Gen 11_3</title>
 <style>
   @font-face { font-family: "Archivo"; font-style: normal; font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; src: url("ds/fonts/archivo-latin-var.woff2") format("woff2"); }
   @font-face { font-family: "Plex Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("ds/fonts/plex-mono-400.woff2") format("woff2"); }
@@ -31,7 +31,9 @@
   .logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: -.01em; }
   .logo i { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; background: var(--brand); color: #fff; font: 700 11px/1 "Archivo", sans-serif; font-style: normal; }
   .bar nav { margin-left: auto; display: flex; gap: 4px; }
-  .bar nav a { text-decoration: none; padding: 7px 12px; border-radius: 8px; font-size: 14px; color: var(--on-2); }
+  .bar nav a { text-decoration: none; padding: 7px 12px; border-radius: 8px; font-size: 14px; color: var(--on-2); white-space: nowrap; }
+  .logo { white-space: nowrap; }
+  @media (max-width: 1000px) { .bar nav a[href="#gen11"] { display: none; } }   /* the logo already says Gen 11_3; the labels keep one line (Nov 17) */
   .bar nav a:hover { background: rgba(255,255,255,.08); color: var(--on); }
   .bar nav a.go { background: var(--brand); color: #fff; font-weight: 600; }
 
@@ -43,7 +45,7 @@
   .hero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px; align-items: center; }
   .hero h1 { margin: 14px 0 12px; font-size: 52px; line-height: 1.02; letter-spacing: -.03em; font-weight: 700; font-stretch: 92%; }
   .hero h1 em { font-style: normal; color: var(--brand-2); }
-  /* the build's name, large: Gen 11_2 = Gen 11 after the team's review round */
+  /* the build's name, large: Gen 11_3 = Gen 11 after the team's second review round (11_2 was the first; v2 on the AAN server) */
   .g112 { display: flex; align-items: flex-end; gap: 18px; margin: 4px 0 18px; }
   .g112 b { font-size: clamp(64px, 7vw, 112px); font-weight: 800; line-height: .82; letter-spacing: -.05em; color: #ffd400; }   /* the login's yellow */
   .g112 b i { font-style: normal; color: inherit; }
@@ -364,7 +366,9 @@
   .qa { margin-top: 30px; padding: 22px 24px 8px; border-radius: 16px; background: rgba(255,255,255,.035); box-shadow: inset 0 0 0 1px rgba(255,255,255,.10); }
   .qa__h { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 12px; margin-bottom: 10px; }
   .qa__h b { font-size: 17px; letter-spacing: -.01em; }
-  .qa__h--nf { margin-top: 22px; }
+  .qa__h--nf { margin-top: 0; }
+  .qa--nf { margin-top: 20px; }
+  #questions, #new-features { scroll-margin-top: 72px; }
   .qa__n { display: inline-grid; place-items: center; min-width: 26px; height: 22px; padding: 0 8px; border-radius: 99px; background: rgba(242,161,43,.16); color: var(--amber); font: 600 12px var(--mono); }
   .qa__h--nf .qa__n { background: rgba(255,255,255,.08); color: var(--on-2); }
   .qa__s { font-size: 13px; color: var(--on-3); }
@@ -387,12 +391,13 @@
 <body>
 
 <div class="bar"><div class="wrap">
-  <span class="logo"><i>AAN</i> Control Panel · Gen 11_2</span>
+  <span class="logo"><i>AAN</i> Control Panel · Gen 11_3</span>
   <nav>
-    <a href="#gen11">Gen 11_2</a>
+    <a href="#gen11">Gen 11_3</a>
     <a href="#questions">Questions</a>
+    <a href="#new-features">New features</a>
     <a href="comments.html">Notes</a>
-    <a class="go" href="pages/dealer/all-vehicles-gen11.html">Open Gen 11_2 →</a>
+    <a class="go" href="pages/dealer/all-vehicles-gen11.html">Open Gen 11_3 →</a>
   </nav>
 </div></div>
 
@@ -400,7 +405,7 @@
 <div class="hero"><div class="wrap">
   <div>
     <span class="caps">Dealer UI · AAN Employee UI · review build</span>
-    <div class="g112" role="img" aria-label="Gen 11_2"><b>11<i>_</i>2</b><span><em>Gen 11 &middot; round 2</em>after the team&rsquo;s review</span></div>
+    <div class="g112" role="img" aria-label="Gen 11_3"><b>11<i>_</i>3</b><span><em>Gen 11 &middot; round 3</em>after the team&rsquo;s second review</span></div>
     <h1>The control panel,<br>rebuilt as a <em>workspace</em>.</h1>
     <p>Ten pages, dealer and employee, on one component system. Every page carries a Notes button &mdash; point at what you mean and leave a note for the team.</p>
     <div class="facts">
@@ -534,12 +539,17 @@
   <div class="qa" id="questions">
     <div class="qa__h">
       <b>Questions for the team</b><span class="qa__n" id="qa-n"></span>
-      <span class="qa__s">After the review round: 124 of 124 notes resolved. These wait for a decision.</span>
+      <span class="qa__s">Round 1 (October) and round 2 (November). Each says what was asked and by whom; <b>See the note in v2</b> opens it where it was left.</span>
       <a class="qa__all" href="review-status.html">Full status page &rarr;</a>
     </div>
     <ol class="qa__l" id="qa-list"><li class="qa__empty">Loading the questions&hellip;</li></ol>
+  </div>
+
+  <!-- New features, its own block with its own link in the bar (Alex, Nov 17: it sat under 38 questions and was hard to find) -->
+  <div class="qa qa--nf" id="new-features">
     <div class="qa__h qa__h--nf"><b>New features, after go-live</b><span class="qa__n" id="nf-n"></span>
-      <span class="qa__s">Agreed with Ivaylo: no new features in this redesign. Each comes back after go-live.</span></div>
+      <span class="qa__s">This redesign is a facelift of the old system. Each of these comes back after go-live, and Tony approves it then.</span>
+      <a class="qa__all" href="review-status.html#h-nf">On the status page &rarr;</a></div>
     <ol class="qa__l" id="nf-list"></ol>
   </div>
 
