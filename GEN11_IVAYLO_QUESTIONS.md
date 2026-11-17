@@ -157,3 +157,17 @@ Alex and Claude read the new backend: the menus, the Add New Dealer form and the
 - **19. Column layout per user:** settings exist per dealer only (`dealers.settings`), none per user. The live system remembers the layout per user, so the new backend needs a user setting.
 - **19. Auction Tools:** no endpoints. Is it still used?
 - **Still for Ivaylo (fields not shown in the console):** 13 which flag the Internet checkbox writes (`leads.update`); 17 whether the YouTube field keeps several links; 11 whether `tickets.queue` returns the viewer's own Begin / Completion dates; 19 / #64 whether `vehicles.index` returns inventory-wide Discount and Invoice totals.
+
+## Checked again in the new backend and the live system (Nov 17)
+Read only: the API Console (17 endpoints), Manage Dealers, My Work, a ticket page; the live Manage Dealers list. Nothing was saved.
+- **18. Edit lock — answered.** `vehicles.locks.index` returns each live lock as "name since time"; `vehicles.lock.store` with `takeover=1` takes the lock over (the live "Unlock and take control"); a lock expires after 4 hours. Off the question list.
+- **18. VIN Decoder Selectable — answered.** The style / engine / transmission lists come from the VIN decode (DataOne), cached per dealer; `apply=true` writes the picked values into the vehicle; a cached decode never calls out again. Off the list.
+- **15 / #28. Comments date format — answered** by Bill's own screenshot (item27): MM/DD/YYYY. The screenshot request is off the list. Still open: the new leads list returns no last-comment date.
+- **1–2. Print:** the new Manage Dealers has no Print (it offers Dealers CSV). Accounting was not seen (billing pages need billing access).
+- **6. CL:** in the live list CL is a text code its legend does not explain (Craigslist has its own icon there); the new backend computes CL from the dealer's Carfax account, so CL = Carfax Login, not Craigslist. Bill asked to remove it, so it stays hidden. The new backend still shows LS, not LMS.
+- **8. Dealership on a ticket:** the new ticket page lets staff change it (Work Order · classification); its HTTP update keeps the stored dealer. Open: do history and billing move with it?
+- **10. ToDo files:** a ToDo is a ticket message (`todo_note`), and ticket messages take no files at all. Attachments are missing for go-live.
+- **11. My dates:** the queue API says My Work rows carry the assignment columns; the new My Work screen shows only Begin / Completion.
+- **12. Filters:** Marketing Clients exists (`marketing`, marketing-package dealers). Reporting and Tagged As Completed are missing in the new My Work.
+- **18. CARFAX PDF:** the dealer Carfax settings have no PDF option, so the per-dealer upload is a new feature (moved to New features).
+- **Round 1 · Feed Management:** the new backend keeps all 18 feeds in its menu, as links to the old pages. **Commercials:** the new backend shows those fields only to billing-authorized staff.
