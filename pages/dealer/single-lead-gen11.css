@@ -1134,3 +1134,17 @@
 .paper__h b { font-size: 15px; font-weight: 600; color: var(--ink); }
 .paper__h .btn { margin-left: auto; align-self: center; }
 .paper__note { margin: var(--s4) 0 0; }
+
+/* Head bar below 768 (Alex, Nov 17: the actions fell apart one by one). Two composed rows instead:
+   the way back and Prev / Next, then the three record actions. 768 and up are untouched. */
+@media (max-width: 767.98px) {
+  .app .head--card .head__top { flex-wrap: wrap; row-gap: var(--s2); }
+  .head--card .head__top > .walk { order: 1; margin: 0 calc(-1 * var(--s3)) 0 auto; }
+  .head--card .head__top > .head__sp { order: 2; flex: 0 0 100%; height: 0; }
+  .head--card .head__top > [data-act="goto-note"], .head--card .head__top > [data-act="goto-email"] { order: 3; }
+  .head--card .head__top > [data-act="resend"] { order: 4; }
+}
+@media (max-width: 479.98px) {
+  .head--card .head__top > [data-act="goto-note"], .head--card .head__top > [data-act="goto-email"] { flex: 1 1 calc(50% - var(--s2)); justify-content: center; }
+  .head--card .head__top > [data-act="resend"] { flex: 1 1 100%; justify-content: center; }
+}
