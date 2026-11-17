@@ -84,6 +84,18 @@
    "hid": 0,
    "lost": 0
   },
+  "nav | Marketing": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "nav | Newsletter ToolsEmail lists and subscribe forms": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
   "nav | Dealer tools": {
    "vis": 1,
    "disc": 0,
@@ -792,7 +804,37 @@
    "hid": 0,
    "lost": 0
   },
+  "button | Swap the Status column": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
   "button | Swap the Thumbnail column": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Swap the Stock column": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Swap the Year column": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Swap the Make column": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Swap the Model column": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -811,6 +853,12 @@
    "lost": 0
   },
   "button | Swap the Mileage column": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Swap the Price column": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -1071,6 +1119,18 @@
    "lost": 0
   },
   "nav | Form EditorDealer forms · AAN admins only": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
+  "nav | Marketing": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "nav | Newsletter ToolsEmail lists and subscribe forms": {
    "vis": 0,
    "disc": 1,
    "hid": 0,
@@ -2399,6 +2459,18 @@
    "lost": 0
   },
   "nav | Form EditorDealer forms · AAN admins only": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
+  "nav | Marketing": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "nav | Newsletter ToolsEmail lists and subscribe forms": {
    "vis": 0,
    "disc": 1,
    "hid": 0,
@@ -4050,6 +4122,18 @@
    "hid": 0,
    "lost": 0
   },
+  "nav | Marketing": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "nav | Newsletter ToolsEmail lists and subscribe forms": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
   "nav | Dealer tools": {
    "vis": 1,
    "disc": 0,
@@ -4662,7 +4746,43 @@
    "hid": 1,
    "lost": 0
   },
-  "button | Credit Application": {
+  "button | Sales Agreement": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Purchase Order Description": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Title And Registration Application": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Power Of Attorney": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Waiver Of Service Contract": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Statement Of Error": {
+   "vis": 1,
+   "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "button | Plate Credit Refund Request": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -5386,6 +5506,12 @@
    "hid": 0,
    "lost": 0
   },
+  "dock | Close filters": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
   "section | Go Live List": {
    "vis": 1,
    "disc": 0,
@@ -5398,45 +5524,15 @@
    "hid": 0,
    "lost": 0
   },
+  "section | Filters": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
   "input | input:search Search tickets": {
    "vis": 1,
    "disc": 0,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | select:select-one Dealer": {
-   "vis": 0,
-   "disc": 1,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | select:select-one Status": {
-   "vis": 0,
-   "disc": 1,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | select:select-one Work Type": {
-   "vis": 0,
-   "disc": 1,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | select:select-one Priority": {
-   "vis": 0,
-   "disc": 1,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | select:select-one Assigned": {
-   "vis": 0,
-   "disc": 1,
-   "hid": 0,
-   "lost": 0
-  },
-  "input | select:select-one Reporting": {
-   "vis": 0,
-   "disc": 1,
    "hid": 0,
    "lost": 0
   },
@@ -6007,6 +6103,42 @@
   "input | select:select-one Work priority for ticket 1027798": {
    "vis": 1,
    "disc": 0,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Dealer": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Status": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Work Type": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Priority": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Assigned": {
+   "vis": 0,
+   "disc": 1,
+   "hid": 0,
+   "lost": 0
+  },
+  "input | select:select-one Reporting": {
+   "vis": 0,
+   "disc": 1,
    "hid": 0,
    "lost": 0
   },

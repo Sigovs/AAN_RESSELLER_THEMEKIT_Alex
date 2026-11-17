@@ -8,7 +8,7 @@
    cannot land this one in a half-dark state. Only an explicit `light` is honoured. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
 <link rel="stylesheet" href="all-vehicles-gen11.css?v=20261030-ds">
-<link rel="stylesheet" href="single-lead-gen11.css?v=20261116-paper">
+<link rel="stylesheet" href="single-lead-gen11.css?v=20261117-paper2">
 <link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
 <link rel="stylesheet" href="../_aan-components.css?v=20261116-bar">
 </head>
@@ -390,15 +390,26 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <!-- ── DEALER PAPERWORK (Bill, Nov 10: Paperwork forms filled with the customer's and the dealer's info; his
            screenshot bill changes/item5 shows another dealer's list). The live lead card has a "Dealer Paperwork" tab:
            each of the dealer's forms opens filled in from the lead (sale_paperwork.php, one template per form). Checked
-           Nov 16: Chicago Motor Cars and Miller Motorcars both have one form, Credit Application. -->
+           Nov 16: Chicago Motor Cars and Miller Motorcars both have one form, Credit Application.
+           Bill, Nov 17 (#23): "the "Credit Application" should not go under the Paperwork section it is different item".
+           So the list is now the forms in his item5 screenshot (another dealer's Paperwork menu, without the state forms),
+           and a form opens as the dealer's template filled in from the lead, no longer as a second copy of the Credit App.
+           The Credit App itself stays its own section and tab, on credit-app leads only. -->
       <section class="sec" id="s-paper" aria-labelledby="t-paper">
         <div class="sec__h"><h2 id="t-paper">Dealer Paperwork</h2><span class="demo">Demo</span><span class="s">this dealer's forms, filled in from the lead</span></div>
         <div class="sec__b">
           <div class="paper" id="paper-list" role="group" aria-label="Forms">
-            <button class="btn btn--sheet btn--sm" type="button" data-paper="credit" aria-expanded="false" aria-controls="paper-form"><svg class="i"><use href="#i-file"/></svg> Credit Application</button>
+            <!-- <button class="btn btn--sheet btn--sm" type="button" data-paper="credit" aria-expanded="false" aria-controls="paper-form"><svg class="i"><use href="#i-file"/></svg> Credit Application</button>   Bill #23, Nov 17: not Paperwork -->
+            <button class="btn btn--sheet btn--sm" type="button" data-paper="Sales Agreement" aria-expanded="false" aria-controls="paper-form"><svg class="i"><use href="#i-file"/></svg> Sales Agreement</button>
+            <button class="btn btn--sheet btn--sm" type="button" data-paper="Purchase Order Description" aria-expanded="false" aria-controls="paper-form"><svg class="i"><use href="#i-file"/></svg> Purchase Order Description</button>
+            <button class="btn btn--sheet btn--sm" type="button" data-paper="Title And Registration Application" aria-expanded="false" aria-controls="paper-form"><svg class="i"><use href="#i-file"/></svg> Title And Registration Application</button>
+            <button class="btn btn--sheet btn--sm" type="button" data-paper="Power Of Attorney" aria-expanded="false" aria-controls="paper-form"><svg class="i"><use href="#i-file"/></svg> Power Of Attorney</button>
+            <button class="btn btn--sheet btn--sm" type="button" data-paper="Waiver Of Service Contract" aria-expanded="false" aria-controls="paper-form"><svg class="i"><use href="#i-file"/></svg> Waiver Of Service Contract</button>
+            <button class="btn btn--sheet btn--sm" type="button" data-paper="Statement Of Error" aria-expanded="false" aria-controls="paper-form"><svg class="i"><use href="#i-file"/></svg> Statement Of Error</button>
+            <button class="btn btn--sheet btn--sm" type="button" data-paper="Plate Credit Refund Request" aria-expanded="false" aria-controls="paper-form"><svg class="i"><use href="#i-file"/></svg> Plate Credit Refund Request</button>
           </div>
           <div class="paper__form" id="paper-form" hidden>
-            <div class="paper__h"><b>Credit Application</b><span class="hint">filled in from this lead · the sensitive numbers are sealed</span><a class="btn btn--primary btn--sm" href="#" target="_blank" rel="noopener" data-act="print-paper"><svg class="i"><use href="#i-print"/></svg> Print</a></div>
+            <div class="paper__h"><b id="paper-t">Sales Agreement</b><span class="hint">this dealer's template, filled in from this lead</span><a class="btn btn--primary btn--sm" href="#" target="_blank" rel="noopener" data-act="print-paper"><svg class="i"><use href="#i-print"/></svg> Print</a></div>
             <div class="capp" id="paper-capp"></div>
           </div>
         </div>
@@ -452,7 +463,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 
 <script src="all-vehicles-gen11.data.js?v=20260930234502"></script>
 <script src="all-leads-gen10.data.js?v=20260930234502"></script>
-<script src="single-lead-gen11.js?v=20261116-paper"></script>
+<script src="single-lead-gen11.js?v=20261117-paper2"></script>
 <script src="../_aan-tablet.js?v=20261030-tab"></script>
 </body>
 </html>

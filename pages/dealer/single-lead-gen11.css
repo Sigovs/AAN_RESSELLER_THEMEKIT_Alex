@@ -1133,3 +1133,4 @@
 .paper__h { display: flex; align-items: baseline; gap: var(--s2); margin-bottom: var(--s4); flex-wrap: wrap; }
 .paper__h b { font-size: 15px; font-weight: 600; color: var(--ink); }
 .paper__h .btn { margin-left: auto; align-self: center; }
+.paper__note { margin: var(--s4) 0 0; }

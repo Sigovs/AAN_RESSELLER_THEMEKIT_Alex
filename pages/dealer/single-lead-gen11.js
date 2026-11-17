@@ -523,11 +523,21 @@
     var on = L.type === 'credit-app';
     $('#nav-credit').hidden = !on;
     $('#s-credit').hidden = !on;
-    if ($('#paper-form') && !$('#paper-form').hidden) $('#paper-capp').innerHTML = cappHTML();
+    if ($('#paper-form') && !$('#paper-form').hidden) $('#paper-capp').innerHTML = paperHTML();   /* cappHTML() until Nov 17 (#23) */
     if (!on) { $('#capp').innerHTML = ''; return; }
     $('#capp').innerHTML = cappHTML();
   }
-  /* the application's groups and fields, filled from this lead: the Credit App section and Dealer Paperwork's form */
+  /* a Paperwork form: the dealer's own template, with the lead's details filled in (Bill's item5: "Purchaser's Name and
+     Address" etc.). Only what the lead holds; the template's own wording is the dealer's and is not invented here. */
+  function paperHTML() {
+    var city = String(L.city || '').split(','), car = String(L.car || '');
+    var f = [['Customer', L.name], ['Phone', L.phone], ['Email', L.email], ['City', city[0]], ['State', (city[1] || '').trim()],
+             ['Vehicle', car], ['Stock #', L.stock]];
+    return '<div class="rec__g capp__f">' + f.map(function (x) {
+      return '<div><span class="rec__l">' + esc(x[0]) + '</span>' + (x[1] ? '<span class="rec__v">' + esc(x[1]) + '</span>' : '<span class="rec__v none">—</span>') + '</div>';
+    }).join('') + '</div><p class="src paper__note">The rest of the page is the dealer\'s own form, as set up in Paperwork.</p>';
+  }
+  /* the application's groups and fields, filled from this lead: the Credit App section (Dealer Paperwork's form until Nov 17) */
   function cappHTML() {
     var nm = String(L.name || '').split(' '), city = String(L.city || '').split(',');
     var car = String(L.car || '').split(' ');
@@ -677,9 +687,11 @@
     if (t.closest('[data-act="write-email"]')) { openMail(); return; }
     if (t.closest('[data-act="mail-cancel"]')) { closeMail(); return; }
     if ((el = t.closest('[data-paper]'))) {
-      var pf = $('#paper-form'), open = pf.hidden;
-      pf.hidden = !open; el.setAttribute('aria-expanded', String(open)); el.classList.toggle('btn--on', open);
-      if (open) $('#paper-capp').innerHTML = cappHTML();
+      /* one form open at a time: a second click on the open form closes it, another form replaces it (#23, Nov 17) */
+      var pf = $('#paper-form'), open = pf.hidden || $('#paper-t').textContent !== el.dataset.paper;
+      $$('#paper-list [data-paper]').forEach(function (b) { var on = open && b === el; b.setAttribute('aria-expanded', String(on)); b.classList.toggle('btn--on', on); });
+      pf.hidden = !open;
+      if (open) { $('#paper-t').textContent = el.dataset.paper; $('#paper-capp').innerHTML = paperHTML(); }
       sizeExtender(); return;
     }
     if (t.closest('[data-act="vfields"]')) { setVf(!$('.vacc').classList.contains('acc--open')); return; }
