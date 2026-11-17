@@ -728,3 +728,25 @@ select.sel, select.ui-ctl, .rows select, .cmd select, .zone select, .form select
 .ui-switch__l { font-size: 14px; color: var(--ink-2, #353e4e); white-space: nowrap; }
 @media (pointer: coarse) and (max-width: 1279.98px) { .app .ui-switch { min-height: 36px; } }
 @media (prefers-reduced-motion: reduce) { .ui-switch__t, .ui-switch__t::after { transition: none; } }
+
+/* ── TEXT INSET — text never touches the edge of its own element ─────────────
+   Alex, Nov 17: "тексты никогда не должны прилипать к краю элемента". Measured
+   5–7px on tags, counters, keys, the mark and the nav item; every word or number
+   in a filled, ringed or bordered element now has at least 8px each side.
+   Centred single-glyph tiles (avatars, the dealer mark, A / P / T package letters,
+   the photo index and count, a count on a button) are drawn glyphs, not labels,
+   and keep their square. The selectors carry .app (and body where the origin rule
+   is already .app-scoped) so they beat the page rules they replace, whatever order
+   a page loads its stylesheets in. DESIGN.md §2 · §27. */
+.app .top .brand__mk { padding-left: 8px; padding-right: 8px; }
+@media (max-width: 1799.98px) { .app .top .nav__b { padding-left: 8px; padding-right: 8px; } }
+.app kbd { padding-left: 8px; padding-right: 8px; }
+.app .row .tags .tag--flag, .app .tag--flag,
+.app .row .tags .tag--more, .app .tag--more { padding-left: 8px; padding-right: 8px; }
+.app .rail .badge:not(.badge--dot), .app .badge:not(.badge--dot) { padding-left: 8px; padding-right: 8px; }
+.app .age, .app .demo, .app .att__gone { padding-left: 8px; padding-right: 8px; }
+body .app .ft, body .app .nt, body .app .vt, body .app .c-pkg .bdg { padding-left: 8px; padding-right: 8px; }
+.app .c-mail .more { padding-left: 8px; padding-right: 8px; }
+.app .stk__l a.stock, .app .vcar__img .st { padding-left: 8px; padding-right: 8px; }   /* the tinted stock link (All Vehicles), the state over the car photo (Single Lead) */
+/* the two caps tags become sentence-case tags (DESIGN.md §27: no caps on any chip or tag) */
+.app .grp__ed, .app .em__dir { padding-left: 8px; padding-right: 8px; text-transform: none; letter-spacing: 0; font-size: 12px; font-weight: 600; }

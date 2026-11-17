@@ -314,7 +314,7 @@
     $('#trade-b').innerHTML = '<form class="form" id="f-trade" novalidate>'
       + '<div class="grp">'
       + '<div class="grp__h"><span class="grp__t">The vehicle being traded</span>'
-      + '<span class="grp__ed">' + ic('i-edit') + ' editable</span></div>'
+      + '<span class="grp__ed">' + ic('i-edit') + ' Editable</span></div>'
       + '<div class="kind"><span class="caps">Kind</span>'
       + '<label><input class="ck" type="radio" name="trade-kind"' + (L.type !== 'consignment' ? ' checked' : '') + '> Trade-in</label>'
       + '<label><input class="ck" type="radio" name="trade-kind"' + (L.type === 'consignment' ? ' checked' : '') + '> Consignment</label></div>'
@@ -420,7 +420,7 @@
       + emails.map(function (e, i) {
         var unread = e.dir === 'IN' && i === 0 && L.newMail;
         return '<div class="em' + (unread ? ' em--unread' : '') + '" data-em="' + i + '" role="button" tabindex="0" aria-expanded="false">'
-          + '<span class="em__dir em__dir--' + e.dir.toLowerCase() + '">' + e.dir + '</span>'
+          + '<span class="em__dir em__dir--' + e.dir.toLowerCase() + '">' + e.dir.charAt(0) + e.dir.slice(1).toLowerCase() + '</span>'
           + '<span class="em__s" title="' + esc(e.s) + '">' + esc(e.s) + '<span class="em__p">' + esc(e.b || snip(e, i)) + '</span></span>'
           + '<span class="em__w" title="' + esc(e.dir === 'IN' ? 'From ' + L.name + ' to ' + who : 'From ' + who + ' to ' + L.name) + '">' + (e.dir === 'IN'
             ? '<b>' + esc(L.name) + '</b> <em>→</em> ' + esc(who)

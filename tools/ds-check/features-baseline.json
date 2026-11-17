@@ -3706,6 +3706,12 @@
    "hid": 0,
    "lost": 0
   },
+  "button | Send Email": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
   "button | Assign to…": {
    "vis": 0,
    "disc": 0,
@@ -4722,19 +4728,19 @@
    "hid": 1,
    "lost": 0
   },
-  "button | OUT2015 Aston Martin VanquishHi Patrick, thanks for reaching out": {
+  "button | Out2015 Aston Martin VanquishHi Patrick, thanks for reaching out": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
    "lost": 0
   },
-  "button | INRe: 2015 Aston Martin VanquishGot it. What is your best out-th": {
+  "button | InRe: 2015 Aston Martin VanquishGot it. What is your best out-th": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
    "lost": 0
   },
-  "button | OUT2015 Aston Martin VanquishFollowing up on your enquiry — any ": {
+  "button | Out2015 Aston Martin VanquishFollowing up on your enquiry — any ": {
    "vis": 1,
    "disc": 0,
    "hid": 0,
@@ -15712,6 +15718,12 @@
    "hid": 1,
    "lost": 0
   },
+  "input | input:text New group name": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
   "input | input:text Address": {
    "vis": 1,
    "disc": 0,
@@ -15968,6 +15980,24 @@
    "vis": 1,
    "disc": 0,
    "hid": 0,
+   "lost": 0
+  },
+  "button | New Group": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "button | Add": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
+   "lost": 0
+  },
+  "button | Cancel": {
+   "vis": 0,
+   "disc": 0,
+   "hid": 1,
    "lost": 0
   },
   "button | Remove Billing Emails 1": {
