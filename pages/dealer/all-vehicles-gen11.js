@@ -96,8 +96,8 @@
     { id: 'colour',  label: 'Color',     grp: 'Vehicle', sort: 'colour', cls: 'c-ext', dockOff: true, track: { lg: 92, sm: 84 }, grow: 1 },
     { id: 'miles',   label: 'Mileage',   grp: 'Vehicle', sort: 'miles', cls: 'c-miles', dockOff: true, track: { lg: 96, sm: 80 } },
     { id: 'price',   label: 'Price',     grp: 'Pricing', sort: 'price', cls: 'c-price', track: { lg: 118, sm: 84, dock: 80, dockSm: 76 } },
-    { id: 'health',  label: 'Listing',    grp: 'Listing & feeds', sort: 'issues', cls: 'c-health', tip: 'Formerly “Missing items”', track: { lg: 246, sm: 124, dock: 120, dockSm: 116 } },
-    { id: 'age',     label: 'Added',     grp: 'Dates', sort: 'days', track: { lg: 104, sm: 96, dock: 96, dockSm: 92 } },
+    { id: 'health',  label: 'Listing',    grp: 'Listing & feeds', sort: 'issues', cls: 'c-health', tip: 'Formerly “Missing items”', track: { lg: 246, sm: 124, dock: 120, dockSm: 112 } },   /* dockSm 116 until Nov 17: 4px to Actions */
+    { id: 'age',     label: 'Added',     grp: 'Dates', sort: 'days', track: { lg: 104, sm: 96, dock: 96, dockSm: 84 } },   /* dockSm 92 until Nov 17: 8px to Actions */
     /* ── optional columns (Bill, AV note 36: "all possible columns") ──────
        Off by default; the dealer adds them in Columns, as far as the table has
        room (no sideways scroll — the panel says when it is full). Columns the
@@ -135,7 +135,7 @@
     { id: 'cf_ove',            label: 'OVE Feed Data',                 grp: 'Custom fields', off: true, dockOff: true, nodata: true, track: { lg: 112, sm: 104 } },
     { id: 'cf_no_carfax',      label: 'Do Not Report VIN To Carfax',   grp: 'Custom fields', off: true, dockOff: true, nodata: true, track: { lg: 130, sm: 120 } },
     { id: 'cf_no_vin',         label: 'Do Not Display VIN On Website', grp: 'Custom fields', off: true, dockOff: true, nodata: true, track: { lg: 130, sm: 120 } },
-    { id: 'actions', label: 'Actions',   locked: true, track: { lg: 108, sm: 112, dock: 104, dockSm: 92 } }
+    { id: 'actions', label: 'Actions',   locked: true, track: { lg: 108, sm: 112, dock: 104, dockSm: 104 } }   /* dockSm 92 until Nov 17: four 26px buttons need 104, the delete one was cut with Filters open at 1280-1400 */
   ];
   var COLKEY = 'aan.gen11.allVehicles.columns';
 
