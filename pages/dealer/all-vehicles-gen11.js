@@ -86,16 +86,16 @@
     /* review 2026-10: the row checkboxes and their bulk tray are gone (neither is
        in the original); Status takes the leading column instead. It still steps
        aside when Filters is open, as it always has. */
-    { id: 'status',  label: 'Status',    grp: 'Listing & feeds', locked: true, sort: 'status', cls: 'c-status', dockOff: true, track: { lg: 96, sm: 88 } },
+    { id: 'status',  label: 'Status',    grp: 'Listing & feeds', sort: 'status', cls: 'c-status', dockOff: true, track: { lg: 96, sm: 88 } },
     { id: 'thumb',   label: 'Thumbnail', grp: 'Listing & feeds', track: { lg: 92, sm: 76, dock: 68, dockSm: 60 } },
-    { id: 'stock',   label: 'Stock',     grp: 'Vehicle', locked: true, sort: 'stock', track: { lg: 104, sm: 92, dock: 100, dockSm: 88 }, grow: 1 },
-    { id: 'year',    label: 'Year',      grp: 'Vehicle', sort: 'year', track: { lg: 46, sm: 42, dock: 40, dockSm: 40 } },
-    { id: 'make',    label: 'Make',      grp: 'Vehicle', locked: true, sort: 'make', track: { lg: 104, sm: 92, dock: 86, dockSm: 84 } },
-    { id: 'model',   label: 'Model',     grp: 'Vehicle', locked: true, sort: 'model', track: { lg: 100, sm: 88, dock: 80, dockSm: 80 }, grow: 6 },
+    { id: 'stock',   label: 'Stock',     grp: 'Vehicle', sort: 'stock', track: { lg: 104, sm: 92, dock: 100, dockSm: 80 }, grow: 1 },   /* dockSm 88 until Nov 17 (#61: Year's swap icon) */
+    { id: 'year',    label: 'Year',      grp: 'Vehicle', sort: 'year', track: { lg: 58, sm: 58, dock: 56, dockSm: 56 } }   /* 46/42/40/40 until Nov 17: room for its swap icon (#61) */,
+    { id: 'make',    label: 'Make',      grp: 'Vehicle', sort: 'make', track: { lg: 104, sm: 92, dock: 86, dockSm: 76 } },   /* dockSm 84 until Nov 17 (#61: Year's swap icon) */
+    { id: 'model',   label: 'Model',     grp: 'Vehicle', sort: 'model', track: { lg: 100, sm: 88, dock: 80, dockSm: 80 }, grow: 6 },
     { id: 'trim',    label: 'Trim',      grp: 'Vehicle', sort: 'trim', cls: 'c-trim', dockOff: true, track: { lg: 84, sm: 88 }, grow: 1 },
     { id: 'colour',  label: 'Color',     grp: 'Vehicle', sort: 'colour', cls: 'c-ext', dockOff: true, track: { lg: 92, sm: 84 }, grow: 1 },
     { id: 'miles',   label: 'Mileage',   grp: 'Vehicle', sort: 'miles', cls: 'c-miles', dockOff: true, track: { lg: 96, sm: 80 } },
-    { id: 'price',   label: 'Price',     grp: 'Pricing', locked: true, sort: 'price', cls: 'c-price', track: { lg: 118, sm: 84, dock: 80, dockSm: 76 } },
+    { id: 'price',   label: 'Price',     grp: 'Pricing', sort: 'price', cls: 'c-price', track: { lg: 118, sm: 84, dock: 80, dockSm: 76 } },
     { id: 'health',  label: 'Listing',    grp: 'Listing & feeds', sort: 'issues', cls: 'c-health', tip: 'Formerly “Missing items”', track: { lg: 246, sm: 124, dock: 120, dockSm: 116 } },
     { id: 'age',     label: 'Added',     grp: 'Dates', sort: 'days', track: { lg: 104, sm: 96, dock: 96, dockSm: 92 } },
     /* ── optional columns (Bill, AV note 36: "all possible columns") ──────
@@ -317,8 +317,10 @@
       var arrow = (c.sort && c.sort === S.sort) ? ' ' + ic(S.dir === 'asc' ? 'i-up' : 'i-dn') : '';
       /* the swap control (Bill, Nov 6: "The current system has a gear next to the heading that you can quickly swap it
          with another un-used field"; live: preferences icon on each heading, checked Nov 16). On every column the dealer
-         may change; the locked ones (Status, Stock, Make, Model, Price, Actions) stay as they are. */
-      var swap = (S.view === 'rows' && !S.inline && !c.locked && !c.system && c.id !== 'year')   /* Year is too narrow for its label and the icon */
+         may change. Bill, Nov 17: "all fields should have that change the field...looks like missing on year/make/model/stock",
+         as in the live list, where every heading has it. So Status, Stock, Year, Make, Model and Price are no longer locked
+         (they were "Always shown" until Nov 17); only Actions, which is not a field, stays. */
+      var swap = (S.view === 'rows' && !S.inline && !c.locked && !c.system)
         ? '<button class="hd__sw" type="button" data-swap="' + c.id + '" aria-haspopup="true" aria-label="Swap the ' + esc(c.label) + ' column" title="Swap this column">' + ic('i-sliders') + '</button>' : '';
       if (swap) cls.push('hd--sw');
       return '<span' + (cls.length ? ' class="' + cls.join(' ') + '"' : '') +

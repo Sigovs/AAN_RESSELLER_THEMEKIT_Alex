@@ -3979,7 +3979,7 @@ body:has(#iebar:not([hidden])) { padding-bottom: 88px; }
 
 /* Column swap from the heading (Bill, Nov 6; live: a preferences icon on each heading) */
 .hd > span.hd--sw { display: flex; align-items: center; gap: 2px; }
-.hd__sw { display: inline-grid; place-items: center; flex: none; width: 22px; height: 22px; margin-left: 2px; border-radius: 6px; color: var(--ink-4); }
+.hd__sw { display: inline-grid; place-items: center; flex: none; width: 20px; height: 22px; border-radius: 6px; color: var(--ink-4); }   /* 22px + 2px margin until Nov 17: Year and Mileage clipped */
 .hd__sw .i { width: 13px; height: 13px; }
 .hd__sw:hover, .hd__sw:focus-visible { background: var(--wash); color: var(--ink); }
 .swap.pop { position: fixed; z-index: 60; width: 260px; max-height: min(440px, calc(100vh - 16px)); overflow: auto; }
