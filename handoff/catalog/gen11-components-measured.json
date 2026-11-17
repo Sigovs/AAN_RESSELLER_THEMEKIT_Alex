@@ -1,0 +1,5528 @@
+[
+ {
+  "name": "Button · primary",
+  "ui": "ui-btn--primary",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".btn--primary",
+  "tag": "button",
+  "cls": "btn btn--primary",
+  "size": "125x36",
+  "comp": {
+   "display": "flex",
+   "width": "124.656px",
+   "height": "36px",
+   "minHeight": "auto",
+   "padding": "0px 14px",
+   "margin": "0px",
+   "gap": "7px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "500",
+   "lineHeight": "14px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(255, 255, 255)",
+   "backgroundColor": "rgb(31, 95, 224)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(255, 255, 255)",
+   "borderRadius": "9px",
+   "boxShadow": "rgba(29, 95, 230, 0.7) 0px 10px 22px -10px, rgba(255, 255, 255, 0.32) 0px 1px 0px 0px inset",
+   "outline": "rgb(255, 255, 255) none 3px",
+   "transition": "background 0.16s cubic-bezier(0.2, 0, 0, 1), border-color 0.16s cubic-bezier(0.2, 0, 0, 1), color 0.16s cubic-bezier(0.2, 0, 0, 1)",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "button",
+    "css": "font: inherit; color: inherit; background: none; border: 0px; padding: 0px; cursor: pointer;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "button:disabled",
+    "css": "cursor: default; opacity: 0.45;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".btn--primary:hover",
+    "css": "background: var(--brand-hover);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".btn",
+    "css": "display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-size: 14px; font-weight: 600; white-space: nowrap; transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease); border: 0px; height: 44px; padding: 0px 16px; border-radius: 999px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".btn--primary",
+    "css": "background: var(--brand-btn); color: rgb(255, 255, 255); box-shadow: rgba(29, 95, 230, 0.7) 0px 10px 22px -10px, rgba(255, 255, 255, 0.32) 0px 1px 0px inset;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".btn + .btn",
+    "css": "margin-left: 0px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".btn",
+    "css": "border-radius: var(--r-control);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".btn, .btn--sm, .btn--lg, .facet__b, .fld, .sel, .search, .input, .fbtn",
+    "css": "border-radius: var(--r-control);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".btn",
+    "css": "height: 36px; padding: 0px 14px; font-size: 14px; font-weight: 600;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl, .tally :where(button, span, a).tl",
+    "css": "height: var(--ctl-dense); padding: 0px 10px; border-radius: 7px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line-2); font-size: 13px; font-weight: 500; color: var(--ink-2); gap: 6px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl b, .tally :where(button, span, a).tl b",
+    "css": "font-size: 12.5px; font-weight: 600; color: var(--ink-3); font-variant-numeric: tabular-nums;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl:hover",
+    "css": "background: var(--wash); color: var(--ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on, :where(button, span, a).tl[aria-pressed=\"true\"]",
+    "css": "background: var(--brand-soft); color: var(--brand-ink); box-shadow: inset 0 0 0 1px var(--brand-soft-2);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on b, :where(button, span, a).tl[aria-pressed=\"true\"] b",
+    "css": "color: var(--brand-ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, select, input, textarea",
+    "css": "font-size: 14px; font-weight: 500;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, :where(button, span, a).tl, .tag, .bdg, .badge, .chip, .pill, .lane, .ui-view, .ui-filter, .ui-nav__i, .ui-ctl, .facet__b, .kbd, kbd, .tbtn, .rlink,",
+    "css": "display: inline-flex; align-items: center; line-height: 1;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, .tbtn, .kbd, kbd",
+    "css": "justify-content: center;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".bdg, .badge, .tag, .chip, .pill, :where(button, span, a).tl, .ui-filter",
+    "css": "justify-content: center;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".app .btn",
+    "css": "border-radius: 9px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".app .btn--primary",
+    "css": "background-color: var(--brand); color: rgb(255, 255, 255); box-shadow: rgba(29, 95, 230, 0.7) 0px 10px 22px -10px, rgba(255, 255, 255, 0.32) 0px 1px 0px inset;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".app .btn--primary:hover",
+    "css": "background-color: var(--brand-hover, #1a50c4);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".app .btn--primary:disabled",
+    "css": "box-shadow: none;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1279.98px)",
+    "sel": ".app :is(.btn, .nav__b, .facet__b, .ui-view, .secnav__b, .mn__it, .menu__l, .gsearch, .dealer, .me, .rail__i, .rail__b, .ui-nav__i)",
+    "css": "min-height: 36px;"
+   }
+  ],
+  "html": "<button class=\"btn btn--primary\" type=\"button\"><svg class=\"i\"><use href=\"#i-plus\"></use></svg> Add vehicle</button>"
+ },
+ {
+  "name": "Button · secondary (sheet)",
+  "ui": "ui-btn",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".btn--sheet",
+  "tag": "button",
+  "cls": "btn btn--sheet",
+  "size": "93x36",
+  "comp": {
+   "display": "flex",
+   "width": "93.2344px",
+   "height": "36px",
+   "minHeight": "auto",
+   "padding": "0px 14px",
+   "margin": "0px",
+   "gap": "7px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "500",
+   "lineHeight": "14px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgb(255, 255, 255)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(13, 19, 32)",
+   "borderRadius": "9px",
+   "boxShadow": "rgba(34, 58, 118, 0.12) 0px 1px 2px 0px, rgba(34, 58, 118, 0.32) 0px 6px 14px -8px, rgb(255, 255, 255) 0px 1px 0px 0px inset",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "background 0.16s cubic-bezier(0.2, 0, 0, 1), border-color 0.16s cubic-bezier(0.2, 0, 0, 1), color 0.16s cubic-bezier(0.2, 0, 0, 1)",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "button",
+    "css": "font: inherit; color: inherit; background: none; border: 0px; padding: 0px; cursor: pointer;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "button:disabled",
+    "css": "cursor: default; opacity: 0.45;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".btn--sheet:hover",
+    "css": "background: var(--wash);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".btn",
+    "css": "display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-size: 14px; font-weight: 600; white-space: nowrap; transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease); border: 0px; height: 44px; padding: 0px 16px; border-radius: 999px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".btn--sheet",
+    "css": "background: var(--sheet); color: var(--ink); box-shadow: var(--sh-pill);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".btn + .btn",
+    "css": "margin-left: 0px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".btn",
+    "css": "border-radius: var(--r-control);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".btn, .btn--sm, .btn--lg, .facet__b, .fld, .sel, .search, .input, .fbtn",
+    "css": "border-radius: var(--r-control);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".btn",
+    "css": "height: 36px; padding: 0px 14px; font-size: 14px; font-weight: 600;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl, .tally :where(button, span, a).tl",
+    "css": "height: var(--ctl-dense); padding: 0px 10px; border-radius: 7px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line-2); font-size: 13px; font-weight: 500; color: var(--ink-2); gap: 6px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl b, .tally :where(button, span, a).tl b",
+    "css": "font-size: 12.5px; font-weight: 600; color: var(--ink-3); font-variant-numeric: tabular-nums;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl:hover",
+    "css": "background: var(--wash); color: var(--ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on, :where(button, span, a).tl[aria-pressed=\"true\"]",
+    "css": "background: var(--brand-soft); color: var(--brand-ink); box-shadow: inset 0 0 0 1px var(--brand-soft-2);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on b, :where(button, span, a).tl[aria-pressed=\"true\"] b",
+    "css": "color: var(--brand-ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, select, input, textarea",
+    "css": "font-size: 14px; font-weight: 500;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, :where(button, span, a).tl, .tag, .bdg, .badge, .chip, .pill, .lane, .ui-view, .ui-filter, .ui-nav__i, .ui-ctl, .facet__b, .kbd, kbd, .tbtn, .rlink,",
+    "css": "display: inline-flex; align-items: center; line-height: 1;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, .tbtn, .kbd, kbd",
+    "css": "justify-content: center;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".bdg, .badge, .tag, .chip, .pill, :where(button, span, a).tl, .ui-filter",
+    "css": "justify-content: center;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".app .btn",
+    "css": "border-radius: 9px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1279.98px)",
+    "sel": ".app :is(.btn, .nav__b, .facet__b, .ui-view, .secnav__b, .mn__it, .menu__l, .gsearch, .dealer, .me, .rail__i, .rail__b, .ui-nav__i)",
+    "css": "min-height: 36px;"
+   }
+  ],
+  "html": "<button class=\"btn btn--sheet\" type=\"button\"><svg class=\"i\"><use href=\"#i-down\"></use></svg> Export</button>"
+ },
+ {
+  "name": "Button · quiet",
+  "ui": "ui-btn--ghost",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".btn--quiet",
+  "tag": "button",
+  "cls": "btn btn--quiet",
+  "size": "112x36",
+  "comp": {
+   "display": "flex",
+   "width": "111.641px",
+   "height": "36px",
+   "minHeight": "auto",
+   "padding": "0px 14px",
+   "margin": "0px",
+   "gap": "7px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "500",
+   "lineHeight": "14px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(53, 62, 78)",
+   "backgroundColor": "rgba(0, 0, 0, 0)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(53, 62, 78)",
+   "borderRadius": "9px",
+   "boxShadow": "none",
+   "outline": "rgb(53, 62, 78) none 3px",
+   "transition": "background 0.16s cubic-bezier(0.2, 0, 0, 1), border-color 0.16s cubic-bezier(0.2, 0, 0, 1), color 0.16s cubic-bezier(0.2, 0, 0, 1)",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "button",
+    "css": "font: inherit; color: inherit; background: none; border: 0px; padding: 0px; cursor: pointer;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "button:disabled",
+    "css": "cursor: default; opacity: 0.45;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".btn--quiet",
+    "css": "color: var(--ink-2);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".btn--quiet:hover",
+    "css": "color: var(--ink); background: rgba(18, 23, 20, 0.05);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".btn",
+    "css": "display: inline-flex; align-items: center; justify-content: center; gap: 7px; font-size: 14px; font-weight: 600; white-space: nowrap; transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease); border: 0px; height: 44px; padding: 0px 16px; border-radius: 999px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".btn",
+    "css": "border-radius: var(--r-control);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".btn, .btn--sm, .btn--lg, .facet__b, .fld, .sel, .search, .input, .fbtn",
+    "css": "border-radius: var(--r-control);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".btn",
+    "css": "height: 36px; padding: 0px 14px; font-size: 14px; font-weight: 600;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl, .tally :where(button, span, a).tl",
+    "css": "height: var(--ctl-dense); padding: 0px 10px; border-radius: 7px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line-2); font-size: 13px; font-weight: 500; color: var(--ink-2); gap: 6px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl b, .tally :where(button, span, a).tl b",
+    "css": "font-size: 12.5px; font-weight: 600; color: var(--ink-3); font-variant-numeric: tabular-nums;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl:hover",
+    "css": "background: var(--wash); color: var(--ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on, :where(button, span, a).tl[aria-pressed=\"true\"]",
+    "css": "background: var(--brand-soft); color: var(--brand-ink); box-shadow: inset 0 0 0 1px var(--brand-soft-2);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on b, :where(button, span, a).tl[aria-pressed=\"true\"] b",
+    "css": "color: var(--brand-ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, select, input, textarea",
+    "css": "font-size: 14px; font-weight: 500;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, :where(button, span, a).tl, .tag, .bdg, .badge, .chip, .pill, .lane, .ui-view, .ui-filter, .ui-nav__i, .ui-ctl, .facet__b, .kbd, kbd, .tbtn, .rlink,",
+    "css": "display: inline-flex; align-items: center; line-height: 1;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, .tbtn, .kbd, kbd",
+    "css": "justify-content: center;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".bdg, .badge, .tag, .chip, .pill, :where(button, span, a).tl, .ui-filter",
+    "css": "justify-content: center;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".app .btn",
+    "css": "border-radius: 9px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1279.98px)",
+    "sel": ".app :is(.btn, .nav__b, .facet__b, .ui-view, .secnav__b, .mn__it, .menu__l, .gsearch, .dealer, .me, .rail__i, .rail__b, .ui-nav__i)",
+    "css": "min-height: 36px;"
+   }
+  ],
+  "html": "<button class=\"btn btn--quiet\" type=\"button\" data-act=\"inline\" aria-pressed=\"false\"><svg class=\"i\"><use href=\"#i-grid\"></use></svg> Inline edit</button>"
+ },
+ {
+  "name": "Button · danger",
+  "ui": "ui-btn--danger",
+  "page": "pages/staff/manage-dealers-gen11.html",
+  "sel": ".btn--danger",
+  "tag": "button",
+  "cls": "btn btn--danger",
+  "size": "127x36",
+  "comp": {
+   "display": "flex",
+   "width": "126.859px",
+   "height": "36px",
+   "minHeight": "auto",
+   "padding": "0px 14px",
+   "margin": "0px 232.5px 0px 0px",
+   "gap": "8px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "500",
+   "lineHeight": "14px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(189, 51, 40)",
+   "backgroundColor": "rgba(0, 0, 0, 0)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(189, 51, 40)",
+   "borderRadius": "9px",
+   "boxShadow": "none",
+   "outline": "rgb(189, 51, 40) none 3px",
+   "transition": "background 0.16s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.16s cubic-bezier(0.2, 0, 0, 1), color 0.16s cubic-bezier(0.2, 0, 0, 1)",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": "button, input, select, textarea",
+    "css": "font: inherit; color: inherit;"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": "button",
+    "css": "background: none; border: 0px; padding: 0px; cursor: pointer;"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); border-radius: var(--r-micro);"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": ".btn",
+    "css": "display: inline-flex; align-items: center; justify-content: center; gap: var(--s2); height: 40px; padding: 0 var(--s4); border-radius: var(--r-pill); font-size: 14px; font-weight: 600; white-space: nowrap; transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease);"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": ".btn--danger",
+    "css": "color: var(--danger); margin-right: auto;"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": ".btn--danger:hover",
+    "css": "background: var(--danger-soft);"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "animation-duration: 1ms !important; transition-duration: 1ms !important; scroll-behavior: auto !important;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".btn",
+    "css": "border-radius: var(--r-control);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".btn, .btn--sm, .btn--lg, .facet__b, .fld, .sel, .search, .input, .fbtn",
+    "css": "border-radius: var(--r-control);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".btn",
+    "css": "height: 36px; padding: 0px 14px; font-size: 14px; font-weight: 600;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl, .tally :where(button, span, a).tl",
+    "css": "height: var(--ctl-dense); padding: 0px 10px; border-radius: 7px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line-2); font-size: 13px; font-weight: 500; color: var(--ink-2); gap: 6px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl b, .tally :where(button, span, a).tl b",
+    "css": "font-size: 12.5px; font-weight: 600; color: var(--ink-3); font-variant-numeric: tabular-nums;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl:hover",
+    "css": "background: var(--wash); color: var(--ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on, :where(button, span, a).tl[aria-pressed=\"true\"]",
+    "css": "background: var(--brand-soft); color: var(--brand-ink); box-shadow: inset 0 0 0 1px var(--brand-soft-2);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on b, :where(button, span, a).tl[aria-pressed=\"true\"] b",
+    "css": "color: var(--brand-ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, select, input, textarea",
+    "css": "font-size: 14px; font-weight: 500;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, :where(button, span, a).tl, .tag, .bdg, .badge, .chip, .pill, .lane, .ui-view, .ui-filter, .ui-nav__i, .ui-ctl, .facet__b, .kbd, kbd, .tbtn, .rlink,",
+    "css": "display: inline-flex; align-items: center; line-height: 1;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, .tbtn, .kbd, kbd",
+    "css": "justify-content: center;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".bdg, .badge, .tag, .chip, .pill, :where(button, span, a).tl, .ui-filter",
+    "css": "justify-content: center;"
+   }
+  ],
+  "html": "<button class=\"btn btn--danger\" type=\"button\" data-act=\"pkg-del\" disabled=\"\">Delete Package</button>"
+ },
+ {
+  "name": "Field · text input",
+  "ui": "ui-input",
+  "page": "pages/dealer/single-vehicle-gen11.html",
+  "sel": "input.in",
+  "tag": "input",
+  "cls": "in",
+  "size": "179x36",
+  "comp": {
+   "display": "block",
+   "width": "179.328px",
+   "height": "36px",
+   "minHeight": "auto",
+   "padding": "0px 12px",
+   "margin": "0px",
+   "gap": "normal",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "19.6px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgb(255, 255, 255)",
+   "backgroundImage": "none",
+   "borderTop": "1px solid rgb(197, 203, 213)",
+   "borderRadius": "7px",
+   "boxShadow": "none",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "border-color 0.16s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.16s cubic-bezier(0.2, 0, 0, 1)",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": "input, select, textarea",
+    "css": "font: inherit; color: inherit;"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset);"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ".in, .sel, .ta",
+    "css": "width: 100%; min-width: 0px; height: var(--ctl-h); padding: 0px 12px; border-radius: var(--r-inner); border: 1px solid var(--line-3); background: var(--sheet); color: var(--ink); font-size: 14px; transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ".in::placeholder, .ta::placeholder",
+    "css": "color: var(--ink-4);"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ".in:hover, .sel:hover, .ta:hover",
+    "css": "border-color: var(--ink-4);"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ".in:focus, .sel:focus, .ta:focus",
+    "css": "border-color: var(--brand);"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; scroll-behavior: auto !important;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, select, input, textarea",
+    "css": "font-size: 14px; font-weight: 500;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": "input, textarea, select",
+    "css": "font-weight: 400;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(pointer: coarse) and (max-width: 1279.98px)",
+    "sel": ".app :is(.fld, .in, .sel, select:not([class]), .agerow, .head .nav__it > button, .cc__disc)",
+    "css": "min-height: 36px;"
+   }
+  ],
+  "html": "<input class=\"in\" id=\"core-stockno\" type=\"text\" autocomplete=\"off\">"
+ },
+ {
+  "name": "Field · select",
+  "ui": "ui-select",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".sel",
+  "tag": "select",
+  "cls": "sel sel--sm",
+  "size": "70x30",
+  "comp": {
+   "display": "flex",
+   "width": "70px",
+   "height": "30px",
+   "minHeight": "auto",
+   "padding": "0px 28px 0px 10px",
+   "margin": "0px",
+   "gap": "normal",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "13px",
+   "fontWeight": "400",
+   "lineHeight": "18.2px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgb(255, 255, 255)",
+   "backgroundImage": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.75 6 8.25l3.5-3.5' fill='none' stroke='%23576070' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")",
+   "borderTop": "1px solid rgb(197, 203, 213)",
+   "borderRadius": "8px",
+   "boxShadow": "rgb(216, 222, 231) 0px 0px 0px 1px inset",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "input, select",
+    "css": "font: inherit; color: inherit;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".fld, .sel",
+    "css": "height: 36px; padding: 0px 10px; background: var(--sheet); color: var(--ink); border: 1px solid var(--line-3); border-radius: 9px; font-size: 14px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".fld:focus, .sel:focus",
+    "css": "border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-soft);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".sel",
+    "css": "appearance: none; padding-right: 32px; background-image: url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7383' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>\"); background-repeat: no-repeat; background-position: right 8px center;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".pgr__per .sel",
+    "css": "height: 30px; padding: 0px 28px 0px 10px; border-radius: 8px; background-color: var(--sheet); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink); font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-language-override: inherit; font-size: 13px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".btn, .btn--sm, .btn--lg, .facet__b, .fld, .sel, .search, .input, .fbtn",
+    "css": "border-radius: var(--r-control);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".btn--sm, .fld, .sel, .input",
+    "css": "border-radius: var(--r-inner);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, select, input, textarea",
+    "css": "font-size: 14px; font-weight: 500;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": "input, textarea, select",
+    "css": "font-weight: 400;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, :where(button, span, a).tl, .tag, .bdg, .badge, .chip, .pill, .lane, .ui-view, .ui-filter, .ui-nav__i, .ui-ctl, .facet__b, .kbd, kbd, .tbtn, .rlink,",
+    "css": "display: inline-flex; align-items: center; line-height: 1;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, .tbtn, .kbd, kbd",
+    "css": "justify-content: center;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": "select.sel, select.ui-ctl, .rows select, .cmd select, .zone select, .form select",
+    "css": "appearance: none; padding-right: 34px; background-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.75 6 8.25l3.5-3.5' fill='none' stroke='%23576070' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\"); background-position: right 12px center; background-size: 12px 12px; background-repeat: no-repeat;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(pointer: coarse) and (max-width: 1279.98px)",
+    "sel": ".app :is(.fld, .in, .sel, select:not([class]), .agerow, .head .nav__it > button, .cc__disc)",
+    "css": "min-height: 36px;"
+   }
+  ],
+  "html": "<select class=\"sel sel--sm\" data-per=\"\" aria-label=\"Rows per page\"><option>50</option><option selected=\"\">100</option><option>250</option><option>500</option><option>1000</option></select>"
+ },
+ {
+  "name": "Field · checkbox",
+  "ui": "ui-checkbox",
+  "page": "pages/dealer/all-leads-gen11.html",
+  "sel": "#sel-all, .ck",
+  "tag": "input",
+  "cls": "ck",
+  "size": "16x16",
+  "comp": {
+   "display": "grid",
+   "width": "16px",
+   "height": "16px",
+   "minHeight": "0px",
+   "padding": "0px",
+   "margin": "0px",
+   "gap": "normal",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "18.9px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(87, 96, 112)",
+   "backgroundColor": "rgb(255, 255, 255)",
+   "backgroundImage": "none",
+   "borderTop": "1px solid rgb(197, 203, 213)",
+   "borderRadius": "5px",
+   "boxShadow": "none",
+   "outline": "rgb(87, 96, 112) none 3px",
+   "transition": "background 0.16s cubic-bezier(0.2, 0, 0, 1), border-color 0.16s cubic-bezier(0.2, 0, 0, 1)",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "input, select",
+    "css": "font: inherit; color: inherit;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".ck",
+    "css": "appearance: none; width: 16px; height: 16px; margin: 0px; border: 1.5px solid var(--line-3); border-radius: 5px; background: var(--sheet); display: grid; place-items: center; cursor: pointer; flex: 0 0 auto; transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".ck:hover",
+    "css": "border-color: var(--ink-4);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".ck:checked",
+    "css": "background: var(--brand-btn); border-color: var(--brand-btn);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".ck:checked::after",
+    "css": "content: \"\"; width: 8px; height: 5px; border-width: 0px 0px 2px 2px; border-style: none none solid solid; border-color: currentcolor currentcolor rgb(255, 255, 255) rgb(255, 255, 255); border-image: none; transform: translateY(-1px) rotate(-45deg);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, select, input, textarea",
+    "css": "font-size: 14px; font-weight: 500;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": "input, textarea, select",
+    "css": "font-weight: 400;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(pointer: coarse) and (max-width: 1279.98px)",
+    "sel": ".app :is(a[href]:not([class]), a.stock, a.tkt, a.dlr, a.dlr__site, a.gear, a.ra, a.c--1, a.s, a.gl, a.atlas, a.brand, a.ctag, a.dbchip, .copy, .del, .ed, .ev__m",
+    "css": "position: relative;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(pointer: coarse) and (max-width: 1279.98px)",
+    "sel": ".app :is(a[href]:not([class]), a.stock, a.tkt, a.dlr, a.dlr__site, a.gear, a.ra, a.c--1, a.s, a.gl, a.atlas, a.brand, a.ctag, a.dbchip, .copy, .del, .ed, .ev__m",
+    "css": "content: \"\"; position: absolute; z-index: 1; inset: min(0px, 50% - 18px);"
+   }
+  ],
+  "html": "<input class=\"ck\" type=\"checkbox\" id=\"sel-all\" aria-label=\"Select all rows on this page\">"
+ },
+ {
+  "name": "Search",
+  "ui": "ui-search",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".search",
+  "tag": "label",
+  "cls": "search",
+  "size": "958x36",
+  "comp": {
+   "display": "flex",
+   "width": "957.5px",
+   "height": "36px",
+   "minHeight": "auto",
+   "padding": "0px 12px 0px 16px",
+   "margin": "0px",
+   "gap": "8px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "19.6px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(87, 96, 112)",
+   "backgroundColor": "rgb(255, 255, 255)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(87, 96, 112)",
+   "borderRadius": "14px",
+   "boxShadow": "rgba(34, 58, 118, 0.12) 0px 1px 2px 0px, rgba(34, 58, 118, 0.32) 0px 6px 14px -8px, rgb(255, 255, 255) 0px 1px 0px 0px inset",
+   "outline": "rgb(87, 96, 112) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".search",
+    "css": "flex: 1 1 300px; min-width: 180px; display: flex; align-items: center; gap: 8px; padding: 0px 10px 0px 12px; background: var(--sheet); color: var(--ink-3); height: 52px; border-radius: 16px; box-shadow: rgba(18, 23, 20, 0.07) 0px 1px 2px, rgba(18, 23, 20, 0.26) 0px 10px 24px -14px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".cmd .search",
+    "css": "padding: 0px 12px 0px 16px; flex: 1 1 420px; height: 56px; border-radius: 14px; box-shadow: var(--sh-pill);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".cmd .search",
+    "css": "height: calc(var(--stick-cmd) - var(--s2) * 2);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".cmd .search, .cmd > .search",
+    "css": "height: calc(var(--stick-cmd) - var(--s2) * 2);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".btn, .btn--sm, .btn--lg, .facet__b, .fld, .sel, .search, .input, .fbtn",
+    "css": "border-radius: var(--r-control);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".cmd .fld, .cmd .search, .toolbar .search",
+    "css": "height: 36px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".cmd > *",
+    "css": "min-width: 0px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".cmd .search, .cmd .fld",
+    "css": "flex: 1 1 220px; min-width: 0px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".ui-toolbar > *",
+    "css": "flex: 0 0 auto; min-width: 0px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".ui-toolbar .search, .ui-toolbar .ui-search, .ui-toolbar .fld",
+    "css": "flex: 1 1 240px; min-width: 0px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".ui-toolbar .search, .ui-toolbar .fld, .ui-toolbar input[type=\"search\"]",
+    "css": "height: var(--ctl);"
+   }
+  ],
+  "html": "<label class=\"search\"><svg class=\"i\"><use href=\"#i-search\"></use></svg><input type=\"search\" id=\"q\" placeholder=\"Find a vehicle — stock, VIN, year, make, model, color…\" autocomplete=\"off\"><kbd>/</kbd></label>"
+ },
+ {
+  "name": "Facet (filter button)",
+  "ui": "ui-facet",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".cmd .facet__b",
+  "tag": "button",
+  "cls": "facet__b",
+  "size": "144x36",
+  "comp": {
+   "display": "inline-flex",
+   "width": "143.531px",
+   "height": "36px",
+   "minHeight": "0px",
+   "padding": "0px 12px",
+   "margin": "0px",
+   "gap": "6px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "13.5px",
+   "fontWeight": "600",
+   "lineHeight": "13.5px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(53, 62, 78)",
+   "backgroundColor": "rgb(255, 255, 255)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(53, 62, 78)",
+   "borderRadius": "9px",
+   "boxShadow": "rgba(34, 58, 118, 0.12) 0px 1px 2px 0px, rgba(34, 58, 118, 0.32) 0px 6px 14px -8px, rgb(255, 255, 255) 0px 1px 0px 0px inset",
+   "outline": "rgb(53, 62, 78) none 3px",
+   "transition": "background 0.16s cubic-bezier(0.2, 0, 0, 1), color 0.16s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.16s cubic-bezier(0.2, 0, 0, 1)",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "button",
+    "css": "font: inherit; color: inherit; background: none; border: 0px; padding: 0px; cursor: pointer;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "button:disabled",
+    "css": "cursor: default; opacity: 0.45;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".cmd .facet__b, .cmd .facet__k, .cmd .facet__v, .cmd .seg__b",
+    "css": "color: rgb(255, 255, 255);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".facet__b",
+    "css": "display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); font-size: 14px; font-weight: 500; white-space: nowrap; transition: background var(--dur) var(--ease), color var(--dur) var(--ease), box-shadow var(--dur) var(--ease); height: 46px; padding: 0px 16px; border-radius: 999px; background: transparent; box-shadow: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".facet__b:hover",
+    "css": "color: var(--ink); background: var(--sheet); box-shadow: var(--sh-pill);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".cmd .facet__b, .cmd .facet__k, .cmd .seg__b",
+    "css": "color: var(--ink-2);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".cmd .facet__b:hover",
+    "css": "background: rgba(255, 255, 255, 0.18); box-shadow: none; color: var(--ink);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".cmd .facet__b",
+    "css": "flex-direction: column; align-items: flex-start; justify-content: center; gap: 1px; height: 56px; padding: 0px 16px; border-radius: 14px; background: var(--sheet); box-shadow: var(--sh-pill);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".facet__b",
+    "css": "border-radius: var(--r-s);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".cmd .facet__b, .cmd.cmd--sec .facet__b, .cmdtop .facet__b",
+    "css": "border-radius: var(--r-s);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".btn, .btn--sm, .btn--lg, .facet__b, .fld, .sel, .search, .input, .fbtn",
+    "css": "border-radius: var(--r-control);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".facet__b, .fbtn",
+    "css": "height: 36px; padding: 0px 12px; font-size: 14px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".cmd .btn, .cmd .facet__b, .toolbar .btn, .toolbar .facet__b",
+    "css": "height: 36px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".cmd .facet, .cmd .facet__b, .cmd .btn, .cmd .seg",
+    "css": "flex: 0 0 auto;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".facet__b, .fbtn",
+    "css": "height: 36px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".ui-ctl, .ui-toolbar .btn, .ui-toolbar .facet__b, .ui-toolbar .sel, .ui-toolbar .fbtn",
+    "css": "height: var(--ctl); padding: 0 var(--inset-ctl); border-radius: 9px; font-family: var(--font); font-size: 13.5px; font-weight: 600; line-height: 1;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".facet__b, .selectish, .ui-selectish",
+    "css": "display: inline-flex; align-items: center; gap: 6px; height: var(--ctl); padding: 0 var(--inset-ctl); border-radius: 9px; line-height: 1;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".facet__b::after",
+    "css": "content: none;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".facet__b, .cmd .facet__b, .ui-toolbar .facet__b, .qf .facet__b, .sub .facet__b",
+    "css": "flex-direction: row; align-items: center; justify-content: flex-start; gap: 6px; height: var(--ctl); padding: 0 var(--inset-ctl); border-radius: 9px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl, .tally :where(button, span, a).tl",
+    "css": "height: var(--ctl-dense); padding: 0px 10px; border-radius: 7px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line-2); font-size: 13px; font-weight: 500; color: var(--ink-2); gap: 6px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl b, .tally :where(button, span, a).tl b",
+    "css": "font-size: 12.5px; font-weight: 600; color: var(--ink-3); font-variant-numeric: tabular-nums;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl:hover",
+    "css": "background: var(--wash); color: var(--ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on, :where(button, span, a).tl[aria-pressed=\"true\"]",
+    "css": "background: var(--brand-soft); color: var(--brand-ink); box-shadow: inset 0 0 0 1px var(--brand-soft-2);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on b, :where(button, span, a).tl[aria-pressed=\"true\"] b",
+    "css": "color: var(--brand-ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, :where(button, span, a).tl, .tag, .bdg, .badge, .chip, .pill, .lane, .ui-view, .ui-filter, .ui-nav__i, .ui-ctl, .facet__b, .kbd, kbd, .tbtn, .rlink,",
+    "css": "display: inline-flex; align-items: center; line-height: 1;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".bdg, .badge, .tag, .chip, .pill, :where(button, span, a).tl, .ui-filter",
+    "css": "justify-content: center;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".app .facet__b",
+    "css": "color: var(--ink-2);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1279.98px)",
+    "sel": ".app :is(.btn, .nav__b, .facet__b, .ui-view, .secnav__b, .mn__it, .menu__l, .gsearch, .dealer, .me, .rail__i, .rail__b, .ui-nav__i)",
+    "css": "min-height: 36px;"
+   }
+  ],
+  "html": "<button class=\"facet__b\" type=\"button\" data-pop=\"p-sort\"><span class=\"facet__k\">Sort</span><span class=\"facet__v\" id=\"sort-v\">When added ↑</span><svg class=\"i\"><use href=\"#i-chev\"></use></svg></button>"
+ },
+ {
+  "name": "View track (lanes / tabs)",
+  "ui": "ui-seg / ui-tabs",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".ui-views",
+  "tag": "div",
+  "cls": "lanes ui-views",
+  "size": "230x36",
+  "comp": {
+   "display": "flex",
+   "width": "230.297px",
+   "height": "36px",
+   "minHeight": "36px",
+   "padding": "2px",
+   "margin": "112.844px 0px 0px",
+   "gap": "2px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "19.6px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(243, 246, 251)",
+   "backgroundColor": "rgba(255, 255, 255, 0.06)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(243, 246, 251)",
+   "borderRadius": "8px",
+   "boxShadow": "rgba(255, 255, 255, 0.08) 0px 0px 0px 1px inset",
+   "outline": "rgb(243, 246, 251) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".lanes",
+    "css": "grid-template-columns: 1fr 1fr; margin-top: 16px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".focal .focal__main .lanes",
+    "css": "display: inline-flex; flex-wrap: nowrap; gap: 2px; align-self: flex-start; margin: 10px 0px 0px; padding: 2px; border: 0px; border-radius: 8px; background: rgba(255, 255, 255, 0.06); box-shadow: rgba(255, 255, 255, 0.08) 0px 0px 0px 1px inset;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".focal .focal__main .soldmo[hidden] + .lanes",
+    "css": "margin-top: auto;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".ui-views",
+    "css": "display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px 6px; min-height: var(--ctl); padding: 0px; width: auto; border: 0px; border-radius: 0px; background: none; box-shadow: none; flex: 0 1 auto; max-width: 100%; min-width: 0px; overflow: visible;"
+   }
+  ],
+  "html": "<div class=\"lanes ui-views\" role=\"group\" aria-label=\"Lane\"> <button class=\"lane lane--on ui-view ui-view--on\" type=\"button\" data-lane=\"Available\" aria-pressed=\"true\"><span>Available</span><b>359</b></button> <button class=\"lane ui-view\" type=\"button\" data-lane=\"Sold\" aria-pressed=\"false\"><span>Sold</span><b>13,212</b></button> <button class=\"lane lane--zero ui-view\" type=\"button\" data-lane=\"Pending\" aria-pressed=\"false\"><span>Pending</span><b>0</b></button> <button class=\"lane lane--all ui-view\""
+ },
+ {
+  "name": "View · current",
+  "ui": "ui-tabs__tab--on",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".ui-view--on",
+  "tag": "button",
+  "cls": "lane lane--on ui-view ui-view--on",
+  "size": "73x24",
+  "comp": {
+   "display": "flex",
+   "width": "72.9375px",
+   "height": "24px",
+   "minHeight": "auto",
+   "padding": "0px 10px",
+   "margin": "0px",
+   "gap": "6px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "12.5px",
+   "fontWeight": "600",
+   "lineHeight": "12.5px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(255, 255, 255)",
+   "backgroundColor": "rgb(31, 95, 224)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(255, 255, 255)",
+   "borderRadius": "6px",
+   "boxShadow": "none",
+   "outline": "rgb(255, 255, 255) none 3px",
+   "transition": "background 0.16s cubic-bezier(0.2, 0, 0, 1), color 0.16s cubic-bezier(0.2, 0, 0, 1)",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "button",
+    "css": "font: inherit; color: inherit; background: none; border: 0px; padding: 0px; cursor: pointer;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "button:disabled",
+    "css": "cursor: default; opacity: 0.45;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".lane:hover",
+    "css": "background: rgba(255, 255, 255, 0.12); box-shadow: rgba(255, 255, 255, 0.22) 0px 0px 0px 1px inset; transform: translateY(-1px);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".lane:active",
+    "css": "transform: translateY(0px);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".lane--on, .lane--on:hover",
+    "css": "color: var(--focal-on-ink); transform: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".lane:focus-visible",
+    "css": "outline: 2px solid var(--focal-on); outline-offset: 1px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".lane",
+    "css": "align-items: center; justify-content: space-between; color: var(--focal-ink-2); font-size: 13px; transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease), transform var(--dur) var(--ease);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".lane:focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".focal .focal__main .lanes > .lane",
+    "css": "display: inline-flex; align-items: center; height: 24px; padding: 0px 10px; border-radius: 6px; background: none; box-shadow: none; color: var(--focal-ink-3); font-size: 12.5px; font-weight: 500; white-space: nowrap; transform: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".focal .focal__main .lanes > .lane:hover",
+    "css": "background: rgba(255, 255, 255, 0.08); box-shadow: none; color: var(--focal-ink);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".focal .focal__main .lanes > .lane--on, .focal .focal__main .lanes > .lane--on:hover",
+    "css": "background: var(--brand); box-shadow: none; color: rgb(255, 255, 255); font-weight: 600;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".focal .focal__main .lanes > .lane:focus-visible",
+    "css": "outline: 2px solid var(--focal-on, #fff); outline-offset: 1px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".tag, .chip, .idtag, .lane, .seg, .seg__b, .facet__cnt, .cnt, .badge, .pill, .status, .avatar, .switch, .sw, .dot",
+    "css": "border-radius: 999px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".tab--on, .tabs .on, .seg__b--on, .mn__it--on, .lane--on",
+    "css": "box-shadow: none;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".seg__b--on, .lane--on",
+    "css": "background: var(--sheet); color: var(--ink); box-shadow: var(--sh-pill, 0 1px 2px rgba(34,58,118,.12));"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".ui-views > *",
+    "css": "display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 30px; padding: 0 var(--inset-ctl); border: 0px; border-radius: 7px; background: transparent; box-shadow: none; font-family: var(--font); font-size: 13.5px; font-weight: 500; line-height: 1; letter-spacing: 0px; text-transform: none; color: var(--ink-2); white-space: nowrap; text-decoration: none; cursor: pointer; flex: 0 0 auto; min-width: 0px; transition: background var(--dur, 160ms) var(--ease, ease), color var(--dur, 160ms) var(--ease, ease);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".ui-views > .ui-view--on, .ui-views > .lane--on, .ui-views > .secnav__b--on, .ui-views > [aria-pressed=\"true\"], .ui-views > .ui-view--on:hover, .ui-views > .lan",
+    "css": "background: var(--brand); color: rgb(255, 255, 255); font-weight: 500; border: 0px; box-shadow: none;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl, .tally :where(button, span, a).tl",
+    "css": "height: var(--ctl-dense); padding: 0px 10px; border-radius: 7px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line-2); font-size: 13px; font-weight: 500; color: var(--ink-2); gap: 6px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl b, .tally :where(button, span, a).tl b",
+    "css": "font-size: 12.5px; font-weight: 600; color: var(--ink-3); font-variant-numeric: tabular-nums;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl:hover",
+    "css": "background: var(--wash); color: var(--ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on, :where(button, span, a).tl[aria-pressed=\"true\"]",
+    "css": "background: var(--brand-soft); color: var(--brand-ink); box-shadow: inset 0 0 0 1px var(--brand-soft-2);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on b, :where(button, span, a).tl[aria-pressed=\"true\"] b",
+    "css": "color: var(--brand-ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, :where(button, span, a).tl, .tag, .bdg, .badge, .chip, .pill, .lane, .ui-view, .ui-filter, .ui-nav__i, .ui-ctl, .facet__b, .kbd, kbd, .tbtn, .rlink,",
+    "css": "display: inline-flex; align-items: center; line-height: 1;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".bdg, .badge, .tag, .chip, .pill, :where(button, span, a).tl, .ui-filter",
+    "css": "justify-content: center;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1279.98px)",
+    "sel": ".app :is(.btn, .nav__b, .facet__b, .ui-view, .secnav__b, .mn__it, .menu__l, .gsearch, .dealer, .me, .rail__i, .rail__b, .ui-nav__i)",
+    "css": "min-height: 36px;"
+   }
+  ],
+  "html": "<button class=\"lane lane--on ui-view ui-view--on\" type=\"button\" data-lane=\"Available\" aria-pressed=\"true\"><span>Available</span><b>359</b></button>"
+ },
+ {
+  "name": "Segmented control",
+  "ui": "ui-seg",
+  "page": "pages/dealer/single-vehicle-gen11.html",
+  "sel": ".seg",
+  "tag": "div",
+  "cls": "seg",
+  "size": "524x46",
+  "comp": {
+   "display": "flex",
+   "width": "524px",
+   "height": "46px",
+   "minHeight": "auto",
+   "padding": "5px",
+   "margin": "0px",
+   "gap": "2px 6px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "19.6px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgba(255, 255, 255, 0.7)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(13, 19, 32)",
+   "borderRadius": "9px",
+   "boxShadow": "rgb(216, 222, 231) 0px 0px 0px 1px inset",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset);"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ".seg",
+    "css": "display: inline-flex; align-items: center; gap: 2px; height: 46px; padding: 5px; border-radius: var(--r-pill); background: rgba(18, 23, 20, 0.06); box-shadow: inset 0 0 0 1px var(--line);"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; scroll-behavior: auto !important;"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ".seg",
+    "css": "height: 38px; padding: 4px; border-radius: var(--r-control);"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ".scard .seg",
+    "css": "display: flex; width: 100%; height: 46px; padding: 5px; border-radius: var(--r-control);"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ".scard--status .seg",
+    "css": "background: rgba(255, 255, 255, 0.7);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".tag, .chip, .idtag, .lane, .seg, .seg__b, .facet__cnt, .cnt, .badge, .pill, .status, .avatar, .switch, .sw, .dot",
+    "css": "border-radius: 999px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".seg",
+    "css": "height: 36px; padding: 3px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".secnav, .tabs, .seg, .cock__nav",
+    "css": "column-gap: 6px;"
+   }
+  ],
+  "html": "<div class=\"seg\" role=\"group\" aria-labelledby=\"l-sold\" data-seg=\"status\"> <button class=\"seg__b seg__b--on\" type=\"button\" data-v=\"Available\" aria-pressed=\"true\">Available</button> <button class=\"seg__b\" type=\"button\" data-v=\"Sold\" aria-pressed=\"false\">Sold</button> <!-- no Pending status in the system (Bill, Nov 6: \"We do not have a Pending option so that should be removed ... Sale Pending is accounted for below\"); Staging stays <button class=\"seg__b\" type=\"button\" data-v=\"Pending\" aria-pressed="
+ },
+ {
+  "name": "Switch",
+  "ui": "ui-switch",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".sitesw",
+  "tag": "button",
+  "cls": "sitesw sitesw--off",
+  "size": "156x40",
+  "comp": {
+   "display": "flex",
+   "width": "156px",
+   "height": "40px",
+   "minHeight": "auto",
+   "padding": "0px 14px 0px 10px",
+   "margin": "0px",
+   "gap": "10px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "13px",
+   "fontWeight": "600",
+   "lineHeight": "18.2px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(189, 51, 40)",
+   "backgroundColor": "rgb(253, 232, 229)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(189, 51, 40)",
+   "borderRadius": "10px",
+   "boxShadow": "rgb(189, 51, 40) 0px 0px 0px 1px inset, color(srgb 0.741177 0.2 0.156863 / 0.18) 0px 0px 0px 3px",
+   "outline": "rgb(189, 51, 40) none 3px",
+   "transition": "box-shadow 0.16s cubic-bezier(0.2, 0, 0, 1), color 0.16s cubic-bezier(0.2, 0, 0, 1), background-color 0.16s cubic-bezier(0.2, 0, 0, 1)",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "button",
+    "css": "font: inherit; color: inherit; background: none; border: 0px; padding: 0px; cursor: pointer;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "button:disabled",
+    "css": "cursor: default; opacity: 0.45;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".sitesw",
+    "css": "display: inline-flex; align-items: center; gap: 10px; height: 40px; padding: 0px 14px 0px 10px; border-radius: 10px; background: var(--sheet); box-shadow: 0 1px 2px rgba(16, 24, 40, .06), inset 0 0 0 1px var(--line-2); color: var(--ink); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-language-override: inherit; font-size: 13px; font-weight: 600; cursor: pointer; transition: box-shad"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".sitesw:hover",
+    "css": "box-shadow: 0 1px 2px rgba(16, 24, 40, .08), inset 0 0 0 1px var(--line-3);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".sitesw:focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".sitesw--off",
+    "css": "color: var(--danger); background: var(--danger-soft); box-shadow: inset 0 0 0 1px var(--danger), 0 0 0 3px color-mix(in srgb, var(--danger) 18%, transparent);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".sitesw--off:hover",
+    "css": "box-shadow: inset 0 0 0 1px var(--danger), 0 0 0 4px color-mix(in srgb, var(--danger) 22%, transparent);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": ".sitesw, .sitesw__t, .sitesw__t i",
+    "css": "transition: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".sitesw",
+    "css": "min-width: 156px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl, .tally :where(button, span, a).tl",
+    "css": "height: var(--ctl-dense); padding: 0px 10px; border-radius: 7px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line-2); font-size: 13px; font-weight: 500; color: var(--ink-2); gap: 6px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl b, .tally :where(button, span, a).tl b",
+    "css": "font-size: 12.5px; font-weight: 600; color: var(--ink-3); font-variant-numeric: tabular-nums;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl:hover",
+    "css": "background: var(--wash); color: var(--ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on, :where(button, span, a).tl[aria-pressed=\"true\"]",
+    "css": "background: var(--brand-soft); color: var(--brand-ink); box-shadow: inset 0 0 0 1px var(--brand-soft-2);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on b, :where(button, span, a).tl[aria-pressed=\"true\"] b",
+    "css": "color: var(--brand-ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, :where(button, span, a).tl, .tag, .bdg, .badge, .chip, .pill, .lane, .ui-view, .ui-filter, .ui-nav__i, .ui-ctl, .facet__b, .kbd, kbd, .tbtn, .rlink,",
+    "css": "display: inline-flex; align-items: center; line-height: 1;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".bdg, .badge, .tag, .chip, .pill, :where(button, span, a).tl, .ui-filter",
+    "css": "justify-content: center;"
+   }
+  ],
+  "html": "<button class=\"sitesw sitesw--off\" type=\"button\" role=\"switch\" aria-checked=\"false\" data-site=\"v3\"><span class=\"sitesw__t\" aria-hidden=\"true\"><i></i></span><span class=\"sitesw__l\">Hidden on site</span></button>"
+ },
+ {
+  "name": "Status chip",
+  "ui": "ui-badge",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".stat",
+  "tag": "span",
+  "cls": "stat stat--ok",
+  "size": "71x24",
+  "comp": {
+   "display": "inline-flex",
+   "width": "71.0469px",
+   "height": "24px",
+   "minHeight": "0px",
+   "padding": "0px 8px",
+   "margin": "0px",
+   "gap": "normal",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "13px",
+   "fontWeight": "600",
+   "lineHeight": "13px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(18, 112, 74)",
+   "backgroundColor": "rgb(224, 244, 232)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(18, 112, 74)",
+   "borderRadius": "7px",
+   "boxShadow": "rgb(185, 226, 201) 0px 0px 0px 1px inset",
+   "outline": "rgb(18, 112, 74) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".stat",
+    "css": "display: inline-flex; align-items: center; height: 24px; padding: 0px 8px; border-radius: 7px; font-size: 13px; font-weight: 600; white-space: nowrap;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".stat--ok",
+    "css": "color: var(--ok); background: var(--ok-soft); box-shadow: inset 0 0 0 1px var(--ok-line);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl, .tally :where(button, span, a).tl",
+    "css": "height: var(--ctl-dense); padding: 0px 10px; border-radius: 7px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line-2); font-size: 13px; font-weight: 500; color: var(--ink-2); gap: 6px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl b, .tally :where(button, span, a).tl b",
+    "css": "font-size: 12.5px; font-weight: 600; color: var(--ink-3); font-variant-numeric: tabular-nums;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl:hover",
+    "css": "background: var(--wash); color: var(--ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on, :where(button, span, a).tl[aria-pressed=\"true\"]",
+    "css": "background: var(--brand-soft); color: var(--brand-ink); box-shadow: inset 0 0 0 1px var(--brand-soft-2);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on b, :where(button, span, a).tl[aria-pressed=\"true\"] b",
+    "css": "color: var(--brand-ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, :where(button, span, a).tl, .tag, .bdg, .badge, .chip, .pill, .lane, .ui-view, .ui-filter, .ui-nav__i, .ui-ctl, .facet__b, .kbd, kbd, .tbtn, .rlink,",
+    "css": "display: inline-flex; align-items: center; line-height: 1;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".bdg, .badge, .tag, .chip, .pill, :where(button, span, a).tl, .ui-filter",
+    "css": "justify-content: center;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".app .stat, .app .chips .chip:not(.chip--id):not(.wchip):not(.chip--type), .app .head__sub > .chip:not(.chip--id), .app .bdg, .app .c-pkg .bdg",
+    "css": "height: 24px; border-radius: 7px; line-height: 1;"
+   }
+  ],
+  "html": "<span class=\"stat stat--ok\">Available</span>"
+ },
+ {
+  "name": "Tag / chip",
+  "ui": "ui-chip",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".tag",
+  "tag": "span",
+  "cls": "tag tag--flag",
+  "size": "73x24",
+  "comp": {
+   "display": "flex",
+   "width": "73.1406px",
+   "height": "24px",
+   "minHeight": "auto",
+   "padding": "0px 6px",
+   "margin": "0px",
+   "gap": "4px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "12px",
+   "fontWeight": "600",
+   "lineHeight": "12px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(53, 62, 78)",
+   "backgroundColor": "rgb(238, 241, 245)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(53, 62, 78)",
+   "borderRadius": "999px",
+   "boxShadow": "rgb(229, 233, 239) 0px 0px 0px 1px inset",
+   "outline": "rgb(53, 62, 78) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".tag",
+    "css": "display: inline-flex; align-items: center; height: 22px; padding: 0px 7px; border-radius: 5px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; color: var(--tone, var(--signal)); background: var(--tone-soft, var(--signal-soft)); box-shadow: inset 0 0 0 1px var(--tone-line, var(--signal-line)), 0 1px 0 rgba(14,20,33,.04);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".tag, .chip, .veh__tags > *, .idtag",
+    "css": "border-radius: 999px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".tags > *",
+    "css": "font-size: 11px; font-weight: 700; letter-spacing: 0.03em; padding: 2px 6px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".row .tags .tag",
+    "css": "padding: 0px 6px; letter-spacing: 0.02em; font-size: 11.5px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".row .tags .tag--flag, .tag--flag",
+    "css": "--tone: var(--ink-2); --tone-soft: var(--wash); --tone-line: var(--line-2); display: inline-flex; align-items: center; gap: 4px; color: var(--ink-2); background: var(--wash); box-shadow: inset 0 0 0 1px var(--line-2);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".row .tags .tag--flag, .tag--flag",
+    "css": "text-transform: none; letter-spacing: 0px; font-size: 12px; font-weight: 600;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".tag, .chip, .idtag, .lane, .seg, .seg__b, .facet__cnt, .cnt, .badge, .pill, .status, .avatar, .switch, .sw, .dot",
+    "css": "border-radius: 999px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".chip, .tag, .idtag",
+    "css": "height: 24px; padding: 0px 9px; font-size: 12.5px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl, .tally :where(button, span, a).tl",
+    "css": "height: var(--ctl-dense); padding: 0px 10px; border-radius: 7px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line-2); font-size: 13px; font-weight: 500; color: var(--ink-2); gap: 6px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl b, .tally :where(button, span, a).tl b",
+    "css": "font-size: 12.5px; font-weight: 600; color: var(--ink-3); font-variant-numeric: tabular-nums;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl:hover",
+    "css": "background: var(--wash); color: var(--ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on, :where(button, span, a).tl[aria-pressed=\"true\"]",
+    "css": "background: var(--brand-soft); color: var(--brand-ink); box-shadow: inset 0 0 0 1px var(--brand-soft-2);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on b, :where(button, span, a).tl[aria-pressed=\"true\"] b",
+    "css": "color: var(--brand-ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, :where(button, span, a).tl, .tag, .bdg, .badge, .chip, .pill, .lane, .ui-view, .ui-filter, .ui-nav__i, .ui-ctl, .facet__b, .kbd, kbd, .tbtn, .rlink,",
+    "css": "display: inline-flex; align-items: center; line-height: 1;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".bdg, .badge, .tag, .chip, .pill, :where(button, span, a).tl, .ui-filter",
+    "css": "justify-content: center;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".bdg, .badge, .tag, .chip, .pill",
+    "css": "padding-top: 0px; padding-bottom: 0px;"
+   }
+  ],
+  "html": "<span class=\"tag tag--flag\"><svg class=\"i\"><use href=\"#i-tag\"></use></svg>No price</span>"
+ },
+ {
+  "name": "Platform bar",
+  "ui": "ui-topbar",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".top",
+  "tag": "header",
+  "cls": "top",
+  "size": "1408x56",
+  "comp": {
+   "display": "flex",
+   "width": "1408px",
+   "height": "56px",
+   "minHeight": "auto",
+   "padding": "0px 16px",
+   "margin": "16px 0px 0px",
+   "gap": "0px 6px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "19.6px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgba(255, 255, 255, 0.76)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(13, 19, 32)",
+   "borderRadius": "12px",
+   "boxShadow": "rgba(34, 58, 118, 0.42) 0px 28px 64px -34px, rgba(34, 58, 118, 0.1) 0px 2px 8px -3px, rgba(255, 255, 255, 0.95) 0px 1px 0px 0px inset",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".top",
+    "css": "grid-area: 1 / 1 / auto / -1; display: flex; align-items: center; gap: 4px; position: sticky; top: 0px; align-self: center; height: 68px; margin: 12px 0px 0px; padding: 0px 16px; border-radius: 24px; background: var(--glass); box-shadow: var(--sh-soft); border-bottom: 0px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(backdrop-filter: blur(14px))",
+    "sel": ".top",
+    "css": "backdrop-filter: saturate(1.4) blur(14px);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".top",
+    "css": "z-index: var(--z-platform);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".top",
+    "css": "height: var(--stick-bar);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".top",
+    "css": "align-self: start; margin: var(--s4) 0 0;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".top",
+    "css": "border-radius: var(--aan-bar-r); gap: 0px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".top",
+    "css": "column-gap: 6px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".app .top",
+    "css": "padding-left: var(--s4); padding-right: var(--s4);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1139.98px)",
+    "sel": ".app > .top:has(.dealer)",
+    "css": "height: var(--stick-bar); flex-wrap: wrap; align-content: center; row-gap: 14px;"
+   }
+  ],
+  "html": "<header class=\"top\"> <a class=\"brand\" href=\"#\" title=\"All Auto Network · Backend\"><span class=\"brand__mk\">AAN</span><span class=\"brand__t\">All Auto Network</span><span class=\"brand__env\">Backend</span></a> <nav class=\"nav\" aria-label=\"Platform\"> <div class=\"nav__it\"><a class=\"nav__b\" href=\"#\">Home</a></div> <div class=\"nav__it nav__it--on\"> <button class=\"nav__b\" type=\"button\" data-menu=\"\" aria-haspopup=\"true\" aria-expanded=\"false\">Inventory<svg class=\"i\"><use href=\"#i-chev\"></use></svg></button"
+ },
+ {
+  "name": "Nav item",
+  "ui": "ui-topnav__item",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".nav__b",
+  "tag": "a",
+  "cls": "nav__b",
+  "size": "47x30",
+  "comp": {
+   "display": "flex",
+   "width": "47.25px",
+   "height": "30px",
+   "minHeight": "auto",
+   "padding": "0px 6px",
+   "margin": "0px",
+   "gap": "6px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "13px",
+   "fontWeight": "500",
+   "lineHeight": "13px",
+   "letterSpacing": "-0.065px",
+   "textTransform": "none",
+   "color": "rgb(53, 62, 78)",
+   "backgroundColor": "rgba(0, 0, 0, 0)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(53, 62, 78)",
+   "borderRadius": "8px",
+   "boxShadow": "none",
+   "outline": "rgb(53, 62, 78) none 3px",
+   "transition": "color 0.16s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.16s cubic-bezier(0.2, 0, 0, 1)",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".nav__b",
+    "css": "display: inline-flex; align-items: center; gap: 6px; height: 36px; padding: 0px 12px; border-radius: var(--r-m); font-size: 14px; font-weight: 500; color: var(--ink-2); white-space: nowrap; transition: background var(--dur) var(--ease), color var(--dur) var(--ease);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".nav__b:hover, .nav__it--open > .nav__b",
+    "css": "background: var(--wash); color: var(--ink);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "a",
+    "css": "text-decoration: none; color: var(--brand-ink);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".top .nav__b",
+    "css": "border-radius: 999px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".nav__b, .top .nav__b",
+    "css": "height: 30px; padding: 0px 11px; border-radius: 0px; font-size: 14px; font-weight: 600; letter-spacing: 0.03em; color: var(--brand); box-shadow: transparent 0px -2px 0px inset; transition: color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".nav__b:hover, .nav__it--open > .nav__b",
+    "css": "background: none; color: var(--brand-ink); box-shadow: inset 0 -2px 0 var(--brand-soft-2, var(--brand-soft));"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "(max-width: 1560px)",
+    "sel": ".nav__b, .top .nav__b",
+    "css": "padding: 0px 9px; font-size: 13.5px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "(max-width: 1400px)",
+    "sel": ".nav__b, .top .nav__b",
+    "css": "padding: 0px 8px; font-size: 13px; letter-spacing: 0.02em;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "(max-width: 1500px)",
+    "sel": ".nav__b, .top .nav__b",
+    "css": "padding: 0px 8px; font-size: 13px; letter-spacing: 0px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "(max-width: 1380px)",
+    "sel": ".nav__b, .top .nav__b",
+    "css": "padding: 0px 6px; letter-spacing: 0.005em;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".top .nav__b",
+    "css": "padding: 0px 9px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "(max-width: 1500px)",
+    "sel": ".top .nav__b",
+    "css": "padding: 0px 7px; font-size: 13.5px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".top .nav__b",
+    "css": "padding: 0px 6px; font-size: 13px; letter-spacing: -0.005em;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "(min-width: 1800px)",
+    "sel": ".top .nav__b",
+    "css": "padding: 0px 10px; font-size: 14px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "(max-width: 1520px)",
+    "sel": ".top .nav__b",
+    "css": "padding: 0px 6px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".top .nav__b, .ui-topnav__trigger",
+    "css": "border-radius: 8px; font-weight: 500; box-shadow: none !important; border-bottom: 0px !important;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".top .nav__b::after, .ui-topnav__trigger::after",
+    "css": "content: none !important;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".top .nav__b:hover",
+    "css": "background: var(--well);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".top .nav a, .top .nav__b, .top .nav__it > a",
+    "css": "color: var(--ink-2);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, :where(button, span, a).tl, .tag, .bdg, .badge, .chip, .pill, .lane, .ui-view, .ui-filter, .ui-nav__i, .ui-ctl, .facet__b, .kbd, kbd, .tbtn, .rlink,",
+    "css": "display: inline-flex; align-items: center; line-height: 1;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1279.98px)",
+    "sel": ".app :is(.btn, .nav__b, .facet__b, .ui-view, .secnav__b, .mn__it, .menu__l, .gsearch, .dealer, .me, .rail__i, .rail__b, .ui-nav__i)",
+    "css": "min-height: 36px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(pointer: coarse) and (max-width: 1279.98px)",
+    "sel": ".app :is(a[href]:not([class]), a.stock, a.tkt, a.dlr, a.dlr__site, a.gear, a.ra, a.c--1, a.s, a.gl, a.atlas, a.brand, a.ctag, a.dbchip, .copy, .del, .ed, .ev__m",
+    "css": "position: relative;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(pointer: coarse) and (max-width: 1279.98px)",
+    "sel": ".app :is(a[href]:not([class]), a.stock, a.tkt, a.dlr, a.dlr__site, a.gear, a.ra, a.c--1, a.s, a.gl, a.atlas, a.brand, a.ctag, a.dbchip, .copy, .del, .ed, .ev__m",
+    "css": "content: \"\"; position: absolute; z-index: 1; inset: min(0px, 50% - 18px);"
+   }
+  ],
+  "html": "<a class=\"nav__b\" href=\"#\">Home</a>"
+ },
+ {
+  "name": "Global search",
+  "ui": "ui-topbar__search",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".gsearch",
+  "tag": "label",
+  "cls": "gsearch",
+  "size": "232x30",
+  "comp": {
+   "display": "flex",
+   "width": "232px",
+   "height": "30px",
+   "minHeight": "auto",
+   "padding": "0px 8px 0px 10px",
+   "margin": "0px 6px 0px 0px",
+   "gap": "8px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "13px",
+   "fontWeight": "400",
+   "lineHeight": "18.2px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(105, 113, 129)",
+   "backgroundColor": "rgb(255, 255, 255)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(105, 113, 129)",
+   "borderRadius": "7px",
+   "boxShadow": "rgb(216, 222, 231) 0px 0px 0px 1px inset",
+   "outline": "rgb(105, 113, 129) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".gsearch",
+    "css": "display: flex; align-items: center; gap: 8px; width: 232px; height: 36px; margin-right: 6px; padding: 0px 8px 0px 12px; border-radius: var(--r-m); background: var(--well); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink-3);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(max-width: 1360px)",
+    "sel": ".gsearch",
+    "css": "width: 180px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(max-width: 1400px)",
+    "sel": ".gsearch",
+    "css": "width: 180px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".tbtn, .gsearch, .dealer, .me, .atlas, .cock__back, .lock",
+    "css": "border-radius: var(--r-s);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".gsearch",
+    "css": "height: 30px; font-size: 13px; background: var(--sheet); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink-4);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "(max-width: 1560px)",
+    "sel": ".gsearch",
+    "css": "width: 160px; padding: 0 var(--s2) 0 10px; justify-content: flex-start;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "(max-width: 1400px)",
+    "sel": ".gsearch",
+    "css": "width: 132px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "(max-width: 1300px)",
+    "sel": ".gsearch",
+    "css": "width: 32px; padding: 0px; justify-content: center;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".gsearch",
+    "css": "flex: 0 1 232px; width: 232px; min-width: 132px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "(max-width: 1380px)",
+    "sel": ".gsearch",
+    "css": "width: 190px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "(max-width: 1280px)",
+    "sel": ".gsearch",
+    "css": "width: 160px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "(max-width: 1520px)",
+    "sel": ".gsearch",
+    "css": "width: 112px; min-width: 112px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1279.98px)",
+    "sel": ".app > .top .gsearch",
+    "css": "display: flex; width: 200px; padding: 0 var(--s2) 0 10px; justify-content: flex-start;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1279.98px)",
+    "sel": ".app :is(.btn, .nav__b, .facet__b, .ui-view, .secnav__b, .mn__it, .menu__l, .gsearch, .dealer, .me, .rail__i, .rail__b, .ui-nav__i)",
+    "css": "min-height: 36px;"
+   }
+  ],
+  "html": "<label class=\"gsearch\"><svg class=\"i\"><use href=\"#i-search\"></use></svg><input type=\"search\" placeholder=\"Search anywhere\" aria-label=\"Search anywhere\"><kbd>⌘K</kbd></label>"
+ },
+ {
+  "name": "Page head",
+  "ui": "ui-page-header",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".head",
+  "tag": "div",
+  "cls": "head",
+  "size": "1408x32",
+  "comp": {
+   "display": "flex",
+   "width": "1408px",
+   "height": "32px",
+   "minHeight": "auto",
+   "padding": "0px",
+   "margin": "12px 0px 24px",
+   "gap": "8px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "19.6px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgba(0, 0, 0, 0)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(13, 19, 32)",
+   "borderRadius": "0px",
+   "boxShadow": "none",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".head",
+    "css": "grid-area: 2 / 1 / auto / -1; display: flex; align-items: center; gap: 8px; min-width: 0px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".app > .head",
+    "css": "margin-top: 12px; margin-bottom: 24px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1279.98px)",
+    "sel": ".app > .head:not(.head--card)",
+    "css": "flex-wrap: wrap; height: auto; min-height: 0px; row-gap: var(--s2);"
+   }
+  ],
+  "html": "<div class=\"head\"> <h1>Vehicle Inventory</h1> <span class=\"live\">Updated 5 min ago</span> <span class=\"head__sp\"></span> <!-- Inline edit (Bill, Nov 6: \"Would love to see what this feature is?\" and the fields \"editable from this screen so dealers can update them on multiple vehicles at one time ... an update button at the bottom\"). The live Inventory Manager edits Status, Price and Discount Price in the rows with one Update button (checked Nov 16). --> <button class=\"btn btn--quiet\" type=\"button"
+ },
+ {
+  "name": "Page title",
+  "ui": "ui-page-header__title",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".head h1",
+  "tag": "h1",
+  "cls": "",
+  "size": "197x28",
+  "comp": {
+   "display": "block",
+   "width": "196.938px",
+   "height": "28px",
+   "minHeight": "auto",
+   "padding": "0px",
+   "margin": "0px",
+   "gap": "normal",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "28px",
+   "fontWeight": "600",
+   "lineHeight": "28px",
+   "letterSpacing": "-0.616px",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgba(0, 0, 0, 0)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(13, 19, 32)",
+   "borderRadius": "0px",
+   "boxShadow": "none",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "h1, h2, h3, p, ul, dl, dd",
+    "css": "margin: 0px; padding: 0px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".head h1",
+    "css": "font-size: 28px; font-weight: 600; font-stretch: 92%; letter-spacing: -0.022em; line-height: 1; white-space: nowrap;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".head__t, .page__t, h1",
+    "css": "font-size: 21px; font-weight: 650; letter-spacing: -0.018em; line-height: 1.2;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".app .head h1, .app .head--card > h1, .app .cock__t",
+    "css": "font-stretch: 92%;"
+   }
+  ],
+  "html": "<h1>Vehicle Inventory</h1>"
+ },
+ {
+  "name": "Board card (dark)",
+  "ui": "ui-cockpit / ui-pulsecard",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".focal, .bento > *, .board > *",
+  "tag": "div",
+  "cls": "focal",
+  "size": "544x258",
+  "comp": {
+   "display": "grid",
+   "width": "543.719px",
+   "height": "257.75px",
+   "minHeight": "auto",
+   "padding": "0px",
+   "margin": "0px",
+   "gap": "normal",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "19.6px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(243, 246, 251)",
+   "backgroundColor": "rgb(23, 34, 52)",
+   "backgroundImage": "radial-gradient(124% 86% at 0% -30%, rgba(36, 97, 74, 0.46) 0px, rgba(36, 97, 74, 0.16) 38%, rgba(36, 97, 74, 0) 68%), radial-gradient(60% 52% at 108% -18%, rgba(36, 97, 74, 0.24) 0px, rgba(36, 97, 74, 0) 60%)",
+   "borderTop": "0px none rgb(243, 246, 251)",
+   "borderRadius": "14px",
+   "boxShadow": "rgba(15, 27, 61, 0.55) 0px 22px 44px -22px, rgba(255, 255, 255, 0.14) 0px 1px 0px 0px inset",
+   "outline": "rgb(243, 246, 251) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".focal::after",
+    "css": "content: \"\"; position: absolute; inset: 0px; border-radius: inherit; box-shadow: rgba(255, 255, 255, 0.16) 0px 1px 0px inset; pointer-events: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".focal",
+    "css": "position: relative; flex: 0 0 auto; background-position-x: ; background-position-y: ; background-size: ; background-repeat: ; background-attachment: ; background-origin: ; background-clip: ; background-color: ; color: var(--focal-ink); border-radius: var(--r-l); box-shadow: var(--el-2); overflow: hidden; background-image: radial-gradient(124% 86% at 0% -30%, rgba(36, 97, 74, 0.46) 0px, rgba(36, 97, 74, 0.16) 38%, rgba(36, 97, 74, 0) 68%), radial-gradient(60% 52% at 108% -18%, rgba(36, 97, 74, 0.24) 0px, rgba(36, 97, 74, 0) 60%); display: grid; padding: 0px; grid-template-columns: minmax(0px, 1"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".focal, .value, .attn",
+    "css": "border-radius: 24px; box-shadow: var(--sh-card);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".focal, .value, .attn",
+    "css": "border-radius: 24px; box-shadow: var(--sh-card);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".focal :focus-visible, .value :focus-visible, .attn :focus-visible, .exp__l :focus-visible",
+    "css": "outline-offset: -2px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".focal :focus-visible, .value :focus-visible, .attn :focus-visible, .row.open :focus-visible, .tray :focus-visible",
+    "css": "outline-color: var(--focus-color-on-dark);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".field, .sheet, .workspace, .bento > *, .focal, .value, .attn, .card, .panel, .mod",
+    "css": "border-radius: var(--r-card);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tile--on:hover, .tile--on:focus-visible, .focal:hover, .value:hover, .attn:hover, [class*=\"--on\"].tile:hover",
+    "css": "background: var(--focal-2, #223049);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1179.98px)",
+    "sel": ".app .bento > *",
+    "css": "grid-area: auto;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1179.98px)",
+    "sel": ".app .bento > :first-child, .app .bento > :last-child:nth-child(2n)",
+    "css": "grid-column: 1 / -1;"
+   }
+  ],
+  "html": "<div class=\"focal\"> <div class=\"focal__main\"> <div class=\"focal__h\"><span class=\"caps\">Lot</span><span class=\"s\">6 rooftops · updated 5 min ago</span></div> <div class=\"hero\"><div class=\"hero__n\" id=\"scope-n\">359</div><div class=\"hero__l\"><b id=\"scope-l\">Available</b><span class=\"hero__of\">of 13,587 on file</span></div></div> <a class=\"soldmo\" id=\"soldmo\" href=\"#\" hidden=\"\"></a> <div class=\"lanes ui-views\" role=\"group\" aria-label=\"Lane\"> <button class=\"lane lane--on ui-view ui-view--on\" type=\"bu"
+ },
+ {
+  "name": "Field sheet (list container)",
+  "ui": "ui-panel",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".field",
+  "tag": "section",
+  "cls": "field",
+  "size": "1408x1440",
+  "comp": {
+   "display": "flex",
+   "width": "1408px",
+   "height": "1440.19px",
+   "minHeight": "0px",
+   "padding": "0px",
+   "margin": "0px",
+   "gap": "normal",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "19.6px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgb(255, 255, 255)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(13, 19, 32)",
+   "borderRadius": "14px",
+   "boxShadow": "rgba(34, 58, 118, 0.42) 0px 28px 64px -34px, rgba(34, 58, 118, 0.1) 0px 2px 8px -3px, rgba(255, 255, 255, 0.95) 0px 1px 0px 0px inset",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(max-width: 1320px)",
+    "sel": ".field",
+    "css": "--cols: 26px 72px 96px 46px 96px minmax(90px, 1fr) 80px 80px 100px 80px 170px 70px 104px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".field",
+    "css": "position: relative; display: flex; flex-direction: column; min-width: 0px; min-height: 0px; grid-area: 4 / 1; overflow: visible; --cols: 26px 92px 104px 46px 104px minmax(100px, 1fr) 84px 92px 118px 80px 218px 76px 108px; align-self: stretch; border-radius: 28px; background: rgba(255, 255, 255, 0.58); box-shadow: var(--sh-soft);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(max-width: 1400px)",
+    "sel": ".field",
+    "css": "--cols: 24px 76px 92px 42px 92px minmax(96px, 1fr) 88px 84px 84px 80px 168px 72px 96px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".field",
+    "css": "border-radius: var(--r-card);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".field",
+    "css": "background: var(--sheet);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(max-width: 1400px)",
+    "sel": ".field",
+    "css": "--cols: 24px 76px 92px 42px 92px minmax(96px, 1fr) 88px 84px 84px 80px 168px 72px 112px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".field",
+    "css": "background: var(--sheet);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".field, .sheet, .workspace, .bento > *, .focal, .value, .attn, .card, .panel, .mod",
+    "css": "border-radius: var(--r-card);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".field",
+    "css": "overflow: clip;"
+   }
+  ],
+  "html": "<section class=\"field\" aria-label=\"Inventory\" style=\"--cols: 96px 92px 104px 58px 104px minmax(100px, 1fr) 84px 92px 96px 118px 124px 104px 108px;\"> <div class=\"cmd ui-toolbar\"> <label class=\"search\"><svg class=\"i\"><use href=\"#i-search\"></use></svg><input type=\"search\" id=\"q\" placeholder=\"Find a vehicle — stock, VIN, year, make, model, color…\" autocomplete=\"off\"><kbd>/</kbd></label> <div class=\"facet\"><button class=\"facet__b\" type=\"button\" data-pop=\"p-sort\"><span class=\"facet__k\">Sort</span><spa"
+ },
+ {
+  "name": "Command row",
+  "ui": "ui-filterbar",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".cmd",
+  "tag": "div",
+  "cls": "cmd ui-toolbar",
+  "size": "1408x56",
+  "comp": {
+   "display": "flex",
+   "width": "1408px",
+   "height": "56px",
+   "minHeight": "56px",
+   "padding": "10px 16px",
+   "margin": "0px",
+   "gap": "8px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "19.6px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgb(255, 255, 255)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(13, 19, 32)",
+   "borderRadius": "0px",
+   "boxShadow": "none",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "background 0.16s cubic-bezier(0.2, 0, 0, 1)",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".cmd::after",
+    "css": "content: \"\"; position: absolute; inset: -10px -10px 0px; z-index: -1; box-sizing: border-box; border-top-color: ; border-top-style: ; border-top-width: ; border-right-color: ; border-right-style: ; border-right-width: ; border-left-color: ; border-left-style: ; border-left-width: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-bottom: 0px; border-radius: 23px 23px 0px 0px; pointer-events: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(backdrop-filter: blur(12px))",
+    "sel": ".cmd",
+    "css": "background: rgba(255, 255, 255, 0.88); backdrop-filter: saturate(1.35) blur(12px);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".cmd",
+    "css": "display: flex; align-items: center; margin: 10px 10px 0px; position: sticky; isolation: isolate; transition: margin var(--dur) var(--ease), border-radius var(--dur) var(--ease); gap: 8px; padding: 8px; background: rgba(255, 255, 255, 0.93); box-shadow: rgba(34, 58, 118, 0.09) 0px 0px 0px 1px, rgba(34, 58, 118, 0.55) 0px 14px 26px -20px, rgba(255, 255, 255, 0.95) 0px 1px 0px inset; border-radius: 24px 24px 0px 0px; top: 68px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(backdrop-filter: blur(12px))",
+    "sel": ".cmd",
+    "css": "background: rgba(255, 255, 255, 0.88); backdrop-filter: saturate(1.35) blur(12px);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".cmd",
+    "css": "top: var(--stick-cmd-top);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".cmd",
+    "css": "z-index: var(--z-sticky-cmd);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".cmd",
+    "css": "margin: 0px; padding: var(--s2) var(--gutter); border-radius: 0px; box-shadow: none; transition: background var(--dur) var(--ease);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".cmd",
+    "css": "transition: background var(--dur) var(--ease);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".cmd",
+    "css": "height: var(--stick-cmd);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".cmd, .cmdtop, .toolbar, .rows, .tbl, .list, .form, .sec, .well, .tray, .dock, .drawer",
+    "css": "border-radius: var(--r-panel);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".cmd",
+    "css": "border-radius: var(--r-panel) var(--r-panel) 0 0;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".cmd, .hd, .scope--stuck, .toolbar--stuck",
+    "css": "background: var(--sheet); box-shadow: rgba(34, 58, 118, 0.08) 0px 0px 0px 1px, rgba(34, 58, 118, 0.5) 0px 12px 22px -20px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".field > .cmd, .field .cmd, .sheet > .cmd",
+    "css": "border-radius: 0px; box-shadow: none; background: var(--sheet); border-bottom: 1px solid var(--line-2);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".cmd",
+    "css": "flex-wrap: nowrap;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".ui-toolbar",
+    "css": "display: flex; align-items: center; gap: 8px; min-height: 56px; padding: 10px var(--inset); background: var(--sheet); border-bottom: 1px solid var(--line-2); border-radius: 0px; box-shadow: none; min-width: 0px;"
+   }
+  ],
+  "html": "<div class=\"cmd ui-toolbar\"> <label class=\"search\"><svg class=\"i\"><use href=\"#i-search\"></use></svg><input type=\"search\" id=\"q\" placeholder=\"Find a vehicle — stock, VIN, year, make, model, color…\" autocomplete=\"off\"><kbd>/</kbd></label> <div class=\"facet\"><button class=\"facet__b\" type=\"button\" data-pop=\"p-sort\"><span class=\"facet__k\">Sort</span><span class=\"facet__v\" id=\"sort-v\">When added ↑</span><svg class=\"i\"><use href=\"#i-chev\"></use></svg></button> <div class=\"pop pop--right mn\" id=\"p-sort\""
+ },
+ {
+  "name": "Table header",
+  "ui": "ui-table__head",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".hd",
+  "tag": "div",
+  "cls": "hd ui-thead",
+  "size": "1408x48",
+  "comp": {
+   "display": "grid",
+   "width": "1408px",
+   "height": "48px",
+   "minHeight": "48px",
+   "padding": "9px 16px",
+   "margin": "0px",
+   "gap": "8px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "11px",
+   "fontWeight": "700",
+   "lineHeight": "14.85px",
+   "letterSpacing": "0.88px",
+   "textTransform": "uppercase",
+   "color": "rgb(87, 96, 112)",
+   "backgroundColor": "rgb(255, 255, 255)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(87, 96, 112)",
+   "borderRadius": "0px",
+   "boxShadow": "rgb(216, 222, 231) 0px 1px 0px 0px, rgba(34, 58, 118, 0.45) 0px 12px 22px -20px",
+   "outline": "rgb(87, 96, 112) none 3px",
+   "transition": "opacity 0.16s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.16s cubic-bezier(0.2, 0, 0, 1)",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".hd, .row",
+    "css": "gap: 8px; padding: 0px 16px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(max-width: 1320px)",
+    "sel": ".hd, .row",
+    "css": "gap: 6px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".hd",
+    "css": "display: grid; grid-template-columns: var(--cols); gap: 16px; align-items: center; padding: 4px 16px; font-weight: 700; text-transform: uppercase; color: var(--ink-3); border-bottom: 1px solid var(--line-2); position: sticky; background: var(--sheet); isolation: isolate; transition: opacity var(--dur) var(--ease), box-shadow var(--dur) var(--ease); height: 52px; font-size: 13px; letter-spacing: 0.06em; box-shadow: 0 1px 0 var(--line-3), 0 12px 22px -20px rgba(34,58,118,.5); top: 140px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".hd, .row",
+    "css": "gap: 8px; padding: 0px 16px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".hd",
+    "css": "padding-top: 4px; padding-bottom: 4px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".hd",
+    "css": "top: var(--stick-hd-top);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".hd",
+    "css": "z-index: var(--z-sticky-hd);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(max-width: 1400px)",
+    "sel": ".hd, .row",
+    "css": "gap: 6px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".hd",
+    "css": "padding-left: var(--gutter); padding-right: var(--gutter);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".hd",
+    "css": "height: var(--stick-hd);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".cmd, .hd, .scope--stuck, .toolbar--stuck",
+    "css": "background: var(--sheet); box-shadow: rgba(34, 58, 118, 0.08) 0px 0px 0px 1px, rgba(34, 58, 118, 0.5) 0px 12px 22px -20px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".hd",
+    "css": "box-shadow: 0 1px 0 var(--line), 0 12px 22px -20px rgba(34, 58, 118, .45);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".ui-thead",
+    "css": "min-height: 48px; align-items: center; padding: 9px var(--inset); font-family: var(--font); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); line-height: 1.35; background: var(--sheet); border-bottom: 1px solid var(--line);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1279.98px)",
+    "sel": ".app .rows.ui-table > #tb > .row, .app .rows.ui-table > .hd",
+    "css": "width: var(--tw, auto);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1279.98px)",
+    "sel": ".app .rows.ui-table > .hd",
+    "css": "transform: translateX(calc(var(--sx, 0) * -1px));"
+   }
+  ],
+  "html": "<div class=\"hd ui-thead\" id=\"hd\"><span class=\"s c-status hd--sw\" data-sort=\"status\">Status<button class=\"hd__sw\" type=\"button\" data-swap=\"status\" aria-haspopup=\"true\" aria-label=\"Swap the Status column\" title=\"Swap this column\"><svg class=\"i\"><use href=\"#i-sliders\"></use></svg></button></span><span class=\"hd--sw\"><button class=\"hd__sw\" type=\"button\" data-swap=\"thumb\" aria-haspopup=\"true\" aria-label=\"Swap the Thumbnail column\" title=\"Swap this column\"><svg class=\"i\"><use href=\"#i-sliders\"></use><"
+ },
+ {
+  "name": "Table row",
+  "ui": "ui-table__row",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".row",
+  "tag": "div",
+  "cls": "row",
+  "size": "1408x74",
+  "comp": {
+   "display": "grid",
+   "width": "1408px",
+   "height": "74px",
+   "minHeight": "0px",
+   "padding": "0px 16px",
+   "margin": "0px",
+   "gap": "8px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "19.6px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgba(0, 0, 0, 0)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(13, 19, 32)",
+   "borderRadius": "0px",
+   "boxShadow": "none",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "background 0.16s cubic-bezier(0.2, 0, 0, 1)",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".row",
+    "css": "position: relative; display: grid; grid-template-columns: var(--cols); gap: 16px; align-items: center; height: var(--row); padding: 0px 16px; border-bottom: 1px solid var(--line-2); cursor: pointer; transition: background var(--dur) var(--ease);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".row:hover",
+    "css": "background: var(--well);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".row:focus-visible",
+    "css": "border-radius: 0px; box-shadow: inset 0 0 0 2px var(--brand);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".hd, .row",
+    "css": "gap: 8px; padding: 0px 16px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(max-width: 1320px)",
+    "sel": ".hd, .row",
+    "css": "gap: 6px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".hd, .row",
+    "css": "gap: 8px; padding: 0px 16px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(max-width: 1400px)",
+    "sel": ".hd, .row",
+    "css": "gap: 6px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".row",
+    "css": "border-bottom-color: color-mix(in srgb, var(--line-2) 65%, var(--sheet));"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".row:hover",
+    "css": "background: var(--well);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1279.98px)",
+    "sel": ".app .rows.ui-table > #tb > .row, .app .rows.ui-table > .hd",
+    "css": "width: var(--tw, auto);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1279.98px)",
+    "sel": ":where(.app .rows.ui-table > #tb > .row)",
+    "css": "background-color: var(--sheet);"
+   }
+  ],
+  "html": "<div class=\"row\" data-id=\"v3\" tabindex=\"0\" aria-label=\"2021 SUNDOWNER SUNLITE ARGO 40GN\"><div class=\"st\"><span class=\"stat stat--ok\">Available</span></div><span class=\"th th--none\" title=\"No photos uploaded\"><svg class=\"i\"><use href=\"#i-cam-off\"></use></svg></span><div class=\"stk\"><span class=\"stk__l\"><a class=\"stock\" href=\"single-vehicle-gen11.html\" data-stop=\"\" title=\"Open in the vehicle editor\">18421</a></span><span class=\"stk__vin\" title=\"VIN MZMXA07G6DWM0C9LA\">MZMXA07G6DWM0C9LA</span></div>"
+ },
+ {
+  "name": "Menu / popover",
+  "ui": "ui-menu",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".pop",
+  "tag": "div",
+  "cls": "pop pop--right mn",
+  "size": "0x0",
+  "comp": {
+   "display": "none",
+   "width": "auto",
+   "height": "auto",
+   "minHeight": "0px",
+   "padding": "6px",
+   "margin": "0px",
+   "gap": "normal",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "19.6px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgb(255, 255, 255)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(13, 19, 32)",
+   "borderRadius": "7px",
+   "boxShadow": "rgba(34, 58, 118, 0.42) 0px 28px 64px -34px, rgba(34, 58, 118, 0.1) 0px 2px 8px -3px, rgba(255, 255, 255, 0.95) 0px 1px 0px 0px inset",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".pop--right",
+    "css": "left: auto; right: 0px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".mn",
+    "css": "padding: 6px; min-width: 224px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".pop",
+    "css": "display: none; position: absolute; top: calc(100% + 8px); left: 0px; min-width: 272px; background: var(--sheet); border-radius: 18px; box-shadow: var(--sh-soft);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".pop--right",
+    "css": "left: auto; right: 0px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".pop",
+    "css": "z-index: var(--z-menu);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".pop, .menu, .mn, .sheet--pop, .exp__in, .veh__pr, .veh__kv, .acc, .note, .inset",
+    "css": "border-radius: var(--r-inner);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".pop",
+    "css": "max-width: min(420px, calc(100vw - var(--s6)));"
+   }
+  ],
+  "html": "<div class=\"pop pop--right mn\" id=\"p-sort\"><div class=\"caps mn__lab\">Sort by</div><button class=\"mn__it\" type=\"button\" data-sort=\"stock\"><svg class=\"i\"><use href=\"#i-check\"></use></svg>Stock</button><button class=\"mn__it\" type=\"button\" data-sort=\"year\"><svg class=\"i\"><use href=\"#i-check\"></use></svg>Year</button><button class=\"mn__it\" type=\"button\" data-sort=\"make\"><svg class=\"i\"><use href=\"#i-check\"></use></svg>Make</button><button class=\"mn__it\" type=\"button\" data-sort=\"price\"><svg class=\"i\"><"
+ },
+ {
+  "name": "Menu item",
+  "ui": "ui-menu__item",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".mn__it",
+  "tag": "button",
+  "cls": "mn__it",
+  "size": "0x0",
+  "comp": {
+   "display": "flex",
+   "width": "100%",
+   "height": "auto",
+   "minHeight": "0px",
+   "padding": "8px 10px",
+   "margin": "0px",
+   "gap": "10px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "17.5px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgba(0, 0, 0, 0)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(13, 19, 32)",
+   "borderRadius": "7px",
+   "boxShadow": "none",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "button",
+    "css": "font: inherit; color: inherit; background: none; border: 0px; padding: 0px; cursor: pointer;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "button:disabled",
+    "css": "cursor: default; opacity: 0.45;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".mn__it",
+    "css": "display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 10px; border-radius: 8px; font-size: 14px; color: var(--ink); text-align: left; white-space: nowrap;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".mn__it:hover",
+    "css": "background: var(--wash);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".mn__it, .pop .mn__it, .menu__it",
+    "css": "border-radius: var(--r-inner);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".mn__it",
+    "css": "white-space: normal; overflow-wrap: anywhere;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl, .tally :where(button, span, a).tl",
+    "css": "height: var(--ctl-dense); padding: 0px 10px; border-radius: 7px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line-2); font-size: 13px; font-weight: 500; color: var(--ink-2); gap: 6px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl b, .tally :where(button, span, a).tl b",
+    "css": "font-size: 12.5px; font-weight: 600; color: var(--ink-3); font-variant-numeric: tabular-nums;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ":where(button, span, a).tl:hover",
+    "css": "background: var(--wash); color: var(--ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on, :where(button, span, a).tl[aria-pressed=\"true\"]",
+    "css": "background: var(--brand-soft); color: var(--brand-ink); box-shadow: inset 0 0 0 1px var(--brand-soft-2);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tl--on b, :where(button, span, a).tl[aria-pressed=\"true\"] b",
+    "css": "color: var(--brand-ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".btn, .sel, :where(button, span, a).tl, .tag, .bdg, .badge, .chip, .pill, .lane, .ui-view, .ui-filter, .ui-nav__i, .ui-ctl, .facet__b, .kbd, kbd, .tbtn, .rlink,",
+    "css": "display: inline-flex; align-items: center; line-height: 1;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".mn__it",
+    "css": "display: flex; align-items: center; width: 100%; line-height: 1.25;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".bdg, .badge, .tag, .chip, .pill, :where(button, span, a).tl, .ui-filter",
+    "css": "justify-content: center;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".app .mn__it:not(.mn__it--sub):not(.mn__it--danger)",
+    "css": "color: var(--ink);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1279.98px)",
+    "sel": ".app :is(.btn, .nav__b, .facet__b, .ui-view, .secnav__b, .mn__it, .menu__l, .gsearch, .dealer, .me, .rail__i, .rail__b, .ui-nav__i)",
+    "css": "min-height: 36px;"
+   }
+  ],
+  "html": "<button class=\"mn__it\" type=\"button\" data-sort=\"stock\"><svg class=\"i\"><use href=\"#i-check\"></use></svg>Stock</button>"
+ },
+ {
+  "name": "Pagination",
+  "ui": "ui-pagination",
+  "page": "pages/dealer/all-vehicles-gen11.html",
+  "sel": ".pgr, .foot.pgr",
+  "tag": "div",
+  "cls": "foot pgr pgr--top",
+  "size": "1408x48",
+  "comp": {
+   "display": "flex",
+   "width": "1408px",
+   "height": "48px",
+   "minHeight": "auto",
+   "padding": "0px 16px",
+   "margin": "0px",
+   "gap": "12px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "19.6px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(87, 96, 112)",
+   "backgroundColor": "rgb(255, 255, 255)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(87, 96, 112)",
+   "borderRadius": "0px",
+   "boxShadow": "none",
+   "outline": "rgb(87, 96, 112) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".foot",
+    "css": "display: flex; align-items: center; gap: 12px; height: 48px; border-top: 1px solid var(--line-2); color: var(--ink-3); font-size: 14px; padding: 0px 16px; border-radius: 0px 0px 10px 10px; background: var(--sheet);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".foot",
+    "css": "border-radius: 0px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".foot",
+    "css": "padding: 0 var(--gutter);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".pgr",
+    "css": "gap: var(--s3);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".pgr--top",
+    "css": "border-top: 0px; border-bottom: 1px solid var(--line-2); border-radius: 0px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   }
+  ],
+  "html": "<div class=\"foot pgr pgr--top\" id=\"pg-top\" aria-label=\"Pages\"><span class=\"pgr__n\">Showing <b>1–100</b> of <b>359</b></span><span class=\"sp\"></span><span class=\"pg\"><button type=\"button\" data-pg=\"prev\" aria-label=\"Previous page\" disabled=\"\">‹</button><button type=\"button\" data-pg=\"1\" class=\"on\" aria-current=\"page\">1</button><button type=\"button\" data-pg=\"2\">2</button><span>…</span><button type=\"button\" data-pg=\"4\">4</button><button type=\"button\" data-pg=\"next\" aria-label=\"Next page\">›</button></"
+ },
+ {
+  "name": "Section card (record page)",
+  "ui": "ui-panel (record)",
+  "page": "pages/dealer/single-vehicle-gen11.html",
+  "sel": ".zone",
+  "tag": "section",
+  "cls": "zone",
+  "size": "1168x677",
+  "comp": {
+   "display": "block",
+   "width": "1168px",
+   "height": "676.719px",
+   "minHeight": "0px",
+   "padding": "0px",
+   "margin": "0px",
+   "gap": "normal",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "19.6px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgba(0, 0, 0, 0)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(13, 19, 32)",
+   "borderRadius": "0px",
+   "boxShadow": "none",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset);"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ".zone",
+    "css": "position: relative;"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; scroll-behavior: auto !important;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".zone",
+    "css": "counter-increment: chapter 1;"
+   }
+  ],
+  "html": "<section class=\"zone\" id=\"zSpecs\" aria-labelledby=\"t-specs\"> <div class=\"zone__h\"> <h2 class=\"zone__t\" id=\"t-specs\">Specs &amp; VIN</h2> </div> <div class=\"zone__b\"> <div class=\"vinbar\"> <span class=\"caps\">VIN</span> <span class=\"vinbar__v\" id=\"vinbar-v\">ZFF97CMA0P0300236</span> <button class=\"copy\" type=\"button\" data-copy=\"vin\" aria-label=\"Copy VIN\" title=\"Copy VIN\"><svg class=\"i\"><use href=\"#i-copy\"></use></svg></button> <span class=\"vinbar__sp\"></span> <span class=\"note\" id=\"decode-note\" hidd"
+ },
+ {
+  "name": "Disclosure row",
+  "ui": "ui-disclosure",
+  "page": "pages/dealer/single-vehicle-gen11.html",
+  "sel": ".zone__h",
+  "tag": "div",
+  "cls": "zone__h",
+  "size": "1168x52",
+  "comp": {
+   "display": "flex",
+   "width": "1168px",
+   "height": "52px",
+   "minHeight": "52px",
+   "padding": "8px 16px",
+   "margin": "0px",
+   "gap": "12px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "19.6px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgba(0, 0, 0, 0)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(13, 19, 32)",
+   "borderRadius": "0px",
+   "boxShadow": "none",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset);"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ".zone__h",
+    "css": "display: flex; align-items: center; gap: var(--s3); min-height: var(--zone-hd); padding: var(--s2) var(--sheet-inset);"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; scroll-behavior: auto !important;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   }
+  ],
+  "html": "<div class=\"zone__h\"> <h2 class=\"zone__t\" id=\"t-specs\">Specs &amp; VIN</h2> </div>"
+ },
+ {
+  "name": "Save bar",
+  "ui": "ui-savebar",
+  "page": "pages/dealer/single-vehicle-gen11.html",
+  "sel": ".savebar, .sbar",
+  "tag": "div",
+  "cls": "savebar",
+  "size": "1440x48",
+  "comp": {
+   "display": "flex",
+   "width": "1440px",
+   "height": "48px",
+   "minHeight": "0px",
+   "padding": "10px 24px",
+   "margin": "0px",
+   "gap": "10px 8px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "19.6px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(243, 246, 251)",
+   "backgroundColor": "rgb(255, 255, 255)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(243, 246, 251)",
+   "borderRadius": "0px",
+   "boxShadow": "rgb(216, 222, 231) 0px -1px 0px 0px, rgba(34, 58, 118, 0.4) 0px -10px 24px -20px",
+   "outline": "rgb(243, 246, 251) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset);"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ".savebar :focus-visible, .photo--main :focus-visible",
+    "css": "outline-color: var(--focus-color-on-dark);"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ".savebar",
+    "css": "position: fixed; left: 50%; bottom: var(--s5); transform: translateX(-50%); z-index: var(--z-savebar); display: flex; align-items: center; gap: var(--s3); max-width: calc(100vw - var(--s9)); height: var(--s8); padding: 0 var(--s2) 0 var(--s4); border-radius: var(--r-control); background: var(--focal); box-shadow: var(--el-3); color: var(--focal-ink);"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; scroll-behavior: auto !important;"
+   },
+   {
+    "file": "single-vehicle-gen11.css",
+    "media": "",
+    "sel": ".savebar",
+    "css": "left: auto; right: var(--gutter); bottom: var(--s4); transform: none; border-radius: var(--r-card);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".savebar",
+    "css": "left: 0px; right: 0px; width: auto; bottom: 0px; transform: none; max-width: none; display: flex; align-items: center; justify-content: flex-end; gap: 10px; padding: 10px calc(var(--gutter, 16px) + 8px); border-radius: 0px; background: var(--sheet); box-shadow: 0 -1px 0 var(--line), 0 -10px 24px -20px rgba(34, 58, 118, .40); backdrop-filter: none;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".head__actions, .cock__acts, .chips, .tally, .statuses, .savebar, .tray",
+    "css": "column-gap: var(--s2);"
+   }
+  ],
+  "html": "<div class=\"savebar\" id=\"savebar\"> <span class=\"savebar__n\" id=\"save-n\"><b>0</b> unsaved change(s)</span> <span class=\"savebar__say\" id=\"save-say\" hidden=\"\"></span> <span class=\"savebar__div\"></span> <span class=\"pop-wrap\"> <button class=\"savebar__b\" type=\"button\" data-pop=\"p-changes\" aria-haspopup=\"true\" aria-expanded=\"false\" id=\"review-btn\" disabled=\"\"><svg class=\"i\"><use href=\"#i-list\"></use></svg>Review changes</button> <div class=\"pop pop--up\" id=\"p-changes\" aria-label=\"Changed fields\"><div"
+ },
+ {
+  "name": "Record head card",
+  "ui": "ui-page-header (record)",
+  "page": "pages/dealer/single-lead-gen11.html",
+  "sel": ".head--card",
+  "tag": "div",
+  "cls": "head head--card",
+  "size": "1408x148",
+  "comp": {
+   "display": "flex",
+   "width": "1408px",
+   "height": "148.188px",
+   "minHeight": "0px",
+   "padding": "12px 24px 24px",
+   "margin": "12px 0px 24px",
+   "gap": "0px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "19.6px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgb(255, 255, 255)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(13, 19, 32)",
+   "borderRadius": "14px",
+   "boxShadow": "rgba(34, 58, 118, 0.42) 0px 28px 64px -34px, rgba(34, 58, 118, 0.1) 0px 2px 8px -3px, rgba(255, 255, 255, 0.95) 0px 1px 0px 0px inset",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".head",
+    "css": "grid-area: 2 / 1 / auto / -1; display: flex; align-items: center; gap: 8px; min-width: 0px;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "single-lead-gen11.css",
+    "media": "",
+    "sel": ".head",
+    "css": "gap: var(--s2);"
+   },
+   {
+    "file": "single-lead-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: none; outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); border-radius: var(--r-inner);"
+   },
+   {
+    "file": "single-lead-gen11.css",
+    "media": "",
+    "sel": ".head.head--card",
+    "css": "display: flex; flex-direction: column; align-items: stretch; gap: 0px; min-height: 0px; margin: var(--s2) 0 var(--gutter); padding: var(--s3) var(--s5) var(--s5); border-radius: var(--r-card); background: var(--sheet); box-shadow: var(--sh-soft);"
+   },
+   {
+    "file": "single-lead-gen11.css",
+    "media": "",
+    "sel": ".app > .head.head--card",
+    "css": "height: auto; max-height: none;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".app > .head",
+    "css": "margin-top: 12px; margin-bottom: 24px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1279.98px)",
+    "sel": ".app > .head:not(.head--card)",
+    "css": "flex-wrap: wrap; height: auto; min-height: 0px; row-gap: var(--s2);"
+   }
+  ],
+  "html": "<div class=\"head head--card\"> <div class=\"head__top\"> <a class=\"btn btn--quiet btn--sm\" href=\"all-leads-gen11.html\"><svg class=\"i\"><use href=\"#i-left\"></use></svg> Back to board</a> <!-- ReSend / Email (Bill, Nov 10): in the live system now - re-sends the lead to the dealership's lead-routing emails or CRM (the emails in the settings), for \"I never got that lead\" --> <button class=\"btn btn--sheet btn--sm\" type=\"button\" data-act=\"resend\" title=\"Re-send this lead to the dealership's lead-routing e"
+ },
+ {
+  "name": "Section navigator",
+  "ui": "ui-subtab",
+  "page": "pages/dealer/single-lead-gen11.html",
+  "sel": ".secnav",
+  "tag": "nav",
+  "cls": "secnav ui-views",
+  "size": "534x38",
+  "comp": {
+   "display": "flex",
+   "width": "534.328px",
+   "height": "38px",
+   "minHeight": "36px",
+   "padding": "0px",
+   "margin": "0px",
+   "gap": "4px 6px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "19.6px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgba(0, 0, 0, 0)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(13, 19, 32)",
+   "borderRadius": "0px",
+   "boxShadow": "none",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "single-lead-gen11.css",
+    "media": "",
+    "sel": ".secnav",
+    "css": "display: inline-flex; gap: 2px; padding: 5px; background: var(--well); box-shadow: inset 0 0 0 1px var(--line); min-width: 0px;"
+   },
+   {
+    "file": "single-lead-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: none; outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); border-radius: var(--r-inner);"
+   },
+   {
+    "file": "single-lead-gen11.css",
+    "media": "(max-width: 1279.98px)",
+    "sel": ".cmd.cmd--sec .secnav",
+    "css": "flex: 0 1 auto; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".secnav",
+    "css": "height: 38px; padding: 4px; border-radius: var(--r-control);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".cmd > *",
+    "css": "min-width: 0px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".cmd--sec, .secnav, .tabs--sec",
+    "css": "min-width: 0px; flex-wrap: wrap; overflow: visible;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".secnav, .tabs, .seg, .cock__nav",
+    "css": "column-gap: 6px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".ui-views",
+    "css": "display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px 6px; min-height: var(--ctl); padding: 0px; width: auto; border: 0px; border-radius: 0px; background: none; box-shadow: none; flex: 0 1 auto; max-width: 100%; min-width: 0px; overflow: visible;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".ui-toolbar > *",
+    "css": "flex: 0 0 auto; min-width: 0px;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".ui-toolbar > .ui-views, .cmdtop > .ui-views, .sub > .ui-views",
+    "css": "flex: 0 1 auto; min-width: 0px;"
+   }
+  ],
+  "html": "<nav class=\"secnav ui-views\" id=\"secnav\" aria-label=\"Sections on this page\"> <a class=\"secnav__b secnav__b--on ui-view ui-view--on\" href=\"#s-overview\" data-sec=\"s-overview\" aria-current=\"true\">Overview</a> <a class=\"secnav__b ui-view\" href=\"#s-contact\" data-sec=\"s-contact\">Contact</a> <a class=\"secnav__b ui-view\" href=\"#s-trade\" data-sec=\"s-trade\">Trade-in</a> <a class=\"secnav__b ui-view\" href=\"#s-activity\" data-sec=\"s-activity\">Activity <b id=\"n-act\">4</b></a> <a class=\"secnav__b ui-view\" href="
+ },
+ {
+  "name": "Dock (side panel)",
+  "ui": "ui-panel (side)",
+  "page": "pages/dealer/single-lead-gen11.html",
+  "sel": ".dock",
+  "tag": "aside",
+  "cls": "dock",
+  "size": "400x789",
+  "comp": {
+   "display": "flex",
+   "width": "400px",
+   "height": "789.297px",
+   "minHeight": "0px",
+   "padding": "0px",
+   "margin": "0px",
+   "gap": "normal",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "19.6px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgb(255, 255, 255)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(13, 19, 32)",
+   "borderRadius": "12px",
+   "boxShadow": "rgba(16, 24, 40, 0.22) 0px 12px 30px -14px, rgba(16, 24, 40, 0.05) 0px 0px 0px 1px",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "opacity 0.24s cubic-bezier(0.2, 0, 0, 1), transform 0.24s cubic-bezier(0.2, 0, 0, 1)",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: var(--focus); border-radius: var(--r-s);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "transition-duration: 0.01ms !important; animation-duration: 0.01ms !important;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".app.dock-open .dock",
+    "css": "opacity: 1; transform: none; visibility: visible; transition: opacity var(--dur2) var(--ease), transform var(--dur2) var(--ease);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".dock",
+    "css": "min-width: 0px; min-height: 0px; display: flex; flex-direction: column; background: var(--sheet); border-radius: var(--r-l); box-shadow: var(--el-2); overflow: hidden; opacity: 0; transform: translateX(16px); visibility: hidden; transition: opacity var(--dur2) var(--ease), transform var(--dur2) var(--ease), visibility 0s linear var(--dur2); grid-area: 4 / 2; position: sticky; align-self: start; top: var(--top); max-height: calc(100vh - var(--top) - 16px);"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ".dock",
+    "css": "top: var(--stick-cmd-top); max-height: calc(100vh - var(--stick-cmd-top) - var(--sheet-inset));"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "all-vehicles-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); box-shadow: none; border-radius: revert;"
+   },
+   {
+    "file": "single-lead-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "box-shadow: none; outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); border-radius: var(--r-inner);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".cmd, .cmdtop, .toolbar, .rows, .tbl, .list, .form, .sec, .well, .tray, .dock, .drawer",
+    "css": "border-radius: var(--r-panel);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1179.98px)",
+    "sel": ".app > .dock",
+    "css": "position: fixed; z-index: var(--z-menu); top: calc(var(--stick-bar) + var(--s5)); right: var(--gutter); bottom: var(--gutter); width: min(440px, calc(100vw - 2 * var(--gutter))); max-height: none; height: auto; align-self: stretch; box-shadow: var(--el-3);"
+   }
+  ],
+  "html": "<aside class=\"dock\" id=\"dock\" aria-label=\"Workflow\"> <div class=\"dock__h\"><h2 class=\"dock__t\">Workflow</h2><span class=\"dock__c\" id=\"dock-c\">#16994</span><button class=\"dock__x\" type=\"button\" data-act=\"close\" aria-label=\"Close workflow\"><svg class=\"i\"><use href=\"#i-x\"></use></svg></button></div> <div class=\"dock__b\"> <form class=\"wf\" id=\"f-wf\" autocomplete=\"off\" novalidate=\"\"> <div class=\"wf__state\"><span class=\"caps\">Current state</span><span class=\"stat stat--new\" id=\"wf-chip\">New Lead</span><"
+ },
+ {
+  "name": "Login card",
+  "ui": "ui-auth",
+  "page": "pages/dealer/dealer-login-gen11.html",
+  "sel": ".card, .login, form",
+  "tag": "section",
+  "cls": "card",
+  "size": "400x523",
+  "comp": {
+   "display": "block",
+   "width": "400px",
+   "height": "522.688px",
+   "minHeight": "auto",
+   "padding": "36px 32px 28px",
+   "margin": "0px",
+   "gap": "normal",
+   "fontFamily": "Archivo, system-ui, sans-serif",
+   "fontSize": "15px",
+   "fontWeight": "400",
+   "lineHeight": "22.5px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(242, 245, 250)",
+   "backgroundColor": "rgba(0, 0, 0, 0.47)",
+   "backgroundImage": "linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.02) 38%, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0.05) 100%), none",
+   "borderTop": "0px none rgb(242, 245, 250)",
+   "borderRadius": "0px",
+   "boxShadow": "rgba(255, 255, 255, 0.22) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.12) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.4) 0px -1px 0px 0px inset, rgba(0, 0, 0, 0.5) 0px 30px 80px 0px",
+   "outline": "rgb(242, 245, 250) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "dealer-login-video.css",
+    "media": "",
+    "sel": "*",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "dealer-login-video.css",
+    "media": "",
+    "sel": ".card",
+    "css": "position: relative; padding: 36px 32px 28px; border-radius: 0px; background: linear-gradient(135deg, rgba(255, 255, 255, .09) 0%, rgba(255, 255, 255, .02) 38%, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, .05) 100%),\r\n    rgba(0, 0, 0, var(--glass-tint)); box-shadow: rgba(255, 255, 255, 0.22) 0px 1px 0px inset, rgba(255, 255, 255, 0.12) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.4) 0px -1px 0px inset, rgba(0, 0, 0, 0.5) 0px 30px 80px; backdrop-filter: url(#glass) blur(var(--glass-blur)) brightness(var(--glass-bright)) saturate(1.05);"
+   },
+   {
+    "file": "dealer-login-video.css",
+    "media": "not (backdrop-filter: url(#glass))",
+    "sel": ".card",
+    "css": "backdrop-filter: blur(14px) brightness(0.62) saturate(0.9);"
+   }
+  ],
+  "html": "<section class=\"card\" aria-label=\"Sign in\"> <h1>Login<span>to your account</span></h1> <form method=\"post\" action=\"#\" novalidate=\"\"> <div class=\"row\"> <label for=\"email\">User Name</label> <input id=\"email\" name=\"email\" type=\"text\" autocomplete=\"username\" spellcheck=\"false\" required=\"\"> </div> <div class=\"row\"> <label for=\"password\">Password</label> <div class=\"pw\"> <input id=\"password\" name=\"password\" type=\"password\" autocomplete=\"current-password\" required=\"\"> <button class=\"eye\" type=\"button\" "
+ },
+ {
+  "name": "Feed entry (history)",
+  "ui": "ui-stream__item",
+  "page": "pages/staff/single-ticket-gen11.html",
+  "sel": ".ev, .msg",
+  "tag": "li",
+  "cls": "ev ev--message",
+  "size": "944x197",
+  "comp": {
+   "display": "grid",
+   "width": "944px",
+   "height": "197.438px",
+   "minHeight": "0px",
+   "padding": "12px 14px",
+   "margin": "0px 0px 8px",
+   "gap": "12px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "20.3px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgb(255, 255, 255)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(13, 19, 32)",
+   "borderRadius": "10px",
+   "boxShadow": "rgb(229, 233, 239) 0px 0px 0px 1px inset",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "single-ticket-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "single-ticket-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "single-ticket-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); border-radius: var(--r-micro);"
+   },
+   {
+    "file": "single-ticket-gen11.css",
+    "media": "",
+    "sel": ".ev",
+    "css": "position: relative; display: grid; grid-template-columns: 36px minmax(0px, 1fr) auto; gap: var(--s3); padding: var(--s3) 0; align-items: start;"
+   },
+   {
+    "file": "single-ticket-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "animation-duration: 1ms !important; transition-duration: 1ms !important; scroll-behavior: auto !important;"
+   },
+   {
+    "file": "single-ticket-gen11.css",
+    "media": "",
+    "sel": ".ev",
+    "css": "padding: var(--s4) 0;"
+   },
+   {
+    "file": "single-ticket-gen11.css",
+    "media": "",
+    "sel": "#s-thread .ev",
+    "css": "background: var(--sheet); border-radius: 10px; box-shadow: inset 0 0 0 1px var(--line-2); padding: 12px 14px; margin-bottom: 8px; border-bottom: 0px;"
+   },
+   {
+    "file": "single-ticket-gen11.css",
+    "media": "",
+    "sel": "#s-thread .ev:hover",
+    "css": "box-shadow: inset 0 0 0 1px var(--line);"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   }
+  ],
+  "html": "<li class=\"ev ev--message\" data-ev=\"message-0\"><span class=\"ev__i\"><svg class=\"i\"><use href=\"#i-mail\"></use></svg></span><div class=\"ev__b\"><div class=\"ev__t\"><span class=\"kind\">Message</span><span class=\"who\">SAMANTHA BECK</span></div><span class=\"ev__n\">We have edits that need to be made to our website - there are a lot of double edits and we would like to schedule a call to request changes. can you contact us asap by phone 8138036500 or email info@oneexoticstampa.com - I need to speak with Ka"
+ },
+ {
+  "name": "Dialog",
+  "ui": "ui-modal",
+  "page": "pages/staff/manage-dealers-gen11.html",
+  "sel": "dialog.modal",
+  "tag": "dialog",
+  "cls": "modal",
+  "size": "620x669",
+  "comp": {
+   "display": "block",
+   "width": "620px",
+   "height": "668.844px",
+   "minHeight": "0px",
+   "padding": "0px",
+   "margin": "115.578px 410px",
+   "gap": "normal",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "20.3px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgb(255, 255, 255)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(13, 19, 32)",
+   "borderRadius": "14px",
+   "boxShadow": "rgba(16, 24, 40, 0.34) 0px 30px 64px -18px, rgba(16, 24, 40, 0.06) 0px 0px 0px 1px",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); border-radius: var(--r-micro);"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": ".modal",
+    "css": "width: 620px; max-width: calc(100vw - var(--s8)); max-height: calc(100vh - var(--s9)); padding: 0px; border: 0px; border-radius: var(--r-card); background: var(--sheet); box-shadow: var(--el-3); color: var(--ink); overflow: hidden;"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "animation-duration: 1ms !important; transition-duration: 1ms !important; scroll-behavior: auto !important;"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "print",
+    "sel": ".top, .cmdtop, .cmd, .sub, .pop, .frf, .head__actions, .modal",
+    "css": "display: none !important;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   }
+  ],
+  "html": "<dialog class=\"modal\" id=\"pkg\" aria-labelledby=\"pkg-t\" open=\"\"> <form method=\"dialog\" class=\"modal__in\"> <div class=\"modal__hd\"> <h2 class=\"modal__t\" id=\"pkg-t\">Dealer Package</h2> <button class=\"modal__x\" type=\"submit\" value=\"close\" aria-label=\"Close\"><svg class=\"i\"><use href=\"#i-x\"></use></svg></button> </div> <div class=\"modal__bd\"> <div class=\"fg\"> <div class=\"fld-w fld-w--full\"> <label class=\"fld-l fld-l--req\" for=\"pkg-d\">Dealer</label> <select class=\"fld\" id=\"pkg-d\"><option value=\"659\">1 S"
+ },
+ {
+  "name": "Counts strip",
+  "ui": "ui-statstrip",
+  "page": "pages/staff/manage-dealers-gen11.html",
+  "sel": ".tally",
+  "tag": "div",
+  "cls": "tally",
+  "size": "1408x44",
+  "comp": {
+   "display": "flex",
+   "width": "1408px",
+   "height": "44px",
+   "minHeight": "auto",
+   "padding": "0px 0px 12px",
+   "margin": "0px",
+   "gap": "6px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "20.3px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgba(0, 0, 0, 0)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(13, 19, 32)",
+   "borderRadius": "0px",
+   "boxShadow": "none",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); border-radius: var(--r-micro);"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": ".tally",
+    "css": "grid-row: 3; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s1) var(--s2); padding: 0 0 var(--s3);"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "animation-duration: 1ms !important; transition-duration: 1ms !important; scroll-behavior: auto !important;"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "print",
+    "sel": ".tally",
+    "css": "padding-bottom: 8px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ".head__actions, .cock__acts, .chips, .tally, .statuses, .savebar, .tray",
+    "css": "column-gap: var(--s2);"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".tally",
+    "css": "display: flex; align-items: center; gap: 6px; flex-wrap: wrap;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "",
+    "sel": ".ui-filters, .tally",
+    "css": "display: flex; align-items: center; flex-wrap: wrap; gap: 6px; min-width: 0px;"
+   }
+  ],
+  "html": "<div class=\"tally\" id=\"tally\" aria-label=\"Roster counts\"><span class=\"caps tally__l\">Roster</span><span class=\"tl\"><span>Active</span><b>317</b></span><span class=\"tl\"><span>Client Intake</span><b>24</b></span><span class=\"tl\"><span>Pending</span><b>24</b></span><span class=\"tl\"><span>Inactive</span><b>744</b></span><span class=\"tl\"><span>Has Marketing Package</span><b>58</b></span><span class=\"tl\"><span>No Marketing Package</span><b>259</b></span><nav class=\"tally__links\" aria-label=\"Dealer ref"
+ },
+ {
+  "name": "Empty state",
+  "ui": "ui-empty",
+  "page": "pages/staff/manage-dealers-gen11.html",
+  "sel": ".empty",
+  "tag": "div",
+  "cls": "empty",
+  "size": "0x0",
+  "comp": {
+   "display": "none",
+   "width": "auto",
+   "height": "auto",
+   "minHeight": "0px",
+   "padding": "64px 16px",
+   "margin": "0px",
+   "gap": "12px",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "20.3px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(87, 96, 112)",
+   "backgroundColor": "rgba(0, 0, 0, 0)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(87, 96, 112)",
+   "borderRadius": "0px",
+   "boxShadow": "none",
+   "outline": "rgb(87, 96, 112) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": "[hidden]",
+    "css": "display: none !important;"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); border-radius: var(--r-micro);"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": ".empty",
+    "css": "display: flex; flex-direction: column; align-items: center; gap: var(--s3); padding: var(--s9) var(--gutter); color: var(--ink-3); text-align: center;"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "animation-duration: 1ms !important; transition-duration: 1ms !important; scroll-behavior: auto !important;"
+   },
+   {
+    "file": "manage-dealers-gen11.css",
+    "media": "",
+    "sel": "[hidden]",
+    "css": "display: none !important;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": "[hidden]",
+    "css": "display: none !important;"
+   },
+   {
+    "file": "_aan-components.css",
+    "media": "(max-width: 1279.98px)",
+    "sel": ".app .rows.ui-table > #tb > :is(.exp, .empty, .gal)",
+    "css": "position: sticky; left: 0px;"
+   }
+  ],
+  "html": "<div class=\"empty\" id=\"empty\" hidden=\"\"></div>"
+ },
+ {
+  "name": "Form field group",
+  "ui": "ui-field",
+  "page": "pages/staff/dealer-edit-gen11.html",
+  "sel": ".fw",
+  "tag": "div",
+  "cls": "fw",
+  "size": "424x64",
+  "comp": {
+   "display": "block",
+   "width": "424px",
+   "height": "63.8438px",
+   "minHeight": "auto",
+   "padding": "0px",
+   "margin": "0px",
+   "gap": "normal",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "14px",
+   "fontWeight": "400",
+   "lineHeight": "20.3px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(13, 19, 32)",
+   "backgroundColor": "rgba(0, 0, 0, 0)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(13, 19, 32)",
+   "borderRadius": "0px",
+   "boxShadow": "none",
+   "outline": "rgb(13, 19, 32) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "dealer-edit-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "dealer-edit-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "dealer-edit-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); border-radius: var(--r-micro);"
+   },
+   {
+    "file": "dealer-edit-gen11.css",
+    "media": "",
+    "sel": ".fw",
+    "css": "min-width: 0px;"
+   },
+   {
+    "file": "dealer-edit-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "animation-duration: 1ms !important; transition-duration: 1ms !important; scroll-behavior: auto !important;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   }
+  ],
+  "html": "<div class=\"fw\"><label class=\"fl\" for=\"f1\">Account Status</label><select class=\"fld\" id=\"f1\" data-k=\"f.status\"><option value=\"T\">Client Intake</option><option value=\"P\">Pending</option><option value=\"A\" selected=\"\">Active</option><option value=\"I\">Inactive</option></select></div>"
+ },
+ {
+  "name": "Form label",
+  "ui": "ui-field__label",
+  "page": "pages/staff/dealer-edit-gen11.html",
+  "sel": ".fl",
+  "tag": "label",
+  "cls": "fl",
+  "size": "424x19",
+  "comp": {
+   "display": "block",
+   "width": "424px",
+   "height": "18.8438px",
+   "minHeight": "0px",
+   "padding": "0px",
+   "margin": "0px 0px 5px",
+   "gap": "normal",
+   "fontFamily": "Archivo, \"Segoe UI\", system-ui, sans-serif",
+   "fontSize": "13px",
+   "fontWeight": "600",
+   "lineHeight": "18.85px",
+   "letterSpacing": "normal",
+   "textTransform": "none",
+   "color": "rgb(53, 62, 78)",
+   "backgroundColor": "rgba(0, 0, 0, 0)",
+   "backgroundImage": "none",
+   "borderTop": "0px none rgb(53, 62, 78)",
+   "borderRadius": "0px",
+   "boxShadow": "none",
+   "outline": "rgb(53, 62, 78) none 3px",
+   "transition": "all",
+   "opacity": "1"
+  },
+  "rules": [
+   {
+    "file": "dealer-edit-gen11.css",
+    "media": "",
+    "sel": "*, ::before, ::after",
+    "css": "box-sizing: border-box;"
+   },
+   {
+    "file": "dealer-edit-gen11.css",
+    "media": "",
+    "sel": ":focus",
+    "css": "outline: none;"
+   },
+   {
+    "file": "dealer-edit-gen11.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); border-radius: var(--r-micro);"
+   },
+   {
+    "file": "dealer-edit-gen11.css",
+    "media": "",
+    "sel": ".fl",
+    "css": "display: block; margin-bottom: 5px; color: var(--ink-2); font-size: 13px; font-weight: 600;"
+   },
+   {
+    "file": "dealer-edit-gen11.css",
+    "media": "(prefers-reduced-motion: reduce)",
+    "sel": "*, ::before, ::after",
+    "css": "animation-duration: 1ms !important; transition-duration: 1ms !important; scroll-behavior: auto !important;"
+   },
+   {
+    "file": "_aan-family.css",
+    "media": "",
+    "sel": ":focus-visible",
+    "css": "outline: 2px solid var(--brand); outline-offset: 2px;"
+   }
+  ],
+  "html": "<label class=\"fl\" for=\"f1\">Account Status</label>"
+ }
+]
