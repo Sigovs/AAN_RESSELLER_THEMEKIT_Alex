@@ -506,7 +506,7 @@
 '.note { display: grid; gap: 7px; padding: 11px var(--s3); border-radius: var(--r2);',
 '        background: var(--bg2); box-shadow: inset 0 0 0 1px var(--line2); cursor: pointer; }',
 '.note:hover { box-shadow: inset 0 0 0 1px var(--line); }',
-'.note--sel { box-shadow: inset 0 0 0 1px var(--acc); }',
+'.note--sel { box-shadow: inset 0 0 0 2px var(--acc); background: rgba(255,122,61,.10); }',
 '.note--done { opacity: .5; }',
 '.note__h { display: flex; align-items: center; gap: var(--s2); }',
 '.note__n { flex: none; width: 20px; height: 20px; border-radius: 50%; background: var(--acc); color: #26120a;',
@@ -1083,8 +1083,34 @@
   (function () {
     var m = /(?:^|[#&])aan-note=([a-z0-9]+)/i.exec(location.hash);
     if (!m) return;
-    setTimeout(function () { openPanel(true); focusNote(m[1]); }, 450);
+    /* Nov 17 (Alex: a dashboard link must land exactly on its note). Wait until the note has arrived (a first visit has
+       no mirror yet), show it even when it is resolved, scroll the panel's list to it and mark it, then walk to its
+       element. Before, it looked once after 450ms, kept the "Open" filter and left the list at the top. */
+    var id = m[1], tries = 0;
+    function land() {
+      var n = mine().filter(function (x) { return x.id === id; })[0];
+      if (!n) {
+        if (++tries < 48) return setTimeout(land, 250);
+        openPanel(true); toast('That note is not on this page'); return;
+      }
+      var hidden = (S.filter === 'open' && n.status === 'done') || (S.filter === 'done' && n.status !== 'done') || S.filter === 'mine';
+      if (hidden) { S.filter = 'all'; elFilter.value = 'all'; }
+      S.landed = id;
+      openPanel(true);
+      focusNote(id);
+      showInList(id);
+    }
+    setTimeout(land, 300);
   })();
+  /* bring a note's card into view inside the panel, without moving the page */
+  function showInList(id) {
+    var c = elList.querySelector('.note[data-id="' + id + '"]');
+    if (!c) return;
+    var sc = c.parentNode;
+    while (sc && sc !== sr && sc.scrollHeight <= sc.clientHeight + 1) sc = sc.parentNode;
+    if (!sc || sc === sr) return;
+    sc.scrollTop += c.getBoundingClientRect().top - sc.getBoundingClientRect().top - 12;
+  }
 
   /* First a full read so the panel shows what everyone has written, then a
      light poll for what changed. The poll stops while the tab is hidden —

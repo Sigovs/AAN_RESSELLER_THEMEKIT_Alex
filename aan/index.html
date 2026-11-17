@@ -369,6 +369,15 @@
   .qa__h--nf { margin-top: 0; }
   .qa--nf { margin-top: 20px; }
   #questions, #new-features { scroll-margin-top: 72px; }
+  .qa-sec { margin-top: 64px; margin-bottom: 16px; }
+  .qa-sec--nf { margin-top: 72px; }
+  .qa-sec h2 { display: inline-flex; align-items: center; gap: 12px; }
+  .qa-sec h2 .qa__n { height: 26px; min-width: 32px; font-size: 13px; }
+  .qa-sec + .qa { margin-top: 0; }
+  .qa--ask { box-shadow: inset 3px 0 0 var(--amber), inset 0 0 0 1px rgba(255,255,255,.10); }
+  .qa--nf { box-shadow: inset 3px 0 0 var(--brand-2), inset 0 0 0 1px rgba(255,255,255,.10); }
+  .qa--nf .qa__n, .qa-sec--nf .qa__n { background: rgba(255,255,255,.08); color: var(--on-2); }
+  .qa .qa__h { justify-content: flex-end; margin-bottom: 4px; }
   .qa__n { display: inline-grid; place-items: center; min-width: 26px; height: 22px; padding: 0 8px; border-radius: 99px; background: rgba(242,161,43,.16); color: var(--amber); font: 600 12px var(--mono); }
   .qa__h--nf .qa__n { background: rgba(255,255,255,.08); color: var(--on-2); }
   .qa__s { font-size: 13px; color: var(--on-3); }
@@ -536,20 +545,25 @@
        review-status.html, which ships in the same build, so the dashboard never
        holds a second, older copy of the list. Links to a note open it here, on
        this build, with the notes tool. -->
-  <div class="qa" id="questions">
-    <div class="qa__h">
-      <b>Questions for the team</b><span class="qa__n" id="qa-n"></span>
-      <span class="qa__s">Round 1 (October) and round 2 (November). Each says what was asked and by whom; <b>See the note in v2</b> opens it where it was left.</span>
-      <a class="qa__all" href="review-status.html">Full status page &rarr;</a>
-    </div>
+  <!-- Two separate sections (Alex, Nov 17: "separate New Features and Questions for the team more clearly"): each has
+       its own section head, like What changed below, its own accent and its own link in the bar. -->
+  <div class="sec-h qa-sec" id="questions">
+    <span class="caps">Open &middot; waiting for answers</span>
+    <h2>Questions for the team<span class="qa__n" id="qa-n"></span></h2>
+    <p>Round 1 (October) and round 2 (November). Each says what was asked and by whom; <b>See the note</b> opens its page with that note marked in the notes panel.</p>
+  </div>
+  <div class="qa qa--ask">
+    <div class="qa__h"><a class="qa__all" href="review-status.html#h-ask">Full status page &rarr;</a></div>
     <ol class="qa__l" id="qa-list"><li class="qa__empty">Loading the questions&hellip;</li></ol>
   </div>
 
-  <!-- New features, its own block with its own link in the bar (Alex, Nov 17: it sat under 38 questions and was hard to find) -->
-  <div class="qa qa--nf" id="new-features">
-    <div class="qa__h qa__h--nf"><b>New features, after go-live</b><span class="qa__n" id="nf-n"></span>
-      <span class="qa__s">This redesign is a facelift of the old system. Each of these comes back after go-live, and Tony approves it then.</span>
-      <a class="qa__all" href="review-status.html#h-nf">On the status page &rarr;</a></div>
+  <div class="sec-h qa-sec qa-sec--nf" id="new-features">
+    <span class="caps">Parked &middot; after go-live</span>
+    <h2>New features<span class="qa__n" id="nf-n"></span></h2>
+    <p>This redesign is a facelift of the old system. Each of these comes back after go-live, and Tony approves it then.</p>
+  </div>
+  <div class="qa qa--nf">
+    <div class="qa__h"><a class="qa__all" href="review-status.html#h-nf">On the status page &rarr;</a></div>
     <ol class="qa__l" id="nf-list"></ol>
   </div>
 
