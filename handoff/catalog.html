@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gen 11 Design System — Catalogue</title>
+<meta name="description" content="AAN Gen 11 design system for the new backend: tokens, atoms, molecules, organisms, templates and pages. Each component shows the Gen 11 reference next to the package layer on the backend's own ui-* markup.">
+<!-- the package, in the order the backend loads it: (theme.css — stood in for by catalog-base.css) → tokens → components -->
+<link rel="stylesheet" href="catalog-base.css">
+<link rel="stylesheet" href="aan-gen11-theme.css">
+<link rel="stylesheet" href="aan-gen11-components.css">
+<style>
+  /* page chrome of the catalogue itself (not part of the package) */
+  body { margin: 0; background: var(--color-surface-0); color: var(--color-ink); font: 400 14px/1.4 var(--font-sans); }
+  a { color: var(--color-brand-strong); }
+  .cat-bar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px; padding: 12px clamp(16px, 4vw, 48px);
+    background: rgba(238,241,245,.86); backdrop-filter: blur(12px); box-shadow: inset 0 -1px 0 #d8dee7; }
+  .cat-bar b { font-size: 15px; }
+  .cat-bar nav { display: flex; gap: 4px; flex-wrap: wrap; margin-left: auto; }
+  .cat-bar nav a { padding: 6px 10px; border-radius: 8px; color: #353e4e; text-decoration: none; font-weight: 500; }
+  .cat-bar nav a:hover { background: #fff; color: var(--color-ink); }
+  .cat { max-width: 1240px; margin: 0 auto; padding: 32px clamp(16px, 4vw, 48px) 96px; }
+  .cat-intro h1 { margin: 0 0 8px; font: 600 34px/1.1 var(--font-sans); letter-spacing: -.025em; }
+  .cat-intro p { margin: 0; max-width: 72ch; color: #353e4e; font-size: 15px; line-height: 1.55; }
+  .ladder { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; margin: 24px 0 8px; }
+  .ladder a { display: block; padding: 12px 14px; border-radius: 12px; background: #fff; box-shadow: var(--g11-pill); text-decoration: none; color: var(--color-ink); }
+  .ladder a b { display: block; font-size: 15px; }
+  .ladder a span { font-size: 13px; color: var(--color-ink-muted); }
+  .rule { margin: 16px 0 0; padding: 12px 16px; border-radius: 12px; background: var(--color-brand-soft); color: #1747b3; font-size: 14px; }
+  .lvl { margin-top: 64px; scroll-margin-top: 72px; }
+  .lvl > h2 { display: flex; align-items: baseline; gap: 12px; margin: 0 0 6px; font: 600 26px/1.15 var(--font-sans); letter-spacing: -.02em; }
+  .lvl > h2 small { font: 500 14px var(--font-sans); color: var(--color-ink-muted); letter-spacing: 0; }
+  .lvl > p { margin: 0 0 20px; max-width: 76ch; color: #353e4e; }
+  .card { margin-top: 16px; padding: 20px 24px; border-radius: 14px; background: #fff; box-shadow: var(--g11-soft); }
+  .card__h { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 14px; margin-bottom: 14px; }
+  .card__h h3 { margin: 0; font: 600 18px/1.2 var(--font-sans); }
+  .card__h code { font: 500 12.5px var(--font-mono); color: #353e4e; background: #eef1f5; padding: 2px 6px; border-radius: 6px; }
+  .card__h .st { margin-left: auto; font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: 999px; }
+  .st--ok { background: var(--color-success-soft); color: var(--color-success); }
+  .st--check { background: var(--color-warning-soft); color: var(--color-warning); }
+  .card__src { font-size: 13px; color: var(--color-ink-muted); }
+  .pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 20px; align-items: start; }
+  .pair > div > .lab { display: block; margin-bottom: 8px; font: 600 12px/1 var(--font-sans); letter-spacing: .06em; text-transform: uppercase; color: var(--color-ink-muted); }
+  .pair--stack { grid-template-columns: minmax(0, 1fr); }
+  .pair--stack > div:first-child { overflow-x: auto; }
+  .pair--stack .ref { max-width: none; }   /* 1:1, so sizes compare honestly with the live side */
+  .ref { display: block; max-width: 100%; height: auto; border-radius: 10px; box-shadow: inset 0 0 0 1px #e5e9ef; background: #eef1f5; }
+  .live { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 16px; border-radius: 10px; background: var(--color-surface-0); box-shadow: inset 0 0 0 1px #e5e9ef; }
+  .states { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px 16px; width: 100%; }
+  .states > div { display: grid; gap: 6px; justify-items: start; }
+  .states em { font: 500 12px var(--font-sans); font-style: normal; color: var(--color-ink-muted); }
+  .note { margin: 12px 0 0; font-size: 13px; color: #353e4e; }
+  .note b { color: var(--color-ink); }
+  .grid-tok { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+  .sw-tok { border-radius: 10px; overflow: hidden; background: #fff; box-shadow: inset 0 0 0 1px #e5e9ef; }
+  .sw-tok i { display: block; height: 56px; }
+  .sw-tok span { display: block; padding: 8px 10px; font-size: 12.5px; }
+  .sw-tok code { display: block; font: 500 11.5px var(--font-mono); color: var(--color-ink-muted); }
+  .type-row { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 10px 0; box-shadow: inset 0 -1px 0 #e5e9ef; }
+  .type-row code { font: 500 12px var(--font-mono); color: var(--color-ink-muted); }
+  .bars { display: grid; gap: 6px; }
+  .bars div { display: flex; align-items: center; gap: 12px; font: 500 12.5px var(--font-mono); color: var(--color-ink-muted); }
+  .bars i { display: block; height: 12px; border-radius: 3px; background: var(--color-brand); }
+  .shapes { display: flex; flex-wrap: wrap; gap: 16px; }
+  .shapes div { display: grid; place-items: center; width: 140px; height: 84px; background: #fff; font: 500 12.5px var(--font-mono); color: var(--color-ink-muted); }
+  .tpl { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  .tpl a { display: block; padding: 16px 18px; border-radius: 14px; background: #fff; box-shadow: var(--g11-soft); text-decoration: none; color: var(--color-ink); }
+  .tpl a b { display: block; font-size: 16px; margin-bottom: 4px; }
+  .tpl a span { font-size: 13.5px; color: #353e4e; line-height: 1.45; }
+  .tpl a em { display: block; margin-top: 8px; font-style: normal; font-size: 13px; color: var(--color-brand-strong); font-weight: 600; }
+  @media (max-width: 900px) { .pair { grid-template-columns: minmax(0, 1fr); } .ladder { grid-template-columns: repeat(3, minmax(0, 1fr)); } .cat-bar nav { display: none; } }
+</style>
+</head>
+<body>
+<div class="cat-bar"><b>AAN Gen 11 · Design System</b><span class="card__src">for the new backend · light theme</span>
+  <nav><a href="#tokens">Tokens</a><a href="#atoms">Atoms</a><a href="#molecules">Molecules</a><a href="#organisms">Organisms</a><a href="#templates">Templates</a><a href="#pages">Pages</a></nav></div>
+
+<main class="cat">
+  <section class="cat-intro">
+    <h1>One system, from tokens to pages</h1>
+    <p>Every component of the AAN control panel, in the order it is built: tokens make atoms, atoms make molecules, molecules make organisms, organisms make page templates, templates become pages. Each card shows the Gen 11 reference as drawn on its origin page, next to the same component on the new backend's own <code>ui-*</code> markup with the two package layers applied. If the two sides differ, the package is wrong, not the page.</p>
+    <div class="ladder">
+      <a href="#tokens"><b>Tokens</b><span>colour, type, space, radius, depth</span></a>
+      <a href="#atoms"><b>Atoms</b><span>one element, one job</span></a>
+      <a href="#molecules"><b>Molecules</b><span>atoms with one purpose</span></a>
+      <a href="#organisms"><b>Organisms</b><span>a block of a page</span></a>
+      <a href="#templates"><b>Templates</b><span>the five page types</span></a>
+      <a href="#pages"><b>Pages</b><span>the references, real data</span></a>
+    </div>
+    <p class="rule"><b>The one rule:</b> a level is built only from the levels below it and never restyles them. A table does not change how a button looks; a page does not change how a table looks.</p>
+  </section>
+
+  <!-- ══ TOKENS ══ -->
+  <section class="lvl" id="tokens">
+    <h2>Tokens <small>aan-gen11-theme.css · the backend's own variables, Gen 11 values</small></h2>
+    <p>One file, loaded after the backend's theme.css. It changes no markup; every component that reads these variables changes at once.</p>
+    <div class="card"><div class="card__h"><h3>Colour</h3><span class="card__src">surfaces, ink, lines, brand, states</span></div>
+      <div class="grid-tok" id="tok-colors"></div></div>
+    <div class="card"><div class="card__h"><h3>Type</h3><span class="card__src">Archivo for text; Plex Mono only for codes: stock, VIN, phone, IP</span></div>
+      <div class="type-row"><code>Page title · 600 28/1</code><span style="font:600 28px/1 var(--font-sans);letter-spacing:-.022em">Manage Dealers</span></div>
+      <div class="type-row"><code>Section · 600 20/1.2</code><span style="font:600 20px/1.2 var(--font-sans)">Identity &amp; Status</span></div>
+      <div class="type-row"><code>Card title · 600 16/1.3</code><span style="font:600 16px/1.3 var(--font-sans)">Lead board</span></div>
+      <div class="type-row"><code>Body · 400 14/1.4</code><span>Ten pages, dealer and employee, on one component system.</span></div>
+      <div class="type-row"><code>Meta · 400 13</code><span style="font-size:13px;color:var(--color-ink-muted)">Updated 5 min ago</span></div>
+      <div class="type-row"><code>Table heading · 700 11 caps</code><span style="font:700 11px var(--font-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--color-ink-muted)">Company name</span></div>
+      <div class="type-row"><code>Code · Plex Mono 500 12</code><span style="font:500 12px var(--font-mono)">ZFF97CMA0P0300236</span></div></div>
+    <div class="card"><div class="card__h"><h3>Space · radius · depth</h3><span class="card__src">4px ladder; 7 · 9 · 14 radius; three shadows</span></div>
+      <div class="pair"><div class="bars" id="tok-space"></div>
+        <div class="shapes">
+          <div style="border-radius:var(--radius-sm);box-shadow:inset 0 0 0 1px #c5cbd5">7 · inputs, chips</div>
+          <div style="border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px #c5cbd5">9 · buttons</div>
+          <div style="border-radius:var(--radius-lg);box-shadow:inset 0 0 0 1px #c5cbd5">14 · cards</div>
+          <div style="border-radius:12px;box-shadow:var(--g11-pill)">pill · controls</div>
+          <div style="border-radius:14px;box-shadow:var(--g11-soft)">soft · sheets</div>
+          <div style="border-radius:14px;background:var(--g11-focal);color:#f3f6fb;box-shadow:var(--g11-card)">card · board</div>
+        </div></div></div>
+  </section>
+
+  <!-- ══ ATOMS ══ -->
+  <section class="lvl" id="atoms">
+    <h2>Atoms <small>one element, one job</small></h2>
+    <p>Every atom shows all its states. A state that is not drawn here does not exist.</p>
+
+    <div class="card"><div class="card__h"><h3>Button</h3><code>.ui-btn · --primary · --secondary · --ghost · --danger · --sm</code><span class="st st--ok">Verified on backend</span></div>
+      <div class="pair"><div><span class="lab">Gen 11 reference · All Vehicles</span><img class="ref" src="catalog/ref/btn-primary.png" alt="Primary button on All Vehicles"><br><img class="ref" src="catalog/ref/btn-secondary.png" alt="Secondary button" style="margin-top:8px"><br><img class="ref" src="catalog/ref/btn-ghost.png" alt="Quiet button" style="margin-top:8px"></div>
+        <div><span class="lab">Package on ui-* markup</span><div class="live"><div class="states" data-states="ui-btn"></div></div></div></div>
+      <p class="note"><b>One primary per view.</b> Navigation is a link, not a button. Danger is a quiet red word until it is pressed; it never sits next to a primary of the same weight.</p></div>
+
+    <div class="card"><div class="card__h"><h3>Text field · select</h3><code>.ui-input · .ui-select · .ui-textarea · --sm</code><span class="st st--ok">Verified on backend</span></div>
+      <div class="pair"><div><span class="lab">Gen 11 reference · Single Vehicle, Manage Dealers</span><img class="ref" src="catalog/ref/input.png" alt="Text field"><br><img class="ref" src="catalog/ref/select.png" alt="Select" style="margin-top:8px"></div>
+        <div><span class="lab">Package on ui-* markup</span><div class="live"><div class="states" data-states="ui-input"></div></div></div></div>
+      <p class="note">One field radius (7px). <b>Converges:</b> All Vehicles' small select draws 8px.</p></div>
+
+    <div class="card"><div class="card__h"><h3>Switch</h3><code>.ui-switch · --on · --ok · --danger</code><span class="st st--check">Check against Blade</span></div>
+      <div class="pair"><div><span class="lab">Gen 11 reference · All Vehicles</span><img class="ref" src="catalog/ref/switch.png" alt="On website switch, off state"></div>
+        <div><span class="lab">Package on ui-* markup</span><div class="live"><div class="states" data-states="ui-switch"></div></div></div></div>
+      <p class="note">34×20 track, 16px thumb. ON is green: the thing is running. Brand blue for a view or filter toggle. Red OFF only where OFF is a problem (hidden on site). <b>Converges:</b> Single Vehicle (42×24) and My Work Queue (30×18).</p></div>
+
+    <div class="card"><div class="card__h"><h3>Checkbox · status · tag</h3><code>.ui-checkbox · .ui-badge · .ui-chip</code><span class="st st--ok">Badge, checkbox verified</span></div>
+      <div class="pair"><div><span class="lab">Gen 11 reference · All Leads, All Vehicles</span><img class="ref" src="catalog/ref/checkbox.png" alt="Checkbox"><br><img class="ref" src="catalog/ref/badge.png" alt="Status chip" style="margin-top:8px"><br><img class="ref" src="catalog/ref/chip.png" alt="Tag" style="margin-top:8px"></div>
+        <div><span class="lab">Package on ui-* markup</span><div class="live" data-live="badges"></div></div></div>
+      <p class="note">Status reads in words, never in colour alone. No all-caps chips.</p></div>
+  </section>
+
+  <!-- ══ MOLECULES ══ -->
+  <section class="lvl" id="molecules">
+    <h2>Molecules <small>atoms with one purpose</small></h2>
+    <p>A molecule adds no new look: its parts are atoms. It adds arrangement and behaviour.</p>
+    <div class="card"><div class="card__h"><h3>Form field</h3><code>.ui-field · __label · __help · __error · --required</code><span class="st st--ok">Verified on backend</span></div>
+      <div class="pair"><div><span class="lab">Gen 11 reference · Dealer Edit</span><img class="ref" src="catalog/ref/field.png" alt="Form field"></div>
+        <div><span class="lab">Package on ui-* markup</span><div class="live" data-live="field"></div></div></div>
+      <p class="note">Label above, help under, error replaces help in the same place: the form never jumps.</p></div>
+    <div class="card"><div class="card__h"><h3>Search · facet · views</h3><code>.ui-cmdbar · .ui-facet__btn · .ui-pill · .ui-seg__btn</code><span class="st st--check">Facet, views: check against Blade</span></div>
+      <div class="pair pair--stack"><div><span class="lab">Gen 11 reference · All Vehicles, Manage Dealers</span><img class="ref" src="catalog/ref/search.png" alt="Search"><br><img class="ref" src="catalog/ref/facet.png" alt="Facet" style="margin-top:8px"><br><img class="ref" src="catalog/ref/tabs.png" alt="Views" style="margin-top:8px"></div>
+        <div><span class="lab">Package on ui-* markup</span><div class="live" data-live="filters"></div></div></div>
+      <p class="note">Only the current view is an object (filled); the others are labels. Counts sit inside the view, tabular.</p></div>
+    <div class="card"><div class="card__h"><h3>Row actions · menu</h3><code>.ui-rowaction · .ui-menu · __item</code><span class="st st--ok">Verified on backend</span></div>
+      <div class="pair"><div><span class="lab">Gen 11 reference · Manage Dealers</span><img class="ref" src="catalog/ref/rowactions.png" alt="Row actions"></div>
+        <div><span class="lab">Package on ui-* markup</span><div class="live" data-live="menu"></div></div></div></div>
+  </section>
+
+  <!-- ══ ORGANISMS ══ -->
+  <section class="lvl" id="organisms">
+    <h2>Organisms <small>a block of a page</small></h2>
+    <p>Each organism is a whole part of a page with its own job. It is assembled from molecules and atoms only.</p>
+    <div class="card"><div class="card__h"><h3>Platform bar and system menu</h3><code>.ui-topbar · .ui-topnav__trigger</code><span class="st st--ok">Verified on backend</span></div>
+      <div class="pair pair--stack"><div><span class="lab">Gen 11 reference · All Vehicles · 1:1</span><img class="ref" src="catalog/ref/topbar.png" alt="Platform bar"></div>
+        <div><span class="lab">Package on ui-* markup</span><div class="live" data-live="topbar" style="background:#e5e9ef"></div></div></div>
+      <p class="note"><b>Markup change:</b> the backend marks no current section. Add <code>aria-current="page"</code> on the current group's trigger. Gen 11 keeps the menu inside the one bar; the backend's second nav row and side rail go.</p></div>
+    <div class="card"><div class="card__h"><h3>Page head · filter bar · table</h3><code>.ui-page-header · .ui-filterbar · .ui-table</code><span class="st st--ok">Verified on backend</span></div>
+      <div class="pair pair--stack"><div><span class="lab">Gen 11 reference · Manage Dealers</span><img class="ref" src="catalog/ref/page-header.png" alt="Page head"><br><img class="ref" src="catalog/ref/filterbar.png" alt="Filter bar" style="margin-top:8px"></div>
+        <div><span class="lab">Package on ui-* markup</span><div data-live="list"></div></div></div></div>
+    <div class="card"><div class="card__h"><h3>Board card · record head</h3><code>.ui-pulsecard · .ui-cockpit</code><span class="st st--check">Check against Blade</span></div>
+      <div class="pair"><div><span class="lab">Gen 11 reference · All Vehicles, Single Lead</span><img class="ref" src="catalog/ref/pulsecard.png" alt="Dark board card"><br><img class="ref" src="catalog/ref/record-head.png" alt="Record head" style="margin-top:8px"></div>
+        <div><span class="lab">Package on ui-* markup</span><div data-live="board"></div></div></div>
+      <p class="note">Board titles are sentence case, 16/600; rows spread over the card's height; one fact in one place.</p></div>
+    <div class="card"><div class="card__h"><h3>Dialog · feed entry</h3><code>.ui-modal · .ui-stream</code><span class="st st--ok">Verified on backend</span></div>
+      <div class="pair"><div><span class="lab">Gen 11 reference · Manage Dealers, Single Ticket</span><img class="ref" src="catalog/ref/modal.png" alt="Dialog"><br><img class="ref" src="catalog/ref/stream.png" alt="Feed entry" style="margin-top:8px"></div>
+        <div><span class="lab">Package on ui-* markup</span><div data-live="dialog"></div></div></div></div>
+  </section>
+
+  <!-- ══ TEMPLATES ══ -->
+  <section class="lvl" id="templates">
+    <h2>Templates <small>the five page types</small></h2>
+    <p>A new screen starts from the nearest type. Take its reference page as the skeleton; add only the cells and blocks that are the screen's own.</p>
+    <div class="tpl">
+      <a href="../pages/dealer/all-vehicles-gen11.html"><b>List</b><span>Board, views, filter bar, table, pagination. Most backend screens are this.</span><em>Reference: All Vehicles · Manage Dealers (staff) →</em></a>
+      <a href="../pages/dealer/single-vehicle-gen11.html"><b>Record</b><span>Head card, section navigator, sections, save bar.</span><em>Reference: Single Vehicle · Single Lead →</em></a>
+      <a href="../pages/staff/single-ticket-gen11.html"><b>Record with feed</b><span>A record whose history is the main content: composer, stream of entries.</span><em>Reference: Single Ticket →</em></a>
+      <a href="../pages/staff/dealer-edit-gen11.html"><b>Edit form</b><span>Sections of fields in a grid, a side rail of options, one save bar.</span><em>Reference: Dealer Edit →</em></a>
+      <a href="../pages/dealer/dealer-login-gen11.html"><b>Login</b><span>One card over the brand film, support close by.</span><em>Reference: Dealer Login →</em></a>
+    </div>
+    <div class="card"><div class="card__h"><h3>Pattern added from the test page: record with sub-lines</h3><span class="card__src">Feeds Incoming</span></div>
+      <p class="note" style="margin-top:0">When one record owns several lines (a dealer with several feeds), the record's identity and its record-level actions span all its lines; each line carries its own cells and actions; a hairline separates the lines inside the record, a stronger line separates records. No nested tables, no expanders.</p></div>
+  </section>
+
+  <!-- ══ PAGES ══ -->
+  <section class="lvl" id="pages">
+    <h2>Pages <small>the references on real data</small></h2>
+    <p>The ten Gen 11 pages are the standard. The eleventh was never drawn: it was built only from this system as the test, and holds up.</p>
+    <div class="tpl" id="page-list"></div>
+  </section>
+</main>
+
+<script>
+(function () {
+  /* token swatches: read the live values from the token layer, so this page cannot drift from it */
+  var css = getComputedStyle(document.documentElement);
+  var C = [['--color-surface-0','Page ground'],['--color-surface-1','Sheet'],['--color-surface-3','Well'],['--color-ink','Ink'],['--color-ink-muted','Ink · muted'],
+    ['--color-ink-faint','Ink · faint'],['--color-border','Line'],['--color-border-strong','Line · strong'],['--color-brand','Brand'],['--color-brand-strong','Brand · hover'],
+    ['--color-brand-soft','Brand · soft'],['--color-success','OK'],['--color-warning','Signal'],['--color-danger','Danger'],['--g11-focal','Board (dark)']];
+  document.getElementById('tok-colors').innerHTML = C.map(function (c) {
+    var v = css.getPropertyValue(c[0]).trim();
+    return '<div class="sw-tok"><i style="background:' + v + '"></i><span>' + c[1] + '<code>' + c[0] + ' · ' + v + '</code></span></div>';
+  }).join('');
+  document.getElementById('tok-space').innerHTML = [4, 8, 12, 16, 20, 24, 32, 40].map(function (n) { return '<div><i style="width:' + n * 3 + 'px"></i>' + n + 'px</div>'; }).join('');
+
+  /* state mirror: every :hover / :focus-visible rule of the package gets an .is-hover / .is-focus twin, so states can be drawn side by side */
+  var add = [];
+  [].forEach.call(document.styleSheets, function (sh) {
+    var rules; try { rules = sh.cssRules; } catch (e) { return; }
+    [].forEach.call(rules, function (r) {
+      if (!r.selectorText || !/:(hover|focus-visible|focus)\b/.test(r.selectorText)) return;
+      add.push(r.selectorText.replace(/:hover/g, '.is-hover').replace(/:focus-visible/g, '.is-focus').replace(/:focus\b/g, '.is-focus') + '{' + r.style.cssText + '}');
+    });
+  });
+  var st = document.createElement('style'); st.textContent = add.join('\n'); document.head.appendChild(st);
+
+  function cell(label, html) { return '<div><em>' + label + '</em>' + html + '</div>'; }
+  var S = {
+    'ui-btn': cell('Primary', '<button class="ui-btn ui-btn--primary" type="button">Add vehicle</button>') +
+      cell('Primary · hover', '<button class="ui-btn ui-btn--primary is-hover" type="button">Add vehicle</button>') +
+      cell('Primary · focus', '<button class="ui-btn ui-btn--primary is-focus" type="button">Add vehicle</button>') +
+      cell('Primary · disabled', '<button class="ui-btn ui-btn--primary" type="button" disabled>Add vehicle</button>') +
+      cell('Secondary', '<button class="ui-btn ui-btn--secondary" type="button">Export</button>') +
+      cell('Secondary · hover', '<button class="ui-btn ui-btn--secondary is-hover" type="button">Export</button>') +
+      cell('Ghost', '<button class="ui-btn ui-btn--ghost" type="button">Inline edit</button>') +
+      cell('Ghost · hover', '<button class="ui-btn ui-btn--ghost is-hover" type="button">Inline edit</button>') +
+      cell('Danger', '<button class="ui-btn ui-btn--danger" type="button">Delete package</button>') +
+      cell('Small', '<button class="ui-btn ui-btn--secondary ui-btn--sm" type="button">Rerun</button>'),
+    'ui-input': cell('Default', '<input class="ui-input" value="0P0300236 PS" aria-label="Stock">') +
+      cell('Placeholder', '<input class="ui-input" placeholder="Company name…" aria-label="Company">') +
+      cell('Hover', '<input class="ui-input is-hover" value="Greenwich" aria-label="City">') +
+      cell('Focus', '<input class="ui-input is-focus" value="06803" aria-label="ZIP" style="border-color:var(--color-brand)">') +
+      cell('Disabled', '<input class="ui-input" value="Read only" disabled aria-label="Disabled">') +
+      cell('Select', '<select class="ui-select" aria-label="Account status"><option>Active</option></select>') +
+      cell('Select · small', '<select class="ui-select ui-select--sm" aria-label="Rows"><option>100</option></select>'),
+    'ui-switch': cell('On', '<button class="ui-switch ui-switch--on" type="button" role="switch" aria-checked="true"><span class="ui-switch__track"></span>On website</button>') +
+      cell('Off', '<button class="ui-switch" type="button" role="switch" aria-checked="false"><span class="ui-switch__track"></span>Inactive</button>') +
+      cell('Off is a problem', '<button class="ui-switch ui-switch--danger" type="button" role="switch" aria-checked="false"><span class="ui-switch__track"></span>Hidden on site</button>')
+  };
+  [].forEach.call(document.querySelectorAll('[data-states]'), function (el) { el.innerHTML = S[el.getAttribute('data-states')] || ''; });
+
+  var L = {
+    badges: '<input type="checkbox" class="ui-checkbox" checked aria-label="Select all"> <input type="checkbox" class="ui-checkbox" aria-label="Select row">' +
+      '<span class="ui-badge" style="background:var(--status-green-bg);color:var(--status-green-ink)">Available</span>' +
+      '<span class="ui-badge" style="background:var(--status-amber-bg);color:var(--status-amber-ink)">Sale pending</span>' +
+      '<span class="ui-badge" style="background:var(--status-violet-bg);color:var(--status-violet-ink)">Client Intake</span>' +
+      '<span class="ui-badge">Inactive</span><span class="ui-chip">No price</span><span class="ui-chip">vAuto</span>',
+    field: '<div class="ui-field" style="width:100%"><label class="ui-field__label ui-field__label--required">Company Name</label><input class="ui-input" value="Miller Motorcars" aria-label="Company Name"><span class="ui-field__help">As it appears on the dealer\'s site.</span></div>' +
+      '<div class="ui-field" style="width:100%"><label class="ui-field__label ui-field__label--required">Phone</label><input class="ui-input" value="203.629" aria-label="Phone" style="border-color:var(--color-danger)"><span class="ui-field__error">Enter a full phone number.</span></div>',
+    filters: '<div class="ui-cmdbar" style="flex:1 1 260px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#576070" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg><input class="ui-cmdbar__input" placeholder="Find a vehicle — stock, VIN, year, make…" aria-label="Search"></div>' +
+      '<button class="ui-facet__btn" type="button">Sort <span class="ui-facet__val">When added</span></button><button class="ui-facet__btn ui-facet__btn--on" type="button">Make <span class="ui-facet__val">Ferrari</span></button>' +
+      '<div class="ui-seg"><button class="ui-pill ui-pill--on" type="button">View Active Dealers<span class="ui-pill__count">365</span></button><button class="ui-pill" type="button">View All Dealers<span class="ui-pill__count">1,109</span></button><button class="ui-pill is-hover" type="button">Marketing Dealers<span class="ui-pill__count">68</span></button></div>',
+    menu: '<span style="display:flex;gap:2px"><button class="ui-rowaction" type="button" aria-label="Edit">✎</button><button class="ui-rowaction is-hover" type="button" aria-label="Setup">⚙</button><button class="ui-rowaction ui-rowaction--danger" type="button" aria-label="Delete">✕</button></span>' +
+      '<div class="ui-menu"><a class="ui-menu__item" href="#">View Dealers</a><a class="ui-menu__item is-hover" href="#">Add New Dealer</a><a class="ui-menu__item ui-menu__item--on" href="#">Feeds Incoming</a></div>',
+    topbar: '<header class="ui-topbar" style="margin:0;width:100%"><a class="ui-topbar__brand" href="#"><span class="ui-topbar__brand-mark">AAN</span>All Auto Network</a>' +
+      '<ul class="ui-topnav"><li class="ui-topnav__group"><a class="ui-topnav__trigger" href="#">Dealer Management</a></li><li class="ui-topnav__group"><a class="ui-topnav__trigger" href="#" aria-current="page">Feed Management</a></li><li class="ui-topnav__group"><a class="ui-topnav__trigger is-hover" href="#">Work</a></li></ul><span class="ui-topbar__spacer"></span></header>',
+    list: '<div class="ui-panel"><div class="ui-page-header" style="margin:16px 16px 8px"><h1 class="ui-page-header__title">Manage Dealers</h1><span class="ui-page-header__meta">365 dealers</span><div class="ui-page-header__actions"><button class="ui-btn ui-btn--primary ui-btn--sm" type="button">Add New Dealer</button></div></div>' +
+      '<div class="ui-filterbar"><div class="ui-cmdbar" style="flex:1"><input class="ui-cmdbar__input" placeholder="Company name…" aria-label="Company name"></div><button class="ui-facet__btn" type="button">Reseller <span class="ui-facet__val">Show all</span></button></div>' +
+      '<table class="ui-table"><thead><tr><th>Company name</th><th>State</th><th>Status</th></tr></thead><tbody><tr><td><b>1 Stop Leasing</b></td><td>NJ</td><td><span class="ui-badge" style="background:var(--status-green-bg);color:var(--status-green-ink)">Active</span></td></tr><tr><td><b>360 Auto Care Inc</b></td><td>NY</td><td><span class="ui-badge" style="background:var(--status-violet-bg);color:var(--status-violet-ink)">Client Intake</span></td></tr></tbody></table>' +
+      '<div class="ui-pagination"><button class="ui-pagination__btn ui-pagination__btn--current" type="button">1</button><button class="ui-pagination__btn" type="button">2</button><button class="ui-pagination__btn" type="button">3</button></div></div>',
+    board: '<div class="ui-pulsecard"><div class="ui-pulsecard__l">Lead board</div><div style="display:flex;align-items:baseline;gap:12px;margin-top:10px"><span class="ui-pulsecard__v" style="font-size:44px;line-height:1">16,574</span><span>All leads</span></div></div>' +
+      '<div class="ui-cockpit" style="margin-top:12px"><button class="ui-btn ui-btn--ghost ui-btn--sm" type="button">‹ Back to board</button><h2 class="ui-cockpit__title">Patrick Weber</h2><span class="ui-badge" style="margin-top:12px;background:var(--status-blue-bg);color:var(--status-blue-ink)">New Lead</span></div>',
+    dialog: '<div class="ui-modal__panel"><div class="ui-modal__header"><h2 class="ui-modal__title">Main incoming feeds log</h2><button class="ui-rowaction ui-modal__close" type="button" aria-label="Close">✕</button></div><div class="ui-modal__body">Today\'s log not found!</div><div class="ui-modal__footer"><button class="ui-btn ui-btn--ghost" type="button">Previous</button><button class="ui-btn ui-btn--primary" type="button">Close</button></div></div>' +
+      '<div class="ui-stream" style="margin-top:12px"><div><b>Samantha Beck</b> · Message<br>We have edits that need to be made to our website…</div></div>'
+  };
+  [].forEach.call(document.querySelectorAll('[data-live]'), function (el) { el.innerHTML = L[el.getAttribute('data-live')] || ''; });
+
+  var P = [['All Vehicles', 'dealer/all-vehicles-gen11.html', 'List · dealer'], ['Single Vehicle', 'dealer/single-vehicle-gen11.html', 'Record'], ['All Leads', 'dealer/all-leads-gen11.html', 'List'],
+    ['Single Lead', 'dealer/single-lead-gen11.html', 'Record'], ['Dealer Login', 'dealer/dealer-login-gen11.html', 'Login'], ['My Work Queue', 'staff/my-work-queue-gen11.html', 'List · staff'],
+    ['Single Ticket', 'staff/single-ticket-gen11.html', 'Record with feed'], ['Manage Dealers', 'staff/manage-dealers-gen11.html', 'List · staff'], ['Dealer Edit', 'staff/dealer-edit-gen11.html', 'Edit form'],
+    ['Accounting', 'staff/accounting-view-all-gen11.html', 'List · billing'], ['Feeds Incoming — the test', 'staff/feeds-incoming-gen11.html', 'List · built only from this system']];
+  document.getElementById('page-list').innerHTML = P.map(function (p, i) {
+    return '<a href="../pages/' + p[1] + '"><b>' + (i + 1) + '. ' + p[0] + '</b><span>' + p[2] + '</span><em>Open →</em></a>';
+  }).join('');
+})();
+</script>
+</body>
+</html>
