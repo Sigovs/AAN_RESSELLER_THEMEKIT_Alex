@@ -1,0 +1,103 @@
+/* ============================================================================
+   AAN GEN 11 — TOKEN LAYER FOR THE NEW BACKEND (light theme)
+
+   Load this file AFTER the backend's theme.css. It changes no markup and no
+   component rules: it gives the backend's own design tokens the Gen 11 values,
+   so every ui-* component picks up the Gen 11 type, colour, radius, height and
+   elevation at once. Component and screen changes come after, per the
+   component and screen maps in this package.
+
+   Source of every value: the Gen 11 reference build (pages/_aan-family.css,
+   pages/_aan-components.css and the page sheets), measured on the live pages.
+   Where Gen 11 has no matching role, the backend's value is KEPT and marked
+   "kept". Nothing here is invented.
+
+   Dark theme: not yet. This layer is light only; [data-theme=dark] is
+   untouched until the Gen 11 dark values are approved.
+   ============================================================================ */
+
+/* Fonts: self-hosted, shipped in ./fonts (Archivo variable, IBM Plex Mono). */
+@font-face { font-family: "Archivo"; font-style: normal; font-weight: 100 900; font-stretch: 62% 125%; font-display: swap;
+  src: url("fonts/archivo-latin-var.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Archivo"; font-style: normal; font-weight: 100 900; font-stretch: 62% 125%; font-display: swap;
+  src: url("fonts/archivo-latin-ext-var.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Plex Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/plex-mono-400.woff2") format("woff2"); }
+@font-face { font-family: "Plex Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/plex-mono-400-ext.woff2") format("woff2"); unicode-range: U+0100-024F; }
+@font-face { font-family: "Plex Mono"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/plex-mono-600.woff2") format("woff2"); }
+
+:root {
+  /* ── Type ─────────────────────────────────────────────────────────────── */
+  --font-sans: "Archivo", "Segoe UI", system-ui, sans-serif;          /* was IBM Plex Sans */
+  --font-mono: "Plex Mono", "IBM Plex Mono", ui-monospace, monospace;  /* same family; mono only for codes: stock, VIN, phone, IP */
+  /* --text-* scale: kept (2xs 14 · xs 13 · sm 14 · md 15 · lg 17 · xl 20 · 2xl 25). Gen 11 body text is 14px.
+     Gen 11 page titles: 28px/600 (record name), section titles 20px/600 — set per component, not here. */
+  --leading-normal: 1.4;            /* was 1.45; Gen 11 body 14/19.6 */
+  /* --leading-tight, --weight-*: kept */
+
+  /* ── Space: kept (4 · 8 · 12 · 16 · 20 · 24 · 32 · 40). Gen 11 uses the same 4px ladder. ── */
+
+  /* ── Controls and rows ────────────────────────────────────────────────── */
+  --control-height: 36px;           /* was 34; Gen 11 --ctl (search, filters, sort, views, buttons) */
+  --control-height-sm: 30px;        /* was 28; Gen 11 --ctl-dense (row and icon actions) */
+  /* --row-height, --cell-padding-*: kept — row height is set per list type in the component map */
+
+  /* ── Radius ───────────────────────────────────────────────────────────── */
+  --radius-sm: 7px;                 /* was 3; Gen 11 --r-inner / --r-s (inputs, chips, inner tiles) */
+  --radius-md: 9px;                 /* was 5; Gen 11 --r-control (buttons, selects, menus) */
+  --radius-lg: 14px;                /* was 8; Gen 11 --r-card (cards, sheets, panels) */
+
+  /* ── Elevation ────────────────────────────────────────────────────────── */
+  --shadow-sm: 0 1px 2px rgba(16,24,40,.08), 0 0 0 1px rgba(16,24,40,.04);     /* Gen 11 --el-1 */
+  --shadow-md: 0 12px 30px -14px rgba(16,24,40,.22), 0 2px 6px rgba(16,24,40,.06); /* Gen 11 --el-2 (menus, popovers) */
+  --shadow-lg: 0 30px 64px -18px rgba(16,24,40,.34), 0 4px 12px rgba(16,24,40,.08); /* Gen 11 --el-3 (dialogs) */
+  --focus-ring: 0 0 0 2px #ffffff, 0 0 0 4px #1f5fe0;                          /* Gen 11 --focus */
+
+  /* ── Surfaces ─────────────────────────────────────────────────────────── */
+  --color-surface-0: #eef1f5;       /* Gen 11 --wash (page ground) — already equal */
+  --color-surface-1: #ffffff;       /* Gen 11 --sheet — already equal */
+  /* --color-surface-2 (#f6f8fa), --color-surface-inset (#f1f4f7): kept — no Gen 11 role of their own */
+  --color-surface-3: #e4e9f0;       /* was #e9edf2; Gen 11 --well (sunken tracks) */
+
+  /* ── Ink ──────────────────────────────────────────────────────────────── */
+  --color-ink: #0d1320;             /* was #16212f; Gen 11 --ink */
+  --color-ink-muted: #576070;       /* was #5a6b80; Gen 11 --ink-3 */
+  --color-ink-faint: #697181;       /* was #8b99ab; Gen 11 --ink-4 — darker, passes AA on white */
+  --color-ink-inverse: #f3f6fb;     /* Gen 11 --focal-ink */
+
+  /* ── Lines ────────────────────────────────────────────────────────────── */
+  --color-border: #d8dee7;          /* was #d4dbe4; Gen 11 --line */
+  --color-border-strong: #c5cbd5;   /* was #b6c1cf; Gen 11 --line-3 */
+
+  /* ── Brand ────────────────────────────────────────────────────────────── */
+  --color-brand: #1f5fe0;           /* was #1f5eb8; Gen 11 --brand */
+  --color-brand-strong: #1a50c4;    /* was #174a94; Gen 11 --brand-hover */
+  --color-brand-soft: #e9f0fe;      /* was #e3ecf9; Gen 11 --brand-soft */
+  /* --color-brand-ink (#fff, text on brand): kept */
+  --color-info: #1f5fe0;
+  --color-info-soft: #e9f0fe;
+
+  /* ── States ───────────────────────────────────────────────────────────── */
+  --color-success: #12704a;         /* Gen 11 --ok */
+  --color-success-soft: #e0f4e8;    /* Gen 11 --ok-soft */
+  --color-warning: #945000;         /* Gen 11 --signal */
+  --color-warning-soft: #fff2dc;    /* Gen 11 --signal-soft */
+  --color-danger: #bd3328;          /* Gen 11 --danger */
+  --color-danger-soft: #fde8e5;     /* Gen 11 --danger-soft */
+  --color-neutral: #586171;         /* Gen 11 --slate */
+  --color-neutral-soft: #eceef2;    /* Gen 11 --slate-soft */
+
+  /* ── Status chips: the six Gen 11 has, the rest kept ──────────────────── */
+  --status-blue-bg: #e9f0fe;   --status-blue-ink: #1747b3;    /* Gen 11 --brand-soft / --brand-ink */
+  --status-green-bg: #e0f4e8;  --status-green-ink: #12704a;   /* --ok-soft / --ok */
+  --status-amber-bg: #fff2dc;  --status-amber-ink: #945000;   /* --signal-soft / --signal */
+  --status-red-bg: #fde8e5;    --status-red-ink: #bd3328;     /* --danger-soft / --danger */
+  --status-violet-bg: #eeeafc; --status-violet-ink: #5c42c9;  /* --violet-soft / --violet */
+  --status-slate-bg: #eceef2;  --status-slate-ink: #586171;   /* --slate-soft / --slate */
+  /* --status-magenta-*, --status-teal-*, --status-orange-*, --status-cyan-*, --heat-*: kept */
+
+  /* ── Shell sizes: kept here (--sidenav-width, --topbar-height, --topnav-height, --datatable-chrome,
+        --cockpit-height). The Gen 11 shell (one 56px bar, sticky command row) is a component change,
+        see the component map. ── */
+}
