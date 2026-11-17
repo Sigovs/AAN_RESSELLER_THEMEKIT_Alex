@@ -56,7 +56,7 @@ Rules for this round:
 | 46 | Single Vehicle | Body Code: remove (Bill) | done, commented out | same block | same |
 | 47 | Single Vehicle | Model Number: not needed (Bill) | done, commented out | same block | same |
 | 48 | Single Vehicle | Original Price: remove (Bill) | done, commented out | same block | same |
-| 49 | Single Vehicle | Discount: remove (Bill) | done, commented out | same block. **Conflict:** Karen #69 asks for a Discount column on All Vehicles | same |
+| 49 | Single Vehicle | Discount: remove (Bill) | done, commented out | same block: **Discount** is hidden on Single Vehicle (with Book Value and Original Price, #48). **Discount Price** is a different field and stays: the live system uses and shows it, and Karen #69's Discount Price column is in All Vehicles → Columns → Pricing. **Bill, Nov 17:** confirms it: "the discount field is not used by any dealers and doesn't display in live system for anyone", and Discount Price "is covered". No change | same |
 | 50 | Single Vehicle | Book Value: remove (Bill) | done, commented out | same block; More Details keeps Location only | same |
 | 51 | Single Vehicle | colors: one section in two parts, Exterior then Interior (Bill) | done | Colors is two groups: **Exterior** (Exterior Color, Basic Exterior Color, the factory swatches) and **Interior** (Interior Color, Basic Interior Color). Interior swatches come when the decode returns interior colours (none in the fixture) | `review-shots/51-single-vehicle-colors-before.png` |
 | 52 | Single Vehicle | Specs & VIN on top of all sections (Bill) | done | the section, its rail button and the scroll-spy order moved to the top; the rail lights Specs & VIN on load | `review-shots/52-single-vehicle-specs-position-before.png` |
