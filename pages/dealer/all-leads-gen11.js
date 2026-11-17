@@ -593,6 +593,9 @@
       });
       S.sel = {}; closePops(); renderBoard(); render(); return;
     }
+    /* Send Email (#27): live it opens Newsletter > Post Newsletter with the selection; that page is not in the mockup yet,
+       so it leads nowhere and keeps the selection (Alex, Nov 17) */
+    if (t.closest('[data-act="send-email"]')) { closePops(); return; }
     if ((el = t.closest('[data-act="unassign"]'))) {
       Object.keys(S.sel).forEach(function (id) {
         var l = V.filter(function (x) { return x.id === +id; })[0];
