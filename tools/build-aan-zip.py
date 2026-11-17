@@ -188,6 +188,21 @@ def main():
                 s = s.replace('</body>', NOTES_TAG.format(v=stamp) + '\n</body>', 1)
                 open(fp, 'w', encoding='utf-8', newline='\n').write(s)
 
+        # one file, one cache key: Plesk caches CSS/JS for a year, so a page that loads a shared file
+        # under an older ?v= key keeps serving the old copy to anyone who opened it before (Nov 17:
+        # All Leads and Single Lead loaded all-vehicles-gen11.css under the Oct 30 key).
+        keys = {}
+        for p in pages:
+            for name, key in re.findall(r'([\w.-]+\.(?:css|js))\?v=([^"\'&]+)', open(os.path.join(tmp, p), encoding='utf-8').read()):
+                if name != '_aan-notes.js' and name != '_aan-fix.js':
+                    keys.setdefault(name, {}).setdefault(key, []).append(p.split('/')[-1])
+        mixed = {n: k for n, k in keys.items() if len(k) > 1}
+        if mixed:
+            sys.exit('Stopping: these files are loaded with different ?v= keys on different pages. Give each one '
+                     'its newest key in every HTML that loads it:\n' +
+                     '\n'.join('  %s: %s' % (n, '; '.join('%s on %s' % (key, ', '.join(ps)) for key, ps in k.items()))
+                               for n, k in mixed.items()))
+
         # keep what the entry points reach
         keep, todo, missing = set(), ['index.html', 'comments.html'] + pages, set()
         while todo:
