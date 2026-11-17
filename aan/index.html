@@ -369,6 +369,20 @@
   .qa__h--nf { margin-top: 0; }
   .qa--nf { margin-top: 20px; }
   #questions, #new-features { scroll-margin-top: 72px; }
+  /* round three intro (Nov 17): a quiet reading block, not a card */
+  .r3 { margin-top: 64px; max-width: 76ch; scroll-margin-top: 72px; }
+  .r3__h { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
+  .r3__h .caps, .r3__h h2 { white-space: nowrap; }
+  @media (max-width: 560px) { .r3__h h2 { white-space: normal; } }
+  .r3__lead { margin: 0 0 14px; font-size: 16px; line-height: 1.6; color: var(--on-2); }
+  .r3__l { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .r3__l li { position: relative; padding-left: 18px; font-size: 15px; line-height: 1.6; color: var(--on-2); }
+  .r3__l li::before { content: ""; position: absolute; left: 0; top: .72em; width: 6px; height: 6px; border-radius: 50%; background: var(--brand-2); }
+  .r3__l b { color: var(--on); font-weight: 650; }
+  .r3 a { color: var(--brand-2); text-decoration: none; font-weight: 600; }
+  .r3 a:hover { text-decoration: underline; }
+  .r3__end { margin: 16px 0 0; font-size: 15px; line-height: 1.6; color: var(--on); }
+  .r3 + .qa-sec { margin-top: 56px; }
   .qa-sec { margin-top: 64px; margin-bottom: 16px; }
   .qa-sec--nf { margin-top: 72px; }
   .qa-sec h2 { display: inline-flex; align-items: center; gap: 12px; }
@@ -547,6 +561,22 @@
        this build, with the notes tool. -->
   <!-- Two separate sections (Alex, Nov 17: "separate New Features and Questions for the team more clearly"): each has
        its own section head, like What changed below, its own accent and its own link in the bar. -->
+  <!-- Round three, the last one (Alex, Nov 17): what this round was and wasn't, above the two lists -->
+  <section class="r3" id="round3" aria-labelledby="r3-t">
+    <div class="sec-h r3__h">
+      <span class="caps">Round three &middot; the last one</span>
+      <h2 id="r3-t">What this round was, and what it wasn&rsquo;t</h2>
+    </div>
+    <p class="r3__lead">This was the last of three review rounds. It set out to be a design facelift of the control panel we already have: the same features, on one calm, consistent system. Reviewing it with you pulled us into usability as well. Here is how the work divides.</p>
+    <ul class="r3__l">
+      <li><b>Design, our task.</b> The look, the grid, density, states, tablet. Most of the work.</li>
+      <li><b>Usability of existing features.</b> While the team worked in the mockup, it showed where today&rsquo;s features were hard to use. We fixed those in place: the same features, easier to reach and steadier to work with. A redesign that looked better but worked worse than today&rsquo;s system would have been a step back. Every change, note by note, is on the <a href="review-status.html">status page</a>.</li>
+      <li><b>New features.</b> We did not go there. Anything today&rsquo;s system does not have is commented out, not deleted, and waits on the <a href="#new-features">New features</a> list (<span data-n="nf-n">17</span>) for after go-live, our own ideas included.</li>
+      <li><b>Open questions.</b> Not design work, but the mockup surfaced them. They are collected for the team in <a href="#questions">Questions</a> (<span data-n="qa-n">32</span>), so none gets lost in the handoff.</li>
+    </ul>
+    <p class="r3__end">The line held: a facelift of today&rsquo;s system, with usability touched only where a feature already exists.</p>
+  </section>
+
   <div class="sec-h qa-sec" id="questions">
     <span class="caps">Open &middot; waiting for answers</span>
     <h2>Questions for the team<span class="qa__n" id="qa-n"></span></h2>
@@ -720,6 +750,7 @@
     var host = document.getElementById(list), n = document.getElementById(count);
     var sec = doc.querySelector(sel); if (!sec) { host.innerHTML = ''; return; }
     var items = sec.querySelectorAll('.list > li'); n.textContent = items.length;
+    [].forEach.call(document.querySelectorAll('[data-n="' + count + '"]'), function (e) { e.textContent = items.length; });
     host.innerHTML = '';
     [].forEach.call(items, function (li) {
       var row = document.createElement('li'); row.className = 'qa__i';

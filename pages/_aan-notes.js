@@ -1090,8 +1090,12 @@
     function land() {
       var n = mine().filter(function (x) { return x.id === id; })[0];
       if (!n) {
-        if (++tries < 48) return setTimeout(land, 250);
-        openPanel(true); toast('That note is not on this page'); return;
+        /* the panel opens at once, so a slow notes server never leaves the page silent; the note is marked as soon
+           as it arrives. A full read is asked again every 3s (a first read can fail), for up to 40s. */
+        if (tries === 0) { openPanel(true); toast('Loading the note\u2026'); }
+        if (++tries % 12 === 0) sync(true);
+        if (tries < 160) return setTimeout(land, 250);
+        toast('That note is not on this page'); return;
       }
       var hidden = (S.filter === 'open' && n.status === 'done') || (S.filter === 'done' && n.status !== 'done') || S.filter === 'mine';
       if (hidden) { S.filter = 'all'; elFilter.value = 'all'; }
