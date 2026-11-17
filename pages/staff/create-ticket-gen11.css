@@ -1,0 +1,11 @@
+/* Create A Ticket — page layout only. Everything else is Single Ticket's CSS and the shared components.
+   A new ticket has no dealer yet, so the board holds one card across the row. */
+.bento, .app.dock-open .bento { grid-template-columns: minmax(0, 1fr); grid-template-areas: "pulse"; }
+
+/* what is missing stands beside the button, in danger text (DESIGN.md §11); the preview line is ink-3 */
+.wo .form__msg { color: var(--ink-3); font-weight: 500; }
+.wo .form__msg--err { color: var(--danger); font-weight: 600; }
+
+/* nobody assigned yet: the not-set line of the system (DESIGN.md §30) */
+.cc__none { margin: 0; padding: var(--s2) 0; font-size: 14px; color: var(--ink-4); }
+.cc .cc__r1 .rowx { margin-left: auto; }

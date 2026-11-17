@@ -395,7 +395,7 @@
   <!-- ══ PAGES ══ -->
   <section class="lvl" id="pages">
     <h2>Pages <small>the references on real data</small></h2>
-    <p>The ten Gen 11 pages are the standard. The eleventh was never drawn: it was built only from this system as the test, and holds up.</p>
+    <p>The ten Gen 11 pages are the standard. Two more were never drawn: Feeds Incoming and Create A Ticket were built only from this system as tests, and hold up.</p>
     <div class="tpl" id="page-list"></div>
   </section>
 
@@ -500,7 +500,7 @@
   var P = [['All Vehicles', 'dealer/all-vehicles-gen11.html', 'List · dealer'], ['Single Vehicle', 'dealer/single-vehicle-gen11.html', 'Record'], ['All Leads', 'dealer/all-leads-gen11.html', 'List'],
     ['Single Lead', 'dealer/single-lead-gen11.html', 'Record'], ['Dealer Login', 'dealer/dealer-login-gen11.html', 'Login'], ['My Work Queue', 'staff/my-work-queue-gen11.html', 'List · staff'],
     ['Single Ticket', 'staff/single-ticket-gen11.html', 'Record with feed'], ['Manage Dealers', 'staff/manage-dealers-gen11.html', 'List · staff'], ['Dealer Edit', 'staff/dealer-edit-gen11.html', 'Edit form'],
-    ['Accounting', 'staff/accounting-view-all-gen11.html', 'List · billing'], ['Feeds Incoming — the test', 'staff/feeds-incoming-gen11.html', 'List · built only from this system']];
+    ['Accounting', 'staff/accounting-view-all-gen11.html', 'List · billing'], ['Feeds Incoming — test 1', 'staff/feeds-incoming-gen11.html', 'List · built only from this system'], ['Create A Ticket — test 2', 'staff/create-ticket-gen11.html', 'Record with feed, new and empty · built only from this system']];
   document.getElementById('page-list').innerHTML = P.map(function (p, i) {
     return '<a href="../pages/' + p[1] + '"><b>' + (i + 1) + '. ' + p[0] + '</b><span>' + p[2] + '</span><em>Open →</em></a>';
   }).join('');
