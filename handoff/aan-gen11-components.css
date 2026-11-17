@@ -15,6 +15,20 @@
      soft  0 28px 64px -34px rgba(34,58,118,.42), 0 2px 6px rgba(34,58,118,.10)
      card  0 22px 44px -22px rgba(15,27,61,.55), inset 0 1px 0 rgba(255,255,255,.14)
    Motion: 160ms cubic-bezier(.2,0,0,1) for colour and shadow; nothing moves layout.
+
+   CHECKED AGAINST THE LIVE BACKEND (2026-11-17, read only): 45 of the 73
+   selectors below match elements on /manage/dealers, /work/queue, a ticket,
+   /manage/feeds/inc, /manage/dealers/new and /inventory. The other 28 come
+   from theme.css class names on screens not opened yet (dealer-scoped
+   inventory and leads) and must be checked against the Blade markup before
+   use: ui-btn--danger, ui-chip, ui-cockpit(__title), ui-facet__btn(--on),
+   ui-field__error, ui-omni__input, ui-pill(--on, __count), ui-pulsecard(__l, __v),
+   ui-row--selected, ui-seg(__btn, --on), ui-subtab(--on), ui-switch states,
+   ui-tabs(__list, __tab).
+   MARKUP CHANGE NEEDED: the top nav marks no current section
+   (li.ui-topnav__group > a.ui-topnav__trigger + ul.ui-topnav__menu, no state).
+   Add aria-current="page" on the current group's trigger and its link; the
+   rules below key on it.
    ============================================================================ */
 
 :root {
@@ -138,7 +152,7 @@
   transition: color var(--g11-dur) var(--g11-ease), background var(--g11-dur) var(--g11-ease);
 }
 .ui-topnav__trigger:hover, .ui-topnav__link:hover { background: var(--g11-well); color: var(--color-ink); }
-.ui-topnav__group--on > .ui-topnav__trigger, .ui-topnav__link[aria-current] { color: var(--color-brand-strong); font-weight: 600; background: var(--color-brand-soft); }
+.ui-topnav__trigger[aria-current], .ui-topnav__link[aria-current] { color: var(--color-brand-strong); font-weight: 600; background: var(--color-brand-soft); }
 
 /* ── PAGE HEAD — origin All Vehicles (.head h1) / Single Lead (.head--card) ── */
 .ui-page-header { min-height: 32px; margin: 24px 16px 16px; gap: 12px; }
