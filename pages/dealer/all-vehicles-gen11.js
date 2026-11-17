@@ -88,7 +88,7 @@
        aside when Filters is open, as it always has. */
     { id: 'status',  label: 'Status',    grp: 'Listing & feeds', sort: 'status', cls: 'c-status', dockOff: true, track: { lg: 96, sm: 88 } },
     { id: 'thumb',   label: 'Thumbnail', grp: 'Listing & feeds', track: { lg: 92, sm: 76, dock: 68, dockSm: 60 } },
-    { id: 'stock',   label: 'Stock',     grp: 'Vehicle', sort: 'stock', track: { lg: 104, sm: 92, dock: 100, dockSm: 80 }, grow: 1 },   /* dockSm 88 until Nov 17 (#61: Year's swap icon) */
+    { id: 'stock',   label: 'Stock',     grp: 'Vehicle', sort: 'stock', track: { lg: 104, sm: 92, dock: 104, dockSm: 80 }, grow: 1 },   /* dockSm 88 until Nov 17 (#61: Year's swap icon); dock 100 until Nov 17 (8px text inset in the stock link) */
     { id: 'year',    label: 'Year',      grp: 'Vehicle', sort: 'year', track: { lg: 58, sm: 58, dock: 56, dockSm: 56 } }   /* 46/42/40/40 until Nov 17: room for its swap icon (#61) */,
     { id: 'make',    label: 'Make',      grp: 'Vehicle', sort: 'make', track: { lg: 104, sm: 92, dock: 86, dockSm: 76 } },   /* dockSm 84 until Nov 17 (#61: Year's swap icon) */
     { id: 'model',   label: 'Model',     grp: 'Vehicle', sort: 'model', track: { lg: 100, sm: 88, dock: 80, dockSm: 80 }, grow: 6 },

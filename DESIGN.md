@@ -144,7 +144,7 @@ the nine shell pages (Dealer Login has its own world, §15).
 
 ```
 .top         56px · inset 16px both sides · radius 12px · white .76 glass · --sh-soft
-.brand__mk   "AAN" · 37×18 · padding 2px 7px · radius 4px · --brand fill · #fff · 600 12.5px Plex Mono
+.brand__mk   "AAN" · 39×18 · padding 2px 8px · radius 4px · --brand fill · #fff · 600 12.5px Plex Mono
              sits at x = 32 on every page (bar at 16 + 16 inset; the brand link has no padding)
 .brand__t    15px / 600 ink · "All Auto Network"; 8px after the mark
 .nav__b      30px · radius 8px · 13px / 500 ink-2
@@ -607,15 +607,22 @@ Origin: All Vehicles.
 | element | origin | spec |
 |---|---|---|
 | status chip (`.stat`, `.bdg`, `.chip`) | All Vehicles | 24px · radius 7px · padding 0 8px · 13px / 600 sentence case · its tone on its soft fill with a 1px tone ring (ok, new = brand, pending = violet, trade = signal, quiet = slate, won = white with ok ring) |
-| flag tag (`.tag--flag`) | All Vehicles | 24px pill · padding 0 6px · 12px / 600 sentence case · ink-2 on `--wash`, 1px `--line-2` ring · its glyph first · never clipped; `+N` for the rest |
+| flag tag (`.tag--flag`) | All Vehicles | 24px pill · padding 0 8px · 12px / 600 sentence case · ink-2 on `--wash`, 1px `--line-2` ring · its glyph first · never clipped; `+N` for the rest |
 | record id pill | Single Vehicle | §21 |
 | Demo / Mock addition | All Vehicles / Single Vehicle | §13 |
-| counter badge (`.badge`) | Single Vehicle (section rail) | 18px pill · padding 0 6px · 11px / 600 · sentence case |
+| counter badge (`.badge`) | Single Vehicle (section rail) | 18px pill · padding 0 8px · 11px / 600 · sentence case |
 | entry kind | Single Ticket | §22 |
 | switchable state chip | Single Ticket | §6 — the status-chip geometry, outline at rest |
 | contact tag | Single Lead | §33 |
 
 **No caps on any chip or tag.**
+
+**Text inset** (Alex, Nov 17: text never touches the edge of its own element). Every word or number in a
+filled, ringed or bordered element has at least **8px** each side: tags, chips, counters, `kbd`, the AAN mark,
+nav items, the stock link, menu items; **10px** in a button; **16px** beside a divider or card edge. Centred
+single-glyph tiles (avatars, the dealer mark, the A / P / T package letters, the photo index and count, a count
+on a button) are glyphs and keep their square. One shared block, `TEXT INSET` at the end of
+`_aan-components.css`, holds the rule for every page.
 
 ---
 
