@@ -697,8 +697,8 @@ button.tile:hover .tile__f { color: var(--brand-ink); }
 /* a right-aligned header keeps a FULL-WIDTH box on purpose: the operational
    group's divider is an inset shadow on the box's left edge, and shrinking the
    box to its text would move that line off the track edge */
-.hd .r { text-align: right; }
-.hd .r .s { justify-content: flex-end; width: 100%; }
+.hd .r { text-align: left; }   /* Nov 18 (Alex, again): every table column left-aligned, numbers and money included — the head sits over its content */
+.hd .r .s { justify-content: flex-start; width: 100%; }
 
 /* ── the money group ────────────────────────────────────────────────────
    Bill · Company · Bill To · Pay With · Billing Email · Latest Payment tell you
@@ -750,7 +750,7 @@ button.tile:hover .tile__f { color: var(--brand-ink); }
 .c { min-width: 0; display: flex; align-items: center; gap: 6px; }
 .c--1 { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .muted { color: var(--ink-3); }
-.num { text-align: right; justify-content: flex-end; font-family: var(--mono); font-size: 12.5px; white-space: nowrap; }
+.num { text-align: left; justify-content: flex-start; font-family: var(--mono); font-size: 12.5px; white-space: nowrap; }
 
 /* ── the bill cell: a status glyph and the billing-active toggle ──────────
    Two different facts in one 44px track, as production ships them. The glyph
@@ -798,7 +798,7 @@ button.tile:hover .tile__f { color: var(--brand-ink); }
 .due { color: var(--danger); font-weight: 600; }
 .zero { color: var(--ink-4); }
 
-.c-act { display: flex; align-items: center; justify-content: flex-end; gap: var(--s1); }
+.c-act { display: flex; align-items: center; justify-content: flex-start; gap: var(--s1); }
 .row.open .c-act .btn--sheet { background: rgba(255,255,255,.14); color: var(--focal-ink); box-shadow: inset 0 0 0 1px rgba(255,255,255,.22); }
 .row.open .c-act .btn--sheet:hover { background: rgba(255,255,255,.24); }
 
@@ -891,7 +891,7 @@ button.tile:hover .tile__f { color: var(--brand-ink); }
 }
 .lg td { box-shadow: inset 0 -1px 0 var(--line-2); }
 .lg tbody tr:hover td { background: var(--wash); }
-.lg .num, .lg th.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
+.lg .num, .lg th.num { text-align: left; font-family: var(--mono); white-space: nowrap; }
 .lg th.num { font-family: var(--font); }
 .lg .inv { font-family: var(--mono); font-weight: 600; }
 .lg .faint { color: var(--ink-3); }
