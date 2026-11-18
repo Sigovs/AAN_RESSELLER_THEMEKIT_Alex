@@ -297,6 +297,15 @@ Origin: All Vehicles.
 - **Zebra on every monotonous block.** A block of many rows of the same shape (a list, a ledger, a log table) shades every second row with `color-mix(in srgb, var(--wash) 55%, var(--sheet))`, as All Vehicles. It is automatic on a list (`#tb > .row`; an open sheet between two rows does not break the count). Mark a table with `.zebra` (`<table class="lg zebra">`). Hover, the open row, a selected row and drag / jump targets keep their own tint. Not on feeds and timelines (entries are read one by one, not across), forms, menus, or a block of a few rows.
 - **Row link** (the stock number): Plex Mono 13px / 700 brand-ink, no underline.
 - Columns are left-aligned (numbers included) unless a column is a pure figure column with its own head.
+- **A list never scrolls sideways and never hides a column** (Alex, 18 Nov 2026). When the columns do not fit
+  1280 (My Work Queue, sixteen of them):
+  - **short heads**, the full name in the head's `title` and in the Sort menu: Dealer, Age, Created,
+    Modified, Since Modified, Est., My Est., Left, My Begin, My End, Begin, End (planned dates, so never "Done");
+  - **every track `minmax(its minimum, a share)`** with a 6px gap. The minimums fit 1280; a wider screen spreads
+    its extra width across all the columns in proportion, never to the free-text columns alone;
+  - **the free-text columns wrap onto a second line** (Dealer, Subject) instead of an ellipsis; a third line
+    ends in an ellipsis;
+  - **every head starts on the top line**, so a one-line head keeps its second line free.
 
 **Pager** — Origin: All Vehicles. On top **and** bottom of the list (`.pgr--top`, `.pgr`): a 48px bar
 in the field, "Showing 1–100 of 359" 14px ink-3 at the left; page buttons 30×30, radius 8px,
@@ -698,7 +707,11 @@ FLOATING to the right of the field, one gutter from it, radius 12px, `--el-2` (S
 | body `.dock__b` | padding 16px 24px, scrolls inside |
 | foot `.dock__f` | padding 12px 24px; the note 13px ink-3 at the left ("No unsaved changes"), actions right |
 
-Opening the dock narrows the field; it never covers it.
+Opening the dock narrows the field, **only where the field still fits beside it**. A list that does not
+(My Work Queue below 1800px: its list must keep at least the 1408px it has at 1440 without the dock) gets the
+dock **over** it instead: at its right, one 16px inset in, starting under the command band so Filters, Sort and
+Clear stay in sight, sticking under the band on scroll, `--el-3`. The list does not move. The dock is closed by
+default, stays open until it is closed, and the browser remembers it (Bill, 11 Nov; Alex, 18 Nov 2026).
 
 ---
 
@@ -1091,7 +1104,7 @@ Purpose: a side task for the page or the open record, beside the list. Origin: A
   <div class="dock__f dock__f--row"><span class="dock__note">No unsaved changes</span>…Discard · Save…</div>
 </aside>
 ```
-Open: `.app.dock-open`. Don't: a modal or a drawer over the list instead.
+Open: `.app.dock-open`. Don't: a modal instead. Over the list only where the list does not fit beside it (§31).
 
 ### 38.15 Save bar
 Origin: Single Vehicle. Markup: copy `.savebar` from Single Vehicle (record view) or Dealer Edit (edit
@@ -1252,7 +1265,8 @@ it; the A–Z jump wraps.
 right: fixed under the platform bar, a gutter from the edges, `min(440px, 100vw − 32px)` wide, `--el-3`,
 over the page; its own toggle and its close button work as on desktop. A page that opens its dock on
 load (Single Lead's Workflow, Single Ticket's Assigned To) starts with it closed at overlay widths.
-Side panels that do not fit (Dealer Edit's Options, Danger & Locks) go under the form.
+Side panels that do not fit (Dealer Edit's Options, Danger & Locks) go under the form. My Work Queue
+lies its dock over the list from 1280 to 1799 as well (§31).
 
 **Touch** (`hover: none` / `pointer: coarse`, in the tablet range). Nothing waits for a hover: row
 actions, filter-by-value buttons, the site link and the photo remove button are shown; a "?" mark
@@ -1364,24 +1378,22 @@ it here. `tools/ds-check` prints the measured state of each.
     `.zone__hd` (Dealer Edit) for `.zone__h`, field `.fw` + `.fl` (Dealer Edit) for `.f` + `.f__l`, record
     head `.head--card` for `.cockpit--card`. New pages use the origin names in §38; merging the aliases
     is the backlog `tools/ds-check` lists.
-14. **My Work Queue's table is cut off below 1600px** (re-measured 18 Nov 2026). Its 16 columns need about
-   1500px, and the page clips them with no way to reach them. Horizontal scroll is not allowed.
-   - What is lost: at 1280, Begin Date and Completion Date and the row's settings gear; at 1366,
-     Completion Date and the gear; at 1440, part of Completion Date and the gear.
-   - Option A: short headers plus columns sized to their content plus 6px gaps, about 1230px. It fits 1366
-     and up with room and 1280 just. The short headers are Age, My Est., Left, Modified, My Begin, My End,
-     Begin, End, with the full name in the header's title. Do not use "Done": these are planned dates.
-   - Option B: merge the pairs into two-line cells: My Begin/End, Begin/End, My Est./Left (about 275px saved).
-   - Alex is undecided: wait.
-15. **Native checkboxes on touch:** Accounting's row checkboxes (14px, the browser's box) cannot take the
+14. **Native checkboxes on touch:** Accounting's row checkboxes (14px, the browser's box) cannot take the
     invisible hit area; with §25's `.ck` they would (see 2).
-16. **Sticky column head on tablet** follows the rows sideways by a transform driven from the rows'
+15. **Sticky column head on tablet** follows the rows sideways by a transform driven from the rows'
     scroll (`_aan-tablet.js`); without JavaScript the head stays put while the rows scroll.
+16. **The dock-over rule on the other pages.** §31's "over the list where it does not fit" is used on My Work
+    Queue only. All Vehicles still narrows its list and hides the Spec column and two command-band controls
+    while Filters is open; Single Lead (Workflow), Single Ticket and Create A Ticket (Assigned To) narrow their
+    content. Alex to decide whether they follow.
 
 **Decided on 18 Nov 2026 (Alex):**
 - the field heights are 36 / 30 (§11);
 - Accounting's per-row Pay **stays** as it is;
-- no tap-and-hold photo preview on tablet: the larger photo stays one tap away in the row's sheet.
+- no tap-and-hold photo preview on tablet: the larger photo stays one tap away in the row's sheet;
+- My Work Queue's table fits 1280 with no horizontal scroll (§10): short heads, `minmax` tracks, two-line
+  Dealer / Subject, heads on the top line. Its Filters dock lies over the list below 1800 and pushes it from
+  1800 up (§31). It was Bill's side panel (11 Nov); its behaviour is his, only the overlay is new.
 
 - Explanatory lines on dealer pages keep only what the live system has (checked on reseller.aansupport.com).
   The following are commented out, not deleted:
@@ -1396,4 +1408,3 @@ it here. `tools/ds-check` prints the measured state of each.
   car's status changes to Available, a confirm asks "Do you want to reset 'When Added' date to today's? Click
   cancel to keep original date." Gen 11 shows it as a switch in Utilities instead of the confirm.
 
-Waiting: My Work Queue's table width (above).

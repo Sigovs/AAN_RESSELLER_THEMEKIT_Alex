@@ -50,46 +50,48 @@
 
   /* ── column sets ─────────────────────────────────────────────────────────
      Two of them, because production ships two. The header is addressed by
-     semantic class, never by nth-child (DESIGN.md §10). */
+     semantic class, never by nth-child (DESIGN.md §10). `h` is the short head the
+     column shows (Alex, Nov 18: everything fits 1280 with no horizontal scroll); `l`
+     stays the full name, in the head's title and in the Sort menu. */
   var COLS = {
     mine: [
       { c: 'c-grip', l: '' },
       { c: 'c-rank', l: 'Priority',        s: 'rank',    ctr: true },
       { c: 'c-tkt',  l: 'Ticket',          s: 'ticket' },
-      { c: 'c-dlr',  l: 'Dealership',      s: 'dealer' },
+      { c: 'c-dlr',  l: 'Dealership',      h: 'Dealer',   s: 'dealer' },
       { c: 'c-sub',  l: 'Subject',         s: 'subject' },
       { c: 'c-st',   l: 'Status',          s: 'status' },
       { c: 'c-wt',   l: 'Work Type',       s: 'work' },
-      { c: 'c-age',  l: 'Ticket Age',      s: 'age',     r: true },
+      { c: 'c-age',  l: 'Ticket Age',      h: 'Age',      s: 'age',     r: true },
       { c: 'c-amt',  l: 'Dollar Amount',                 r: true },
-      { c: 'c-est',  l: 'My Est. Time',                  r: true },
-      { c: 'c-left', l: 'Remaining Time',                r: true },
-      { c: 'c-mod',  l: 'Last Modified',   s: 'mod' },
+      { c: 'c-est',  l: 'My Est. Time',     h: 'My Est.',                r: true },
+      { c: 'c-left', l: 'Remaining Time',   h: 'Left',                   r: true },
+      { c: 'c-mod',  l: 'Last Modified',   h: 'Modified', s: 'mod' },
       { c: 'c-who',  l: 'Assigned' },
       /* my own dates on the ticket, then the ticket's (Bill, Nov 11: "There should be 2 sets of dates here";
          the live My Work list has My Begin Date · My Completion Date · Begin Date · Completion Date) */
-      { c: 'c-mbeg',  l: 'My Begin Date' },
-      { c: 'c-mdone', l: 'My Completion Date' },
-      { c: 'c-beg',  l: 'Begin Date',      s: 'begin' },
-      { c: 'c-done', l: 'Completion Date', s: 'done' },
+      { c: 'c-mbeg',  l: 'My Begin Date',      h: 'My Begin' },
+      { c: 'c-mdone', l: 'My Completion Date', h: 'My End' },
+      { c: 'c-beg',  l: 'Begin Date',      h: 'Begin',    s: 'begin' },
+      { c: 'c-done', l: 'Completion Date', h: 'End',      s: 'done' },
       { c: 'c-act',  l: '' }
     ],
     open: [
       { c: 'c-tkt',   l: 'Ticket',              s: 'ticket' },
-      { c: 'c-dlr',   l: 'Dealership',          s: 'dealer' },
+      { c: 'c-dlr',   l: 'Dealership',          h: 'Dealer',         s: 'dealer' },
       { c: 'c-sub',   l: 'Subject',             s: 'subject' },
       { c: 'c-st',    l: 'Status',              s: 'status' },
       { c: 'c-pri',   l: 'Priority',            s: 'pri' },
-      { c: 'c-cre',   l: 'Date Created',        s: 'created' },
-      { c: 'c-age',   l: 'Ticket Age',          s: 'age',   r: true },
+      { c: 'c-cre',   l: 'Date Created',        h: 'Created',        s: 'created' },
+      { c: 'c-age',   l: 'Ticket Age',          h: 'Age',            s: 'age',   r: true },
       { c: 'c-wt',    l: 'Work Type',           s: 'work' },
       { c: 'c-amt',   l: 'Dollar Amount',                   r: true },
-      { c: 'c-est',   l: 'Est. Time',                       r: true },
-      { c: 'c-mod',   l: 'Last Modified',       s: 'mod' },
-      { c: 'c-since', l: 'Days Since Modified', s: 'since', r: true },
+      { c: 'c-est',   l: 'Est. Time',           h: 'Est.',                         r: true },
+      { c: 'c-mod',   l: 'Last Modified',       h: 'Modified',       s: 'mod' },
+      { c: 'c-since', l: 'Days Since Modified', h: 'Since Modified', s: 'since', r: true },
       { c: 'c-who',   l: 'Assigned' },
-      { c: 'c-beg',   l: 'Begin Date',          s: 'begin' },
-      { c: 'c-done',  l: 'Completion Date',     s: 'done' },
+      { c: 'c-beg',   l: 'Begin Date',          h: 'Begin',          s: 'begin' },
+      { c: 'c-done',  l: 'Completion Date',     h: 'End',            s: 'done' },
       { c: 'c-act',   l: '' }
     ]
   };
@@ -324,12 +326,13 @@
     $('#hd').innerHTML = set().map(function (c) {
       var cls = c.c + (c.r ? ' r' : '') + (c.ctr ? ' ctr' : '');
       if (!c.l) return '<span class="' + cls + '" role="columnheader"></span>';
-      if (!c.s) return '<span class="' + cls + '" role="columnheader">' + esc(c.l) + '</span>';
+      var t = c.h ? ' title="' + esc(c.l) + '"' : '';
+      if (!c.s) return '<span class="' + cls + '" role="columnheader"' + t + '>' + esc(c.h || c.l) + '</span>';
       var on = S.sort === c.s;
-      return '<span class="' + cls + '" role="columnheader" aria-sort="' +
+      return '<span class="' + cls + '" role="columnheader"' + t + ' aria-sort="' +
         (on ? (S.dir === 'asc' ? 'ascending' : 'descending') : 'none') + '">' +
         '<button class="s' + (on ? ' s--on' : '') + '" type="button" data-sort="' + c.s + '">' +
-        esc(c.l) + ic(S.dir === 'asc' ? 'i-up' : 'i-dn') + '</button></span>';
+        esc(c.h || c.l) + ic(S.dir === 'asc' ? 'i-up' : 'i-dn') + '</button></span>';
     }).join('');
   }
 
@@ -632,6 +635,16 @@
     window.dispatchEvent(new Event('resize'));   /* the list's width changed: the wide-list scroll re-measures */
   }
   try { if (localStorage.getItem('aan-mwq-filters-open') === '1') setFilters(true); } catch (x) { }
+  /* where the dock lies over the list (1280-1799, the CSS): under the search band, and under it again once the band
+     sticks. Measured, because the band's height follows the lane and the chips. */
+  function placeDock() {
+    var app = $('#app'), cmd = $('#cmd'), field = $('#field');
+    if (!cmd || !field) return;
+    var top = parseFloat(getComputedStyle(cmd).top) || 0, c = cmd.getBoundingClientRect();
+    app.style.setProperty('--dock-stick', (top + c.height + 8) + 'px');
+    if (c.top > top + 1) app.style.setProperty('--dock-off', (c.bottom - field.getBoundingClientRect().top + 8) + 'px');   /* the band is not stuck: its natural place */
+  }
+  placeDock(); window.addEventListener('resize', placeDock); window.addEventListener('load', placeDock);
 
   /* ── actions ─────────────────────────────────────────────────────────── */
   document.addEventListener('click', function (e) {

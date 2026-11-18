@@ -610,111 +610,48 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
    ========================================================================== */
 .rows { background: var(--sheet); border-radius: 0; }
 
-/* ── column model ────────────────────────────────────────────────────────
-   Sixteen tracks. Fourteen are fixed, Dealership is clamped, and Subject is
-   the ONE flexible track that absorbs the difference at every width
-   (DESIGN.md §15, §16).
-
-   Every fixed track is sized by its WORST CASE, and the worst case that binds
-   is the widest unbreakable word in either the header or the cells — measured,
-   not guessed, at 12px/700/.05em caps for headers and 13px for cells. That is
-   the whole fix for the mid-word breaks the verification found: nothing here
-   relies on `overflow-wrap: break-word` or `hyphens: auto` to make a label fit.
-
-       track        px   binding worst case
-       grip         20   the handle
-       rank         72   PRIORITY 63.1
-       ticket       60   TICKET 48.3 · 1048663 in mono 54.6
-       dealership  88+   1fr   ─┐ the two free-text tracks. See the note below
-       subject     140+  1.6fr  ─┘ on why there are two and not one.
-       status      100   the badge, not the label: "Support Open" measures 93.2
-                         with its pill padding and was clipping at 92
-       work type    88   "Modification" 74.0 — the longest word, not the longest
-                         value: "DNS Records/Settings" breaks after the slash
-       ticket age   52   TICKET 48.3
-       dollar       68   $49,500.00 in mono
-       my est.      64   "EST. TIME" 64.2 on one line under MY. 48px forced a
-                         third line into a header box that holds two.
-       remaining    80   REMAINING 76.5
-       last mod.    92   9/8/26 17:28 in mono 86.4
-       assigned     80   ASSIGNED 69.1
-       begin        52   BEGIN 42.1
-       completion   92   COMPLETION 88.1
-       actions      36   the cog
-
-   TWO flexible tracks, not one. DESIGN.md §16 names Model as All Vehicles' only
-   1fr because that table has one free-text column. This one has two — Dealership
-   and Subject — and production sizes them 8% and 13%, a ratio of 1.625. The fr
-   factors below reproduce that ratio (1 : 1.6) rather than inventing a split.
-   A clamped track was tried first and rejected on measurement: grid maximises a
-   clamped track BEFORE it expands an fr one, so at 1440 Dealership took 155px
-   while Subject sat at its 140px floor and 55 of 94 subjects truncated. Subject
-   is the ticket's identity; it must lead.
-
-   Budget check, the number that decides whether it fits. At 1366 the field is
-   1338px wide once the ≤1400 gutter step lands; 15 gaps of 8 and 16px of row
-   inset leave 1202px of track. The minimums sum to 1168px (mine) and 1176px
-   (open), so both sets clear it with room and nothing overflows — verified at
-   0px, not assumed.
-   ========================================================================== */
+/* ── column model (Alex, Nov 18) ─────────────────────────────────────────
+   No horizontal scroll, ever: all the columns fit 1280. Three things make that possible.
+     · Short headers (the JS `h`; the full name stays in the head's title and in the Sort menu):
+       Dealership → Dealer, Ticket Age → Age, My Est. Time → My Est., Remaining Time → Left,
+       Last Modified → Modified, My Begin / My Completion Date → My Begin / My End,
+       Begin / Completion Date → Begin / End, Date Created → Created, Est. Time → Est.,
+       Days Since Modified → Since Modified.
+     · A 6px column gap, and every track is minmax(its minimum, a share): the minimums fit 1280,
+       and a wide screen spreads its extra width across ALL the columns in proportion, never to
+       Dealer and Subject alone (that left amounts cut at 1920 and 2540).
+     · Dealer and Subject wrap onto a second line instead of an ellipsis (the row is two lines
+       already: Work Type, Modified); a third line still ends in an ellipsis.
+   Measured at 1280 · 1366 · 1440 · 1536 · 1600 · 1920 · 2540, filters open and closed, on My Work,
+   All Open and Support: no column lost, no amount cut, overflow 0. Every head starts on the top
+   line, so a one-line head keeps its second line free (Age sits level with Dollar / Amount). */
 .field[data-cols="mine"] {
-  --cols:
-    20px                  /* reorder     */
-    72px                  /* priority    */
-    60px                  /* ticket      */
-    minmax(88px, 1fr)     /* dealership  */
-    minmax(140px, 1.6fr)  /* subject     */
-    100px                 /* status      */
-    88px                  /* work type   */
-    52px                  /* ticket age  */
-    68px                  /* dollar      */
-    64px                  /* my est.     */
-    80px                  /* remaining   */
-    92px                  /* last mod.   */
-    80px                  /* assigned    */
-    64px                  /* my begin    MY BEGIN on one line (Bill, Nov 11)  */
-    112px                 /* my compl.   MY COMPLETION on one line            */
-    52px                  /* begin       */
-    92px                  /* completion  */
-    36px;                 /* actions     */
+  --col-gap: 6px;
+  --cols: 20px minmax(64px, .64fr) minmax(56px, .6fr) minmax(88px, 1.3fr) minmax(102px, 2.2fr) minmax(100px, 1fr)
+          minmax(80px, .9fr) minmax(40px, .45fr) minmax(84px, .8fr) minmax(44px, .5fr) minmax(36px, .45fr)
+          minmax(92px, 1fr) minmax(78px, .85fr) minmax(44px, .55fr) minmax(40px, .55fr) minmax(56px, .65fr)
+          minmax(72px, .8fr) 36px;
+  /* grip · priority · ticket · dealer · subject · status · work type · age · dollar amount · my est. · left ·
+     modified · assigned · my begin · my end · begin · end · actions */
 }
-
-/* The All Open / archived lanes ship a DIFFERENT sixteen: no reorder handle and
-   no personal time columns, and Priority becomes a badge rather than a rank.
-   Two column sets, declared, rather than one set that half-fits both. */
+/* All Open, Support, Client Projects …: production's other sixteen (no grip, no personal times, Priority as a badge) */
 .field[data-cols="open"] {
-  --cols:
-    60px                  /* ticket              TICKET 48.3 · mono 54.6      */
-    minmax(88px, 1fr)     /* dealership          DEALERSHIP 84.8              */
-    minmax(132px, 1.6fr)  /* subject             132 rather than the 140 the
-                                                  other set uses: this set
-                                                  carries one more wide track
-                                                  and the 8px buys DAYS SINCE a
-                                                  single line                  */
-    104px                 /* status              the archived lane's labels run
-                                                  longer than My Work's:
-                                                  "Internal Closed" needs 103  */
-    68px                  /* priority (badge)    PRIORITY 63.1. Six of the
-                                                  seven production values fit;
-                                                  "As Scheduled" ellipsises and
-                                                  carries its full text as the
-                                                  element's title, the way this
-                                                  table already treats a VIN    */
-    64px                  /* date created        CREATED 62.4                 */
-    48px                  /* ticket age          TICKET 47.6                  */
-    76px                  /* work type           "Modification" 74.0          */
-    60px                  /* dollar              AMOUNT 57.3 (all N/A here)   */
-    44px                  /* est. time           TIME 31.9                    */
-    92px                  /* last modified       mono timestamp 86.4          */
-    88px                  /* days since modified "DAYS SINCE" 79.0 on one line,
-                                                  MODIFIED 65.4 on the next.
-                                                  Measured: 68px broke it into
-                                                  three lines, 80px still did.  */
-    72px                  /* assigned            ASSIGNED 68.2                */
-    52px                  /* begin               BEGIN 41.5                   */
-    92px                  /* completion          COMPLETION 86.9              */
-    36px;                 /* actions             the cog                      */
+  --col-gap: 6px;
+  --cols: minmax(56px, .6fr) minmax(88px, 1.3fr) minmax(102px, 2.2fr) minmax(104px, 1fr) minmax(68px, .7fr)
+          minmax(60px, .65fr) minmax(40px, .45fr) minmax(80px, .9fr) minmax(84px, .8fr) minmax(44px, .5fr)
+          minmax(92px, 1fr) minmax(68px, .6fr) minmax(78px, .85fr) minmax(56px, .65fr) minmax(72px, .8fr) 36px;
+  /* ticket · dealer · subject · status · priority · created · age · work type · dollar amount · est. · modified ·
+     since modified · assigned · begin · end · actions */
 }
+.field[data-cols] .c-st { align-items: flex-start; }   /* the status chip hugs its word when the column grows */
+.field[data-cols] .hd { align-items: start; }
+.field[data-cols] .hd > * { align-self: start; }
+.field[data-cols] .hd .s { align-items: flex-start; }
+.field[data-cols] .c-sub a, .field[data-cols] .dlr span {
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2;
+  white-space: normal; overflow: hidden; text-overflow: clip; overflow-wrap: anywhere; line-height: 1.35;
+}
+.field[data-cols] .c-mod--flag { margin-left: -6px; margin-right: -6px; }   /* the 6px gap: the flag chip stays inside its column */
 
 /* ── column header · sticky #3 of 3. It owns the stack's bottom edge. ───── */
 .hd {
@@ -1399,8 +1336,10 @@ html.no-js .cmdtop, html.no-js .cmd, html.no-js .sub, html.no-js .hd, html.no-js
 .app .hd.ui-thead { padding-left: var(--sheet-inset); padding-right: var(--sheet-inset); }
 
 /* ============================================================================
-   FILTERS DOCK (Bill, Nov 11; Alex, Nov 16): the staff dock of Single Ticket, on the right of the list, open until
-   closed. Rows above the list keep the full width; the list shares its row with the dock.
+   FILTERS DOCK (Bill, Nov 11; Alex, Nov 16 and 18): the staff dock of Single Ticket, closed by default, open until
+   closed, remembered. It sits BESIDE the list and pushes it only where the list still keeps the room it has at
+   1440 without it: 1800 and up (1412px of list vs 1408; the dock takes 388px with its gap). Narrower, it lies OVER
+   the list at its right and the list does not move (below 1280: the shared tablet overlay, _aan-components.css).
    ========================================================================== */
 :root { --dock: 340px; }
 .app.dock-open { grid-template-columns: minmax(0, 1fr) var(--dock); column-gap: var(--gutter); }
@@ -1428,3 +1367,16 @@ html.no-js .cmdtop, html.no-js .cmd, html.no-js .sub, html.no-js .hd, html.no-js
 .dock__b { flex: 1 1 auto; min-height: 0; padding: var(--s3) var(--s2); overflow: auto; overscroll-behavior: contain; }
 .dock .mn__row .sel { max-width: none !important; }
 .facet__b--on { background: var(--brand-soft); color: var(--brand-ink); }
+@media (min-width: 1280px) and (max-width: 1799.98px) {
+  .app.dock-open { grid-template-columns: minmax(0, 1fr); }
+  .app.dock-open > .field { grid-column: 1; grid-row: 4; }   /* placed, or auto-placement moves the list to a new column */
+  /* the dock shares the list's grid cell, at its right: it starts under the search band (Filters, Sort and Clear stay in
+     sight) and sticks under the stuck band on scroll. The two offsets are measured by the page script (placeDock). */
+  .app > .dock {
+    grid-column: 1; grid-row: 4; justify-self: end; position: sticky;
+    top: var(--dock-stick, calc(var(--stick-bar) + var(--s2)));
+    margin: var(--dock-off, 0px) var(--s4) 0 0; z-index: var(--z-menu);
+    width: var(--dock); max-height: calc(100vh - var(--dock-stick, var(--stick-bar)) - var(--s4));
+    box-shadow: var(--el-3);
+  }
+}
