@@ -257,7 +257,10 @@
     $('#vis').innerHTML = D.vis.map(function (s) {
       var on = !!S.v.vis[s.id];
       return '<div class="swrow' + (s.tone === 'danger' ? ' swrow--danger' : '') + (on ? ' swrow--on' : '') + '">' +
-        '<span class="swrow__x"><b title="' + esc(s.label) + '">' + esc(s.label) + '</b><span>' + esc(s.help) + '</span><i class="swrow__on">' + esc(VIS_ON[s.id] || 'On') + '</i></span>' +
+        '<span class="swrow__x"><b title="' + esc(s.label) + '">' + esc(s.label) + '</b>' +
+        /* the help line is not in the live system (checked Nov 18): s.help stays in the data, not on the page
+        '<span>' + esc(s.help) + '</span>' + */
+        '<i class="swrow__on">' + esc(VIS_ON[s.id] || 'On') + '</i></span>' +
         '<label class="sw' + (s.tone === 'danger' ? ' sw--danger' : '') + '">' +
         '<input type="checkbox" id="core-' + s.id + '" name="core-' + s.id + '" data-vis="' + s.id + '" aria-label="' + esc(s.label) + '"' +
         (S.v.vis[s.id] ? ' checked' : '') + '><span class="sw__t"></span></label>' +
@@ -684,7 +687,7 @@
       '<div class="cfx__card">' +
         '<label class="cfx__sw" for="custom-no_carfax">' +
           '<span class="sw"><input type="checkbox" id="custom-no_carfax" name="custom-no_carfax" data-custom="no_carfax"' + (v.custom.no_carfax ? ' checked' : '') + '><span class="sw__t"></span></span>' +
-          '<span><b>Do Not Report VIN To Carfax</b><span>Keeps this VIN out of the CARFAX dealer feed</span></span></label>' +
+          '<span><b>Do Not Report VIN To Carfax</b>' + /* not in the live system (Nov 18): '<span>Keeps this VIN out of the CARFAX dealer feed</span>' + */ '</span></label>' +
         /* Report date and Last checked out (Bill, Nov 6: "we don't have this info so this field can be removed" / "we also don't have this data")
         '<div class="cfx__dates">' + cfxField('cfx_date', 'Report date') + cfxField('carfax_timestamp', 'Last checked') + '</div>' + */
       '</div>';

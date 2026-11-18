@@ -9,7 +9,7 @@
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
 var h = location.hash.slice(1).split('&'); if (h.indexOf('dark') >= 0 || h.indexOf('light') >= 0) document.documentElement.setAttribute('data-theme', h.indexOf('dark') >= 0 ? 'dark' : 'light');   /* review hash, applied before the page paints */</script>
 <link rel="stylesheet" href="all-vehicles-gen11.css?v=20261117-dark">
-<link rel="stylesheet" href="single-lead-gen11.css?v=20261118-h36">
+<link rel="stylesheet" href="single-lead-gen11.css?v=20261118-live">
 <link rel="stylesheet" href="../_aan-family.css?v=20261118-tbtn">
 <link rel="stylesheet" href="../_aan-components.css?v=20261118-tbtn">
 </head>
@@ -338,7 +338,7 @@ var h = location.hash.slice(1).split('&'); if (h.indexOf('dark') >= 0 || h.index
             <div class="composer__b">
               <label class="composer__lab" for="note-in">Add a note</label>
               <textarea class="fld" id="note-in" rows="2" placeholder="What happened, and what is next…" autocomplete="off"></textarea>
-              <div class="composer__f"><span class="hint">Logged as <b id="composer-name">Parin</b> · shows in Activity for everyone on this lead</span><button class="btn btn--primary btn--sm" type="submit" data-act="add-note">Add note</button></div>
+              <div class="composer__f"><!-- not in the live system (Nov 18): <span class="hint">Logged as <b id="composer-name">Parin</b> · shows in Activity for everyone on this lead</span> --><button class="btn btn--primary btn--sm" type="submit" data-act="add-note">Add note</button></div>
             </div>
           </form>
           <p class="src">Timeline reconstructed from this lead's own counts — demo data, no CRM event stream connected.</p>
@@ -467,7 +467,7 @@ var h = location.hash.slice(1).split('&'); if (h.indexOf('dark') >= 0 || h.index
 
 <script src="all-vehicles-gen11.data.js?v=20260930234502"></script>
 <script src="all-leads-gen10.data.js?v=20260930234502"></script>
-<script src="single-lead-gen11.js?v=20261118-tbtn"></script>
+<script src="single-lead-gen11.js?v=20261118-live"></script>
 <script src="../_aan-tablet.js?v=20261116-wide"></script>
 </body>
 </html>

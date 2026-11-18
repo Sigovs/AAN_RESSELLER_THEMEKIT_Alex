@@ -1288,9 +1288,7 @@ it here. `tools/ds-check` prints the measured state of each.
     package flags are 12px / 7px-radius `.bdg`; Dealer Edit's `.dbchip` is a 22px pill; My Work Queue's
     "Archived" is a 34px pill toggle — four shapes for what §27 has two of.
 10. **Single Lead's platform bar** is solid white at rest; every other page is the .76 glass.
-11. **Explanatory lines on dealer pages:** All Vehicles' empty Model popover ("Pick a make first — models
-    scope to it."), Single Lead's "Logged as …" under the note box, Single Vehicle's toggle descriptions
-    ("Feature this car in the site's Specials rail") — keep only those the original has.
+11. **All Vehicles' Model filter** is a stub: its popover only says "Pick a make first — models scope to it." and never lists models. The live system shows a plain list of every model. To decide: list the models (as live) or keep the stub.
 12. **Column-header height:** `--stick-hd` is 40px, All Vehicles' `.hd` measures 48px at rest — re-measure
     the 162px anchor (§8) before changing either.
 13. **Inert tokens:** `all-vehicles-gen11.css` still declares an older radius scale (`--r-card 24px` …)
@@ -1313,5 +1311,11 @@ it here. `tools/ds-check` prints the measured state of each.
 - Accounting's per-row Pay **stays** as it is;
 - no tap-and-hold photo preview on tablet: the larger photo stays one tap away in the row's sheet.
 
-Being worked: the explanatory lines on dealer pages keep only those the live system has. Waiting: staff lists
-at 1280–1340.
+- Explanatory lines on dealer pages keep only what the live system has (checked on reseller.aansupport.com).
+  The following are commented out, not deleted:
+  - Single Lead's "Logged as …" under the note box;
+  - Single Vehicle's five visibility-switch descriptions;
+  - Single Vehicle's CARFAX description;
+  - Single Vehicle's "Renew listing on save" description.
+
+Waiting: staff lists at 1280–1340.
