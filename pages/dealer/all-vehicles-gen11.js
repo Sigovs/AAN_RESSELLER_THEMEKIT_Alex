@@ -199,7 +199,7 @@
      is shown against the table's own width. */
   function trackPx(c) {
     var t = colTier();
-    if (c.id === 'health' && t === 'lg' && CHIPMQ.matches) return c.track.sm;   /* as colTemplate() */
+    if (c.id === 'health' && t === 'lg' && oneChip()) return c.track.sm;   /* as colTemplate() */
     return c.track[t] != null ? c.track[t] : (c.track.sm || c.track.lg);
   }
   function tableRoom() {
@@ -223,7 +223,14 @@
     if (n) n.hidden = !full;
   }
 
-  function dockOpen() { return S.dock === 'filters'; }
+  /* Filters dock, beside or over (Alex, Nov 18; DESIGN §31). The list no longer adapts to the dock: it sits BESIDE the
+     list only where the list keeps the room it has at 1440 with Filters closed (1900 and up: 1412px vs 1408), and lies
+     OVER the list everywhere narrower — so no column steps aside and no track tier changes for it any more.
+     Was: function dockOpen() { return S.dock === 'filters'; }   (it dropped Status, Trim, Color, Mileage and used the
+     dock / dockSm tracks; those stay in COLS, unused) */
+  var BESIDE = window.matchMedia('(min-width: 1900px)');
+  function dockOpen() { return false; }
+  function dockBeside() { return S.dock === 'filters' && BESIDE.matches; }
   /* The tier is watched, not sampled. A first render can happen before the
      viewport has settled on its final width, and the template would then keep
      the tier it was born with; the media query tells us when to rebuild. */
@@ -231,7 +238,7 @@
   /* Health shows one chip + "+N" up to 1600 now that Mileage shares the row
      (review note 15); two chips only where the row has room for them. */
   var CHIPMQ = window.matchMedia('(max-width: 1600px)');
-  function oneChip() { return dockOpen() || CHIPMQ.matches; }
+  function oneChip() { return dockBeside() || CHIPMQ.matches; }   /* beside, the list has the room it has at 1440: one chip, as there */
   function colTier() {
     var narrow = COLMQ.matches;
     return dockOpen() ? (narrow ? 'dockSm' : 'dock') : (narrow ? 'sm' : 'lg');
@@ -278,7 +285,7 @@
     return visibleCols().map(function (c) {
       if (S.view === 'photos' && PHOTO_TRACK[c.id]) return PHOTO_TRACK[c.id] + 'px';
       if (S.view === 'photos') { var pp = (c.track[tier] != null ? c.track[tier] : c.track.lg) + 'px'; return PHOTO_GROW[c.id] ? 'minmax(' + pp + ', ' + PHOTO_GROW[c.id] + 'fr)' : pp; }
-      var px = (c.id === 'health' && tier === 'lg' && CHIPMQ.matches ? c.track.sm : (c.track[tier] != null ? c.track[tier] : c.track.lg)) + 'px';
+      var px = (c.id === 'health' && tier === 'lg' && oneChip() ? c.track.sm : (c.track[tier] != null ? c.track[tier] : c.track.lg)) + 'px';
       if (!c.grow) return px;
       if (c.id === 'model') return 'minmax(' + px + ', ' + (freed ? c.grow : 1) + 'fr)';
       return freed ? 'minmax(' + px + ', ' + c.grow + 'fr)' : px;
@@ -837,8 +844,25 @@
     if (b) b.setAttribute('aria-expanded', open);
     if (p) { if (open) p.removeAttribute('inert'); else p.setAttribute('inert', ''); }
   }
-  function openDock() { $('#app').classList.add('dock-open'); $('[data-act="filters"]').classList.toggle('facet__b--on', S.dock === 'filters'); }
-  function closeDock() { S.dock = null; $('#app').classList.remove('dock-open'); $('[data-act="filters"]').classList.remove('facet__b--on'); $('#dock-f').className = 'dock__f'; render(); }
+  /* .dock-beside: the list narrows beside the dock · .dock-over: the dock lies over the list at its right.
+     (.dock-open, the old state that reshaped the list, is not set any more; its rules stay in the CSS, unused.) */
+  function openDock() {
+    var beside = BESIDE.matches;
+    $('#app').classList.toggle('dock-beside', beside); $('#app').classList.toggle('dock-over', !beside);
+    $('[data-act="filters"]').classList.toggle('facet__b--on', S.dock === 'filters'); placeDock();
+  }
+  function closeDock() { S.dock = null; $('#app').classList.remove('dock-beside', 'dock-over'); $('[data-act="filters"]').classList.remove('facet__b--on'); $('#dock-f').className = 'dock__f'; render(); }
+  /* over the list, the dock starts under the list's controls (search band, scope line, top pager: nothing it covers is
+     a control) and sticks under the stuck search band on scroll. Measured: the bands' heights follow chips and widths. */
+  function placeDock() {
+    var app = $('#app'), cmd = $('.field .cmd'), pg = $('#pg-top'), field = $('.field');
+    if (!cmd || !field) return;
+    var top = parseFloat(getComputedStyle(cmd).top) || 0, c = cmd.getBoundingClientRect(), last = (pg && pg.getBoundingClientRect().height ? pg : cmd).getBoundingClientRect();
+    app.style.setProperty('--dock-stick', (top + c.height + 8) + 'px');
+    if (c.top > top + 1) app.style.setProperty('--dock-off', (last.bottom - field.getBoundingClientRect().top + 8) + 'px');   /* the band is not stuck: the natural place */
+  }
+  window.addEventListener('resize', function () { if (S.dock) placeDock(); });
+  if (BESIDE.addEventListener) BESIDE.addEventListener('change', function () { if (S.dock) { openDock(); applyCols(); render(); } });   /* the one-chip Listing track follows */
 
   function showVehicle(id) {
     var v = byId(id); if (!v) return;
