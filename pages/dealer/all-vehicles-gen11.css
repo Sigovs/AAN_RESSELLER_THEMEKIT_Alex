@@ -356,6 +356,8 @@ svg { display: block; }
 .menu__l b .i { width: 13px; height: 13px; color: var(--ink-3); }
 .menu__l span { font-size: 14px; color: var(--ink-3); }
 .menu__l:hover { background: var(--wash); }
+button.menu__l { width: 100%; border: 0; background: none; font: inherit; text-align: left; cursor: pointer; }   /* the theme switch in the account menu */
+button.menu__l:hover { background: var(--wash); }
 .menu__l--on { background: var(--brand-soft); }
 .menu__l--on b { color: var(--brand-ink); }
 .menu__who { display: flex; flex-direction: column; gap: 2px; padding: 10px 10px 12px; margin-bottom: 4px; border-bottom: 1px solid var(--line-2); }

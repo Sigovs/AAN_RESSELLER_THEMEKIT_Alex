@@ -241,23 +241,14 @@
    room it needs: a 104px label track that holds `Active Prospect` whole, rows
    on the 8pt ladder, and 5 rows instead of 4.
    ========================================================================== */
-.bento { grid-template-columns: minmax(560px, 1.4fr) 236px minmax(0, 1.35fr); }
-.focal { grid-template-columns: minmax(0, 1fr) 268px; }
-.agemix { padding: var(--s5) var(--s5) var(--s5) var(--s5); }
-.agerows { display: flex; flex-direction: column; gap: var(--s1); margin: 0 calc(var(--s2) * -1); }
-.agerow {
-  grid-template-columns: 104px minmax(0, 1fr) 28px 36px;
-  gap: var(--s2);
-  height: 32px;
-  padding: 0 var(--s2);
-  border-radius: var(--r-inner);
-}
+/* Nov 18 (Alex: "same cards, same amount of information — why are they different sizes?"): the board has NO
+   geometry of its own here. Column widths, the inset, the row metrics and the height all come from All Vehicles
+   (page order = precedence), so the two boards are the same object to the pixel. The one local value: the label
+   track is cut to its measured text, as All Vehicles cut its own — "Active Prospect" is 98px, the count keeps the
+   rest (19px; "28" is 17.4), the percentage keeps 30px. */
+.agerow { grid-template-columns: 98px minmax(0, 1fr) 30px; }
 .agerow__l { overflow: hidden; text-overflow: ellipsis; }
-.agerow b { min-width: 0; }
-
-/* Assigned — three figures, so the number and its label sit on one line each */
-.value .kv > div { padding: var(--s3) 0; }
-.value .kv .l { text-align: right; }
+.value__h .s { line-height: 1.2; }   /* the "this page" note may not make the heading 1px taller than All Vehicles' */
 
 /* Flags — six queues, 2 x 3. No glow: this is an operational queue, and a
    chromatic halo on a meter is decoration that reads as a state the meter has
@@ -433,10 +424,6 @@
       110px;
   }
   .hd, .row { gap: var(--col-gap); }
-  .bento { grid-template-columns: minmax(520px, 1.4fr) 224px minmax(0, 1.3fr); }
-  .focal { grid-template-columns: minmax(0, 1fr) 252px; }
-  .agemix { padding: var(--s4); }
-  .agerow { grid-template-columns: 100px minmax(0, 1fr) 26px 34px; }
   .cmd .tog { min-width: 112px; }
   .exp .exp__in { grid-template-columns: 420px minmax(0, 1fr); }
   /* `.cf` keeps three columns at 1366: the stack is 1273px wide here, so two
@@ -484,7 +471,7 @@
 /* the chosen lane is filled brand, as the lane track in All Vehicles' Lot card
    (Alex, after Karen's "Search first"): the default view reads as chosen */
 .cmdtop .lanes > .lane--on, .cmdtop .lanes > .lane--on:hover { background: var(--brand); color: #fff; box-shadow: none; font-weight: 500; } /* same weight as the others: the fill marks it, and the row never shifts */
-.cmdtop .lanes > .lane--on b { color: rgba(255, 255, 255, .82); }
+.cmdtop .lanes > .lane--on b { color: #fff; }   /* Nov 18: was 82% white, 4.28:1 on the brand fill — full white, AA */
 
 /* A selected row carries the class `sel`, which is also the system's select-control class: the
    shared rules made the row an inline-flex pill (narrower, rounded, 14px/500). Found with the
@@ -504,3 +491,7 @@
 .cm--none b { color: var(--ink-4); font-weight: 400; }
 .row.open .cm b { color: var(--focal-ink); }
 .row.open .cm--none b { color: var(--focal-ink-3); }
+
+/* Nov 18 — no caps on chips (Alex, Oct 13): the lead card's flags (New mail, Unassigned) inherited the base
+   .tag's uppercase micro-label; they take All Vehicles' flag chip type instead — 12 / 600, sentence case, 8px inset */
+.exp .veh__tags .tag { text-transform: none; letter-spacing: 0; font-size: 12px; font-weight: 600; padding: 0 8px; }

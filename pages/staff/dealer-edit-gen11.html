@@ -6,13 +6,11 @@
 <title>Dealer File — AAN (Gen 11)</title>
 <meta name="description" content="AAN staff dealer file — Gen 11 build of the production Edit Dealer form.">
 <script>document.documentElement.classList.remove('no-js');
-/* Dark is gated off across Gen 11 while the palette is re-solved, so a stored
-   `dark` — the key is shared with the other Gen pages — cannot land this page
-   in a half-dark state at load. */
-try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
+</script>
+<script src="../_aan-theme.js?v=20261118-a"></script>
 <link rel="stylesheet" href="dealer-edit-gen11.css?v=20261117-grp3">
-<link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
-<link rel="stylesheet" href="../_aan-components.css?v=20261117-inset">
+<link rel="stylesheet" href="../_aan-family.css?v=20261118-staff">
+<link rel="stylesheet" href="../_aan-components.css?v=20261118-staff">
 </head>
 <body>
 
@@ -71,6 +69,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       </button>
       <div class="pop pop--r" id="p-me">
         <div class="mn__who"><b>Ivaylo Guenkov</b>AAN · Backend</div>
+        <button class="mn__it" type="button" data-act="theme" aria-label="Switch to dark theme">Dark theme</button>
         <a class="mn__it" href="#">Logout</a>
       </div>
     </div>

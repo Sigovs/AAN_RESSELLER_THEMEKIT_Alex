@@ -351,6 +351,7 @@ body {
 .menu__l b .i { width: 13px; height: 13px; color: var(--ink-3); }
 .menu__l span { font-size: 14px; color: var(--ink-3); }
 .menu__l:hover { background: var(--wash); }
+button.menu__l { width: 100%; border: 0; background: none; font: inherit; text-align: left; cursor: pointer; }   /* the theme switch in the account menu (Nov 18) */
 .menu__l--on { color: var(--brand-ink); }
 .menu__who { padding: 6px 10px 10px; border-bottom: 1px solid var(--line-2); margin-bottom: 4px; }
 .menu__who b { display: block; font-size: 14px; font-weight: 600; }

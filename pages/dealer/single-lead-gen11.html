@@ -6,11 +6,12 @@
 <title>Lead · Chicago Motor Cars — AAN (Gen 11)</title>
 <script>/* Dark is gated off for Gen 11 (DESIGN.md §5) — a stored `dark` from another Gen page
    cannot land this one in a half-dark state. Only an explicit `light` is honoured. */
-try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="all-vehicles-gen11.css?v=20261117-gear">
+try { var t = localStorage.getItem('aan-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+var h = location.hash.slice(1).split('&'); if (h.indexOf('dark') >= 0 || h.indexOf('light') >= 0) document.documentElement.setAttribute('data-theme', h.indexOf('dark') >= 0 ? 'dark' : 'light');   /* review hash, applied before the page paints */</script>
+<link rel="stylesheet" href="all-vehicles-gen11.css?v=20261117-dark">
 <link rel="stylesheet" href="single-lead-gen11.css?v=20261117-head5">
-<link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
-<link rel="stylesheet" href="../_aan-components.css?v=20261117-inset">
+<link rel="stylesheet" href="../_aan-family.css?v=20261118-staff">
+<link rel="stylesheet" href="../_aan-components.css?v=20261118-staff">
 </head>
 <body>
 
@@ -158,6 +159,8 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <div class="menu menu--r"><div class="menu__col">
         <div class="menu__who"><b>Parin</b><span>Chicago Motor Cars · #277</span></div>
         <a class="menu__l" href="#"><b>Account</b></a>
+        <!-- theme: here, not in the bar, as on All Vehicles (Nov 18, dark theme review) -->
+        <button class="menu__l" type="button" data-act="theme" aria-label="Switch to dark theme"><b>Dark theme</b></button>
         <a class="menu__l" href="#"><b>Log out</b></a>
       </div></div>
     </div>
@@ -463,7 +466,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 
 <script src="all-vehicles-gen11.data.js?v=20260930234502"></script>
 <script src="all-leads-gen10.data.js?v=20260930234502"></script>
-<script src="single-lead-gen11.js?v=20261117-inset"></script>
+<script src="single-lead-gen11.js?v=20261118-dark"></script>
 <script src="../_aan-tablet.js?v=20261116-wide"></script>
 </body>
 </html>

@@ -1063,13 +1063,14 @@
      inactive, and this keeps the attribute from ever being set — including from
      an `aan-theme=dark` left in localStorage by one of the other Gen pages,
      which share that key. Temporary: the dark-theme stage removes this gate. */
-  var DARK_ENABLED = false;
+  var DARK_ENABLED = true;   /* Nov 17: the Gen 11 dark palette (_aan-family.css, DARK THEME) is on for review on this page */
   function setTheme(t, keep) {
     if (t === 'dark' && !DARK_ENABLED) t = 'light';
     document.documentElement.setAttribute('data-theme', t);
     if (keep) try { localStorage.setItem('aan-theme', t); } catch (e) {}
     var btn = $('[data-act="theme"]');
-    if (btn) btn.setAttribute('aria-label', t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+    if (btn) { btn.setAttribute('aria-label', t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+      var lab = btn.querySelector('b'); if (lab) lab.textContent = t === 'dark' ? 'Light theme' : 'Dark theme'; }
   }
 
   /* ── events ───────────────────────────────────────────────────────── */
