@@ -86,7 +86,7 @@
   font-variant-numeric: tabular-nums; background: none; padding: 0; border-radius: 0;
 }
 .ui-views > .ui-view--on b, .ui-views > .lane--on b, .ui-views > .secnav__b--on b,
-.ui-views > [aria-pressed="true"] b { color: rgba(255, 255, 255, .82); background: none; }
+.ui-views > [aria-pressed="true"] b { color: #fff; background: none; }   /* Nov 18: was 82% white — 4.28:1 in light, 3.8:1 in dark; full white holds AA in both */
 /* legacy decorations — underlines, dividers, carets — are not this component */
 .ui-views > *::after, .ui-views > *::before { content: none; }
 /* a group divider is a hairline, not an empty 24px item pretending to be one */
@@ -652,6 +652,9 @@ select.sel, select.ui-ctl, .rows select, .cmd select, .zone select, .form select
   .app .bento { grid-template-columns: minmax(0, 1fr) minmax(0, 1.8fr); grid-template-areas: none; }
   .app .bento > * { grid-area: auto; }
   .app .bento > :first-child, .app .bento > :last-child:nth-child(even) { grid-column: 1 / -1; }
+  /* Nov 18: the top card is alone in its row here, so its inset sets its height — room for five rows
+     (All Leads' five statuses) on every page, so All Vehicles' and All Leads' boards stay one height */
+  .app .bento .agerows { min-height: calc(5 * var(--ctl-dense) + 7px); }
 
   /* a dock that does not fit beside the content becomes an overlay at the right; its toggle and its
      close button stay what they are (_aan-tablet.js starts it closed if a page opens it on load) */
@@ -750,3 +753,6 @@ body .app .ft, body .app .nt, body .app .vt, body .app .c-pkg .bdg { padding-lef
 .app .stk__l a.stock, .app .vcar__img .st { padding-left: 8px; padding-right: 8px; }   /* the tinted stock link (All Vehicles), the state over the car photo (Single Lead) */
 /* the two caps tags become sentence-case tags (DESIGN.md §27: no caps on any chip or tag) */
 .app .grp__ed, .app .em__dir { padding-left: 8px; padding-right: 8px; text-transform: none; letter-spacing: 0; font-size: 12px; font-weight: 600; }
+
+/* Nov 18 — the theme item in the staff user menu is a <button>: it takes the menu item's look, not the browser's */
+button.mn__it { width: 100%; border: 0; background: none; font: inherit; text-align: left; cursor: pointer; }

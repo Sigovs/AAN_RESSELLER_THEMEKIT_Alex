@@ -176,10 +176,13 @@
     /* Assigned — who is holding this page's leads */
     var un = V.filter(function (l) { return l.unassigned; }).length, reps = {};
     V.forEach(function (l) { if (!l.unassigned) reps[l.rep] = 1; });
+    /* the same component as Value on All Vehicles (Nov 18): two figures, label over number, then a totals strip */
     $('#assigned-kv').innerHTML =
-      '<div><div class="v' + (un ? ' warn' : '') + '">' + un + '</div><div class="l">unassigned</div></div>' +
-      '<div><div class="v">' + (V.length - un) + '</div><div class="l">assigned to ' + Object.keys(reps).length + ' reps</div></div>' +
-      '<div><div class="v">' + D.reps.length + '</div><div class="l">sales reps · rotation</div></div>';
+      '<div><div class="l">Unassigned</div><div class="v' + (un ? ' warn' : '') + '">' + un + '</div></div>' +
+      '<div><div class="l">Assigned</div><div class="v">' + (V.length - un) + '</div></div>';
+    $('#assigned-tot').innerHTML =
+      '<div><dt>Reps with leads</dt><dd>' + Object.keys(reps).length + '</dd></div>' +
+      '<div><dt>Reps in rotation</dt><dd>' + D.reps.length + '</dd></div>';
 
     /* Flags — six queues over this page */
     $('#attn-g').innerHTML = FLAGS.map(function (f) {
@@ -515,13 +518,14 @@
   /* Dark is gated off for Gen 11 while its palette is re-solved (DESIGN.md §5).
      The `aan-theme` key is shared with the Gen 10 pages, so a stored `dark`
      must not be able to reach this page. Temporary. */
-  var DARK_ENABLED = false;
+  var DARK_ENABLED = true;   /* Nov 18: the Gen 11 dark palette (v3, _aan-family.css DARK THEME) is on for review on this page */
   function setTheme(t, keep) {
     if (t === 'dark' && !DARK_ENABLED) t = 'light';
     document.documentElement.setAttribute('data-theme', t);
     if (keep) try { localStorage.setItem('aan-theme', t); } catch (e) {}
     var btn = $('[data-act="theme"]');
-    if (btn) btn.setAttribute('aria-label', t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+    if (btn) { btn.setAttribute('aria-label', t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+      var lab = btn.querySelector('b'); if (lab) lab.textContent = t === 'dark' ? 'Light theme' : 'Dark theme'; }
   }
 
 
@@ -704,10 +708,12 @@
   renderBoard();
   render();
 
-  /* review states via hash: #lead=16994 · #open=contact,activity · #lane=pastdue */
+  /* review states via hash: #dark · #lead=16994 · #open=contact,activity · #lane=pastdue */
   (function fromHash() {
     var parts = location.hash.slice(1).split('&').filter(Boolean), P = {};
     parts.forEach(function (p) { var kv = p.split('='); P[kv[0]] = decodeURIComponent(kv[1] || ''); });
+    if ('dark' in P) setTheme('dark', false);
+    if ('light' in P) setTheme('light', false);
     if (P.open) P.open.split(',').forEach(function (x) { if (x in S.acc) S.acc[x] = true; });
     if (P.close) P.close.split(',').forEach(function (x) { if (x in S.acc) S.acc[x] = false; });
     if (P.lane && LANE_NAME[P.lane]) { S.lane = P.lane; renderBoard(); }

@@ -1214,3 +1214,21 @@
     if (bar) new ResizeObserver(sizeSaveBar).observe(bar);
   }
 })();
+
+/* ── theme (Nov 18, dark-theme review): the switch in the account menu, #dark / #light, the shared
+   `aan-theme` key — the same behaviour as All Vehicles and All Leads ── */
+(function () {
+  var root = document.documentElement;
+  function setTheme(t, keep) {
+    root.setAttribute('data-theme', t);
+    if (keep) try { localStorage.setItem('aan-theme', t); } catch (e) {}
+    var btn = document.querySelector('[data-act="theme"]');
+    if (btn) { btn.setAttribute('aria-label', t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+      var lab = btn.querySelector('b'); if (lab) lab.textContent = t === 'dark' ? 'Light theme' : 'Dark theme'; }
+  }
+  document.addEventListener('click', function (e) {
+    if (e.target.closest && e.target.closest('[data-act="theme"]')) setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true);
+  });
+  var P = location.hash.slice(1).split('&');
+  setTheme(P.indexOf('dark') >= 0 ? 'dark' : P.indexOf('light') >= 0 ? 'light' : (root.getAttribute('data-theme') || 'light'), false);
+})();

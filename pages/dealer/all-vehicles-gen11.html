@@ -7,10 +7,10 @@
 <script>/* Dark is gated off for Gen 11 while its palette is re-solved, so a stored
    `dark` — the key is shared with the other Gen pages — cannot land this page in a
    half-dark state at load. Temporary; the dark-theme stage removes it. */
-try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
-<link rel="stylesheet" href="all-vehicles-gen11.css?v=20261117-gear">
-<link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
-<link rel="stylesheet" href="../_aan-components.css?v=20261117-inset">
+try { var t = localStorage.getItem('aan-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
+<link rel="stylesheet" href="all-vehicles-gen11.css?v=20261117-dark">
+<link rel="stylesheet" href="../_aan-family.css?v=20261118-staff">
+<link rel="stylesheet" href="../_aan-components.css?v=20261118-staff">
 </head>
 <body>
 
@@ -125,7 +125,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
     </nav>
     <span class="top__sp"></span>
     <label class="gsearch"><svg class="i"><use href="#i-search"/></svg><input type="search" placeholder="Search anywhere" aria-label="Search anywhere"><kbd>⌘K</kbd></label>
-    <button class="tbtn" type="button" data-act="theme" aria-label="Switch to dark theme" hidden title="Dark theme is being re-solved"><svg class="i t-moon"><use href="#i-moon"/></svg><svg class="i t-sun"><use href="#i-sun"/></svg></button>
+    <button class="tbtn" type="button" data-act="theme-bar" aria-label="Switch to dark theme" hidden title="Dark theme: in the account menu"><svg class="i t-moon"><use href="#i-moon"/></svg><svg class="i t-sun"><use href="#i-sun"/></svg></button>
     <button class="tbtn" type="button" aria-label="Notifications"><svg class="i"><use href="#i-bell"/></svg><span class="tbtn__dot"></span></button>
     <span class="top__div"></span>
     <div class="nav__it nav__it--r">
@@ -144,6 +144,8 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       <div class="menu menu--r"><div class="menu__col">
         <div class="menu__who"><b>Parin</b><span>Chicago Motor Cars · #277</span></div>
         <a class="menu__l" href="#"><b>Account</b></a>
+        <!-- theme: here, not in the bar — the bar is full at 1180 (Nov 17, dark theme review) -->
+        <button class="menu__l" type="button" data-act="theme" aria-label="Switch to dark theme"><b>Dark theme</b></button>
         <a class="menu__l" href="#"><b>Log out</b></a>
       </div></div>
     </div>
@@ -263,7 +265,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
 </div>
 
 <script src="all-vehicles-gen11.data.js?v=20260930234502"></script>
-<script src="all-vehicles-gen11.js?v=20261117-inset"></script>
+<script src="all-vehicles-gen11.js?v=20261117-dark"></script>
 <script src="../_aan-tablet.js?v=20261116-wide"></script>
 </body>
 </html>

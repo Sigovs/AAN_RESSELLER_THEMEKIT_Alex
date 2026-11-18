@@ -6,13 +6,11 @@
 <title>Single Ticket · Work — AAN (Gen 11)</title>
 <meta name="description" content="AAN staff single ticket — Gen 11 build of the production ticket detail page.">
 <script>document.documentElement.classList.remove('no-js');
-/* Dark is gated off across Gen 11 while the palette is re-solved (DESIGN.md §5), and the
-   `aan-theme` key is shared with the Gen 10 pages, so a stored `dark` must not land this
-   page in a half-dark state at load. Temporary; the dark-theme stage removes it. */
-try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
+</script>
+<script src="../_aan-theme.js?v=20261118-a"></script>
 <link rel="stylesheet" href="single-ticket-gen11.css?v=20261115-r4">
-<link rel="stylesheet" href="../_aan-family.css?v=20261002-fix">
-<link rel="stylesheet" href="../_aan-components.css?v=20261117-inset">
+<link rel="stylesheet" href="../_aan-family.css?v=20261118-staff">
+<link rel="stylesheet" href="../_aan-components.css?v=20261118-staff">
 </head>
 <body>
 
@@ -82,6 +80,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light') document.doc
       </button>
       <div class="pop pop--r" id="p-me">
         <div class="mn__who"><b>Ivaylo Guenkov</b>AAN · Backend</div>
+        <button class="mn__it" type="button" data-act="theme" aria-label="Switch to dark theme">Dark theme</button>
         <a class="mn__it" href="#">Logout</a>
       </div>
     </div>

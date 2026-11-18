@@ -800,3 +800,105 @@
 .row .c-act,
 .row .c > .btn + .btn { margin-left: 0; }
 .c-act { column-gap: var(--s2); }
+
+/* ══ DARK THEME — Gen 11 (Nov 17) ═══════════════════════════════════════════
+   One block, every page: the tokens get their dark values, so anything painted
+   with a token turns dark by itself. Contrast measured on the tokens, AA for every text role:
+   ink 11.2, ink-2 8.0, ink-3 6.2, ink-4 5.2 on the sheet (ink-4 4.5 on the wash); white on the brand
+   fill 4.8; every status tone on its soft fill 6.0-7.4. The page ground is the darkest step, a floating
+   sheet one step up with a cast shadow and a faint light edge, controls a step above the sheet. Shown only where a page sets
+   data-theme="dark" (All Vehicles while it is reviewed). */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  /* v3 (Alex: "dark does not mean as dark as possible; the type is almost white everywhere, hard to look at"):
+     a dimmed graphite, not a night black, and softer type. Two materials, as in light: neutral graphite for
+     the ground, sheets, rows and controls, the board alone in blue. */
+  --ground: #191b1f; --ground-2: #191b1f;
+  --sheet: #24272d; --wash: #2d3037; --well: #292c32;   /* Nov 18: the recess step lifts in dark (it read as a black hole; hover sank instead of lifting) */
+  --line: #393d45; --line-2: #30333a; --line-3: #4b505a;
+  --ink: #dcdfe5; --ink-2: #b8bec8; --ink-3: #a1a8b3; --ink-4: #9198a4;
+  --brand: #2f6be6; --brand-btn: #2f6be6; --brand-hover: #4a85f5; --brand-ink: #9dbdff;
+  --brand-soft: #263858; --brand-soft-2: #34507f;
+  --focal: #1f2f52; --focal-2: #283b63; --focal-line: #364a76; --focal-inset: #1a2847;
+  --focal-ink: #e8ecf3; --focal-ink-2: #b9c3d4; --focal-ink-3: #9ea9bd; --focal-on: #ffffff; --focal-on-ink: #172234;
+  --ok: #62cf9e; --ok-fill: #36b877; --ok-soft: #173527; --ok-line: #2a5a43;
+  --danger: #ff8a7d; --danger-fill: #e35548; --danger-soft: #46231f; --danger-line: #75332c;
+  --signal: #f2b860; --signal-fill: #f2a12b; --signal-soft: #3e2e15; --signal-line: #6f5221;
+  --violet: #b8a9ff; --violet-fill: #8f78ea; --violet-soft: #2e2852; --violet-line: #4d4389;
+  --slate: #adb4c1; --slate-fill: #737c8c; --slate-soft: #30333a;
+  --age-mid: #666c77; --age-mid-focal: #4f6088;
+  --accent: #62cf9e; --accent-fill: #2f7d5c;
+  --glass: rgba(36, 39, 45, .90);
+  --edge: inset 0 1px 0 rgba(255, 255, 255, .05);
+  /* on a dimmed ground a cast shadow reads again, so floating sheets get one, plus a faint light edge */
+  --el-1: 0 1px 2px rgba(0, 0, 0, .30), 0 0 0 1px rgba(255, 255, 255, .05);
+  --el-2: 0 14px 30px -14px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255, 255, 255, .06);
+  --el-3: 0 30px 64px -18px rgba(0, 0, 0, .60), 0 0 0 1px rgba(255, 255, 255, .08);
+  /* controls sit a step above the sheet: a faint light fill inside their own shadow lifts them */
+  --sh-ctl: 0 1px 2px rgba(0, 0, 0, .35), 0 0 0 1px rgba(255, 255, 255, .07), inset 0 0 0 100px rgba(255, 255, 255, .035);
+  --sh-soft: 0 24px 56px -30px rgba(0, 0, 0, .60), 0 2px 6px -2px rgba(0, 0, 0, .30), 0 0 0 1px rgba(255, 255, 255, .05);
+  --sh-card: 0 22px 44px -22px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255, 255, 255, .06);
+  --sh-pill: 0 1px 2px rgba(0, 0, 0, .35), 0 0 0 1px rgba(255, 255, 255, .07), inset 0 0 0 100px rgba(255, 255, 255, .035);
+  --focus-color: #7ea6ff; --focus-color-on-dark: #ffd98a;
+  --focus: 0 0 0 2px var(--sheet), 0 0 0 4px #7ea6ff;
+}
+html[data-theme="dark"] body { background: var(--ground); color: var(--ink); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }   /* light type on dark looks heavier; antialiased thins it (macOS) */
+/* dark only: text painted with the brand FILL takes the brand INK (the fill is 3.6:1 on the dark sheet);
+   the two inverted blocks (current page, dealer mark) step down instead of turning white */
+html[data-theme="dark"] .price__sub--lease i { color: var(--brand-ink); }
+html[data-theme="dark"] .pg .on, html[data-theme="dark"] .pg .on:hover { background: var(--brand); color: #fff; }
+html[data-theme="dark"] .dealer__mk { background: var(--focal-2); color: var(--ink); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
+/* dark only: the engaged sticky stack is the dark glass, not the light one; the open row keeps its white
+   stock pill (as in light), so its number takes the light-theme brand ink to stay legible on white */
+html[data-theme="dark"] .app.is-stuck .top, html[data-theme="dark"] .cmd--stuck { background: rgba(36, 39, 45, .95); }
+html[data-theme="dark"] .row.open .stock { color: #1747b3; }
+/* dark only: a selected row sits on brand-soft, where the faintest ink step is 4.0:1; there it takes ink-3 (4.9:1) */
+html[data-theme="dark"] .row.sel { --ink-4: #a1a8b3; }
+/* dark only: the alternating chapter grounds (Single Lead, Single Vehicle, Dealer Edit) are local literals in
+   _aan-components.css — a near-white wash and a warm live ground. In dark they are a step above the sheet and a
+   warm graphite, the same alternation at the same quiet strength (1.05:1 to the sheet) */
+html[data-theme="dark"] .secs, html[data-theme="dark"] .zones { --chapter-wash: #282b31; --chapter-live: #2b2a27; }
+/* the window-sticker preview is paper: it stays white, with the light theme's ink and lines on it */
+html[data-theme="dark"] .wstk__sheet { --ink: #0d1320; --ink-2: #353e4e; --ink-3: #576070; --ink-4: #697181; --line: #d8dee7; --line-2: #e5e9ef; }
+/* dark only: Single Vehicle's status switch sits on a 70%-white track inside the tinted status card, and the
+   chosen status is white type on the status colour. In dark the track is a recess in the card, and the chosen
+   status — a light fill here — takes dark type */
+html[data-theme="dark"] .scard--status .seg { background: rgba(0, 0, 0, .22); }
+html[data-theme="dark"] .seg[data-seg="status"] .seg__b--on { color: var(--ground); }
+/* dark only: a switch's thumb is painted with the sheet colour (white in light) — on the dark track it vanished.
+   In dark the thumb is light, so off reads as a light knob on a dark track and on as a light knob on the colour */
+html[data-theme="dark"] .sw__t::after { background: var(--ink-2); }
+html[data-theme="dark"] .sw input:checked + .sw__t::after { background: var(--ink); }
+/* dark only: CKEditor's moono-lisa skin (Single Vehicle → Descriptions) paints black sprite icons and grey
+   labels; on the dark toolbar they invert, and the labels take the page ink. The editing area itself stays white
+   paper, like the window sticker: it previews the dealer's light website, and the stored HTML carries its own
+   inline colours (one description sets color:#000000), which a dark editing area would hide */
+html[data-theme="dark"] #desc-pane .cke_button_icon, html[data-theme="dark"] #desc-pane .cke_combo_arrow { filter: invert(.86); }
+html[data-theme="dark"] #desc-pane .cke_button_label, html[data-theme="dark"] #desc-pane .cke_combo_text { color: var(--ink-2); }
+html[data-theme="dark"] #desc-pane .cke_button_on { background: var(--wash); box-shadow: inset 0 0 0 1px var(--line-3); }
+html[data-theme="dark"] #desc-pane .cke_resizer { color: var(--ink-3); border-color: transparent var(--ink-3) transparent transparent; }
+/* dark only: the staff pages' local palettes are light literals at :root — My Work Queue's department colours
+   (--t-*) and the badge tones of Manage Dealers and Dealer Edit (--b-*). Their dark values are the backend's own:
+   assets/theme tokens.css, dark block, --status-* (each pair 5.7–7.2:1) — taken, not invented */
+html[data-theme="dark"] {
+  --t-blue-bg: #1c2f4c;    --t-blue-ink: #82b0ee;
+  --t-amber-bg: #362a0e;   --t-amber-ink: #dcb459;
+  --t-green-bg: #14331f;   --t-green-ink: #5ec98a;
+  --t-red-bg: #3c1717;     --t-red-ink: #ef8484;
+  --t-violet-bg: #291f45;  --t-violet-ink: #ab8ef1;
+  --t-magenta-bg: #3a1229; --t-magenta-ink: #ec7ab6;
+  --t-teal-bg: #0e302e;    --t-teal-ink: #55c5be;
+  --t-orange-bg: #38230e;  --t-orange-ink: #e09a55;
+  --t-slate-bg: #232d3b;   --t-slate-ink: #a3b2c4;
+  --t-cyan-bg: #0e2d3a;    --t-cyan-ink: #62b8d8;
+  --b-ok-bg: #14331f;      --b-ok-ink: #5ec98a;
+  --b-high-bg: #362a0e;    --b-high-ink: #dcb459;
+  --b-info-bg: #1c2f4c;    --b-info-ink: #82b0ee;
+  --b-quiet-bg: #232d3b;   --b-quiet-ink: #a3b2c4;
+}
+/* Accounting's Marketing chip is the same amber pair, written as literals */
+html[data-theme="dark"] .app .c-mkt .mkt { background: #362a0e; color: #dcb459; }
+/* Accounting's chosen summary tile: 85% white on the lighter dark-theme brand fill is 3.9:1 — full white */
+html[data-theme="dark"] .deck .tile--on .tile__k, html[data-theme="dark"] .deck .tile--on .tile__s, html[data-theme="dark"] .deck .tile--on .tile__f { color: #fff; }
+/* Single Ticket's section count is white on the tone's ink, which is light in dark — dark type there */
+html[data-theme="dark"] .tsec__n { color: var(--ground); }
