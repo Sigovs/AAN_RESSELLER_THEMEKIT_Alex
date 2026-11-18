@@ -174,7 +174,7 @@
   background: var(--sheet);
   border-bottom: 1px solid var(--line);
 }
-.ui-thead .r, .ui-thead .num { text-align: right; font-variant-numeric: tabular-nums; }
+.ui-thead .r, .ui-thead .num { text-align: left; font-variant-numeric: tabular-nums; }   /* Nov 18 (Alex, again): every column left-aligned, numbers and money included; the head sits over its content */
 /* A sortable column is a button inside the header cell. It was resetting the
    header's own type, so a header row read half caps / half sentence case:
    PACKAGES FEATURES NOTES beside "Company Name" and "Date Created". The
@@ -763,3 +763,7 @@ button.mn__it { width: 100%; border: 0; background: none; font: inherit; text-al
 html[data-theme="dark"] .tbtn.tbtn--theme .t-sun { display: block; }
 html[data-theme="dark"] .tbtn.tbtn--theme .t-moon { display: none; }
 @media (max-width: 1279.98px) { .tbtn.tbtn--theme { display: none; } }
+
+/* Nov 18 — a column head that IS its sort button (Accounting's Balance, All Leads' Status) sat flush on its own
+   divider: the button reset zeroes its padding. It takes the 12px its cells have, so head and values start level. */
+.app .hd > .s.c-bal, .app .hd > .s.c-status { padding-left: var(--s3); }

@@ -568,7 +568,7 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .hd .s--on { color: var(--ink); }
 .hd .s--on .i { opacity: 1; }
 .hd .s--asc .i { transform: rotate(180deg); }
-.hd .r { text-align: right; }
+.hd .r { text-align: left; }   /* Nov 18 (Alex, again): every table column left-aligned, numbers and money included — the head sits over its content */
 
 /* ── row ────────────────────────────────────────────────────────────────── */
 .row {
@@ -633,7 +633,7 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 }
 .ft--more { background: var(--wash); color: var(--ink-3); letter-spacing: 0; font-variant-numeric: tabular-nums; }
 
-.c-act { display: flex; align-items: center; justify-content: flex-end; gap: var(--s1); }
+.c-act { display: flex; align-items: center; justify-content: flex-start; gap: var(--s1); }
 .ra {
   display: inline-grid; place-items: center;
   width: 26px; height: 26px;

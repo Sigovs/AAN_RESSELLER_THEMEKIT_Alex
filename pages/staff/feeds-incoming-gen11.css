@@ -46,8 +46,8 @@
 .fi-rows .c-time i { font: 400 11px var(--mono); font-style: normal; color: var(--ink-4); }
 .fi-tag { color: var(--brand-ink); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
 .fi-tag:hover { text-decoration: underline; text-underline-offset: 2px; }
-.fi-rows .c-runs { justify-content: flex-end; font: 500 12px var(--mono); color: var(--ink-3); font-variant-numeric: tabular-nums; }
-.fi-rows .c-act { justify-content: flex-end; }
+.fi-rows .c-runs { justify-content: flex-start; font: 500 12px var(--mono); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.fi-rows .c-act { justify-content: flex-start; }
 
 /* a feed that is switched off reads as off: its line goes quiet, the switch says why */
 .fi-rows .fl--off .fi-feed, .fi-rows .fl--off.c-time b, .fi-rows .fl--off .fi-tag { color: var(--ink-4); }

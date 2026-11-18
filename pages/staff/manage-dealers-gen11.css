@@ -638,7 +638,7 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .hd .s--on { color: var(--ink); }
 .hd .s--on .i { opacity: 1; }
 .hd .s--asc .i { transform: rotate(180deg); }
-.hd .r { text-align: right; }
+.hd .r { text-align: left; }   /* Nov 18 (Alex, again): every table column left-aligned, numbers and money included — the head sits over its content */
 
 /* ── the operational column group ────────────────────────────────────────
    Packages · Features · Support · Notes · Actions · Version are the dealer's
@@ -772,7 +772,7 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 }
 .nt .i { width: 11px; height: 11px; }
 
-.c-act { display: flex; align-items: center; justify-content: flex-end; gap: var(--s1); }
+.c-act { display: flex; align-items: center; justify-content: flex-start; gap: var(--s1); }
 .ra {
   display: inline-grid; place-items: center;
   width: 26px; height: 26px;

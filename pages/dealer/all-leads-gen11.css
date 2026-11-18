@@ -67,7 +67,7 @@
 .sub { padding: var(--s2) var(--gutter); }
 
 /* Created reads right-aligned, as a figure column does. */
-.hd > .c-created { text-align: right; justify-self: end; }
+.hd > .c-created { text-align: left; justify-self: start; }   /* Nov 18 (Alex, again): every table column left-aligned, numbers and money included — the head sits over its content */
 
 /* The field is FLOATING and carries `--r-card`, but it cannot clip: the command
    band's and the scope line's popovers have to leave it, so `overflow` is
@@ -178,7 +178,7 @@
 .as--none { color: var(--ink-4); }
 
 /* — Created: date over time, right-aligned, tabular */
-.cr { min-width: 0; text-align: right; line-height: 1.25; font-variant-numeric: tabular-nums; }
+.cr { min-width: 0; text-align: left; line-height: 1.25; font-variant-numeric: tabular-nums; }
 .cr b { display: block; font-size: 14px; font-weight: 500; color: var(--ink-2); white-space: nowrap; }
 .cr span { display: block; margin-top: var(--s1); font-size: 12px; color: var(--ink-4); white-space: nowrap; }
 

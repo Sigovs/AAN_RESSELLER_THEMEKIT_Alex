@@ -760,8 +760,8 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 /* right-aligned header cells keep a FULL-WIDTH box on purpose: the operational
    group's divider is an inset shadow on the box's left edge, and justify-self:
    end would shrink that box to its text and move the line off the track edge. */
-.hd .r { text-align: right; }
-.hd .r .s { justify-content: flex-end; width: 100%; }
+.hd .r { text-align: left; }   /* Nov 18 (Alex, again): every table column left-aligned, numbers and money included — the head sits over its content */
+.hd .r .s { justify-content: flex-start; width: 100%; }
 
 /* ── the operational column group ────────────────────────────────────────
    Dollar Amount · My Est. · Remaining · Last Modified · Assigned · Begin ·
@@ -799,8 +799,8 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
   gap: 1px;
   line-height: 1.35;
 }
-.c.r, .row > .n { text-align: right; align-items: flex-end; }
-.c.ctr { text-align: center; align-items: center; }
+.c.r, .row > .n { text-align: left; align-items: flex-start; }
+.c.ctr { text-align: left; align-items: flex-start; }   /* Nov 18: the Priority rank sits under its head, at the left */
 
 /* reorder handle */
 .grip {
@@ -939,12 +939,12 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .c-beg .ed, .c-done .ed { font: 500 12px var(--mono); color: var(--ink-2); }
 .c-beg .d, .c-done .d, .c-mbeg .d, .c-mdone .d { font: 500 12px var(--mono); color: var(--ink-2); }
 
-/* numeric tracks — tabular, right-aligned, and quiet when the value is absent.
+/* numeric tracks — tabular, left-aligned like every column (Nov 18), and quiet when the value is absent.
    No age banding: production defines no day thresholds for a ticket, and
    inventing four would be inventing a workflow. */
 .c-age, .c-amt, .c-est, .c-left, .c-since {
   font-variant-numeric: tabular-nums;
-  align-items: flex-end; text-align: right;
+  align-items: flex-start; text-align: left;
 }
 .c-amt { font: 500 12px var(--mono); color: var(--ink-2); }
 .c-amt .na, .c-est .na, .c-left .na { color: var(--ink-4); font-family: var(--font); font-size: 12px; }
