@@ -1,4 +1,4 @@
-"""Write the measured spec tables into handoff/catalog.html.
+"""Write the measured spec tables into handoff/rules-and-backend.html.
 
 python tools/ds-check/catalog-spec.py
 Reads handoff/catalog/gen11-components-measured.json (made by catalog.mjs) and fills every
@@ -9,7 +9,7 @@ import json, re, os, html
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 J = os.path.join(ROOT, 'handoff', 'catalog', 'gen11-components-measured.json')
-H = os.path.join(ROOT, 'handoff', 'catalog.html')
+H = os.path.join(ROOT, 'handoff', 'rules-and-backend.html')
 M = json.load(open(J, encoding='utf-8'))
 
 TOK = {  # DESIGN.md §5 roles, so a value reads as the token it is
