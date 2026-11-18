@@ -716,6 +716,7 @@
 .composer__b textarea.fld { height: auto; min-height: 64px; padding: var(--s2) var(--s3); resize: vertical; font: inherit; font-size: 14px; line-height: 1.45; }
 .composer__f { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); }
 .composer__f .hint b { font-weight: 600; color: var(--ink-2); }
+.composer__f > .btn:only-of-type { margin-left: auto; }   /* Nov 18: with the "Logged as" line gone the button keeps its place at the right */
 
 .feed { position: relative; margin: 0; padding: 0; list-style: none; }
 .feed::before { content: ""; position: absolute; left: 17px; top: 18px; bottom: 18px; width: 2px; background: var(--line-2); }

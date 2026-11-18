@@ -357,7 +357,7 @@
     var who = repOf(L);
     $('#composer-who').textContent = (L.rep === 'Unassigned' ? 'CM'
       : L.rep.replace(/^Chicago Motor Cars\s*-\s*/, '').split(/\s+/).map(function (w) { return w[0]; }).join('').slice(0, 2).toUpperCase());
-    $('#composer-name').textContent = who;
+    var cn = $('#composer-name'); if (cn) cn.textContent = who;   /* the "Logged as" line is commented out (not in the live system) */
 
     var parts = (L.car || '').split(' '), car = carOf(L);
     $('#raw').textContent = '<?xml version="1.0"?>\n<?adf version="1.0"?>\n<adf>\n  <prospect>\n'
