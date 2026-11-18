@@ -1364,10 +1364,15 @@ it here. `tools/ds-check` prints the measured state of each.
     `.zone__hd` (Dealer Edit) for `.zone__h`, field `.fw` + `.fl` (Dealer Edit) for `.f` + `.f__l`, record
     head `.head--card` for `.cockpit--card`. New pages use the origin names in §38; merging the aliases
     is the backlog `tools/ds-check` lists.
-14. **Staff lists at 1280–1340 (desktop):** on My Work Queue the list is clipped at the right (64px of
-    columns at 1280, no scroll) and the column head sits below the first row (the page's own 1340 rule
-    makes `.rows` a scroll container). The tablet table rule (§41) fixes both; extending it up to
-    1340 changes the desktop build at those widths.
+14. **My Work Queue's table is cut off below 1600px** (re-measured 18 Nov 2026). Its 16 columns need about
+   1500px, and the page clips them with no way to reach them. Horizontal scroll is not allowed.
+   - What is lost: at 1280, Begin Date and Completion Date and the row's settings gear; at 1366,
+     Completion Date and the gear; at 1440, part of Completion Date and the gear.
+   - Option A: short headers plus columns sized to their content plus 6px gaps, about 1230px. It fits 1366
+     and up with room and 1280 just. The short headers are Age, My Est., Left, Modified, My Begin, My End,
+     Begin, End, with the full name in the header's title. Do not use "Done": these are planned dates.
+   - Option B: merge the pairs into two-line cells: My Begin/End, Begin/End, My Est./Left (about 275px saved).
+   - Alex is undecided: wait.
 15. **Native checkboxes on touch:** Accounting's row checkboxes (14px, the browser's box) cannot take the
     invisible hit area; with §25's `.ck` they would (see 2).
 16. **Sticky column head on tablet** follows the rows sideways by a transform driven from the rows'
@@ -1391,4 +1396,4 @@ it here. `tools/ds-check` prints the measured state of each.
   car's status changes to Available, a confirm asks "Do you want to reset 'When Added' date to today's? Click
   cancel to keep original date." Gen 11 shows it as a switch in Utilities instead of the confirm.
 
-Waiting: staff lists at 1280–1340.
+Waiting: My Work Queue's table width (above).
