@@ -1,5 +1,5 @@
 /* ============================================================================
-   AAN GEN 11 — TOKEN LAYER FOR THE NEW BACKEND (light theme)
+   AAN GEN 11 — TOKEN LAYER FOR THE NEW BACKEND (light and dark)
 
    Load this file AFTER the backend's theme.css. It changes no markup and no
    component rules: it gives the backend's own design tokens the Gen 11 values,
@@ -12,8 +12,10 @@
    Where Gen 11 has no matching role, the backend's value is KEPT and marked
    "kept". Nothing here is invented.
 
-   Dark theme: not yet. This layer is light only; [data-theme=dark] is
-   untouched until the Gen 11 dark values are approved.
+   Dark theme (approved by Alex on 18 Nov 2026, on sl11 with a switch in the account menu): the
+   [data-theme="dark"] block at the end gives the same backend tokens the Gen 11 dark values, read from
+   pages/_aan-family.css (DARK THEME). The backend already switches themes with [data-theme="dark"] on
+   <html>, so nothing else changes.
    ============================================================================ */
 
 /* Fonts: self-hosted, shipped in ./fonts (Archivo variable, IBM Plex Mono). */
@@ -100,4 +102,65 @@
   /* ── Shell sizes: kept here (--sidenav-width, --topbar-height, --topnav-height, --datatable-chrome,
         --cockpit-height). The Gen 11 shell (one 56px bar, sticky command row) is a component change,
         see the component map. ── */
+}
+
+/* ══ DARK — Gen 11 "dimmed graphite" ═══════════════════════════════════════════════════════════
+   Neutral graphite for the ground, sheets, rows and controls; the board (the focal surface) alone in navy.
+   Dark is not "as dark as possible": the ground is #191b1f, not black, and the type steps down from a soft
+   near-white, never pure white. Every text pair is AA on the composited render (DESIGN.md §42).
+   Same rule as light: where Gen 11 has no role, the backend's value is KEPT; the two surfaces with no Gen 11
+   role (surface-2, surface-inset) are DERIVED at the same place they hold in light — between the ground
+   and the sheet — because the backend's own dark values for them are blue-black and would clash. */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* ── Surfaces ─────────────────────────────────────────────────────────── */
+  --color-surface-0: #191b1f;       /* Gen 11 --ground (page ground). In light it equals --wash; in dark it is its own, darker step */
+  --color-surface-1: #24272d;       /* Gen 11 --sheet */
+  --color-surface-2: #202227;       /* derived: between ground and sheet, as #f6f8fa sits in light */
+  --color-surface-inset: #1d1f24;   /* derived: the same */
+  --color-surface-3: #292c32;       /* Gen 11 --well — in dark a step ABOVE the sheet: a sunken black read as a hole */
+  /* --color-backdrop: kept */
+
+  /* ── Ink ──────────────────────────────────────────────────────────────── */
+  --color-ink: #dcdfe5;             /* Gen 11 --ink (11.2 : 1 on the sheet) */
+  --color-ink-muted: #a1a8b3;       /* Gen 11 --ink-3 (6.2 : 1) */
+  --color-ink-faint: #9198a4;       /* Gen 11 --ink-4 (5.2 : 1) */
+  --color-ink-inverse: #e8ecf3;     /* Gen 11 --focal-ink: text on the navy board */
+
+  /* ── Lines ────────────────────────────────────────────────────────────── */
+  --color-border: #393d45;          /* Gen 11 --line */
+  --color-border-strong: #4b505a;   /* Gen 11 --line-3 */
+
+  /* ── Brand ────────────────────────────────────────────────────────────── */
+  --color-brand: #2f6be6;           /* Gen 11 --brand (white on it 4.8 : 1) */
+  --color-brand-strong: #4a85f5;    /* Gen 11 --brand-hover */
+  --color-brand-soft: #263858;      /* Gen 11 --brand-soft */
+  --color-brand-ink: #ffffff;       /* text on the brand fill stays white (the backend's dark value is near-black) */
+  --color-info: #2f6be6;
+  --color-info-soft: #263858;
+
+  /* ── States ───────────────────────────────────────────────────────────── */
+  --color-success: #62cf9e;         /* Gen 11 --ok */
+  --color-success-soft: #173527;    /* Gen 11 --ok-soft */
+  --color-warning: #f2b860;         /* Gen 11 --signal */
+  --color-warning-soft: #3e2e15;    /* Gen 11 --signal-soft */
+  --color-danger: #ff8a7d;          /* Gen 11 --danger */
+  --color-danger-soft: #46231f;     /* Gen 11 --danger-soft */
+  --color-neutral: #adb4c1;         /* Gen 11 --slate */
+  --color-neutral-soft: #30333a;    /* Gen 11 --slate-soft */
+
+  /* ── Status chips: the six Gen 11 has, the rest kept (the backend's own dark pairs, 5.7–7.2 : 1) ── */
+  --status-blue-bg: #263858;   --status-blue-ink: #9dbdff;    /* --brand-soft / --brand-ink */
+  --status-green-bg: #173527;  --status-green-ink: #62cf9e;   /* --ok-soft / --ok */
+  --status-amber-bg: #3e2e15;  --status-amber-ink: #f2b860;   /* --signal-soft / --signal */
+  --status-red-bg: #46231f;    --status-red-ink: #ff8a7d;     /* --danger-soft / --danger */
+  --status-violet-bg: #2e2852; --status-violet-ink: #b8a9ff;  /* --violet-soft / --violet */
+  --status-slate-bg: #30333a;  --status-slate-ink: #adb4c1;   /* --slate-soft / --slate */
+
+  /* ── Elevation: on a dimmed ground a cast shadow reads again; each also carries a faint light edge ── */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.30), 0 0 0 1px rgba(255,255,255,.05);              /* Gen 11 --el-1 */
+  --shadow-md: 0 14px 30px -14px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);       /* Gen 11 --el-2 */
+  --shadow-lg: 0 30px 64px -18px rgba(0,0,0,.60), 0 0 0 1px rgba(255,255,255,.08);       /* Gen 11 --el-3 */
+  --focus-ring: 0 0 0 2px #24272d, 0 0 0 4px #7ea6ff;                                     /* Gen 11 --focus */
 }

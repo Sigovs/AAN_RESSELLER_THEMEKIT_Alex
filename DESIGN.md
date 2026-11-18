@@ -207,7 +207,7 @@ Origin: All Vehicles.
 **Red is for two things only:** Hidden on site, and Clear all (All Vehicles, All Leads).
 Destructive actions use `--danger` text (§11), not a red fill.
 
-Dark mode is gated off (`DARK_ENABLED = false`); its rules stay inert behind `[data-aan-dark]`.
+Dark theme: on, with a switch in the account menu — its tokens and rules are §42.
 
 ---
 
@@ -1260,6 +1260,71 @@ checkboxes) keep their drawn size and get an invisible 36 × 36 hit area (`::bef
 **Checked at** 768×1024 · 820×1180 · 834×1112 · 1024×768 · 1024×1366 · 1112×834 · 1180×820 · 1279×800,
 portrait and landscape, with `node tools/ds-check/ds-check.mjs --widths` (overflow, targets, stack)
 and `features.mjs`.
+
+---
+
+## 42 · Dark theme
+
+Approved by Alex on 18 Nov 2026 ("dimmed graphite", v3). It is on for the nine pages that have the account menu.
+Dealer Login keeps its own video styling.
+
+**The idea in one line:** neutral graphite for everything you work on, and the board alone in navy. That
+gives two materials, exactly as in light, where everything is white and the board alone is dark.
+
+**What Alex said, and the rules they became:**
+- **Dark is not "as dark as possible".** The ground is `#191b1f`, never black.
+- **The type is not white.** It is a soft near-white `#dcdfe5` and steps down from there.
+- **Not "everything in a heap".** Surfaces step up in light: ground → sheet → wash → controls.
+
+**Switching it on.** Set `<html data-theme="dark">`. That is the same attribute the new backend already uses.
+- The choice is stored in `localStorage['aan-theme']` and is shared by every Gen page.
+- A `#dark` / `#light` hash is for review only.
+- Dealer pages switch in their page JS; staff pages share `pages/_aan-theme.js`. Both are loaded in `<head>`, so
+  the page never paints in the wrong theme.
+
+**Tokens** — `pages/_aan-family.css`, block `html[data-theme="dark"]`:
+
+```
+--ground  #191b1f  page ground (in light it equals --wash; in dark it is its own step)
+--sheet   #24272d  cards, sheets, fields              --wash  #2d3037  hover, chips
+--well    #292c32  tracks — in dark a step ABOVE the sheet (a sunken black read as a hole)
+--line    #393d45  --line-2 #30333a  --line-3 #4b505a
+--ink     #dcdfe5 11.2:1   --ink-2 #b8bec8 8.0   --ink-3 #a1a8b3 6.2   --ink-4 #9198a4 5.2   (on the sheet)
+--brand   #2f6be6 (white on it 4.8)   --brand-ink #9dbdff   --brand-soft #263858
+--focal   #1f2f52 board, the row open for inspection   --focal-2 #283b63
+--ok #62cf9e  --signal #f2b860  --danger #ff8a7d  --violet #b8a9ff  --slate #adb4c1, each with a -soft fill
+```
+
+The staff pages' local palettes (`--t-*` department colours, `--b-*` badges) take the backend's own dark
+`--status-*` pairs (5.7–7.2:1).
+
+**Rules**
+
+1. **Re-solve, don't invert.** A token keeps its role, not its lightness. `--well` sinks in light and lifts
+   in dark. Hover lightens in dark.
+2. **AA is measured on the composited render, not on the token.**
+   - A white at 82% that passes on the light brand fails on the lighter dark brand. Counts on a chosen view
+     are therefore full white.
+   - Any text that sits on a light fill in dark (a section count, the chosen status) takes dark type.
+3. **Paper stays paper.** Two areas stay white in dark:
+   - the window-sticker preview;
+   - the description editor's text area. It previews the dealer's light website, and the stored HTML
+     carries its own inline colours (`color:#000000` in the data).
+
+   The editor's toolbar is dark: the skin's icons are inverted and its labels take the ink.
+4. **Thumbs and knobs are light.** A switch thumb painted with `--sheet` vanishes on a dark track.
+5. **Shadows read again** on a dimmed ground. Each elevation also gets a faint light edge,
+   `0 0 0 1px rgba(255,255,255,.05–.08)`.
+
+**For the new backend:**
+- `handoff/aan-gen11-theme.css` maps the same backend tokens in its `[data-theme="dark"]` block.
+- `handoff/aan-gen11-components.css` routes every literal through a `--g11-*` variable with a dark value.
+- `handoff/design-system.html` shows every colour in both themes and draws every component in either
+  (switch at the top left).
+
+**Checked:** all nine pages at 1440 · 1280 · 1024 · 768 — no overflow, no text under AA.
+- Left as they are on purpose: the decorative "·" separators and the disabled A–Z letters.
+- The probe is `node tools/ds-check/dark-audit.mjs <page> [width]`, a dark-surface and composited-contrast audit.
 
 ---
 

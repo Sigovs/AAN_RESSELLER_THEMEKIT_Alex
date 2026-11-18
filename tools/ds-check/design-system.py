@@ -114,25 +114,42 @@ def board(id_, title, lead, body, src=''):
             % (id_, E(title), '<span class="b__src">%s</span>' % src if src else '', lead, body))
 
 
+# ── dark values: read from the pages' own dark block, so this file cannot drift from them ──────
+_fam = open(os.path.join(ROOT, 'pages', '_aan-family.css'), encoding='utf-8').read()
+_m = re.search(r'html\[data-theme="dark"\] \{(.*?)\n\}', _fam, re.S)
+DARK = dict(re.findall(r'(--[\w-]+):\s*(#[0-9a-fA-F]{6})', _m.group(1))) if _m else {}
+DARK_SHEET, DARK_INK = DARK.get('--sheet', '#24272d'), DARK.get('--ink', '#dcdfe5')
+
+
+def chip(hx, light_ink, dark_ink, label):
+    text_on = light_ink if ratio(hx, light_ink) >= ratio(hx, dark_ink) else dark_ink
+    return ('<div class="sw__c" style="background:%s;color:%s"><em>%s</em><span>Aa</span><small>%.1f : 1</small></div>'
+            % (hx, text_on, label, ratio(hx, text_on)))
+
+
+def aa(r):
+    return ' · AA text' if r >= 4.5 else (' · AA large' if r >= 3 else '')
+
+
 # ── foundations ───────────────────────────────────────────────────────────────
 F = []
 rows = ''
 for grp, items in COL:
     cells = ''
     for name, tok, hx, be, use in items:
-        on_white = ratio(hx, '#ffffff')
-        text_on = '#ffffff' if ratio(hx, '#ffffff') >= ratio(hx, '#0d1320') else '#0d1320'
-        aa = ratio(hx, text_on)
-        cells += ('<div class="sw"><div class="sw__c" style="background:%s;color:%s"><span>Aa</span><small>%.1f : 1</small></div>'
-                  '<div class="sw__t"><b>%s</b><code>%s</code><span class="hex">%s</span><span class="be">%s</span><span class="use">%s</span>'
-                  '<span class="ct">on white %.1f : 1%s</span></div></div>') % (
-            hx, text_on, aa, E(name), tok, hx.upper(), ('backend ' + be) if be != '—' else 'no backend token', E(use), on_white,
-            ' · AA text' if on_white >= 4.5 else (' · AA large' if on_white >= 3 else ''))
+        dk = DARK.get(tok, hx)
+        on_white, on_dark = ratio(hx, '#ffffff'), ratio(dk, DARK_SHEET)
+        cells += ('<div class="sw"><div class="sw__cc">%s%s</div>'
+                  '<div class="sw__t"><b>%s</b><code>%s</code><span class="hex">%s <i>light</i> · %s <i>dark</i></span><span class="be">%s</span><span class="use">%s</span>'
+                  '<span class="ct">light: on white %.1f : 1%s</span><span class="ct">dark: on the dark sheet %.1f : 1%s</span></div></div>') % (
+            chip(hx, '#ffffff', '#0d1320', 'Light'), chip(dk, DARK_INK, '#191b1f', 'Dark'),
+            E(name), tok, hx.upper(), dk.upper(), ('backend ' + be) if be != '—' else 'no backend token', E(use),
+            on_white, aa(on_white), on_dark, aa(on_dark))
     rows += '<h3 class="grp">%s</h3><div class="sws">%s</div>' % (grp, cells)
 rows += ('<div class="rules"><div><h4>Red, twice only</h4><p>Red marks Hidden on site and Clear all. A destructive action is danger <i>text</i>, never a red fill.</p></div>'
          '<div><h4>One means per state</h4><p>Brand fill = chosen view. Focal dark = the record open for inspection. Brand soft = bulk selection. They never look alike.</p></div>'
          '<div><h4>Never colour alone</h4><p>A tone always comes with its word. Status reads in words; red never grades a fact.</p></div></div>')
-F.append(board('colour', 'Colour', 'Every colour on the ten pages. The swatch shows its own text colour and contrast; the line under it says what it is for and which backend token carries it.', rows, 'DESIGN.md §5 · §6'))
+F.append(board('colour', 'Colour', 'Every colour on the ten pages, in both themes. Each swatch shows the light value and the dark value with their own text colour and contrast; the lines under it say what it is for and which backend token carries it. The dark values are read from the pages’ own dark block (<code>_aan-family.css</code>, <code>html[data-theme="dark"]</code>).', rows, 'DESIGN.md §5 · §6 · §42'))
 
 fam = ('<div class="fams"><div class="fam"><div class="fam__aa" style="font-family:var(--font)">Aa</div><div><b>Archivo</b><p>All text. Variable: weight 100–900, width 62–125%. '
        'Weights in use: 400 · 500 · 600 · 650 · 700.</p><div class="fam__w">' +

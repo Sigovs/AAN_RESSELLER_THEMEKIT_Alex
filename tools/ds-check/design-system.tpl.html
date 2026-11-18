@@ -46,7 +46,10 @@
   /* colour */
   .sws { display: grid; grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); gap: 16px; }
   .sw { border-radius: 12px; overflow: hidden; box-shadow: inset 0 0 0 1px var(--line-2); }
-  .sw__c { display: flex; align-items: flex-end; justify-content: space-between; height: 96px; padding: 12px 14px; box-shadow: inset 0 -1px 0 var(--line-2); }
+  .sw__cc { display: grid; grid-template-columns: 1fr 1fr; box-shadow: inset 0 -1px 0 var(--line-2); }
+  .sw__c { position: relative; display: flex; align-items: flex-end; justify-content: space-between; gap: 6px; height: 96px; padding: 12px 12px; }
+  .sw__c em { position: absolute; top: 10px; left: 12px; font: 600 11px/1 var(--font); font-style: normal; opacity: .8; }
+  .sw__t .hex i { font-style: normal; font-family: var(--font); font-weight: 500; color: var(--ink-3); }
   .sw__c span { font: 600 22px/1 var(--font); }
   .sw__c small { font: 500 12px var(--font); opacity: .85; }
   .sw__t { display: grid; gap: 2px; padding: 12px 14px 14px; font-size: 13px; }
@@ -144,6 +147,21 @@
     .fam { grid-template-columns: minmax(0, 1fr); } .fams { grid-template-columns: minmax(0, 1fr); }
     .tt td:first-child { width: auto; } .tt td:last-child { display: none; } .tt th:last-child { display: none; }
   }
+
+  /* theme switch (Nov 18): the whole file and every frame follow it */
+  .themesw { display: inline-flex; gap: 2px; padding: 3px; margin: 0 0 20px; border-radius: 10px; background: var(--well); }
+  .themesw button { height: 30px; padding: 0 12px; border: 0; border-radius: 8px; background: none; color: var(--ink-2); font: 600 13px var(--font); cursor: pointer; }
+  .themesw button[aria-pressed="true"] { background: var(--sheet, #fff); color: var(--ink); box-shadow: 0 1px 2px rgba(16,21,31,.12), inset 0 0 0 1px var(--line-2); }
+  /* dark: the file's own chrome on the pages' dark tokens (_aan-family.css sets them on html) */
+  html[data-theme="dark"] .nav { background: #1d1f23; }
+  html[data-theme="dark"] .nav a.on { background: var(--brand-soft); }
+  html[data-theme="dark"] .themesw button[aria-pressed="true"] { background: #3a3e46; box-shadow: inset 0 0 0 1px var(--line-3); }
+  html[data-theme="dark"] .b, html[data-theme="dark"] .rh, html[data-theme="dark"] .tile__e, html[data-theme="dark"] .st,
+  html[data-theme="dark"] .fr, html[data-theme="dark"] .dur { background: var(--sheet); }
+  html[data-theme="dark"] .rh--head { background: transparent; }
+  html[data-theme="dark"] .rh--board, html[data-theme="dark"] .fm__s--dark { background: var(--focal); }
+  html[data-theme="dark"] .tile__s { background: var(--brand-soft); box-shadow: inset 0 0 0 1.5px var(--brand-soft-2); }
+  html[data-theme="dark"] .demo-btn { background: var(--brand); outline-color: var(--brand); }
 </style>
 </head>
 <body>
@@ -151,7 +169,8 @@
 <div class="ds">
   <aside class="nav">
     <div class="nav__brand"><span class="nav__mk">AAN</span>Gen 11 Design System</div>
-    <p class="nav__sub">Light theme · the ten reference pages</p>
+    <p class="nav__sub">Light and dark · the ten reference pages</p>
+    <div class="themesw" role="group" aria-label="Theme"><button type="button" data-theme-set="light" aria-pressed="true">Light</button><button type="button" data-theme-set="dark" aria-pressed="false">Dark</button></div>
     <nav aria-label="Design system">
       <h2>Foundations</h2>{{NAV_F}}
       <h2>Components</h2>{{NAV_C}}
@@ -191,15 +210,27 @@
     '.ds-app .pop,.ds-app .menu{position:static!important;display:block!important;opacity:1!important;visibility:visible!important;transform:none!important;pointer-events:auto!important}' +
     '.ds-app dialog{position:static!important;display:block!important;margin:0!important;max-height:none!important}.ds-app .modal__in{max-height:none!important}' +
     '.ds-app .savebar{position:static!important;transform:none!important;opacity:1!important;visibility:visible!important}' +
-    '.ds-app [hidden]{display:none!important}';
+    '.ds-app [hidden]{display:none!important}' +
+    'html[data-theme=dark] .dsm>.h,html[data-theme=dark] .dsm>.r small,html[data-theme=dark] .dsc>em{color:#a1a8b3}html[data-theme=dark] .dsm>.r{color:#dcdfe5}html[data-theme=dark] .dsm>.na{color:#7d8491}' +
+    'html[data-theme=dark] .dsdark{background:#1f2f52}html[data-theme=dark] .dswash{background:#191b1f}';
   var MIRROR = '(function(){var a=[];[].forEach.call(document.styleSheets,function(s){var r;try{r=s.cssRules}catch(e){return}(function w(rs){[].forEach.call(rs,function(x){if(x.cssRules&&!x.selectorText){w(x.cssRules);return}' +
     'if(!x.selectorText||!/:(hover|focus-visible|focus|focus-within)\\b/.test(x.selectorText))return;a.push(x.selectorText.replace(/:hover/g,".is-hover").replace(/:focus-visible/g,".is-focus").replace(/:focus-within/g,".is-focus").replace(/:focus\\b/g,".is-focus")+"{"+x.style.cssText+"}")})})(r)});' +
     'var st=document.createElement("style");st.textContent=a.join("\\n");document.head.appendChild(st)})();';
   function doc(origin, inner) {
     var links = (STACK[origin] || STACK.AV).concat(['_aan-family.css', '_aan-components.css']).map(function (h) { return '<link rel="stylesheet" href="' + P + h + '">'; }).join('');
-    return '<!doctype html><html lang="en" data-theme="light"><head><meta charset="utf-8"><base href="' + location.href + '">' + links + '<style>' + OVR + '</style></head><body>' + SPRITE +
+    return '<!doctype html><html lang="en" data-theme="' + THEME + '"><head><meta charset="utf-8"><base href="' + location.href + '">' + links + '<style>' + OVR + '</style></head><body>' + SPRITE +
       '<div class="app ds-app">' + inner + '</div><script>' + MIRROR + '<\/script></body></html>';
   }
+  /* theme: #dark / #light, else the last choice in this browser, else light */
+  var THEME = /(^|[#&])dark(&|$)/.test(location.hash) ? 'dark' : /(^|[#&])light(&|$)/.test(location.hash) ? 'light' : (function () { try { return localStorage.getItem('aan-ds-theme') === 'dark' ? 'dark' : 'light'; } catch (e) { return 'light'; } })();
+  function applyTheme(t, keep) {
+    THEME = t; document.documentElement.setAttribute('data-theme', t);
+    [].forEach.call(document.querySelectorAll('[data-theme-set]'), function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-theme-set') === t)); });
+    [].forEach.call(document.querySelectorAll('iframe.fr'), function (f) { try { f.contentDocument.documentElement.setAttribute('data-theme', t); setTimeout(function () { fit(f); }, 50); } catch (e) {} });
+    if (keep) try { localStorage.setItem('aan-ds-theme', t); } catch (e) {}
+  }
+  document.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('[data-theme-set]'); if (b) applyTheme(b.getAttribute('data-theme-set'), true); });
+  applyTheme(THEME, false);
   function fit(f) { try { var d = f.contentDocument, h = d && d.documentElement; if (!h) return; f.style.height = (Math.ceil(h.getBoundingClientRect().height) + (h.scrollWidth > h.clientWidth + 1 ? 14 : 0)) + 'px'; } catch (e) {} }   /* a wide matrix scrolls sideways inside its frame */
   [].forEach.call(document.querySelectorAll('iframe.fr'), function (f) {
     f.addEventListener('load', function () {

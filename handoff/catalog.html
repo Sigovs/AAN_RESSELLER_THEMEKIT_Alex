@@ -155,6 +155,7 @@
       <a href="#templates"><b>Templates</b><span>the five page types</span></a>
       <a href="#pages"><b>Pages</b><span>the references, real data</span></a>
     </div>
+    <p class="rule"><b>Main document:</b> <a href="design-system.html">design-system.html</a> — every token in both themes and every component in light or dark. This catalogue adds the rules, the solved problems and the backend side by side.</p>
     <p class="rule"><b>The one rule:</b> a level is built only from the levels below it and never restyles them. A table does not change how a button looks; a page does not change how a table looks.</p>
   </section>
 
@@ -208,6 +209,9 @@
       <article><h3><i>13</i>Fake data says so</h3>
         <p>Data that is fabricated or not connected carries a Demo tag (violet, sentence case) before the reader has to decide whether to believe it. A control the original lacks carries Mock addition.</p>
         <dl><dt>Why</dt><dd>A reviewer must not mistake a mock figure for a real one.</dd><dt>Check</dt><dd>Every unconnected region is tagged at its header.</dd></dl></article>
+      <article><h3><i>14</i>Dark is re-solved, not inverted</h3>
+        <p>Neutral graphite for everything you work on, the board alone in navy — two materials, as in light. The ground is #191b1f, not black; the type is a soft near-white, never pure white. A token keeps its role, not its lightness: the well lifts in dark, hover lightens. Paper stays paper (the window sticker, the description editor's text).</p>
+        <dl><dt>Why</dt><dd>The first dark pass was "heavy, everything in a heap": too dark, too white, too few steps (Alex, Nov 17).</dd><dt>Check</dt><dd><code>dark-audit.mjs</code> on every page: no light surface left, no text under AA on the composited render. DESIGN.md §42.</dd></dl></article>
     </div>
 
     <h3 class="sub-h">Problems we solved — don't bring them back</h3>
