@@ -523,9 +523,12 @@
     if (t === 'dark' && !DARK_ENABLED) t = 'light';
     document.documentElement.setAttribute('data-theme', t);
     if (keep) try { localStorage.setItem('aan-theme', t); } catch (e) {}
-    var btn = $('[data-act="theme"]');
-    if (btn) { btn.setAttribute('aria-label', t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
-      var lab = btn.querySelector('b'); if (lab) lab.textContent = t === 'dark' ? 'Light theme' : 'Dark theme'; }
+    /* every theme control on the page: the bar button (icon) and the account-menu item (label) — Nov 18 */
+    document.querySelectorAll('[data-act="theme"]').forEach(function (btn) {
+      btn.setAttribute('aria-label', t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+      if (btn.hasAttribute('title')) btn.setAttribute('title', t === 'dark' ? 'Light theme' : 'Dark theme');
+      var lab = btn.querySelector('b'); if (lab) lab.textContent = t === 'dark' ? 'Light theme' : 'Dark theme';
+    });
   }
 
 

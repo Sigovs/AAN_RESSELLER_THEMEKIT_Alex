@@ -1222,9 +1222,12 @@
   function setTheme(t, keep) {
     root.setAttribute('data-theme', t);
     if (keep) try { localStorage.setItem('aan-theme', t); } catch (e) {}
-    var btn = document.querySelector('[data-act="theme"]');
-    if (btn) { btn.setAttribute('aria-label', t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
-      var lab = btn.querySelector('b'); if (lab) lab.textContent = t === 'dark' ? 'Light theme' : 'Dark theme'; }
+    /* every theme control on the page: the bar button (icon) and the account-menu item (label) — Nov 18 */
+    document.querySelectorAll('[data-act="theme"]').forEach(function (btn) {
+      btn.setAttribute('aria-label', t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+      if (btn.hasAttribute('title')) btn.setAttribute('title', t === 'dark' ? 'Light theme' : 'Dark theme');
+      var lab = btn.querySelector('b'); if (lab) lab.textContent = t === 'dark' ? 'Light theme' : 'Dark theme';
+    });
   }
   document.addEventListener('click', function (e) {
     if (e.target.closest && e.target.closest('[data-act="theme"]')) setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true);

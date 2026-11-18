@@ -902,3 +902,5 @@ html[data-theme="dark"] .app .c-mkt .mkt { background: #362a0e; color: #dcb459; 
 html[data-theme="dark"] .deck .tile--on .tile__k, html[data-theme="dark"] .deck .tile--on .tile__s, html[data-theme="dark"] .deck .tile--on .tile__f { color: #fff; }
 /* Single Ticket's section count is white on the tone's ink, which is light in dark — dark type there */
 html[data-theme="dark"] .tsec__n { color: var(--ground); }
+/* dark only: the staff bar's icon buttons hover with 72% white — a white flash in dark; they take the wash */
+html[data-theme="dark"] .tbtn:hover { background: var(--wash); color: var(--ink); }
