@@ -640,7 +640,7 @@
 .f > span { font-size: 13px; font-weight: 600; color: var(--ink-3); }
 .f > span b { color: var(--danger); font-weight: 700; }
 .f > span i { font-style: normal; font-weight: 500; color: var(--ink-4); }
-.fld, .sel { height: 40px; border-radius: var(--r-inner); font-size: 14px; }
+.fld, .sel { height: 36px; border-radius: var(--r-inner); font-size: 14px; }   /* Nov 18: 40 -> 36, the standard form height */
 .f .fld, .f .sel { width: 100%; }
 .f textarea.fld { height: auto; min-height: 92px; padding: var(--s2) var(--s3); resize: vertical; font: inherit; line-height: 1.45; }
 .f--big .fld { font-size: 15px; font-weight: 500; }
