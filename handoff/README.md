@@ -54,9 +54,9 @@ The details are in DESIGN.md §42. You can see it live on the reference pages: t
 - **The dark layer has not been run on the backend yet.** Its values are the Gen 11 pages' own, one to one.
   The exceptions are `--color-surface-2` and `--color-surface-inset`, which Gen 11 has no role for. They are
   derived and marked so in the file.
-- **Five open design decisions** are listed at the end of DESIGN.md (form-control height, dense labels,
-  native checkboxes, Accounting's Pay button, Manage Dealers' cell size). Until they are decided, use the
-  **origin page's** value, the earliest page in the order below.
+- **Open design decisions** are listed at the end of DESIGN.md: small differences between pages, such as
+  a label size, a menu check mark or a dock width. Until they are decided, use the **origin page's** value,
+  the earliest page in the order below. Field heights are decided: 36 in a form, 30 in a dense working form.
 - **The test pages are not references.** Feeds Incoming and Create A Ticket were built from the system as
   experiments. They are not a model for form density.
 

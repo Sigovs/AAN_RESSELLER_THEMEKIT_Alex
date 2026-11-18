@@ -325,6 +325,12 @@ Origin: All Vehicles (default, primary, sheet, quiet); Single Vehicle (small).
 | destructive | `--danger` text, `--danger-soft` hover, `margin-left: auto` at the far end of its group |
 
 - One height per class of control within a page; icon-only buttons take the square of their tier.
+- **Field heights (decided by Alex, 18 Nov 2026).** There are two heights for fields:
+  - **36px in a form** (Dealer Edit, Single Lead's Workflow dock, Single Vehicle);
+  - **30px in a dense working form or panel** (Single Lead's contact form, Single Ticket's work order and
+    Assigned To dock, My Work Queue's row selects).
+
+  32 and 40 are gone. A small button beside a dense field is 30, so the two stay level.
 - Buttons are sized by their label; 8px between neighbours.
 - A form's result ("Saved", or what is missing) stands beside the button that produced it, 16px to its
   left, and the button does not move when it appears (Single Ticket, Single Lead).
@@ -1336,41 +1342,44 @@ The staff pages' local palettes (`--t-*` department colours, `--b-*` badges) tak
 Design decisions, not mechanical drift. When one is decided, move its rule into its section and delete
 it here. `tools/ds-check` prints the measured state of each.
 
-1. **Form-control height.** Origin 36px (All Vehicles, Single Vehicle). Single Lead's dense contact form
-   30px / 13.5px, its dock fields 40px; Single Ticket 32px / 13px; Dealer Edit 40px.
-2. **Dense field label.** Single Lead `.form--dense` labels 12.5px against the 13px role.
-3. **Native checkboxes.** Single Ticket (Flag note, ToDo) and Accounting's row checkboxes (14px) are the
+1. **Dense field label.** Single Lead `.form--dense` labels 12.5px against the 13px role.
+2. **Native checkboxes.** Single Ticket (Flag note, ToDo) and Accounting's row checkboxes (14px) are the
    browser's box, not §25's `.ck` (needs the checked-state styling, not only a value).
-4. **Accounting's per-row Pay** is `.btn--primary` drawn as an outline (205 rows) — not the one primary style.
-5. **Manage Dealers' table cells** are 13px against the 14px cell role.
-6. **My Work Queue's command search** keeps a 1px ring (recorded reason in its CSS) instead of `--sh-pill`.
-7. **Chosen menu item.** Staff menus also show a brand check glyph; dealer menus only the brand-ink text.
-8. **Global search hint:** `⌘K` on the dealer pages, `/` on the staff pages.
-9. **Dock width:** 440px (All Vehicles) against 400px (Single Lead, Single Ticket).
-10. **Caps outside keys:** Manage Dealers' "ROSTER" eyebrow; Single Ticket's "POTENTIAL" inside a contact
+3. **Manage Dealers' table cells** are 13px against the 14px cell role.
+4. **My Work Queue's command search** keeps a 1px ring (recorded reason in its CSS) instead of `--sh-pill`.
+5. **Chosen menu item.** Staff menus also show a brand check glyph; dealer menus only the brand-ink text.
+6. **Global search hint:** `⌘K` on the dealer pages, `/` on the staff pages.
+7. **Dock width:** 440px (All Vehicles) against 400px (Single Lead, Single Ticket).
+8. **Caps outside keys:** Manage Dealers' "ROSTER" eyebrow; Single Ticket's "POTENTIAL" inside a contact
     tag and "SPENT / EST." field labels in the dock.
-11. **Staff status palette:** My Work Queue's production status colours carry no tone ring; Manage Dealers'
+9. **Staff status palette:** My Work Queue's production status colours carry no tone ring; Manage Dealers'
     package flags are 12px / 7px-radius `.bdg`; Dealer Edit's `.dbchip` is a 22px pill; My Work Queue's
     "Archived" is a 34px pill toggle — four shapes for what §27 has two of.
-12. **Single Lead's platform bar** is solid white at rest; every other page is the .76 glass.
-13. **Explanatory lines on dealer pages:** All Vehicles' empty Model popover ("Pick a make first — models
+10. **Single Lead's platform bar** is solid white at rest; every other page is the .76 glass.
+11. **Explanatory lines on dealer pages:** All Vehicles' empty Model popover ("Pick a make first — models
     scope to it."), Single Lead's "Logged as …" under the note box, Single Vehicle's toggle descriptions
     ("Feature this car in the site's Specials rail") — keep only those the original has.
-14. **Column-header height:** `--stick-hd` is 40px, All Vehicles' `.hd` measures 48px at rest — re-measure
+12. **Column-header height:** `--stick-hd` is 40px, All Vehicles' `.hd` measures 48px at rest — re-measure
     the 162px anchor (§8) before changing either.
-15. **Inert tokens:** `all-vehicles-gen11.css` still declares an older radius scale (`--r-card 24px` …)
+13. **Inert tokens:** `all-vehicles-gen11.css` still declares an older radius scale (`--r-card 24px` …)
     that `_aan-family.css` overrides on load — delete once the dealer pages are re-checked.
-16. **Class-name aliases:** later pages carry their own names for origin components — section head
+14. **Class-name aliases:** later pages carry their own names for origin components — section head
     `.zone__hd` (Dealer Edit) for `.zone__h`, field `.fw` + `.fl` (Dealer Edit) for `.f` + `.f__l`, record
     head `.head--card` for `.cockpit--card`. New pages use the origin names in §38; merging the aliases
     is the backlog `tools/ds-check` lists.
-17. **Staff lists at 1280–1340 (desktop):** on My Work Queue the list is clipped at the right (64px of
+15. **Staff lists at 1280–1340 (desktop):** on My Work Queue the list is clipped at the right (64px of
     columns at 1280, no scroll) and the column head sits below the first row (the page's own 1340 rule
     makes `.rows` a scroll container). The tablet table rule (§41) fixes both; extending it up to
     1340 changes the desktop build at those widths.
-18. **Native checkboxes on touch:** Accounting's row checkboxes (14px, the browser's box) cannot take the
-    invisible hit area; with §25's `.ck` they would (see 3).
-19. **Photo preview on a touch screen:** All Vehicles' hover preview of a thumbnail is mouse-only; on a
-    tablet the larger photo is one tap away in the row's sheet. A tap-and-hold preview is possible.
-20. **Sticky column head on tablet** follows the rows sideways by a transform driven from the rows'
+16. **Native checkboxes on touch:** Accounting's row checkboxes (14px, the browser's box) cannot take the
+    invisible hit area; with §25's `.ck` they would (see 2).
+17. **Sticky column head on tablet** follows the rows sideways by a transform driven from the rows'
     scroll (`_aan-tablet.js`); without JavaScript the head stays put while the rows scroll.
+
+**Decided on 18 Nov 2026 (Alex):**
+- the field heights are 36 / 30 (§11);
+- Accounting's per-row Pay **stays** as it is;
+- no tap-and-hold photo preview on tablet: the larger photo stays one tap away in the row's sheet.
+
+Being worked: the explanatory lines on dealer pages keep only those the live system has. Waiting: staff lists
+at 1280–1340.

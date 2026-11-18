@@ -136,7 +136,7 @@
      are the same object height. --zone-air is the 40px that separates two
      attached zones: §1's --s7, chosen because it is the step at which a heading
      reads as starting a new region without a card drawn round it. */
-  --field-h: 40px;
+  --field-h: 36px;   /* Nov 18 (Alex): forms are 36, dense working forms 30 — 40 and 32 are gone */
   --zone-air: var(--s7);
 
   /* ── motion (DESIGN.md §14) ──────────────────────────────────────────── */
