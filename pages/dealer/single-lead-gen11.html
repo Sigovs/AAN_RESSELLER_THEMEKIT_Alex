@@ -10,8 +10,8 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light' || t === 'dar
 var h = location.hash.slice(1).split('&'); if (h.indexOf('dark') >= 0 || h.indexOf('light') >= 0) document.documentElement.setAttribute('data-theme', h.indexOf('dark') >= 0 ? 'dark' : 'light');   /* review hash, applied before the page paints */</script>
 <link rel="stylesheet" href="all-vehicles-gen11.css?v=20261117-dark">
 <link rel="stylesheet" href="single-lead-gen11.css?v=20261117-head5">
-<link rel="stylesheet" href="../_aan-family.css?v=20261118-staff">
-<link rel="stylesheet" href="../_aan-components.css?v=20261118-staff">
+<link rel="stylesheet" href="../_aan-family.css?v=20261118-tbtn">
+<link rel="stylesheet" href="../_aan-components.css?v=20261118-tbtn">
 </head>
 <body>
 
@@ -141,6 +141,7 @@ var h = location.hash.slice(1).split('&'); if (h.indexOf('dark') >= 0 || h.index
     </nav>
     <span class="top__sp"></span>
     <label class="gsearch"><svg class="i"><use href="#i-search"/></svg><input type="search" id="q-global" name="q-global" autocomplete="off" placeholder="Search anywhere" aria-label="Search anywhere"></label>
+    <button class="tbtn tbtn--theme" type="button" data-act="theme" aria-label="Switch to dark theme" title="Dark theme"><svg class="i t-moon"><use href="#i-moon"/></svg><svg class="i t-sun"><use href="#i-sun"/></svg></button>
     <button class="tbtn" type="button" aria-label="Notifications"><svg class="i"><use href="#i-bell"/></svg><span class="tbtn__dot"></span></button>
     <span class="top__div"></span>
     <div class="nav__it nav__it--r">
@@ -466,7 +467,7 @@ var h = location.hash.slice(1).split('&'); if (h.indexOf('dark') >= 0 || h.index
 
 <script src="all-vehicles-gen11.data.js?v=20260930234502"></script>
 <script src="all-leads-gen10.data.js?v=20260930234502"></script>
-<script src="single-lead-gen11.js?v=20261118-dark"></script>
+<script src="single-lead-gen11.js?v=20261118-tbtn"></script>
 <script src="../_aan-tablet.js?v=20261116-wide"></script>
 </body>
 </html>

@@ -207,7 +207,7 @@ Origin: All Vehicles.
 **Red is for two things only:** Hidden on site, and Clear all (All Vehicles, All Leads).
 Destructive actions use `--danger` text (§11), not a red fill.
 
-Dark theme: on, with a switch in the account menu — its tokens and rules are §42.
+Dark theme: on, switched from the bar (moon / sun, 1280 and up) and the account menu — tokens and rules in §42.
 
 ---
 
@@ -1266,6 +1266,9 @@ and `features.mjs`.
 ## 42 · Dark theme
 
 Approved by Alex on 18 Nov 2026 ("dimmed graphite", v3). It is on for the nine pages that have the account menu.
+Two controls switch it:
+- **the moon / sun button in the bar**, beside the bell, at 1280 and up (the bar has no room for it at 1180);
+- **the "Dark theme" item in the account / user menu**, at every width.
 Dealer Login keeps its own video styling.
 
 **The idea in one line:** neutral graphite for everything you work on, and the board alone in navy. That

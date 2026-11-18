@@ -756,3 +756,10 @@ body .app .ft, body .app .nt, body .app .vt, body .app .c-pkg .bdg { padding-lef
 
 /* Nov 18 — the theme item in the staff user menu is a <button>: it takes the menu item's look, not the browser's */
 button.mn__it { width: 100%; border: 0; background: none; font: inherit; text-align: left; cursor: pointer; }
+
+/* Nov 18 — the theme button in the bar (Alex: a visible switch): moon in light, sun in dark. Shown at 1280 and up;
+   below that the bar has no room (it overflowed at 1180), and the theme lives in the account / user menu only. */
+.tbtn.tbtn--theme .t-sun { display: none; }
+html[data-theme="dark"] .tbtn.tbtn--theme .t-sun { display: block; }
+html[data-theme="dark"] .tbtn.tbtn--theme .t-moon { display: none; }
+@media (max-width: 1279.98px) { .tbtn.tbtn--theme { display: none; } }

@@ -9,8 +9,8 @@
    half-dark state at load. Temporary; the dark-theme stage removes it. */
 try { var t = localStorage.getItem('aan-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
 <link rel="stylesheet" href="all-vehicles-gen11.css?v=20261117-dark">
-<link rel="stylesheet" href="../_aan-family.css?v=20261118-staff">
-<link rel="stylesheet" href="../_aan-components.css?v=20261118-staff">
+<link rel="stylesheet" href="../_aan-family.css?v=20261118-tbtn">
+<link rel="stylesheet" href="../_aan-components.css?v=20261118-tbtn">
 </head>
 <body>
 
@@ -125,7 +125,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light' || t === 'dar
     </nav>
     <span class="top__sp"></span>
     <label class="gsearch"><svg class="i"><use href="#i-search"/></svg><input type="search" placeholder="Search anywhere" aria-label="Search anywhere"><kbd>⌘K</kbd></label>
-    <button class="tbtn" type="button" data-act="theme-bar" aria-label="Switch to dark theme" hidden title="Dark theme: in the account menu"><svg class="i t-moon"><use href="#i-moon"/></svg><svg class="i t-sun"><use href="#i-sun"/></svg></button>
+    <button class="tbtn tbtn--theme" type="button" data-act="theme" aria-label="Switch to dark theme" title="Dark theme"><svg class="i t-moon"><use href="#i-moon"/></svg><svg class="i t-sun"><use href="#i-sun"/></svg></button>
     <button class="tbtn" type="button" aria-label="Notifications"><svg class="i"><use href="#i-bell"/></svg><span class="tbtn__dot"></span></button>
     <span class="top__div"></span>
     <div class="nav__it nav__it--r">
@@ -265,7 +265,7 @@ try { var t = localStorage.getItem('aan-theme'); if (t === 'light' || t === 'dar
 </div>
 
 <script src="all-vehicles-gen11.data.js?v=20260930234502"></script>
-<script src="all-vehicles-gen11.js?v=20261117-dark"></script>
+<script src="all-vehicles-gen11.js?v=20261118-tbtn"></script>
 <script src="../_aan-tablet.js?v=20261116-wide"></script>
 </body>
 </html>

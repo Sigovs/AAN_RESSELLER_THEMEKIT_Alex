@@ -40,8 +40,8 @@ is navy. That gives two materials, as in light.
   because that area previews the dealer's light website.
 - Every text pair passes AA, measured on the rendered page.
 
-The details are in DESIGN.md §42. You can see it live on the reference pages: account menu → **Dark theme**,
-or add `#dark` to the URL. The choice is stored in `localStorage['aan-theme']` and shared by all pages.
+The details are in DESIGN.md §42. You can see it live on the reference pages: the moon / sun button in the top bar
+(1280px and wider), or account menu → **Dark theme**, or add `#dark` to the URL. The choice is stored in `localStorage['aan-theme']` and shared by all pages.
 
 ## Rules an agent must keep
 
