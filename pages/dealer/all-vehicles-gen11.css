@@ -3993,3 +3993,23 @@ body:has(#iebar:not([hidden])) { padding-bottom: 88px; }
 .iest { display: block; }
 .iest .sel { height: 32px; min-width: 0; width: 100%; font-size: 13px; }
 .iest--chg .sel { background: var(--brand-soft); box-shadow: inset 0 0 0 1px var(--brand); }
+
+/* ============================================================================
+   FILTERS DOCK — beside or over (Alex, Nov 18; DESIGN §31). The dock sits BESIDE the list (.dock-beside) only where
+   the list keeps the room it has at 1440 with Filters closed: 1900 and up (1412px of list vs 1408; the dock takes
+   456px with its gap). Narrower it lies OVER the list at its right (.dock-over) and the list does not change: no
+   column steps aside, no track tier, no board change. The old .dock-open state (above, in its quarantine) is not set
+   any more and is left as it was. Below 1280 the shared tablet overlay places it (_aan-components.css).
+   ========================================================================== */
+.app.dock-beside { grid-template-columns: minmax(0, 1fr) var(--dock); column-gap: var(--gap); }
+.app.dock-beside .dock, .app.dock-over .dock { opacity: 1; transform: none; visibility: visible; transition: opacity var(--dur2) var(--ease), transform var(--dur2) var(--ease); }
+@media (min-width: 1280px) {
+  .app.dock-over > .field { grid-column: 1; grid-row: 4; }
+  .app.dock-over > .dock {
+    grid-column: 1; grid-row: 4; justify-self: end; align-self: start; position: sticky;
+    top: var(--dock-stick, calc(var(--stick-bar) + var(--s2)));
+    margin: var(--dock-off, 0px) var(--s4) 0 0; z-index: var(--z-menu);
+    width: var(--dock); max-height: calc(100vh - var(--dock-stick, var(--stick-bar)) - var(--s4));
+    box-shadow: var(--el-3);
+  }
+}

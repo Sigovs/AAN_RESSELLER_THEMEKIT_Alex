@@ -707,11 +707,24 @@ FLOATING to the right of the field, one gutter from it, radius 12px, `--el-2` (S
 | body `.dock__b` | padding 16px 24px, scrolls inside |
 | foot `.dock__f` | padding 12px 24px; the note 13px ink-3 at the left ("No unsaved changes"), actions right |
 
-Opening the dock narrows the field, **only where the field still fits beside it**. A list that does not
-(My Work Queue below 1800px: its list must keep at least the 1408px it has at 1440 without the dock) gets the
-dock **over** it instead: at its right, one 16px inset in, starting under the command band so Filters, Sort and
-Clear stay in sight, sticking under the band on scroll, `--el-3`. The list does not move. The dock is closed by
-default, stays open until it is closed, and the browser remembers it (Bill, 11 Nov; Alex, 18 Nov 2026).
+**A list's Filters dock stands beside the list only where the list still fits beside it** (Alex, 18 Nov 2026):
+the list must keep at least the room it has at 1440 with the dock closed, so nothing in it changes. Narrower, the
+dock lies **over** the list instead: at its right, a 16px inset in, starting under the list's controls (search band,
+scope line, top pager: it covers no control), sticking under the stuck search band on scroll, `--el-3`. The list
+does not move, no column steps aside and no track changes for the dock.
+
+| list | dock | beside from | over |
+|---|---|---|---|
+| All Vehicles (Filters) | 440 | 1900 (list 1412 vs 1408) | 1280–1899; below 1280 the tablet overlay |
+| My Work Queue (Filters) | 340 | 1800 (list 1412 vs 1408) | 1280–1799; below 1280 the tablet overlay |
+
+Classes: `.dock-beside` / `.dock-over` (All Vehicles), `.dock-open` + the 1280–1799 block (My Work Queue). All
+Vehicles' older `.dock-open`, which dropped Status, Trim, Color, Mileage and Spec and used narrower tracks, is no
+longer set; its rules stay in the quarantine, unused. My Work Queue's dock is closed by default, stays open until it
+is closed, and the browser remembers it (Bill, 11 Nov).
+
+**A work panel is not a filter dock**: Single Lead's Workflow, Single Ticket's and Create A Ticket's Assigned To are
+worked on together with the record beside them, so they always stand beside it and narrow the content.
 
 ---
 
@@ -1104,7 +1117,7 @@ Purpose: a side task for the page or the open record, beside the list. Origin: A
   <div class="dock__f dock__f--row"><span class="dock__note">No unsaved changes</span>…Discard · Save…</div>
 </aside>
 ```
-Open: `.app.dock-open`. Don't: a modal instead. Over the list only where the list does not fit beside it (§31).
+Open: `.app.dock-open` (a work panel) or `.dock-beside` / `.dock-over` (a list's Filters, §31). Don't: a modal.
 
 ### 38.15 Save bar
 Origin: Single Vehicle. Markup: copy `.savebar` from Single Vehicle (record view) or Dealer Edit (edit
@@ -1265,8 +1278,8 @@ it; the A–Z jump wraps.
 right: fixed under the platform bar, a gutter from the edges, `min(440px, 100vw − 32px)` wide, `--el-3`,
 over the page; its own toggle and its close button work as on desktop. A page that opens its dock on
 load (Single Lead's Workflow, Single Ticket's Assigned To) starts with it closed at overlay widths.
-Side panels that do not fit (Dealer Edit's Options, Danger & Locks) go under the form. My Work Queue
-lies its dock over the list from 1280 to 1799 as well (§31).
+Side panels that do not fit (Dealer Edit's Options, Danger & Locks) go under the form. A list's Filters dock
+lies over the list on desktop too, wherever the list would not keep its 1440 room beside it (§31).
 
 **Touch** (`hover: none` / `pointer: coarse`, in the tablet range). Nothing waits for a hover: row
 actions, filter-by-value buttons, the site link and the photo remove button are shown; a "?" mark
@@ -1382,10 +1395,6 @@ it here. `tools/ds-check` prints the measured state of each.
     invisible hit area; with §25's `.ck` they would (see 2).
 15. **Sticky column head on tablet** follows the rows sideways by a transform driven from the rows'
     scroll (`_aan-tablet.js`); without JavaScript the head stays put while the rows scroll.
-16. **The dock-over rule on the other pages.** §31's "over the list where it does not fit" is used on My Work
-    Queue only. All Vehicles still narrows its list and hides the Spec column and two command-band controls
-    while Filters is open; Single Lead (Workflow), Single Ticket and Create A Ticket (Assigned To) narrow their
-    content. Alex to decide whether they follow.
 
 **Decided on 18 Nov 2026 (Alex):**
 - the field heights are 36 / 30 (§11);
@@ -1393,7 +1402,9 @@ it here. `tools/ds-check` prints the measured state of each.
 - no tap-and-hold photo preview on tablet: the larger photo stays one tap away in the row's sheet;
 - My Work Queue's table fits 1280 with no horizontal scroll (§10): short heads, `minmax` tracks, two-line
   Dealer / Subject, heads on the top line. Its Filters dock lies over the list below 1800 and pushes it from
-  1800 up (§31). It was Bill's side panel (11 Nov); its behaviour is his, only the overlay is new.
+  1800 up (§31). It was Bill's side panel (11 Nov); its behaviour is his, only the overlay is new;
+- All Vehicles' Filters dock follows the same rule: over the list below 1900, beside it from 1900; the list keeps
+  every column with Filters open. Work panels (Workflow, Assigned To) stay beside their record (§31).
 
 - Explanatory lines on dealer pages keep only what the live system has (checked on reseller.aansupport.com).
   The following are commented out, not deleted:
