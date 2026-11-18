@@ -1356,22 +1356,21 @@ it here. `tools/ds-check` prints the measured state of each.
     package flags are 12px / 7px-radius `.bdg`; Dealer Edit's `.dbchip` is a 22px pill; My Work Queue's
     "Archived" is a 34px pill toggle — four shapes for what §27 has two of.
 10. **Single Lead's platform bar** is solid white at rest; every other page is the .76 glass.
-11. **All Vehicles' Model filter** is a stub: its popover only says "Pick a make first — models scope to it." and never lists models. The live system shows a plain list of every model. To decide: list the models (as live) or keep the stub.
-12. **Column-header height:** `--stick-hd` is 40px, All Vehicles' `.hd` measures 48px at rest — re-measure
+11. **Column-header height:** `--stick-hd` is 40px, All Vehicles' `.hd` measures 48px at rest — re-measure
     the 162px anchor (§8) before changing either.
-13. **Inert tokens:** `all-vehicles-gen11.css` still declares an older radius scale (`--r-card 24px` …)
+12. **Inert tokens:** `all-vehicles-gen11.css` still declares an older radius scale (`--r-card 24px` …)
     that `_aan-family.css` overrides on load — delete once the dealer pages are re-checked.
-14. **Class-name aliases:** later pages carry their own names for origin components — section head
+13. **Class-name aliases:** later pages carry their own names for origin components — section head
     `.zone__hd` (Dealer Edit) for `.zone__h`, field `.fw` + `.fl` (Dealer Edit) for `.f` + `.f__l`, record
     head `.head--card` for `.cockpit--card`. New pages use the origin names in §38; merging the aliases
     is the backlog `tools/ds-check` lists.
-15. **Staff lists at 1280–1340 (desktop):** on My Work Queue the list is clipped at the right (64px of
+14. **Staff lists at 1280–1340 (desktop):** on My Work Queue the list is clipped at the right (64px of
     columns at 1280, no scroll) and the column head sits below the first row (the page's own 1340 rule
     makes `.rows` a scroll container). The tablet table rule (§41) fixes both; extending it up to
     1340 changes the desktop build at those widths.
-16. **Native checkboxes on touch:** Accounting's row checkboxes (14px, the browser's box) cannot take the
+15. **Native checkboxes on touch:** Accounting's row checkboxes (14px, the browser's box) cannot take the
     invisible hit area; with §25's `.ck` they would (see 2).
-17. **Sticky column head on tablet** follows the rows sideways by a transform driven from the rows'
+16. **Sticky column head on tablet** follows the rows sideways by a transform driven from the rows'
     scroll (`_aan-tablet.js`); without JavaScript the head stays put while the rows scroll.
 
 **Decided on 18 Nov 2026 (Alex):**
@@ -1385,5 +1384,11 @@ it here. `tools/ds-check` prints the measured state of each.
   - Single Vehicle's five visibility-switch descriptions;
   - Single Vehicle's CARFAX description;
   - Single Vehicle's "Renew listing on save" description.
+
+- All Vehicles' Model filter **stays a stub until go-live.** Its popover says "Pick a make first", while the
+  live system shows a plain list of every model.
+- Single Vehicle's **"Renew listing on save" stays.** It is the live system's `reset_when_added`. There, when a
+  car's status changes to Available, a confirm asks "Do you want to reset 'When Added' date to today's? Click
+  cancel to keep original date." Gen 11 shows it as a switch in Utilities instead of the confirm.
 
 Waiting: staff lists at 1280–1340.
