@@ -71,8 +71,8 @@
   .ch__p { grid-column: 2; margin: 0; color: var(--ink-3); font-size: 14px; max-width: 80ch; }
 
   /* steps */
-  .steps { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s4); counter-reset: st; }
-  .steps li { counter-increment: st; padding: var(--s4); border-radius: var(--r-panel); background: var(--wash); box-shadow: inset 0 0 0 1px var(--line-2); color: var(--ink-2); }
+  .steps { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s5) var(--s6); counter-reset: st; }
+  .steps li { counter-increment: st; color: var(--ink-2); }   /* no box: the steps sit in the sheet, spaced, not carded inside a card */
   .steps li::before { content: counter(st, decimal-leading-zero); display: block; margin-bottom: var(--s2); font: 400 13px/1 var(--mono); color: var(--ink-4); }
   .steps b { color: var(--ink); font-weight: 600; }
   .steps code { white-space: nowrap; }   /* a file name never breaks at its hyphen */
