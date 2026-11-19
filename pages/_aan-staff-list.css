@@ -579,7 +579,7 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
   height: var(--row);
   padding: 0 var(--sheet-inset);
   box-shadow: inset 0 -1px 0 var(--line-2);
-  font-size: 13px;
+  font-size: 14px;   /* 13px until Nov 18: the cell role is 14px on every list (All Vehicles) */
   transition: background var(--dur) var(--ease);
 }
 .row:hover { background: var(--well); }

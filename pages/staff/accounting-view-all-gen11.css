@@ -762,7 +762,17 @@ button.tile:hover .tile__f { color: var(--brand-ink); }
 .bstat--green { color: var(--ok-fill); }
 .bstat--blue { color: var(--brand); }
 .bstat--amber { color: var(--signal-fill); }
-.bck { width: 14px; height: 14px; margin: 0; flex: none; accent-color: var(--brand); cursor: pointer; }
+/* the row's billing checkbox is the family .ck (class="bck ck"); 14px native until Nov 18 */
+.ck {   /* All Vehicles' checkbox (§25), Nov 18 the DS pass: the browser's box until then */
+  appearance: none; width: 16px; height: 16px; margin: 0;
+  border: 1.5px solid var(--line-3); border-radius: 5px; background: var(--sheet);
+  display: grid; place-items: center; cursor: pointer; flex: 0 0 auto;
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.ck:hover { border-color: var(--ink-4); }
+.ck:checked { background: var(--brand-btn, var(--brand)); border-color: var(--brand-btn, var(--brand)); }
+.ck:checked::after { content: ""; width: 8px; height: 5px; border: 2px solid #fff; border-top: 0; border-right: 0; transform: translateY(-1px) rotate(-45deg); }
+.ck:disabled { opacity: .5; cursor: default; }
 
 .c-name { min-width: 0; }
 .c-name a { font-weight: 600; color: var(--ink); }

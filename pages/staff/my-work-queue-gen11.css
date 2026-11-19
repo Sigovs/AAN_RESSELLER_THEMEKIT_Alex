@@ -532,15 +532,13 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
   height: 56px; padding: 0 var(--s3) 0 14px;
   border-radius: var(--r-control);
   background: var(--sheet);
-  /* An input is a control on a surface, not a card floating above one. It used
-     to carry --sh-pill, a real drop shadow, which made it the only genuinely
-     raised thing inside the field card on the whole family. A 1px ring states
-     the same edge without the elevation. DESIGN.md §2, §4. */
-  box-shadow: inset 0 0 0 1px var(--line);
+  /* --sh-pill, as on every other list (All Vehicles is the origin; Nov 18, the DS pass). A 1px ring until then:
+     "an input is a control on a surface, not a card floating above one" — this page alone. */
+  box-shadow: var(--sh-pill);
   color: var(--ink-3);
   overflow: hidden;
 }
-.search:focus-within { box-shadow: inset 0 0 0 1px var(--brand); }
+/* the focus ring is shared now (_aan-components.css). Was: .search:focus-within { box-shadow: inset 0 0 0 1px var(--brand); } */
 .search__chips { display: flex; align-items: center; gap: var(--s1); flex: none; }
 .search input {
   flex: 1 1 140px; min-width: 100px;
@@ -1297,7 +1295,7 @@ html.no-js .cmdtop, html.no-js .cmd, html.no-js .sub, html.no-js .hd, html.no-js
 /* dates and money are text with even figures, not mono (only ids, codes and phones are mono) */
 .app .c-mod i, .app .c-beg .ed, .app .c-done .ed, .app .c-beg .d, .app .c-done .d, .app .c-mbeg .d, .app .c-mdone .d, .app .row .c-amt { font-family: var(--font); font-size: 13px; font-variant-numeric: tabular-nums; }
 /* status as the status chip of All Leads: 24px, 7px radius, 13 / 600 */
-.app .bdg { box-sizing: border-box; height: 24px; padding: 0 8px; border-radius: 7px; font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; }
+.app .bdg { box-sizing: border-box; height: 24px; padding: 0 8px; border-radius: 7px; font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--bdg-ink, currentColor) 22%, transparent); }   /* the status chip's tone ring (All Vehicles), Nov 18 */
 /* the dealer name reads from its first letter, left-aligned (it was centred and cut on the left) */
 .app .row .c-dlr { flex-direction: row; align-items: center; justify-content: flex-start; text-align: left; overflow: hidden; }
 .app .c-dlr .dlr { min-width: 0; max-width: 100%; justify-content: flex-start; }
@@ -1341,10 +1339,10 @@ html.no-js .cmdtop, html.no-js .cmd, html.no-js .sub, html.no-js .hd, html.no-js
 /* ============================================================================
    FILTERS DOCK (Bill, Nov 11; Alex, Nov 16 and 18): the staff dock of Single Ticket, closed by default, open until
    closed, remembered. It sits BESIDE the list and pushes it only where the list still keeps the room it has at
-   1440 without it: 1800 and up (1412px of list vs 1408; the dock takes 388px with its gap). Narrower, it lies OVER
+   1440 without it: 1900 and up (the dock is All Vehicles' 440 since Nov 18; 340 until then). Narrower, it lies OVER
    the list at its right and the list does not move (below 1280: the shared tablet overlay, _aan-components.css).
    ========================================================================== */
-:root { --dock: 340px; }
+:root { --dock: 440px; }   /* the Filters dock is one component: All Vehicles' 440 (Nov 18, the DS pass; 340 until then) */
 .app.dock-open { grid-template-columns: minmax(0, 1fr) var(--dock); column-gap: var(--gutter); }
 .app.dock-open > :not(.field):not(.dock) { grid-column: 1 / -1; }
 .dock {
@@ -1380,7 +1378,7 @@ html.no-js .cmdtop, html.no-js .cmd, html.no-js .sub, html.no-js .hd, html.no-js
 .dock__b { flex: 1 1 auto; min-height: 0; padding: var(--s3) var(--s2); overflow: auto; overscroll-behavior: contain; }
 .dock .mn__row .sel { max-width: none !important; }
 .facet__b--on { background: var(--brand-soft); color: var(--brand-ink); }
-@media (min-width: 1280px) and (max-width: 1799.98px) {
+@media (min-width: 1280px) and (max-width: 1899.98px) {
   .app.dock-open { grid-template-columns: minmax(0, 1fr); }
   .app.dock-open > .field { grid-column: 1; grid-row: 4; }   /* placed, or auto-placement moves the list to a new column */
   /* the dock shares the list's grid cell, at its right: it starts under the search band (Filters, Sort and Clear stay in

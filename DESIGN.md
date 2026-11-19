@@ -724,9 +724,9 @@ does not move, no column steps aside and no track changes for the dock.
 | list | dock | beside from | over |
 |---|---|---|---|
 | All Vehicles (Filters) | 440 | 1900 (list 1412 vs 1408) | 1280–1899; below 1280 the tablet overlay |
-| My Work Queue (Filters) | 340 | 1800 (list 1412 vs 1408) | 1280–1799; below 1280 the tablet overlay |
+| My Work Queue (Filters) | 440 | 1900 (list 1412 vs 1408) | 1280–1899; below 1280 the tablet overlay |
 
-Classes: `.dock-beside` / `.dock-over` (All Vehicles), `.dock-open` + the 1280–1799 block (My Work Queue). All
+Classes: `.dock-beside` / `.dock-over` (All Vehicles), `.dock-open` + the 1280–1899 block (My Work Queue). All
 Vehicles' older `.dock-open`, which dropped Status, Trim, Color, Mileage and Spec and used narrower tracks, is no
 longer set; its rules stay in the quarantine, unused. My Work Queue's dock is closed by default, stays open until it
 is closed, and the browser remembers it (Bill, 11 Nov).
@@ -1375,42 +1375,67 @@ The staff pages' local palettes (`--t-*` department colours, `--b-*` badges) tak
 ## Appendix — open decisions
 
 Design decisions, not mechanical drift. When one is decided, move its rule into its section and delete
-it here. `tools/ds-check` prints the measured state of each.
+it here. `tools/ds-check` prints the measured state of each. **None is open on 18 Nov 2026**: the DS pass
+below closed them by the precedence rule (the earlier page wins, All Vehicles first).
 
-1. **Dense field label.** Single Lead `.form--dense` labels 12.5px against the 13px role.
-2. **Native checkboxes.** Single Ticket (Flag note, ToDo) and Accounting's row checkboxes (14px) are the
-   browser's box, not §25's `.ck` (needs the checked-state styling, not only a value).
-3. **Manage Dealers' table cells** are 13px against the 14px cell role.
-4. **My Work Queue's command search** keeps a 1px ring (recorded reason in its CSS) instead of `--sh-pill`.
-5. **Chosen menu item.** Staff menus also show a brand check glyph; dealer menus only the brand-ink text.
-6. **Global search hint:** `⌘K` on the dealer pages, `/` on the staff pages.
-7. **Dock width:** 440px (All Vehicles) against 400px (Single Lead, Single Ticket).
-8. **Caps outside keys:** Manage Dealers' "ROSTER" eyebrow; Single Ticket's "POTENTIAL" inside a contact
-    tag and "SPENT / EST." field labels in the dock.
-9. **Staff status palette:** My Work Queue's production status colours carry no tone ring; Manage Dealers'
-    package flags are 12px / 7px-radius `.bdg`; Dealer Edit's `.dbchip` is a 22px pill; My Work Queue's
-    "Archived" is a 34px pill toggle — four shapes for what §27 has two of.
-10. **Single Lead's platform bar** is solid white at rest; every other page is the .76 glass.
-11. **Column-header height:** `--stick-hd` is 40px, All Vehicles' `.hd` measures 48px at rest — re-measure
-    the 162px anchor (§8) before changing either.
-12. **Inert tokens:** `all-vehicles-gen11.css` still declares an older radius scale (`--r-card 24px` …)
-    that `_aan-family.css` overrides on load — delete once the dealer pages are re-checked.
-13. **Class-name aliases:** later pages carry their own names for origin components — section head
-    `.zone__hd` (Dealer Edit) for `.zone__h`, field `.fw` + `.fl` (Dealer Edit) for `.f` + `.f__l`, record
-    head `.head--card` for `.cockpit--card`. New pages use the origin names in §38; merging the aliases
-    is the backlog `tools/ds-check` lists.
-14. **Native checkboxes on touch:** Accounting's row checkboxes (14px, the browser's box) cannot take the
-    invisible hit area; with §25's `.ck` they would (see 2).
-15. **Sticky column head on tablet** follows the rows sideways by a transform driven from the rows'
-    scroll (`_aan-tablet.js`); without JavaScript the head stays put while the rows scroll.
+**Known in the code, invisible on the page** (for the developers; no visual decision is left in them):
+1. **Inert tokens:** `all-vehicles-gen11.css` still declares an older radius scale (`--r-card 24px` …)
+   that `_aan-family.css` overrides on load.
+2. **Class-name aliases:** later pages carry their own names for origin components — section head
+   `.zone__hd` (Dealer Edit) for `.zone__h`, field `.fw` + `.fl` (Dealer Edit) for `.f` + `.f__l`, record
+   head `.head--card` for `.cockpit--card`. New pages use the origin names in §38.
+3. **`--stick-hd` says 40px; every list's column head measures 48px** (All Vehicles, All Leads, My Work
+   Queue, Manage Dealers, Accounting, Feeds Incoming — the same everywhere). The sticky offsets are measured
+   by the pages, so nothing on screen depends on the token; correct it with the 162px anchor (§8).
+4. **Sticky column head on tablet** follows the rows sideways by a transform driven from the rows' scroll
+   (`_aan-tablet.js`); without JavaScript the head stays put while the rows scroll.
+
+**The DS pass, 18 Nov 2026 (Alex: "по правилу, одним заходом").** Each former open item, and what it is now:
+- **Field label 13px everywhere.** The dense forms (Single Lead, Single Ticket, Create A Ticket) were 12.5px.
+  Below 900px Single Ticket's Work Order takes its narrow arrangement (Classification across, Contact |
+  Schedule under it), so no label or date field is cut at 768.
+- **One checkbox: All Vehicles' `.ck`** (16px, 5px radius, brand fill, white tick). Single Ticket, Create A
+  Ticket (Flag note, ToDo, Waiting, Billable) and Accounting's row checkbox (`bck ck`, was the browser's 14px
+  box) now use it, so it also takes the touch hit area.
+- **List cells 14px** on Manage Dealers and Feeds Incoming (13px before). Manage Dealers' Reseller column
+  became `minmax(140px, .4fr)`: at 1920 it shows every reseller in full; at 1280–1440 the company name keeps
+  the slack, so more long names end in an ellipsis than at 13px (235 of 365 at 1280, 42 at 1440).
+- **Command search:** `--sh-pill` at rest on every list (My Work Queue had a 1px ring), and one shared focus
+  state, the pill plus a 1px brand ring (`_aan-components.css`); All Vehicles had no focus state on it.
+- **Two menu states, both already consistent:** the *current page* in a bar menu is a brand-soft fill with
+  brand-ink text (`.menu__l--on`, Accounting's nav `.mn__it--on`); the *chosen option* in a list menu is
+  brand-ink text with the brand check glyph (Sort, queues). Not one component drawn two ways.
+- **Key hint `/` only on the field the key focuses.** ⌘K on the dealer pages focused nothing; `/` in the
+  global search of My Work Queue, Manage Dealers, Feeds Incoming, Accounting and Dealer Edit focused nothing
+  or another field. Those hints are commented out. `/` stays on the command search (All Vehicles, All Leads,
+  Accounting) and on the global search where `/` focuses it (Single Ticket, Create A Ticket). No shortcut was
+  added (facelift only).
+- **One Filters dock, 440px** (All Vehicles). My Work Queue's was 340; it now stands beside the list from
+  1900, as All Vehicles' does (list 1412 vs 1408), and lies over it below. The work panel (Workflow,
+  Assigned To) is a different component and stays 400 (§31).
+- **Caps only on keys.** Sentence case now: Single Ticket's "Potential" in the contact tag, and the ToDo
+  field labels Spent / Est. / Begin / Done by (13px / 600, the field label role). Keys that stay caps: the
+  `.tally` group label ("Roster", "Feeds" — the label of a counts line, like a menu's `.mn__lab`), fact and
+  tile keys, Dealer Edit's form group labels (`.fsec`).
+- **Status and flag shapes.** A status is the status chip (24px, 7px radius, 13 / 600, tone ring): My Work
+  Queue's production statuses gained the ring; Manage Dealers' package is the dealer's state, so a status
+  chip at 13px. A flag is All Vehicles' flag tag (24px pill, 12 / 600, ring): Manage Dealers' feature tags
+  were 22px with a 6px radius. Dealer Edit's database link chip is the record id pill (26px, 12.5px mono,
+  `--line-3` ring). My Work Queue's Archived is a switch, a control, not a status.
+- **Single Lead's platform bar is the .76 glass** like every other page (it was solid white, for the dense
+  form text under it; Single Ticket and My Work Queue carry the same text under the glass).
+- **Selects have two roles, both from All Vehicles:** a form select 36px / 7px radius / 14px (30px / 13.5px
+  in a dense form), and a toolbar select 36px / 9px radius / 13.5px (All Vehicles' popover rows, Accounting's
+  facets, My Work Queue's page size). ds-check measures them as one role and lists the toolbar ones.
+- **Column-header height** is one value already (48px) — see item 3 above.
 
 **Decided on 18 Nov 2026 (Alex):**
 - the field heights are 36 / 30 (§11);
 - Accounting's per-row Pay **stays** as it is;
 - no tap-and-hold photo preview on tablet: the larger photo stays one tap away in the row's sheet;
 - My Work Queue's table fits 1280 with no horizontal scroll (§10): short heads, `minmax` tracks, two-line
-  Dealer / Subject, heads on the top line. Its Filters dock lies over the list below 1800 and pushes it from
-  1800 up (§31). It was Bill's side panel (11 Nov); its behaviour is his, only the overlay is new;
+  Dealer / Subject, heads on the top line. Its Filters dock lies over the list below 1900 and pushes it from
+  1900 up (§31; 1800 with the 340px dock until the DS pass). It was Bill's side panel (11 Nov); its behaviour is his, only the overlay is new;
 - All Vehicles' Filters dock follows the same rule: over the list below 1900, beside it from 1900; the list keeps
   every column with Filters open. Work panels (Workflow, Assigned To) stay beside their record (§31).
 

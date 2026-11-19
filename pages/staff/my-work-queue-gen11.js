@@ -629,9 +629,9 @@
   });
   /* Filters is a side panel that stays until it is closed, remembered in this browser (Bill, Nov 11; Alex, Nov 16) */
   var RM = window.matchMedia('(prefers-reduced-motion: reduce)'), dockT = 0;
-  /* the list changes width only where the dock stands beside it (1800 and up, the CSS); only there does the wide-list
+  /* the list changes width only where the dock stands beside it (1900 and up, the CSS); only there does the wide-list
      scroll re-measure (_aan-tablet.js fit, a full layout of this long list: run on every toggle, it ate the motion) */
-  var BESIDE = window.matchMedia('(min-width: 1800px)');
+  var BESIDE = window.matchMedia('(min-width: 1900px)');
   function remeasure() { if (BESIDE.matches) window.dispatchEvent(new Event('resize')); else placeDock(); }
   function setFilters(open) {
     var app = $('#app'), dock = $('.app > .dock'); clearTimeout(dockT); dock.classList.remove('dock--closing');
@@ -647,7 +647,7 @@
   $('#app').classList.add('dock-instant');   /* the remembered state is restored without an arrival */
   try { if (localStorage.getItem('aan-mwq-filters-open') === '1') setFilters(true); } catch (x) { }
   requestAnimationFrame(function () { requestAnimationFrame(function () { $('#app').classList.remove('dock-instant'); }); });
-  /* where the dock lies over the list (1280-1799, the CSS): under the search band, and under it again once the band
+  /* where the dock lies over the list (1280-1899, the CSS): under the search band, and under it again once the band
      sticks. Measured, because the band's height follows the lane and the chips. */
   function placeDock() {
     var app = $('#app'), cmd = $('#cmd'), field = $('#field');

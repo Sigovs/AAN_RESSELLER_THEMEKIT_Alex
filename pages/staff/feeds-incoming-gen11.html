@@ -9,9 +9,9 @@
 <!-- A page Gen 11 never drew (experiment, Nov 17): built only from the system — Manage Dealers' list skeleton
      (same page type: staff roster of dealers) plus the shared components; the switch is Single Vehicle's. -->
 <script src="../_aan-theme.js?v=20261118-b"></script>
-<link rel="stylesheet" href="../_aan-staff-list.css?v=20261118-left">
+<link rel="stylesheet" href="../_aan-staff-list.css?v=20261118-ds">
 <link rel="stylesheet" href="../_aan-family.css?v=20261118-tbtn">
-<link rel="stylesheet" href="../_aan-components.css?v=20261118-left2">
+<link rel="stylesheet" href="../_aan-components.css?v=20261118-ds">
 <link rel="stylesheet" href="feeds-incoming-gen11.css?v=20261118-left">
 </head>
 <body>
@@ -46,7 +46,7 @@
     <label class="gsearch">
       <svg class="i"><use href="#i-search"/></svg>
       <input type="search" name="global-search" placeholder="Search anywhere" aria-label="Search anywhere">
-      <kbd>/</kbd>
+      <!-- <kbd>/</kbd> (Nov 18: no key focuses this field here; the hint stands only on the field "/" focuses) -->
     </label>
     <a class="atlas" href="#" title="The Atlas — system architecture wiki"><span aria-hidden="true">▣</span><span class="atlas__t">Atlas</span></a>
     <button class="tbtn tbtn--theme" type="button" data-act="theme" aria-label="Switch to dark theme" title="Dark theme"><svg class="i t-moon"><use href="#i-moon"/></svg><svg class="i t-sun"><use href="#i-sun"/></svg></button>
