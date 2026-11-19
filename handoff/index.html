@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gen 11 Handover</title>
+<meta name="description" content="Everything for building the AAN control panel on the Gen 11 design system: the developer package, the design system, the ten reference pages and seven sample pages built from the system.">
+<!-- Built from the Gen 11 tokens only (pages/_aan-staff-list.css, _aan-family.css, the board of Accounting / Sales Report). -->
+<style>
+  @font-face { font-family: "Archivo"; font-style: normal; font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; src: url("fonts/archivo-latin-var.woff2") format("woff2"); }
+  @font-face { font-family: "Archivo"; font-style: normal; font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; src: url("fonts/archivo-latin-ext-var.woff2") format("woff2"); unicode-range: U+0100-024F, U+1E00-1EFF; }
+  @font-face { font-family: "Plex Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/plex-mono-400.woff2") format("woff2"); }
+  @font-face { font-family: "Plex Mono"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/plex-mono-600.woff2") format("woff2"); }
+
+  :root {
+    color-scheme: light;
+    --font: "Archivo", "Segoe UI", system-ui, sans-serif;
+    --mono: "Plex Mono", ui-monospace, Menlo, monospace;
+    --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 40px; --s8: 48px; --s9: 64px;
+    --sheet: #ffffff; --well: #eef1f5; --wash: #f3f5f8;
+    --ink: #0d1320; --ink-2: #353e4e; --ink-3: #576070; --ink-4: #697181;
+    --line: #dfe3ea; --line-2: #e9ecf1; --line-3: #c5cbd5;
+    --brand: #1f5fe0; --brand-ink: #1747b3; --brand-soft: #e9f0fe;
+    --signal: #945000; --signal-soft: #fff2dc; --signal-line: #efcd93;
+    --focal: #172234; --focal-2: #223049; --focal-line: #2b3850;
+    --focal-ink: #f3f6fb; --focal-ink-2: #bdc6d5; --focal-ink-3: #97a3b7;
+    --r-card: 14px; --r-panel: 12px; --r-inner: 7px; --r-micro: 4px; --r-pill: 999px;
+    --sh-soft: 0 28px 64px -34px rgba(34,58,118,.42), 0 2px 8px -3px rgba(34,58,118,.10), inset 0 1px 0 rgba(255,255,255,.95);
+    --sh-card: 0 22px 44px -22px rgba(15,27,61,.55), inset 0 1px 0 rgba(255,255,255,.14);
+    --ring: 0 0 0 2px var(--sheet), 0 0 0 4px var(--brand);
+    --dur: 160ms; --ease: cubic-bezier(.2,.7,.2,1);
+    --gutter: clamp(16px, 4vw, 48px);
+    --measure: 1240px;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--wash); color: var(--ink); font: 400 14px/1.5 var(--font); -webkit-font-smoothing: antialiased; }
+  a { color: var(--brand-ink); }
+  a:focus-visible { outline: none; box-shadow: var(--ring); border-radius: var(--r-inner); }
+  code { font: 400 13px/1.4 var(--mono); color: var(--ink-2); overflow-wrap: anywhere; }
+  .wrap { max-width: calc(var(--measure) + 2 * var(--gutter)); margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* ── head ── */
+  .head { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--s2) var(--s4); padding: var(--s7) 0 var(--s5); }
+  .brand__mk { display: inline-block; padding: 2px 7px; border-radius: var(--r-micro); background: var(--brand); color: #fff; font: 600 12.5px/1.15 var(--mono); letter-spacing: .02em; align-self: center; }
+  .head h1 { margin: 0; font-size: 28px; line-height: 1.15; font-weight: 700; letter-spacing: -.02em; }
+  .head__meta { color: var(--ink-3); font-size: 14px; }
+  .head__meta::before { content: "·"; margin-right: var(--s4); color: var(--ink-4); }
+
+  /* ── the board: the four ways in ── */
+  .board { padding: 20px 24px 24px; border-radius: var(--r-card); background: var(--focal); box-shadow: var(--sh-card); color: var(--focal-ink); }
+  .board__h { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--s2) var(--s3); margin-bottom: var(--s4); }
+  .board__t { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -.01em; }
+  .board__m { color: var(--focal-ink-3); font-size: 13px; }
+  .board__g { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s3); }
+  .tile { display: flex; flex-direction: column; min-width: 0; padding: var(--s4); border-radius: var(--r-panel);
+    background: rgba(255,255,255,.055); box-shadow: inset 0 0 0 1px rgba(255,255,255,.07); color: var(--focal-ink); text-decoration: none;
+    transition: background-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
+  .tile:hover { background: rgba(255,255,255,.09); box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); }
+  .tile:focus-visible { box-shadow: 0 0 0 2px var(--focal), 0 0 0 4px #7fa6ff; border-radius: var(--r-panel); }
+  .tile__k { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; line-height: 16px; color: var(--focal-ink-3); }
+  .tile__v { margin-top: var(--s2); font-size: 24px; font-weight: 700; letter-spacing: -.015em; line-height: 1.1; font-stretch: 88%; }
+  .tile__s { margin-top: var(--s1); font-size: 14px; color: var(--focal-ink-2); }
+  .tile__go { margin-top: auto; padding-top: var(--s3); font-size: 13px; color: #9fbcff; }
+
+  /* ── chapters ── */
+  .ch { margin-top: var(--s4); padding: var(--s5); border-radius: var(--r-card); background: var(--sheet); box-shadow: var(--sh-soft); }
+  .ch__h { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: baseline; gap: var(--s1) var(--s3); padding-bottom: var(--s3); margin-bottom: var(--s4); border-bottom: 1px solid var(--line-2); }
+  .ch__n { font: 400 13px/1 var(--mono); color: var(--ink-4); }
+  .ch__h h2 { text-wrap: balance; margin: 0; font-size: 18px; line-height: 1.3; font-weight: 700; letter-spacing: -.01em; }
+  .ch__p { grid-column: 2; margin: 0; color: var(--ink-3); font-size: 14px; max-width: 80ch; }
+
+  /* steps */
+  .steps { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s4); counter-reset: st; }
+  .steps li { counter-increment: st; padding: var(--s4); border-radius: var(--r-panel); background: var(--wash); box-shadow: inset 0 0 0 1px var(--line-2); color: var(--ink-2); }
+  .steps li::before { content: counter(st, decimal-leading-zero); display: block; margin-bottom: var(--s2); font: 400 13px/1 var(--mono); color: var(--ink-4); }
+  .steps b { color: var(--ink); font-weight: 600; }
+  .steps code { white-space: nowrap; }   /* a file name never breaks at its hyphen */
+
+  /* link rows: the list skeleton without the table (name · what it is · address) */
+  .rows { margin: 0; padding: 0; list-style: none; }
+  .rows li + li { border-top: 1px solid var(--line-2); }
+  .row { display: grid; grid-template-columns: minmax(180px, 2fr) minmax(0, 5fr) minmax(0, 3fr); gap: var(--s2) var(--s4); align-items: baseline;
+    padding: var(--s3) var(--s3); margin: 0 calc(-1 * var(--s3)); border-radius: var(--r-inner); text-decoration: none; color: var(--ink-2);
+    transition: background-color var(--dur) var(--ease); }
+  .row:hover { background: var(--wash); }
+  .row__n { color: var(--brand-ink); font-weight: 600; }
+  .row__a { font: 400 13px/1.4 var(--mono); color: var(--ink-4); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* page cards */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--s5) var(--s4); }
+  .card { display: block; min-width: 0; text-decoration: none; color: var(--ink); }
+  .card__img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top left; border-radius: var(--r-panel);
+    background: var(--well); box-shadow: 0 0 0 1px var(--line); transition: box-shadow var(--dur) var(--ease); }
+  .card:hover .card__img { box-shadow: 0 0 0 2px var(--brand); }
+  .card:focus-visible { box-shadow: none; }
+  .card:focus-visible .card__img { box-shadow: var(--ring); }
+  .card__t { display: flex; align-items: baseline; gap: var(--s2); margin-top: var(--s2); font-weight: 600; }
+  .card__n { flex: none; font: 400 13px/1 var(--mono); color: var(--ink-4); }
+  .card__s { display: block; margin-top: 2px; color: var(--ink-3); font-size: 13px; }
+
+  .note { display: flex; gap: var(--s3); margin-top: var(--s5); padding: var(--s3) var(--s4); border-radius: var(--r-panel); background: var(--signal-soft); box-shadow: inset 0 0 0 1px var(--signal-line); color: var(--ink-2); }
+  .note b { color: var(--signal); font-weight: 600; white-space: nowrap; }
+
+  .two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s4); margin-top: var(--s4); }
+  .two .ch { margin-top: 0; }
+  .lim { margin: 0; padding-left: 18px; color: var(--ink-2); }
+  .lim li + li { margin-top: var(--s2); }
+
+  .foot { padding: var(--s6) 0 var(--s8); color: var(--ink-3); font-size: 13px; }
+
+  @media (max-width: 1099.98px) {
+    .board__g, .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .row { grid-template-columns: minmax(160px, 2fr) minmax(0, 5fr); }
+    .row__a { display: none; }
+  }
+  @media (max-width: 767.98px) {
+    .head { padding-top: var(--s6); }
+    .head__meta { flex-basis: 100%; }
+    .head__meta::before { content: none; }
+    .two { grid-template-columns: minmax(0, 1fr); }
+    .two .ch + .ch { margin-top: 0; }
+    .ch { padding: var(--s4); }
+    .row { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s4) var(--s3); }
+  }
+  @media (max-width: 479.98px) {
+    .board { padding: var(--s4); }
+    .board__g, .steps { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="head">
+  <span class="brand__mk" aria-hidden="true">AAN</span>
+  <h1>Gen&nbsp;11 handover</h1>
+  <span class="head__meta">For the developers · updated 19 Nov 2026</span>
+</header>
+
+<section class="board" aria-labelledby="b-t">
+  <div class="board__h"><h2 class="board__t" id="b-t">Start here</h2><span class="board__m">Read the design system first. Where anything disagrees, the reference pages win.</span></div>
+  <div class="board__g">
+    <a class="tile" href="https://github.com/Sigovs/aan-gen11-v3-preview/tree/main/handoff">
+      <span class="tile__k">Developer package</span><span class="tile__v">README</span>
+      <span class="tile__s">What each file is, and the order to use them in</span><span class="tile__go">GitHub →</span></a>
+    <a class="tile" href="aan-gen11-handoff.zip" download>
+      <span class="tile__k">For the backend</span><span class="tile__v">One zip</span>
+      <span class="tile__s">Two CSS layers, fonts, DESIGN.md, README · 342 KB</span><span class="tile__go">Download →</span></a>
+    <a class="tile" href="design-system.html">
+      <span class="tile__k">Design system</span><span class="tile__v">Tokens &amp; components</span>
+      <span class="tile__s">Light and dark, every state, drawn by the pages' own CSS</span><span class="tile__go">Open →</span></a>
+    <a class="tile" href="https://www.allautonetwork.com/previews/aan_reseller_2026_design_v3/index.html">
+      <span class="tile__k">Reference pages</span><span class="tile__v">10 screens</span>
+      <span class="tile__s">The Gen 11 pages with real data, on the dashboard</span><span class="tile__go">Dashboard →</span></a>
+  </div>
+</section>
+
+<section class="ch" aria-labelledby="c1">
+  <div class="ch__h"><span class="ch__n">01</span><h2 id="c1">Bringing the new backend to Gen&nbsp;11</h2></div>
+  <ol class="steps">
+    <li><b>Load three stylesheets</b>, in this order: your <code>theme.css</code>, then <code>aan-gen11-theme.css</code>, then <code>aan-gen11-components.css</code>. None of your own files change.</li>
+    <li><b>Make the markup changes</b> listed in the header of <code>aan-gen11-components.css</code>, for example <code>aria-current="page"</code> on the current top-nav group.</li>
+    <li><b>Dark theme comes with it.</b> Your existing <code>&lt;html data-theme="dark"&gt;</code> switches both layers.</li>
+    <li><b>Compare every screen</b> with its reference page side by side at 1440, 1366 and 1280, including where the first field sits.</li>
+  </ol>
+</section>
+
+<section class="ch" aria-labelledby="c2">
+  <div class="ch__h"><span class="ch__n">02</span><h2 id="c2">The design system</h2></div>
+  <ul class="rows">
+    <li><a class="row" href="design-system.html"><span class="row__n">Design system</span><span>Every token in light and dark, type, spacing, icons, focus and motion; every component with its states</span><span class="row__a">handoff/design-system.html</span></a></li>
+    <li><a class="row" href="rules-and-backend.html"><span class="row__n">Rules and backend map</span><span>Do and don't per component; each one beside your <code>ui-*</code> markup with the Gen 11 layers applied</span><span class="row__a">handoff/rules-and-backend.html</span></a></li>
+    <li><a class="row" href="catalog.html"><span class="row__n">Component catalog</span><span>Each component as a 1:1 crop from its origin page, with the measured spec</span><span class="row__a">handoff/catalog.html</span></a></li>
+    <li><a class="row" href="https://github.com/Sigovs/AAN_RESSELLER_THEMEKIT_Alex/blob/handoff/DESIGN.md"><span class="row__n">DESIGN.md</span><span>The full written system, §0–42: the source of every rule (§42 is the dark theme)</span><span class="row__a">github · DESIGN.md</span></a></li>
+    <li><a class="row" href="https://github.com/Sigovs/AAN_RESSELLER_THEMEKIT_Alex/tree/handoff/tools/ds-check"><span class="row__n">Checks</span><span>Drift against the system, the dark theme on the rendered page, nothing lost on tablet</span><span class="row__a">github · tools/ds-check</span></a></li>
+  </ul>
+</section>
+
+<section class="ch" aria-labelledby="c3">
+  <div class="ch__h"><span class="ch__n">03</span><h2 id="c3">Reference pages</h2>
+    <p class="ch__p">The ten Gen 11 screens, in order of precedence: when two pages disagree, the earlier one wins. Add <code>#dark</code> to any address for the dark theme. Source: <a href="https://github.com/Sigovs/AAN_RESSELLER_THEMEKIT_Alex/tree/handoff/pages">pages/ on GitHub</a>.</p></div>
+  <div class="grid">
+    <a class="card" href="https://www.allautonetwork.com/previews/aan_reseller_2026_design_v3/pages/dealer/all-vehicles-gen11.html"><img class="card__img" src="start/all-vehicles.jpg" alt="All Vehicles" loading="lazy" width="720" height="450"><span class="card__t"><span class="card__n">01</span>All Vehicles</span><span class="card__s">Dealer · list, the origin of the system</span></a>
+    <a class="card" href="https://www.allautonetwork.com/previews/aan_reseller_2026_design_v3/pages/dealer/single-vehicle-gen11.html"><img class="card__img" src="start/single-vehicle.jpg" alt="Single Vehicle" loading="lazy" width="720" height="450"><span class="card__t"><span class="card__n">02</span>Single Vehicle</span><span class="card__s">Dealer · edit form</span></a>
+    <a class="card" href="https://www.allautonetwork.com/previews/aan_reseller_2026_design_v3/pages/dealer/all-leads-gen11.html"><img class="card__img" src="start/all-leads.jpg" alt="All Leads" loading="lazy" width="720" height="450"><span class="card__t"><span class="card__n">03</span>All Leads</span><span class="card__s">Dealer · list</span></a>
+    <a class="card" href="https://www.allautonetwork.com/previews/aan_reseller_2026_design_v3/pages/dealer/single-lead-gen11.html"><img class="card__img" src="start/single-lead.jpg" alt="Single Lead" loading="lazy" width="720" height="450"><span class="card__t"><span class="card__n">04</span>Single Lead</span><span class="card__s">Dealer · record</span></a>
+    <a class="card" href="https://www.allautonetwork.com/previews/aan_reseller_2026_design_v3/pages/dealer/dealer-login-gen11.html"><img class="card__img" src="start/dealer-login.jpg" alt="Dealer Login" loading="lazy" width="720" height="450"><span class="card__t"><span class="card__n">05</span>Dealer Login</span><span class="card__s">Dealer · sign-in</span></a>
+    <a class="card" href="https://www.allautonetwork.com/previews/aan_reseller_2026_design_v3/pages/staff/my-work-queue-gen11.html"><img class="card__img" src="start/my-work-queue.jpg" alt="My Work Queue" loading="lazy" width="720" height="450"><span class="card__t"><span class="card__n">06</span>My Work Queue</span><span class="card__s">Staff · list with lanes</span></a>
+    <a class="card" href="https://www.allautonetwork.com/previews/aan_reseller_2026_design_v3/pages/staff/single-ticket-gen11.html"><img class="card__img" src="start/single-ticket.jpg" alt="Single Ticket" loading="lazy" width="720" height="450"><span class="card__t"><span class="card__n">07</span>Single Ticket</span><span class="card__s">Staff · record with feed</span></a>
+    <a class="card" href="https://www.allautonetwork.com/previews/aan_reseller_2026_design_v3/pages/staff/manage-dealers-gen11.html"><img class="card__img" src="start/manage-dealers.jpg" alt="Manage Dealers" loading="lazy" width="720" height="450"><span class="card__t"><span class="card__n">08</span>Manage Dealers</span><span class="card__s">Staff · list</span></a>
+    <a class="card" href="https://www.allautonetwork.com/previews/aan_reseller_2026_design_v3/pages/staff/dealer-edit-gen11.html"><img class="card__img" src="start/dealer-edit.jpg" alt="Dealer Edit" loading="lazy" width="720" height="450"><span class="card__t"><span class="card__n">09</span>Dealer Edit</span><span class="card__s">Staff · long edit form</span></a>
+    <a class="card" href="https://www.allautonetwork.com/previews/aan_reseller_2026_design_v3/pages/staff/accounting-view-all-gen11.html"><img class="card__img" src="start/accounting-view-all.jpg" alt="Accounting" loading="lazy" width="720" height="450"><span class="card__t"><span class="card__n">10</span>Accounting</span><span class="card__s">Staff · board and list</span></a>
+  </div>
+</section>
+
+<section class="ch" aria-labelledby="c4">
+  <div class="ch__h"><span class="ch__n">04</span><h2 id="c4">Sample pages built only from the system</h2>
+    <p class="ch__p">Seven screens of the new backend, redrawn from the design system alone, with data read from the backend. They show how the page types carry screens nobody drew.</p></div>
+  <div class="grid">
+    <a class="card" href="../pages/staff/feeds-incoming-gen11.html"><img class="card__img" src="start/feeds-incoming.jpg" alt="Feeds Incoming" loading="lazy" width="720" height="450"><span class="card__t">Feeds Incoming</span><span class="card__s">List</span></a>
+    <a class="card" href="../pages/staff/create-ticket-gen11.html"><img class="card__img" src="start/create-ticket.jpg" alt="Create A Ticket" loading="lazy" width="720" height="450"><span class="card__t">Create A Ticket</span><span class="card__s">Form</span></a>
+    <a class="card" href="../pages/staff/sales-report-gen11.html"><img class="card__img" src="start/sales-report.jpg" alt="Sales Report" loading="lazy" width="720" height="450"><span class="card__t">Sales Report</span><span class="card__s">Board and wide tables</span></a>
+    <a class="card" href="../pages/staff/system-settings-gen11.html"><img class="card__img" src="start/system-settings.jpg" alt="System Settings" loading="lazy" width="720" height="450"><span class="card__t">System Settings</span><span class="card__s">Long edit form</span></a>
+    <a class="card" href="../pages/staff/activity-report-gen11.html"><img class="card__img" src="start/activity-report.jpg" alt="Activity Report" loading="lazy" width="720" height="450"><span class="card__t">Activity Report</span><span class="card__s">Board, staff table and log</span></a>
+    <a class="card" href="../pages/staff/field-management-gen11.html"><img class="card__img" src="start/field-management.jpg" alt="Field Management" loading="lazy" width="720" height="450"><span class="card__t">Field Management</span><span class="card__s">Two modes over one registry</span></a>
+    <a class="card" href="../pages/staff/feed-groups-gen11.html"><img class="card__img" src="start/feed-groups.jpg" alt="Feed Groups" loading="lazy" width="720" height="450"><span class="card__t">Feed Groups</span><span class="card__s">List and the group editor (New Group)</span></a>
+  </div>
+  <p class="note"><b>Not references.</b><span>Use them as worked examples of the page types. Take values from the reference pages, not from these. Their data is a partial sample, with the real totals kept.</span></p>
+</section>
+
+<div class="two">
+  <section class="ch" aria-labelledby="c5">
+    <div class="ch__h"><span class="ch__n">05</span><h2 id="c5">Open for the team</h2></div>
+    <ul class="rows">
+      <li><a class="row" style="grid-template-columns:minmax(0,2fr) minmax(0,3fr)" href="https://github.com/Sigovs/AAN_RESSELLER_THEMEKIT_Alex/blob/handoff/GEN11_IVAYLO_QUESTIONS.md"><span class="row__n">Questions</span><span>Commented-out features, each with its original note and the open question</span></a></li>
+      <li><a class="row" style="grid-template-columns:minmax(0,2fr) minmax(0,3fr)" href="https://www.allautonetwork.com/previews/aan_reseller_2026_design_v3/index.html#questions"><span class="row__n">Questions on the dashboard</span><span>The same list, beside the pages</span></a></li>
+      <li><a class="row" style="grid-template-columns:minmax(0,2fr) minmax(0,3fr)" href="https://www.allautonetwork.com/previews/aan_reseller_2026_design_v3/index.html#new-features"><span class="row__n">New features</span><span>After go-live only. Gen 11 is a facelift of the current system</span></a></li>
+    </ul>
+  </section>
+  <section class="ch" aria-labelledby="c6">
+    <div class="ch__h"><span class="ch__n">06</span><h2 id="c6">Known limits</h2></div>
+    <ul class="lim">
+      <li>28 of the 73 selectors in <code>aan-gen11-components.css</code> are not yet matched against a live backend screen. The file's header lists them; check them against the Blade markup.</li>
+      <li>The dark layer has not been run on the backend yet. Its values are the Gen 11 pages' own, one to one.</li>
+      <li>No design decision is open. Four code-level notes for developers are at the end of DESIGN.md.</li>
+    </ul>
+  </section>
+</div>
+
+<footer class="foot">AAN Gen 11 · design facelift of the reseller control panel · this page lives in <a href="https://github.com/Sigovs/aan-gen11-v3-preview/tree/main/handoff">handoff/</a></footer>
+</div>
+</body>
+</html>
