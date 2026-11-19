@@ -365,7 +365,15 @@ Fabricated or unconnected data says so **before** the reader has to decide wheth
 ## 14 · Motion
 
 `--dur 160ms` · `--dur2 240ms` · `--ease cubic-bezier(.2,0,0,1)`. Transitions are for disclosure and
-state, not for arrival. No `setTimeout` choreography. Under `prefers-reduced-motion` the anchor lands
+state, not for arrival.
+
+**A list's Filters dock opens and closes softly** (Alex, 18 Nov 2026; All Vehicles, My Work Queue): it opens over
+`--dur3 320ms` with `--ease-soft cubic-bezier(.22,.61,.36,1)`, opacity 0→1 and 16px from the right; it closes over
+`--dur2` with `--ease-io cubic-bezier(.4,0,.2,1)`, sliding back out and fading **where it stands**
+(`.dock--closing` on the dock itself, not on `.app`, so the start of the close restyles nothing else), and lets go of
+its place only then; beside the list, the list takes the room back after the fade. Opening on load (a remembered
+open dock) has no arrival. Nothing heavy runs in the motion: a list re-measure happens only where the list's width
+changes (beside), and after the opening. Reduced motion: it appears and goes at once. No `setTimeout` choreography. Under `prefers-reduced-motion` the anchor lands
 at the same place instantly. **Nothing jumps on a state change:** reserve the space (a status chip
 sized to its longest state, a result line that is always there).
 

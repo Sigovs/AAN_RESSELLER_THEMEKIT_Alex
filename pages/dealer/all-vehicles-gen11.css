@@ -41,6 +41,9 @@
   --dur: 160ms;
   --dur2: 240ms;
   --ease: cubic-bezier(.2,0,0,1);
+  --dur3: 320ms;                            /* a side panel opening (Alex, Nov 18: "softer") */
+  --ease-soft: cubic-bezier(.22,.61,.36,1); /* a long, even deceleration: no snap at the start */
+  --ease-io: cubic-bezier(.4,0,.2,1);       /* a side panel closing: eases in and out */
   color-scheme: light;
   --ground: #e5e9ef;
   --ground-2: #e3e7ee;
@@ -4002,7 +4005,7 @@ body:has(#iebar:not([hidden])) { padding-bottom: 88px; }
    any more and is left as it was. Below 1280 the shared tablet overlay places it (_aan-components.css).
    ========================================================================== */
 .app.dock-beside { grid-template-columns: minmax(0, 1fr) var(--dock); column-gap: var(--gap); }
-.app.dock-beside .dock, .app.dock-over .dock { opacity: 1; transform: none; visibility: visible; transition: opacity var(--dur2) var(--ease), transform var(--dur2) var(--ease); }
+.app.dock-beside .dock, .app.dock-over .dock { opacity: 1; transform: none; visibility: visible; transition: opacity var(--dur3) var(--ease-soft), transform var(--dur3) var(--ease-soft); }
 @media (min-width: 1280px) {
   .app.dock-over > .field { grid-column: 1; grid-row: 4; }
   .app.dock-over > .dock {
@@ -4013,3 +4016,9 @@ body:has(#iebar:not([hidden])) { padding-bottom: 88px; }
     box-shadow: var(--el-3);
   }
 }
+
+/* the dock closes softly (Alex, Nov 18): it keeps its place while it slides 16px out and fades, and lets go of its
+   place (.dock-beside / .dock-over) only then: the page script removes them after --dur2. The class sits on the dock,
+   not on .app, so starting the close restyles the dock alone and its first frame is never late */
+.app .dock.dock--closing { opacity: 0; transform: translateX(16px); visibility: visible; transition: opacity var(--dur2) var(--ease-io), transform var(--dur2) var(--ease-io); pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .app .dock { transition: none; transform: none; } }

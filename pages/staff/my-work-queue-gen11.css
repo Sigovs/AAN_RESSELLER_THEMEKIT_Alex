@@ -152,6 +152,9 @@
   --dur: 160ms;
   --dur2: 240ms;
   --ease: cubic-bezier(.2,0,0,1);
+  --dur3: 320ms;                            /* a side panel opening (Alex, Nov 18: "softer") */
+  --ease-soft: cubic-bezier(.22,.61,.36,1); /* a long, even deceleration: no snap at the start */
+  --ease-io: cubic-bezier(.4,0,.2,1);       /* a side panel closing: eases in and out */
 
   /* ── focus (DESIGN.md §12) — owns `outline`, and nothing else owns it ── */
   --focus-w: 2px;
@@ -1359,6 +1362,16 @@ html.no-js .cmdtop, html.no-js .cmd, html.no-js .sub, html.no-js .hd, html.no-js
   overflow: hidden;
 }
 .app.dock-open .dock { display: flex; }
+/* soft in and out (Alex, Nov 18): it opens over --dur3 from 16px to the right; closing (.dock-closing) it slides back
+   out and fades where it stands, and the page script lets go of .dock-open after --dur2. No arrival on page load
+   (.dock-instant while the remembered state is restored). The closing class sits on the dock, not on .app: the
+   list here is large, and restyling it would eat the first frames of the close. */
+.dock { opacity: 0; transform: translateX(16px); transition: opacity var(--dur3) var(--ease-soft), transform var(--dur3) var(--ease-soft); }
+.app.dock-open .dock { opacity: 1; transform: none; }
+@starting-style { .app.dock-open .dock { opacity: 0; transform: translateX(16px); } }
+.app.dock-open .dock.dock--closing { opacity: 0; transform: translateX(16px); pointer-events: none; transition: opacity var(--dur2) var(--ease-io), transform var(--dur2) var(--ease-io); }
+.app.dock-instant .dock { transition: none; }
+@media (prefers-reduced-motion: reduce) { .app .dock { transition: none; transform: none; } }
 .dock__h { display: flex; align-items: center; gap: var(--s2); min-height: 58px; padding: 0 var(--s3) 0 var(--s5); box-shadow: inset 0 -1px 0 var(--line-2); }
 .dock__t { font-size: 15px; font-weight: 600; }
 .dock__c { flex: 1; min-width: 0; font-size: 14px; color: var(--ink-3); }
