@@ -54,11 +54,19 @@ The details are in DESIGN.md §42. You can see it live on the reference pages: t
 - **The dark layer has not been run on the backend yet.** Its values are the Gen 11 pages' own, one to one.
   The exceptions are `--color-surface-2` and `--color-surface-inset`, which Gen 11 has no role for. They are
   derived and marked so in the file.
-- **Open design decisions** are listed at the end of DESIGN.md: small differences between pages, such as
-  a label size, a menu check mark or a dock width. Until they are decided, use the **origin page's** value,
-  the earliest page in the order below. Field heights are decided: 36 in a form, 30 in a dense working form.
-- **The test pages are not references.** Feeds Incoming and Create A Ticket were built from the system as
-  experiments. They are not a model for form density.
+- **No design decision is open** (DS pass, 18 Nov 2026). The end of DESIGN.md lists only four code-level
+  items for developers, none of them visible on the page. When two pages still disagree, use the **origin
+  page's** value, the earliest page in the order below. Field heights: 36 in a form, 30 in a dense working form.
+- **The test pages are not references.** Seven backend screens were rebuilt from the system only, to show
+  it carries screens nobody drew: [Feeds Incoming](https://sigovs.github.io/aan-gen11-v3-preview/pages/staff/feeds-incoming-gen11.html),
+  [Create A Ticket](https://sigovs.github.io/aan-gen11-v3-preview/pages/staff/create-ticket-gen11.html),
+  [Sales Report](https://sigovs.github.io/aan-gen11-v3-preview/pages/staff/sales-report-gen11.html),
+  [System Settings](https://sigovs.github.io/aan-gen11-v3-preview/pages/staff/system-settings-gen11.html),
+  [Activity Report](https://sigovs.github.io/aan-gen11-v3-preview/pages/staff/activity-report-gen11.html),
+  [Field Management](https://sigovs.github.io/aan-gen11-v3-preview/pages/staff/field-management-gen11.html) and
+  [Feed Groups](https://sigovs.github.io/aan-gen11-v3-preview/pages/staff/feed-groups-gen11.html) (with its group editor).
+  Use them as worked examples of the page types, not as a source of values: where one disagrees with a
+  reference page, the reference page wins. Their data is a partial sample with the real totals kept.
 
 ## Rules an agent must keep
 
