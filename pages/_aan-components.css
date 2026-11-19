@@ -734,3 +734,7 @@ html[data-theme="dark"] .tbtn.tbtn--theme .t-moon { display: none; }
 /* Nov 18 — a column head that IS its sort button (Accounting's Balance, All Leads' Status) sat flush on its own
    divider: the button reset zeroes its padding. It takes the 12px its cells have, so head and values start level. */
 .app .hd > .s.c-bal, .app .hd > .s.c-status { padding-left: var(--s3); }
+
+/* the list's command search shows where the typing goes (Nov 18, the DS pass): its pill shadow plus a brand ring.
+   All Vehicles had no focus state on it at all; My Work Queue had the ring alone. */
+.app .cmd .search:focus-within { box-shadow: var(--sh-pill), inset 0 0 0 1px var(--brand); }

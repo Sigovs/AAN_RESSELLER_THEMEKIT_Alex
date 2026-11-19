@@ -594,7 +594,7 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
     32px                  /* status mark  */
     minmax(200px, 1fr)    /* company name */
     46px                  /* state        */
-    140px                 /* reseller     */
+    minmax(140px, .4fr)   /* reseller: 140px until Nov 18; at 14px it shares the slack with the name (DESIGN §10) */
     84px                  /* status       */
     80px                  /* date created */
     80px                  /* last modified*/
@@ -661,7 +661,7 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
   height: var(--row);
   padding: 0 var(--sheet-inset);
   box-shadow: inset 0 -1px 0 var(--line-2);
-  font-size: 13px;
+  font-size: 14px;   /* 13px until Nov 18: the cell role is 14px on every list (All Vehicles) */
   transition: background var(--dur) var(--ease);
 }
 .row:hover { background: var(--well); }
@@ -1107,7 +1107,9 @@ html.no-js .field, html.no-js .tally { display: none; }
 /* dates and money are text with even figures, not mono (only ids, codes and phones are mono) */
 .app .row .c-cre b, .app .row .c-cre i, .app .row .c-mod b, .app .row .c-mod i { font-family: var(--font); font-variant-numeric: tabular-nums; }
 /* tags in sentence case, 12 / 600, the flag tag of All Vehicles - and never clipped */
-.app .ft, .app .nt, .app .vt, .app .c-pkg .bdg { display: inline-flex; align-items: center; height: 22px; padding: 0 7px; border-radius: 6px; font: 600 12px var(--font); letter-spacing: 0; text-transform: none; line-height: 1; }
+.app .ft, .app .nt, .app .vt, .app .c-pkg .bdg { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; border-radius: var(--r-pill); font: 600 12px var(--font); letter-spacing: 0; text-transform: none; line-height: 1; box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 20%, transparent); }   /* All Vehicles' flag tag geometry since Nov 18 (was 22px / 6px radius, no ring) */
+/* a package is the dealer's state, so the status chip (_aan-components.css keeps its 7px radius): 13px like it */
+.app .c-pkg .bdg { font-size: 13px; }
 .app .c-pkg { overflow: visible; display: flex; align-items: center; }
 /* status as a chip, as on All Leads */
 .app .row .c-st { display: inline-flex; align-items: center; align-self: center; width: max-content; height: 24px; padding: 0 8px; border-radius: 7px; background: var(--ok-soft, #e5f5ec); box-shadow: inset 0 0 0 1px var(--ok-line, #bfe3cd); color: var(--ok); font-size: 13px; font-weight: 600; }

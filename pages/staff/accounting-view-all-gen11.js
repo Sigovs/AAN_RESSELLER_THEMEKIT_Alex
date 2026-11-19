@@ -230,7 +230,7 @@
       + ' aria-expanded="' + open + '" aria-label="' + esc(d.name) + ' — open ledger">'
       + '<span class="c c-stat">'
         + '<span class="bstat bstat--' + esc(d.tone) + '" role="img" title="' + esc(d.status) + '" aria-label="' + esc(d.status) + '">' + ic(STATI[d.tone] || 'i-dot') + '</span>'
-        + '<input class="bck" type="checkbox"' + (d.bactive ? ' checked' : '') + ' data-bill="' + d.id + '"'
+        + '<input class="bck ck" type="checkbox"' + (d.bactive ? ' checked' : '') + ' data-bill="' + d.id + '"'
         + ' title="Billing active for ' + esc(d.name) + '" aria-label="Billing active for ' + esc(d.name) + '">'
       + '</span>'
       + '<span class="c c-name"><a href="#" data-id="' + d.id + '" class="c--1">' + esc(d.name) + '</a><span class="did">#' + d.id + '</span></span>'

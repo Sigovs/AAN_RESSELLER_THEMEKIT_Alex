@@ -740,7 +740,16 @@ textarea.fld { height: auto; min-height: 64px; padding: var(--s2) var(--s3); res
 .fld--bad, .fld--bad:focus { border-color: var(--danger); background: var(--danger-soft); }
 
 .flag { display: inline-flex; align-items: center; gap: var(--s2); min-height: 40px; font-size: 14px; color: var(--ink); cursor: pointer; }
-.ck { width: 16px; height: 16px; margin: 0; flex: none; accent-color: var(--brand); }
+.ck {   /* All Vehicles' checkbox (§25), Nov 18 the DS pass: the browser's box until then */
+  appearance: none; width: 16px; height: 16px; margin: 0;
+  border: 1.5px solid var(--line-3); border-radius: 5px; background: var(--sheet);
+  display: grid; place-items: center; cursor: pointer; flex: 0 0 auto;
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.ck:hover { border-color: var(--ink-4); }
+.ck:checked { background: var(--brand-btn, var(--brand)); border-color: var(--brand-btn, var(--brand)); }
+.ck:checked::after { content: ""; width: 8px; height: 5px; border: 2px solid #fff; border-top: 0; border-right: 0; transform: translateY(-1px) rotate(-45deg); }
+.ck:disabled { opacity: .5; cursor: default; }
 .money { display: flex; align-items: center; gap: var(--s2); }
 .money .flag { min-height: 0; }
 .money .fld { flex: 1; min-width: 0; }
@@ -1031,7 +1040,7 @@ textarea.fld { height: auto; min-height: 64px; padding: var(--s2) var(--s3); res
 .cc__m { margin-top: 5px; font-size: 12px; color: var(--ink-3); overflow-wrap: anywhere; }
 .cc__ctl { display: flex; align-items: flex-end; gap: var(--s2); margin-top: var(--s3); }
 .tm { display: flex; flex-direction: column; gap: var(--s1); min-width: 0; }
-.tm__k { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.tm__k { font-size: 13px; font-weight: 600; color: var(--ink-2); white-space: nowrap; }   /* a field label (§18), sentence case; 11px caps until Nov 18 */
 .tm .fld { height: 30px; width: 76px; padding: 0 var(--s2); font-size: 13px; text-align: right; }
 .tm--narrow .fld { width: 62px; }
 .tm__echo { font-family: var(--mono); font-size: 11px; color: var(--ink-4); font-variant-numeric: tabular-nums; min-height: 15px; }
@@ -1047,8 +1056,8 @@ textarea.fld { height: auto; min-height: 64px; padding: var(--s2) var(--s3); res
 .cc__disc .i { width: 12px; height: 12px; transition: transform var(--dur2) var(--ease); }
 .cc__disc[aria-expanded="true"] .i { transform: rotate(180deg); }
 .cc__dates { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2); margin-top: var(--s3); padding-top: var(--s3); box-shadow: inset 0 1px 0 var(--line-2); }
-.cc__dates label { display: flex; flex-direction: column; gap: var(--s1); min-width: 0; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
-.cc__dates .fld { height: 30px; font-size: 13px; }
+.cc__dates label { display: flex; flex-direction: column; gap: var(--s1); min-width: 0; font-size: 13px; font-weight: 600; color: var(--ink-2); white-space: nowrap; }   /* field labels (§18), sentence case; 11px caps until Nov 18 */
+.cc__dates .fld { height: 30px; font-size: 13.5px; }   /* the dense control size (Single Lead), 13px until Nov 18 */
 
 .crewfoot {
   display: flex; align-items: center; gap: var(--s4); flex-wrap: wrap;
@@ -1380,8 +1389,8 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 .wo .grp__s { flex-basis: 100%; }
 .form--dense .grid { gap: var(--s3); }
 .form--dense .f { gap: 3px; }
-.form--dense .f > span { font-size: 12.5px; white-space: nowrap; }
-.form--dense .fld, .form--dense .sel { height: 30px; border-radius: 8px; font-size: 13.5px; padding-inline: 10px; }
+.form--dense .f > span { font-size: 13px; white-space: nowrap; }   /* 12.5px until Nov 18: the field label role is 13px everywhere (DS pass) */
+.form--dense .fld, .form--dense .sel { height: 30px; border-radius: 7px; font-size: 13.5px; padding-inline: 10px; }   /* radius 8 until Nov 18: Single Lead's dense controls are 7 */
 .form--dense .flag { min-height: 30px; font-size: 13.5px; }
 .form--dense .emails__r .rowx { width: 24px; height: 24px; }
 .wo .form__f { margin-top: var(--s4); padding-top: var(--s3); }
@@ -1403,6 +1412,19 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
   .app.dock-open .wo .wo__c--class .grid--2 > .f:nth-child(5) { grid-column: span 1; }
   .app.dock-open .wo .wo__cols > .wo__c--class + .wo__c { padding-left: 0; box-shadow: none; }
   .app.dock-open .wo .wo__cols > .wo__c--class + .wo__c + .wo__c { padding-left: var(--s5); }
+}
+/* the same arrangement below 900px, dock or not (Nov 18): three columns left Schedule's date pair 92px each at 768,
+   too narrow for "Completion Date" and for a date */
+@media (max-width: 899.98px) {
+  .wo__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wo .wo__cols > .wo__c--class { grid-column: 1 / -1; padding: var(--s3) 0 var(--s4); box-shadow: inset 0 -1px 0 var(--line-2); }
+  .wo .wo__c--class .grid--2 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .wo .wo__c--class .grid--2 > .f { grid-column: span 2; }
+  .wo .wo__c--class .grid--2 > .f--wide { grid-column: span 3; }
+  .wo .wo__c--class .grid--2 > .f:nth-child(3) { grid-column: span 3; }
+  .wo .wo__c--class .grid--2 > .f:nth-child(5) { grid-column: span 1; }
+  .wo .wo__cols > .wo__c--class + .wo__c { padding-left: 0; box-shadow: none; }
+  .wo .wo__cols > .wo__c--class + .wo__c + .wo__c { padding-left: var(--s5); }
 }
 
 /* ══ Board (DESIGN.md §19, Alex 10-29: "header cards!") — the same row of dark
@@ -1443,7 +1465,7 @@ html.no-js .bento, html.no-js .field, html.no-js .dock, html.no-js .head .chips,
 .ctag--link { transition: background var(--dur) var(--ease); }
 .ctag--link:hover { background: var(--focal-2); text-decoration: none; }
 .ctag--link > .i { width: 12px; height: 12px; }
-.ctag__k { flex: none; font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--focal-ink-3); }
+.ctag__k { flex: none; font-weight: 500; color: var(--focal-ink-3); }   /* no caps on a tag (§18); 11px caps until Nov 18 */
 
 /* ══ DS alignment (Alex 10-29: "must be inside our design system") — the roles
    of DESIGN.md §18, as on All Vehicles, All Leads and Single Lead. Last in the

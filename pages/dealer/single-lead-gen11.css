@@ -364,13 +364,15 @@
    band to arrive ~330px later, and the bento ghosted through the bar for the
    whole of that travel. `#app.is-stuck .top` is (1,1,1) against the base's
    (0,2,0) so the engaged rule wins by weight, not by file order. */
+/* Nov 18 (Alex, the DS pass): the platform bar and the stuck band are the family's .76 glass here too, as on every
+   other page (Single Ticket and My Work Queue carry dense text under the same glass). Was:
 .top,
 #app.is-stuck .top,
 .cmd.cmd--sec.cmd--stuck {
   background: var(--sheet);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-}
+} */
 
 .cmd.cmd--sec.cmd--stuck {
   border-radius: 0;
@@ -997,7 +999,7 @@
 .form--dense .grid { gap: var(--s3) var(--s4); }
 .form--dense .grid + .grid { margin-top: var(--s3); }
 .form--dense .f { gap: 3px; }
-.form--dense .f > span { font-size: 12.5px; white-space: nowrap; }
+.form--dense .f > span { font-size: 13px; white-space: nowrap; }   /* 12.5px until Nov 18: the field label role is 13px everywhere (DS pass) */
 .form--dense .fld, .form--dense .sel { height: 30px; border-radius: var(--r-inner); font-size: 13.5px; padding-inline: 10px; }
 .form--dense .f--big .fld { font-size: 14px; }
 .form--dense .f textarea.fld { min-height: 0; height: auto; padding: 6px 10px; }
