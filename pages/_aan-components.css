@@ -771,3 +771,10 @@ html[data-theme="dark"] .tbtn.tbtn--theme .t-moon { display: none; }
 /* the list's command search shows where the typing goes (Nov 18, the DS pass): its pill shadow plus a brand ring.
    All Vehicles had no focus state on it at all; My Work Queue had the ring alone. */
 .app .cmd .search:focus-within { box-shadow: var(--sh-pill), inset 0 0 0 1px var(--brand); }
+
+/* the column head keeps the rows' inset (Nov 18, found by the test pages): from 1280 to 1399 the staff lists step their
+   rows to an 8px inset (--sheet-inset) while the shared head kept 16, so on Manage Dealers, Accounting and Feeds
+   Incoming every key stood 8px right of its column. Every page publishes --sheet-inset as its rows' inset. */
+@media (max-width: 1399.98px) {   /* tablet too: the same slip at 1024 */
+  .app .rows.ui-table > .hd.ui-thead { padding-left: var(--sheet-inset); padding-right: var(--sheet-inset); }
+}
