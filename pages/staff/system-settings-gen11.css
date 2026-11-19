@@ -1,0 +1,237 @@
+/* AAN · Staff UI · System Settings — GENERATION 11
+   Edit form (DESIGN.md §37.4) started from Dealer Edit: its stylesheet is loaded as the template, so the
+   platform bar, head card, rail, zones, fields (.fl .fld .fg .fw), the seal, the section group label
+   (.fsec) and the save bar are Dealer Edit's own. This sheet holds the page's layout, plus — marked
+   PAGE-LOCAL — the few shared components the template does not carry, rebuilt from their origin
+   page's measured values with the system's tokens (status chip, flag tag, people chip, data table,
+   disclosure bar, menu label). Nothing here introduces a colour, radius, shadow or type size. */
+
+/* two DS tokens Dealer Edit's sheet does not declare for light; values are All Vehicles' own
+   (_aan-family.css declares both for dark, at a higher specificity, so dark keeps its own) */
+:root {
+  --slate-soft: #eceef2;
+  --brand-soft-2: #cddbfb;
+}
+
+/* ══ LAYOUT ══════════════════════════════════════════════════════════════════
+   rail | zones. No side column: every block on this screen is a section of the one settings record,
+   so the zone sheet takes the width the side panels would have had (tables and chip rows use it). */
+.body.ss-body { grid-template-columns: 184px minmax(0, 1fr); }
+
+/* zone header: title, its state, and the store key it reads — the key quiet at the far end */
+.zone__hd { align-items: center; }
+.ss-hdkey { margin-left: auto; }
+
+/* a group inside a zone: a header row (title / label, its marks, its count at the right), then content */
+.ss-grp__h { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); min-width: 0; margin-bottom: var(--s3); }
+.ss-grp__h > .fl { display: inline; margin: 0; }
+.ss-grp__n { margin-left: auto; }
+.ss-grp--sep { margin-top: var(--s5); padding-top: var(--s4); box-shadow: inset 0 1px 0 var(--line-2); }
+
+/* group title (DESIGN.md §18: 14 / 600 ink) and the quiet context beside it (13px ink-3) */
+.ss-gt { font-size: 14px; font-weight: 600; color: var(--ink); }
+.ss-meta, .ss-grp__n:not(.ss-key) { font-size: 13px; color: var(--ink-3); }
+.ss-lead { margin: 0 0 var(--s2); }
+.ss-help { margin-top: var(--s1); }
+.ss-help b, .ss-words b { color: var(--ink-2); font-weight: 600; font-variant-numeric: tabular-nums; }
+.ss-on { color: var(--ink-2); }
+
+/* codes — store keys, module names, model ids: Plex Mono, small, quiet (DESIGN.md §18 mono id) */
+.ss-key { font: 400 12.5px/1.3 var(--mono); color: var(--ink-4); overflow-wrap: anywhere; }
+/* in a table the key sits on zebra and hover tints, where ink-4 drops under 4.5:1 — ink-3 there (5.7:1 on the wash);
+   it breaks only at its own spaces (the → of a two-part key), the table scrolls in place before a key is cut */
+.lg .ss-key { color: var(--ink-3); overflow-wrap: normal; }
+.ss-mono, .fld.ss-mono { font-family: var(--mono); font-size: 13px; }
+.tag.ss-mono { font-family: var(--mono); font-size: 12px; }
+
+/* the DevBar's own shortcut, as the backend prints it */
+.ss-kbd { display: inline-flex; gap: 2px; }
+.ss-kbd kbd, .rail__hint kbd { display: inline-flex; align-items: center; height: 20px; border-radius: var(--r-micro); background: var(--sheet); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink-3); font: 600 11px var(--mono); }
+
+/* switch + its explanation, the help aligned under the switch's label (track 34 + gap 8) */
+.ss-sw .ui-switch__l { white-space: normal; }
+.ss-swhelp { margin: var(--s1) 0 0 42px; }
+.ss-swrow { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s4); margin-top: var(--s3); }
+
+/* AI assistant: Credential beside Tuning, each a dense group; Prompt across both */
+.ss-cols { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 0 var(--s6); align-items: start; }
+.ss-fg { gap: var(--s4) var(--s4); }
+.ss-cols > .ss-grp:last-child .ss-fg { grid-template-columns: minmax(0, 1fr); }
+.seal .seal__dots { flex: 0 0 auto; min-width: 0; }
+.ss-set { color: var(--ink-3); font-size: 13px; }
+.ss-nowrap { white-space: nowrap; overflow-wrap: normal; }
+.ss-prompt { min-height: 156px; font-size: 14px; }
+.ss-render { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s3); margin-top: var(--s4); }
+.ss-render > .fl { display: inline; margin: 0; white-space: nowrap; }
+.ss-find--dealer { flex: 0 1 360px; }
+
+/* the commit row of the AI section: tests and restore at the left, the result beside them, the
+   destructive action at the far end (DESIGN.md §11, §39) */
+.ss-acts { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); margin-top: var(--s5); padding-top: var(--s4); box-shadow: inset 0 1px 0 var(--line-2); }
+.ss-acts .ss-danger { margin-left: auto; }
+.btn.ss-danger { color: var(--danger); }
+.btn.ss-danger:hover { background: var(--danger-soft); color: var(--danger); }
+
+/* a result stands beside the action that produced it, 16px off it; empty, it holds no width, and the
+   row is laid out so its growth moves nothing (it grows into free space) */
+.ss-res { font-size: 13px; color: var(--ink-3); white-space: nowrap; }
+.ss-res:not(:empty) { margin-left: var(--s2); }
+.savebar .ss-res:not(:empty) { margin: 0 var(--s2) 0 0; }
+.savebar__note.savebar__dirty { margin-right: auto; }
+.savebar__dirty b { font-weight: 600; }
+
+/* a disabled action — DESIGN.md §38.1: no shadow, the label at 50% */
+.savebar .btn:disabled { opacity: .5; box-shadow: none; cursor: default; }
+.savebar .btn--quiet:disabled:hover { background: none; }
+
+/* "Last changed by …" — the audit line under a section's controls */
+.ss-audit { margin-top: var(--s3); font-size: 13px; color: var(--ink-3); }
+
+/* search fields with their glyph inside (Developer tools' add, the dealership finder) */
+.ss-add { position: relative; min-width: 0; }
+#dev-add { max-width: 440px; margin-top: var(--s4); }
+.ss-find { position: relative; display: block; min-width: 0; }
+.ss-find > .i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: var(--ink-4); pointer-events: none; }
+.ss-find > .fld { padding-left: 34px; }
+
+/* the pickers: in-page popovers (DESIGN.md §28) under their field, never over it */
+.pop.ss-pick { top: calc(100% + var(--s1)); width: 100%; min-width: 300px; max-height: 340px; }
+.ss-pick__it { justify-content: space-between; gap: var(--s3); }
+.ss-pick--model .ss-pick__it { flex-direction: column; align-items: flex-start; gap: 2px; }
+.ss-pick__d { font-size: 13px; color: var(--ink-3); }
+.ss-pick__more { margin: 0; padding: var(--s1) 10px var(--s2); font-size: 13px; color: var(--ink-3); }
+.mn__it--on .ss-pick__d { color: var(--ink-3); font-weight: 400; }
+
+/* Crew roster: three labelled chip rows */
+.ss-crew__l { display: flex; align-items: baseline; gap: var(--s2); margin: var(--s4) 0 var(--s2); }
+.ss-crew__l:first-child { margin-top: 0; }
+.ss-crew__l > .fl { display: inline; margin: 0; }
+.ss-chips { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); min-width: 0; }
+.ss-more { font-size: 13px; color: var(--ink-3); }
+
+/* Switch panorama: three groups under form group labels (.fsec, Dealer Edit) */
+.zone > .fsec { margin: var(--s5) 0 var(--s1); padding-top: var(--s4); }
+.ss-sub { margin-top: var(--s4); }
+.ss-sub__h { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s2); margin-bottom: var(--s1); }
+.ss-state { display: inline-flex; align-items: center; gap: var(--s2); white-space: nowrap; }
+.ss-det { color: var(--ink-3); }
+.ss-fig { font-weight: 600; font-variant-numeric: tabular-nums; }
+.ss-lists { margin-top: var(--s4); }
+
+/* tables bleed 12px into the zone inset, so their text lines up with the zone's left edge
+   and a zebra stripe still keeps 12px off the sheet; narrower than the table, they scroll in place */
+.ss-tw { margin: 0 calc(-1 * var(--s3)); overflow-x: auto; }
+.ss-seams td:first-child, .ss-ledger td:first-child { white-space: nowrap; }
+.ss-seams { min-width: 640px; }
+.ss-seams col, .ss-seams th:first-child { width: 30%; }
+.ss-seams th:nth-child(2) { width: 30%; }
+.ss-mods { min-width: 640px; }
+.ss-mods th:nth-child(-n+2) { width: 30%; }
+.ss-ledger { min-width: 860px; }
+.ss-v .ss-clip { display: block; max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ss-when { color: var(--ink-3); font-size: 13px; }
+.ss-secret { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-3); }
+.ss-secret .i { width: 12px; height: 12px; }
+
+/* ══ PAGE-LOCAL COMPONENTS — the system defines these on other template pages only ══════════════ */
+
+/* status chip — All Vehicles .stat (DESIGN.md §27): 24px · 7px · 13 / 600 · tone on soft with a tone ring */
+.app .stat { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; border-radius: 7px; font-size: 13px; font-weight: 600; line-height: 1; white-space: nowrap; }
+.stat--ok    { color: var(--ok);        background: var(--ok-soft);    box-shadow: inset 0 0 0 1px var(--ok-line); }
+.stat--new   { color: var(--brand-ink); background: var(--brand-soft); box-shadow: inset 0 0 0 1px var(--brand-soft-2); }
+.stat--quiet { color: var(--slate);     background: var(--slate-soft); box-shadow: inset 0 0 0 1px var(--line-3); }
+
+/* flag tag — All Vehicles .tag--flag: 24px pill · 12 / 600 · ink-2 on wash · line-2 ring · glyph first */
+.app .tag.tag--flag {
+  display: inline-flex; align-items: center; gap: 4px; flex: none;
+  height: 24px; padding: 0 8px; border-radius: var(--r-pill);
+  color: var(--ink-2); background: var(--wash); box-shadow: inset 0 0 0 1px var(--line-2);
+  font-size: 12px; font-weight: 600; letter-spacing: 0; text-transform: none; line-height: 1; white-space: nowrap;
+}
+.tag--flag .i { width: 11px; height: 11px; flex: none; color: var(--ink-3); }
+
+/* people chip — Single Ticket's follower chip (.fchip: 26px pill · well · 12 / 600 · 18px ×),
+   with the staff number in mono. Listed = filled; unlisted = outline; fixed = outline, no button */
+.pchip {
+  display: inline-flex; align-items: center; gap: 6px; flex: none;
+  height: 26px; padding: 0 var(--s1) 0 var(--s2);
+  border-radius: var(--r-pill);
+  background: var(--well); color: var(--ink-2);
+  font-size: 12px; font-weight: 600; white-space: nowrap;
+}
+.pchip__id { font: 400 12px var(--mono); color: var(--ink-3); }
+.pchip__note { font-weight: 400; color: var(--ink-3); }
+.pchip__x { display: grid; place-items: center; width: 18px; height: 18px; border-radius: var(--r-pill); color: var(--ink-3); }
+.pchip__x:hover { background: var(--danger-soft); color: var(--danger); }
+.pchip__x .i { width: 11px; height: 11px; stroke-width: 2.2; }
+.pchip__x--add:hover { background: var(--brand-soft); color: var(--brand-ink); }
+.pchip--off { background: none; box-shadow: inset 0 0 0 1px var(--line); color: var(--ink-3); }
+.pchip--fixed { padding: 0 var(--s2); background: none; box-shadow: inset 0 0 0 1px var(--line-3); }
+
+/* data table — DESIGN.md §10: head key 11 / 700 caps ink-3 (Dealer Edit's .app th), cell 14 / 400,
+   the list row divider, zebra from _aan-components.css on a long uniform block (.zebra) */
+.lg { width: 100%; border-collapse: collapse; }
+.lg th { height: 36px; padding: 0 var(--s3); text-align: left; vertical-align: middle; color: var(--ink-3); white-space: nowrap; box-shadow: inset 0 -1px 0 var(--line); }
+.lg td { height: 40px; padding: var(--s1) var(--s3); text-align: left; vertical-align: middle; font-size: 14px; color: var(--ink); box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--line-2) 65%, var(--sheet)); }
+.lg td.ss-when { font-size: 13px; color: var(--ink-3); }
+.lg td.ss-name { font-weight: 600; }
+.lg tbody tr:hover > td { background: var(--wash); }
+
+/* not-set value — DESIGN.md §30: ink-4, in the value's own font */
+.none { color: var(--ink-4); }
+
+/* menu group label and separator — DESIGN.md §28 */
+.pop .mn__lab { display: block; padding: 6px 10px; }
+.pop .mn__sep { height: 1px; margin: var(--s1); background: var(--line-2); }
+.pop .pop__empty { margin: 0; padding: var(--s2) 10px; font-size: 14px; color: var(--ink-3); }
+
+/* disclosure — Single Lead's bar with a framed chevron (.vacc, DESIGN.md §20), on <details> */
+.ss-disc { margin-top: var(--s4); border-radius: var(--r-inner); }
+.ss-disc__h {
+  display: flex; align-items: center; gap: var(--s3); list-style: none; cursor: pointer;
+  min-height: 44px; padding: 0 6px 0 14px; border-radius: var(--r-inner);
+  background: var(--wash); box-shadow: inset 0 0 0 1px var(--line-2);
+  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.ss-disc__h::-webkit-details-marker { display: none; }
+.ss-disc__h:hover { background: var(--well); box-shadow: inset 0 0 0 1px var(--line-3); }
+.ss-disc__t { flex: 1 1 auto; min-width: 0; font-size: 14px; font-weight: 600; color: var(--ink-2); }
+.ss-disc__h > .i {
+  width: 28px; height: 28px; padding: 7px; border-radius: 8px; flex: none;
+  background: var(--sheet); box-shadow: inset 0 0 0 1px var(--line-3); color: var(--ink-2);
+  transition: transform var(--dur2) var(--ease), background var(--dur) var(--ease);
+}
+.ss-disc[open] { box-shadow: inset 0 0 0 1px var(--line-3); }
+.ss-disc[open] > .ss-disc__h { background: var(--sheet); border-radius: var(--r-inner) var(--r-inner) 0 0; box-shadow: inset 0 -1px 0 var(--line-2); }
+.ss-disc[open] > .ss-disc__h > .i { background: var(--brand); color: #fff; box-shadow: none; transform: rotate(180deg); }
+.ss-disc__in { padding: var(--s3) 14px var(--s4); }
+
+/* the variables: a token button per variable — the token (a code, mono, brand-ink: it inserts), its
+   label, its hint; grouped as the vehicle page is grouped, the group name a key (caps) */
+.tokg { margin-top: var(--s3); }
+.tokg__k { padding: 0 0 var(--s1); }
+.tokg__g { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: var(--s1) var(--s2); }
+.tok {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px var(--s2); min-width: 0;
+  padding: 6px 10px; border-radius: var(--r-inner); text-align: left;
+  background: var(--sheet); box-shadow: inset 0 0 0 1px var(--line-2);
+  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.tok:hover { background: var(--wash); box-shadow: inset 0 0 0 1px var(--line-3); }
+.tok__k { font: 600 12.5px var(--mono); color: var(--brand-ink); }
+.tok__l { font-size: 13px; color: var(--ink-2); }
+.tok__h { font-size: 13px; color: var(--ink-3); }
+.tok--more { align-items: center; background: none; box-shadow: none; color: var(--ink-3); font-size: 13px; cursor: default; }
+.tok--more:hover { background: none; box-shadow: none; }
+
+/* ══ RESPONSIVE — desktop 1280+ unchanged; tablet per DESIGN.md §41 ═══════════════════════════════ */
+@media (max-width: 1179.98px) {
+  .ss-cols { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 1023.98px) {
+  .ss-fg { grid-template-columns: minmax(0, 1fr); }
+  .ss-hdkey { flex: 1 0 100%; margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ss-disc__h, .ss-disc__h > .i, .tok { transition: none; }
+}

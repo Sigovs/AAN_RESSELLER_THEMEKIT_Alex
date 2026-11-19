@@ -1,0 +1,244 @@
+/* AAN · Staff UI · Sales Report — GENERATION 11
+   A page Gen 11 never drew, built from the system only. What it takes, and from where:
+     · page shell, bar, head, field, foot, empty      _aan-staff-list.css (Feeds Incoming's skeleton)
+     · view track (the jump tabs), caps keys, zebra    _aan-components.css
+     · board of tiles                                  Accounting's deck (copied below: it lives in
+                                                       accounting-view-all-gen11.css, not in a shared file)
+     · segmented control (the year)                    Dealer Edit's .seg / .seg__o (copied below, same reason)
+     · chapter head with its number                    .secs / .sec__h (_aan-components.css)
+   Every value is a token or a value those pages already measure; nothing new is introduced. Page rules
+   here are layout plus the three copied components, each marked COPIED with its origin. */
+
+.app {
+  --sr-band: 48px;                                     /* the jump band: the shared sub-toolbar height */
+  --sr-hd-top: calc(var(--stick-bar) + var(--sr-band)); /* where a table head sticks: under bar + band */
+  --sr-m: 4.7%;                                        /* one month column; twelve of them = 56.4% of the table */
+}
+
+/* ── page head: the year filter and Print are the page's actions ─────────────────────────────────── */
+.sr-year { gap: var(--s2); }
+.sr-year > .flt__k { margin-right: 0; }
+.sr-more { flex: none; width: auto; }
+.sr-more > select { width: 148px; }   /* sized to its label; the note option is read in the open list */
+
+/* COPIED · Dealer Edit (.seg, .seg__o): one exclusive choice on a sunken track, white thumb (DESIGN.md §6, §25) */
+.sr-year .seg {
+  display: inline-flex; flex-wrap: nowrap; gap: 3px;
+  height: auto; padding: 4px; border-radius: var(--r-pill);
+  background: var(--well);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.seg__o { position: relative; display: inline-flex; }
+.seg__o input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.seg__o span {
+  display: inline-flex; align-items: center;
+  height: 30px; padding: 0 var(--s3);
+  border-radius: var(--r-pill);
+  color: var(--ink-2); font-size: 13px; white-space: nowrap; font-variant-numeric: tabular-nums;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.seg__o:hover span { background: rgba(255, 255, 255, .66); color: var(--ink); }
+.seg__o input:checked + span { background: var(--sheet); color: var(--brand-ink); font-weight: 600; box-shadow: var(--sh-pill); }
+.seg__o input:focus-visible + span { outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); }
+html[data-theme="dark"] .seg__o:hover span { background: var(--wash); }
+/* the chosen label is 600, its neighbours 400: the thumb is sized to its 600 width in every state so nothing moves */
+.seg__o span::after { content: attr(data-l); height: 0; overflow: hidden; visibility: hidden; font-weight: 600; display: block; }
+.seg__o span { flex-direction: column; justify-content: center; }
+
+/* ── COPIED · Accounting's board of tiles (DESIGN.md §19): one dark card, four tiles ────────────────── */
+.sr-deck {
+  grid-row: 3;
+  display: block;
+  padding: 20px 24px 24px;
+  margin-bottom: var(--s4);
+  border-radius: var(--r-card);
+  background: var(--focal);
+  box-shadow: var(--sh-card, var(--el-2));
+  color: var(--focal-ink);
+}
+/* centred on a fixed 24px line, so the status slot can fill and empty without moving the tiles */
+.sr-deck .deck__h { display: flex; align-items: center; gap: var(--s3); height: var(--s5); margin-bottom: var(--s4); }
+.sr-deck .deck__t { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -.01em; color: var(--focal-ink); }
+.sr-deck .deck__m {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  margin-left: auto; min-height: 20px;
+  font-size: 13px; color: var(--focal-ink-3, #97a3b7); white-space: nowrap;
+}
+.sr-deck .deck__g { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s3); }
+.sr-deck .tile {
+  display: flex; flex-direction: column; min-width: 0;
+  padding: var(--s4); border-radius: 12px;
+  background: rgba(255, 255, 255, .055); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07);
+  color: var(--focal-ink);
+}
+.sr-deck .tile__k {
+  font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--focal-ink-3, #97a3b7);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.sr-deck .tile__v {
+  display: flex; align-items: center;
+  height: calc(24px * 1.1); margin-top: var(--s2);   /* the figure's own line box, held by "Loading…" and "—" too */
+  font-size: 24px; font-weight: 700; letter-spacing: -.015em; line-height: 1.1; font-stretch: 88%;
+  font-variant-numeric: tabular-nums; color: var(--focal-ink);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.sr-deck .tile__v > span { overflow: hidden; text-overflow: ellipsis; }
+.sr-deck .tile__s {
+  margin-top: var(--s1); font-size: 14px; color: var(--focal-ink-3, #97a3b7);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+/* a value not there: the board's quiet ink, in the value's own place (DESIGN.md §30, §38 loading) */
+.sr-deck .tile__v--none { color: var(--focal-ink-3, #97a3b7); }
+.sr-deck .tile__v--wait { font-size: 13px; font-weight: 400; letter-spacing: 0; font-stretch: 100%; color: var(--focal-ink-3, #97a3b7); }
+
+/* the backend's count sweep and refresh, shown only as a review state (#loading, #interrupted) */
+.sr-spin { width: 14px; height: 14px; flex: none; animation: sr-spin 1s linear infinite; }
+@keyframes sr-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .sr-spin { animation: none; } }
+.sr-deck .sr-resume {
+  padding: 0; border: 0; background: none; cursor: pointer;
+  font: inherit; font-weight: 600; color: var(--focal-ink);
+}
+.sr-deck .sr-resume:hover { text-decoration: underline; text-underline-offset: 2px; }
+.sr-deck :focus-visible { outline-color: var(--focus-color-on-dark); }
+
+@media (max-width: 999.98px) { .sr-deck .deck__g { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ── field: the jump band sticks under the bar; each table's head sticks under the band ─────────── */
+.sr-field { grid-row: 4; }
+.sr-band {
+  position: sticky; top: var(--stick-bar); z-index: var(--z-sticky-cmd);
+  height: var(--sr-band); min-height: 0;
+  padding-top: 0; padding-bottom: 0;
+  border-radius: var(--r-card) var(--r-card) 0 0;
+}
+.sr-band > .flt__k { margin-right: var(--s1); }
+
+/* a jump tab with nothing to jump to (an unread year): it stays where it is, quiet, and does not act */
+.sr-band .ui-views > [aria-disabled="true"] { cursor: default; color: var(--ink-3); }
+.sr-band .ui-views > [aria-disabled="true"]:hover { background: none; color: var(--ink-3); }
+
+/* ── chapters: one per table, numbered by the shared chapter head ──────────────────────────────────── */
+.sr-sec { counter-increment: chapter; scroll-margin-top: calc(var(--stick-bar) + var(--sr-band)); }
+.sr-sec + .sr-sec { border-top: 1px solid var(--line); }
+.sr-sec > .sec__h {
+  display: flex; align-items: center;
+  min-height: 52px; margin-bottom: 0; padding: var(--s1) var(--sheet-inset) 0;
+  box-shadow: none;
+}
+.sr-sec > .sec__h h2 { margin: 0; white-space: nowrap; }
+.sr-sec__by { min-width: 0; font-size: 14px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sr-sec__sp { flex: 1 1 auto; }
+.sr-sec__n { font-size: 13px; color: var(--ink-3); white-space: nowrap; }
+.sr-sec__n b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ── the month matrix: a real table (figures align down and across), list-row geometry (DESIGN.md §10) ── */
+.sr-tbl {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate; border-spacing: 0;
+  font-size: 14px; color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+/* columns: the months are the last twelve in every table, so they line up from table to table; the first
+   two of All Dealers (# + name) are as wide as the name column of the other two, so Total lines up too */
+.sr-tbl .k-rank  { width: 48px; }
+.sr-tbl .k-tot   { width: 96px; }
+.sr-tbl .k-share { width: 88px; }
+.sr-tbl .k-tot2  { width: 184px; }                 /* Total where there is no Share column: 96 + 88 */
+.sr-tbl .k-m     { width: var(--sr-m); }
+
+.sr-tbl th, .sr-tbl td {
+  padding: 0 var(--s1);
+  text-align: left; vertical-align: middle;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.sr-tbl :is(th, td):first-child { padding-left: var(--sheet-inset); }
+.sr-tbl :is(th, td):last-child { padding-right: var(--sheet-inset); }
+
+/* head keys: 11 / 700, +0.08em, caps, ink-3 — the only caps in a table */
+.sr-tbl thead th {
+  position: sticky; top: var(--sr-hd-top); z-index: var(--z-sticky-hd);
+  height: 48px;
+  background: var(--sheet);
+  box-shadow: inset 0 -1px 0 var(--line-3);
+  font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; line-height: 1.25;
+  color: var(--ink-3);
+  white-space: normal; overflow-wrap: normal; word-break: normal;
+}
+.sr-tbl thead .s {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 0; border: 0; background: none; cursor: pointer;
+  font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit; text-align: left;
+}
+.sr-tbl thead .s:hover { color: var(--ink); }
+.sr-tbl thead .s .i { flex: none; width: 11px; height: 11px; }
+.sr-tbl thead .s--on { color: var(--ink); }
+.sr-tbl thead .s--asc .i { transform: rotate(180deg); }
+
+/* cells: 14px, the row's identifier 600; one divider where the months begin */
+.sr-tbl tbody td {
+  height: 40px;
+  box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--line-2) 65%, var(--sheet));
+}
+.sr-tbl tbody tr:hover td { background: var(--wash); }
+.sr-tbl .c-id { font-weight: 600; }
+.sr-tbl .c-rank { color: var(--ink-3); }
+.sr-tbl .c-tot { font-weight: 600; }
+.sr-tbl :is(th, td).c-m1 { padding-left: var(--s3); }
+.sr-tbl thead th.c-m1 { box-shadow: inset 1px 0 0 var(--line-2), inset 0 -1px 0 var(--line-3); }
+.sr-tbl tbody td.c-m1 { box-shadow: inset 1px 0 0 var(--line-2), inset 0 -1px 0 color-mix(in srgb, var(--line-2) 65%, var(--sheet)); }
+.sr-tbl tfoot td.c-m1 { box-shadow: inset 1px 0 0 var(--line-2), inset 0 2px 0 var(--line-3); }
+
+/* the totals row — COPIED · Accounting's ledger foot: heavier, on its own ground, not a data row */
+.sr-tbl tfoot td {
+  height: 44px;
+  background: var(--well);
+  box-shadow: inset 0 2px 0 var(--line-3);
+  font-weight: 700; color: var(--ink);
+}
+.sr-tbl tfoot .c-lab { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+
+/* the loading line of a table (review state): the rows keep their place, the figures say they are coming */
+.sr-wait { color: var(--ink-4); font-size: 13px; }
+
+/* ── empty year: the field says what is missing and offers the one year that was read ─────────────── */
+.sr-field .empty { padding: var(--s9) var(--gutter); }
+.sr-field .empty p { margin: 0; }
+.linkbtn {   /* DESIGN.md §35 text action: 14 / 600 brand-ink, hover brand */
+  padding: 0; border: 0; background: none; cursor: pointer;
+  font: inherit; font-size: 14px; font-weight: 600; color: var(--brand-ink);
+}
+.linkbtn:hover { color: var(--brand); }
+
+/* ── tablet (768–1279, DESIGN.md §41): a table wider than its sheet scrolls inside its own container,
+   never the page; the row's name stays in view at the left with a 1px edge ─────────────────────────── */
+@media (max-width: 1279.98px) {
+  .sr-scroll { overflow-x: auto; overscroll-behavior-x: contain; }
+  /* the narrowest the figures stay whole: a two-digit month needs less room than All Dealers' "12,504" */
+  .sr-tbl { min-width: 900px; }
+  .sr-tbl--ranked { min-width: 1140px; }
+  .sr-tbl :is(th, td).c-stick { position: sticky; left: 0; z-index: 2; background-clip: padding-box; }
+  .sr-tbl tbody td.c-stick, .sr-tbl thead th.c-stick { background-color: var(--sheet); }
+  .sr-tbl :is(th, td).c-stick--2 { left: 48px; }
+  .sr-tbl :is(th, td).c-stick-edge { box-shadow: 1px 0 0 var(--line-2), inset 0 -1px 0 color-mix(in srgb, var(--line-2) 65%, var(--sheet)); }
+  .sr-tbl thead th.c-stick-edge { box-shadow: 1px 0 0 var(--line-2), inset 0 -1px 0 var(--line-3); }
+  .sr-tbl tfoot td.c-stick-edge { box-shadow: 1px 0 0 var(--line-2), inset 0 2px 0 var(--line-3); }
+  /* inside a scroller the head cannot stick to the page; it stays the first row of its table */
+  .sr-tbl thead th { position: static; }
+  .sr-tbl thead th.c-stick { position: sticky; top: auto; }
+  .sr-band { overflow-x: auto; scrollbar-width: none; }
+  .sr-band::-webkit-scrollbar { display: none; }
+}
+
+/* ── print: the report, without the chrome ─────────────────────────────────────────────────────────── */
+@media print {
+  .sr-band, .nojs { display: none !important; }
+  .sr-deck { background: none; box-shadow: none; color: #000; padding: 0 0 8px; }
+  .sr-deck .tile { background: none; box-shadow: inset 0 0 0 1px #bbb; border-radius: 0; color: #000; }
+  .sr-deck :is(.deck__t, .tile__v) { color: #000; }
+  .sr-deck :is(.tile__k, .tile__s, .deck__m) { color: #555; }
+  .sr-tbl thead th { position: static; }
+  .sr-tbl tbody td { height: auto; padding-top: 4px; padding-bottom: 4px; }
+}

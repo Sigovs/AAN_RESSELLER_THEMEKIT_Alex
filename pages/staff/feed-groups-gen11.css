@@ -1,0 +1,226 @@
+/* AAN · Staff UI · Feed Groups — GENERATION 11
+   Layout only, from the system's tokens. Two views of one page:
+   · the list — Feeds Incoming's skeleton (same bar, head, field, row, switch, foot), with the backend's
+     tabs in the head row so the first group row is where the backend's is;
+   · the group editor — the edit-form type (DESIGN.md §37.4, Dealer Edit): rail | chaptered zones | save bar,
+     dense 30px controls (§11, Single Ticket's .form--dense).
+   Page-local pieces the shared layer does not carry yet (listed as gaps in the report): the radio segment
+   (.seg__o, Dealer Edit), the in-flow panel under a row (.fgp-exp, All Vehicles' .exp idea), the small form
+   table (.fgp-tbl, Dealer Edit's .rtbl), the checkbox option (.opt, Dealer Edit). */
+
+/* ══ PAGE GRID ════════════════════════════════════════════════════════════
+   No tally on this page: the list (or the editor) takes the row the tally would hold, so no empty
+   track and no second gap sits between the head and the work. */
+.fgp > .field, .fgp > .fgp-body { grid-row: 3; }
+.fgp:has(> .savebar[hidden]) { padding-bottom: var(--gutter); }
+
+/* ── the head: title · its count, the area's tabs, New Group ── */
+.fgp > .head { column-gap: var(--s5); }
+.fgp-tabs { flex: 0 1 auto; }
+.fgp-tabs > a:hover { text-decoration: none; }
+
+/* the Demo tag (DESIGN.md §13): its look lives in All Vehicles' page sheet, not in the staff layer —
+   restated here from that origin (18px, 4px radius, violet on violet-soft, the shared 12 / 600 sentence case) */
+.app .demo { display: inline-flex; align-items: center; height: 18px; border-radius: var(--r-micro);
+  color: var(--violet); background: var(--violet-soft); box-shadow: inset 0 0 0 1px var(--violet-line); line-height: 1; }
+
+/* ══ THE LIST ═════════════════════════════════════════════════════════════
+   One line per group. 40px rows — Feeds Incoming's feed line — so the list shows as many groups on the
+   first screen as the backend's own 38px table does. */
+.fgp-field { overflow: clip; }
+.fgp-rows {
+  --row: 40px;
+  --cols:
+    56px                   /* id              */
+    minmax(200px, 2.2fr)   /* group name      */
+    minmax(72px, .6fr)     /* type            */
+    minmax(120px, .6fr)    /* on / off (its Demo tag fits at 768) */
+    minmax(128px, 1fr)     /* group to dealer */
+    72px;                  /* delete — the far end */
+}
+/* no command band on this list: the column head sticks straight under the platform bar */
+.fgp-rows > .hd { top: var(--stick-bar); padding-left: var(--sheet-inset); padding-right: var(--sheet-inset); }   /* the head keys start where the cells do at every width (the shared .ui-thead inset is 16 while the rows step to 8 below 1400) */
+.fgp-rows .hd > span { white-space: nowrap; display: flex; align-items: center; gap: var(--s2); }
+.fgp-rows .c-id { font: 500 13px var(--mono); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.fgp-rows .hd > .c-id { font: inherit; color: inherit; }
+.fgp-rows .row > .c-name { min-width: 0; }
+.fgp-rows .c-name a { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fgp-rows .c-name a:hover { color: var(--brand-ink); }
+.fgp-rows .row > .c-on, .fgp-rows .row > .c-del, .fgp-rows .row > .c-asg { display: flex; align-items: center; }
+.fgp-rows .c-type { color: var(--ink-2); }
+/* a group switched off reads as off: its name and type go quiet, the switch says why */
+.fgp-rows .row.fgp-off .c-name a, .fgp-rows .row.fgp-off .c-type { color: var(--ink-4); }
+
+/* Assignment — a text action (DESIGN.md §35 .linkbtn); while its panel is open it is the "on" toggle (§11) */
+.fgp-asg {
+  display: inline-flex; align-items: center; height: 30px; padding: 0 10px; margin-left: -10px;
+  border-radius: var(--r-inner);
+  color: var(--brand-ink); font-size: 14px; font-weight: 600; white-space: nowrap;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.fgp-asg:hover { color: var(--brand); background: var(--wash); }
+.fgp-asg--on, .fgp-asg--on:hover { background: var(--brand-soft); color: var(--brand-ink); box-shadow: inset 0 0 0 1px var(--brand-soft-2, #cddbfb); }
+/* Delete: danger text at the far end of the row (DESIGN.md §11); it is the row's last column */
+.fgp-rows .fgp-del { margin-left: -11px; }
+
+/* the row whose panel is open: the hairline frames row and panel as one object (§8: shared edges, seam 0) */
+.fgp-rows #tb > .row.fgp-open { box-shadow: inset 1px 0 0 var(--line), inset -1px 0 0 var(--line), inset 0 1px 0 var(--line); }
+
+/* ── the in-flow panel under a row (DESIGN.md §8): in flow, the row's edges, one hairline,
+      no elevation, no radius at the seam; it covers and dims nothing ── */
+.fgp-exp {
+  padding: var(--s3) var(--sheet-inset) var(--s4);
+  background: var(--sheet);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.fgp-exp__h { display: flex; align-items: center; gap: var(--s2); min-height: 34px; margin-bottom: var(--s2); }
+.fgp-exp__t { min-width: 0; }
+.fgp-exp__sp { flex: 1 1 auto; }
+.fgp-exp__f { display: flex; align-items: center; justify-content: flex-end; gap: var(--s2); margin-top: var(--s3); }
+
+/* ── a small table inside a panel or a form (Dealer Edit's routing table): caps keys, 30px controls ── */
+.fgp-tbl { width: 100%; border-collapse: collapse; }
+.fgp-tbl th {
+  height: 36px; padding: 0 var(--s3) 0 0; text-align: left; white-space: nowrap;
+  font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3);
+  box-shadow: inset 0 -1px 0 var(--line);
+}
+.fgp-tbl td { padding: var(--s1) var(--s3) var(--s1) 0; vertical-align: middle; box-shadow: inset 0 -1px 0 var(--line-2); }
+.fgp-tbl th:last-child, .fgp-tbl td:last-child { padding-right: 0; }
+.fgp-tbl__ck { width: 32px; }
+.fgp-tbl__pos { width: 112px; }
+.fgp-tbl__act { width: 1%; white-space: nowrap; }
+.fgp-tbl__act { display: table-cell; }
+.fgp-tbl td.fgp-tbl__act > * + * { margin-left: var(--s1); }
+.fgp-tbl__none { height: 48px; color: var(--ink-3); font-size: 13px; }
+.fgp-tbl .ck { display: grid; }
+
+/* ══ THE EDITOR ═══════════════════════════════════════════════════════════ */
+/* the head: the way back, then the record's title in the head row (a new group has no state, id or dates,
+   so §21's card would be two empty rows; the title row is the whole head) */
+.fgp-edhead { column-gap: var(--s3); }
+.fgp-edhead .fgp-back { flex: none; margin-left: calc(-1 * var(--s3)); }
+.fgp-edhead .head__id { min-width: 0; flex: 0 1 auto; }
+.fgp-edhead h1 { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fgp-edctx { display: flex; align-items: center; gap: var(--s2); min-width: 0; color: var(--ink-3); font-size: 13px; }
+.fgp-edctx .demo { flex: none; }
+.fgp-edctx__t { min-width: 0; }
+
+/* rail | zones (Dealer Edit's body without the side column: this record has no side panels) */
+.fgp-body {
+  display: grid; grid-template-columns: 184px minmax(0, 1fr); gap: var(--s4);
+  align-items: start;
+}
+.fgp-rail { position: sticky; top: calc(var(--stick-bar) + var(--s4)); }
+.fgp-rail .rail__b { display: flex; align-items: center; gap: var(--s2); text-decoration: none; }
+.fgp-rail__t { flex: 1 1 auto; min-width: 0; white-space: nowrap; }
+.fgp-rail .badge, .fgp-zones .zone__hd .badge {
+  height: 18px; border-radius: var(--r-pill); background: var(--well); color: var(--ink-3);
+  font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums;
+}
+
+/* the zones: one floating sheet, chapters attached inside it (DESIGN.md §2; the chapter rule is shared) */
+.fgp-zones {
+  min-width: 0;
+  border-radius: var(--r-card);
+  background: var(--sheet);
+  box-shadow: var(--sh-soft);
+  overflow: clip;
+}
+.fgp-zones > .zone { padding: 0 var(--s5) var(--s5); scroll-margin-top: calc(var(--stick-bar) + var(--s4)); }
+.fgp-zones .zone__hd { display: flex; align-items: center; gap: var(--s3); padding-top: var(--s4); margin-bottom: var(--s3); }
+
+/* the field grid: twelve columns, a field spans what its content needs. Air between groups, not in rows. */
+.fgrid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--s3) var(--s4); align-items: start; }
+.fgrid > * { min-width: 0; }
+.w1 { grid-column: span 1; } .w2 { grid-column: span 2; } .w3 { grid-column: span 3; }
+.w4 { grid-column: span 4; } .w6 { grid-column: span 6; } .w12 { grid-column: 1 / -1; }
+
+/* one field: label above, control — the dense form of Single Ticket (13px label, 3px, a 30px control) */
+.form--dense .f { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.form--dense .f__l { display: flex; align-items: center; gap: var(--s2); min-height: 18px; font-size: 13px; font-weight: 600; color: var(--ink-2); white-space: nowrap; }
+.form--dense .f__req { margin-left: -6px; color: var(--danger); font-weight: 700; }
+.form--dense .fld { height: 30px; border-radius: var(--r-inner); font-size: 13.5px; padding-inline: 10px; }
+.form--dense select.fld { padding-right: 32px; }
+.form--dense .fld--area { height: auto; min-height: 92px; padding: var(--s2) 10px; line-height: 1.45; }
+.form--dense .fld--num { font-variant-numeric: tabular-nums; }
+.form--dense .fld--mono { font-family: var(--mono); font-size: 13px; }
+.form--dense .f__help { margin: 0; }
+.form--dense .f__help code { font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); }
+/* a missing required value (DESIGN.md §24, Dealer Edit) */
+.form--dense .f--miss .fld { background: var(--signal-soft); box-shadow: inset 0 0 0 1px var(--signal-line); }
+/* the backend's own warning on the two SQL fields */
+.fgp-warn { display: inline-flex; align-items: center; gap: var(--s1); color: var(--signal); font-weight: 600; }
+.fgp-warn .i { width: 14px; height: 14px; }
+
+/* a checkbox with its label to the right (Dealer Edit's .opt), level with the controls of its row */
+.app .ck { width: 16px; height: 16px; border-radius: 5px; }
+.form--dense .opt { display: inline-flex; align-items: center; gap: var(--s2); min-height: 30px; font-size: 13.5px; color: var(--ink); cursor: pointer; white-space: nowrap; }
+.form--dense .opt--bare { padding-left: 2px; }
+.form--dense .f--opt { padding-top: 21px; }   /* the label line (18) + its gap (3): the box sits level with the controls */
+.opts { display: flex; flex-wrap: wrap; gap: 0 var(--s5); }
+.opts--grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(288px, 1fr)); gap: 0 var(--s4); }
+.f .opts { flex-direction: column; flex-wrap: nowrap; }
+.opt .none { color: var(--ink-4); }
+
+/* the radio set: a segmented track (DESIGN.md §25, Dealer Edit's .seg__o), at the dense height */
+.fgp-segrow { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s4); min-width: 0; }
+.form--dense .fgp-seg { align-self: flex-start; display: inline-flex; flex-wrap: wrap; gap: 2px; height: auto; min-height: 30px; padding: 3px; max-width: 100%;
+  border-radius: var(--r-pill); background: var(--well); box-shadow: inset 0 0 0 1px var(--line); }
+.seg__o { position: relative; display: inline-flex; }
+.seg__o input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.seg__o span {
+  display: inline-flex; align-items: center; height: 24px; padding: 0 var(--s3);
+  border-radius: var(--r-pill); color: var(--ink-2); font-size: 13px; white-space: nowrap;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.seg__o:hover span { background: var(--sheet); color: var(--ink); }
+.seg__o input:checked + span { background: var(--sheet); color: var(--brand-ink); font-weight: 600; box-shadow: var(--sh-pill); }
+.seg__o input:focus-visible + span { outline: var(--focus-w) solid var(--focus-color); outline-offset: var(--focus-offset); }
+/* nothing chosen yet is a real state on a new group: quiet, not absent (Dealer Edit) */
+.form--dense .fgp-seg.seg--unset { box-shadow: inset 0 0 0 1px var(--line-3); }
+
+/* field mapping and data lab */
+.fgp-map__f { margin-top: var(--s3); }
+.fgp-map__exp > td { padding: 0 0 var(--s3); box-shadow: none; }
+.fgp-adv { padding: var(--s3) var(--s4) var(--s4); background: var(--sheet); box-shadow: inset 0 0 0 1px var(--line); }
+.fgp-map__r:has(+ .fgp-map__exp) > td { box-shadow: none; }
+.fgp-advb.fgp-asg--on { box-shadow: inset 0 0 0 1px var(--brand-soft-2, #cddbfb); }
+.fgp-labrow { display: flex; align-items: center; gap: var(--s2); min-width: 0; }
+.fgp-labrow > .fld { flex: 1 1 auto; min-width: 0; }
+.fgp-labrow > .btn { flex: none; }
+.form--dense .btn--sm .i { width: 14px; height: 14px; }
+
+/* ══ SAVE BAR — the shared footer bar (DESIGN.md §32), fixed to the viewport ══ */
+.fgp-save { position: fixed; z-index: var(--z-platform); height: 56px; }
+.fgp-save .savebar__n { margin-right: auto; color: var(--ink-2); font-size: 14px; font-weight: 600; }
+.fgp-save .savebar__n:not(.savebar__n--dirty) { color: var(--ink-3); font-weight: 400; }
+
+/* a form's result: beside the button that produced it, 16px to its left; the space is always there,
+   so nothing moves when it appears (DESIGN.md §11, §14) */
+.fgp-res { display: inline-flex; align-items: center; justify-content: flex-end; min-width: 248px; margin-right: var(--s2);
+  color: var(--ink-3); font-size: 13px; white-space: nowrap; }
+.fgp-res--err { color: var(--danger); }
+.fgp-res--inline { justify-content: flex-start; min-width: 0; min-height: 18px; margin: 0; }
+.fgp-exp__f .fgp-res { margin-right: var(--s2); }
+
+/* ══ TABLET (DESIGN.md §41) — the shared TABLET block carries the bar and the head; this is the page's own layout ══ */
+@media (max-width: 1279.98px) {
+  /* this list's six columns fit 768 (minimums 680px): the staff layer's 1168px floor for wide rosters is not
+     for it — that floor pushed Delete out of the clipped list at 1024 */
+  .fgp-rows > .hd, .fgp-rows > #tb > .row { min-width: 0; }
+  .w1, .w2 { grid-column: span 3; }
+  .w3 { grid-column: span 6; }
+  .w4, .w6 { grid-column: 1 / -1; }
+  .fgp-body { grid-template-columns: 184px minmax(0, 1fr); }
+  .fgp-edctx { flex: 1 0 100%; flex-wrap: wrap; }
+}
+@media (max-width: 1023.98px) {
+  .w1, .w2, .w3 { grid-column: span 6; }
+  .form--dense .opt { white-space: normal; line-height: 1.3; }   /* a long option wraps at a space, never inside a word */
+  .fgp-res { min-width: 0; }
+  .fgp-tbl--asg { display: block; overflow-x: auto; }
+}
+
+/* ══ NO SCRIPT ══ */
+html.no-js .fgp .head, html.no-js .fgp .fgp-body { display: none; }

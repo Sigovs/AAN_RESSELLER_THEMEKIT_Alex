@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>System Settings — AAN (Gen 11)</title>
+<meta name="description" content="AAN staff system settings — Gen 11 build of the new backend's System Settings screen (a page with no Gen 11 reference, built from the system).">
+<script>document.documentElement.classList.remove('no-js');</script>
+<!-- A page Gen 11 never drew (Nov 18): built only from the system. Page type: edit form (DESIGN.md §37.4),
+     started from Dealer Edit — its stylesheet is the template CSS, as §36 loads it; the staff platform bar
+     is Feeds Incoming's. The six zones are the backend's six sections, in its order. -->
+<script src="../_aan-theme.js?v=20261118-b"></script>
+<link rel="stylesheet" href="dealer-edit-gen11.css?v=20261118-ds">
+<link rel="stylesheet" href="../_aan-family.css?v=20261118-tbtn">
+<link rel="stylesheet" href="../_aan-components.css?v=20261118-inset">
+<link rel="stylesheet" href="system-settings-gen11.css?v=20261118-a">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 2v6M15 2v6M6 8h12v3a6 6 0 0 1-12 0V8ZM12 17v5"/></symbol>
+  <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"/></symbol>
+</svg>
+
+<div class="app" id="app">
+
+  <!-- ══ PLATFORM BAR — the staff bar of Feeds Incoming; System Tools is the current section ══ -->
+  <header class="top">
+    <a class="brand" href="#" title="All Auto Network · Backend">
+      <span class="brand__mk">AAN</span>
+      <span class="brand__t">All Auto Network</span>
+      <span class="brand__env">Backend</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="System menu"></nav>
+    <span class="top__sp"></span>
+    <label class="gsearch">
+      <svg class="i"><use href="#i-search"/></svg>
+      <input type="search" name="global-search" placeholder="Search anywhere" aria-label="Search anywhere">
+      <!-- <kbd>/</kbd> (Nov 18: no key focuses this field here; the hint stands only on the field "/" focuses) -->
+    </label>
+    <a class="atlas" href="#" title="The Atlas — system architecture wiki"><span aria-hidden="true">▣</span><span class="atlas__t">Atlas</span></a>
+    <button class="tbtn tbtn--theme" type="button" data-act="theme" aria-label="Switch to dark theme" title="Dark theme"><svg class="i t-moon"><use href="#i-moon"/></svg><svg class="i t-sun"><use href="#i-sun"/></svg></button>
+    <div class="nav__it">
+      <button class="tbtn" type="button" data-pop="p-help" aria-haspopup="true" aria-expanded="false" aria-label="Support"><svg class="i"><use href="#i-buoy"/></svg></button>
+      <div class="pop pop--r" id="p-help">
+        <div class="caps pop__lab">Support</div>
+        <a class="mn__it" href="#">Create A Ticket</a>
+        <a class="mn__it" href="#">Activity Report</a>
+      </div>
+    </div>
+    <span class="top__div"></span>
+    <div class="nav__it">
+      <button class="me" type="button" data-pop="p-me" aria-haspopup="true" aria-expanded="false">
+        <span class="me__mk">IG</span><span class="me__n">Ivaylo Guenkov</span>
+        <svg class="i"><use href="#i-chev"/></svg>
+      </button>
+      <div class="pop pop--r" id="p-me">
+        <div class="mn__who"><b>Ivaylo Guenkov</b>AAN · Backend</div>
+        <button class="mn__it" type="button" data-act="theme" aria-label="Switch to dark theme">Dark theme</button>
+        <a class="mn__it" href="#">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ HEAD — the backend's title; no record to go back to, no id, so the card is the title and its provenance ══ -->
+  <header class="head" id="head">
+    <h1>System Settings</h1>
+    <div class="head__sub">
+      <span class="head__audit">Read from the new backend, Nov 18 · demo — nothing is saved</span>
+    </div>
+  </header>
+
+  <!-- ══ BODY — rail · zones (no side panels: every block on this screen is a section of the one record) ══ -->
+  <div class="body ss-body" id="body">
+    <nav class="rail ui-nav" id="rail" aria-label="Settings sections">
+      <button class="rail__b ui-nav__i rail__b--on ui-nav__i--on" type="button" data-zone="zDev" aria-current="true"><span>Developer tools</span><span class="ui-nav__n" id="rn-dev">14</span></button>
+      <button class="rail__b ui-nav__i" type="button" data-zone="zAi"><span>AI assistant</span></button>
+      <button class="rail__b ui-nav__i" type="button" data-zone="zParity"><span>Parity testing</span></button>
+      <button class="rail__b ui-nav__i" type="button" data-zone="zPano"><span>Switch panorama</span><span class="ui-nav__n">17</span></button>
+      <button class="rail__b ui-nav__i" type="button" data-zone="zCrew"><span>Crew roster</span><span class="ui-nav__n" id="rn-crew">22</span></button>
+      <button class="rail__b ui-nav__i" type="button" data-zone="zLedger"><span>Store ledger</span><span class="ui-nav__n">11</span></button>
+      <div class="rail__sep"></div>
+      <span class="rail__hint">Jump: <kbd>/</kbd></span>
+    </nav>
+
+    <div class="zones" id="zones">
+
+      <!-- 01 · Developer tools -->
+      <section class="zone" id="zDev" aria-labelledby="zDev-h">
+        <header class="zone__hd"><h2 class="zone__t" id="zDev-h">Developer tools</h2><span class="ss-key ss-hdkey" id="dev-key"></span></header>
+        <div class="ss-grp">
+          <div class="ss-grp__h">
+            <span class="fl">DevBar viewers</span>
+            <span class="ss-kbd" title="Keyboard shortcut that opens the DevBar"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>D</kbd></span>
+            <span class="ss-grp__n" id="dev-n"></span>
+          </div>
+          <div class="ss-chips" id="dev-chips" aria-label="DevBar viewers"></div>
+          <div class="ss-add" id="dev-add">
+            <label class="ss-find">
+              <svg class="i" aria-hidden="true"><use href="#i-search"/></svg>
+              <input class="fld" type="search" id="dev-q" placeholder="Add a DevBar viewer — search AAN staff" autocomplete="off"
+                     role="combobox" aria-expanded="false" aria-controls="p-dev" aria-label="Add a DevBar viewer — search AAN staff">
+            </label>
+            <div class="pop ss-pick" id="p-dev" role="listbox" aria-label="AAN staff"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 02 · AI assistant -->
+      <section class="zone" id="zAi" aria-labelledby="zAi-h">
+        <header class="zone__hd"><h2 class="zone__t" id="zAi-h">AI assistant</h2><span class="stat stat--ok">Live key set</span><span class="ss-key ss-hdkey">see dealers.ai_description</span></header>
+        <div class="ss-grp">
+          <div class="ss-grp__h"><span class="ss-gt">AI Description Generator</span><span class="ss-meta">egress only <span class="ss-key">api.openai.com</span></span></div>
+          <label class="ui-switch ss-sw"><input type="checkbox" role="switch" id="ai-live" data-k="ai-live" checked><span class="ui-switch__t"></span><span class="ui-switch__l">Send real completions</span></label>
+          <p class="f__help ss-swhelp">ON: the assistant answers dealers for real. OFF: every request is staged to disk</p>
+        </div>
+
+        <div class="ss-cols">
+          <div class="ss-grp ss-grp--sep">
+            <div class="ss-grp__h"><span class="ss-gt">Credential</span><span class="tag tag--flag"><svg class="i"><use href="#i-lock"/></svg>Encrypted</span><span class="ss-key ss-grp__n">engine_system_settings</span></div>
+            <div class="fg ss-fg">
+              <div class="fw"><span class="fl">Stored key</span>
+                <div class="seal" id="seal-key"><span class="seal__lock" aria-hidden="true"><svg class="i"><use href="#i-lock"/></svg></span><span class="seal__dots">••••</span><span class="ss-set">set</span></div>
+              </div>
+              <div class="fw"><label class="fl" for="ai-newkey">Replace API key</label>
+                <input class="fld" type="password" id="ai-newkey" data-k="ai-newkey" placeholder="sk-… (leave blank to keep the current key)" autocomplete="new-password">
+              </div>
+              <div class="fw"><label class="fl" for="ai-model">Model</label>
+                <div class="ss-add">
+                  <input class="fld ss-mono" type="text" id="ai-model" data-k="ai-model" autocomplete="off" spellcheck="false"
+                         role="combobox" aria-expanded="false" aria-controls="p-model">
+                  <div class="pop ss-pick ss-pick--model" id="p-model" role="listbox" aria-label="Suggested models"></div>
+                </div>
+                <p class="f__help ss-help" id="ai-model-h"></p>
+              </div>
+              <div class="fw"><label class="fl" for="ai-ep">Endpoint</label>
+                <select class="fld" id="ai-ep" data-k="ai-ep"></select>
+                <p class="f__help ss-help" id="ai-ep-d"></p>
+                <p class="f__help">The endpoint decides the request shape: <span class="ss-key ss-nowrap" id="ai-ep-path"></span></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="ss-grp ss-grp--sep">
+            <div class="ss-grp__h"><span class="ss-gt">Tuning</span><span class="ss-key ss-grp__n" id="tune-model"></span></div>
+            <div class="fg ss-fg">
+              <div class="fw"><label class="fl" for="ai-effort">Reasoning effort</label>
+                <select class="fld" id="ai-effort" data-k="ai-effort"></select>
+                <p class="f__help ss-help">how hard it thinks first</p>
+              </div>
+              <div class="fw"><label class="fl" for="ai-verb">Verbosity</label>
+                <select class="fld" id="ai-verb" data-k="ai-verb"></select>
+                <p class="f__help ss-help ss-words" id="ai-words"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ss-grp ss-grp--sep">
+          <div class="ss-grp__h"><span class="ss-gt">Prompt</span><span class="tag tag--flag"><svg class="i"><use href="#i-edit"/></svg>Customised</span></div>
+          <textarea class="fld fld--area ss-prompt" id="ai-prompt" data-k="ai-prompt" rows="7" aria-label="Prompt" spellcheck="false"></textarea>
+          <p class="f__help ss-help">Shown here: the first lines of the stored prompt, as read on Nov 18.</p>
+
+          <div class="ss-render">
+            <label class="fl" for="ai-dealer">See it rendered:</label>
+            <label class="ss-find ss-find--dealer">
+              <svg class="i" aria-hidden="true"><use href="#i-search"/></svg>
+              <input class="fld" type="search" id="ai-dealer" placeholder="Find a dealership by name" autocomplete="off">
+            </label>
+          </div>
+
+          <details class="ss-disc" id="ai-vars">
+            <summary class="ss-disc__h"><span class="ss-disc__t">Available variables — click one to insert it into the prompt</span><svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+            <div class="ss-disc__in">
+              <p class="f__help" id="ai-vars-intro"></p>
+              <div id="ai-vars-g"></div>
+            </div>
+          </details>
+        </div>
+
+        <div class="ss-acts">
+          <button class="btn btn--sheet" type="button" data-demo="ai" data-say="Demo — no request is sent"><svg class="i"><use href="#i-plug"/></svg>Test connection</button>
+          <button class="btn btn--quiet" type="button" data-act="restore"><svg class="i"><use href="#i-undo"/></svg>Restore default prompt</button>
+          <span class="ss-res" id="res-ai" role="status" aria-live="polite"></span>
+          <button class="btn btn--quiet ss-danger" type="button" data-demo="ai" data-say="Demo — the stored key stays">Remove stored key</button>
+        </div>
+        <p class="ss-audit" id="ai-changed"></p>
+      </section>
+
+      <!-- 03 · Parity testing -->
+      <section class="zone" id="zParity" aria-labelledby="zParity-h">
+        <header class="zone__hd"><h2 class="zone__t" id="zParity-h">Parity testing</h2><span class="tag tag--flag"><svg class="i"><use href="#i-clock"/></svg><span id="par-tag"></span></span></header>
+        <p class="f__help ss-lead" id="par-note"></p>
+        <div class="ss-swrow">
+          <label class="ui-switch ss-sw"><input type="checkbox" role="switch" id="par-on" data-k="par-on"><span class="ui-switch__t"></span><span class="ui-switch__l" id="par-l"></span></label>
+          <button class="btn btn--sheet btn--sm" type="button" data-demo="par" data-say="Demo — no request is sent"><svg class="i"><use href="#i-plug"/></svg>Test connection</button>
+          <span class="ss-res" id="res-par" role="status" aria-live="polite"></span>
+        </div>
+        <p class="ss-audit" id="par-changed"></p>
+      </section>
+
+      <!-- 04 · Switch panorama (read-only) -->
+      <section class="zone" id="zPano" aria-labelledby="zPano-h">
+        <header class="zone__hd"><h2 class="zone__t" id="zPano-h">Switch panorama</h2><span class="ss-meta">Read-only · 17 switches</span></header>
+        <p class="f__help ss-lead" id="pano-note"></p>
+
+        <div class="fsec">Real-world seams</div>
+        <div class="ss-tw"><table class="lg zebra ss-seams" aria-label="Real-world seams">
+          <thead><tr><th>Seam</th><th>State</th><th>Key</th></tr></thead><tbody id="pano-seams"></tbody>
+        </table></div>
+
+        <div class="fsec">Secrets — presence only</div>
+        <div class="ss-tw"><table class="lg ss-seams" aria-label="Secrets — presence only">
+          <thead><tr><th>Secret</th><th>Presence</th><th>Key</th></tr></thead><tbody id="pano-secrets"></tbody>
+        </table></div>
+
+        <div class="fsec">Dual-run ownership</div>
+        <div class="ss-tw"><table class="lg ss-seams" aria-label="Dual-run ownership">
+          <thead><tr><th>Switch</th><th>Owner</th><th>Key</th></tr></thead><tbody id="pano-owners"></tbody>
+        </table></div>
+        <div class="ss-sub">
+          <div class="ss-sub__h"><span class="ss-gt">Modules</span><span class="ss-meta" id="mod-n"></span></div>
+          <div class="ss-tw"><table class="lg ss-mods" aria-label="Modules — front door and email delivery">
+            <thead><tr><th>Module</th><th>Front door</th><th>Email delivery</th></tr></thead><tbody id="pano-mods"></tbody>
+          </table></div>
+        </div>
+        <div class="ss-tw"><table class="lg ss-seams ss-lists" aria-label="Cutover lists">
+          <thead><tr><th>List</th><th>Rule</th><th>Key</th></tr></thead><tbody id="pano-lists"></tbody>
+        </table></div>
+      </section>
+
+      <!-- 05 · Crew roster -->
+      <section class="zone" id="zCrew" aria-labelledby="zCrew-h">
+        <header class="zone__hd"><h2 class="zone__t" id="zCrew-h">Crew roster</h2><span class="ss-key ss-hdkey" id="crew-key"></span></header>
+        <div class="ss-grp">
+          <div class="ss-grp__h"><span class="ss-gt" id="crew-t"></span><span class="ss-grp__n" id="crew-n"></span></div>
+          <div class="ss-crew">
+            <div class="ss-crew__l"><span class="fl">Listed</span><span class="ss-meta">offered in the pickers · × to unlist</span></div>
+            <div class="ss-chips" id="crew-listed" aria-label="Listed — offered in the pickers"></div>
+            <div class="ss-crew__l"><span class="fl">Fixed entries</span><span class="ss-meta">always available</span></div>
+            <div class="ss-chips" id="crew-fixed" aria-label="Fixed entries — always available"></div>
+            <div class="ss-crew__l"><span class="fl">Unlisted</span><span class="ss-meta">hidden from the pickers · + to list</span></div>
+            <div class="ss-chips" id="crew-unlisted" aria-label="Unlisted — hidden from the pickers"></div>
+          </div>
+        </div>
+        <p class="ss-audit" id="crew-changed"></p>
+      </section>
+
+      <!-- 06 · Store ledger -->
+      <section class="zone" id="zLedger" aria-labelledby="zLedger-h">
+        <header class="zone__hd"><h2 class="zone__t" id="zLedger-h">Store ledger</h2><span class="tag tag--flag ss-mono">engine_*</span><span class="tag tag--flag">New system only</span><span class="ss-key ss-hdkey" id="led-store"></span></header>
+        <div class="ss-tw"><table class="lg zebra ss-ledger" aria-label="Store ledger — 11 keys">
+          <thead><tr><th>Key</th><th>Label</th><th>Value</th><th>Last change</th></tr></thead><tbody id="led-rows"></tbody>
+        </table></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ══ SAVE BAR — DESIGN.md §32: it counts changes, it does not hide; nothing writes ══ -->
+  <div class="savebar" id="savebar" role="status">
+    <span class="savebar__note" id="sb-note">No unsaved changes</span>
+    <span class="ss-res" id="res-save" aria-live="polite"></span>
+    <button class="btn btn--quiet" type="button" id="discard" disabled>Discard</button>
+    <button class="btn btn--primary" type="button" id="save" disabled>Save settings</button>
+    <span class="savebar__kbd"><kbd>Ctrl</kbd>+<kbd>S</kbd></span>
+  </div>
+
+  <p class="nojs">System Settings is rendered by script. Enable JavaScript to open it.</p>
+</div>
+
+<script src="manage-dealers-gen11.data.js?v=20261030-nav"></script>
+<script src="system-settings-gen11.data.js?v=20261118-a"></script>
+<script src="system-settings-gen11.js?v=20261118-a"></script>
+<script src="../_aan-tablet.js?v=20261116-wide"></script>
+</body>
+</html>

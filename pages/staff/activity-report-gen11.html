@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Activity Report — AAN (Gen 11)</title>
+<meta name="description" content="AAN staff activity report — Gen 11 build of the new backend's Activity Report (/work/activity), a page with no Gen 11 reference, built from the system.">
+<script>document.documentElement.classList.remove('no-js');</script>
+<!-- A page Gen 11 never drew (test, Nov 18): built only from the system. List page (DESIGN.md §37.1) on the staff
+     list skeleton of Feeds Incoming; the board is All Vehicles' (§19: a tiles card as Accounting's deck, a rows card
+     with the Needs-attention meter); facets, view tabs and the two-line cells as My Work Queue. -->
+<script src="../_aan-theme.js?v=20261118-b"></script>
+<link rel="stylesheet" href="../_aan-staff-list.css?v=20261118-ds">
+<link rel="stylesheet" href="../_aan-family.css?v=20261118-tbtn">
+<link rel="stylesheet" href="../_aan-components.css?v=20261118-inset">
+<link rel="stylesheet" href="activity-report-gen11.css?v=20261118-a">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-dn" viewBox="0 0 24 24"><path d="M12 5v14m6-6-6 6-6-6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"/></symbol>
+  <!-- action-type glyphs: the backend's ☑ ✓ ⏱ ✎ ＋ ✉, and 📎 for an attached file -->
+  <symbol id="i-todo" viewBox="0 0 24 24"><path d="m9 11 3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M10 2h4"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+  <symbol id="i-clip" viewBox="0 0 24 24"><path d="m21.4 11.1-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"/></symbol>
+</svg>
+
+<div class="app" id="app">
+
+  <header class="top">
+    <a class="brand" href="#" title="All Auto Network · Backend">
+      <span class="brand__mk">AAN</span>
+      <span class="brand__t">All Auto Network</span>
+      <span class="brand__env">Backend</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="System menu"></nav>
+    <span class="top__sp"></span>
+    <label class="gsearch">
+      <svg class="i"><use href="#i-search"/></svg>
+      <input type="search" name="global-search" placeholder="Search anywhere" aria-label="Search anywhere">
+      <!-- <kbd>/</kbd> (Nov 18: no key focuses this field here; the hint stands only on the field "/" focuses) -->
+    </label>
+    <a class="atlas" href="#" title="The Atlas — system architecture wiki"><span aria-hidden="true">▣</span><span class="atlas__t">Atlas</span></a>
+    <button class="tbtn tbtn--theme" type="button" data-act="theme" aria-label="Switch to dark theme" title="Dark theme"><svg class="i t-moon"><use href="#i-moon"/></svg><svg class="i t-sun"><use href="#i-sun"/></svg></button>
+    <div class="nav__it">
+      <button class="tbtn" type="button" data-pop="p-help" aria-haspopup="true" aria-expanded="false" aria-label="Support"><svg class="i"><use href="#i-buoy"/></svg></button>
+      <div class="pop pop--r" id="p-help">
+        <div class="caps pop__lab">Support</div>
+        <a class="mn__it" href="create-ticket-gen11.html">Create A Ticket</a>
+        <a class="mn__it" href="activity-report-gen11.html" aria-current="page">Activity Report</a>
+      </div>
+    </div>
+    <span class="top__div"></span>
+    <div class="nav__it">
+      <button class="me" type="button" data-pop="p-me" aria-haspopup="true" aria-expanded="false">
+        <span class="me__mk">IG</span><span class="me__n">Ivaylo Guenkov</span>
+        <svg class="i"><use href="#i-chev"/></svg>
+      </button>
+      <div class="pop pop--r" id="p-me">
+        <div class="mn__who"><b>Ivaylo Guenkov</b>AAN · Backend</div>
+        <button class="mn__it" type="button" data-act="theme" aria-label="Switch to dark theme">Dark theme</button>
+        <a class="mn__it" href="#">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ PAGE HEAD — the title and the backend's range line; the Summary toggle (§20 Show / Hide) ══ -->
+  <div class="head">
+    <div class="head__id">
+      <h1 id="page-t">Activity Report</h1>
+      <div class="head__meta" id="head-meta"></div>
+    </div>
+    <span class="head__sp"></span>
+    <div class="head__actions">
+      <button class="btn btn--sheet acr-tog" type="button" data-act="summary" aria-expanded="true" aria-controls="board" title="Hide the summary">
+        <svg class="i"><use href="#i-chev"/></svg> Summary
+      </button>
+    </div>
+  </div>
+
+  <!-- ══ BOARD (§19) — the summary of the range: six figures, and who did the work ══════════════
+       Two cards: tiles (Accounting's deck) and rows with a share meter (All Vehicles' Needs attention).
+       A staff row is the backend's "filter →": it filters the log below. -->
+  <section class="bento acr-board" id="board" aria-label="Summary">
+    <section class="acr-card acr-sum" aria-labelledby="sum-t">
+      <div class="acr-card__h"><h2 class="acr-card__t" id="sum-t">Summary</h2><span class="acr-card__m" id="sum-m"></span></div>
+      <div class="acr-tiles" id="tiles"></div>
+    </section>
+    <section class="acr-card acr-staff" aria-labelledby="staff-t">
+      <div class="acr-card__h"><h2 class="acr-card__t" id="staff-t">Staff</h2><span class="acr-card__m">click a person to filter the log</span></div>
+      <div class="acr-st acr-st--hd" aria-hidden="true">
+        <span class="caps">Employee</span><span class="caps">Rows</span><span class="caps acr-st__share">Share</span>
+        <span class="caps">Tickets</span><span class="caps">Notes</span><span class="caps">Hours Δ</span><span></span>
+      </div>
+      <div class="acr-st__g" id="staff" role="group" aria-label="Filter the log by employee"></div>
+    </section>
+  </section>
+
+  <!-- ══ FIELD — the activity log ═════════════════════════════════════════════════════════════ -->
+  <section class="field" id="field" aria-label="Activity log">
+    <!-- the range: the backend's five buttons as view tabs, and its Start / End dates beside them -->
+    <div class="cmdtop ui-toolbar ui-toolbar--sub">
+      <div class="lanes ui-views" id="ranges" role="group" aria-label="Date range"></div>
+      <span class="sub__sp"></span>
+      <label class="acr-date"><span>Start date</span><input class="fld" type="date" id="d-start"></label>
+      <label class="acr-date"><span>End date</span><input class="fld" type="date" id="d-end"></label>
+    </div>
+
+    <!-- command band · sticky #2 of 3: Ticket # (the backend's one text filter), Action, User, Dealer -->
+    <div class="cmd ui-toolbar" id="cmd">
+      <label class="search">
+        <svg class="i"><use href="#i-search"/></svg>
+        <span class="vh">Ticket #</span>
+        <input type="search" id="q" inputmode="numeric" placeholder="Ticket #…" autocomplete="off">
+      </label>
+      <span class="cmd__div"></span>
+      <div class="facet">
+        <button class="facet__b" type="button" data-pop="p-act" aria-haspopup="true" aria-expanded="false">
+          <span class="facet__k">Action</span><span class="facet__v" id="act-v">All</span><svg class="i"><use href="#i-chev"/></svg>
+        </button>
+        <div class="pop pop--r pop--wide acr-pop" id="p-act"><div class="acr-pop__list" id="act-list"></div><div class="pop__foot" id="act-foot"></div></div>
+      </div>
+      <div class="facet">
+        <button class="facet__b" type="button" data-pop="p-user" aria-haspopup="true" aria-expanded="false">
+          <span class="facet__k">User</span><span class="facet__v" id="user-v">All</span><svg class="i"><use href="#i-chev"/></svg>
+        </button>
+        <div class="pop pop--r acr-pop" id="p-user"><div class="acr-pop__list" id="user-list"></div><div class="pop__foot" id="user-foot"></div></div>
+      </div>
+      <div class="facet">
+        <button class="facet__b" type="button" data-pop="p-dlr" aria-haspopup="true" aria-expanded="false">
+          <span class="facet__k">Dealer</span><span class="facet__v" id="dlr-v">All dealers</span><svg class="i"><use href="#i-chev"/></svg>
+        </button>
+        <div class="pop pop--r pop--wide acr-pop" id="p-dlr">
+          <div class="pop__find"><input class="fld" type="search" id="dlr-q" placeholder="Find a dealer…" aria-label="Find a dealer" autocomplete="off"></div>
+          <div class="acr-pop__list" id="dlr-list"></div>
+          <div class="pop__foot" id="dlr-foot"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- the applied filters (removable) and Reset all; the count at the right -->
+    <div class="sub ui-toolbar ui-toolbar--sub">
+      <span class="acr-chips" id="chips"></span>
+      <span class="sub__sp ui-toolbar__sp"></span>
+      <span class="scope" id="scope"></span>
+    </div>
+
+    <div class="rows ui-table acr-rows" id="rows">
+      <div class="hd ui-thead" id="hd" role="row">
+        <span class="c-when"><button class="s s--on" type="button" data-sort="when">Date / Time<svg class="i"><use href="#i-dn"/></svg></button></span>
+        <span class="c-emp">Employee</span>
+        <span class="c-tk" title="Ticket number">#</span>
+        <span class="c-dlr" title="Dealership Name">Dealership</span>
+        <span class="c-subj" title="Ticket's Subject">Subject</span>
+        <span class="c-type">Action type</span>
+        <span class="c-hrs" title="Employee Total Hours">Hours<i class="f__q" tabindex="0" title="Employee Total Hours. The backend's own note on this column was not read for this demo." aria-label="Employee Total Hours. The backend's own note on this column was not read for this demo.">?</i></span>
+        <span class="c-note">Message / Notes</span>
+      </div>
+      <div id="tb"></div>
+      <div class="empty" id="empty" hidden></div>
+    </div>
+
+    <div class="foot">
+      <span id="foot-n"></span>
+      <span class="foot__sp"></span>
+      <span class="foot__prov">Read from the new backend (Activity Report), Nov 18 · client names in notes removed</span>
+    </div>
+  </section>
+
+  <p class="nojs">This page renders its report with script. Enable JavaScript to read it.</p>
+</div>
+
+<script src="manage-dealers-gen11.data.js?v=20261030-nav"></script>
+<script src="activity-report-gen11.data.js?v=20261118-a"></script>
+<script src="activity-report-gen11.js?v=20261118-a"></script>
+<script src="../_aan-tablet.js?v=20261116-wide"></script>
+</body>
+</html>

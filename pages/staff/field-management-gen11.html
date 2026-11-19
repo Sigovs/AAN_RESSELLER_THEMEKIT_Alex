@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Field Management — AAN (Gen 11)</title>
+<meta name="description" content="AAN staff vehicle field registry — Gen 11 build of the new backend's Field Management screen (a page with no Gen 11 reference, built from the system).">
+<script>document.documentElement.classList.remove('no-js');</script>
+<!-- A page Gen 11 never drew (test page, Nov 18): built only from the system — the list page type (DESIGN.md §37.1)
+     through Feeds Incoming's staff skeleton (platform bar, page head, tally, field) plus the shared components. -->
+<script src="../_aan-theme.js?v=20261118-b"></script>
+<link rel="stylesheet" href="../_aan-staff-list.css?v=20261118-ds">
+<link rel="stylesheet" href="../_aan-family.css?v=20261118-tbtn">
+<link rel="stylesheet" href="../_aan-components.css?v=20261118-inset">
+<link rel="stylesheet" href="field-management-gen11.css?v=20261118-a">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"/></symbol>
+</svg>
+
+<div class="app" id="app">
+
+  <header class="top">
+    <a class="brand" href="#" title="All Auto Network · Backend">
+      <span class="brand__mk">AAN</span>
+      <span class="brand__t">All Auto Network</span>
+      <span class="brand__env">Backend</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="System menu"></nav>
+    <span class="top__sp"></span>
+    <label class="gsearch">
+      <svg class="i"><use href="#i-search"/></svg>
+      <input type="search" name="global-search" placeholder="Search anywhere" aria-label="Search anywhere">
+      <!-- <kbd>/</kbd> (Nov 18: no key focuses this field here; the hint stands only on the field "/" focuses) -->
+    </label>
+    <a class="atlas" href="#" title="The Atlas — system architecture wiki"><span aria-hidden="true">▣</span><span class="atlas__t">Atlas</span></a>
+    <button class="tbtn tbtn--theme" type="button" data-act="theme" aria-label="Switch to dark theme" title="Dark theme"><svg class="i t-moon"><use href="#i-moon"/></svg><svg class="i t-sun"><use href="#i-sun"/></svg></button>
+    <div class="nav__it">
+      <button class="tbtn" type="button" data-pop="p-help" aria-haspopup="true" aria-expanded="false" aria-label="Support"><svg class="i"><use href="#i-buoy"/></svg></button>
+      <div class="pop pop--r" id="p-help">
+        <div class="caps pop__lab">Support</div>
+        <a class="mn__it" href="create-ticket-gen11.html">Create A Ticket</a>
+        <a class="mn__it" href="#">Activity Report</a>
+      </div>
+    </div>
+    <span class="top__div"></span>
+    <div class="nav__it">
+      <button class="me" type="button" data-pop="p-me" aria-haspopup="true" aria-expanded="false">
+        <span class="me__mk">IG</span><span class="me__n">Ivaylo Guenkov</span>
+        <svg class="i"><use href="#i-chev"/></svg>
+      </button>
+      <div class="pop pop--r" id="p-me">
+        <div class="mn__who"><b>Ivaylo Guenkov</b>AAN · Backend</div>
+        <button class="mn__it" type="button" data-act="theme" aria-label="Switch to dark theme">Dark theme</button>
+        <a class="mn__it" href="#">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 1 · page head: the title and its context in one quiet line (the registry size, or the dealer whose set is open) -->
+  <div class="head">
+    <div class="head__id">
+      <h1>Field Management</h1>
+      <div class="head__meta" id="page-meta">397 registry fields</div>
+      <span class="chip chip--id fm-table" id="fm-table" title="The dealer's vehicle table" hidden><span class="head__k">Table:</span> <b id="enable-table">products</b></span>
+    </div>
+    <span class="head__ctx">System Tools</span>
+    <span class="head__sp"></span>
+  </div>
+
+  <!-- counts of the whole registry: read-only, Manage Dealers' tally -->
+  <!-- Facelift only (Nov 18): the backend shows the count alone ("397 registry fields", in the head); this breakdown was ours. Was:
+  <div class="tally" id="tally" aria-label="Registry counts"></div> -->
+
+  <!-- 3 · the list -->
+  <section class="field" id="field" aria-label="Vehicle fields">
+
+    <!-- command band · sticky: find, the dealer, Show inactive, and the backend's three filters -->
+    <div class="cmd ui-toolbar" id="cmd">
+      <!-- Facelift only (Nov 18): the backend screen has no search, so it waits for after go-live. Was:
+      <label class="search">
+        <svg class="i"><use href="#i-search"/></svg>
+        <span class="vh">Find a field by key or label</span>
+        <input type="search" placeholder="Find a field — key or label…" autocomplete="off">
+        <span class="chip-src" title="The backend screen has no search; Gen 11's list template does">Mock addition</span>
+      </label> -->
+      <input type="hidden" id="q" value="">
+
+      <label class="search fm-dealer" title="Dealer # — opens that dealer's vehicle field set">
+        <span class="fm-dealer__k">Dealer #</span>
+        <input type="text" id="dealer" inputmode="numeric" pattern="[0-9]*" placeholder="id…" autocomplete="off" aria-label="Dealer #">
+        <button class="fm-dealer__x" type="button" id="dealer-x" aria-label="Clear dealer #" title="Clear dealer #" hidden><svg class="i"><use href="#i-x"/></svg></button>
+      </label>
+
+      <label class="opt fm-inactive"><input type="checkbox" class="ck" id="inactive"> Show inactive</label>
+
+      <span class="cmd__div"></span>
+
+      <div class="facet">
+        <button class="facet__b" type="button" data-pop="p-group" aria-haspopup="true" aria-expanded="false">
+          <span class="facet__k">Group</span><span class="facet__v" id="group-v">All</span><svg class="i"><use href="#i-chev"/></svg>
+        </button>
+        <div class="pop" id="p-group"><div id="group-list"></div></div>
+      </div>
+      <div class="facet">
+        <button class="facet__b" type="button" data-pop="p-core" aria-haspopup="true" aria-expanded="false">
+          <span class="facet__k">Core</span><span class="facet__v" id="core-v">All</span><svg class="i"><use href="#i-chev"/></svg>
+        </button>
+        <div class="pop" id="p-core"><div id="core-list"></div></div>
+      </div>
+      <div class="facet">
+        <button class="facet__b" type="button" data-pop="p-flag" aria-haspopup="true" aria-expanded="false">
+          <span class="facet__k">Source flag</span><span class="facet__v" id="flag-v">All</span><svg class="i"><use href="#i-chev"/></svg>
+        </button>
+        <div class="pop pop--r" id="p-flag"><div class="caps pop__lab">Source flag · provenance</div><div id="flag-list"></div></div>
+      </div>
+    </div>
+
+    <!-- the mode, then the scope line: what is shown; in a dealer's set, its table and the Enable field action -->
+    <div class="sub ui-toolbar ui-toolbar--sub">
+      <!-- the backend's two modes: view tabs in the sub band (DESIGN.md §37.1), its own order -->
+      <div class="lanes ui-views fm-modes" id="modes" role="group" aria-label="Mode">
+        <button class="lane ui-view" type="button" data-mode="dealer" aria-pressed="false"><span>Dealer Field Set</span><b id="mode-dealer-n" hidden></b></button>
+        <button class="lane ui-view" type="button" data-mode="global" aria-pressed="true"><span>Global Registry</span><b>397</b></button>
+      </div>
+      <span class="scope" id="scope"></span>
+      <form class="fm-enable" id="enable" hidden novalidate>
+        <span class="fm-res" aria-live="polite"><span class="fm-res__ok" id="res-ok">Demo — nothing is saved</span><span class="fm-res__err" id="res-err">Enter a registry key</span></span>
+        <label class="fm-enable__l" for="enable-key">Enable field</label>
+        <input class="fld fm-enable__in" type="text" id="enable-key" placeholder="field_registry key…" autocomplete="off" spellcheck="false" list="keys">
+        <datalist id="keys"></datalist>
+        <button class="btn btn--sheet btn--sm" type="submit"><svg class="i"><use href="#i-plus"/></svg> Enable</button>
+      </form>
+    </div>
+
+    <div class="rows ui-table fm-rows" id="rows">
+      <div class="hd ui-thead" id="hd" role="row"></div>
+      <div id="tb"></div>
+    </div>
+
+    <div class="foot">
+      <span id="foot-n"></span>
+      <span class="foot__sp"></span>
+      <span class="foot__prov">Read from the new backend (Field Management), Nov 18 · demo sample</span>
+    </div>
+  </section>
+
+  <div class="nojs">Field Management is drawn by script. Turn JavaScript on to see the registry.</div>
+</div>
+
+<script src="manage-dealers-gen11.data.js?v=20261030-nav"></script>
+<script src="field-management-gen11.data.js?v=20261118-a"></script>
+<script src="field-management-gen11.js?v=20261118-a"></script>
+<script src="../_aan-tablet.js?v=20261116-wide"></script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sales Report — AAN (Gen 11)</title>
+<meta name="description" content="AAN staff sales report — Gen 11 build of the new backend's Sales Report screen (a page with no Gen 11 reference, built from the system).">
+<script>document.documentElement.classList.remove('no-js');</script>
+<!-- A page Gen 11 never drew (test, Nov 18): built only from the system — the staff list skeleton
+     (Feeds Incoming), Accounting's board of tiles, the shared view track, the record pages' chapter heads
+     and Dealer Edit's segmented control. Review states: #loading · #interrupted · #y2024 (any year) · #dark -->
+<script src="../_aan-theme.js?v=20261118-b"></script>
+<link rel="stylesheet" href="../_aan-staff-list.css?v=20261118-ds">
+<link rel="stylesheet" href="../_aan-family.css?v=20261118-tbtn">
+<link rel="stylesheet" href="../_aan-components.css?v=20261118-inset">
+<link rel="stylesheet" href="sales-report-gen11.css?v=20261118-a">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-dn" viewBox="0 0 24 24"><path d="M12 5v14m6-6-6 6-6-6"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36M21 4v5h-5"/></symbol>
+  <symbol id="i-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6M18.4 5.6l-3.6 3.6M18.4 18.4l-3.6-3.6M5.6 18.4l3.6-3.6"/></symbol>
+</svg>
+
+<div class="app" id="app">
+
+  <!-- ══ PLATFORM BAR — copied whole from Feeds Incoming (staff side). The Sales Report is in no staff
+       menu group, so no group is current. ═══════════════════════════════════════════════════════════ -->
+  <header class="top">
+    <a class="brand" href="#" title="All Auto Network · Backend">
+      <span class="brand__mk">AAN</span>
+      <span class="brand__t">All Auto Network</span>
+      <span class="brand__env">Backend</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="System menu"></nav>
+    <span class="top__sp"></span>
+    <label class="gsearch">
+      <svg class="i"><use href="#i-search"/></svg>
+      <input type="search" name="global-search" placeholder="Search anywhere" aria-label="Search anywhere">
+      <!-- <kbd>/</kbd> (Nov 18: no key focuses this field here; the hint stands only on the field "/" focuses) -->
+    </label>
+    <a class="atlas" href="#" title="The Atlas — system architecture wiki"><span aria-hidden="true">▣</span><span class="atlas__t">Atlas</span></a>
+    <button class="tbtn tbtn--theme" type="button" data-act="theme" aria-label="Switch to dark theme" title="Dark theme"><svg class="i t-moon"><use href="#i-moon"/></svg><svg class="i t-sun"><use href="#i-sun"/></svg></button>
+    <div class="nav__it">
+      <button class="tbtn" type="button" data-pop="p-help" aria-haspopup="true" aria-expanded="false" aria-label="Support"><svg class="i"><use href="#i-buoy"/></svg></button>
+      <div class="pop pop--r" id="p-help">
+        <div class="caps pop__lab">Support</div>
+        <a class="mn__it" href="create-ticket-gen11.html">Create A Ticket</a>
+        <a class="mn__it" href="#">Activity Report</a>
+      </div>
+    </div>
+    <span class="top__div"></span>
+    <div class="nav__it">
+      <button class="me" type="button" data-pop="p-me" aria-haspopup="true" aria-expanded="false">
+        <span class="me__mk">IG</span><span class="me__n">Ivaylo Guenkov</span>
+        <svg class="i"><use href="#i-chev"/></svg>
+      </button>
+      <div class="pop pop--r" id="p-me">
+        <div class="mn__who"><b>Ivaylo Guenkov</b>AAN · Backend</div>
+        <button class="mn__it" type="button" data-act="theme" aria-label="Switch to dark theme">Dark theme</button>
+        <a class="mn__it" href="#">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ PAGE HEAD — title · year; the year filter and Print are the page's actions ═══════════════════ -->
+  <div class="head">
+    <div class="head__id">
+      <h1>Sales Report</h1>
+      <div class="head__meta" id="head-meta">2026</div>
+    </div>
+    <span class="head__sp"></span>
+    <div class="head__actions sr-year">
+      <span class="caps flt__k" id="year-k">Year</span>
+      <div class="seg" id="years" role="radiogroup" aria-labelledby="year-k"></div>
+      <label class="facet facet--sel ui-select sr-more" title="More years">
+        <select class="sel" id="more-years" aria-label="More years">
+          <option value="" selected>More years</option>
+          <option value="" disabled>Not read for this mockup</option>
+        </select>
+      </label>
+      <button class="btn btn--sheet" type="button" data-act="print"><svg class="i"><use href="#i-print"/></svg> Print</button>
+    </div>
+  </div>
+
+  <!-- ══ BOARD — the four figures of the year (DESIGN.md §19, Accounting's board of tiles) ══════════════ -->
+  <section class="deck sr-deck" id="deck" aria-labelledby="deck-t">
+    <div class="deck__h">
+      <h2 class="deck__t" id="deck-t">Sales in 2026</h2>
+      <span class="deck__m" id="deck-m" role="status" aria-live="polite"></span>
+    </div>
+    <div class="deck__g" id="tiles"></div>
+  </section>
+
+  <!-- ══ FIELD — the jump band, then one chapter per table ═════════════════════════════════════════════ -->
+  <section class="field sr-field" id="field" aria-label="Sales by month">
+    <div class="cmdtop ui-toolbar ui-toolbar--sub sr-band" id="band">
+      <span class="caps flt__k" id="jump-k">Jump to</span>
+      <nav class="lanes ui-views" id="jump" aria-labelledby="jump-k"></nav>
+    </div>
+
+    <div class="secs" id="secs"></div>
+    <div class="empty" id="empty" hidden></div>
+
+    <div class="foot">
+      <span id="foot-n"></span>
+      <span class="foot__sp"></span>
+      <span class="foot__prov">Read from the new backend (Sales Report), Nov 18 · 2026 only</span>
+    </div>
+  </section>
+
+  <p class="nojs">This page renders its report with script. Enable JavaScript to read it.</p>
+</div>
+
+<script src="manage-dealers-gen11.data.js?v=20261030-nav"></script>
+<script src="sales-report-gen11.data.js?v=20261118-a"></script>
+<script src="sales-report-gen11.js?v=20261118-a"></script>
+</body>
+</html>

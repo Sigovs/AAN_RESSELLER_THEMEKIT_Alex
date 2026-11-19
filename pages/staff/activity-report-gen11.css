@@ -1,0 +1,218 @@
+/* AAN · Staff UI · Activity Report — GENERATION 11
+   A list page (DESIGN.md §37.1) on the staff list skeleton (_aan-staff-list.css, as Feeds Incoming). This file
+   sets the page's layout and its column model; the few components the shared layers do not carry yet are
+   written here once, from their origin page's measured values and the system tokens (listed under "page-local"
+   below — candidates for _aan-components.css). No new colour, radius, shadow, size or weight. */
+
+/* ── the board tokens All Vehicles and Accounting declare in their own sheets (light values, verbatim).
+      The dark theme's values come from _aan-family.css (html[data-theme="dark"] outranks :root). ── */
+:root {
+  --focal-2: #223049;
+  --focal-ink-2: #bdc6d5;
+  --focal-ink-3: #97a3b7;
+  --brand-soft-2: #cddbfb;
+  --sh-card: 0 22px 44px -22px rgba(15, 27, 61, .55), inset 0 1px 0 rgba(255, 255, 255, .14);
+}
+
+/* ── page grid: bar · head · board · field (the board takes the row Feeds Incoming gives its tally) ── */
+.acr-board { grid-row: 3; }
+.app > .field { grid-row: 4; }
+
+/* the Summary toggle (§20 Show / Hide): one label, the chevron turns; the button never changes width */
+.acr-tog .i { transition: transform var(--dur) var(--ease); }
+.acr-tog[aria-expanded="true"] .i { transform: rotate(180deg); }
+
+/* ══ BOARD (§19) ══════════════════════════════════════════════════════════════════════════════════
+   page-local: the board card, the tile (Accounting's deck) and the meter row (All Vehicles' Needs attention) */
+.acr-board {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+  gap: var(--s4);
+}
+.acr-card {
+  display: flex; flex-direction: column; min-width: 0;
+  padding: var(--s4);
+  border-radius: var(--r-l);
+  background: var(--focal);
+  box-shadow: var(--sh-card);
+  color: var(--focal-ink);
+}
+.acr-card__h { display: flex; align-items: baseline; gap: var(--s3); padding: 0 var(--s2) var(--s2); }
+.acr-card__t { flex: 1 1 auto; font-size: 16px; font-weight: 700; letter-spacing: -.01em; line-height: 1.25; color: var(--focal-ink); }
+.acr-card__m { font-size: 13px; color: var(--focal-ink-3); white-space: nowrap; }
+
+/* tiles: 2 × 3, sharing the card's height (content never packs at the top, §19) */
+.acr-tiles {
+  flex: 1 1 auto;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 1fr;
+  gap: var(--s2);
+}
+.acr-card .tile {
+  display: flex; flex-direction: column; justify-content: center; min-width: 0;
+  padding: var(--s3) var(--s4);
+  border-radius: var(--r-panel);
+  background: rgba(255, 255, 255, .055);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07);
+}
+.acr-card .tile__k { color: var(--focal-ink-3); white-space: nowrap; }
+.acr-card .tile__v {
+  margin-top: 6px;
+  font-size: 24px; font-weight: 700; letter-spacing: -.015em; font-stretch: 88%; line-height: 1.1;
+  font-variant-numeric: tabular-nums; color: var(--focal-ink);
+}
+.acr-card .tile__s {
+  display: flex; align-items: center; gap: var(--s1);
+  margin-top: var(--s1);
+  font-size: 14px; color: var(--focal-ink-3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* staff rows: name, rows, share meter + %, tickets, notes, hours Δ, and the filter arrow */
+.acr-st {
+  display: grid;
+  grid-template-columns: minmax(132px, 1.4fr) 40px minmax(48px, 1fr) 44px 52px 44px 60px 16px;
+  align-items: center;
+  column-gap: var(--s3);
+  min-height: 26px;
+  padding: 0 var(--s2);
+  border-radius: var(--r-inner);
+  font-size: 14px; line-height: 1.2; text-align: left;
+  color: var(--focal-ink-2);
+  font-variant-numeric: tabular-nums;
+}
+.acr-st--hd { min-height: 22px; padding-bottom: var(--s1); }
+.acr-st--hd .caps { color: var(--focal-ink-3); white-space: nowrap; }
+.acr-st__share { grid-column: 3 / span 2; }
+.acr-st__g { flex: 1 1 auto; display: grid; grid-auto-rows: 1fr; }
+button.acr-st {
+  width: 100%;
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, .07);
+  transition: background var(--dur) var(--ease);
+}
+button.acr-st:last-child { box-shadow: none; }
+button.acr-st:hover { background: rgba(255, 255, 255, .055); }
+button.acr-st:focus-visible { outline-color: var(--focus-color-on-dark); outline-offset: -2px; }
+.acr-st__n { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; color: var(--focal-ink); }
+.acr-st__r { font-weight: 700; color: var(--focal-ink); }
+.ar__m { display: block; height: 4px; border-radius: 2px; background: rgba(255, 255, 255, .14); overflow: hidden; }
+.ar__m i { display: block; height: 100%; width: var(--w, 0); border-radius: 2px; background: var(--focal-ink-2); }
+.acr-st__p { color: var(--focal-ink-3); }
+.acr-st__go { display: grid; place-items: center; color: var(--focal-ink-3); }
+.acr-st__go .i { width: 13px; height: 13px; }
+.acr-st__go .i-on { display: none; }
+button.acr-st:hover .acr-st__go { color: var(--focal-ink); }
+/* chosen = brand fill, white type; the check takes the arrow's place (§19 tiles) */
+button.acr-st.acr-st--on, button.acr-st.acr-st--on:hover { background: var(--brand); box-shadow: none; color: #fff; }
+.acr-st--on .acr-st__n, .acr-st--on .acr-st__r, .acr-st--on .acr-st__p, .acr-st--on .acr-st__go { color: #fff; }
+.acr-st--on .ar__m { background: rgba(255, 255, 255, .28); }
+.acr-st--on .ar__m i { background: #fff; }
+.acr-st--on .acr-st__go .i-off { display: none; }
+.acr-st--on .acr-st__go .i-on { display: block; }
+
+/* "?" mark (Single Vehicle's .f__q) — page-local */
+.f__q {
+  display: inline-grid; place-items: center; flex: none;
+  width: 15px; height: 15px; margin-left: var(--s1);
+  border-radius: 50%;
+  background: var(--ink-4); color: var(--sheet);
+  font-size: 10px; font-weight: 700; font-style: normal; letter-spacing: 0; text-transform: none;
+  cursor: help; vertical-align: 1px;
+}
+.acr-card .f__q { background: var(--focal-ink-3); color: var(--focal); }
+.acr-card .f__q:focus-visible { outline-color: var(--focus-color-on-dark); }
+
+/* ══ FIELD ════════════════════════════════════════════════════════════════════════════════════ */
+/* the range row: view tabs at the left, the two dates at the right (dense fields, 30px — §11) */
+.acr-date { display: inline-flex; align-items: center; gap: var(--s2); }
+.acr-date > span { font-size: 13px; font-weight: 600; color: var(--ink-2); white-space: nowrap; }
+.acr-date .fld { width: 148px; height: 30px; padding: 0 var(--s2); }
+
+/* applied filters + Reset all (All Vehicles' .scope__clear, page-local) */
+.acr-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; }
+.fchip { padding-right: var(--s1); }
+.scope__clear {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 30px; padding: 0 var(--s3);
+  border-radius: 8px;
+  background: var(--danger-soft); color: var(--danger);
+  box-shadow: inset 0 0 0 1px var(--danger-line);
+  font-size: 13px; font-weight: 600; white-space: nowrap;
+}
+.scope__clear:hover { box-shadow: inset 0 0 0 1px var(--danger); }
+.sub .scope { white-space: nowrap; }
+.scope__clear:disabled { opacity: .5; cursor: default; box-shadow: inset 0 0 0 1px var(--danger-line); }
+
+/* a filter popover: the find field and the footer stay put, the list scrolls between them */
+.acr-pop.pop--open { display: flex; flex-direction: column; overflow: hidden; }
+.acr-pop__list { flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; }
+
+/* a popover's footer (All Vehicles' .pop__foot) — page-local */
+.pop__foot {
+  display: flex; align-items: center; gap: var(--s2);
+  margin: 6px -6px -6px;
+  padding: var(--s2) var(--s3);
+  box-shadow: inset 0 1px 0 var(--line-2);
+  font-size: 13px; color: var(--ink-3);
+}
+.pop__foot b { color: var(--ink-2); font-weight: 600; font-variant-numeric: tabular-nums; }
+.pop__empty { padding: var(--s4); color: var(--ink-3); font-size: 14px; }
+.pop__find .fld { height: 36px; }
+
+/* ── the log: eight columns, every track minmax(its minimum, a share) so the table fits 1024 with no sideways
+      scroll (§10); the free-text columns wrap onto a second line, a third ends in an ellipsis ── */
+.acr-rows {
+  --cols:
+    minmax(84px, .7fr)     /* date / time      */
+    minmax(96px, .9fr)     /* employee         */
+    minmax(52px, .4fr)     /* ticket #         */
+    minmax(120px, 1.1fr)   /* dealership       */
+    minmax(128px, 1.2fr)   /* subject          */
+    minmax(160px, 1.4fr)   /* action type      */
+    minmax(92px, .7fr)     /* hours            */
+    minmax(164px, 2fr);    /* message / notes  */
+}
+.acr-rows .hd, .acr-rows .row { min-width: 0; }   /* the skeleton's 1168px floor (≤1220) is for Manage Dealers' columns */
+.acr-rows .hd > span { white-space: nowrap; }
+.acr-rows .hd > .c-hrs { display: inline-flex; align-items: center; }
+.acr-rows .row {
+  /* the head now takes the rows' inset below 1400 (_aan-components.css, Nov 18), so the rows keep the skeleton's */
+  height: auto; min-height: var(--row);
+  padding-top: var(--s2); padding-bottom: var(--s2);
+  line-height: 1.35;
+}
+.acr-rows .row > * { min-width: 0; }
+.acr-2l {
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2;
+  overflow: hidden; overflow-wrap: break-word; word-break: normal;
+}
+.acr-rows .row > .c-when, .acr-rows .row > .c-hrs { display: flex; flex-direction: column; gap: 1px; font-variant-numeric: tabular-nums; }
+.acr-rows .c-when small, .acr-rows .c-hrs small { font-size: 13px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.acr-rows .c-emp { overflow: hidden; text-overflow: ellipsis; }
+.acr-rows .tkt { font: 600 13px var(--mono); color: var(--brand-ink); letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+.acr-rows .tkt:hover { color: var(--brand); text-decoration: none; }
+.acr-rows .c-subj { font-weight: 600; }
+.acr-rows .c-type { display: flex; align-items: center; gap: var(--s2); color: var(--ink-2); }
+.acr-rows .c-type > .i, .acr-rows .c-type > .acr-g { width: 16px; height: 16px; flex: none; color: var(--ink-3); }
+.acr-rows .c-hrs b { font-weight: 600; color: var(--ink); }
+.acr-rows .c-hrs .d { margin-left: 6px; color: var(--ink-2); font-weight: 600; }
+.acr-rows .c-note { color: var(--ink-2); }
+.acr-rows .c-note .i { width: 12px; height: 12px; margin-right: 2px; vertical-align: -1px; color: var(--ink-3); stroke-width: 2.2; }
+.acr-rows .empty .btn { margin-top: var(--s1); }
+
+/* ── tablet (§41): the range row and the chips wrap; the log scrolls inside #tb below its minimums ── */
+@media (max-width: 1279.98px) {
+  .cmdtop { flex-wrap: wrap; row-gap: var(--s2); }
+  .acr-date .fld { width: 140px; }
+}
+/* the board's cards stack below 1180 (the shared TABLET block): the tiles card runs the full row, so its six
+   tiles go three across and the card stays two tiles tall */
+@media (max-width: 1179.98px) {
+  .acr-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* no script: the board and the toggle are drawn by script, so they go with the field (the skeleton's .nojs line says why) */
+html.no-js .acr-board, html.no-js .head__actions { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .acr-tog .i { transition: none; }
+}

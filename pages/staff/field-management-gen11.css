@@ -1,0 +1,132 @@
+/* AAN · Staff UI · Field Management — GENERATION 11
+   The list page type (DESIGN.md §37.1) on Feeds Incoming's staff skeleton. Page CSS is layout only:
+   the column tracks, the row height, where the dealer field and the Enable form sit. Two components the
+   staff skeleton does not load are drawn here from their origin values (marked GAP), and nothing else. */
+
+/* ── the list: one line per field ─────────────────────────────────────────────
+   Every cell here is one short line (a key, a label, a type word), so the row is 40px (--s7), the
+   line height of Feeds Incoming's feed lines — the air goes between the bands, not inside each of
+   397 rows. Key and Label share the slack; the attribute columns are sized to their longest value. */
+.fm-rows {
+  --row: var(--s7);
+  /* every track minmax(its minimum, a share) (§10): the minimums fit 1280, a wider screen spreads its
+     extra width across all the columns in proportion, not to Key and Label alone */
+  --cols:
+    minmax(188px, 1.1fr)   /* key          */
+    minmax(188px, 1.2fr)   /* label        */
+    minmax(112px, .55fr)   /* physical type */
+    minmax(88px, .45fr)    /* group        */
+    minmax(80px, .4fr)     /* core         */
+    minmax(212px, 1fr);    /* source flag  */
+}
+.fm-rows--dealer {
+  --cols:
+    minmax(172px, 1fr)     /* key          */
+    minmax(172px, 1.1fr)   /* label        */
+    minmax(112px, .55fr)   /* physical type */
+    minmax(88px, .45fr)    /* group        */
+    minmax(80px, .4fr)     /* core         */
+    minmax(120px, .6fr)    /* source       */
+    minmax(88px, .4fr)     /* active       */
+    96px;                  /* action       */
+}
+.fm-rows .hd > span { white-space: nowrap; }
+/* the head sits over its cells at every width: below 1400 the staff skeleton steps the row inset down to
+   8px (--sheet-inset) while .ui-thead keeps --inset 16px, which put every head 8px right of its column
+   (Feeds Incoming and Manage Dealers measure the same at 1280). Here the head takes the rows' inset. */
+.app .fm-rows > .hd { padding-left: var(--sheet-inset); padding-right: var(--sheet-inset); }
+
+/* cells: the key and the provenance codes are what a person copies or matches by eye — mono (§18);
+   type, group and core are attributes of the field, plain text in its own words */
+.fm-rows .row > * { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fm-key { font: 600 13px var(--mono); color: var(--ink); }
+.fm-code { font: 500 12.5px var(--mono); color: var(--ink-2); }
+.fm-attr { color: var(--ink-2); }
+.fm-rows .c-act { overflow: visible; }
+
+/* GAP · status chip (DESIGN.md §27, Origin All Vehicles). The shared block sets its geometry (.stat
+   24px / 7px); its tones live in the dealer pages' CSS, which a staff page does not load. These are
+   Manage Dealers' own .c-st tones (manage-dealers-gen11.css), token for token. */
+.fm-rows .stat { display: inline-flex; align-items: center; padding: 0 8px; font-size: 13px; font-weight: 600; width: max-content; }
+.fm-rows .stat--ok { background: var(--ok-soft); box-shadow: inset 0 0 0 1px var(--ok-line); color: var(--ok); }
+.fm-rows .stat--quiet { background: var(--slate-soft, var(--well)); box-shadow: inset 0 0 0 1px var(--line-3); color: var(--ink-3); }
+
+/* GAP · Mock addition tag (DESIGN.md §13, Origin Single Vehicle .chip-src), at the right of the search
+   it marks: the backend screen has no search, the list template does */
+.chip-src {
+  display: inline-flex; align-items: center; flex: none;
+  height: 20px; padding: 0 8px;
+  border-radius: var(--r-micro);
+  background: var(--violet-soft); box-shadow: inset 0 0 0 1px var(--violet-line); color: var(--violet);
+  font-size: 12px; font-weight: 600; white-space: nowrap;
+}
+
+/* ── command band: the dealer # is a second, narrow lookup field (as Manage Dealers' phone search) ── */
+.app .cmd .search.fm-dealer { flex: 0 0 176px; min-width: 0; gap: var(--s2); padding-right: var(--s1); }
+.fm-dealer__k { flex: none; color: var(--ink-3); font-size: 13px; font-weight: 500; white-space: nowrap; }
+.fm-dealer input { min-width: 0; flex: 1 1 auto; font-variant-numeric: tabular-nums; }
+.fm-dealer__x {
+  display: inline-grid; place-items: center; flex: none;
+  width: 26px; height: 26px; border-radius: var(--r-micro); color: var(--ink-3);
+}
+.fm-dealer__x:hover { background: var(--wash); color: var(--ink); }
+.fm-dealer__x .i { width: 13px; height: 13px; }
+.fm-inactive { flex: none; color: var(--ink-2); white-space: nowrap; padding: 0 var(--s1); }
+
+/* the dealer # takes the same 36px as the search beside it, without the search's flex */
+.app .cmd .search.fm-dealer input { font-size: 14px; }
+
+/* the command band is the field's first band here (the modes sit in the sub band, §37.1), so at rest it
+   takes the field's top corners; engaged, it is square like every stuck band (§2) */
+.app .field > .cmd:first-child:not(.cmd--stuck) { border-radius: var(--r-card) var(--r-card) 0 0; }
+.app .sub > .fm-modes { flex: none; margin-right: var(--s2); }
+.app .sub > .scope { flex: 0 0 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ── scope line, and in a dealer's set: its table, the result, the Enable field (dense: 30px) ── */
+.scope .fm-sep { color: var(--ink-4); }
+.fm-enable { display: flex; align-items: center; gap: var(--s2); min-width: 0; margin: 0; }
+.app .sub > .fm-enable { flex: 1 1 auto; }
+.app .ui-toolbar .fm-enable .fld.fm-enable__in { flex: 0 1 240px; min-width: 184px; height: var(--ctl-dense); font-size: 13px; }
+.app .ui-toolbar .fm-enable .btn { height: var(--ctl-dense); padding: 0 var(--s3); font-size: 14px; }
+.app .sub > .fm-enable { justify-content: flex-end; }
+/* the dealer's table is part of the head's context: "Chicago Motor Cars — dealer #277", then its table pill */
+.app .head__id > .fm-table { align-self: center; }
+/* the backend's "Enable field" stands before its input as a field label beside a dense control (§18 13 / 600) */
+.fm-enable__l { color: var(--ink-2); font-size: 13px; font-weight: 600; white-space: nowrap; }
+.fm-enable__in { font-family: var(--mono); }
+/* the result stands 16px left of the field it answers (§11) in the free room between the table chip and
+   the action, which is always there: both messages share one grid cell, only one is visible, and nothing
+   beside them moves when one appears (§14). The table chip stays with the scope it describes. */
+.fm-res { flex: 1 1 0; min-width: 0; display: grid; justify-items: end; margin-right: var(--s2); font-size: 13px; white-space: nowrap; }
+.fm-res > span { grid-area: 1 / 1; visibility: hidden; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+.fm-res__ok { color: var(--ink-3); }
+.fm-res__err { color: var(--danger); }
+.fm-res--ok .fm-res__ok, .fm-res--err .fm-res__err { visibility: visible; }
+
+/* ── empty states (§30): the dealer prompt and "no match" sit in the list's own sheet ── */
+.fm-rows .empty { padding: var(--s8) var(--gutter); }
+.fm-rows .empty .linkbtn {
+  display: inline-flex; align-items: center; gap: var(--s1);
+  color: var(--brand-ink); font-size: 14px; font-weight: 600;
+}
+.fm-rows .empty .linkbtn:hover { color: var(--brand); }
+
+/* ── tally: two keys on one counts line (registry, types) ── */
+.tally .tally__l + .tl { margin-left: 0; }
+.tally .fm-tally2 { margin-left: var(--s4); }
+
+/* ── tablet (DESIGN.md §41): the shared TABLET block scrolls #tb inside the field and keeps the key
+   column (.c-name) in view; here only the Enable form takes its own line under the scope ── */
+@media (max-width: 1279.98px) {
+  /* the modes and the scope share the first line where they fit (the shared rule gives the scope a row of
+     its own, which left the two tabs alone on a 48px line); the dealer's table and Enable go under them */
+  .app .field .sub.ui-toolbar > .scope { flex: 1 1 auto; }
+  .app .field .sub.ui-toolbar > .fm-enable { flex: 1 1 100%; flex-wrap: wrap; row-gap: var(--s2); }
+  .fm-res { flex: 1 0 auto; }
+  /* the staff skeleton gives every row a 1168px minimum below 1220; this table's minimums fit 1024, so it
+     scrolls inside the field only where it must (768) */
+  .fm-rows .hd, .fm-rows .row { min-width: 0; }
+  .app .ui-toolbar .fm-enable .fld.fm-enable__in { flex: 1 1 220px; height: var(--ctl); }   /* the button beside it grows to 36 below 1280 (§41), the field with it */
+  .app .cmd { flex-wrap: wrap; height: auto; row-gap: var(--s2); }
+  .app .cmd > .search:not(.fm-dealer) { flex: 1 1 100%; }   /* the search keeps its whole placeholder: its own line, the controls under it */
+}
