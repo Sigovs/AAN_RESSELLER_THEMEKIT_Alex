@@ -14,8 +14,8 @@ window.SR = {
   tiles: [
     { k: 'Fleet sold · 2026', v: '90,340', s: '232 dealers reporting' },
     { k: 'Top seller', v: 'Design Auto LLC', s: '3,603 sold · 4.0% of fleet' },
-    { k: 'FCKerbeck', v: '369', s: '5 brand lines' },
-    { k: 'Miller Motorcars', v: '795', s: '13 showrooms' }
+    { k: 'FCKerbeck', name: true, v: '369', s: '5 brand lines' },
+    { k: 'Miller Motorcars', name: true, v: '795', s: '13 showrooms' }
   ],
 
   months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],

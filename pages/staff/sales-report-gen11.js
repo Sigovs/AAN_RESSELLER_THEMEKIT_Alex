@@ -59,7 +59,7 @@
       if (!ok) { v = '—'; cls = ' tile__v--none'; }
       else if (S.state === 'loading') { v = 'Loading…'; cls = ' tile__v--wait'; }
       else v = t.v;
-      return '<div class="tile"><span class="tile__k" title="' + esc(k) + '">' + esc(k) + '</span>' +
+      return '<div class="tile"><span class="tile__k' + (t.name ? ' tile__k--name' : '') + '" title="' + esc(k) + '">' + esc(k) + '</span>' +
         '<span class="tile__v' + cls + '" title="' + esc(v) + '"><span>' + esc(v) + '</span></span>' +
         '<span class="tile__s">' + (ok && S.state !== 'loading' ? esc(t.s) : '&nbsp;') + '</span></div>';
     }).join('');

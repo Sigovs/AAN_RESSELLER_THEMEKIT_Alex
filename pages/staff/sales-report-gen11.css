@@ -73,9 +73,13 @@ html[data-theme="dark"] .seg__o:hover span { background: var(--wash); }
 }
 .sr-deck .tile__k {
   font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  line-height: 16px;   /* one line box for both key roles, so the figures stay on one line across the deck */
   color: var(--focal-ink-3, #97a3b7);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
+/* a dealer's name in the key slot is data, not a key: written as the dealer writes it ("FCKerbeck"),
+   in the field label role (13 / 600, sentence case) — caps only on keys (DESIGN.md Appendix) */
+.sr-deck .tile__k--name { font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; }
 .sr-deck .tile__v {
   display: flex; align-items: center;
   height: calc(24px * 1.1); margin-top: var(--s2);   /* the figure's own line box, held by "Loading…" and "—" too */
