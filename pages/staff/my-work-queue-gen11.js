@@ -621,20 +621,32 @@
       e.preventDefault();
       return;
     }
-    if (e.target.closest('[data-act="filters"]')) { setFilters(!$('#app').classList.contains('dock-open')); return; }
+    if (e.target.closest('[data-act="filters"]')) { setFilters(!$('#app').classList.contains('dock-open') || $('.app > .dock').classList.contains('dock--closing')); return; }
     if (!e.target.closest('.pop')) closePops();
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closePops();
   });
   /* Filters is a side panel that stays until it is closed, remembered in this browser (Bill, Nov 11; Alex, Nov 16) */
+  var RM = window.matchMedia('(prefers-reduced-motion: reduce)'), dockT = 0;
+  /* the list changes width only where the dock stands beside it (1800 and up, the CSS); only there does the wide-list
+     scroll re-measure (_aan-tablet.js fit, a full layout of this long list: run on every toggle, it ate the motion) */
+  var BESIDE = window.matchMedia('(min-width: 1800px)');
+  function remeasure() { if (BESIDE.matches) window.dispatchEvent(new Event('resize')); else placeDock(); }
   function setFilters(open) {
-    $('#app').classList.toggle('dock-open', open);
+    var app = $('#app'), dock = $('.app > .dock'); clearTimeout(dockT); dock.classList.remove('dock--closing');
+    if (open) app.classList.add('dock-open');
+    else if (app.classList.contains('dock-open') && !RM.matches && !app.classList.contains('dock-instant')) {
+      dock.classList.add('dock--closing');   /* soft close: the dock fades where it stands, then lets go of its place */
+      dockT = setTimeout(function () { dock.classList.remove('dock--closing'); app.classList.remove('dock-open'); remeasure(); }, 240);   /* --dur2 */
+    } else { app.classList.remove('dock-open'); remeasure(); }
     $$('[data-act="filters"]').forEach(function (b) { if (b.closest('.facet')) { b.setAttribute('aria-expanded', String(open)); b.classList.toggle('facet__b--on', open); } });
     try { localStorage.setItem('aan-mwq-filters-open', open ? '1' : '0'); } catch (x) { }
-    window.dispatchEvent(new Event('resize'));   /* the list's width changed: the wide-list scroll re-measures */
+    if (open) { if (BESIDE.matches && !RM.matches) dockT = setTimeout(remeasure, 320); else remeasure(); }   /* after --dur3: the heavy re-measure never delays the opening */
   }
+  $('#app').classList.add('dock-instant');   /* the remembered state is restored without an arrival */
   try { if (localStorage.getItem('aan-mwq-filters-open') === '1') setFilters(true); } catch (x) { }
+  requestAnimationFrame(function () { requestAnimationFrame(function () { $('#app').classList.remove('dock-instant'); }); });
   /* where the dock lies over the list (1280-1799, the CSS): under the search band, and under it again once the band
      sticks. Measured, because the band's height follows the lane and the chips. */
   function placeDock() {

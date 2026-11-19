@@ -86,18 +86,18 @@
     /* review 2026-10: the row checkboxes and their bulk tray are gone (neither is
        in the original); Status takes the leading column instead. It still steps
        aside when Filters is open, as it always has. */
-    { id: 'status',  label: 'Status',    grp: 'Listing & feeds', sort: 'status', cls: 'c-status', dockOff: true, track: { lg: 96, sm: 88 } },
+    { id: 'status',  label: 'Status',    grp: 'Listing & feeds', sort: 'status', cls: 'c-status', dockOff: true, track: { lg: 96, sm: 84 } },   /* sm 88 until Nov 18: the 1280 row was 18px wider than the card (Actions in its padding). With Added and Color it fits; the head with sort and swap needs 83 */
     { id: 'thumb',   label: 'Thumbnail', grp: 'Listing & feeds', track: { lg: 92, sm: 76, dock: 68, dockSm: 60 } },
     { id: 'stock',   label: 'Stock',     grp: 'Vehicle', sort: 'stock', track: { lg: 104, sm: 92, dock: 104, dockSm: 80 }, grow: 1 },   /* dockSm 88 until Nov 17 (#61: Year's swap icon); dock 100 until Nov 17 (8px text inset in the stock link) */
     { id: 'year',    label: 'Year',      grp: 'Vehicle', sort: 'year', track: { lg: 58, sm: 58, dock: 56, dockSm: 56 } }   /* 46/42/40/40 until Nov 17: room for its swap icon (#61) */,
     { id: 'make',    label: 'Make',      grp: 'Vehicle', sort: 'make', track: { lg: 104, sm: 92, dock: 86, dockSm: 76 } },   /* dockSm 84 until Nov 17 (#61: Year's swap icon) */
     { id: 'model',   label: 'Model',     grp: 'Vehicle', sort: 'model', track: { lg: 100, sm: 88, dock: 80, dockSm: 80 }, grow: 6 },
     { id: 'trim',    label: 'Trim',      grp: 'Vehicle', sort: 'trim', cls: 'c-trim', dockOff: true, track: { lg: 84, sm: 88 }, grow: 1 },
-    { id: 'colour',  label: 'Color',     grp: 'Vehicle', sort: 'colour', cls: 'c-ext', dockOff: true, track: { lg: 92, sm: 84 }, grow: 1 },
+    { id: 'colour',  label: 'Color',     grp: 'Vehicle', sort: 'colour', cls: 'c-ext', dockOff: true, track: { lg: 92, sm: 80 }, grow: 1 },   /* sm 84 until Nov 18 (the 1280 fit, see Status); the head needs 67 */
     { id: 'miles',   label: 'Mileage',   grp: 'Vehicle', sort: 'miles', cls: 'c-miles', dockOff: true, track: { lg: 96, sm: 80 } },
     { id: 'price',   label: 'Price',     grp: 'Pricing', sort: 'price', cls: 'c-price', track: { lg: 118, sm: 84, dock: 80, dockSm: 76 } },
     { id: 'health',  label: 'Listing',    grp: 'Listing & feeds', sort: 'issues', cls: 'c-health', tip: 'Formerly “Missing items”', track: { lg: 246, sm: 124, dock: 120, dockSm: 112 } },   /* dockSm 116 until Nov 17: 4px to Actions */
-    { id: 'age',     label: 'Added',     grp: 'Dates', sort: 'days', track: { lg: 104, sm: 96, dock: 96, dockSm: 84 } },   /* dockSm 92 until Nov 17: 8px to Actions */
+    { id: 'age',     label: 'Added',     grp: 'Dates', sort: 'days', track: { lg: 104, sm: 86, dock: 96, dockSm: 84 } },   /* dockSm 92 until Nov 17: 8px to Actions. sm 96 until Nov 18 (with Status: the 1280 row fits the card); the head with its swap needs 81 */
     /* ── optional columns (Bill, AV note 36: "all possible columns") ──────
        Off by default; the dealer adds them in Columns, as far as the table has
        room (no sideways scroll — the panel says when it is full). Columns the
@@ -846,12 +846,22 @@
   }
   /* .dock-beside: the list narrows beside the dock · .dock-over: the dock lies over the list at its right.
      (.dock-open, the old state that reshaped the list, is not set any more; its rules stay in the CSS, unused.) */
+  /* soft close (Alex, Nov 18): .dock--closing fades the dock out where it stands; its place goes after --dur2 */
+  var RM = window.matchMedia('(prefers-reduced-motion: reduce)'), dockT = 0;
   function openDock() {
     var beside = BESIDE.matches;
+    clearTimeout(dockT); $('.app > .dock').classList.remove('dock--closing');
     $('#app').classList.toggle('dock-beside', beside); $('#app').classList.toggle('dock-over', !beside);
     $('[data-act="filters"]').classList.toggle('facet__b--on', S.dock === 'filters'); placeDock();
   }
-  function closeDock() { S.dock = null; $('#app').classList.remove('dock-beside', 'dock-over'); $('[data-act="filters"]').classList.remove('facet__b--on'); $('#dock-f').className = 'dock__f'; render(); }
+  function closeDock() {
+    var app = $('#app'); S.dock = null; $('[data-act="filters"]').classList.remove('facet__b--on');
+    var dock = $('.app > .dock');
+    var done = function () { dock.classList.remove('dock--closing'); app.classList.remove('dock-beside', 'dock-over'); $('#dock-f').className = 'dock__f'; render(); };
+    clearTimeout(dockT);
+    if (RM.matches || !(app.classList.contains('dock-beside') || app.classList.contains('dock-over'))) { done(); return; }
+    dock.classList.add('dock--closing'); dockT = setTimeout(done, 240);   /* --dur2 */
+  }
   /* over the list, the dock starts under the list's controls (search band, scope line, top pager: nothing it covers is
      a control) and sticks under the stuck search band on scroll. Measured: the bands' heights follow chips and widths. */
   function placeDock() {
