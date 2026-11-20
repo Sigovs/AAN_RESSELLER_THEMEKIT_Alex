@@ -67,6 +67,11 @@ has not loaded yet, not broken files (all links and images return 200 live).
 10. Handed over 20 Nov 2026: Alex sent the one-line ticket with the handover
     page link. README got an "If an agent does the work" section.
 
+11. Plex Mono zero is slashed (Alex's call, 20 Nov): the zero outline in
+    ds/fonts and handoff/fonts plex-mono-400/600 is IBM Plex Mono's zero.alt01,
+    unhinted. Design system page now loads the real fonts (it showed Segoe UI
+    and Consolas). New sl11 build AAN_Gen11_review_build_20261120_v3.zip.
+
 ## Next
 
 - Only possible change ahead: the Dealer Login page (Alex may adjust it).
