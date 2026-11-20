@@ -32,10 +32,27 @@
    - only in the backend's CSS, as states set on interaction: ui-chip (an
      active filter), ui-facet__btn--on (a chosen facet), ui-switch--ok.
    Look at these nine on screen when a page first uses them.
-   MARKUP CHANGE NEEDED: the top nav marks no current section
-   (li.ui-topnav__group > a.ui-topnav__trigger + ul.ui-topnav__menu, no state).
-   Add aria-current="page" on the current group's trigger and its link; the
-   rules below key on it.
+   DARK, RUN ON THE LIVE BACKEND (2026-11-20, read only, both layers injected,
+   html[data-theme="dark"]): 13 screens measured, every text against its
+   composited ground — Manage Dealers, Add New Dealer, a dealer's inventory and
+   lead board, Work Queue, a ticket, Create A Ticket, Feeds Incoming, Feed
+   Groups, Sales Report, System Settings, Field Management, the styleguide.
+   No text of the layers falls under AA. What is left is the backend's own
+   inline colours, listed under MARKUP CHANGES.
+   MARKUP CHANGES NEEDED:
+   1. The top nav marks no current section
+      (li.ui-topnav__group > a.ui-topnav__trigger + ul.ui-topnav__menu, no state).
+      Add aria-current="page" on the current group's trigger and its link; the
+      rules below key on it.
+   2. Work Queue, Last Modified: the highlight is an inline
+      style="background-color: rgba(250, 204, 21, .35)". In dark the grey time
+      inside reads 2.6 : 1. Give it a class painted with --color-warning-soft.
+   3. Feeds Incoming: the log lines carry inline colours (color:#666, #444,
+      #222; the Success chip is #222 on #1e8449, 3.4 : 1 even in light). Move
+      them to classes on the tokens (--color-ink-muted, --color-success-soft).
+   4. The rich-text editor (CKEditor, e.g. the styleguide) keeps its light
+      skin in dark. DESIGN.md §42 rule 3: its text area stays paper on purpose;
+      its toolbar should go dark (invert the skin's icons, labels on the ink).
    ============================================================================ */
 
 :root {

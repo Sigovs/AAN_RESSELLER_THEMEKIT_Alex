@@ -58,7 +58,13 @@ has not loaded yet, not broken files (all links and images return 200 live).
 8. Handover page: fifth Start-here tile (7 samples); the design system is
    chapter 01 with two page previews; the catalog row was dropped
    (catalog.html only redirects to rules-and-backend.html).
-9. Alex: ready to hand over; he sends the page link himself.
+9. Dark run on the live backend (13 screens, read only, layers injected via
+   jsDelivr + sessionStorage). Fixed: --color-brand is the text role in dark
+   (#9dbdff), Gen 11 fills via --g11-brand-fill; a.ui-btn--primary and
+   ui-qseg__btn--on keep white. Left for devs: MARKUP CHANGES 2-4 in the
+   components header (inline colours). Screenshots from that Chrome tab fail
+   ("page busy"); the check is by measured contrast.
+10. Alex: ready to hand over; he sends the page link himself.
 
 ## Open
 - Optional: capture the real backend Feed Groups modal on the new backend

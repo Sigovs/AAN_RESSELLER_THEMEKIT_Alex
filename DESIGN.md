@@ -1339,6 +1339,11 @@ gives two materials, exactly as in light, where everything is white and the boar
 --ok #62cf9e  --signal #f2b860  --danger #ff8a7d  --violet #b8a9ff  --slate #adb4c1, each with a -soft fill
 ```
 
+**On the new backend** (run live, 20 Nov 2026): the backend paints text *and* fills with one token,
+`--color-brand`. In dark that token therefore carries the text role, `#9dbdff` (`--brand-ink`); the Gen 11
+fill `#2f6be6` comes through `--g11-brand-fill` in `aan-gen11-components.css`. The backend's own remaining
+brand fills keep its own pairing: a light-blue fill with `--color-brand-ink #0c1524`.
+
 The staff pages' local palettes (`--t-*` department colours, `--b-*` badges) take the backend's own dark
 `--status-*` pairs (5.7–7.2:1).
 

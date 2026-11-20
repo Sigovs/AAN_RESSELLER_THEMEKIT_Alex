@@ -51,9 +51,13 @@ The details are in DESIGN.md §42. You can see it live on the reference pages: t
   exists in the backend (checked read only, 17 and 20 Nov 2026), and most were found on live screens. Nine
   were seen only in the backend's styleguide or its CSS (states set on interaction); the file's header
   lists them. Look at those on screen when a page first uses them.
-- **The dark layer has not been run on the backend yet.** Its values are the Gen 11 pages' own, one to one.
-  The exceptions are `--color-surface-2` and `--color-surface-inset`, which Gen 11 has no role for. They are
-  derived and marked so in the file.
+- **Dark was run on the live backend (20 Nov 2026), 13 screens; no text of the two layers is under AA.**
+  It found one real fault, now fixed: the backend paints text as well as fills with `--color-brand`, so in
+  dark that token is the text role (`#9dbdff`) and the Gen 11 fill comes through `--g11-brand-fill`. What is
+  left is the backend's own inline colours (Work Queue's Last Modified highlight, the Feeds Incoming log, the
+  editor skin); they are listed under MARKUP CHANGES in the header of `aan-gen11-components.css`. Two dark
+  values are not Gen 11's own: `--color-surface-2` and `--color-surface-inset` have no Gen 11 role, so they
+  are derived and marked so in the file.
 - **No design decision is open** (DS pass, 18 Nov 2026). The end of DESIGN.md lists only four code-level
   items for developers, none of them visible on the page. When two pages still disagree, use the **origin
   page's** value, the earliest page in the order below. Field heights: 36 in a form, 30 in a dense working form.
