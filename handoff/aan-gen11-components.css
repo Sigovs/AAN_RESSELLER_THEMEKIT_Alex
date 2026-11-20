@@ -86,7 +86,7 @@
 .ui-btn:disabled { opacity: .45; cursor: default; }
 .ui-btn--sm { height: var(--control-height-sm); padding: 0 10px; }
 .ui-btn--secondary { background-color: var(--color-surface-1); color: var(--color-ink); box-shadow: var(--g11-pill); }
-.ui-btn--primary {
+.ui-btn--primary, a.ui-btn--primary, a.ui-btn--primary:hover {   /* the backend sets a.ui-btn--primary's text to --color-brand-ink, which is dark in dark */
   background-color: var(--g11-brand-fill); color: #fff;
   box-shadow: 0 10px 22px -10px rgba(29,95,230,.70), inset 0 1px 0 rgba(255,255,255,.32);
 }
@@ -141,6 +141,8 @@
 .ui-seg__btn--on, .ui-tabs__tab[aria-selected="true"], .ui-pill--on {   /* only the current view is an object */
   background-color: var(--g11-brand-fill); color: #fff; font-weight: 600;
 }
+/* the backend's quick segments (lead board, work queue): the same current-view fill, colour only */
+.ui-qseg__btn--on { background-color: var(--g11-brand-fill); color: #fff; }
 .ui-pill__count { margin-left: 6px; font: 600 12.5px/1 var(--font-sans); opacity: .85; font-variant-numeric: tabular-nums; }
 
 /* section navigator on a record page — origin Single Lead (.secnav) */
