@@ -55,7 +55,10 @@ has not loaded yet, not broken files (all links and images return 200 live).
 7. Handover page: an "Inside:" line under Rules and backend map links straight
    to its levels (Rules, Tokens, Atoms, Molecules, Organisms, Templates,
    Pages, Before you hand in a screen).
-8. Alex: ready to hand over.
+8. Handover page: fifth Start-here tile (7 samples); the design system is
+   chapter 01 with two page previews; the catalog row was dropped
+   (catalog.html only redirects to rules-and-backend.html).
+9. Alex: ready to hand over; he sends the page link himself.
 
 ## Open
 - Optional: capture the real backend Feed Groups modal on the new backend
