@@ -86,6 +86,12 @@
   .row:hover { background: var(--wash); }
   .row__n { color: var(--brand-ink); font-weight: 600; }
   .row__a { font: 400 13px/1.4 var(--mono); color: var(--ink-4); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* direct links into a page's levels, under its row, on the description column */
+  .jump { display: grid; grid-template-columns: minmax(180px, 2fr) minmax(0, 5fr) minmax(0, 3fr); column-gap: var(--s4); padding-bottom: var(--s3); margin-top: calc(-1 * var(--s1)); }
+  .jump__in { grid-column: 2 / -1; display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s1) var(--s3); }
+  .jump__k { color: var(--ink-4); }
+  .jump a { color: var(--brand-ink); text-decoration: none; white-space: nowrap; }
+  .jump a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
   /* page cards */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--s5) var(--s4); }
@@ -113,6 +119,7 @@
     .board__g, .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .row { grid-template-columns: minmax(160px, 2fr) minmax(0, 5fr); }
     .row__a { display: none; }
+    .jump { grid-template-columns: minmax(160px, 2fr) minmax(0, 5fr); }
   }
   @media (max-width: 767.98px) {
     .head { padding-top: var(--s6); }
@@ -122,6 +129,8 @@
     .two .ch + .ch { margin-top: 0; }
     .ch { padding: var(--s4); }
     .row { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+    .jump { grid-template-columns: minmax(0, 1fr); }
+    .jump__in { grid-column: 1 / -1; }
     .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s4) var(--s3); }
   }
   @media (max-width: 479.98px) {
@@ -172,7 +181,8 @@
   <div class="ch__h"><span class="ch__n">02</span><h2 id="c2">The design system</h2></div>
   <ul class="rows">
     <li><a class="row" href="design-system.html"><span class="row__n">Design system</span><span>Every token in light and dark, type, spacing, icons, focus and motion; every component with its states</span><span class="row__a">handoff/design-system.html</span></a></li>
-    <li><a class="row" href="rules-and-backend.html"><span class="row__n">Rules and backend map</span><span>Do and don't per component; each one beside your <code>ui-*</code> markup with the Gen 11 layers applied</span><span class="row__a">handoff/rules-and-backend.html</span></a></li>
+    <li><a class="row" href="rules-and-backend.html"><span class="row__n">Rules and backend map</span><span>Do and don't per component; each one beside your <code>ui-*</code> markup with the Gen 11 layers applied</span><span class="row__a">handoff/rules-and-backend.html</span></a>
+      <nav class="jump" aria-label="Levels inside the rules and backend map"><span class="jump__in"><span class="jump__k">Inside:</span><a href="rules-and-backend.html#rules">Rules</a><a href="rules-and-backend.html#tokens">Tokens</a><a href="rules-and-backend.html#atoms">Atoms</a><a href="rules-and-backend.html#molecules">Molecules</a><a href="rules-and-backend.html#organisms">Organisms</a><a href="rules-and-backend.html#templates">Templates</a><a href="rules-and-backend.html#pages">Pages</a><a href="rules-and-backend.html#hand-in">Before you hand in a screen</a></span></nav></li>
     <li><a class="row" href="catalog.html"><span class="row__n">Component catalog</span><span>Each component as a 1:1 crop from its origin page, with the measured spec</span><span class="row__a">handoff/catalog.html</span></a></li>
     <li><a class="row" href="https://github.com/Sigovs/AAN_RESSELLER_THEMEKIT_Alex/blob/handoff/DESIGN.md"><span class="row__n">DESIGN.md</span><span>The full written system, §0–42: the source of every rule (§42 is the dark theme)</span><span class="row__a">github · DESIGN.md</span></a></li>
     <li><a class="row" href="https://github.com/Sigovs/AAN_RESSELLER_THEMEKIT_Alex/tree/handoff/tools/ds-check"><span class="row__n">Checks</span><span>Drift against the system, the dark theme on the rendered page, nothing lost on tablet</span><span class="row__a">github · tools/ds-check</span></a></li>
