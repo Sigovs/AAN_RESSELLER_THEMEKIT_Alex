@@ -52,7 +52,7 @@
   .board__h { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--s2) var(--s3); margin-bottom: var(--s4); }
   .board__t { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -.01em; }
   .board__m { color: var(--focal-ink-3); font-size: 13px; }
-  .board__g { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s3); }
+  .board__g { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--s3); }
   .tile { display: flex; flex-direction: column; min-width: 0; padding: var(--s4); border-radius: var(--r-panel);
     background: rgba(255,255,255,.055); box-shadow: inset 0 0 0 1px rgba(255,255,255,.07); color: var(--focal-ink); text-decoration: none;
     transition: background-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
@@ -117,6 +117,7 @@
 
   @media (max-width: 1099.98px) {
     .board__g, .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .board__g .tile:last-child { grid-column: 1 / -1; }   /* five tiles in two columns: the samples take the last row whole */
     .row { grid-template-columns: minmax(160px, 2fr) minmax(0, 5fr); }
     .row__a { display: none; }
     .jump { grid-template-columns: minmax(160px, 2fr) minmax(0, 5fr); }
@@ -146,7 +147,7 @@
 <header class="head">
   <span class="brand__mk" aria-hidden="true">AAN</span>
   <h1>Gen&nbsp;11 handover</h1>
-  <span class="head__meta">For the developers · updated 19 Nov 2026</span>
+  <span class="head__meta">For the developers · updated 20 Nov 2026</span>
 </header>
 
 <section class="board" aria-labelledby="b-t">
@@ -157,13 +158,16 @@
       <span class="tile__s">What each file is, and the order to use them in</span><span class="tile__go">GitHub →</span></a>
     <a class="tile" href="aan-gen11-handoff.zip" download>
       <span class="tile__k">For the backend</span><span class="tile__v">One zip</span>
-      <span class="tile__s">Two CSS layers, fonts, DESIGN.md, README · 342 KB</span><span class="tile__go">Download →</span></a>
+      <span class="tile__s">Two CSS layers, fonts, DESIGN.md, README · 258&nbsp;KB</span><span class="tile__go">Download →</span></a>
     <a class="tile" href="design-system.html">
-      <span class="tile__k">Design system</span><span class="tile__v">Tokens &amp; components</span>
-      <span class="tile__s">Light and dark, every state, drawn by the pages' own CSS</span><span class="tile__go">Open →</span></a>
+      <span class="tile__k">Design system</span><span class="tile__v">Components</span>
+      <span class="tile__s">Every token and every state, light and dark, drawn by the pages' own CSS</span><span class="tile__go">Open →</span></a>
     <a class="tile" href="https://www.allautonetwork.com/previews/aan_reseller_2026_design_v3/index.html">
       <span class="tile__k">Reference pages</span><span class="tile__v">10 screens</span>
       <span class="tile__s">The Gen 11 pages with real data, on the dashboard</span><span class="tile__go">Dashboard →</span></a>
+    <a class="tile" href="#c4">
+      <span class="tile__k">Built on the system</span><span class="tile__v">7 samples</span>
+      <span class="tile__s">Your new-backend screens, built only from the system</span><span class="tile__go">See below ↓</span></a>
   </div>
 </section>
 
