@@ -8,6 +8,11 @@
 <!-- built by tools/ds-check/design-system.py — edit that, the template or design-system-components.html, then rebuild -->
 <link rel="stylesheet" href="../pages/_aan-family.css">
 <style>
+  /* the two faces the pages use, self-hosted beside this file (without them the page showed the system fallbacks) */
+  @font-face { font-family: "Archivo"; font-style: normal; font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; src: url("fonts/archivo-latin-var.woff2") format("woff2"); }
+  @font-face { font-family: "Archivo"; font-style: normal; font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; src: url("fonts/archivo-latin-ext-var.woff2") format("woff2"); unicode-range: U+0100-024F, U+1E00-1EFF; }
+  @font-face { font-family: "Plex Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/plex-mono-400.woff2") format("woff2"); }
+  @font-face { font-family: "Plex Mono"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/plex-mono-600.woff2") format("woff2"); }
   :root { --font: "Archivo", "Segoe UI", system-ui, sans-serif; --mono: "Plex Mono", ui-monospace, monospace;
     --ink: #0d1320; --ink-2: #353e4e; --ink-3: #576070; --ink-4: #697181; --line: #d8dee7; --line-2: #e5e9ef; --wash: #eef1f5; --well: #e4e9f0; --brand: #1f5fe0; --brand-ink: #1747b3;
     --sh-soft: 0 28px 64px -34px rgba(34,58,118,.42), 0 2px 8px -3px rgba(34,58,118,.10), inset 0 1px 0 rgba(255,255,255,.95); }
