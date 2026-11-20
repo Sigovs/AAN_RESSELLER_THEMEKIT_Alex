@@ -64,7 +64,15 @@ has not loaded yet, not broken files (all links and images return 200 live).
    ui-qseg__btn--on keep white. Left for devs: MARKUP CHANGES 2-4 in the
    components header (inline colours). Screenshots from that Chrome tab fail
    ("page busy"); the check is by measured contrast.
-10. Alex: ready to hand over; he sends the page link himself.
+10. Handed over 20 Nov 2026: Alex sent the one-line ticket with the handover
+    page link. README got an "If an agent does the work" section.
+
+## Next
+
+- Only possible change ahead: the Dealer Login page (Alex may adjust it).
+  It is reference page 05 and lives on round2-v3 (sl11); a change there means
+  a new sl11 build that Alex uploads, plus a fresh thumbnail
+  (handoff/start/dealer-login.jpg) on the handover page.
 
 ## Open
 - Optional: capture the real backend Feed Groups modal on the new backend
