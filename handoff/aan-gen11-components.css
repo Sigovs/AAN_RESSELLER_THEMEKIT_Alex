@@ -21,15 +21,17 @@
    Fills are set with background-color, never the background shorthand: the shorthand would wipe
    the backend's own background images (the select chevron, icons).
 
-   CHECKED AGAINST THE LIVE BACKEND (2026-11-17, read only): 45 of the 73
-   selectors below match elements on /manage/dealers, /work/queue, a ticket,
-   /manage/feeds/inc, /manage/dealers/new and /inventory. The other 28 come
-   from theme.css class names on screens not opened yet (dealer-scoped
-   inventory and leads) and must be checked against the Blade markup before
-   use: ui-btn--danger, ui-chip, ui-cockpit(__title), ui-facet__btn(--on),
-   ui-field__error, ui-omni__input, ui-pill(--on, __count), ui-pulsecard(__l, __v),
-   ui-row--selected, ui-seg(__btn, --on), ui-subtab(--on), ui-switch states,
-   ui-tabs(__list, __tab).
+   CHECKED AGAINST THE LIVE BACKEND (2026-11-17 and 2026-11-20, read only):
+   every class below exists in the backend. Most were found on loaded screens
+   (/manage/dealers, /work/queue, a ticket, /manage/feeds/inc,
+   /manage/dealers/new, /inventory, a dealer's inventory and lead board,
+   /admin/field-registry). Nine were not seen on a loaded screen:
+   - only in the backend's own styleguide (/dev/styleguide), so the markup is
+     the kit's: ui-cockpit(__title), ui-subtab(--on), ui-switch--danger,
+     ui-field__error (it shows only on a validation error);
+   - only in the backend's CSS, as states set on interaction: ui-chip (an
+     active filter), ui-facet__btn--on (a chosen facet), ui-switch--ok.
+   Look at these nine on screen when a page first uses them.
    MARKUP CHANGE NEEDED: the top nav marks no current section
    (li.ui-topnav__group > a.ui-topnav__trigger + ul.ui-topnav__menu, no state).
    Add aria-current="page" on the current group's trigger and its link; the

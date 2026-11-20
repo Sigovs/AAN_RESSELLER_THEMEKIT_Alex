@@ -47,10 +47,10 @@ The details are in DESIGN.md §42. You can see it live on the reference pages: t
 
 ## Known limits of this handoff
 
-- **The backend layers are not yet checked on every backend screen.** In light, 45 of the 73 selectors in
-  `aan-gen11-components.css` were matched against live backend screens. The other 28 come from `theme.css`
-  class names on screens not opened yet; the file's header lists them. Check them against the Blade markup
-  before relying on them.
+- **Nine classes were not seen on a loaded backend screen.** Every class in `aan-gen11-components.css`
+  exists in the backend (checked read only, 17 and 20 Nov 2026), and most were found on live screens. Nine
+  were seen only in the backend's styleguide or its CSS (states set on interaction); the file's header
+  lists them. Look at those on screen when a page first uses them.
 - **The dark layer has not been run on the backend yet.** Its values are the Gen 11 pages' own, one to one.
   The exceptions are `--color-surface-2` and `--color-surface-inset`, which Gen 11 has no role for. They are
   derived and marked so in the file.
