@@ -133,11 +133,18 @@
   --color-border-strong: #4b505a;   /* Gen 11 --line-3 */
 
   /* ── Brand ────────────────────────────────────────────────────────────── */
-  --color-brand: #2f6be6;           /* Gen 11 --brand (white on it 4.8 : 1) */
-  --color-brand-strong: #4a85f5;    /* Gen 11 --brand-hover */
+  /* The backend paints TEXT with --color-brand (links, nav, row actions: 67 rules)
+     as well as fills (44 rules, each with --color-brand-ink on it). Gen 11 has two
+     roles here: the fill #2f6be6 with white, and the text #9dbdff. On a dark ground
+     the token has to be the text role (#2f6be6 as text is 3.1 : 1, found on the
+     live backend 2026-11-20); the Gen 11 fill comes back through --g11-brand-fill
+     in aan-gen11-components.css. The backend's own fills keep its own pairing:
+     a light-blue fill with near-black ink. */
+  --color-brand: #9dbdff;           /* Gen 11 --brand-ink, text role (7.9 : 1 on the sheet, 6.2 on brand-soft) */
+  --color-brand-strong: #9dbdff;    /* the same: Gen 11 has no lighter link tone; hover shows by its ground */
   --color-brand-soft: #263858;      /* Gen 11 --brand-soft */
-  --color-brand-ink: #ffffff;       /* text on the brand fill stays white (the backend's dark value is near-black) */
-  --color-info: #2f6be6;
+  --color-brand-ink: #0c1524;       /* text on the backend's own brand fills (the backend's dark value; 9.7 : 1) */
+  --color-info: #9dbdff;
   --color-info-soft: #263858;
 
   /* ── States ───────────────────────────────────────────────────────────── */
