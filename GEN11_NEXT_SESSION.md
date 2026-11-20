@@ -1,4 +1,4 @@
-# Gen 11 — where we stopped (19 Nov 2026)
+# Gen 11 — where we stopped (20 Nov 2026)
 
 Read this first when continuing on another machine. It is the state of the
 work, not a spec. Later notes go at the bottom; replace this file when the
@@ -46,9 +46,18 @@ no low-contrast text, no clipped titles, no console errors at
 1920/1440/1024/768/390. "brokenImgs" at 768/390 are lazy images that headless
 has not loaded yet, not broken files (all links and images return 200 live).
 
-## Open
+## Done 20 Nov
 
-- Waiting for Alex to check the handover page.
+6. Backend classes checked on the live backend (read only): every class in
+   `aan-gen11-components.css` exists; nine were seen only in the backend's
+   styleguide or CSS and are listed in the file's header. README, the page's
+   Known limits and the zip updated.
+7. Handover page: an "Inside:" line under Rules and backend map links straight
+   to its levels (Rules, Tokens, Atoms, Molecules, Organisms, Templates,
+   Pages, Before you hand in a screen).
+8. Alex: ready to hand over.
+
+## Open
 - Optional: capture the real backend Feed Groups modal on the new backend
   (needs Alex logged in in Chrome; never enter passwords; read only).
 - The email to Alex with the hand-over links was not sent (no mail
