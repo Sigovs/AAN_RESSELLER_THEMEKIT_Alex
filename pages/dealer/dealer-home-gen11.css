@@ -37,16 +37,14 @@
   display: flex; flex-direction: column; justify-content: space-between; gap: 16px;
   padding: 28px 24px 24px;
   color: inherit; text-decoration: none;
-  transition: background-color var(--dur2) var(--ease);
 }
-.home-stat::before { content: ""; position: absolute; left: 0; top: 24px; bottom: 24px; width: 1px; background: var(--focal-line); }
+.home-stat::before { content: ""; position: absolute; left: 0; top: 32px; bottom: 32px; width: 1px; background: var(--focal-line); opacity: .7; }
 .home-stat__v { display: flex; align-items: flex-end; gap: 12px; }
 .home-stat__v b { font-size: 60px; font-weight: 600; font-stretch: 84%; letter-spacing: -.025em; line-height: .86; font-variant-numeric: tabular-nums; }
 .home-stat__v span { padding-bottom: 3px; font-size: 17px; font-weight: 600; }
 .home-stat__go { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: var(--focal-ink-2); }
 .home-stat__go .i { width: 14px; height: 14px; transition: transform var(--dur2) var(--ease); }
-.home-stat:hover { background-color: var(--focal-inset); }
-.home-stat:hover .home-stat__go { color: var(--focal-ink); }
+.home-stat:hover .home-stat__go { color: var(--focal-ink); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--focal-line); }
 .home-stat:hover .home-stat__go .i { transform: translateX(2px); }
 .home-stat:focus-visible { outline: 2px solid var(--brand); outline-offset: -4px; border-radius: var(--r-l); }
 .home-stat--due .home-stat__v { color: #ff8c7f; }
@@ -88,8 +86,8 @@
 .home-l__t span { font-size: 14px; color: var(--ink-3); }
 .home-l__x, .home-l__go { width: 14px; height: 14px; flex: none; color: var(--ink-3); }
 .home-l__go { opacity: 0; transform: translateX(-2px); transition: opacity var(--dur2) var(--ease), transform var(--dur2) var(--ease); }
-.home-l:hover { background: var(--tone-soft); }
-.home-l:hover .home-l__go, .home-l:focus-visible .home-l__go { opacity: 1; transform: none; color: var(--tone); }
+.home-l:hover { background: var(--wash); }
+.home-l:hover .home-l__go, .home-l:focus-visible .home-l__go { opacity: 1; transform: none; color: var(--ink-2); }
 .home-l:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
 @media (hover: none) { .home-l__go { opacity: 1; transform: none; } }
 
