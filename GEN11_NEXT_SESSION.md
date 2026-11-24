@@ -72,9 +72,17 @@ has not loaded yet, not broken files (all links and images return 200 live).
     unhinted. Design system page now loads the real fonts (it showed Segoe UI
     and Consolas). New sl11 build AAN_Gen11_review_build_20261120_v3.zip.
 
+## Done 23 Nov
+
+12. Dealer Home is page 11 (pages/dealer/dealer-home-gen11.*): dealer board (All Vehicles focal) +
+    four tool cards in Gen 11 tones (ok, brand, violet, signal) with per-link icons; content is the
+    new backend's /dealer-home/659. On every dashboard (handoff index.html, round2-v3, aan-review),
+    the handover page (11 screens), README, rules page, DESIGN.md precedence and the ds-check lists.
+    sl11 build AAN_Gen11_review_build_20261123_v3.zip — Alex uploaded it.
+
 ## Next
 
-- Only possible change ahead: the Dealer Login page (Alex may adjust it).
+- Possible change ahead: the Dealer Login page, now paired with Dealer Home (Alex's ToDo, Nov 23).
   It is reference page 05 and lives on round2-v3 (sl11); a change there means
   a new sl11 build that Alex uploads, plus a fresh thumbnail
   (handoff/start/dealer-login.jpg) on the handover page.

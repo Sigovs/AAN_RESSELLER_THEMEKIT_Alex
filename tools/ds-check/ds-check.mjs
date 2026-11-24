@@ -38,6 +38,7 @@ const PAGES = [ // precedence order — the earlier page wins
   ['Manage Dealers', 'pages/staff/manage-dealers-gen11'],
   ['Dealer Edit',    'pages/staff/dealer-edit-gen11'],
   ['Accounting',     'pages/staff/accounting-view-all-gen11'],
+  ['Dealer Home',    'pages/dealer/dealer-home-gen11'],
 ];
 
 // ── (a) static scan ─────────────────────────────────────────────────────────

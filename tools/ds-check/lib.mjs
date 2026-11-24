@@ -1,4 +1,4 @@
-// Shared plumbing for tools/ds-check: the ten pages, a static server, a headless browser over CDP.
+// Shared plumbing for tools/ds-check: the eleven pages, a static server, a headless browser over CDP.
 // No dependencies: Node 22+ (global fetch + WebSocket). Browser: $EDGE or $CHROME, else the default
 // Edge path on Windows, else Chrome / Chromium.
 
@@ -22,6 +22,7 @@ export const PAGES = [ // precedence order (DESIGN.md §0) — the earlier page 
   ['Manage Dealers', 'pages/staff/manage-dealers-gen11'],
   ['Dealer Edit',    'pages/staff/dealer-edit-gen11'],
   ['Accounting',     'pages/staff/accounting-view-all-gen11'],
+  ['Dealer Home',    'pages/dealer/dealer-home-gen11'],
 ];
 
 export const sleep = ms => new Promise(r => setTimeout(r, ms));

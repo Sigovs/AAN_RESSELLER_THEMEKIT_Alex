@@ -20,7 +20,8 @@ an old number is never reused for something else.
 
 ```
 1 All Vehicles → 2 Single Vehicle → 3 All Leads → 4 Single Lead → 5 Dealer Login
-→ 6 My Work Queue → 7 Single Ticket → 8 Manage Dealers → 9 Dealer Edit → 10 Accounting
+→ 6 My Work Queue → 7 Single Ticket → 8 Manage Dealers → 9 Dealer Edit → 10 Accounting → 11 Dealer Home
+  (Dealer Home, Nov 23, is built only from the pages above: the All Vehicles board and the menu link item)
 ```
 
 - When two pages disagree, **the earlier page wins.** All Vehicles is the base; Single Vehicle second.

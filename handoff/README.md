@@ -11,13 +11,13 @@ Download everything for the backend in one zip: https://sigovs.github.io/aan-gen
 
 | File | What it is | Who it is for |
 |---|---|---|
-| [`design-system.html`](https://sigovs.github.io/aan-gen11-v3-preview/handoff/design-system.html) (open in a browser) | **The design system.** It covers every colour token in light and dark with its contrast and the backend token that carries it. It also covers type roles, spacing, radius, elevation, the 70 icons, focus and motion, and layout. Every component appears with its variants and states. A **Light / Dark** switch sits at the top left. Each component is drawn by its origin page's own CSS, so the file cannot drift from the pages. | everyone; read it first |
+| [`design-system.html`](https://sigovs.github.io/aan-gen11-v3-preview/handoff/design-system.html) (open in a browser) | **The design system.** It covers every colour token in light and dark with its contrast and the backend token that carries it. It also covers type roles, spacing, radius, elevation, the 76 icons, focus and motion, and layout. Every component appears with its variants and states. A **Light / Dark** switch sits at the top left. Each component is drawn by its origin page's own CSS, so the file cannot drift from the pages. | everyone; read it first |
 | [`rules-and-backend.html`](https://sigovs.github.io/aan-gen11-v3-preview/handoff/rules-and-backend.html) (open in a browser) | **Rules and backend map.** The 14 principles, the problems we solved and must not bring back, which pattern to use for which need, and each component with the Gen 11 reference next to the backend's `ui-*` markup restyled by the two layers below. Tokens and breakpoints are not repeated here: they are in the design system. | anyone restyling the backend |
 | [`aan-gen11-theme.css`](https://raw.githubusercontent.com/Sigovs/AAN_RESSELLER_THEMEKIT_Alex/handoff/handoff/aan-gen11-theme.css) | **The token layer for the backend.** It gives the backend's own tokens (`--color-*`, `--status-*`, `--radius-*`, `--shadow-*`, `--control-height*`, fonts) their Gen 11 values, light in `:root` and dark in `[data-theme="dark"]`. It changes no markup. | backend devs |
 | [`aan-gen11-components.css`](https://raw.githubusercontent.com/Sigovs/AAN_RESSELLER_THEMEKIT_Alex/handoff/handoff/aan-gen11-components.css) | **The component layer for the backend.** It restyles the `ui-*` components to Gen 11, and its header lists the markup changes it needs. Every colour goes through a token or a `--g11-*` variable, so it is right in both themes. | backend devs |
 | `fonts/` (in the zip) | Archivo (variable) and IBM Plex Mono, self-hosted. `aan-gen11-theme.css` loads them from `fonts/` beside it. | — |
 | [`DESIGN.md`](https://raw.githubusercontent.com/Sigovs/AAN_RESSELLER_THEMEKIT_Alex/handoff/DESIGN.md) (also in the zip) | The full written system, §0–42. It is the source of every rule. §42 is the dark theme. | agents, reviewers |
-| [The ten reference pages](https://www.allautonetwork.com/previews/aan_reseller_2026_design_v3/) | **The Gen 11 pages** with real data. Source: [`pages/`](https://github.com/Sigovs/AAN_RESSELLER_THEMEKIT_Alex/tree/handoff/pages). Where this package and a page disagree, the page wins. | everyone |
+| [The eleven reference pages](https://www.allautonetwork.com/previews/aan_reseller_2026_design_v3/) | **The Gen 11 pages** with real data. Source: [`pages/`](https://github.com/Sigovs/AAN_RESSELLER_THEMEKIT_Alex/tree/handoff/pages). Where this package and a page disagree, the page wins. | everyone |
 | [`tools/ds-check/`](https://github.com/Sigovs/AAN_RESSELLER_THEMEKIT_Alex/tree/handoff/tools/ds-check) | Checks: `ds-check.mjs` (drift against the system, widths), `dark-audit.mjs` (dark theme: light surfaces and text under AA on the rendered page), `features.mjs` (nothing lost on tablet). | agents, QA |
 
 ## If an agent does the work
@@ -91,7 +91,7 @@ The details are in DESIGN.md §42. You can see it live on the reference pages: t
   If Gen 11 has no role for something, keep the backend's value and mark it "kept".
 - **One system.** When two pages disagree, the earlier page wins:
   All Vehicles → Single Vehicle → All Leads → Single Lead → Dealer Login → My Work Queue → Single Ticket →
-  Manage Dealers → Dealer Edit → Accounting.
+  Manage Dealers → Dealer Edit → Accounting → Dealer Home.
   - The same component has the same width, height and inner metrics on every page.
 - **Nothing jumps.** Reserve space, so no state change moves the layout.
 - **Text never touches its edge.** Keep at least 8px inside chips, tags, menu items and nav items, 10px
