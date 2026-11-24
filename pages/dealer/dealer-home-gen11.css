@@ -87,6 +87,8 @@
 .home-l__x, .home-l__go { width: 14px; height: 14px; flex: none; color: var(--ink-3); }
 .home-l__go { opacity: 0; transform: translateX(-2px); transition: opacity var(--dur2) var(--ease), transform var(--dur2) var(--ease); }
 .home-l:hover { background: var(--wash); }
+/* dark: the hover sinks below the card (the page ground), it does not lift */
+[data-theme="dark"] .home-l:hover { background: var(--ground); }
 .home-l:hover .home-l__go, .home-l:focus-visible .home-l__go { opacity: 1; transform: none; color: var(--ink-2); }
 .home-l:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
 @media (hover: none) { .home-l__go { opacity: 1; transform: none; } }
