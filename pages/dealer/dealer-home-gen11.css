@@ -1,0 +1,109 @@
+/* Dealer Home — Gen 11 (Nov 23, v4). The dealer board (All Vehicles focal: dark, green glow, 60px
+   numerals) over four tool cards. Each card takes one of Gen 11's own tones — ok, brand, violet,
+   signal — for its icon tile, its link icons and a soft corner glow, the way the board's Value and
+   Needs-attention panels carry theirs. No new colour: every value is a Gen 11 token (light and dark). */
+
+.app { grid-template-rows: var(--top) var(--headh) auto auto; align-content: start; }
+
+.dealer--one { cursor: default; }
+.dealer--one:hover { background: none; }
+
+/* ── the board ── */
+.home-board {
+  grid-row: 3; grid-column: 1 / -1;
+  position: relative; overflow: hidden;
+  display: grid; grid-template-columns: minmax(320px, 1.25fr) repeat(3, minmax(0, 1fr));
+  margin-bottom: var(--gap);
+  border-radius: var(--r-l);
+  background: var(--focal);
+  color: var(--focal-ink);
+  box-shadow: var(--el-2);
+  background-image:
+    radial-gradient(124% 86% at 0% -30%, rgba(36,97,74,.50) 0, rgba(36,97,74,.16) 38%, rgba(36,97,74,0) 68%),
+    radial-gradient(48% 90% at 62% 130%, rgba(242,161,43,.16) 0, rgba(242,161,43,0) 62%),
+    radial-gradient(60% 52% at 108% -18%, rgba(36,97,74,.24) 0, rgba(36,97,74,0) 60%);
+}
+.home-board .caps { display: inline-flex; align-items: center; gap: 8px; color: var(--focal-ink-3); }
+.home-board .caps .i { width: 15px; height: 15px; }
+.home-id { display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; padding: 28px; min-width: 0; }
+.home-id__n { font-size: 44px; font-weight: 600; font-stretch: 88%; letter-spacing: -.025em; line-height: 1; }
+.home-id__m { font-size: 14px; color: var(--focal-ink-3); }
+.home-id__m a { color: var(--focal-ink-2); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+.home-id__m a .i { width: 13px; height: 13px; }
+.home-id__m a:hover { color: var(--focal-ink); text-decoration: underline; text-underline-offset: 3px; }
+
+.home-stat {
+  position: relative;
+  display: flex; flex-direction: column; justify-content: space-between; gap: 16px;
+  padding: 28px 24px 24px;
+  color: inherit; text-decoration: none;
+  transition: background-color var(--dur2) var(--ease);
+}
+.home-stat::before { content: ""; position: absolute; left: 0; top: 24px; bottom: 24px; width: 1px; background: var(--focal-line); }
+.home-stat__v { display: flex; align-items: flex-end; gap: 12px; }
+.home-stat__v b { font-size: 60px; font-weight: 600; font-stretch: 84%; letter-spacing: -.025em; line-height: .86; font-variant-numeric: tabular-nums; }
+.home-stat__v span { padding-bottom: 3px; font-size: 17px; font-weight: 600; }
+.home-stat__go { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: var(--focal-ink-2); }
+.home-stat__go .i { width: 14px; height: 14px; transition: transform var(--dur2) var(--ease); }
+.home-stat:hover { background-color: var(--focal-inset); }
+.home-stat:hover .home-stat__go { color: var(--focal-ink); }
+.home-stat:hover .home-stat__go .i { transform: translateX(2px); }
+.home-stat:focus-visible { outline: 2px solid var(--brand); outline-offset: -4px; border-radius: var(--r-l); }
+.home-stat--due .home-stat__v { color: #ff8c7f; }
+.home-stat--due .caps .i { color: #ff8c7f; }
+.home-stat--zero .home-stat__v b { color: var(--focal-ink-3); }
+
+/* ── tools: four tinted cards ── */
+.home-tools {
+  grid-row: 4; grid-column: 1 / -1;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap);
+  align-items: stretch;
+}
+.home-card--ok     { --tone: var(--ok);     --tone-fill: var(--ok-fill);     --tone-soft: var(--ok-soft); }
+.home-card--brand  { --tone: var(--brand-ink); --tone-fill: var(--brand); --tone-soft: var(--brand-soft); }
+.home-card--violet { --tone: var(--violet); --tone-fill: var(--violet-fill); --tone-soft: var(--violet-soft); }
+.home-card--signal { --tone: var(--signal); --tone-fill: var(--signal-fill); --tone-soft: var(--signal-soft); }
+.home-card {
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; gap: 2px; min-width: 0;
+  padding: 18px 12px 12px;
+  background: var(--sheet);
+  border-radius: var(--r-l);
+  box-shadow: var(--el-1);
+}
+/* the corner glow: the tone, very soft, as the Gen 11 panels carry theirs */
+.home-card::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(90% 70% at 100% 0%, color-mix(in srgb, var(--tone-fill) 16%, transparent) 0, transparent 62%);
+}
+.home-card > * { position: relative; }
+.home-card__h { display: flex; align-items: center; gap: 12px; margin: 0 0 10px; padding: 0 8px; font-size: 16px; font-weight: 700; letter-spacing: -.01em; color: var(--ink); }
+.home-card__ic { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: var(--tone-fill); color: #fff; box-shadow: 0 6px 14px -6px var(--tone-fill); }
+.home-card__ic .i { width: 18px; height: 18px; }
+
+.home-l { display: flex; align-items: center; gap: 12px; padding: 8px; border-radius: 9px; color: var(--ink); text-decoration: none; transition: background-color var(--dur2) var(--ease); }
+.home-l__ic { width: 18px; height: 18px; flex: none; color: var(--tone); }
+.home-l__t { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
+.home-l__t b { font-size: 14px; font-weight: 600; }
+.home-l__t span { font-size: 14px; color: var(--ink-3); }
+.home-l__x, .home-l__go { width: 14px; height: 14px; flex: none; color: var(--ink-3); }
+.home-l__go { opacity: 0; transform: translateX(-2px); transition: opacity var(--dur2) var(--ease), transform var(--dur2) var(--ease); }
+.home-l:hover { background: var(--tone-soft); }
+.home-l:hover .home-l__go, .home-l:focus-visible .home-l__go { opacity: 1; transform: none; color: var(--tone); }
+.home-l:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
+@media (hover: none) { .home-l__go { opacity: 1; transform: none; } }
+
+@media (max-width: 1279px) {
+  .home-board { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .home-id { grid-column: 1 / -1; padding-bottom: 16px; }
+  .home-stat:nth-child(2)::before { display: none; }
+  .home-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 767px) {
+  .home-board { grid-template-columns: 1fr; }
+  .home-stat::before, .home-stat:nth-child(2)::before { display: block; left: 24px; right: 24px; top: 0; bottom: auto; width: auto; height: 1px; }
+  .home-tools { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-stat, .home-stat__go .i, .home-l, .home-l__go { transition: none; }
+}
