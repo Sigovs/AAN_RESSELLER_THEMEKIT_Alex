@@ -79,6 +79,10 @@ has not loaded yet, not broken files (all links and images return 200 live).
     new backend's /dealer-home/659. On every dashboard (handoff index.html, round2-v3, aan-review),
     the handover page (11 screens), README, rules page, DESIGN.md precedence and the ds-check lists.
     sl11 build AAN_Gen11_review_build_20261123_v3.zip — Alex uploaded it.
+    Hover (Alex, 23 Nov): one neutral hover on every tool link — --wash (grey on white) in light,
+    --ground (darker than the card) in dark; no fill on the board counts, only the underlined link.
+    Final: handoff e6d35d7, round2-v3 46af5df, aan-review ca03b7a, GitHub Pages synced, sl11 md5-checked.
+    Versions Alex rejected: v1 (4/10, "boring"), v3 asymmetric ("the previous one was better").
 
 ## Next
 
